@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SSOT Governance Dashboard — Prototype</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --navy:#1F3A5F; --navy-bg:#EAF2FB;
+    --gold:#B8860B; --gold-bg:#FBF3E3;
+    --green:#2E7D4F; --green-bg:#E8F5EC;
+    --orange:#C0622D; --orange-bg:#FBEFE9;
+    --red:#B03A2E; --red-bg:#FBEAEA;
+    --gray:#6B7280; --gray-bg:#F2F4F7;
+    --border:#E2E5EA; --bg:#F7F8FA; --card:#FFFFFF; --text:#1F2937; --muted:#6B7280;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+  .app{display:flex;min-height:100vh;}
+  /* Sidebar */
+  .sidebar{width:230px;flex-shrink:0;background:var(--navy);color:#fff;padding:20px 0;position:fixed;top:0;bottom:0;left:0;overflow-y:auto;}
+  .sidebar h1{font-size:15px;font-weight:700;padding:0 20px 4px;margin:0;}
+  .sidebar .sub{font-size:11px;color:#A9BEDA;padding:0 20px 18px;border-bottom:1px solid rgba(255,255,255,0.15);margin-bottom:10px;}
+  .navitem{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;color:#D6E1F0;font-size:13px;border-left:3px solid transparent;}
+  .navitem:hover{background:rgba(255,255,255,0.06);color:#fff;}
+  .navitem.active{background:rgba(255,255,255,0.12);color:#fff;border-left:3px solid var(--gold);font-weight:600;}
+  .navicon{width:16px;text-align:center;opacity:0.85;}
+  .sidebar-foot{position:absolute;bottom:0;left:0;right:0;padding:14px 20px;font-size:10.5px;color:#8CA3C4;border-top:1px solid rgba(255,255,255,0.12);}
+  /* Main */
+  .main{margin-left:230px;flex:1;padding:26px 32px 60px;max-width:1400px;}
+  .topbar{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;}
+  .topbar h2{margin:0;font-size:22px;color:var(--navy);}
+  .topbar p{margin:4px 0 0;color:var(--muted);font-size:13px;}
+  .section{display:none;}
+  .section.active{display:block;}
+  /* Cards */
+  .cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:24px;}
+  .metric-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;}
+  .metric-card .val{font-size:26px;font-weight:700;color:var(--navy);}
+  .metric-card .lbl{font-size:12px;color:var(--muted);margin-top:2px;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:20px;}
+  .card h3{margin:0 0 12px;font-size:15px;color:var(--navy);}
+  .card h4{margin:18px 0 8px;font-size:13px;color:var(--navy);}
+  /* Badges */
+  .badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+  .b-constraint{background:var(--navy-bg);color:#2E5C8A;}
+  .b-rule{background:var(--gold-bg);color:var(--gold);}
+  .b-logic{background:var(--green-bg);color:var(--green);}
+  .b-draft{background:var(--gray-bg);color:var(--gray);}
+  .b-candidate{background:var(--gold-bg);color:var(--gold);}
+  .b-released{background:var(--navy);color:#fff;}
+  .b-deprecated{background:var(--orange-bg);color:var(--orange);}
+  .b-retired{background:var(--red-bg);color:var(--red);}
+  .ci-pass{color:var(--green);font-weight:700;}
+  .ci-fail{color:var(--red);font-weight:700;}
+  .ci-na{color:#B7BEC7;}
+  .sev-MAJOR{background:var(--red-bg);color:var(--red);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
+  .sev-MINOR{background:var(--gold-bg);color:var(--gold);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
+  .sev-PATCH{background:var(--gray-bg);color:var(--gray);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;}
+  .b-math{background:var(--navy-bg);color:#2E5C8A;}
+  .b-structural{background:var(--navy);color:#fff;}
+  .b-temporal{background:var(--gray-bg);color:var(--gray);}
+  .b-association{background:var(--green-bg);color:var(--green);}
+  .b-endorsed{background:var(--green-bg);color:var(--green);}
+  .b-warned{background:var(--gold-bg);color:var(--gold);}
+  .b-deprecatedcert{background:var(--red-bg);color:var(--red);}
+  .codebox{background:#0F2A44;color:#CFE3FF;font-family:"SF Mono",Consolas,Monaco,monospace;font-size:12.5px;padding:10px 12px;border-radius:8px;margin:8px 0;overflow-x:auto;white-space:pre;}
+  .alation-id{font-family:"SF Mono",Consolas,Monaco,monospace;font-size:11.5px;color:var(--muted);background:var(--gray-bg);padding:2px 7px;border-radius:5px;}
+  .lineage-row td{vertical-align:middle;}
+  .clickable-term{color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline dotted;}
+  .clickable-term:hover{color:var(--gold);}
+  .used-in-list{font-size:12px;color:var(--muted);margin-top:10px;}
+  .used-in-list a{color:var(--navy);cursor:pointer;text-decoration:underline dotted;}
+  /* Explorer layout */
+  .explorer-grid{display:grid;grid-template-columns:250px 1fr;gap:18px;align-items:start;}
+  .tree{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;}
+  .tree-node{padding:7px 10px;border-radius:6px;cursor:pointer;font-size:13px;display:flex;justify-content:space-between;align-items:center;}
+  .tree-node:hover{background:var(--gray-bg);}
+  .tree-node.active{background:var(--navy-bg);color:var(--navy);font-weight:700;}
+  .tree-sub{padding-left:20px;}
+  .tree-count{font-size:10.5px;color:var(--muted);background:var(--gray-bg);border-radius:10px;padding:1px 7px;}
+  .filter-row{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .chip{border:1px solid var(--border);background:#fff;padding:5px 12px;border-radius:20px;font-size:12px;cursor:pointer;color:var(--muted);}
+  .chip.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .artifact-list{display:flex;flex-direction:column;gap:8px;}
+  .artifact-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .artifact-item:hover{border-color:var(--navy);}
+  .artifact-item .left strong{font-size:13.5px;}
+  .artifact-item .meta{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .artifact-item .right{display:flex;gap:6px;align-items:center;flex-shrink:0;}
+  /* Table */
+  table{width:100%;border-collapse:collapse;font-size:12.8px;}
+  th{background:var(--navy);color:#fff;text-align:left;padding:9px 12px;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;}
+  td{padding:9px 12px;border-bottom:1px solid var(--border);vertical-align:top;}
+  tr:nth-child(even) td{background:#FAFBFC;}
+  /* Stepper */
+  .stepper{display:flex;justify-content:space-between;margin:20px 0 26px;position:relative;}
+  .stepper:before{content:"";position:absolute;top:17px;left:5%;right:5%;height:2px;background:var(--border);z-index:0;}
+  .step{flex:1;text-align:center;position:relative;z-index:1;}
+  .step .dot{width:34px;height:34px;border-radius:50%;background:#fff;border:2px solid var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:700;font-size:13px;}
+  .step.done .dot{background:var(--navy);border-color:var(--navy);color:#fff;}
+  .step.current .dot{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:0 0 0 4px var(--gold-bg);}
+  .step .label{font-size:12px;font-weight:600;color:var(--text);}
+  .gov-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px;}
+  .gov-cell{background:var(--gray-bg);border-radius:8px;padding:12px;font-size:11.5px;color:var(--text);}
+  .gov-cell strong{display:block;color:var(--navy);font-size:12px;margin-bottom:4px;}
+  .timeline{border-left:2px solid var(--border);margin-left:8px;padding-left:18px;}
+  .tl-item{position:relative;padding-bottom:16px;}
+  .tl-item:before{content:"";position:absolute;left:-23px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--navy);}
+  .tl-item .tdate{font-size:11px;color:var(--muted);}
+  .tl-item .tevent{font-size:13px;font-weight:600;}
+  .tl-item .tactor{font-size:11.5px;color:var(--muted);}
+  /* select / controls */
+  select, input[type=text]{padding:7px 10px;border-radius:6px;border:1px solid var(--border);font-size:13px;background:#fff;color:var(--text);}
+  .controls{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center;}
+  .subtabs{display:flex;gap:6px;margin-bottom:16px;}
+  .subtab{padding:7px 16px;border-radius:8px 8px 0 0;background:var(--gray-bg);color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;border:1px solid var(--border);border-bottom:none;}
+  .subtab.active{background:#fff;color:var(--navy);}
+  .subpanel{display:none;}
+  .subpanel.active{display:block;}
+  /* mapping viz */
+  .map-flow{display:flex;align-items:center;gap:16px;padding:20px;background:var(--gray-bg);border-radius:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .map-box{background:#fff;border:2px solid var(--gold);border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;}
+  .map-box.core{border-color:var(--navy);background:var(--navy);color:#fff;}
+  .map-rel{font-size:12px;color:var(--muted);text-align:center;}
+  .map-rel .arrow{font-size:20px;color:var(--gray);}
+  /* bars */
+  .barchart{display:flex;align-items:flex-end;gap:14px;height:210px;padding:10px 6px 0;}
+  .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+  .bar{width:100%;border-radius:6px 6px 0 0;background:var(--navy);position:relative;}
+  .bar-val{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+  .bar-lbl{font-size:11px;color:var(--muted);margin-top:6px;text-align:center;line-height:1.3;max-width:80px;}
+  .diff-added{background:var(--green-bg);}
+  .diff-removed{background:var(--red-bg);text-decoration:line-through;color:#8a4a44;}
+  .diff-modified{background:var(--gold-bg);}
+  .banner{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:16px;display:flex;gap:10px;align-items:center;}
+  .banner.ok{background:var(--green-bg);color:var(--green);border:1px solid #BFE3CC;}
+  .banner.warn{background:var(--red-bg);color:var(--red);border:1px solid #F0C6C1;}
+  .legend-row{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px;}
+  .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+  .swatch{width:11px;height:11px;border-radius:3px;display:inline-block;}
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50;align-items:center;justify-content:center;}
+  .modal-overlay.active{display:flex;}
+  .modal{background:#fff;border-radius:12px;width:560px;max-width:92vw;max-height:86vh;overflow-y:auto;padding:24px;}
+  .modal h3{margin:0 0 4px;color:var(--navy);}
+  .modal .close{float:right;cursor:pointer;color:var(--muted);font-size:18px;}
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:6px 10px;font-size:12.8px;margin:14px 0;}
+  .kv .k{color:var(--muted);}
+  .linkbtn{display:inline-block;margin-top:4px;margin-right:8px;padding:6px 12px;border-radius:6px;background:var(--navy);color:#fff;font-size:12px;cursor:pointer;border:none;}
+  .linkbtn.secondary{background:#fff;color:var(--navy);border:1px solid var(--navy);}
+  .search-box{flex:1;min-width:180px;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="sidebar">
+    <h1>SSOT Governance</h1>
+    <div class="sub">Prototype dashboard — synthetic data</div>
+    <div class="navitem active" data-section="overview"><span class="navicon">&#9673;</span> Overview</div>
+    <div class="navitem" data-section="explorer"><span class="navicon">&#9776;</span> Explorer</div>
+    <div class="navitem" data-section="lifecycle"><span class="navicon">&#8635;</span> Lifecycle &amp; Governance</div>
+    <div class="navitem" data-section="diffmap"><span class="navicon">&#8646;</span> Diff &amp; Mapping</div>
+    <div class="navitem" data-section="testing"><span class="navicon">&#10003;</span> Testing &amp; Measures</div>
+    <div class="navitem" data-section="components"><span class="navicon">&#9638;</span> Components</div>
+    <div class="sidebar-foot">Illustrates the SSOT / execution-translation architecture. All data below is mock, for demo purposes.</div>
+  </div>
+
+  <div class="main">
+
+    <!-- OVERVIEW -->
+    <div class="section active" id="sec-overview">
+      <div class="topbar"><div><h2>Overview</h2><p>Enterprise-wide view across Core and all domains / sub-domains.</p></div></div>
+      <div class="cards-row" id="ov-cards"></div>
+      <div class="card">
+        <h3>Logic classification legend</h3>
+        <p style="color:var(--muted);font-size:12.5px;margin-top:-4px;">Every artifact below is routed to the tool built for its paradigm — mixing these is the #1 driver of legacy bloat.</p>
+        <div class="legend-row">
+          <div class="legend-item"><span class="swatch" style="background:#2E5C8A"></span> Constraints — schemas / ontology (structural)</div>
+          <div class="legend-item"><span class="swatch" style="background:var(--gold)"></span> Business Rules — DMN decision tables (policy)</div>
+          <div class="legend-item"><span class="swatch" style="background:var(--green)"></span> Computational Logic — code, not SME-editable</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Recent activity</h3>
+        <div class="timeline" id="ov-activity"></div>
+      </div>
+    </div>
+
+    <!-- EXPLORER -->
+    <div class="section" id="sec-explorer">
+      <div class="topbar"><div><h2>Explorer</h2><p>Browse constraints, rules, and logic across Core, domains, and sub-domains — down to the concepts, relations, and calculations each one is built from.</p></div></div>
+      <div class="subtabs">
+        <div class="subtab active" data-sub="exp-artifacts">Artifacts</div>
+        <div class="subtab" data-sub="exp-vocab">Vocabulary (Concepts)</div>
+        <div class="subtab" data-sub="exp-relations">Upper Ontology (Relations)</div>
+        <div class="subtab" data-sub="exp-calc">Calc Library (Alation)</div>
+      </div>
+
+      <div class="subpanel active" id="sub-exp-artifacts">
+        <div class="explorer-grid">
+          <div class="tree" id="exp-tree"></div>
+          <div>
+            <div class="filter-row" id="exp-cat-filter"></div>
+            <div class="controls">
+              <select id="exp-lifecycle-filter">
+                <option value="">All lifecycle stages</option>
+                <option>Draft</option><option>Candidate</option><option>Released</option><option>Deprecated</option><option>Retired</option>
+              </select>
+              <input type="text" id="exp-search" class="search-box" placeholder="Search by name…">
+            </div>
+            <div class="artifact-list" id="exp-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subpanel" id="sub-exp-vocab">
+        <div class="card">
+          <h3>Domain vocabulary <span style="font-weight:400;color:var(--muted);font-size:12px;">— subjects &amp; objects used across constraints, rules, and logic</span></h3>
+          <div class="filter-row" id="vocab-kind-filter"></div>
+          <table id="vocab-table"><thead><tr><th>Term</th><th>Kind</th><th>Namespace</th><th>Definition</th><th>Value constraint</th><th>Maps to Core</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+
+      <div class="subpanel" id="sub-exp-relations">
+        <div class="card">
+          <h3>Upper ontology relations <span style="font-weight:400;color:var(--muted);font-size:12px;">— predicates every rule/constraint's subject-predicate-object triples draw from</span></h3>
+          <div class="filter-row" id="rel-type-filter"></div>
+          <table id="rel-table"><thead><tr><th>Relation</th><th>Symbol</th><th>Type</th><th>Definition</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+
+      <div class="subpanel" id="sub-exp-calc">
+        <div class="card">
+          <h3>Calculation library <span style="font-weight:400;color:var(--muted);font-size:12px;">— governed in Alation; rules reference these instead of embedding formulas inline</span></h3>
+          <div class="filter-row" id="calc-cert-filter"></div>
+          <table id="calc-table"><thead><tr><th>Calculation</th><th>Formula</th><th>Version</th><th>Owner</th><th>Certification</th><th>Alation ID</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIFECYCLE -->
+    <div class="section" id="sec-lifecycle">
+      <div class="topbar"><div><h2>Lifecycle &amp; Governance</h2><p>Draft → Candidate → Released → Deprecated → Retired, gated by CI and CODEOWNERS review at each step.</p></div></div>
+      <div class="card">
+        <div class="controls"><label style="font-size:13px;color:var(--muted);">Artifact:</label>
+          <select id="lc-select"></select>
+        </div>
+        <div class="stepper" id="lc-stepper"></div>
+        <div class="gov-grid" id="lc-gov"></div>
+      </div>
+      <div class="card">
+        <h3>Audit trail</h3>
+        <div class="timeline" id="lc-history"></div>
+      </div>
+    </div>
+
+    <!-- DIFF & MAPPING -->
+    <div class="section" id="sec-diffmap">
+      <div class="topbar"><div><h2>Diff &amp; Mapping</h2><p>Automated severity classification on every spec change, and the SKOS bridge that relates domain terms back to Core.</p></div></div>
+      <div class="subtabs">
+        <div class="subtab active" data-sub="diff">Diff Viewer</div>
+        <div class="subtab" data-sub="mapping">Mapping Viewer</div>
+      </div>
+      <div class="subpanel active" id="sub-diff">
+        <div class="card">
+          <div class="controls"><label style="font-size:13px;color:var(--muted);">Artifact:</label>
+            <select id="diff-select"></select>
+          </div>
+          <div id="diff-banner"></div>
+          <table id="diff-table"><thead><tr><th>Field</th><th>Before</th><th>After</th><th>Change</th><th>Severity</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+      <div class="subpanel" id="sub-mapping">
+        <div class="card">
+          <div class="controls"><label style="font-size:13px;color:var(--muted);">Domain term:</label>
+            <select id="map-select"></select>
+          </div>
+          <div class="map-flow" id="map-flow"></div>
+          <div class="kv" id="map-provenance"></div>
+        </div>
+        <div class="card">
+          <h3>Published mapping registry <span style="font-weight:400;color:var(--muted);font-size:12px;">— searchable, prevents duplicate concepts across domains</span></h3>
+          <table id="map-registry"><thead><tr><th>Domain term</th><th>Relation</th><th>Core term</th><th>Owner</th><th>Review status</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTING & MEASURES -->
+    <div class="section" id="sec-testing">
+      <div class="topbar"><div><h2>Testing &amp; Measures</h2><p>CI results per artifact, plus rollup metrics on governance health.</p></div></div>
+      <div class="cards-row" id="tm-cards"></div>
+      <div class="card">
+        <h3>Artifacts by lifecycle stage</h3>
+        <div class="barchart" id="tm-chart-stage"></div>
+      </div>
+      <div class="card">
+        <h3>Artifacts by domain</h3>
+        <div class="barchart" id="tm-chart-domain"></div>
+      </div>
+      <div class="card">
+        <h3>CI checks by artifact</h3>
+        <div class="controls">
+          <select id="tm-filter">
+            <option value="">All namespaces</option>
+          </select>
+        </div>
+        <table id="tm-table"><thead><tr><th>Artifact</th><th>Namespace</th><th>Category</th><th>Lint</th><th>Test</th><th>Diff classifier</th><th>Closure</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+
+    <!-- COMPONENTS -->
+    <div class="section" id="sec-components">
+      <div class="topbar"><div><h2>Component Inventory</h2><p>Design-time and run-time components that implement this architecture.</p></div></div>
+      <div class="filter-row" id="comp-type-filter"></div>
+      <div class="filter-row" id="comp-phase-filter"></div>
+      <table id="comp-table"><thead><tr><th>Component</th><th>Type</th><th>Phase</th><th>Description</th></tr></thead><tbody></tbody></table>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ============================= MOCK DATA ============================= */
+
+const DOMAINS = [
+  { id:'core', name:'Core (Enterprise)', owner:'Architecture & Governance', subdomains: [] },
+  { id:'claims', name:'Claims', owner:'Claims SME Team', subdomains: [
+      { id:'claims-auto', name:'Auto Claims' },
+      { id:'claims-property', name:'Property Claims' }
+  ]},
+  { id:'underwriting', name:'Underwriting', owner:'Underwriting SME Team', subdomains: [
+      { id:'uw-commercial', name:'Commercial Lines' },
+      { id:'uw-personal', name:'Personal Lines' }
+  ]}
+];
+
+function nsLabel(ns){
+  for(const d of DOMAINS){
+    if(d.id===ns) return d.name;
+    for(const s of d.subdomains) if(s.id===ns) return d.name+' / '+s.name;
+  }
+  return ns;
+}
+function nsOwner(ns){
+  for(const d of DOMAINS){
+    if(d.id===ns) return d.owner;
+    for(const s of d.subdomains) if(s.id===ns) return d.owner;
+  }
+  return '—';
+}
+
+const ARTIFACTS = [
+  // ---- CORE ----
+  { id:'core-customer', name:'Customer', namespace:'core', category:'constraint', version:'2.1.0', lifecycle:'Released', owner:'Architecture', updated:'2026-06-02',
+    description:'Canonical Customer entity: identity fields, contact info, required relationships.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[
+      {date:'2026-04-01', event:'Draft opened', actor:'A. Reyes (Architecture)'},
+      {date:'2026-04-06', event:'Candidate — CI diff classifier: MINOR (matches bump)', actor:'CI Bot'},
+      {date:'2026-04-09', event:'Released v2.1.0 — published to registry', actor:'Architecture review'}
+    ],
+    triples:[ { subject:'c-customer', predicate:'r-haspart', object:{ type:'concept', ref:'c-customer-tier' } } ],
+    diff:{ from:'2.0.0', to:'2.1.0', changes:[
+      {field:'preferredContactMethod', before:'—', after:'enum[email,phone,mail]', type:'added', severity:'MINOR'},
+      {field:'description', before:'"Customer record"', after:'"Canonical customer entity"', type:'modified', severity:'PATCH'}
+    ]}
+  },
+  { id:'core-order', name:'Order', namespace:'core', category:'constraint', version:'1.4.0', lifecycle:'Released', owner:'Architecture', updated:'2026-05-14',
+    description:'An Order must have at least one Line Item, and the Customer must exist.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-05-14', event:'Released v1.4.0', actor:'Architecture review'}],
+    triples:[
+      { subject:'c-order', predicate:'r-haspart', object:{ type:'concept', ref:'c-order-lineitems' } },
+      { subject:'c-order', predicate:'r-references', object:{ type:'concept', ref:'c-customer', note:'Customer must exist' } }
+    ] },
+  { id:'core-policy', name:'Policy', namespace:'core', category:'constraint', version:'3.0.0', lifecycle:'Released', owner:'Architecture', updated:'2026-03-22',
+    description:'Canonical insurance Policy entity shared by all underwriting and claims domains.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[
+      {date:'2026-03-10', event:'Candidate — CI diff classifier: MAJOR (breaking — field removed)', actor:'CI Bot'},
+      {date:'2026-03-22', event:'Released v3.0.0 after architecture sign-off', actor:'Architecture review'}
+    ],
+    diff:{ from:'2.6.1', to:'3.0.0', changes:[
+      {field:'legacyPolicyNumber', before:'string', after:'—', type:'removed', severity:'MAJOR'},
+      {field:'policyId', before:'—', after:'uuid, required', type:'added', severity:'MAJOR'}
+    ]}
+  },
+  { id:'core-discount-eligibility', name:'Discount Eligibility', namespace:'core', category:'rule', version:'1.2.0', lifecycle:'Released', owner:'Architecture', updated:'2026-06-10',
+    description:'Enterprise-wide discount policy. If customer tier is Gold and order total > $100, apply 15%.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-06-10', event:'Released v1.2.0', actor:'Architecture review'}],
+    triples:[
+      { subject:'c-customer-tier', predicate:'r-equals', object:{ type:'literal', value:'Gold', constraint:{datatype:'enum', enum:['Bronze','Silver','Gold','Platinum']} } },
+      { subject:'c-order-total', predicate:'r-gt', object:{ type:'literal', value:'100', constraint:{datatype:'decimal', min:0, unit:'USD'} } },
+      { subject:'c-order-total', predicate:'r-appliesTo', object:{ type:'calc', ref:'calc-gold-discount' } }
+    ] },
+  { id:'core-kyc-check', name:'KYC Verification Rule', namespace:'core', category:'rule', version:'1.0.0', lifecycle:'Candidate', owner:'Architecture', updated:'2026-07-20',
+    description:'Enterprise know-your-customer decision table, in CI review.',
+    ci:{lint:'pass',test:'fail',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-07-20', event:'Candidate — scenario test failing on edge case', actor:'CI Bot'}] },
+  { id:'core-route-optimizer', name:'Route Optimization Service', namespace:'core', category:'logic', version:'4.2.1', lifecycle:'Released', owner:'Platform Engineering', updated:'2026-05-30',
+    description:'Procedural computation — not SME editable. Multi-stop route optimization for field adjusters.', ci:{lint:'n/a',test:'pass',diff:'n/a',closure:'n/a'},
+    history:[{date:'2026-05-30', event:'Released v4.2.1', actor:'Platform Engineering'}] },
+  { id:'core-risk-score', name:'Risk Scoring Pipeline', namespace:'core', category:'logic', version:'2.0.0', lifecycle:'Released', owner:'Platform Engineering', updated:'2026-06-18',
+    description:'ML feature pipeline computing composite risk score. Not SME editable.', ci:{lint:'n/a',test:'pass',diff:'n/a',closure:'n/a'},
+    history:[{date:'2026-06-18', event:'Released v2.0.0', actor:'Platform Engineering'}],
+    triples:[ { subject:'c-applicant-risk-score', predicate:'r-appliesTo', object:{ type:'calc', ref:'calc-risk-score' } } ] },
+  { id:'core-customer-v1-deprecated', name:'Customer (legacy shape)', namespace:'core', category:'constraint', version:'1.9.3', lifecycle:'Deprecated', owner:'Architecture', updated:'2026-02-01',
+    description:'Superseded by v2.x. Sunset date 2026-09-01 — 3 domain consumers still pinned.', ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-02-01', event:'Deprecated — superseded by v2.0.0, sunset 2026-09-01', actor:'Architecture review'}] },
+
+  // ---- CLAIMS (domain-level) ----
+  { id:'claims-vocab-claim', name:'Claim', namespace:'claims', category:'constraint', version:'1.3.0', lifecycle:'Released', owner:'Claims SME Team', updated:'2026-05-02',
+    description:'Claims-specific Claim entity, extends core Customer + Policy via allOf/$ref.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'pass'},
+    mapping:{ relation:'skos:broader', target:'core:Policy', owner:'Claims SME Team', status:'Approved (dual review)' },
+    history:[{date:'2026-05-02', event:'Released v1.3.0', actor:'Domain SME review'}] },
+  { id:'claims-fraud-flag', name:'Fraud Flag Rule', namespace:'claims', category:'rule', version:'2.0.0', lifecycle:'Released', owner:'Claims SME Team', updated:'2026-06-25',
+    description:'If claim amount > $10,000 and filed <48h after policy start, flag for review.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-06-25', event:'Released v2.0.0', actor:'Domain SME review'}],
+    triples:[
+      { subject:'c-claim-amount', predicate:'r-gt', object:{ type:'literal', value:'10,000', constraint:{datatype:'decimal', min:0, unit:'USD'} } },
+      { subject:'c-claim-filed-date', predicate:'r-within', object:{ type:'concept', ref:'c-policy-startdate', note:'within 48 hours after' } }
+    ] },
+  { id:'claims-payout-calc', name:'Payout Calculation Service', namespace:'claims', category:'logic', version:'1.1.0', lifecycle:'Released', owner:'Claims Engineering', updated:'2026-04-11',
+    description:'Procedural payout computation. Not SME editable.', ci:{lint:'n/a',test:'pass',diff:'n/a',closure:'n/a'},
+    history:[{date:'2026-04-11', event:'Released v1.1.0', actor:'Claims Engineering'}] },
+  { id:'claims-intake-draft', name:'Claim Intake Form', namespace:'claims', category:'constraint', version:'0.3.0', lifecycle:'Draft', owner:'Claims SME Team', updated:'2026-07-24',
+    description:'New intake schema, being authored — not yet in CI.', ci:{lint:'n/a',test:'n/a',diff:'n/a',closure:'n/a'},
+    history:[{date:'2026-07-24', event:'Draft opened', actor:'M. Chen (Claims SME)'}] },
+
+  // ---- CLAIMS / AUTO ----
+  { id:'claims-auto-vehicle', name:'Vehicle', namespace:'claims-auto', category:'constraint', version:'1.0.0', lifecycle:'Released', owner:'Claims SME Team', updated:'2026-04-28',
+    description:'Vehicle entity for auto claims: VIN, make/model, damage zones.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'pass'},
+    mapping:{ relation:'skos:closeMatch', target:'core:Asset', owner:'Claims SME Team', status:'Approved (dual review)' },
+    history:[{date:'2026-04-28', event:'Released v1.0.0', actor:'Domain SME review'}] },
+  { id:'claims-auto-total-loss', name:'Total Loss Determination', namespace:'claims-auto', category:'rule', version:'1.1.0', lifecycle:'Released', owner:'Claims SME Team', updated:'2026-05-19',
+    description:'If repair cost > 75% of actual cash value, classify as total loss.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-05-19', event:'Released v1.1.0', actor:'Domain SME review'}],
+    triples:[ { subject:'c-vehicle-repair-cost', predicate:'r-gte-pct', object:{ type:'calc', ref:'calc-total-loss-ratio' } } ] },
+
+  // ---- CLAIMS / PROPERTY ----
+  { id:'claims-property-dwelling', name:'Dwelling', namespace:'claims-property', category:'constraint', version:'1.2.0', lifecycle:'Released', owner:'Claims SME Team', updated:'2026-03-30',
+    description:'Dwelling entity: structure type, square footage, construction year.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'pass'},
+    mapping:{ relation:'skos:closeMatch', target:'core:Asset', owner:'Claims SME Team', status:'Pending Architecture review' },
+    history:[{date:'2026-03-30', event:'Released v1.2.0', actor:'Domain SME review'}] },
+  { id:'claims-property-water-damage', name:'Water Damage Coverage Rule', namespace:'claims-property', category:'rule', version:'1.0.0', lifecycle:'Retired', owner:'Claims SME Team', updated:'2025-11-02',
+    description:'Retired — replaced by unified Water & Flood Damage rule set.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2025-11-02', event:'Retired — removed from registry', actor:'CI Bot'}] },
+
+  // ---- UNDERWRITING (domain-level) ----
+  { id:'uw-vocab-applicant', name:'Applicant', namespace:'underwriting', category:'constraint', version:'1.5.0', lifecycle:'Released', owner:'Underwriting SME Team', updated:'2026-06-05',
+    description:'Underwriting Applicant entity, extends core Customer.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'pass'},
+    mapping:{ relation:'skos:broader', target:'core:Customer', owner:'Underwriting SME Team', status:'Approved (dual review)' },
+    history:[{date:'2026-06-05', event:'Released v1.5.0', actor:'Domain SME review'}] },
+  { id:'uw-tier-assignment', name:'Risk Tier Assignment Rule', namespace:'underwriting', category:'rule', version:'2.3.0', lifecycle:'Released', owner:'Underwriting SME Team', updated:'2026-07-01',
+    description:'Assigns applicant risk tier from composite score bands.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-07-01', event:'Released v2.3.0', actor:'Domain SME review'}],
+    triples:[ { subject:'c-applicant-risk-score', predicate:'r-appliesTo', object:{ type:'calc', ref:'calc-risk-score' } } ] },
+  { id:'uw-premium-calc', name:'Premium Calculation Service', namespace:'underwriting', category:'logic', version:'3.1.0', lifecycle:'Released', owner:'Underwriting Engineering', updated:'2026-05-27',
+    description:'Procedural premium computation. Not SME editable.', ci:{lint:'n/a',test:'pass',diff:'n/a',closure:'n/a'},
+    history:[{date:'2026-05-27', event:'Released v3.1.0', actor:'Underwriting Engineering'}],
+    triples:[ { subject:'c-applicant', predicate:'r-appliesTo', object:{ type:'calc', ref:'calc-premium' } } ] },
+
+  // ---- UNDERWRITING / COMMERCIAL ----
+  { id:'uw-commercial-entity', name:'Commercial Entity', namespace:'uw-commercial', category:'constraint', version:'1.0.0', lifecycle:'Candidate', owner:'Underwriting SME Team', updated:'2026-07-22',
+    description:'Business entity for commercial underwriting — in CI review.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'fail'},
+    history:[{date:'2026-07-22', event:'Candidate — closure check failing, no mapping to Core yet', actor:'CI Bot'}] },
+  { id:'uw-commercial-industry-rating', name:'Industry Rating Rule', namespace:'uw-commercial', category:'rule', version:'1.4.0', lifecycle:'Released', owner:'Underwriting SME Team', updated:'2026-04-15',
+    description:'Rates commercial applicants by NAICS industry code band.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'n/a'},
+    history:[{date:'2026-04-15', event:'Released v1.4.0', actor:'Domain SME review'}] },
+
+  // ---- UNDERWRITING / PERSONAL ----
+  { id:'uw-personal-household', name:'Household', namespace:'uw-personal', category:'constraint', version:'1.1.0', lifecycle:'Released', owner:'Underwriting SME Team', updated:'2026-06-30',
+    description:'Household entity for personal lines underwriting.',
+    ci:{lint:'pass',test:'pass',diff:'pass',closure:'pass'},
+    mapping:{ relation:'skos:exactMatch', target:'core:Customer', owner:'Underwriting SME Team', status:'Approved (dual review)' },
+    history:[{date:'2026-06-30', event:'Released v1.1.0', actor:'Domain SME review'}] },
+  { id:'uw-personal-teen-driver', name:'Teen Driver Surcharge Rule', namespace:'uw-personal', category:'rule', version:'1.0.0', lifecycle:'Draft', owner:'Underwriting SME Team', updated:'2026-07-25',
+    description:'New surcharge rule being authored for drivers under 19.', ci:{lint:'n/a',test:'n/a',diff:'n/a',closure:'n/a'},
+    history:[{date:'2026-07-25', event:'Draft opened', actor:'J. Patel (Underwriting SME)'}] }
+];
+
+const LIFECYCLE_STAGES = ['Draft','Candidate','Released','Deprecated','Retired'];
+
+const GOVERNANCE_INFO = {
+  'Draft':      { who:'Author (SME or Engineer)', what:'Spec authored/edited locally or on a feature branch.', ci:'None yet.' },
+  'Candidate':  { who:'CODEOWNERS-routed reviewer(s)', what:'PR open — diff classifier runs, lint & scenario tests execute.', ci:'Diff classifier, linter, scenario tests.' },
+  'Released':   { who:'Domain SME (+ Architecture if /core)', what:'Published to the versioned artifact registry as immutable.', ci:'All checks passed; deployment gate cleared.' },
+  'Deprecated': { who:'Owning team sets sunset date', what:'Still served, but flagged; consumers should migrate.', ci:'Consumer scan for pinned versions.' },
+  'Retired':    { who:'CI Bot (automated)', what:'Removed from the registry once the sunset date passes.', ci:'Pinned consumers fail their build.' }
+};
+
+const MAPPING_REGISTRY = ARTIFACTS.filter(a=>a.mapping).map(a=>({
+  term: nsLabel(a.namespace)+' : '+a.name,
+  relation: a.mapping.relation,
+  target: a.mapping.target,
+  owner: a.mapping.owner,
+  status: a.mapping.status
+}));
+
+const COMPONENTS = [
+  // Design-time
+  { name:'Schema/Constraint Authoring UI', type:'Microservice', phase:'Design-time', desc:'Data-dictionary-style form for SMEs to edit constraints without seeing raw JSON Schema/SHACL.' },
+  { name:'Rule Editor UI (Decision Tables)', type:'Microservice', phase:'Design-time', desc:'DMN decision-table grid editor for business rules, e.g. embedded Camunda Modeler.' },
+  { name:'Mapping Authoring UI', type:'Microservice', phase:'Design-time', desc:'SKOS bridge-file editor for relating domain terms to Core terms.' },
+  { name:'Schema Diff Classifier', type:'Agent', phase:'Design-time', desc:'Classifies each spec change as MAJOR/MINOR/PATCH automatically; blocks CI on mismatch.' },
+  { name:'Ontology Closure Checker', type:'Agent', phase:'Design-time', desc:'Walks the mapping graph; fails the build if a domain term has no path to a Core root.' },
+  { name:'DMN/OWL Linter & Validator', type:'Microservice', phase:'Design-time', desc:'Static analysis for DMN tables; semantic reasoner (e.g. HermiT) for ontology consistency.' },
+  { name:'Scenario Test Runner', type:'Microservice', phase:'Design-time', desc:'Runs rule/schema changes against synthetic datasets before merge.' },
+  { name:'CODEOWNERS Router Bot', type:'Agent', phase:'Design-time', desc:'Routes PRs to the correct reviewer(s) based on changed path (/core vs /domains/*).' },
+  { name:'Concept Search Agent', type:'Agent', phase:'Design-time', desc:'Searches Core + all domain mappings for near-duplicate concepts before a new term is created.' },
+  { name:'Code Generator / Compiler', type:'Microservice', phase:'Design-time', desc:'Compiles declarative specs into Pydantic/TS types, SHACL/OWL, and DMN/Drools XML.' },
+  { name:'SSOT Git Repository', type:'Ontology', phase:'Design-time', desc:'Central version-controlled source of truth for all constraints, rules, and mapping files.' },
+  { name:'Versioned Artifact Registry', type:'Microservice', phase:'Design-time', desc:'Immutable, versioned store of released specs; consumers pull pinned ranges from here.' },
+  // Run-time
+  { name:'Decision API (Strangler Fig Facade)', type:'Microservice', phase:'Run-time', desc:'Standardized entry point that routes decision requests to the correct backend, legacy or modern.' },
+  { name:'Rules Engine Runtime', type:'Microservice', phase:'Run-time', desc:'Executes published DMN/Drools decision tables (e.g. Camunda).' },
+  { name:'Domain Computation Services', type:'Microservice', phase:'Run-time', desc:'Procedural/algorithmic logic per domain (route optimization, premium calc, risk scoring).' },
+  { name:'Legacy Wrapper Adapters', type:'Microservice', phase:'Run-time', desc:'Wrap legacy stored procedures / rules engines behind the Decision API without rewriting them.' },
+  { name:'Ontology / Graph Store', type:'Ontology', phase:'Run-time', desc:'SHACL-validated semantic layer, reserved for genuine cross-domain reasoning needs.' },
+  { name:'Schema Registry Service (Postgres)', type:'Mapping Service', phase:'Run-time', desc:'Serves versioned JSON Schema definitions for runtime constraint validation.' },
+  { name:'Mapping Registry Service (Postgres)', type:'Mapping Service', phase:'Run-time', desc:'Serves SKOS relation lookups between domain terms and Core terms.' },
+  { name:'Version Resolution Service', type:'Microservice', phase:'Run-time', desc:'Resolves a caller’s declared policy/schema version to the correct artifact.' },
+  { name:'Deprecation / Sunset Monitor', type:'Agent', phase:'Run-time', desc:'Scans consumers still pinned to deprecated versions and alerts their owning teams.' },
+  { name:'Drift Detection Monitor', type:'Monitoring', phase:'Run-time', desc:'Compares generated artifacts across targets (code/graph/rules) to catch any divergence.' },
+  { name:'Observability & Metrics Collector', type:'Monitoring', phase:'Run-time', desc:'Aggregates CI pass rates, mapping coverage, and release velocity into the measures shown here.' },
+  { name:'Audit / Provenance Logger', type:'Monitoring', phase:'Run-time', desc:'Immutable log of every change, reviewer, and approval outcome for each artifact.' }
+];
+
+/* ===== Vocabulary (concepts), Upper Ontology (relations), and Calc Library (Alation) =====
+   Every constraint/rule/logic artifact decomposes into subject–predicate–object triples.
+   Subjects & objects resolve to CONCEPTS (domain vocabulary terms). Predicates resolve to
+   RELATIONS defined in the upper ontology (typed — math / structural / temporal / association).
+   Where an object is a computed value rather than a literal, it resolves to a governed
+   formula in CALC_LIBRARY (the system of record for which is Alation). */
+
+const CONCEPTS = [
+  { id:'c-customer', term:'Customer', kind:'entity', namespace:'core', definition:'Canonical customer entity.', owner:'Architecture', artifactRef:'core-customer' },
+  { id:'c-customer-tier', term:'Customer.tier', kind:'property', namespace:'core', parent:'c-customer', definition:'Loyalty tier assigned to the customer.', owner:'Architecture',
+    valueConstraint:{ datatype:'enum', enum:['Bronze','Silver','Gold','Platinum'], required:true } },
+  { id:'c-order', term:'Order', kind:'entity', namespace:'core', definition:'Canonical order entity.', owner:'Architecture', artifactRef:'core-order' },
+  { id:'c-order-total', term:'Order.total', kind:'property', namespace:'core', parent:'c-order', definition:'Total monetary value of the order.', owner:'Architecture',
+    valueConstraint:{ datatype:'decimal', min:0, unit:'USD', required:true } },
+  { id:'c-order-lineitems', term:'Order.lineItems', kind:'property', namespace:'core', parent:'c-order', definition:'Line items composing the order.', owner:'Architecture',
+    valueConstraint:{ datatype:'array<LineItem>', cardinality:'1..*', required:true } },
+  { id:'c-policy', term:'Policy', kind:'entity', namespace:'core', definition:'Canonical insurance policy entity.', owner:'Architecture', artifactRef:'core-policy' },
+  { id:'c-policy-startdate', term:'Policy.startDate', kind:'property', namespace:'core', parent:'c-policy', definition:'Effective start date of the policy.', owner:'Architecture',
+    valueConstraint:{ datatype:'date', required:true } },
+  { id:'c-claim', term:'Claim', kind:'entity', namespace:'claims', definition:'Claims-specific claim entity.', owner:'Claims SME Team', artifactRef:'claims-vocab-claim',
+    mapsTo:{ relation:'skos:broader', target:'core:Policy' } },
+  { id:'c-claim-amount', term:'Claim.amount', kind:'property', namespace:'claims', parent:'c-claim', definition:'Monetary amount claimed.', owner:'Claims SME Team',
+    valueConstraint:{ datatype:'decimal', min:0, unit:'USD', required:true } },
+  { id:'c-claim-filed-date', term:'Claim.filedDate', kind:'property', namespace:'claims', parent:'c-claim', definition:'Date the claim was filed.', owner:'Claims SME Team',
+    valueConstraint:{ datatype:'date', required:true } },
+  { id:'c-vehicle', term:'Vehicle', kind:'entity', namespace:'claims-auto', definition:'Vehicle entity for auto claims.', owner:'Claims SME Team', artifactRef:'claims-auto-vehicle',
+    mapsTo:{ relation:'skos:closeMatch', target:'core:Asset' } },
+  { id:'c-vehicle-repair-cost', term:'Vehicle.repairCost', kind:'property', namespace:'claims-auto', parent:'c-vehicle', definition:'Estimated cost to repair the vehicle.', owner:'Claims SME Team',
+    valueConstraint:{ datatype:'decimal', min:0, unit:'USD', required:true } },
+  { id:'c-vehicle-acv', term:'Vehicle.actualCashValue', kind:'property', namespace:'claims-auto', parent:'c-vehicle', definition:'Actual cash value of the vehicle at time of loss.', owner:'Claims SME Team',
+    valueConstraint:{ datatype:'decimal', min:0, unit:'USD', required:true } },
+  { id:'c-applicant', term:'Applicant', kind:'entity', namespace:'underwriting', definition:'Underwriting applicant entity.', owner:'Underwriting SME Team', artifactRef:'uw-vocab-applicant',
+    mapsTo:{ relation:'skos:broader', target:'core:Customer' } },
+  { id:'c-applicant-risk-score', term:'Applicant.riskScore', kind:'property', namespace:'underwriting', parent:'c-applicant', definition:'Composite risk score computed for the applicant.', owner:'Underwriting Engineering',
+    valueConstraint:{ datatype:'decimal', min:0, max:1000, required:true } }
+];
+
+const RELATIONS = [
+  { id:'r-equals', name:'equals', symbol:'=', type:'math', definition:'Equality comparison between a property value and a literal or another property.' },
+  { id:'r-gt', name:'greaterThan', symbol:'>', type:'math', definition:'Strict numeric ordering comparison.' },
+  { id:'r-gte-pct', name:'exceedsPercentOf', symbol:'>%', type:'math', definition:'Ratio comparison — subject exceeds a percentage threshold of a reference value.' },
+  { id:'r-haspart', name:'hasPart', symbol:'⊃', type:'structural', definition:'Composition relation — a whole is composed of one or more parts.' },
+  { id:'r-references', name:'references', symbol:'→', type:'structural', definition:'Referential-integrity relation — the subject must reference an existing instance of the target concept.' },
+  { id:'r-appliesTo', name:'appliesTo', symbol:'⇒', type:'association', definition:'Associates a computed value with the entity or property it modifies.' },
+  { id:'r-within', name:'withinTimeOf', symbol:'⏱', type:'temporal', definition:'Temporal ordering — an event occurs within a bounded time window of another.' }
+];
+
+const CALC_LIBRARY = [
+  { id:'calc-gold-discount', name:'Gold Tier Discount Amount', formula:'orderTotal * 0.15', version:'1.3', owner:'Finance Engineering',
+    alationId:'ALN-CALC-00842', certification:'Endorsed', lastReviewed:'2026-06-01' },
+  { id:'calc-total-loss-ratio', name:'Total Loss Ratio Threshold', formula:'repairCost / actualCashValue >= 0.75', version:'2.0', owner:'Claims Engineering',
+    alationId:'ALN-CALC-00913', certification:'Endorsed', lastReviewed:'2026-05-15' },
+  { id:'calc-risk-score', name:'Composite Risk Score', formula:'weightedSum(creditFactor, claimsHistory, territoryFactor)', version:'3.4', owner:'Underwriting Engineering',
+    alationId:'ALN-CALC-01005', certification:'Warned', lastReviewed:'2026-04-20' },
+  { id:'calc-premium', name:'Base Premium Calculation', formula:'basePremium * riskMultiplier * territoryFactor', version:'5.1', owner:'Underwriting Engineering',
+    alationId:'ALN-CALC-00711', certification:'Endorsed', lastReviewed:'2026-06-10' }
+];
+
+function findConcept(id){ return CONCEPTS.find(c=>c.id===id); }
+function findRelation(id){ return RELATIONS.find(r=>r.id===id); }
+function findCalc(id){ return CALC_LIBRARY.find(c=>c.id===id); }
+function artifactsUsing(kind, id){
+  // kind: 'subject' | 'predicate' | 'calc' — returns artifacts whose triples reference this id
+  return ARTIFACTS.filter(a=> (a.triples||[]).some(t=>{
+    if(kind==='subject') return t.subject===id || (t.object && t.object.type==='concept' && t.object.ref===id);
+    if(kind==='predicate') return t.predicate===id;
+    if(kind==='calc') return t.object && t.object.type==='calc' && t.object.ref===id;
+  }));
+}
+function formatConstraint(vc){
+  if(!vc) return '<span class="ci-na">—</span>';
+  const parts = [];
+  if(vc.datatype) parts.push(vc.datatype);
+  if(vc.enum) parts.push('['+vc.enum.join(', ')+']');
+  if(vc.min!==undefined) parts.push('min '+vc.min);
+  if(vc.max!==undefined) parts.push('max '+vc.max);
+  if(vc.unit) parts.push(vc.unit);
+  if(vc.cardinality) parts.push('cardinality '+vc.cardinality);
+  if(vc.pattern) parts.push('pattern '+vc.pattern);
+  if(vc.required) parts.push('required');
+  return parts.join(' · ');
+}
+
+/* ============================= HELPERS ============================= */
+
+function catBadge(c){ return '<span class="badge b-'+c+'">'+c.charAt(0).toUpperCase()+c.slice(1)+'</span>'; }
+function lcBadge(l){ return '<span class="badge b-'+l.toLowerCase()+'">'+l+'</span>'; }
+function ciMark(v){
+  if(v==='pass') return '<span class="ci-pass">&#10003; pass</span>';
+  if(v==='fail') return '<span class="ci-fail">&#10007; fail</span>';
+  return '<span class="ci-na">n/a</span>';
+}
+function fmtDate(d){ return d; }
+
+let state = { namespace:null, category:'all', lifecycle:'', search:'' };
+
+/* ============================= NAV ============================= */
+document.querySelectorAll('.navitem').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('sec-'+el.dataset.section).classList.add('active');
+  });
+});
+function activateSubtab(el){
+  const scope = el.closest('.section') || document;
+  scope.querySelectorAll('.subtab').forEach(n=>n.classList.remove('active'));
+  scope.querySelectorAll('.subpanel').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sub-'+el.dataset.sub).classList.add('active');
+}
+document.querySelectorAll('.subtab').forEach(el=>{
+  el.addEventListener('click', ()=> activateSubtab(el));
+});
+
+/* ============================= OVERVIEW ============================= */
+function renderOverview(){
+  const total = ARTIFACTS.length;
+  const released = ARTIFACTS.filter(a=>a.lifecycle==='Released').length;
+  const domainsCount = DOMAINS.length;
+  const subCount = DOMAINS.reduce((n,d)=>n+d.subdomains.length,0);
+  const constraintsWithMapping = ARTIFACTS.filter(a=>a.category==='constraint' && a.namespace!=='core');
+  const mapped = constraintsWithMapping.filter(a=>a.mapping).length;
+  const mappingCoverage = constraintsWithMapping.length ? Math.round(100*mapped/constraintsWithMapping.length) : 100;
+  const ciFailures = ARTIFACTS.filter(a=>Object.values(a.ci).includes('fail')).length;
+
+  const cards = [
+    {val:total, lbl:'Total artifacts'},
+    {val:domainsCount+' / '+subCount, lbl:'Domains / sub-domains'},
+    {val:released+' ('+Math.round(100*released/total)+'%)', lbl:'Released'},
+    {val:mappingCoverage+'%', lbl:'Domain mapping coverage'},
+    {val:ciFailures, lbl:'Open CI failures'}
+  ];
+  document.getElementById('ov-cards').innerHTML = cards.map(c=>
+    '<div class="metric-card"><div class="val">'+c.val+'</div><div class="lbl">'+c.lbl+'</div></div>').join('');
+
+  const events = [];
+  ARTIFACTS.forEach(a=>a.history.forEach(h=>events.push({...h, art:a.name, ns:nsLabel(a.namespace)})));
+  events.sort((a,b)=> new Date(b.date) - new Date(a.date));
+  document.getElementById('ov-activity').innerHTML = events.slice(0,8).map(e=>
+    '<div class="tl-item"><div class="tdate">'+e.date+' · '+e.ns+'</div><div class="tevent">'+e.art+' — '+e.event+'</div><div class="tactor">'+e.actor+'</div></div>'
+  ).join('');
+}
+
+/* ============================= EXPLORER ============================= */
+function renderTree(){
+  let html = '<div class="tree-node'+(state.namespace===null?' active':'')+'" data-ns="">All namespaces <span class="tree-count">'+ARTIFACTS.length+'</span></div>';
+  DOMAINS.forEach(d=>{
+    const count = ARTIFACTS.filter(a=>a.namespace===d.id).length;
+    html += '<div class="tree-node'+(state.namespace===d.id?' active':'')+'" data-ns="'+d.id+'">'+d.name+' <span class="tree-count">'+count+'</span></div>';
+    d.subdomains.forEach(s=>{
+      const sc = ARTIFACTS.filter(a=>a.namespace===s.id).length;
+      html += '<div class="tree-node tree-sub'+(state.namespace===s.id?' active':'')+'" data-ns="'+s.id+'">'+s.name+' <span class="tree-count">'+sc+'</span></div>';
+    });
+  });
+  document.getElementById('exp-tree').innerHTML = html;
+  document.querySelectorAll('#exp-tree .tree-node').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.namespace = el.dataset.ns || null; renderTree(); renderExplorerList(); });
+  });
+}
+function renderCatFilter(){
+  const cats = [['all','All'],['constraint','Constraints'],['rule','Rules'],['logic','Logic']];
+  document.getElementById('exp-cat-filter').innerHTML = cats.map(c=>
+    '<div class="chip'+(state.category===c[0]?' active':'')+'" data-cat="'+c[0]+'">'+c[1]+'</div>').join('');
+  document.querySelectorAll('#exp-cat-filter .chip').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.category = el.dataset.cat; renderCatFilter(); renderExplorerList(); });
+  });
+}
+function renderExplorerList(){
+  let list = ARTIFACTS.filter(a=>{
+    if(state.namespace && a.namespace!==state.namespace) return false;
+    if(state.category!=='all' && a.category!==state.category) return false;
+    const lf = document.getElementById('exp-lifecycle-filter').value;
+    if(lf && a.lifecycle!==lf) return false;
+    const q = document.getElementById('exp-search').value.trim().toLowerCase();
+    if(q && !a.name.toLowerCase().includes(q)) return false;
+    return true;
+  });
+  document.getElementById('exp-list').innerHTML = list.map(a=>
+    '<div class="artifact-item" data-id="'+a.id+'"><div class="left"><strong>'+a.name+'</strong><div class="meta">'+nsLabel(a.namespace)+' · v'+a.version+' · '+a.owner+'</div></div>'+
+    '<div class="right">'+catBadge(a.category)+lcBadge(a.lifecycle)+'</div></div>'
+  ).join('') || '<p style="color:var(--muted);">No artifacts match the current filters.</p>';
+  document.querySelectorAll('#exp-list .artifact-item').forEach(el=>{
+    el.addEventListener('click', ()=> openDetail(el.dataset.id));
+  });
+}
+
+function openDetail(id){
+  const a = ARTIFACTS.find(x=>x.id===id);
+  if(!a) return;
+  let html = '<h3>'+a.name+'</h3><p style="color:var(--muted);margin-top:0;">'+nsLabel(a.namespace)+' · owned by '+a.owner+'</p>';
+  html += '<div>'+catBadge(a.category)+' '+lcBadge(a.lifecycle)+'</div>';
+  html += '<div class="kv">'+
+    '<div class="k">Version</div><div>'+a.version+'</div>'+
+    '<div class="k">Last updated</div><div>'+a.updated+'</div>'+
+    '<div class="k">Description</div><div>'+a.description+'</div>';
+  if(a.mapping){
+    html += '<div class="k">Mapping</div><div>'+a.mapping.relation+' &rarr; '+a.mapping.target+' <br><span style="color:var(--muted);font-size:11.5px;">'+a.mapping.status+'</span></div>';
+  }
+  html += '<div class="k">CI checks</div><div>Lint: '+ciMark(a.ci.lint)+' &nbsp; Test: '+ciMark(a.ci.test)+' &nbsp; Diff: '+ciMark(a.ci.diff)+' &nbsp; Closure: '+ciMark(a.ci.closure)+'</div>';
+  html += '</div>';
+  html += '<h4>Lineage — subjects, predicates &amp; objects</h4>';
+  if(a.triples && a.triples.length){
+    html += '<table class="lineage-table"><thead><tr><th>Subject</th><th>Predicate</th><th>Object</th></tr></thead><tbody>';
+    a.triples.forEach(t=>{ html += tripleRow(t, a.id); });
+    html += '</tbody></table>';
+    html += '<p style="color:var(--muted);font-size:11.5px;margin-top:8px;">Click any term to see its full definition, value constraint, or — for calculations — its governing entry in Alation.</p>';
+  } else {
+    html += '<p style="color:var(--muted);font-size:12.5px;">No subject/predicate/object lineage recorded yet for this artifact.</p>';
+  }
+  html += '<button class="linkbtn" onclick="closeModal();jumpTo(\'lifecycle\',\''+a.id+'\')">View lifecycle</button>';
+  if(a.diff) html += '<button class="linkbtn secondary" onclick="closeModal();jumpTo(\'diffmap\',\''+a.id+'\',\'diff\')">View diff</button>';
+  if(a.mapping) html += '<button class="linkbtn secondary" onclick="closeModal();jumpTo(\'diffmap\',\''+a.id+'\',\'mapping\')">View mapping</button>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('active');
+}
+
+function tripleRow(t, backId){
+  const subj = findConcept(t.subject);
+  const pred = findRelation(t.predicate);
+  const subjHtml = subj ? '<span class="clickable-term" onclick="openConceptDetail(\''+subj.id+'\',\''+backId+'\')">'+subj.term+'</span>' : t.subject;
+  const predHtml = pred ? '<span class="clickable-term" onclick="openRelationDetail(\''+pred.id+'\',\''+backId+'\')">'+pred.name+' ('+pred.symbol+')</span> <span class="badge b-'+pred.type+'">'+pred.type+'</span>' : t.predicate;
+  let objHtml = '';
+  if(t.object.type==='literal'){
+    objHtml = '<strong>'+t.object.value+'</strong>' + (t.object.constraint ? '<br><span style="color:var(--muted);font-size:11px;">constraint: '+formatConstraint(t.object.constraint)+'</span>' : '');
+  } else if(t.object.type==='concept'){
+    const oc = findConcept(t.object.ref);
+    objHtml = oc ? '<span class="clickable-term" onclick="openConceptDetail(\''+oc.id+'\',\''+backId+'\')">'+oc.term+'</span>' : t.object.ref;
+    if(t.object.note) objHtml += '<br><span style="color:var(--muted);font-size:11px;">'+t.object.note+'</span>';
+  } else if(t.object.type==='calc'){
+    const cc = findCalc(t.object.ref);
+    objHtml = cc ? '<span class="clickable-term" onclick="openCalcDetail(\''+cc.id+'\',\''+backId+'\')">'+cc.name+'</span> <span class="badge b-'+(cc.certification==='Endorsed'?'endorsed':(cc.certification==='Warned'?'warned':'deprecatedcert'))+'">'+cc.certification+'</span>' : t.object.ref;
+  }
+  return '<tr class="lineage-row"><td>'+subjHtml+'</td><td>'+predHtml+'</td><td>'+objHtml+'</td></tr>';
+}
+
+function usedInList(list){
+  if(!list.length) return '<div class="used-in-list">Not referenced by any artifact’s lineage yet.</div>';
+  return '<div class="used-in-list">Used by: '+list.map(a=>'<a onclick="openDetail(\''+a.id+'\')">'+a.name+'</a>').join(', ')+'</div>';
+}
+
+function openConceptDetail(id, backId){
+  const c = findConcept(id);
+  if(!c) return;
+  let html = '<h3>'+c.term+'</h3><p style="color:var(--muted);margin-top:0;">'+(c.kind==='entity'?'Entity concept':'Property concept')+' · '+nsLabel(c.namespace)+' · owned by '+c.owner+'</p>';
+  html += '<div class="kv"><div class="k">Definition</div><div>'+c.definition+'</div>';
+  if(c.parent){ const p = findConcept(c.parent); html += '<div class="k">Parent entity</div><div><span class="clickable-term" onclick="openConceptDetail(\''+p.id+'\',\''+(backId||'')+'\')">'+p.term+'</span></div>'; }
+  if(c.valueConstraint){ html += '<div class="k">Value constraint</div><div>'+formatConstraint(c.valueConstraint)+'</div>'; }
+  if(c.mapsTo){ html += '<div class="k">Maps to Core</div><div>'+c.mapsTo.relation+' &rarr; '+c.mapsTo.target+'</div>'; }
+  if(c.artifactRef){ html += '<div class="k">Defined by</div><div><a style="color:var(--navy);cursor:pointer;" onclick="closeModal();openDetail(\''+c.artifactRef+'\')">'+ARTIFACTS.find(a=>a.id===c.artifactRef).name+'</a></div>'; }
+  html += '</div>';
+  html += usedInList(artifactsUsing('subject', c.id));
+  if(backId) html += '<button class="linkbtn secondary" onclick="openDetail(\''+backId+'\')">&larr; Back to artifact</button>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('active');
+}
+
+function openRelationDetail(id, backId){
+  const r = findRelation(id);
+  if(!r) return;
+  let html = '<h3>'+r.name+' <span style="color:var(--muted);">('+r.symbol+')</span></h3>';
+  html += '<div><span class="badge b-'+r.type+'">'+r.type+'</span></div>';
+  html += '<div class="kv"><div class="k">Definition</div><div>'+r.definition+'</div></div>';
+  html += usedInList(artifactsUsing('predicate', r.id));
+  if(backId) html += '<button class="linkbtn secondary" onclick="openDetail(\''+backId+'\')">&larr; Back to artifact</button>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('active');
+}
+
+function openCalcDetail(id, backId){
+  const c = findCalc(id);
+  if(!c) return;
+  let html = '<h3>'+c.name+'</h3><p style="color:var(--muted);margin-top:0;">Governed in Alation — not embedded inline in application code.</p>';
+  html += '<div class="codebox">'+c.formula+'</div>';
+  html += '<div class="kv">'+
+    '<div class="k">Version</div><div>'+c.version+'</div>'+
+    '<div class="k">Owner</div><div>'+c.owner+'</div>'+
+    '<div class="k">Certification</div><div><span class="badge b-'+(c.certification==='Endorsed'?'endorsed':(c.certification==='Warned'?'warned':'deprecatedcert'))+'">'+c.certification+'</span></div>'+
+    '<div class="k">Last reviewed</div><div>'+c.lastReviewed+'</div>'+
+    '<div class="k">Alation ID</div><div><span class="alation-id">'+c.alationId+'</span></div>'+
+    '</div>';
+  html += usedInList(artifactsUsing('calc', c.id));
+  if(backId) html += '<button class="linkbtn secondary" onclick="openDetail(\''+backId+'\')">&larr; Back to artifact</button>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('active');
+}
+
+/* ---- Vocabulary / Upper Ontology / Calc Library catalog panels ---- */
+let vocabFilter = '';
+function renderVocabulary(){
+  document.getElementById('vocab-kind-filter').innerHTML = ['', 'entity','property'].map(k=>
+    '<div class="chip'+(vocabFilter===k?' active':'')+'" data-k="'+k+'">'+(k||'All kinds')+'</div>').join('');
+  document.querySelectorAll('#vocab-kind-filter .chip').forEach(el=>el.addEventListener('click', ()=>{ vocabFilter = el.dataset.k; renderVocabulary(); }));
+  const rows = CONCEPTS.filter(c=> !vocabFilter || c.kind===vocabFilter);
+  document.querySelector('#vocab-table tbody').innerHTML = rows.map(c=>
+    '<tr><td><span class="clickable-term" onclick="openConceptDetail(\''+c.id+'\')">'+c.term+'</span></td>'+
+    '<td>'+c.kind+'</td><td>'+nsLabel(c.namespace)+'</td><td>'+c.definition+'</td>'+
+    '<td>'+(c.valueConstraint?formatConstraint(c.valueConstraint):'<span class="ci-na">—</span>')+'</td>'+
+    '<td>'+(c.mapsTo?c.mapsTo.relation+' &rarr; '+c.mapsTo.target:'<span class="ci-na">—</span>')+'</td></tr>'
+  ).join('');
+}
+
+let relFilter = '';
+function renderRelations(){
+  document.getElementById('rel-type-filter').innerHTML = ['','math','structural','temporal','association'].map(t=>
+    '<div class="chip'+(relFilter===t?' active':'')+'" data-t="'+t+'">'+(t||'All types')+'</div>').join('');
+  document.querySelectorAll('#rel-type-filter .chip').forEach(el=>el.addEventListener('click', ()=>{ relFilter = el.dataset.t; renderRelations(); }));
+  const rows = RELATIONS.filter(r=> !relFilter || r.type===relFilter);
+  document.querySelector('#rel-table tbody').innerHTML = rows.map(r=>
+    '<tr><td><span class="clickable-term" onclick="openRelationDetail(\''+r.id+'\')">'+r.name+'</span></td>'+
+    '<td style="font-size:16px;">'+r.symbol+'</td><td><span class="badge b-'+r.type+'">'+r.type+'</span></td><td>'+r.definition+'</td></tr>'
+  ).join('');
+}
+
+let calcFilter = '';
+function renderCalcLibrary(){
+  document.getElementById('calc-cert-filter').innerHTML = ['','Endorsed','Warned','Deprecated'].map(c=>
+    '<div class="chip'+(calcFilter===c?' active':'')+'" data-c="'+c+'">'+(c||'All certifications')+'</div>').join('');
+  document.querySelectorAll('#calc-cert-filter .chip').forEach(el=>el.addEventListener('click', ()=>{ calcFilter = el.dataset.c; renderCalcLibrary(); }));
+  const rows = CALC_LIBRARY.filter(c=> !calcFilter || c.certification===calcFilter);
+  document.querySelector('#calc-table tbody').innerHTML = rows.map(c=>
+    '<tr><td><span class="clickable-term" onclick="openCalcDetail(\''+c.id+'\')">'+c.name+'</span></td>'+
+    '<td><code style="font-size:11.5px;">'+c.formula+'</code></td><td>v'+c.version+'</td><td>'+c.owner+'</td>'+
+    '<td><span class="badge b-'+(c.certification==='Endorsed'?'endorsed':(c.certification==='Warned'?'warned':'deprecatedcert'))+'">'+c.certification+'</span></td>'+
+    '<td><span class="alation-id">'+c.alationId+'</span></td></tr>'
+  ).join('');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('active'); }
+document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+
+function jumpTo(section, artId, subtab){
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelector('.navitem[data-section="'+section+'"]').classList.add('active');
+  document.getElementById('sec-'+section).classList.add('active');
+  if(section==='lifecycle'){ document.getElementById('lc-select').value = artId; renderLifecycle(); }
+  if(section==='diffmap'){
+    if(subtab==='mapping'){
+      activateSubtab(document.querySelector('#sec-diffmap .subtab[data-sub="mapping"]'));
+      document.getElementById('map-select').value = artId; renderMapping();
+    } else {
+      activateSubtab(document.querySelector('#sec-diffmap .subtab[data-sub="diff"]'));
+      document.getElementById('diff-select').value = artId; renderDiff();
+    }
+  }
+  if(section==='explorer' && subtab){
+    activateSubtab(document.querySelector('#sec-explorer .subtab[data-sub="'+subtab+'"]'));
+  }
+}
+
+/* ============================= LIFECYCLE ============================= */
+function populateLcSelect(){
+  const sel = document.getElementById('lc-select');
+  sel.innerHTML = ARTIFACTS.map(a=>'<option value="'+a.id+'">'+a.name+' ('+nsLabel(a.namespace)+')</option>').join('');
+  sel.addEventListener('change', renderLifecycle);
+}
+function renderLifecycle(){
+  const a = ARTIFACTS.find(x=>x.id===document.getElementById('lc-select').value) || ARTIFACTS[0];
+  const curIdx = LIFECYCLE_STAGES.indexOf(a.lifecycle);
+  document.getElementById('lc-stepper').innerHTML = LIFECYCLE_STAGES.map((s,i)=>{
+    let cls = i<curIdx ? 'done' : (i===curIdx ? 'current' : '');
+    return '<div class="step '+cls+'"><div class="dot">'+(i+1)+'</div><div class="label">'+s+'</div></div>';
+  }).join('');
+  document.getElementById('lc-gov').innerHTML = LIFECYCLE_STAGES.map(s=>{
+    const g = GOVERNANCE_INFO[s];
+    return '<div class="gov-cell"><strong>'+s+'</strong>Reviewer: '+g.who+'<br>'+g.what+'<br><em>CI: '+g.ci+'</em></div>';
+  }).join('');
+  document.getElementById('lc-history').innerHTML = a.history.map(h=>
+    '<div class="tl-item"><div class="tdate">'+h.date+'</div><div class="tevent">'+h.event+'</div><div class="tactor">'+h.actor+'</div></div>'
+  ).join('') || '<p style="color:var(--muted);">No history recorded.</p>';
+}
+
+/* ============================= DIFF ============================= */
+function populateDiffSelect(){
+  const withDiff = ARTIFACTS.filter(a=>a.diff);
+  const sel = document.getElementById('diff-select');
+  sel.innerHTML = withDiff.map(a=>'<option value="'+a.id+'">'+a.name+' ('+nsLabel(a.namespace)+')</option>').join('');
+  sel.addEventListener('change', renderDiff);
+}
+function renderDiff(){
+  const withDiff = ARTIFACTS.filter(a=>a.diff);
+  const a = withDiff.find(x=>x.id===document.getElementById('diff-select').value) || withDiff[0];
+  const worst = a.diff.changes.reduce((w,c)=>{
+    const rank = {MAJOR:3,MINOR:2,PATCH:1};
+    return rank[c.severity]>rank[w] ? c.severity : w;
+  }, 'PATCH');
+  const declared = a.version.split('.')[0] !== a.diff.from.split('.')[0] ? 'MAJOR' :
+                   (a.version.split('.')[1] !== a.diff.from.split('.')[1] ? 'MINOR' : 'PATCH');
+  const match = declared===worst;
+  document.getElementById('diff-banner').innerHTML =
+    '<div class="banner '+(match?'ok':'warn')+'">'+(match ? '&#10003; Diff classifier: declared bump ('+declared+') matches detected severity ('+worst+').' :
+    '&#10007; Diff classifier: declared bump ('+declared+') does not match detected severity ('+worst+') — CI blocked until fixed.')+'</div>';
+  document.querySelector('#diff-table tbody').innerHTML = a.diff.changes.map(c=>
+    '<tr><td>'+c.field+'</td><td class="diff-'+(c.type==='removed'?'removed':'')+'">'+c.before+'</td><td class="diff-'+(c.type==='added'?'added':(c.type==='modified'?'modified':''))+'">'+c.after+'</td>'+
+    '<td>'+c.type+'</td><td><span class="sev-'+c.severity+'">'+c.severity+'</span></td></tr>'
+  ).join('');
+}
+
+/* ============================= MAPPING ============================= */
+function populateMapSelect(){
+  const withMap = ARTIFACTS.filter(a=>a.mapping);
+  const sel = document.getElementById('map-select');
+  sel.innerHTML = withMap.map(a=>'<option value="'+a.id+'">'+nsLabel(a.namespace)+' : '+a.name+'</option>').join('');
+  sel.addEventListener('change', renderMapping);
+}
+function renderMapping(){
+  const withMap = ARTIFACTS.filter(a=>a.mapping);
+  const a = withMap.find(x=>x.id===document.getElementById('map-select').value) || withMap[0];
+  document.getElementById('map-flow').innerHTML =
+    '<div class="map-box">'+nsLabel(a.namespace)+' : '+a.name+'</div>'+
+    '<div class="map-rel"><div class="arrow">&#8594;</div>'+a.mapping.relation+'</div>'+
+    '<div class="map-box core">'+a.mapping.target+'</div>';
+  document.getElementById('map-provenance').innerHTML =
+    '<div class="k">Owner</div><div>'+a.mapping.owner+'</div>'+
+    '<div class="k">Review status</div><div>'+a.mapping.status+'</div>'+
+    '<div class="k">Relation type</div><div>'+a.mapping.relation+' (SKOS)</div>';
+  document.querySelector('#map-registry tbody').innerHTML = MAPPING_REGISTRY.map(m=>
+    '<tr><td>'+m.term+'</td><td>'+m.relation+'</td><td>'+m.target+'</td><td>'+m.owner+'</td><td>'+m.status+'</td></tr>'
+  ).join('');
+}
+
+/* ============================= TESTING & MEASURES ============================= */
+function renderTesting(){
+  const total = ARTIFACTS.length;
+  const released = ARTIFACTS.filter(a=>a.lifecycle==='Released').length;
+  const passRate = Math.round(100*ARTIFACTS.filter(a=>!Object.values(a.ci).includes('fail')).length/total);
+  const constraintsDomain = ARTIFACTS.filter(a=>a.category==='constraint' && a.namespace!=='core');
+  const mappingCoverage = Math.round(100*constraintsDomain.filter(a=>a.mapping).length/constraintsDomain.length);
+  const deprecatedStillConsumed = ARTIFACTS.filter(a=>a.lifecycle==='Deprecated').length;
+  const failing = ARTIFACTS.filter(a=>Object.values(a.ci).includes('fail')).length;
+  const lineageCoverage = Math.round(100*ARTIFACTS.filter(a=>a.triples&&a.triples.length).length/total);
+
+  document.getElementById('tm-cards').innerHTML = [
+    {val:released, lbl:'Released specs'},
+    {val:passRate+'%', lbl:'Overall CI pass rate'},
+    {val:mappingCoverage+'%', lbl:'Mapping coverage (domain constraints)'},
+    {val:lineageCoverage+'%', lbl:'Lineage coverage (subject/predicate/object)'},
+    {val:deprecatedStillConsumed, lbl:'Deprecated, still served'},
+    {val:failing, lbl:'Artifacts with a failing check'}
+  ].map(c=>'<div class="metric-card"><div class="val">'+c.val+'</div><div class="lbl">'+c.lbl+'</div></div>').join('');
+
+  // stage chart
+  const stageCounts = LIFECYCLE_STAGES.map(s=>ARTIFACTS.filter(a=>a.lifecycle===s).length);
+  const maxStage = Math.max(...stageCounts,1);
+  document.getElementById('tm-chart-stage').innerHTML = LIFECYCLE_STAGES.map((s,i)=>{
+    const h = Math.round(130*stageCounts[i]/maxStage);
+    return '<div class="bar-col"><div class="bar-val">'+stageCounts[i]+'</div><div class="bar" style="height:'+Math.max(h,4)+'px;background:var(--navy)"></div><div class="bar-lbl">'+s+'</div></div>';
+  }).join('');
+
+  // domain chart
+  const domainKeys = DOMAINS.map(d=>d.id).concat(DOMAINS.flatMap(d=>d.subdomains.map(s=>s.id)));
+  const domainLabels = DOMAINS.map(d=>d.name).concat(DOMAINS.flatMap(d=>d.subdomains.map(s=>s.name)));
+  const domainCounts = domainKeys.map(k=>ARTIFACTS.filter(a=>a.namespace===k).length);
+  const maxDom = Math.max(...domainCounts,1);
+  document.getElementById('tm-chart-domain').innerHTML = domainKeys.map((k,i)=>{
+    const h = Math.round(130*domainCounts[i]/maxDom);
+    return '<div class="bar-col"><div class="bar-val">'+domainCounts[i]+'</div><div class="bar" style="height:'+Math.max(h,4)+'px;background:var(--gold)"></div><div class="bar-lbl">'+domainLabels[i]+'</div></div>';
+  }).join('');
+
+  // filter dropdown
+  const filterSel = document.getElementById('tm-filter');
+  if(filterSel.options.length<=1){
+    const opts = [['','All namespaces']].concat(domainKeys.map((k,i)=>[k,domainLabels[i]]));
+    filterSel.innerHTML = opts.map(o=>'<option value="'+o[0]+'">'+o[1]+'</option>').join('');
+    filterSel.addEventListener('change', renderCiTable);
+  }
+  renderCiTable();
+}
+function renderCiTable(){
+  const ns = document.getElementById('tm-filter').value;
+  const rows = ARTIFACTS.filter(a=> !ns || a.namespace===ns);
+  document.querySelector('#tm-table tbody').innerHTML = rows.map(a=>
+    '<tr><td>'+a.name+'</td><td>'+nsLabel(a.namespace)+'</td><td>'+catBadge(a.category)+'</td>'+
+    '<td>'+ciMark(a.ci.lint)+'</td><td>'+ciMark(a.ci.test)+'</td><td>'+ciMark(a.ci.diff)+'</td><td>'+ciMark(a.ci.closure)+'</td></tr>'
+  ).join('');
+}
+
+/* ============================= COMPONENTS ============================= */
+let compFilter = { type:'', phase:'' };
+function renderComponents(){
+  const types = ['','Microservice','Agent','Ontology','Mapping Service','Monitoring'];
+  document.getElementById('comp-type-filter').innerHTML = types.map(t=>
+    '<div class="chip'+(compFilter.type===t?' active':'')+'" data-t="'+t+'">'+(t||'All types')+'</div>').join('');
+  const phases = ['','Design-time','Run-time'];
+  document.getElementById('comp-phase-filter').innerHTML = phases.map(p=>
+    '<div class="chip'+(compFilter.phase===p?' active':'')+'" data-p="'+p+'">'+(p||'All phases')+'</div>').join('');
+  document.querySelectorAll('#comp-type-filter .chip').forEach(el=>el.addEventListener('click', ()=>{ compFilter.type=el.dataset.t; renderComponents(); }));
+  document.querySelectorAll('#comp-phase-filter .chip').forEach(el=>el.addEventListener('click', ()=>{ compFilter.phase=el.dataset.p; renderComponents(); }));
+
+  const rows = COMPONENTS.filter(c=> (!compFilter.type||c.type===compFilter.type) && (!compFilter.phase||c.phase===compFilter.phase) );
+  document.querySelector('#comp-table tbody').innerHTML = rows.map(c=>
+    '<tr><td><strong>'+c.name+'</strong></td><td>'+c.type+'</td><td>'+(c.phase==='Design-time'?'<span class="badge b-rule">Design-time</span>':'<span class="badge b-logic">Run-time</span>')+'</td><td>'+c.desc+'</td></tr>'
+  ).join('');
+}
+
+/* ============================= INIT ============================= */
+document.getElementById('exp-lifecycle-filter').addEventListener('change', renderExplorerList);
+document.getElementById('exp-search').addEventListener('input', renderExplorerList);
+
+renderOverview();
+renderTree();
+renderCatFilter();
+renderExplorerList();
+populateLcSelect();
+renderLifecycle();
+populateDiffSelect();
+renderDiff();
+populateMapSelect();
+renderMapping();
+renderTesting();
+renderComponents();
+renderVocabulary();
+renderRelations();
+renderCalcLibrary();
+</script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SSOT Governance Dashboard — Prototype</title>
+<title>Rules, Constraints, & Logic for Processes and Policies — Prototype</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
@@ -104,7 +104,8 @@
   .step.current .dot{background:var(--gold);border-color:var(--gold);color:#fff;box-shadow:0 0 0 4px var(--gold-bg);}
   .step .label{font-size:12px;font-weight:600;color:var(--text);}
   .gov-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px;}
-  .gov-cell{background:var(--gray-bg);border-radius:8px;padding:12px;font-size:11.5px;color:var(--text);}
+  .gov-cell{background:var(--gray-bg);border-radius:8px;padding:12px;font-size:11.5px;color:var(--text);transition:background .12s;}
+  .gov-cell:hover{background:var(--navy-bg);}
   .gov-cell strong{display:block;color:var(--navy);font-size:12px;margin-bottom:4px;}
   .timeline{border-left:2px solid var(--border);margin-left:8px;padding-left:18px;}
   .tl-item{position:relative;padding-bottom:16px;}
@@ -192,9 +193,10 @@
 <body>
 <div class="app">
   <div class="sidebar">
-    <h1>SSOT Governance</h1>
+    <h1>Rules, Constraints, &amp; Logic for Processes and Policies</h1>
     <div class="sub">Prototype dashboard — synthetic data</div>
     <div class="navitem active" data-section="overview"><span class="navicon">&#9673;</span> Overview</div>
+    <div class="navitem" data-section="dashboard"><span class="navicon">&#9636;</span> Dashboard</div>
     <div class="navitem" data-section="explorer"><span class="navicon">&#9776;</span> Explorer</div>
     <div class="navitem" data-section="depmap"><span class="navicon">&#9737;</span> Dependency Map</div>
     <div class="navitem" data-section="lifecycle"><span class="navicon">&#8635;</span> Lifecycle &amp; Governance</div>
@@ -202,14 +204,61 @@
     <div class="navitem" data-section="testing"><span class="navicon">&#10003;</span> Testing &amp; Measures</div>
     <div class="navitem" data-section="skos"><span class="navicon">&#10022;</span> SKOS Vocabulary</div>
     <div class="navitem" data-section="components"><span class="navicon">&#9638;</span> Components</div>
-    <div class="sidebar-foot">Illustrates the SSOT / execution-translation architecture. All data below is mock, for demo purposes.</div>
+    <div class="sidebar-foot">Illustrates the Single Source of Truth (SSOT) / execution-translation architecture. All data below is mock, for demo purposes.</div>
   </div>
 
   <div class="main">
 
-    <!-- OVERVIEW -->
+    <!-- OVERVIEW (explainer) -->
     <div class="section active" id="sec-overview">
-      <div class="topbar"><div><h2>Overview</h2><p>Enterprise-wide view across Core and all domains / sub-domains.</p></div></div>
+      <div class="topbar"><div><h2>Overview</h2><p>What a Single Source of Truth is, how to use this system, and the value it provides.</p></div></div>
+
+      <div class="card">
+        <h3>What is a Single Source of Truth (SSOT)?</h3>
+        <p>Most enterprises end up with the same rule implemented three different ways — once in a stored procedure, once in a rules-engine UI, once in a service's if-statements — each drifting further from the others with every change. An SSOT fixes this by giving every constraint, rule, and computation exactly <strong>one</strong> place where it is defined: a version-controlled, declarative specification. Nothing downstream — a microservice, a rules engine, a graph store — is allowed to define its own copy. Each one consumes a generated artifact compiled from that single spec.</p>
+        <p style="color:var(--muted);font-size:12.5px;">This tool is named for what it governs, not for the pattern behind it — "Rules, Constraints, &amp; Logic for Processes and Policies" is the plain-English name; "SSOT" is the architectural pattern that makes it trustworthy.</p>
+      </div>
+
+      <div class="card">
+        <h3>How it should be used</h3>
+        <ol style="padding-left:20px;font-size:13.5px;line-height:1.9;">
+          <li><strong>Classify before you author.</strong> Decide whether what you're capturing is a <em>Constraint</em> (what must always be true), a <em>Rule</em> (a policy decision), or <em>Logic</em> (a procedural computation). Each has a right home — see the legend on the Dashboard.</li>
+          <li><strong>Author in the SSOT repository, never downstream.</strong> Constraints and rules are edited through the Explorer's authoring surfaces; nobody edits a rules-engine UI or a production database directly.</li>
+          <li><strong>Everything passes through governance.</strong> A change moves through Draft → Candidate → Released, gated by lint, scenario tests, and an automated diff classifier — see Lifecycle &amp; Governance.</li>
+          <li><strong>Domains extend Core, they don't redefine it.</strong> Domain-specific concepts compose Core concepts and declare their relationship explicitly via the mapping layer — see the Dependency Map and SKOS Vocabulary.</li>
+          <li><strong>Trace lineage before you trust a number.</strong> Any rule's subjects, predicates, and calculations resolve back to a governed concept or an Alation-certified formula — see each artifact's Lineage tab in the Explorer.</li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <h3>The value it provides</h3>
+        <div class="cards-row" style="margin-top:6px;">
+          <div class="metric-card"><div class="lbl" style="font-size:13px;color:var(--text);"><strong>No logic drift.</strong> One definition compiles to every runtime, so implementations cannot silently diverge.</div></div>
+          <div class="metric-card"><div class="lbl" style="font-size:13px;color:var(--text);"><strong>Governed self-service.</strong> Domain SMEs maintain their own rules and constraints without waiting on a platform team — and without being able to break Core.</div></div>
+          <div class="metric-card"><div class="lbl" style="font-size:13px;color:var(--text);"><strong>Full auditability.</strong> Every change, approval, and version is traceable — who changed what, when, and why it passed or failed CI.</div></div>
+          <div class="metric-card"><div class="lbl" style="font-size:13px;color:var(--text);"><strong>Safe legacy migration.</strong> A strangler-fig Decision API lets modern and legacy logic coexist behind one interface during a phased migration.</div></div>
+          <div class="metric-card"><div class="lbl" style="font-size:13px;color:var(--text);"><strong>Semantic interoperability.</strong> A SKOS mapping layer lets domains extend meaning without duplicating or silently conflicting with Core concepts.</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Where to go next</h3>
+        <div class="legend-row" style="flex-direction:column;align-items:flex-start;gap:10px;">
+          <div><a onclick="navigateTo('dashboard')" style="color:var(--navy);cursor:pointer;font-weight:600;">Dashboard</a> — live rollup metrics and recent activity across Core and every domain.</div>
+          <div><a onclick="navigateTo('explorer')" style="color:var(--navy);cursor:pointer;font-weight:600;">Explorer</a> — browse constraints, rules, and logic, plus the vocabulary, upper ontology, and calc library each one is built from.</div>
+          <div><a onclick="navigateTo('depmap')" style="color:var(--navy);cursor:pointer;font-weight:600;">Dependency Map</a> — the directional, color-coded causal graph between artifacts.</div>
+          <div><a onclick="navigateTo('lifecycle')" style="color:var(--navy);cursor:pointer;font-weight:600;">Lifecycle &amp; Governance</a> — the Draft → Retired pipeline and who reviews what at each step.</div>
+          <div><a onclick="navigateTo('diffmap')" style="color:var(--navy);cursor:pointer;font-weight:600;">Diff &amp; Mapping</a> — automated severity classification and the Core/domain SKOS bridge.</div>
+          <div><a onclick="navigateTo('testing')" style="color:var(--navy);cursor:pointer;font-weight:600;">Testing &amp; Measures</a> — lint, scenario test, and diff-classifier results per artifact.</div>
+          <div><a onclick="navigateTo('skos')" style="color:var(--navy);cursor:pointer;font-weight:600;">SKOS Vocabulary</a> — the governed concepts as a standards-based concept scheme.</div>
+          <div><a onclick="navigateTo('components')" style="color:var(--navy);cursor:pointer;font-weight:600;">Components</a> — every microservice, agent, ontology, mapping service, and monitor that implements this architecture.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DASHBOARD (metrics — formerly Overview) -->
+    <div class="section" id="sec-dashboard">
+      <div class="topbar"><div><h2>Dashboard</h2><p>Enterprise-wide view across Core and all domains / sub-domains.</p></div></div>
       <div class="cards-row" id="ov-cards"></div>
       <div class="card">
         <h3>Logic classification legend</h3>
@@ -584,11 +633,51 @@ const ARTIFACTS = [
 const LIFECYCLE_STAGES = ['Draft','Candidate','Released','Deprecated','Retired'];
 
 const GOVERNANCE_INFO = {
-  'Draft':      { who:'Author (SME or Engineer)', what:'Spec authored/edited locally or on a feature branch.', ci:'None yet.' },
-  'Candidate':  { who:'CODEOWNERS-routed reviewer(s)', what:'PR open — diff classifier runs, lint & scenario tests execute.', ci:'Diff classifier, linter, scenario tests.' },
-  'Released':   { who:'Domain SME (+ Architecture if /core)', what:'Published to the versioned artifact registry as immutable.', ci:'All checks passed; deployment gate cleared.' },
-  'Deprecated': { who:'Owning team sets sunset date', what:'Still served, but flagged; consumers should migrate.', ci:'Consumer scan for pinned versions.' },
-  'Retired':    { who:'CI Bot (automated)', what:'Removed from the registry once the sunset date passes.', ci:'Pinned consumers fail their build.' }
+  'Draft': {
+    who:'Author (SME or Engineer)', what:'Spec authored/edited locally or on a feature branch.', ci:'None yet.',
+    entry:'A new constraint, rule, or logic need is identified — either net-new or a change to a Released artifact.',
+    exit:'A pull request is opened against the SSOT repository, moving the artifact to Candidate.',
+    checks:['None — Draft is not yet visible to CI.'],
+    approvers:'None required. The author works freely on their own branch.',
+    duration:'Unbounded — typically hours to a few days.',
+    pitfalls:['Editing directly in a rules-engine UI or production database instead of the SSOT repo bypasses this stage entirely — see “Orphaned Rule Authoring” in Key Pitfalls.']
+  },
+  'Candidate': {
+    who:'CODEOWNERS-routed reviewer(s)', what:'PR open — diff classifier runs, lint & scenario tests execute.', ci:'Diff classifier, linter, scenario tests.',
+    entry:'A PR is opened. CODEOWNERS routes it: changes under /core require Architecture review; changes under /domains/* require the owning domain SME.',
+    exit:'All required checks pass and the reviewer(s) approve — the artifact is published as Released. Any failing check blocks the merge.',
+    checks:['Lint (schema validity / DMN static analysis)','Scenario / unit tests against synthetic datasets','Diff classifier — declared SemVer bump must match detected change severity','Ontology closure check (constraints only) — every domain term must map to a Core root'],
+    approvers:'Domain SME for /domains/* changes; Architecture & Governance for /core changes; both for mapping-file changes.',
+    duration:'Typically 1–3 business days.',
+    pitfalls:['A declared MINOR bump on an actually-breaking change fails the diff classifier — see the Diff Viewer for real examples.','Overlapping DMN rule rows fail lint — see the Mold Exclusion Rule example under Testing & Measures.']
+  },
+  'Released': {
+    who:'Domain SME (+ Architecture if /core)', what:'Published to the versioned artifact registry as immutable.', ci:'All checks passed; deployment gate cleared.',
+    entry:'Candidate passes every required check and is approved by the routed reviewer(s).',
+    exit:'A newer version supersedes it (back to Draft/Candidate for the next version), or it is explicitly deprecated.',
+    checks:['Deployment gate — a final automated confirmation that the merged artifact matches what CI validated.'],
+    approvers:'No further approval needed; this stage is a publication event, not a review gate.',
+    duration:'Indefinite — this is the steady state for most artifacts.',
+    pitfalls:['Treating a Released artifact as mutable (patching it in place) breaks the immutability guarantee consumers rely on — always cut a new version instead.']
+  },
+  'Deprecated': {
+    who:'Owning team sets sunset date', what:'Still served, but flagged; consumers should migrate.', ci:'Consumer scan for pinned versions.',
+    entry:'A newer MAJOR version of the same artifact is Released, and the owning team schedules a sunset date for this one.',
+    exit:'The sunset date passes and the artifact is automatically Retired — or all consumers migrate early and the team retires it ahead of schedule.',
+    checks:['Automated consumer scan — identifies every service still pinned to this version so its owners can be notified.'],
+    approvers:'Owning team sets and can adjust the sunset date; Architecture is notified for /core artifacts given the wider blast radius.',
+    duration:'Governed by the sunset window — typically 60–90 days for domain artifacts, longer for /core.',
+    pitfalls:['Consumers that never update their declared version range silently stay on a Deprecated artifact until it is forcibly Retired — see “Deprecated, still served” on Testing & Measures.']
+  },
+  'Retired': {
+    who:'CI Bot (automated)', what:'Removed from the registry once the sunset date passes.', ci:'Pinned consumers fail their build.',
+    entry:'The Deprecated sunset date is reached with no further extension granted.',
+    exit:'Terminal state — a Retired artifact is not reactivated; a genuinely new version starts back at Draft.',
+    checks:['Build-time enforcement — any consumer still pinned to this version fails its build rather than silently running stale logic.'],
+    approvers:'None — this transition is fully automated by CI.',
+    duration:'Permanent.',
+    pitfalls:['Retiring without first confirming zero active consumers turns a governance event into an incident — the consumer scan from the Deprecated stage exists to prevent this.']
+  }
 };
 
 const MAPPING_REGISTRY = ARTIFACTS.filter(a=>a.mapping).map(a=>({
@@ -600,32 +689,224 @@ const MAPPING_REGISTRY = ARTIFACTS.filter(a=>a.mapping).map(a=>({
 }));
 
 const COMPONENTS = [
-  // Design-time
-  { name:'Schema/Constraint Authoring UI', type:'Microservice', phase:'Design-time', desc:'Data-dictionary-style form for SMEs to edit constraints without seeing raw JSON Schema/SHACL.' },
-  { name:'Rule Editor UI (Decision Tables)', type:'Microservice', phase:'Design-time', desc:'DMN decision-table grid editor for business rules, e.g. embedded Camunda Modeler.' },
-  { name:'Mapping Authoring UI', type:'Microservice', phase:'Design-time', desc:'SKOS bridge-file editor for relating domain terms to Core terms.' },
-  { name:'Schema Diff Classifier', type:'Agent', phase:'Design-time', desc:'Classifies each spec change as MAJOR/MINOR/PATCH automatically; blocks CI on mismatch.' },
-  { name:'Ontology Closure Checker', type:'Agent', phase:'Design-time', desc:'Walks the mapping graph; fails the build if a domain term has no path to a Core root.' },
-  { name:'DMN/OWL Linter & Validator', type:'Microservice', phase:'Design-time', desc:'Static analysis for DMN tables; semantic reasoner (e.g. HermiT) for ontology consistency.' },
-  { name:'Scenario Test Runner', type:'Microservice', phase:'Design-time', desc:'Runs rule/schema changes against synthetic datasets before merge.' },
-  { name:'CODEOWNERS Router Bot', type:'Agent', phase:'Design-time', desc:'Routes PRs to the correct reviewer(s) based on changed path (/core vs /domains/*).' },
-  { name:'Concept Search Agent', type:'Agent', phase:'Design-time', desc:'Searches Core + all domain mappings for near-duplicate concepts before a new term is created.' },
-  { name:'Code Generator / Compiler', type:'Microservice', phase:'Design-time', desc:'Compiles declarative specs into Pydantic/TS types, SHACL/OWL, and DMN/Drools XML.' },
-  { name:'SSOT Git Repository', type:'Ontology', phase:'Design-time', desc:'Central version-controlled source of truth for all constraints, rules, and mapping files.' },
-  { name:'Versioned Artifact Registry', type:'Microservice', phase:'Design-time', desc:'Immutable, versioned store of released specs; consumers pull pinned ranges from here.' },
-  // Run-time
-  { name:'Decision API (Strangler Fig Facade)', type:'Microservice', phase:'Run-time', desc:'Standardized entry point that routes decision requests to the correct backend, legacy or modern.' },
-  { name:'Rules Engine Runtime', type:'Microservice', phase:'Run-time', desc:'Executes published DMN/Drools decision tables (e.g. Camunda).' },
-  { name:'Domain Computation Services', type:'Microservice', phase:'Run-time', desc:'Procedural/algorithmic logic per domain (route optimization, premium calc, risk scoring).' },
-  { name:'Legacy Wrapper Adapters', type:'Microservice', phase:'Run-time', desc:'Wrap legacy stored procedures / rules engines behind the Decision API without rewriting them.' },
-  { name:'Ontology / Graph Store', type:'Ontology', phase:'Run-time', desc:'SHACL-validated semantic layer, reserved for genuine cross-domain reasoning needs.' },
-  { name:'Schema Registry Service (Postgres)', type:'Mapping Service', phase:'Run-time', desc:'Serves versioned JSON Schema definitions for runtime constraint validation.' },
-  { name:'Mapping Registry Service (Postgres)', type:'Mapping Service', phase:'Run-time', desc:'Serves SKOS relation lookups between domain terms and Core terms.' },
-  { name:'Version Resolution Service', type:'Microservice', phase:'Run-time', desc:'Resolves a caller’s declared policy/schema version to the correct artifact.' },
-  { name:'Deprecation / Sunset Monitor', type:'Agent', phase:'Run-time', desc:'Scans consumers still pinned to deprecated versions and alerts their owning teams.' },
-  { name:'Drift Detection Monitor', type:'Monitoring', phase:'Run-time', desc:'Compares generated artifacts across targets (code/graph/rules) to catch any divergence.' },
-  { name:'Observability & Metrics Collector', type:'Monitoring', phase:'Run-time', desc:'Aggregates CI pass rates, mapping coverage, and release velocity into the measures shown here.' },
-  { name:'Audit / Provenance Logger', type:'Monitoring', phase:'Run-time', desc:'Immutable log of every change, reviewer, and approval outcome for each artifact.' }
+  // ---- Design-time ----
+  { id:'comp-schema-ui', name:'Schema/Constraint Authoring UI', type:'Microservice', phase:'Design-time',
+    desc:'Data-dictionary-style form for SMEs to edit constraints without seeing raw JSON Schema/SHACL.',
+    status:'Live', version:'2.4.0', owner:'Platform Engineering — SME Tools',
+    builtWith:'React + TypeScript frontend; form schema driven directly off JSON Schema so the UI never drifts from the spec it edits.',
+    dependsOn:['comp-schema-registry','comp-diff-classifier'],
+    history:[
+      {date:'2025-09-12', event:'Planned — approved as part of Phase 2 (Decouple via API)', actor:'Architecture'},
+      {date:'2026-01-20', event:'v1.0.0 — first domain (Claims) onboarded', actor:'Platform Engineering'},
+      {date:'2026-05-04', event:'v2.4.0 — added inline value-constraint validation', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-rule-editor', name:'Rule Editor UI (Decision Tables)', type:'Microservice', phase:'Design-time',
+    desc:'DMN decision-table grid editor for business rules, e.g. embedded Camunda Modeler.',
+    status:'Live', version:'1.8.2', owner:'Platform Engineering — SME Tools',
+    builtWith:'Embeds the Camunda DMN Modeler web component; saves directly to the SSOT repository via a Git-backed API, never to a database.',
+    dependsOn:['comp-lint','comp-test-runner'],
+    history:[
+      {date:'2026-02-01', event:'v1.0.0 — released to Claims and Underwriting SMEs', actor:'Platform Engineering'},
+      {date:'2026-06-15', event:'v1.8.2 — added overlap/completeness warnings inline while editing', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-mapping-ui', name:'Mapping Authoring UI', type:'Microservice', phase:'Design-time',
+    desc:'SKOS bridge-file editor for relating domain terms to Core terms.',
+    status:'Live', version:'1.1.0', owner:'Platform Engineering — SME Tools',
+    builtWith:'React frontend over the Mapping Registry Service; renders skos:broader/closeMatch/exactMatch as a guided picker rather than raw Turtle.',
+    dependsOn:['comp-mapping-registry','comp-closure-checker'],
+    history:[
+      {date:'2026-04-10', event:'v1.0.0 — released alongside the Section 5 ownership model', actor:'Platform Engineering'},
+      {date:'2026-06-02', event:'v1.1.0 — added concept-search suggestions to reduce duplicate terms', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-diff-classifier', name:'Schema Diff Classifier', type:'Agent', phase:'Design-time',
+    desc:'Classifies each spec change as MAJOR/MINOR/PATCH automatically; blocks CI on mismatch.',
+    status:'Live', version:'3.0.1', owner:'Platform Engineering — Governance',
+    builtWith:'Python service; structural diff over JSON Schema/DMN ASTs, rule table driven by the change-severity policy documented in Lifecycle & Governance.',
+    dependsOn:['comp-ssot-repo'],
+    history:[
+      {date:'2025-11-02', event:'v1.0.0 — JSON Schema support only', actor:'Platform Engineering'},
+      {date:'2026-03-18', event:'v2.0.0 — added DMN decision-table diffing', actor:'Platform Engineering'},
+      {date:'2026-06-20', event:'v3.0.1 — fixed false-positive MAJOR on reordered enum values', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-closure-checker', name:'Ontology Closure Checker', type:'Agent', phase:'Design-time',
+    desc:'Walks the mapping graph; fails the build if a domain term has no path to a Core root.',
+    status:'Live', version:'1.3.0', owner:'Platform Engineering — Governance',
+    builtWith:'Graph traversal (BFS) over the Mapping Registry\'s edge table; runs as a CI step, not a standing service.',
+    dependsOn:['comp-mapping-registry'],
+    history:[
+      {date:'2026-04-10', event:'v1.0.0 — released alongside the SKOS mapping layer', actor:'Platform Engineering'},
+      {date:'2026-05-29', event:'v1.3.0 — added duplicate-concept warning using the same traversal', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-lint', name:'DMN/OWL Linter & Validator', type:'Microservice', phase:'Design-time',
+    desc:'Static analysis for DMN tables; semantic reasoner (e.g. HermiT) for ontology consistency.',
+    status:'Live', version:'2.1.0', owner:'Platform Engineering — Governance',
+    builtWith:'DMN completeness/overlap analysis in Python; HermiT reasoner invoked as a subprocess for OWL consistency checks.',
+    dependsOn:['comp-ssot-repo'],
+    history:[
+      {date:'2025-10-05', event:'v1.0.0 — DMN static analysis only', actor:'Platform Engineering'},
+      {date:'2026-02-14', event:'v2.0.0 — added HermiT-based OWL reasoning', actor:'Platform Engineering'},
+      {date:'2026-07-28', event:'Flagged overlapping rows in Mold Exclusion Rule v0.4.0', actor:'CI Bot'}
+    ] },
+  { id:'comp-test-runner', name:'Scenario Test Runner', type:'Microservice', phase:'Design-time',
+    desc:'Runs rule/schema changes against synthetic datasets before merge.',
+    status:'Live', version:'1.5.0', owner:'Platform Engineering — Governance',
+    builtWith:'Executes each rule/constraint against a versioned synthetic-data fixture set; results feed directly into the Testing & Measures page.',
+    dependsOn:['comp-ssot-repo'],
+    history:[
+      {date:'2025-12-01', event:'v1.0.0 — initial release covering core-discount-eligibility', actor:'Platform Engineering'},
+      {date:'2026-05-10', event:'v1.5.0 — expanded fixture coverage to Claims and Underwriting', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-codeowners-bot', name:'CODEOWNERS Router Bot', type:'Agent', phase:'Design-time',
+    desc:'Routes PRs to the correct reviewer(s) based on changed path (/core vs /domains/*).',
+    status:'Live', version:'1.2.0', owner:'Platform Engineering — Governance',
+    builtWith:'GitHub App reading the CODEOWNERS file; auto-requests review and blocks merge until the routed approver(s) sign off.',
+    dependsOn:['comp-ssot-repo'],
+    history:[
+      {date:'2026-04-10', event:'v1.0.0 — released with the /core vs /domains namespace split', actor:'Platform Engineering'},
+      {date:'2026-05-22', event:'v1.2.0 — added dual-review enforcement for mapping files', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-concept-search', name:'Concept Search Agent', type:'Agent', phase:'Design-time',
+    desc:'Searches Core + all domain mappings for near-duplicate concepts before a new term is created.',
+    status:'In Development', version:'0.6.0-beta', owner:'Platform Engineering — Governance',
+    builtWith:'Embedding-based similarity search over concept prefLabels/altLabels/definitions; surfaced as a suggestion panel in the authoring UIs.',
+    dependsOn:['comp-mapping-registry'],
+    history:[
+      {date:'2026-06-01', event:'Planned — scoped to reduce duplicate-concept proliferation', actor:'Architecture'},
+      {date:'2026-07-15', event:'v0.6.0-beta — piloting with the Underwriting domain team', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-compiler', name:'Code Generator / Compiler', type:'Microservice', phase:'Design-time',
+    desc:'Compiles declarative specs into Pydantic/TS types, SHACL/OWL, and DMN/Drools XML.',
+    status:'Live', version:'4.2.0', owner:'Platform Engineering — Governance',
+    builtWith:'Template-driven codegen (Jinja2) per target; runs as a CI/CD build step on every merge to /core or /domains/*.',
+    dependsOn:['comp-ssot-repo'],
+    history:[
+      {date:'2025-08-19', event:'v1.0.0 — Pydantic/TS generation only', actor:'Platform Engineering'},
+      {date:'2026-01-30', event:'v3.0.0 — added SHACL/OWL generation for the semantic layer', actor:'Platform Engineering'},
+      {date:'2026-06-25', event:'v4.2.0 — added DMN/Drools XML generation', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-ssot-repo', name:'SSOT Git Repository', type:'Ontology', phase:'Design-time',
+    desc:'Central version-controlled source of truth for all constraints, rules, and mapping files.',
+    status:'Live', version:'n/a', owner:'Architecture & Governance',
+    builtWith:'Git repository with /core and /domains/* namespaces, CODEOWNERS-based review routing, and branch protection requiring all CI checks.',
+    dependsOn:[],
+    history:[
+      {date:'2025-07-01', event:'Repository created; Core schemas migrated first', actor:'Architecture'},
+      {date:'2025-09-12', event:'Claims domain onboarded', actor:'Claims SME Team'},
+      {date:'2026-02-20', event:'Underwriting domain onboarded', actor:'Underwriting SME Team'}
+    ] },
+  { id:'comp-artifact-registry', name:'Versioned Artifact Registry', type:'Microservice', phase:'Design-time',
+    desc:'Immutable, versioned store of released specs; consumers pull pinned ranges from here.',
+    status:'Live', version:'2.0.0', owner:'Platform Engineering — Governance',
+    builtWith:'OCI-compatible artifact store; publish step runs after the deployment gate clears, tags are immutable once written.',
+    dependsOn:['comp-compiler'],
+    history:[
+      {date:'2025-08-19', event:'v1.0.0 — launched alongside the compiler', actor:'Platform Engineering'},
+      {date:'2026-03-01', event:'v2.0.0 — added SemVer range resolution for consumers', actor:'Platform Engineering'}
+    ] },
+  // ---- Run-time ----
+  { id:'comp-decision-api', name:'Decision API (Strangler Fig Facade)', type:'Microservice', phase:'Run-time',
+    desc:'Standardized entry point that routes decision requests to the correct backend, legacy or modern.',
+    status:'Live', version:'3.3.0', owner:'Platform Engineering — Runtime',
+    builtWith:'Stateless API gateway service; resolves the caller\'s declared policy/schema version, then routes to the Rules Engine, a Domain Computation Service, or a Legacy Wrapper.',
+    dependsOn:['comp-version-resolver','comp-rules-engine','comp-legacy-wrapper','comp-schema-registry'],
+    history:[
+      {date:'2026-01-15', event:'v1.0.0 — launched covering Claims fraud-flag only', actor:'Platform Engineering'},
+      {date:'2026-04-01', event:'v2.0.0 — Underwriting decisions onboarded', actor:'Platform Engineering'},
+      {date:'2026-07-01', event:'v3.3.0 — added automatic legacy-wrapper fallback for not-yet-migrated decisions', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-rules-engine', name:'Rules Engine Runtime', type:'Microservice', phase:'Run-time',
+    desc:'Executes published DMN/Drools decision tables (e.g. Camunda).',
+    status:'Live', version:'8.4.0', owner:'Platform Engineering — Runtime',
+    builtWith:'Camunda 8 (Zeebe) cluster; loads compiled DMN XML from the Versioned Artifact Registry on deploy.',
+    dependsOn:['comp-artifact-registry'],
+    history:[
+      {date:'2025-11-20', event:'v1.0.0 — initial cluster stood up', actor:'Platform Engineering'},
+      {date:'2026-06-10', event:'v8.4.0 — upgraded to Camunda 8', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-domain-services', name:'Domain Computation Services', type:'Microservice', phase:'Run-time',
+    desc:'Procedural/algorithmic logic per domain (route optimization, premium calc, risk scoring).',
+    status:'Live', version:'varies by service', owner:'Domain Engineering teams',
+    builtWith:'Independently deployed microservices per domain (Python/Go); not SME editable — changes go through standard code review, not the SSOT pipeline.',
+    dependsOn:['comp-artifact-registry'],
+    history:[
+      {date:'2025-06-01', event:'Pre-existing services incorporated as-is under the "right home" principle', actor:'Domain Engineering'}
+    ] },
+  { id:'comp-legacy-wrapper', name:'Legacy Wrapper Adapters', type:'Microservice', phase:'Run-time',
+    desc:'Wrap legacy stored procedures / rules engines behind the Decision API without rewriting them.',
+    status:'Live', version:'1.4.0', owner:'Platform Engineering — Runtime',
+    builtWith:'Thin adapter services translating Decision API calls into legacy stored-procedure invocations; scoped for retirement as each decision migrates.',
+    dependsOn:[],
+    history:[
+      {date:'2026-01-15', event:'v1.0.0 — wrapped the legacy Claims stored procedure', actor:'Platform Engineering'},
+      {date:'2026-04-01', event:'v1.4.0 — wrapped the legacy Underwriting rating engine', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-graph-store', name:'Ontology / Graph Store', type:'Ontology', phase:'Run-time',
+    desc:'SHACL-validated semantic layer, reserved for genuine cross-domain reasoning needs.',
+    status:'Planned', version:'n/a', owner:'Architecture',
+    builtWith:'Evaluating GraphDB vs. Jena+Fuseki; scoped only for concepts that need genuine subsumption/cross-domain inference, per the storage guidance in the architecture doc.',
+    dependsOn:['comp-compiler'],
+    history:[
+      {date:'2026-06-10', event:'Planned — no genuine reasoning use case has justified standing this up yet', actor:'Architecture'}
+    ] },
+  { id:'comp-schema-registry', name:'Schema Registry Service (Postgres)', type:'Mapping Service', phase:'Run-time',
+    desc:'Serves versioned JSON Schema definitions for runtime constraint validation.',
+    status:'Live', version:'2.2.0', owner:'Platform Engineering — Runtime',
+    builtWith:'Postgres table of versioned schema definitions (not raw triples); validated via a standard JSON Schema validator at request time.',
+    dependsOn:['comp-artifact-registry'],
+    history:[
+      {date:'2025-09-01', event:'v1.0.0 — launched with Core schemas only', actor:'Platform Engineering'},
+      {date:'2026-05-01', event:'v2.2.0 — added domain schema support', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-mapping-registry', name:'Mapping Registry Service (Postgres)', type:'Mapping Service', phase:'Run-time',
+    desc:'Serves SKOS relation lookups between domain terms and Core terms.',
+    status:'Live', version:'1.1.0', owner:'Platform Engineering — Runtime',
+    builtWith:'Postgres edge table (source term, relation, target term, owner, status) with a recursive-CTE closure query — deliberately not a triple store, per the storage guidance.',
+    dependsOn:['comp-artifact-registry'],
+    history:[
+      {date:'2026-04-10', event:'v1.0.0 — launched alongside the SKOS mapping layer', actor:'Platform Engineering'},
+      {date:'2026-06-02', event:'v1.1.0 — added the closure-check query used by CI', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-version-resolver', name:'Version Resolution Service', type:'Microservice', phase:'Run-time',
+    desc:'Resolves a caller’s declared policy/schema version to the correct artifact.',
+    status:'Live', version:'1.6.0', owner:'Platform Engineering — Runtime',
+    builtWith:'Lightweight lookup service over the Versioned Artifact Registry; enforces SemVer range resolution rules.',
+    dependsOn:['comp-artifact-registry'],
+    history:[
+      {date:'2026-01-15', event:'v1.0.0 — launched with the Decision API', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-deprecation-monitor', name:'Deprecation / Sunset Monitor', type:'Agent', phase:'Run-time',
+    desc:'Scans consumers still pinned to deprecated versions and alerts their owning teams.',
+    status:'Live', version:'1.0.0', owner:'Platform Engineering — Governance',
+    builtWith:'Scheduled job scanning consumer version declarations against sunset dates; posts alerts to the owning team\'s channel.',
+    dependsOn:['comp-artifact-registry'],
+    history:[
+      {date:'2026-02-01', event:'v1.0.0 — released; first alert fired for core-customer-v1-deprecated', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-drift-monitor', name:'Drift Detection Monitor', type:'Monitoring', phase:'Run-time',
+    desc:'Compares generated artifacts across targets (code/graph/rules) to catch any divergence.',
+    status:'In Development', version:'0.8.0-beta', owner:'Platform Engineering — Governance',
+    builtWith:'Nightly job re-running the compiler and diffing output against what\'s currently deployed to each runtime target.',
+    dependsOn:['comp-compiler','comp-artifact-registry'],
+    history:[
+      {date:'2026-06-15', event:'Planned — closes the loop on “drift becomes a build failure, not an incident”', actor:'Architecture'},
+      {date:'2026-07-20', event:'v0.8.0-beta — running nightly against Core artifacts only', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-metrics-collector', name:'Observability & Metrics Collector', type:'Monitoring', phase:'Run-time',
+    desc:'Aggregates CI pass rates, mapping coverage, and release velocity into the measures shown here.',
+    status:'Live', version:'1.2.0', owner:'Platform Engineering — Governance',
+    builtWith:'Aggregation service reading CI results and registry events; powers every metric on the Testing & Measures and Dashboard pages.',
+    dependsOn:['comp-diff-classifier','comp-test-runner','comp-lint'],
+    history:[
+      {date:'2026-03-01', event:'v1.0.0 — released', actor:'Platform Engineering'}
+    ] },
+  { id:'comp-audit-logger', name:'Audit / Provenance Logger', type:'Monitoring', phase:'Run-time',
+    desc:'Immutable log of every change, reviewer, and approval outcome for each artifact.',
+    status:'Live', version:'1.0.0', owner:'Platform Engineering — Governance',
+    builtWith:'Append-only log capturing every PR, review decision, and publish event; source of the audit trail shown on each artifact\'s Lifecycle page.',
+    dependsOn:['comp-ssot-repo'],
+    history:[
+      {date:'2025-07-01', event:'v1.0.0 — live since the SSOT repository launched', actor:'Architecture'}
+    ] }
 ];
 
 /* ===== Vocabulary (concepts), Upper Ontology (relations), and Calc Library (Alation) =====
@@ -832,13 +1113,17 @@ let dmState = { types: new Set(['constraint','rule','logic']), domains: new Set(
 let skosSelected = 'c-customer';
 
 /* ============================= NAV ============================= */
+function navigateTo(section){
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  const nav = document.querySelector('.navitem[data-section="'+section+'"]');
+  if(nav) nav.classList.add('active');
+  const sec = document.getElementById('sec-'+section);
+  if(sec) sec.classList.add('active');
+  window.scrollTo(0,0);
+}
 document.querySelectorAll('.navitem').forEach(el=>{
-  el.addEventListener('click', ()=>{
-    document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));
-    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-    el.classList.add('active');
-    document.getElementById('sec-'+el.dataset.section).classList.add('active');
-  });
+  el.addEventListener('click', ()=> navigateTo(el.dataset.section));
 });
 function activateSubtab(el){
   const scope = el.closest('.section') || document;
@@ -1067,10 +1352,7 @@ function closeModal(){ document.getElementById('modal').classList.remove('active
 document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
 
 function jumpTo(section, artId, subtab){
-  document.querySelectorAll('.navitem').forEach(n=>n.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelector('.navitem[data-section="'+section+'"]').classList.add('active');
-  document.getElementById('sec-'+section).classList.add('active');
+  navigateTo(section);
   if(section==='lifecycle'){ document.getElementById('lc-select').value = artId; renderLifecycle(); }
   if(section==='diffmap'){
     if(subtab==='mapping'){
@@ -1101,11 +1383,33 @@ function renderLifecycle(){
   }).join('');
   document.getElementById('lc-gov').innerHTML = LIFECYCLE_STAGES.map(s=>{
     const g = GOVERNANCE_INFO[s];
-    return '<div class="gov-cell"><strong>'+s+'</strong>Reviewer: '+g.who+'<br>'+g.what+'<br><em>CI: '+g.ci+'</em></div>';
+    return '<div class="gov-cell" style="cursor:pointer;" onclick="openGovDetail(\''+s+'\')"><strong>'+s+'</strong>Reviewer: '+g.who+'<br>'+g.what+'<br><em>CI: '+g.ci+'</em><br><span style="color:var(--navy);font-weight:600;">Click for detail &rarr;</span></div>';
   }).join('');
   document.getElementById('lc-history').innerHTML = a.history.map(h=>
     '<div class="tl-item"><div class="tdate">'+h.date+'</div><div class="tevent">'+h.event+'</div><div class="tactor">'+h.actor+'</div></div>'
   ).join('') || '<p style="color:var(--muted);">No history recorded.</p>';
+}
+
+function openGovDetail(stage){
+  const g = GOVERNANCE_INFO[stage];
+  const inStage = ARTIFACTS.filter(a=>a.lifecycle===stage);
+  let html = '<h3>'+stage+'</h3><p style="color:var(--muted);margin-top:0;">Stage '+(LIFECYCLE_STAGES.indexOf(stage)+1)+' of '+LIFECYCLE_STAGES.length+' in the governance pipeline.</p>';
+  html += '<div class="kv">'+
+    '<div class="k">Entry condition</div><div>'+g.entry+'</div>'+
+    '<div class="k">Exit condition</div><div>'+g.exit+'</div>'+
+    '<div class="k">Approvers</div><div>'+g.approvers+'</div>'+
+    '<div class="k">Typical duration</div><div>'+g.duration+'</div>'+
+    '</div>';
+  html += '<h4>Required checks</h4><ul style="padding-left:18px;font-size:12.8px;line-height:1.7;margin-top:4px;">'+g.checks.map(c=>'<li>'+c+'</li>').join('')+'</ul>';
+  html += '<h4>Common pitfalls at this stage</h4><ul style="padding-left:18px;font-size:12.8px;line-height:1.7;margin-top:4px;">'+g.pitfalls.map(p=>'<li>'+p+'</li>').join('')+'</ul>';
+  html += '<h4>Artifacts currently in '+stage+' ('+inStage.length+')</h4>';
+  html += inStage.length
+    ? '<div class="artifact-list">'+inStage.map(a=>
+        '<div class="artifact-item" onclick="closeModal();jumpTo(\'lifecycle\',\''+a.id+'\')"><div class="left"><strong>'+a.name+'</strong><div class="meta">'+nsLabel(a.namespace)+' · v'+a.version+' · '+a.owner+'</div></div><div class="right">'+catBadge(a.category)+'</div></div>'
+      ).join('')+'</div>'
+    : '<p style="color:var(--muted);font-size:12.5px;">No artifacts are currently in this stage.</p>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('active');
 }
 
 /* ============================= DIFF ============================= */
@@ -1446,8 +1750,45 @@ function renderComponents(){
 
   const rows = COMPONENTS.filter(c=> (!compFilter.type||c.type===compFilter.type) && (!compFilter.phase||c.phase===compFilter.phase) );
   document.querySelector('#comp-table tbody').innerHTML = rows.map(c=>
-    '<tr><td><strong>'+c.name+'</strong></td><td>'+c.type+'</td><td>'+(c.phase==='Design-time'?'<span class="badge b-rule">Design-time</span>':'<span class="badge b-logic">Run-time</span>')+'</td><td>'+c.desc+'</td></tr>'
+    '<tr class="ci-row" onclick="openComponentDetail(\''+c.id+'\')"><td><strong>'+c.name+'</strong> '+statusBadge(c.status)+'</td><td>'+c.type+'</td><td>'+(c.phase==='Design-time'?'<span class="badge b-rule">Design-time</span>':'<span class="badge b-logic">Run-time</span>')+'</td><td>'+c.desc+'</td></tr>'
   ).join('');
+}
+
+function statusBadge(status){
+  const map = { 'Live':'endorsed', 'In Development':'warned', 'Planned':'temporal', 'Deprecated':'deprecatedcert' };
+  return '<span class="badge b-'+(map[status]||'temporal')+'" style="margin-left:6px;">'+status+'</span>';
+}
+
+function openComponentDetail(id){
+  const c = COMPONENTS.find(x=>x.id===id);
+  if(!c) return;
+  let html = '<h3>'+c.name+'</h3><p style="color:var(--muted);margin-top:0;">'+c.type+' · '+(c.phase==='Design-time'?'<span class="badge b-rule">Design-time</span>':'<span class="badge b-logic">Run-time</span>')+' '+statusBadge(c.status)+'</p>';
+  html += '<div class="kv">'+
+    '<div class="k">Version</div><div>'+c.version+'</div>'+
+    '<div class="k">Owner</div><div>'+c.owner+'</div>'+
+    '<div class="k">What it does</div><div>'+c.desc+'</div>'+
+    '</div>';
+  html += '<h4>How it\'s built</h4><p style="font-size:12.8px;">'+c.builtWith+'</p>';
+  html += '<h4>Depends on</h4>';
+  if(c.dependsOn && c.dependsOn.length){
+    html += '<div>'+c.dependsOn.map(depId=>{
+      const dep = COMPONENTS.find(x=>x.id===depId);
+      return dep ? '<span class="linkbtn secondary" style="cursor:pointer;" onclick="openComponentDetail(\''+dep.id+'\')">'+dep.name+'</span>' : '';
+    }).join('')+'</div>';
+  } else {
+    html += '<p style="color:var(--muted);font-size:12.5px;">No upstream component dependencies — foundational to the architecture.</p>';
+  }
+  const usedBy = COMPONENTS.filter(x=>(x.dependsOn||[]).includes(c.id));
+  html += '<h4>Depended on by</h4>';
+  html += usedBy.length
+    ? '<div>'+usedBy.map(u=>'<span class="linkbtn secondary" style="cursor:pointer;" onclick="openComponentDetail(\''+u.id+'\')">'+u.name+'</span>').join('')+'</div>'
+    : '<p style="color:var(--muted);font-size:12.5px;">No other cataloged component depends on this one yet.</p>';
+  html += '<h4>Lifecycle history</h4>';
+  html += '<div class="timeline">'+c.history.map(h=>
+    '<div class="tl-item"><div class="tdate">'+h.date+'</div><div class="tevent">'+h.event+'</div><div class="tactor">'+h.actor+'</div></div>'
+  ).join('')+'</div>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('modal').classList.add('active');
 }
 
 /* ============================= INIT ============================= */

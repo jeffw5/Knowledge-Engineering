@@ -1,0 +1,615 @@
+<title>HSGA Governance Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070E1C;--s1:#0C1A2E;--s2:#102035;--s3:#162C47;--s4:#1E3A5A;
+  --bg-rgb:7,14,28;
+  --blue:#0A84FF;--accent:#12B8FF;--thread:#22E1FF;--gold:#FFC24D;
+  --green:#00FFA3;--red:#FF5C7F;--violet:#B99CFF;--teal:#10E3C4;
+  --t1:#D8ECFF;--t2:#88B3D6;--t3:#5A85A8;
+  --f-head:'Exo 2',sans-serif;--f-body:'DM Sans',sans-serif;--f-mono:'JetBrains Mono',monospace;
+  --ov04:rgba(255,255,255,.04);--ov06:rgba(255,255,255,.06);--ov08:rgba(255,255,255,.08);
+  --ov1:rgba(255,255,255,.1);--ov14:rgba(255,255,255,.14);
+  --l7:#0A84FF;--l6:#0090F0;--l5:#2E7CFF;--l4:#0AB8D9;--l3:#F5940A;--l2:#10C97F;--l1:#9B4DFF;
+  --dom-data:#0090F0;--dom-sem:#B99CFF;--dom-ana:#17D3F5;--dom-trust:#FFC24D;
+  --stg-rcb:#B99CFF;--stg-shacl:#4C8FFF;--stg-swrl:#17D3F5;--stg-pep:#FFAE1A;--stg-safety:#FF5252;--stg-dir:#9D6FFF;--stg-facade:#2EE573;
+  --feed-team:#B99CFF;--feed-harm:#10E3C4;--feed-council:#FFC24D;
+  --compiled:#2EE573;
+}
+[data-theme="light"]{
+  --bg:#F5F7FC;--s1:#FFFFFF;--s2:#F3F6FB;--s3:#E7EDF6;--s4:#D7E1F0;
+  --bg-rgb:245,247,252;
+  --t1:#0F1B2E;--t2:#46536A;--t3:#7A889D;
+  --ov04:rgba(15,23,42,.05);--ov06:rgba(15,23,42,.07);--ov08:rgba(15,23,42,.1);
+  --ov1:rgba(15,23,42,.13);--ov14:rgba(15,23,42,.17);
+}
+html{color-scheme:dark}
+[data-theme="light"]{color-scheme:light}
+html,body{background:var(--bg);color:var(--t1)}
+body{font-family:var(--f-body);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%}
+[hidden]{display:none!important}
+a{color:inherit}
+h1,h2,h3,h4{font-family:var(--f-head);text-wrap:balance;font-weight:600}
+::selection{background:rgba(18,184,255,.3)}
+
+/* ── SCAFFOLD ── */
+#topnav{
+  position:sticky;top:0;z-index:50;background:rgba(var(--bg-rgb),.88);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--ov08);
+}
+.nav-inner{max-width:1180px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-family:var(--f-head);font-weight:800;font-size:12px;color:#04101f;flex-shrink:0}
+.brand-text{font-family:var(--f-head);font-weight:600;font-size:13.5px;letter-spacing:.2px}
+.brand-sub{font-size:10px;color:var(--t3);margin-top:1px}
+#navlinks{display:flex;gap:4px;flex-wrap:wrap}
+#navlinks a{
+  font-family:var(--f-head);font-size:10.5px;font-weight:500;letter-spacing:.3px;text-transform:uppercase;
+  color:var(--t3);text-decoration:none;padding:6px 10px;border-radius:7px;transition:background .15s,color .15s;
+}
+#navlinks a:hover{color:var(--t1);background:var(--ov06)}
+.theme-toggle{
+  display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;cursor:pointer;
+  background:var(--ov04);border:1px solid var(--ov1);color:var(--t2);
+  font-family:var(--f-head);font-size:10.5px;font-weight:500;transition:background .2s,color .2s;user-select:none;flex-shrink:0;
+}
+.theme-toggle:hover{background:var(--ov08);color:var(--t1)}
+.tt-icon-sun{display:none}
+[data-theme="light"] .tt-icon-moon{display:none}
+[data-theme="light"] .tt-icon-sun{display:inline}
+
+main{max-width:1180px;margin:0 auto;padding:0 28px}
+section{padding:76px 0;border-bottom:1px solid var(--ov06)}
+section:last-of-type{border-bottom:none}
+.eyebrow{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--accent);
+  margin-bottom:14px;display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--accent)}
+.sec-title{font-size:clamp(24px,3vw,32px);margin-bottom:14px;letter-spacing:-.2px}
+.sec-lede{font-size:16px;color:var(--t2);max-width:760px;line-height:1.7;margin-bottom:8px}
+
+/* ── HERO ── */
+#hero{padding-top:64px;padding-bottom:56px}
+.hero-eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:2px;text-transform:uppercase;color:var(--thread);margin-bottom:20px}
+h1.hero-title{font-size:clamp(32px,5vw,52px);line-height:1.08;max-width:900px;letter-spacing:-.5px}
+h1.hero-title em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:17px;color:var(--t2);max-width:680px;margin-top:22px;line-height:1.75}
+.hero-meta{display:flex;gap:28px;margin-top:36px;flex-wrap:wrap}
+.hero-stat{}
+.hero-stat-v{font-family:var(--f-mono);font-size:22px;font-weight:500;color:var(--t1)}
+.hero-stat-l{font-size:10.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.pillar{background:var(--s2);border:1px solid var(--ov08);border-radius:14px;padding:22px}
+.pillar-num{font-family:var(--f-mono);font-size:11px;color:var(--t3);margin-bottom:10px}
+.pillar h3{font-size:15.5px;margin-bottom:8px;color:var(--t1)}
+.pillar p{font-size:13px;color:var(--t2);line-height:1.6}
+
+/* ── BENEFIT GRID ── */
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+.benefit{
+  background:var(--s2);border:1px solid var(--ov08);border-radius:14px;padding:22px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.benefit-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.benefit h3{font-size:15px}
+.benefit p{font-size:12.8px;color:var(--t2);line-height:1.65}
+.benefit-stat{font-family:var(--f-mono);font-size:19px;font-weight:500;margin-top:2px}
+
+/* ── FIT / SCAFFOLD DIAGRAM ── */
+.fit-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;margin-top:40px;align-items:start}
+.scaffold-art{
+  background:var(--s2);border:1px solid var(--ov08);border-radius:16px;padding:26px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.scaf-row{display:flex;align-items:center;gap:10px;border-radius:10px;padding:10px 14px;font-size:12px}
+.scaf-existing{background:var(--ov04);border:1px dashed var(--ov14);color:var(--t2)}
+.scaf-hsga{background:rgba(18,184,255,.08);border:1px solid rgba(18,184,255,.25);color:var(--accent);font-family:var(--f-mono);font-weight:500}
+.scaf-tag{font-size:9px;text-transform:uppercase;letter-spacing:.5px;padding:2px 7px;border-radius:8px;margin-left:auto;flex-shrink:0}
+.scaf-tag.existing{background:var(--ov08);color:var(--t3)}
+.scaf-tag.new{background:rgba(18,184,255,.18);color:var(--accent)}
+.fit-notes{display:flex;flex-direction:column;gap:18px}
+.fit-note h4{font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.fit-note h4 .dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
+.fit-note p{font-size:13px;color:var(--t2);line-height:1.65}
+
+.phase-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+.phase{background:var(--s2);border:1px solid var(--ov08);border-radius:12px;padding:18px}
+.phase-lbl{font-family:var(--f-mono);font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.phase p{font-size:12.5px;color:var(--t2);line-height:1.6}
+
+/* ── AGENTIC MECHANISM GRID ── */
+.mech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:36px}
+.mech{background:var(--s2);border:1px solid var(--ov08);border-radius:14px;padding:22px;display:flex;gap:16px}
+.mech-icon{width:40px;height:40px;border-radius:10px;background:rgba(18,184,255,.12);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.mech h3{font-size:14.5px;margin-bottom:6px}
+.mech p{font-size:12.5px;color:var(--t2);line-height:1.6}
+
+/* ── RISK: DESIGN vs RUNTIME ── */
+.plm-note{
+  background:rgba(255,194,77,.06);border:1px solid rgba(255,194,77,.2);border-radius:12px;
+  padding:16px 20px;font-size:13px;color:var(--t2);line-height:1.7;margin:32px 0 8px;
+}
+.plm-note b{color:var(--gold);font-weight:600}
+.risk-tracks{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.risk-track-hdr{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.risk-track-hdr .rt-dot{width:10px;height:10px;border-radius:50%}
+.risk-track-hdr h3{font-size:15.5px}
+.risk-track-hdr span{font-size:11px;color:var(--t3);font-family:var(--f-mono)}
+.risk-list{display:flex;flex-direction:column;gap:8px}
+
+/* ── CLICKABLE CELLS ── */
+.cell-grid{display:grid;gap:12px;margin-top:32px;align-items:start}
+.cell-grid.g2{grid-template-columns:1fr 1fr}
+.cell-grid.g3{grid-template-columns:repeat(3,1fr)}
+.cell-grid.g4{grid-template-columns:repeat(4,1fr)}
+.cell{
+  background:var(--s2);border:1px solid var(--ov08);border-radius:12px;overflow:hidden;
+  transition:border-color .2s,background .2s;
+}
+.cell:hover{border-color:var(--ov14);background:var(--s3)}
+.cell.open{border-color:var(--cell-accent,var(--accent))}
+.cell-head{
+  width:100%;display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;
+  background:none;border:none;text-align:left;font-family:var(--f-body);color:inherit;
+}
+.cell-icon{
+  width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;background:color-mix(in srgb, var(--cell-accent,var(--accent)) 18%, transparent);
+  color:var(--cell-accent,var(--accent));font-family:var(--f-mono);font-weight:600;
+}
+.cell-titles{flex:1;min-width:0}
+.cell-title{font-family:var(--f-head);font-size:13.5px;font-weight:600;color:var(--t1)}
+.cell-sub{font-size:11px;color:var(--t3);margin-top:1px}
+.cell-chev{font-size:10px;color:var(--t3);transition:transform .25s;flex-shrink:0}
+.cell.open .cell-chev{transform:rotate(180deg);color:var(--cell-accent,var(--accent))}
+.cell-body-wrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}
+.cell.open .cell-body-wrap{grid-template-rows:1fr}
+.cell-body-inner{overflow:hidden}
+.cell-body{padding:0 16px 16px 60px;font-size:12.5px;color:var(--t2);line-height:1.7}
+.cell-body .cb-tech{
+  margin-top:10px;padding:9px 12px;border-radius:8px;background:var(--ov04);border:1px solid var(--ov08);
+  font-family:var(--f-mono);font-size:10.5px;color:var(--t2);line-height:1.6;
+}
+.cell-body .cb-tech b{color:var(--cell-accent,var(--accent));font-weight:500}
+.cell-pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cell-pill{font-size:9.5px;padding:2px 8px;border-radius:10px;font-family:var(--f-mono);background:var(--ov06);color:var(--t2);border:1px solid var(--ov08)}
+
+/* stage connector for RDSG row */
+.stage-strip{position:relative}
+.stage-strip::before{
+  content:'';position:absolute;top:16px;left:16px;right:16px;height:2px;
+  background:linear-gradient(90deg,var(--stg-rcb),var(--stg-shacl),var(--stg-swrl),var(--stg-pep),var(--stg-safety),var(--stg-dir),var(--stg-facade));
+  opacity:.35;z-index:0;
+}
+.cell-grid.g7{grid-template-columns:repeat(7,1fr);position:relative;z-index:1}
+
+/* feed flow */
+.feed-flow{display:flex;align-items:flex-start;gap:10px;margin-top:32px}
+.feed-flow .cell{flex:1}
+.feed-arrow{display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:18px;flex-shrink:0}
+
+footer{padding:40px 0 60px;text-align:center}
+footer p{font-size:11px;color:var(--t3);font-family:var(--f-mono)}
+
+@media (max-width:900px){
+  .pillars,.benefit-grid,.mech-grid,.risk-tracks,.fit-wrap{grid-template-columns:1fr}
+  .cell-grid.g2,.cell-grid.g3,.cell-grid.g4,.cell-grid.g7{grid-template-columns:1fr 1fr}
+  .feed-flow{flex-direction:column}
+  .feed-arrow{transform:rotate(90deg)}
+}
+</style>
+
+<nav id="topnav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-mark">HS</div>
+      <div>
+        <div class="brand-text">HSGA Overview</div>
+        <div class="brand-sub">For business &amp; technical stakeholders</div>
+      </div>
+    </div>
+    <div id="navlinks">
+      <a href="#why">Why</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#fit">Fits Your Stack</a>
+      <a href="#agentic">Agentic AI</a>
+      <a href="#risk">Risk &amp; Trust</a>
+      <a href="#layers">7 Layers</a>
+      <a href="#domains">Domains</a>
+      <a href="#hitl">HITL</a>
+      <a href="#feed">Gov. Feed</a>
+      <a href="#rdsg">RDSG Pattern</a>
+      <a href="#compiled">Compiled Gov.</a>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()" role="button" aria-label="Toggle light / dark mode">
+      <span class="tt-icon-moon">☾</span><span class="tt-icon-sun">☀</span>
+      <span id="theme-label">Dark</span>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══════════ HERO / WHY ═══════════ -->
+<section id="why">
+  <div id="hero">
+    <div class="hero-eyebrow">Holonic Semantic Governance Architecture · v4.0</div>
+    <h1 class="hero-title">Governance built <em>into</em> the structure — not bolted on after.</h1>
+    <p class="hero-sub">HSGA is a reference architecture that turns governance from a checklist people are supposed to follow into a mechanism the system can't bypass. Every request, every data change, and every autonomous agent action passes through the same enforcement point before it takes effect — so trust, safety, and compliance keep pace with how fast the business actually wants to move.</p>
+    <div class="hero-meta">
+      <div class="hero-stat"><div class="hero-stat-v">212+</div><div class="hero-stat-l">SHACL shapes enforced</div></div>
+      <div class="hero-stat"><div class="hero-stat-v">96+</div><div class="hero-stat-l">SWRL temporal rules</div></div>
+      <div class="hero-stat"><div class="hero-stat-v">96.8%</div><div class="hero-stat-l">Avg. AI trust score</div></div>
+      <div class="hero-stat"><div class="hero-stat-v">100%</div><div class="hero-stat-l">Responses carry an audit record</div></div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-num">01 · Why now</div>
+        <h3>Agents act faster than people can review</h3>
+        <p>Autonomous agents now make decisions and take actions in milliseconds. A human-in-the-loop step on every single one doesn't scale — but removing the human entirely isn't acceptable either. Governance has to be structural: checked automatically, escalated only when it matters.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">02 · Why now</div>
+        <h3>Point governance creates blind spots</h3>
+        <p>Data quality tools, model-risk reviews, and compliance checklists usually live in separate systems that drift apart from each other — and from the systems they're meant to govern. HSGA harmonizes them into one rule set, enforced the same way everywhere.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">03 · Why now</div>
+        <h3>Trust has to be provable, not asserted</h3>
+        <p>Regulators, auditors, and customers no longer accept "we have a policy for that." They want evidence — that a specific action was authorized, scored, and logged. HSGA generates that evidence automatically, as a byproduct of how the system runs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ BUSINESS BENEFITS ═══════════ -->
+<section id="benefits">
+  <div class="eyebrow">For the business</div>
+  <h2 class="sec-title">What this actually changes for the business</h2>
+  <p class="sec-lede">HSGA isn't a compliance tax on top of the work — it's what lets the business adopt AI and automation faster, because the guardrails are already load-bearing.</p>
+
+  <div class="benefit-grid">
+    <div class="benefit">
+      <div class="benefit-icon" style="background:rgba(255,92,127,.14);color:var(--red)">⛔</div>
+      <h3>Irreversible mistakes get stopped, not cleaned up</h3>
+      <p>Any action flagged as irreversible or high-consequence is automatically held at a safety gate for human sign-off — before it happens, not after. Zero autonomous irreversible actions have shipped without one.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="background:rgba(0,255,163,.14);color:var(--green)">✓</div>
+      <h3>Audit-ready by default</h3>
+      <div class="benefit-stat" style="color:var(--green)">100%</div>
+      <p>Every response and every governed transition writes its own audit record automatically — provenance, authorization, and trust score included. No separate audit-prep effort before a regulatory review.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="background:rgba(18,184,255,.14);color:var(--accent)">⚡</div>
+      <h3>Faster, safer AI adoption</h3>
+      <div class="benefit-stat" style="color:var(--accent)">96.8%</div>
+      <p>New agents and models plug into guardrails that already exist — trust scoring, circuit breakers, escalation paths — instead of every team building its own from scratch before it can ship.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="background:rgba(185,156,255,.14);color:var(--violet)">◈</div>
+      <h3>One version of the truth</h3>
+      <p>Every business metric and concept is defined once and enforced everywhere it's used. Two dashboards can no longer quietly disagree about what "gross revenue" or "qualified supplier" means.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="background:rgba(255,194,77,.14);color:var(--gold)">◇</div>
+      <h3>Lower total cost of governance</h3>
+      <p>One harmonized rule library — SHACL, SWRL, and deontic norms — is authored once by domain experts and enforced everywhere, instead of re-implementing risk and compliance logic separately in every application.</p>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon" style="background:rgba(34,225,255,.14);color:var(--thread)">⬡</div>
+      <h3>Regulatory readiness, continuously</h3>
+      <p>Cross-jurisdiction obligations are encoded as machine-enforceable rules and checked on every transition — not rediscovered during the next audit cycle.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FITS EXISTING INFRASTRUCTURE ═══════════ -->
+<section id="fit">
+  <div class="eyebrow">For IT &amp; enterprise architecture</div>
+  <h2 class="sec-title">A lightweight scaffold, not a rebuild</h2>
+  <p class="sec-lede">HSGA doesn't replace your ERP, PLM, data platforms, or BI tools — it wraps a thin, standards-based governance layer around what's already running, and adopts one domain at a time.</p>
+
+  <div class="fit-wrap">
+    <div class="scaffold-art">
+      <div class="scaf-row scaf-existing">Your ERP / PLM / BI / regulatory systems <span class="scaf-tag existing">Unchanged</span></div>
+      <div class="scaf-row scaf-hsga">↕ L7 · Enterprise Ecosystem (existing apps, now consuming governed data)</div>
+      <div class="scaf-row scaf-hsga">↕ L6 · Orchestration &amp; HITL UI <span class="scaf-tag new">Scaffold</span></div>
+      <div class="scaf-row scaf-hsga">↕ L5 · Semantic Governance (ontology · SHACL · SWRL) <span class="scaf-tag new">Scaffold</span></div>
+      <div class="scaf-row scaf-hsga">↕ L4 · Knowledge Graph + Data Fabric <span class="scaf-tag new">Scaffold</span></div>
+      <div class="scaf-row scaf-hsga">↕ L3★ · Gateway Holon — the enforcement point <span class="scaf-tag new">Scaffold</span></div>
+      <div class="scaf-row scaf-hsga">↕ L2 · Protocol adapters onto existing systems <span class="scaf-tag new">Scaffold</span></div>
+      <div class="scaf-row scaf-existing">Your existing equipment, sensors, source systems <span class="scaf-tag existing">Unchanged</span></div>
+    </div>
+    <div class="fit-notes">
+      <div class="fit-note">
+        <h4><span class="dot" style="background:var(--accent)"></span>Standards-based, not proprietary</h4>
+        <p>Built on OWL/RDF, SHACL, SWRL, and JSON-LD — open W3C standards your existing data and integration tooling already speaks, so you're not locked into a single vendor's semantic layer.</p>
+      </div>
+      <div class="fit-note">
+        <h4><span class="dot" style="background:var(--green)"></span>Adapters, not rewrites</h4>
+        <p>Protocol adapters and CDC connectors at L2 translate what your current systems already emit into governed, typed data — no re-platforming of ERP, PLM, or source systems required.</p>
+      </div>
+      <div class="fit-note">
+        <h4><span class="dot" style="background:var(--violet)"></span>Adopt by domain, not all at once</h4>
+        <p>Each of the four governance domains (Data, Semantic, Analytics, AI/Trust) rolls out independently and incrementally — you don't need the whole holarchy live to get value from the first slice.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-row">
+    <div class="phase"><div class="phase-lbl">Phase 1 · Foundation</div><p>Seed the ontology from core standards, stand up priority-domain SHACL shapes, designate stewards, and get the governance council chartered. Value from day one on the domains that matter most.</p></div>
+    <div class="phase"><div class="phase-lbl">Phase 2 · Expansion</div><p>Extend across domains, cross-system lineage, and model registries. Certification programs and RBAC become fully ontology-driven rather than manually managed.</p></div>
+    <div class="phase"><div class="phase-lbl">Phase 3 · Maturity</div><p>95%+ coverage, continuous trust monitoring, predictive quality checks, and a self-service extension toolkit — the scaffold becomes the default way new systems get connected.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ AGENTIC AI ═══════════ -->
+<section id="agentic">
+  <div class="eyebrow">For AI &amp; automation teams</div>
+  <h2 class="sec-title">Built for agentic AI — the agents you have, and the ones you're about to add</h2>
+  <p class="sec-lede">Every agent, model, or automation — existing RPA, a legacy ML model, or a brand-new LLM-based agent — plugs into the same governance checkpoint. The agent doesn't need to know the rules; it just receives a directive that already has them baked in.</p>
+
+  <div class="mech-grid">
+    <div class="mech">
+      <div class="mech-icon">◉</div>
+      <div><h3>Compiled AI Directives, not raw rules</h3><p>Instead of handing an agent a rulebook to interpret, the Gateway synthesizes governance outputs into one behavioral directive per request — the agent gets constrained, governed operating context, carrying the authority of every domain it touched, without needing to parse policy itself.</p></div>
+    </div>
+    <div class="mech">
+      <div class="mech-icon">⛨</div>
+      <div><h3>Trust Circuit Breaker</h3><p>Every deployed model or agent carries a live, five-dimensional trust score (who / what / when / where / why). If it drops below its risk-adjusted threshold, the model is automatically suspended with zero-downtime failover to the last stable version — no manual pager required.</p></div>
+    </div>
+    <div class="mech">
+      <div class="mech-icon">⛓</div>
+      <div><h3>Composition-theorem enforcement</h3><p>When agents call other agents, small errors can compound silently across the chain. HSGA tracks multiplicative fidelity degradation across every hop, so a chain of "pretty confident" agents can't quietly become an unreliable outcome.</p></div>
+    </div>
+    <div class="mech">
+      <div class="mech-icon">◇</div>
+      <div><h3>Model-agnostic by design</h3><p>Because governance lives at the Gateway Holon, not inside each model, a legacy ML classifier and a new autonomous LLM agent are governed identically — swap the model behind the directive without renegotiating the guardrails.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ RISK MONITORING & TRUST — DESIGN TIME + RUN TIME ═══════════ -->
+<section id="risk">
+  <div class="eyebrow">Risk monitoring &amp; trust assessment</div>
+  <h2 class="sec-title">Governed the way your PLM process governs a product — from design through operation</h2>
+  <p class="sec-lede">Nothing reaches runtime without design-time verification, and nothing executes at runtime without being checked, scored, and logged. Risk isn't assessed once at launch — it's monitored continuously across the full lifecycle.</p>
+
+  <div class="plm-note"><b>Think of it like engineering change control:</b> a proposed rule, model, or ontology change goes through review and testing before it's ever "released" — exactly like a part doesn't reach the production line without passing design verification. Once released, it's monitored in the field the same way a manufacturing execution system watches a live process — continuously, with an automatic hold if something drifts out of spec.</p>
+
+  <div class="risk-tracks">
+    <div>
+      <div class="risk-track-hdr"><span class="rt-dot" style="background:var(--accent)"></span><h3>Design-time controls</h3><span>Before release</span></div>
+      <div class="risk-list">
+        <div class="cell" style="--cell-accent:var(--accent)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">1</div><div class="cell-titles"><div class="cell-title">Pre-deployment shape &amp; rule testing</div><div class="cell-sub">Nothing merges untested</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Every new SHACL shape or SWRL rule runs through the ontology CI/CD pipeline before it can reach the production graph — the same discipline as testing code before it ships.</div></div></div></div>
+        <div class="cell" style="--cell-accent:var(--accent)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">2</div><div class="cell-titles"><div class="cell-title">Governance contracts (ORSD-pattern)</div><div class="cell-sub">A requirements baseline per holon</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Every knowledge holon gets a design-time governance contract — the holonic equivalent of a requirements spec — authored, version-controlled, and traced back to the source business requirement it satisfies.</div></div></div></div>
+        <div class="cell" style="--cell-accent:var(--accent)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">3</div><div class="cell-titles"><div class="cell-title">Change-impact analysis</div><div class="cell-sub">Know the blast radius before you ship</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Before an ontology change is promoted, an automated query identifies every downstream artifact it would affect — dashboards, agents, rules — so nothing breaks silently three systems away.</div></div></div></div>
+        <div class="cell" style="--cell-accent:var(--accent)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">4</div><div class="cell-titles"><div class="cell-title">Model cards &amp; staged promotion</div><div class="cell-sub">Experiment → candidate → staging → production</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Every production model requires a published model card — bias assessment, intended use, known limitations — and only advances through statistically-validated promotion gates, never a direct push to production.</div></div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="risk-track-hdr"><span class="rt-dot" style="background:var(--green)"></span><h3>Run-time controls</h3><span>Live, continuous</span></div>
+      <div class="risk-list">
+        <div class="cell" style="--cell-accent:var(--green)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">1</div><div class="cell-titles"><div class="cell-title">Seven-stage RDSG traversal</div><div class="cell-sub">Every transition, every time</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Every proposed state change — human-initiated or agent-initiated — runs the full gateway traversal: structural, temporal, policy, and safety checks, with nothing able to skip a stage. See the RDSG-pattern section below for the full sequence.</div></div></div></div>
+        <div class="cell" style="--cell-accent:var(--green)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">2</div><div class="cell-titles"><div class="cell-title">Live trust scoring</div><div class="cell-sub">96.8% avg. today</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">The Trust Circuit Breaker continuously recalculates each deployed agent's five-dimensional trust score and automatically suspends anything that drops below its threshold — no waiting for the next review cycle to notice.</div></div></div></div>
+        <div class="cell" style="--cell-accent:var(--green)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">3</div><div class="cell-titles"><div class="cell-title">Simplex Action Gateway</div><div class="cell-sub">Irreversible actions held for sign-off</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Any action classified as an unsafe control action or irreversible is automatically suspended pending human authorization — never auto-executed, regardless of how confident the agent is.</div></div></div></div>
+        <div class="cell" style="--cell-accent:var(--green)"><button class="cell-head" onclick="toggleCell(this)"><div class="cell-icon">4</div><div class="cell-titles"><div class="cell-title">Anti-collapse sanitization</div><div class="cell-sub">Bad outputs don't retrain the system</div></div><span class="cell-chev">▾</span></button><div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">Outputs that trip a trust threshold are quarantined and explicitly excluded from training data, preventing a bad output from being learned from and quietly compounding over time.</div></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 7 LAYERS ═══════════ -->
+<section id="layers">
+  <div class="eyebrow">Reference architecture</div>
+  <h2 class="sec-title">The seven-layer holarchy</h2>
+  <p class="sec-lede">Each layer has one job. Together they run the physical world at the bottom up to the enterprise applications people actually use at the top — with governance enforced at every boundary in between. Click a layer for the technical detail.</p>
+
+  <div class="cell-grid g4" id="layers-grid"></div>
+</section>
+
+<!-- ═══════════ GOVERNANCE DOMAINS ═══════════ -->
+<section id="domains">
+  <div class="eyebrow">Reference architecture</div>
+  <h2 class="sec-title">Four governance domains</h2>
+  <p class="sec-lede">Governance isn't one monolithic function — it's four disciplines working from the same rule library, each with its own KPIs and phased rollout. Click a domain to see how it's measured.</p>
+
+  <div class="cell-grid g4" id="domains-grid"></div>
+</section>
+
+<!-- ═══════════ HUMAN IN THE LOOP ═══════════ -->
+<section id="hitl">
+  <div class="eyebrow">Reference architecture</div>
+  <h2 class="sec-title">Human-in-the-loop, where it actually matters</h2>
+  <p class="sec-lede">Most of the seven-stage traversal is fully automated. Three stages are mandatory human gates — and the people staffing them are monitored for fatigue and trust calibration the same way the AI is monitored for accuracy.</p>
+
+  <div class="cell-grid g3" id="hitl-grid"></div>
+
+  <div class="mech-grid" style="margin-top:16px">
+    <div class="mech">
+      <div class="mech-icon" style="background:rgba(255,194,77,.14);color:var(--gold)">◐</div>
+      <div><h3>Reviewer fatigue is a governance risk too</h3><p>The Human Performance Monitor tracks each governance persona's fatigue score and decision-accuracy trend in real time, enforcing mandatory breaks and rebalancing workload before review quality degrades.</p></div>
+    </div>
+    <div class="mech">
+      <div class="mech-icon" style="background:rgba(18,184,255,.14);color:var(--accent)">◈</div>
+      <div><h3>Trust calibration is measured, not assumed</h3><p>The system tracks whether a reviewer's confidence in the AI actually matches the AI's real accuracy at each confidence level — catching both over-trust and under-trust before either becomes a habit.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GOVERNANCE FEED ═══════════ -->
+<section id="feed">
+  <div class="eyebrow">Reference architecture</div>
+  <h2 class="sec-title">The governance feed — where rules actually come from</h2>
+  <p class="sec-lede">Rules aren't handed down from a single central committee, and they aren't invented ad hoc by each team either. They flow through three stages that turn domain expertise into one harmonized, enforceable contract.</p>
+
+  <div class="feed-flow" id="feed-flow"></div>
+</section>
+
+<!-- ═══════════ RDSG PATTERN ═══════════ -->
+<section id="rdsg">
+  <div class="eyebrow">Reference architecture · the Gateway Holon</div>
+  <h2 class="sec-title">RDSG-pattern v2.0 — the seven-stage traversal</h2>
+  <p class="sec-lede">Requirement-Driven Semantic Governance: the sequence every request and every agent action runs through at the Gateway Holon (Layer 3). It's the mechanism that makes governance structural instead of procedural — there's no path around it, because it <em>is</em> the state-transition function, not a filter bolted onto one.</p>
+
+  <div class="cell-grid g7 stage-strip" id="rdsg-grid"></div>
+</section>
+
+<!-- ═══════════ COMPILED SEMANTIC GOVERNANCE ═══════════ -->
+<section id="compiled">
+  <div class="eyebrow">Reference architecture · the Virtualization Layer</div>
+  <h2 class="sec-title">Compiled Semantic Governance — why this stays fast enough for agentic AI</h2>
+  <p class="sec-lede">Running a live graph-reasoning query on every single agent call would be too slow for real-time, agentic use. So the canonical rules are written once — by governance experts, in SHACL / SWRL / deontic norms — and <em style="color:var(--compiled);font-style:normal">compiled</em> ahead of time into four runtime-native enforcement targets. The graph reasoner is invoked only when the rules actually change, never on the hot path.</p>
+
+  <div class="cell-grid g4" id="compiled-grid"></div>
+</section>
+
+</main>
+
+<footer>
+  <p>Holonic Semantic Governance Architecture v4.0 — Executive &amp; Technical Overview · The Value Enablement Group, LLC</p>
+</footer>
+
+<script>
+function toggleTheme(){
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if (isLight) { document.documentElement.removeAttribute('data-theme'); document.getElementById('theme-label').textContent = 'Dark'; }
+  else { document.documentElement.setAttribute('data-theme','light'); document.getElementById('theme-label').textContent = 'Light'; }
+}
+function toggleCell(btn){
+  const cell = btn.closest('.cell');
+  cell.classList.toggle('open');
+}
+
+function cellHTML(o){
+  return `<div class="cell" style="--cell-accent:${o.color}">
+    <button class="cell-head" onclick="toggleCell(this)">
+      <div class="cell-icon">${o.icon}</div>
+      <div class="cell-titles"><div class="cell-title">${o.title}</div><div class="cell-sub">${o.sub}</div></div>
+      <span class="cell-chev">▾</span>
+    </button>
+    <div class="cell-body-wrap"><div class="cell-body-inner"><div class="cell-body">
+      ${o.body}
+      ${o.tech ? `<div class="cb-tech">${o.tech}</div>` : ''}
+      ${o.pills ? `<div class="cell-pills">${o.pills.map(p=>`<span class="cell-pill">${p}</span>`).join('')}</div>` : ''}
+    </div></div></div>
+  </div>`;
+}
+
+// ─── 7 LAYERS ───
+const LAYERS = [
+  {icon:'L7',color:'var(--l7)',title:'Enterprise Ecosystem',sub:'Where value lands',
+    body:'Your existing ERP, PLM, regulatory hub, and BI dashboards — unchanged, now fed governed, provenance-tracked data instead of whatever each source system happened to produce.',
+    tech:'<b>Wymore role:</b> Y (output space) — every output carries provenance back to L4.',
+    pills:['ERP','PLM / Change Mgmt','Regulatory Hub','BI &amp; Analytics']},
+  {icon:'L6',color:'var(--l6)',title:'Holon Orchestration &amp; UI',sub:'Where humans work',
+    body:'Approval queues, trust dashboards, and the Human Performance Monitor live here — the human-AI teaming layer where fatigue detection and HITL authorization actually happen.',
+    tech:'<b>Wymore role:</b> Λ (output function) — the mechanism by which HITL authorizations become formal governance records.',
+    pills:['Orchestration Platform','HITL Pane','Persona Dashboard']},
+  {icon:'L5',color:'var(--l5)',title:'Semantic Governance',sub:'The rulebook',
+    body:'The domain ontology, SHACL shapes, SWRL rules, and deontic norms — the formal, machine-readable definition of every business concept and every constraint a transition must satisfy.',
+    tech:'<b>Wymore role:</b> R (performance specifications) — nothing transitions from W to W′ without satisfying R here.',
+    pills:['212+ SHACL Shapes','96+ SWRL Rules','Deontic Norms']},
+  {icon:'L4',color:'var(--l4)',title:'Knowledge Graph + Data Fabric',sub:'The digital thread',
+    body:'A living, queryable, time-travel-capable model of operational reality — every governed entity has a typed, versioned identity here, reachable by federated query.',
+    tech:'<b>Wymore role:</b> W (state space) — the complete, validated state of every governed entity across the enterprise.',
+    pills:['Graph Database','Named Graphs','Vector Search','Data Lakehouse']},
+  {icon:'L3★',color:'var(--l3)',title:'PEP &amp; AI Edge — Gateway Holon',sub:'The checkpoint',
+    body:'Where RDSG-pattern v2.0 lives. No state transition — human or agent-initiated — completes without passing every governance gate here. This is the enforcement mechanism, not a filter on top of one.',
+    tech:'<b>Wymore role:</b> Δ (state transition function) — governance is structural, not procedural. Impossible to bypass.',
+    pills:['RDSG Gateway','Trust Circuit Breaker','Simplex Action Gateway']},
+  {icon:'L2',color:'var(--l2)',title:'Digital Twin &amp; Connectivity',sub:'The translator',
+    body:'Protocol adapters and CDC connectors turn whatever your existing systems already emit into semantically typed, governed data — without re-plumbing the source systems themselves.',
+    tech:'<b>Wymore role:</b> S (admissible stimulus segments) — only signals typeable against the L5 ontology are admitted.',
+    pills:['Protocol Adapters','Event Streaming','API Gateway']},
+  {icon:'L1',color:'var(--l1)',title:'Physical / Operational Holons',sub:'Ground truth',
+    body:'The equipment, sensors, operational systems, and materials you already run — every asset connected to a digital-twin identity so its data can be trusted upstream.',
+    tech:'<b>Wymore role:</b> X (input space) — the physical reality the holarchy receives, governs, and translates.',
+    pills:['Equipment &amp; Assets','Sensors','Operational Systems']},
+];
+document.getElementById('layers-grid').innerHTML = LAYERS.map(cellHTML).join('');
+
+// ─── GOVERNANCE DOMAINS ───
+const DOMAINS = [
+  {icon:'◉',color:'var(--dom-data)',title:'Data Governance',sub:'Catalog · Lineage · Quality · MDM',
+    body:'Ensures every source feeding the graph is cataloged, lineage-traced, and quality-gated before it becomes part of the governed truth.',
+    tech:'93% catalog coverage · 91% data quality score · 100% lineage automation target',
+    pills:['Unified Catalog','End-to-End Lineage','PII Classification']},
+  {icon:'◈',color:'var(--dom-sem)',title:'Semantic Governance',sub:'Ontology · SHACL · Term Lifecycle',
+    body:'Owns the shared vocabulary of the business — every class and property tracked from proposal through deprecation, so terms never silently drift in meaning.',
+    tech:'212 SHACL shapes active · 99.1% compliance rate · 88% ontology coverage',
+    pills:['Ontology Registry','Change-Impact Analysis','Deontic Norms']},
+  {icon:'◇',color:'var(--dom-ana)',title:'Analytics Governance',sub:'Model Registry · Metric Layer · RBAC',
+    body:'Guarantees a metric means the same thing on every certified dashboard, and every model is registered, staged, and access-controlled by role, not by manual permission lists.',
+    tech:'96% certified dashboard coverage · &lt;8 day model promotion cycle · 0 metric drift incidents',
+    pills:['Semantic Metric Layer','Dashboard Certification','Audit Log']},
+  {icon:'⬡',color:'var(--dom-trust)',title:'AI / Trust Governance',sub:'Circuit Breaker · Model Cards · HITL',
+    body:'The safety net around every deployed model and agent — continuous trust scoring, automatic suspension, and mandatory human authorization on safety-critical decisions.',
+    tech:'96.8% avg. trust score · 100% HITL compliance on safety decisions · 0 unauthorized AI actions',
+    pills:['Trust Circuit Breaker','Model Cards','Anti-Collapse Sanitization']},
+];
+document.getElementById('domains-grid').innerHTML = DOMAINS.map(cellHTML).join('');
+
+// ─── HITL MANDATORY GATES ───
+const HITL_GATES = [
+  {icon:'◇',color:'var(--stg-pep)',title:'PEP Compliance',sub:'Stage 3 · Cross-jurisdiction conflicts',
+    body:'The Enterprise Governance Council arbitrates when two governance domains disagree on a policy decision before a flagged transition can proceed.'},
+  {icon:'⬢',color:'var(--stg-safety)',title:'Safety / UCA Boundary',sub:'Stage 4 · Irreversible actions',
+    body:'No autonomous action proceeds on a flagged unsafe control action — a human safety reviewer signs off before the Simplex Action Gateway releases it. Avg. 1.4 hrs.'},
+  {icon:'◯',color:'var(--stg-facade)',title:'Delivery Gate (Facade)',sub:'Stage 7 · Below-threshold outputs',
+    body:'Outputs that trip the trust threshold are quarantined and routed to a Domain Governance Team for review before they can be excluded from — or released back into — normal operation.'},
+];
+document.getElementById('hitl-grid').innerHTML = HITL_GATES.map(cellHTML).join('');
+
+// ─── GOVERNANCE FEED ───
+const FEED = [
+  {icon:'◈',color:'var(--feed-team)',title:'Domain Governance Teams',sub:'Where rules are proposed',
+    body:'Each business domain (Sales, Finance, Operations, Quality, Supply Chain, HR) has its own team — a Domain Architect, Ontology Engineer, and Data Steward — authoring domain-specific SHACL shapes, SWRL rules, and deontic norms.'},
+  {icon:'⊕',color:'var(--feed-harm)',title:'Rule Harmonization Engine',sub:'Where rules are reconciled',
+    body:'Aggregates every domain\'s proposed rules into one conflict-checked contract, running automated conflict detection across domains and escalating only what it can\'t resolve deterministically.',
+    tech:'212+ SHACL shapes harmonized · 96+ SWRL rules harmonized · 4 domains reconciled'},
+  {icon:'⬟',color:'var(--feed-council)',title:'Enterprise Governance Council',sub:'Where conflicts are decided',
+    body:'The final authority — arbitrates cross-domain conflicts the Harmonization Engine can\'t resolve automatically, and holds sign-off on any change to the Enterprise Core or Upper Ontology.',
+    tech:'Response SLA: 2–5 business days for standard reviews'},
+];
+document.getElementById('feed-flow').innerHTML = FEED.map((o,i)=> cellHTML(o) + (i<FEED.length-1 ? '<div class="feed-arrow">→</div>' : '')).join('');
+
+// ─── RDSG-PATTERN STAGES ───
+const STAGES = [
+  {icon:'0',color:'var(--stg-rcb)',title:'RCB Assembly',sub:'Context instantiation',
+    body:'The request is decomposed into WHO/WHAT/WHEN/WHERE/WHY and the relevant domain holons are activated. This is context instantiation, not input transformation.'},
+  {icon:'1',color:'var(--stg-shacl)',title:'SHACL Enforcement',sub:'Structural validation',
+    body:'212+ shapes checked against the proposed transition. Compliance-critical violations halt it immediately — 99.1% first-pass conformance today.'},
+  {icon:'2',color:'var(--stg-swrl)',title:'SWRL Temporal Rules',sub:'Time-aware reasoning',
+    body:'Qualification windows, expirations, retest intervals — the transition has to be valid right now, not just structurally sound.'},
+  {icon:'3',color:'var(--stg-pep)',title:'PEP Compliance',sub:'Four governance domains',
+    body:'Data, Semantic, Analytics, and AI/Trust governance evaluated as attribute-based policy decisions derived from ontological roles.'},
+  {icon:'4',color:'var(--stg-safety)',title:'Safety / UCA Boundary',sub:'Irreversible-action gate',
+    body:'Unsafe control actions are detected and irreversible actions are suspended for human authorization — no exceptions for confidence level.'},
+  {icon:'5',color:'var(--stg-dir)',title:'Compiled AI Directive',sub:'Context assembly',
+    body:'Governance outputs synthesize into one behavioral directive — the agent receives governed context, never raw rules to interpret.'},
+  {icon:'F',color:'var(--stg-facade)',title:'Delivery Gate',sub:'Acceptance &amp; audit',
+    body:'Response validated against acceptance criteria, trust score updated across five dimensions, and an audit record committed before anything leaves the holarchy.'},
+];
+document.getElementById('rdsg-grid').innerHTML = STAGES.map(cellHTML).join('');
+
+// ─── COMPILED SEMANTIC GOVERNANCE ───
+const COMPILED = [
+  {icon:'⊙',color:'var(--compiled)',title:'Context Engineering',sub:'Only what\'s relevant, ever',
+    body:'Every request is filtered against the five relevancy dimensions before any context is assembled — about 92% of what reaches an agent\'s context window is directly relevance-filtered.'},
+  {icon:'⬡',color:'var(--compiled)',title:'Compiled Policy Registry',sub:'One source, four targets',
+    body:'The canonical SHACL/SWRL/deontic rule set is compiled into four runtime-native enforcement formats, versioned and ready for low-latency lookup — no live reasoning required per call.',
+    pills:['SQL','OPA Policy','Vector Filters','Agent Guardrails']},
+  {icon:'◈',color:'var(--compiled)',title:'Rule Projection Caching',sub:'The graph reasoner isn\'t on the hot path',
+    body:'Compiled projections are cached and only recompiled when the canonical rule library actually changes — the mechanism that keeps enforcement fast enough for real-time, agentic use at enterprise scale.'},
+  {icon:'▦',color:'var(--compiled)',title:'Runtime Delivery',sub:'Facade → L6 → L7',
+    body:'Compiled context and policy reach the Facade delivery gate, human-facing L6 dashboards, and L7 enterprise consumers — all from the same compiled source, so nothing downstream ever disagrees.'},
+];
+document.getElementById('compiled-grid').innerHTML = COMPILED.map(cellHTML).join('');
+</script>

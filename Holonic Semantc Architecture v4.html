@@ -9,17 +9,39 @@
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
 --bg:#070E1C;--s1:#0C1A2E;--s2:#102035;--s3:#162C47;--s4:#1E3A5A;
---blue:#0066CC;--accent:#00AAFF;--thread:#00D4FF;--gold:#FFB347;
---green:#00E08A;--red:#FF4A6E;--violet:#A78BFA;--teal:#06C9B0;
+--bg-rgb:7,14,28;
+--blue:#0A84FF;--accent:#12B8FF;--thread:#22E1FF;--gold:#FFC24D;
+--green:#00FFA3;--red:#FF5C7F;--violet:#B99CFF;--teal:#10E3C4;
 --t1:#D0E8FF;--t2:#7AADD0;--t3:#4A7A9B;
 --f-head:'Exo 2',sans-serif;--f-body:'DM Sans',sans-serif;--f-mono:'JetBrains Mono',monospace;
+/* soft white-on-dark overlays (borders / hovers / hairlines) — flipped for light mode below */
+--ov02:rgba(255,255,255,.02);--ov03:rgba(255,255,255,.03);--ov04:rgba(255,255,255,.04);
+--ov05:rgba(255,255,255,.05);--ov06:rgba(255,255,255,.06);--ov07:rgba(255,255,255,.07);
+--ov08:rgba(255,255,255,.08);--ov1:rgba(255,255,255,.1);--ov12:rgba(255,255,255,.12);
+--ov14:rgba(255,255,255,.14);--ov15:rgba(255,255,255,.15);--ov2:rgba(255,255,255,.2);
+/* muted label text used directly in SVG fills */
+--lbl35:rgba(170,200,230,.35);--lbl4:rgba(170,200,230,.4);
+--lbl5:rgba(170,200,230,.5);--lbl55:rgba(170,200,230,.55);
+--role-txt:rgba(185,156,255,.65);
+}
+[data-theme="light"]{
+--bg:#F3F6FC;--s1:#FFFFFF;--s2:#F3F6FB;--s3:#E7EDF6;--s4:#D7E1F0;
+--bg-rgb:243,246,252;
+--t1:#0F1B2E;--t2:#48566C;--t3:#7C8AA0;
+--ov02:rgba(15,23,42,.035);--ov03:rgba(15,23,42,.045);--ov04:rgba(15,23,42,.06);
+--ov05:rgba(15,23,42,.07);--ov06:rgba(15,23,42,.08);--ov07:rgba(15,23,42,.095);
+--ov08:rgba(15,23,42,.11);--ov1:rgba(15,23,42,.13);--ov12:rgba(15,23,42,.15);
+--ov14:rgba(15,23,42,.17);--ov15:rgba(15,23,42,.19);--ov2:rgba(15,23,42,.24);
+--lbl35:rgba(71,88,112,.45);--lbl4:rgba(71,88,112,.55);
+--lbl5:rgba(71,88,112,.65);--lbl55:rgba(71,88,112,.7);
+--role-txt:rgba(122,45,229,.85);
 }
 html,body{height:100%;background:var(--bg);color:var(--t1);font-family:var(--f-body);overflow:hidden}
 body{display:flex;flex-direction:column}
 
 /* ── HEADER ── */
 #hdr{
-  height:58px;background:var(--s1);border-bottom:1px solid rgba(0,170,255,.15);
+  height:58px;background:var(--s1);border-bottom:1px solid rgba(18,184,255,.15);
   display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0;
   position:relative;z-index:100;
 }
@@ -31,23 +53,35 @@ body{display:flex;flex-direction:column}
 }
 .logo-text{font-family:var(--f-head);font-weight:600;font-size:15px;color:var(--t1)}
 .logo-sub{font-size:11px;color:var(--t3);font-family:var(--f-body);margin-top:1px}
-.hdr-div{width:1px;height:28px;background:rgba(255,255,255,.1)}
+.hdr-div{width:1px;height:28px;background:var(--ov1)}
 #tabs{display:flex;gap:2px}
 .tab{
   padding:7px 16px;border-radius:6px;font-family:var(--f-head);font-size:12px;font-weight:500;
   color:var(--t3);cursor:pointer;transition:all .2s;border:1px solid transparent;letter-spacing:.5px;
   text-transform:uppercase;
 }
-.tab:hover{color:var(--t2);background:rgba(255,255,255,.04)}
-.tab.active{color:var(--accent);background:rgba(0,170,255,.1);border-color:rgba(0,170,255,.2)}
+.tab:hover{color:var(--t2);background:var(--ov04)}
+.tab.active{color:var(--accent);background:rgba(18,184,255,.1);border-color:rgba(18,184,255,.2)}
 .hdr-right{margin-left:auto;display:flex;align-items:center;gap:16px}
 .sys-status{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--t3)}
 .status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse-dot 2s ease-in-out infinite}
-@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,224,138,.4)}50%{opacity:.8;box-shadow:0 0 0 5px rgba(0,224,138,0)}}
+@keyframes pulse-dot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,255,163,.4)}50%{opacity:.8;box-shadow:0 0 0 5px rgba(0,255,163,0)}}
 .mtbh-badge{
   font-family:var(--f-mono);font-size:11px;padding:3px 10px;border-radius:20px;
-  background:rgba(0,224,138,.12);color:var(--green);border:1px solid rgba(0,224,138,.25);
+  background:rgba(0,255,163,.12);color:var(--green);border:1px solid rgba(0,255,163,.25);
 }
+.theme-toggle{
+  display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;cursor:pointer;
+  background:var(--ov05);border:1px solid var(--ov1);color:var(--t2);
+  font-family:var(--f-head);font-size:11px;font-weight:500;transition:background .2s,border-color .2s,color .2s;
+  user-select:none;
+}
+.theme-toggle:hover{background:var(--ov08);color:var(--t1);border-color:var(--ov15)}
+.theme-toggle .tt-icon{font-size:13px;line-height:1;display:flex}
+.tt-icon-moon{display:inline}
+.tt-icon-sun{display:none}
+[data-theme="light"] .tt-icon-moon{display:none}
+[data-theme="light"] .tt-icon-sun{display:inline}
 
 /* ── MAIN CONTENT ── */
 #main{flex:1;overflow:hidden;position:relative}
@@ -74,7 +108,7 @@ body{display:flex;flex-direction:column}
 /* ── DETAIL PANEL ── */
 #panel{
   flex:1;overflow:hidden;display:flex;flex-direction:column;
-  border-top:1px solid rgba(0,170,255,.15);
+  border-top:1px solid rgba(18,184,255,.15);
   background:linear-gradient(180deg,var(--s1) 0%,var(--bg) 100%);
 }
 #panel-empty{
@@ -88,7 +122,7 @@ body{display:flex;flex-direction:column}
 
 #panel-header{
   display:flex;align-items:flex-start;padding:14px 24px 10px;
-  border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;gap:14px;
+  border-bottom:1px solid var(--ov06);flex-shrink:0;gap:14px;
 }
 .panel-stage-icon{
   width:38px;height:38px;border-radius:8px;flex-shrink:0;
@@ -98,53 +132,53 @@ body{display:flex;flex-direction:column}
 .panel-stage-title{font-family:var(--f-head);font-size:16px;font-weight:600;color:var(--t1);margin-bottom:2px}
 .panel-stage-sub{font-size:11px;color:var(--t2);line-height:1.4}
 .panel-close{
-  width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.06);
+  width:26px;height:26px;border-radius:6px;background:var(--ov06);
   display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t3);font-size:14px;
   border:none;transition:background .2s;flex-shrink:0;
 }
-.panel-close:hover{background:rgba(255,255,255,.12);color:var(--t1)}
+.panel-close:hover{background:var(--ov12);color:var(--t1)}
 
 #panel-body{flex:1;overflow-y:auto;padding:14px 24px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;align-content:start}
 #panel-body::-webkit-scrollbar{width:4px}
 #panel-body::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
 
 .metric-card{
-  background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:10px;
+  background:var(--s2);border:1px solid var(--ov07);border-radius:10px;
   padding:12px 14px;
 }
 .metric-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
 .metric-value{font-family:var(--f-mono);font-size:20px;font-weight:500;line-height:1}
 .metric-unit{font-size:10px;color:var(--t2);margin-top:3px}
-.metric-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:8px;overflow:hidden}
+.metric-bar{height:3px;border-radius:2px;background:var(--ov08);margin-top:8px;overflow:hidden}
 .metric-bar-fill{height:100%;border-radius:2px;transition:width 1s ease-out}
 
 .tools-card{
-  background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:10px;
+  background:var(--s2);border:1px solid var(--ov07);border-radius:10px;
   padding:12px 14px;grid-column:span 2;
 }
 .tools-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
 .tools-list{display:flex;flex-wrap:wrap;gap:6px}
 .tool-pill{
   font-size:10px;padding:3px 9px;border-radius:20px;font-family:var(--f-mono);
-  background:rgba(0,170,255,.1);color:var(--accent);border:1px solid rgba(0,170,255,.2);
+  background:rgba(18,184,255,.1);color:var(--accent);border:1px solid rgba(18,184,255,.2);
 }
 
 .hitl-card{
-  background:rgba(255,179,71,.06);border:1px solid rgba(255,179,71,.2);
+  background:rgba(255,194,77,.06);border:1px solid rgba(255,194,77,.2);
   border-radius:10px;padding:12px 14px;grid-column:span 2;
 }
 .hitl-label{font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
-.hitl-text{font-size:11px;color:rgba(255,179,71,.85);line-height:1.5}
+.hitl-text{font-size:11px;color:rgba(255,194,77,.85);line-height:1.5}
 
 .wymore-card{
-  background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);
+  background:rgba(185,156,255,.06);border:1px solid rgba(185,156,255,.2);
   border-radius:10px;padding:12px 14px;grid-column:span 4;
 }
 .wymore-label{font-size:10px;color:var(--violet);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
 .wymore-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
 .wymore-item{text-align:center;border-radius:7px;padding:4px 2px;transition:background .2s}
 .wymore-item.clickable{cursor:pointer}
-.wymore-item.clickable:hover{background:rgba(167,139,250,.15)}
+.wymore-item.clickable:hover{background:rgba(185,156,255,.15)}
 .wymore-sym{font-family:var(--f-mono);font-size:13px;font-weight:500;color:var(--violet)}
 .wymore-desc{font-size:9px;color:var(--t3);margin-top:3px;line-height:1.3}
 
@@ -156,34 +190,34 @@ body{display:flex;flex-direction:column}
 .arch-stack{display:flex;flex-direction:column;gap:4px}
 .arch-layer{
   display:grid;grid-template-columns:80px 1fr auto;gap:16px;align-items:start;
-  background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:10px;
+  background:var(--s2);border:1px solid var(--ov07);border-radius:10px;
   padding:12px 16px;transition:all .2s;position:relative;
 }
-.arch-layer:hover{background:var(--s3);border-color:rgba(0,170,255,.25)}
+.arch-layer:hover{background:var(--s3);border-color:rgba(18,184,255,.25)}
 .arch-layer::before{
   content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:10px 0 0 10px;
 }
-.arch-layer-num{font-family:var(--f-mono);font-size:22px;font-weight:500;color:rgba(255,255,255,.08)}
+.arch-layer-num{font-family:var(--f-mono);font-size:22px;font-weight:500;color:var(--ov08)}
 .arch-layer-main{display:flex;flex-direction:column;gap:4px}
 .arch-layer-name{font-family:var(--f-head);font-size:14px;font-weight:600}
 .arch-layer-sub{font-size:11px;color:var(--t2)}
 .arch-layer-tools{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;max-width:280px}
 .arch-tool{font-size:9px;padding:2px 7px;border-radius:12px;font-family:var(--f-mono)}
 .arch-govband{
-  background:rgba(0,170,255,.05);border:1px solid rgba(0,170,255,.12);border-radius:8px;
+  background:rgba(18,184,255,.05);border:1px solid rgba(18,184,255,.12);border-radius:8px;
   padding:8px 16px;margin:6px 0;display:flex;align-items:center;gap:10px;font-size:10px;color:var(--t2);
 }
 .arch-govband-label{color:var(--accent);font-family:var(--f-head);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
 .rdsg-badge{
   position:absolute;right:16px;top:8px;font-size:9px;padding:2px 7px;border-radius:10px;
-  background:rgba(0,212,255,.1);color:var(--thread);border:1px solid rgba(0,212,255,.2);font-family:var(--f-mono);
+  background:rgba(34,225,255,.1);color:var(--thread);border:1px solid rgba(34,225,255,.2);font-family:var(--f-mono);
 }
 
 /* ── GOVERNANCE VIEW ── */
 #gov-view{overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:10px}
 #gov-view::-webkit-scrollbar{width:4px}
 #gov-view::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
-.gov-domain{background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.gov-domain{background:var(--s2);border:1px solid var(--ov07);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
 .gov-domain-hdr{display:flex;align-items:flex-start;gap:10px}
 .gov-domain-icon{
   width:34px;height:34px;border-radius:8px;flex-shrink:0;
@@ -198,21 +232,21 @@ body{display:flex;flex-direction:column}
 .gov-bars{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .gov-bar-row{display:flex;flex-direction:column;gap:3px}
 .gov-bar-lbl{display:flex;justify-content:space-between;font-size:10px;color:var(--t2)}
-.gov-bar-track{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.gov-bar-track{height:4px;background:var(--ov07);border-radius:2px;overflow:hidden}
 .gov-bar-fill{height:100%;border-radius:2px}
 
 /* ── HITL VIEW ── */
 #hitl-view{overflow-y:auto;padding:20px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;align-content:start}
 #hitl-view::-webkit-scrollbar{width:4px}
 #hitl-view::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
-.hitl-timeline{background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px;grid-column:span 2}
+.hitl-timeline{background:var(--s2);border:1px solid var(--ov07);border-radius:12px;padding:16px;grid-column:span 2}
 .hitl-tl-title{font-family:var(--f-head);font-size:13px;font-weight:600;margin-bottom:14px;color:var(--t1)}
 .hitl-points{display:flex;flex-direction:column;gap:2px}
 .hitl-pt{
   display:grid;grid-template-columns:24px 3fr 2fr 1fr 1fr;gap:12px;align-items:center;
   padding:8px 10px;border-radius:8px;font-size:11px;cursor:pointer;transition:background .2s;
 }
-.hitl-pt:hover{background:rgba(255,255,255,.04)}
+.hitl-pt:hover{background:var(--ov04)}
 .hitl-pt-dot{
   width:10px;height:10px;border-radius:50%;flex-shrink:0;margin:0 auto;
   position:relative;
@@ -230,9 +264,9 @@ body{display:flex;flex-direction:column}
 }
 .hitl-pt-time{font-family:var(--f-mono);font-size:10px;color:var(--t3);text-align:right}
 
-.hf-card{background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px}
+.hf-card{background:var(--s2);border:1px solid var(--ov07);border-radius:12px;padding:16px}
 .hf-title{font-family:var(--f-head);font-size:13px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.hf-meter{position:relative;height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.hf-meter{position:relative;height:8px;background:var(--ov07);border-radius:4px;overflow:hidden;margin-bottom:4px}
 .hf-fill{position:absolute;left:0;top:0;height:100%;border-radius:4px;transition:width 1s ease-out}
 .hf-label-row{display:flex;justify-content:space-between;font-size:10px;color:var(--t3);margin-bottom:10px}
 .trust-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:8px}
@@ -240,7 +274,7 @@ body{display:flex;flex-direction:column}
   background:rgba(0,0,0,.2);border-radius:6px;padding:6px 4px;text-align:center;
   cursor:pointer;transition:background .2s;
 }
-.trust-bucket:hover{background:rgba(255,255,255,.06)}
+.trust-bucket:hover{background:var(--ov06)}
 .tb-range{font-size:9px;color:var(--t3);font-family:var(--f-mono)}
 .tb-acc{font-size:13px;font-weight:500;font-family:var(--f-mono)}
 .tb-bar{height:3px;border-radius:2px;margin-top:4px}
@@ -248,31 +282,31 @@ body{display:flex;flex-direction:column}
 
 /* ── FEED BANNER ── */
 .sreg-banner{
-  background:linear-gradient(90deg,rgba(10,21,40,.9),rgba(10,21,40,.4));
-  border-bottom:1px solid rgba(0,170,255,.12);padding:6px 24px;
+  background:linear-gradient(90deg,rgba(var(--bg-rgb),.92),rgba(var(--bg-rgb),.35));
+  border-bottom:1px solid rgba(18,184,255,.12);padding:6px 24px;
   display:flex;align-items:center;gap:12px;font-size:10px;color:var(--t3);flex-shrink:0;
 }
 .sreg-source{
   display:flex;align-items:center;gap:6px;cursor:pointer;
-  padding:3px 10px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);
+  padding:3px 10px;border-radius:12px;border:1px solid var(--ov08);background:var(--ov03);
   transition:background .2s,border-color .2s;
 }
-.sreg-source:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+.sreg-source:hover{background:var(--ov08);border-color:var(--ov2)}
 .sreg-dot{width:5px;height:5px;border-radius:50%}
 .sreg-arrow{color:var(--t3);font-size:12px}
 
 /* ── EXPAND/COLLAPSE ── */
 @keyframes expand-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .arch-layer{cursor:pointer}
-.arch-layer:hover{background:var(--s3);border-color:rgba(0,170,255,.25)}
-.arch-layer.expanded{background:var(--s3);border-color:rgba(0,170,255,.35)}
+.arch-layer:hover{background:var(--s3);border-color:rgba(18,184,255,.25)}
+.arch-layer.expanded{background:var(--s3);border-color:rgba(18,184,255,.35)}
 .arch-layer-chevron{
   font-size:10px;color:var(--t3);transition:transform .25s;flex-shrink:0;
   width:18px;height:18px;display:flex;align-items:center;justify-content:center;
 }
 .arch-layer.expanded .arch-layer-chevron{transform:rotate(180deg);color:var(--accent)}
 .arch-detail{
-  display:none;padding:14px 0 4px;border-top:1px solid rgba(255,255,255,.06);
+  display:none;padding:14px 0 4px;border-top:1px solid var(--ov06);
   animation:expand-in .2s ease-out;grid-column:1 / -1;
 }
 .arch-detail.open{display:block}
@@ -280,14 +314,14 @@ body{display:flex;flex-direction:column}
 .comp-table th{
   text-align:left;padding:7px 12px;font-family:var(--f-head);font-size:9px;font-weight:600;
   text-transform:uppercase;letter-spacing:.6px;color:var(--t3);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid var(--ov08);
 }
 .comp-table td{
-  padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);
+  padding:8px 12px;border-bottom:1px solid var(--ov04);
   vertical-align:top;line-height:1.5;color:var(--t2);word-wrap:break-word;
 }
 .comp-table tr:last-child td{border-bottom:none}
-.comp-table tr:hover td{background:rgba(255,255,255,.02)}
+.comp-table tr:hover td{background:var(--ov02)}
 .comp-table col.c-name{width:20%}
 .comp-table col.c-type{width:10%}
 .comp-table col.c-purpose{width:42%}
@@ -297,31 +331,31 @@ body{display:flex;flex-direction:column}
   padding:2px 7px;border-radius:10px;font-family:var(--f-mono);font-size:9px;
   white-space:nowrap;display:inline-block;
 }
-.type-ootb{background:rgba(0,224,138,.1);color:#00C87A;border:1px solid rgba(0,224,138,.2)}
-.type-custom{background:rgba(255,179,71,.1);color:#FFB347;border:1px solid rgba(255,179,71,.2)}
-.type-open{background:rgba(167,139,250,.1);color:#A78BFA;border:1px solid rgba(167,139,250,.2)}
-.type-physical{background:rgba(255,74,110,.1);color:#FF6B8A;border:1px solid rgba(255,74,110,.2)}
+.type-ootb{background:rgba(0,255,163,.1);color:#00E58C;border:1px solid rgba(0,255,163,.2)}
+.type-custom{background:rgba(255,194,77,.1);color:#FFC24D;border:1px solid rgba(255,194,77,.2)}
+.type-open{background:rgba(185,156,255,.1);color:#B99CFF;border:1px solid rgba(185,156,255,.2)}
+.type-physical{background:rgba(255,92,127,.1);color:#FF7FA0;border:1px solid rgba(255,92,127,.2)}
 .wymore-inline{
   margin-top:12px;padding:9px 12px;border-radius:8px;
-  background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.15);
-  font-size:10px;color:rgba(167,139,250,.9);font-family:var(--f-mono);line-height:1.5;width:100%;
+  background:rgba(185,156,255,.06);border:1px solid rgba(185,156,255,.15);
+  font-size:10px;color:rgba(185,156,255,.9);font-family:var(--f-mono);line-height:1.5;width:100%;
 }
 .rdsg-stages{margin-top:12px;display:flex;flex-direction:column;gap:3px;width:100%}
 .rdsg-stage-row{
   display:grid;grid-template-columns:64px 1fr;gap:12px;
-  padding:6px 12px;border-radius:6px;background:rgba(0,170,255,.04);
+  padding:6px 12px;border-radius:6px;background:rgba(18,184,255,.04);
   font-size:11px;align-items:start;
 }
 .rdsg-stage-label{font-family:var(--f-mono);color:var(--accent);font-size:9px;font-weight:500;padding-top:1px}
 .rdsg-stage-desc{color:var(--t2);line-height:1.4}
 .gov-domain{cursor:pointer;transition:border-color .2s}
-.gov-domain:hover{border-color:rgba(255,255,255,.14)}
-.gov-domain.expanded{border-color:rgba(0,170,255,.25)}
+.gov-domain:hover{border-color:var(--ov14)}
+.gov-domain.expanded{border-color:rgba(18,184,255,.25)}
 .gov-domain-chevron{
   font-size:10px;color:var(--t3);transition:transform .25s;margin-left:auto;flex-shrink:0;
 }
 .gov-domain.expanded .gov-domain-chevron{transform:rotate(180deg)}
-.gov-detail{display:none;margin-top:12px;border-top:1px solid rgba(255,255,255,.06);padding-top:12px;animation:expand-in .2s ease-out}
+.gov-detail{display:none;margin-top:12px;border-top:1px solid var(--ov06);padding-top:12px;animation:expand-in .2s ease-out}
 .gov-detail.open{display:block}
 .gov-cap-grid{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
 .gov-cap-item{
@@ -333,7 +367,7 @@ body{display:flex;flex-direction:column}
 .gov-cap-desc{font-size:10px;color:var(--t3);line-height:1.45}
 .gov-tools-detail{
   display:flex;flex-wrap:wrap;gap:6px;padding:8px 0;
-  border-top:1px solid rgba(255,255,255,.05);margin-top:4px;
+  border-top:1px solid var(--ov05);margin-top:4px;
 }
 .gov-tool-chip{
   font-size:9px;padding:3px 9px;border-radius:12px;font-family:var(--f-mono);
@@ -348,7 +382,7 @@ body{display:flex;flex-direction:column}
 @keyframes progress-in{from{width:0}}
 
 #statusbar{
-  height:28px;background:var(--s1);border-top:1px solid rgba(255,255,255,.06);
+  height:28px;background:var(--s1);border-top:1px solid var(--ov06);
   display:flex;align-items:center;padding:0 24px;gap:24px;font-size:10px;color:var(--t3);flex-shrink:0;
 }
 .sb-item{display:flex;align-items:center;gap:5px}
@@ -357,21 +391,21 @@ body{display:flex;flex-direction:column}
 /* ── DEEP-DIVE SUBNAV ── */
 .subnav{
   display:flex;gap:6px;padding:10px 24px;flex-wrap:wrap;
-  background:var(--s1);border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0;
+  background:var(--s1);border-bottom:1px solid var(--ov06);flex-shrink:0;
 }
 .subnav-pill{
   padding:6px 14px;border-radius:20px;font-family:var(--f-head);font-size:11px;font-weight:500;
-  cursor:pointer;border:1px solid rgba(255,255,255,.1);color:var(--t2);transition:all .2s;
+  cursor:pointer;border:1px solid var(--ov1);color:var(--t2);transition:all .2s;
 }
-.subnav-pill:hover{background:rgba(255,255,255,.05);color:var(--t1)}
+.subnav-pill:hover{background:var(--ov05);color:var(--t1)}
 
 /* ── DEEP-DIVE SECTIONS ── */
 #deepdive-view{flex:1;overflow-y:auto;padding:16px 24px 32px;display:flex;flex-direction:column;gap:12px}
 #deepdive-view::-webkit-scrollbar{width:4px}
 #deepdive-view::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
-.deep-section{background:var(--s2);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;scroll-margin-top:12px}
+.deep-section{background:var(--s2);border:1px solid var(--ov07);border-radius:12px;overflow:hidden;scroll-margin-top:12px}
 .deep-section-hdr{display:flex;align-items:center;gap:12px;padding:14px 18px;cursor:pointer;transition:background .2s}
-.deep-section-hdr:hover{background:rgba(255,255,255,.03)}
+.deep-section-hdr:hover{background:var(--ov03)}
 .deep-section-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .deep-section-titles{flex:1}
 .deep-section-title{font-family:var(--f-head);font-size:14px;font-weight:600}
@@ -383,10 +417,10 @@ body{display:flex;flex-direction:column}
 .deep-section-body.open{display:block;animation:expand-in .2s ease-out}
 .deep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
 .deep-card{
-  background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:10px;
+  background:rgba(0,0,0,.2);border:1px solid var(--ov06);border-radius:10px;
   padding:12px 14px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:6px;
 }
-.deep-card:hover{background:rgba(255,255,255,.04);border-color:rgba(0,170,255,.25);transform:translateY(-1px)}
+.deep-card:hover{background:var(--ov04);border-color:rgba(18,184,255,.25);transform:translateY(-1px)}
 .deep-card-top{display:flex;align-items:center;gap:8px}
 .deep-card-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
 .deep-card-title{font-family:var(--f-head);font-size:12px;font-weight:600;line-height:1.3}
@@ -403,17 +437,17 @@ body{display:flex;flex-direction:column}
 }
 #modal-overlay.open{display:flex}
 #modal-box{
-  width:640px;max-width:92vw;max-height:82vh;background:var(--s1);border:1px solid rgba(255,255,255,.1);
+  width:640px;max-width:92vw;max-height:82vh;background:var(--s1);border:1px solid var(--ov1);
   border-radius:14px;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.5);
   animation:panel-in .2s ease-out;
 }
-#modal-hdr{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.07);flex-shrink:0}
+#modal-hdr{display:flex;align-items:flex-start;gap:14px;padding:18px 22px;border-bottom:1px solid var(--ov07);flex-shrink:0}
 #modal-icon{width:40px;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 #modal-titles{flex:1}
 #modal-title{font-family:var(--f-head);font-size:16px;font-weight:600;color:var(--t1)}
 #modal-sub{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.5}
-#modal-close{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.06);border:none;color:var(--t3);cursor:pointer;font-size:14px;flex-shrink:0}
-#modal-close:hover{background:rgba(255,255,255,.12);color:var(--t1)}
+#modal-close{width:28px;height:28px;border-radius:7px;background:var(--ov06);border:none;color:var(--t3);cursor:pointer;font-size:14px;flex-shrink:0}
+#modal-close:hover{background:var(--ov12);color:var(--t1)}
 #modal-body{flex:1;overflow-y:auto;padding:16px 22px 22px;display:flex;flex-direction:column;gap:14px}
 #modal-body::-webkit-scrollbar{width:4px}
 #modal-body::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
@@ -424,12 +458,12 @@ body{display:flex;flex-direction:column}
 .modal-metric-v{font-family:var(--f-mono);font-size:16px;font-weight:500}
 .modal-metric-l{font-size:9px;color:var(--t3);margin-top:3px;text-transform:uppercase;letter-spacing:.4px}
 .modal-tags{display:flex;flex-wrap:wrap;gap:6px}
-.modal-tag{font-size:10px;padding:3px 10px;border-radius:14px;font-family:var(--f-mono);background:rgba(0,170,255,.1);color:var(--accent);border:1px solid rgba(0,170,255,.2)}
+.modal-tag{font-size:10px;padding:3px 10px;border-radius:14px;font-family:var(--f-mono);background:rgba(18,184,255,.1);color:var(--accent);border:1px solid rgba(18,184,255,.2)}
 .modal-code{
   background:#050B15;border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:11px 13px;
-  font-family:var(--f-mono);font-size:10.5px;color:#8FE3C7;line-height:1.7;white-space:pre-wrap;overflow-x:auto;
+  font-family:var(--f-mono);font-size:10.5px;color:#9FF5D9;line-height:1.7;white-space:pre-wrap;overflow-x:auto;
 }
-.modal-kv-row{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:11px}
+.modal-kv-row{display:grid;grid-template-columns:120px 1fr;gap:10px;padding:6px 0;border-bottom:1px solid var(--ov05);font-size:11px}
 .modal-kv-row:last-child{border-bottom:none}
 .modal-kv-k{color:var(--t3);font-family:var(--f-head);font-size:10px;text-transform:uppercase;letter-spacing:.4px;padding-top:1px}
 .modal-kv-v{color:var(--t2);line-height:1.5}
@@ -457,6 +491,10 @@ body{display:flex;flex-direction:column}
   <div class="hdr-right">
     <div class="sys-status"><div class="status-dot"></div>All governance checkpoints operational</div>
     <div class="mtbh-badge">Trust Score Avg: 96.8%</div>
+    <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" role="button" aria-label="Toggle light / dark mode">
+      <span class="tt-icon tt-icon-moon">☾</span><span class="tt-icon tt-icon-sun">☀</span>
+      <span id="theme-toggle-label">Dark</span>
+    </div>
   </div>
 </header>
 
@@ -464,7 +502,7 @@ body{display:flex;flex-direction:column}
 <div class="sreg-banner">
   <span style="color:var(--accent);font-family:var(--f-head);font-weight:600;font-size:10px;letter-spacing:.5px;text-transform:uppercase">HSGA Governance Feed</span>
   <span>Live governance signal:</span>
-  <div class="sreg-source" onclick="openModal(GOV_FEED_MODALS.domainTeams)"><div class="sreg-dot" style="background:#A78BFA"></div><span style="color:var(--t2)">Domain Governance Teams</span></div>
+  <div class="sreg-source" onclick="openModal(GOV_FEED_MODALS.domainTeams)"><div class="sreg-dot" style="background:#B99CFF"></div><span style="color:var(--t2)">Domain Governance Teams</span></div>
   <span class="sreg-arrow">→</span>
   <div class="sreg-source" onclick="openModal(GOV_FEED_MODALS.harmonization)"><div class="sreg-dot" style="background:var(--teal)"></div><span style="color:var(--t2)">Rule Harmonization Engine</span></div>
   <span class="sreg-arrow">→</span>
@@ -499,17 +537,17 @@ body{display:flex;flex-direction:column}
       </defs>
 
       <path id="thread-path" d="M90,105 C150,105 150,105 195,105 C240,105 240,105 345,105 C450,105 450,105 495,105 C540,105 540,105 645,105 C750,105 750,105 795,105 C840,105 840,105 945,105 C1050,105 1050,105 1095,105 C1140,105 1140,105 1155,105"
-        fill="none" stroke="rgba(0,212,255,.12)" stroke-width="20"/>
+        fill="none" stroke="rgba(34,225,255,.12)" stroke-width="20"/>
       <path d="M90,105 C150,105 150,105 195,105 C240,105 240,105 345,105 C450,105 450,105 495,105 C540,105 540,105 645,105 C750,105 750,105 795,105 C840,105 840,105 945,105 C1050,105 1050,105 1095,105 C1140,105 1140,105 1155,105"
-        fill="none" stroke="rgba(0,212,255,.35)" stroke-width="1.5"/>
+        fill="none" stroke="rgba(34,225,255,.35)" stroke-width="1.5"/>
       <path class="thread-particles" d="M90,105 C150,105 150,105 195,105 C240,105 240,105 345,105 C450,105 450,105 495,105 C540,105 540,105 645,105 C750,105 750,105 795,105 C840,105 840,105 945,105 C1050,105 1050,105 1095,105 C1140,105 1140,105 1155,105"
         fill="none" stroke="var(--thread)" stroke-width="2.5" filter="url(#glow)"/>
       <path class="thread-particles2" d="M90,105 C150,105 150,105 195,105 C240,105 240,105 345,105 C450,105 450,105 495,105 C540,105 540,105 645,105 C750,105 750,105 795,105 C840,105 840,105 945,105 C1050,105 1050,105 1095,105 C1140,105 1140,105 1155,105"
-        fill="none" stroke="rgba(0,212,255,.6)" stroke-width="1.5"/>
+        fill="none" stroke="rgba(34,225,255,.6)" stroke-width="1.5"/>
 
       <g id="stage-nodes"></g>
 
-      <text x="620" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(167,139,250,.5)">
+      <text x="620" y="195" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="rgba(185,156,255,.5)">
         Wymore M = (X, Y, W, S, Δ, Λ, R) · governance enforced at every layer boundary — this journey is the RDSG-pattern six-stage traversal
       </text>
     </svg>
@@ -561,7 +599,7 @@ body{display:flex;flex-direction:column}
   <div id="hitl-view">
     <div class="hitl-timeline">
       <div class="hitl-tl-title">Human-in-the-loop governance checkpoints across the HSGA topology</div>
-      <div style="display:grid;grid-template-columns:24px 3fr 2fr 1fr 1fr;gap:12px;padding:0 10px 8px;font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:4px">
+      <div style="display:grid;grid-template-columns:24px 3fr 2fr 1fr 1fr;gap:12px;padding:0 10px 8px;font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--ov06);margin-bottom:4px">
         <div></div><div>Action &amp; governance trigger</div><div>Authorized by</div><div>Status</div><div style="text-align:right">Avg time</div>
       </div>
       <div class="hitl-points" id="hitl-points"></div>
@@ -624,105 +662,105 @@ body{display:flex;flex-direction:column}
 // ─── DATA ─────────────────────────────────────────────────────────────────
 const STAGES = [
   {
-    id:'rcb', label:'RCB Assembly', sub:'Context Instantiation', x:90, color:'#A78BFA', bg:'rgba(167,139,250,.15)',
+    id:'rcb', label:'RCB Assembly', sub:'Context Instantiation', x:90, color:'#B99CFF', bg:'rgba(185,156,255,.15)',
     hitl:false, icon:'◎',
     title:'Requirement Context Bundle Assembly',
     description:'The request is decomposed into WHO/WHAT/WHEN/WHERE/WHY relevancy dimensions and the appropriate domain holons are activated — context instantiation, not input transformation.',
     metrics:[
-      {label:'Relevancy Dimensions Resolved',value:'5/5',unit:'WHO/WHAT/WHEN/WHERE/WHY',pct:100,color:'#A78BFA'},
-      {label:'Domain Holons Activated',value:'3.4',unit:'avg per request',pct:68,color:'#A78BFA'},
-      {label:'Context Assembly Time',value:'80',unit:'ms avg',pct:88,color:'#00E08A'},
-      {label:'Requirement Traceability',value:'100%',unit:'RCB traced to source requirement',pct:100,color:'#00E08A'},
+      {label:'Relevancy Dimensions Resolved',value:'5/5',unit:'WHO/WHAT/WHEN/WHERE/WHY',pct:100,color:'#B99CFF'},
+      {label:'Domain Holons Activated',value:'3.4',unit:'avg per request',pct:68,color:'#B99CFF'},
+      {label:'Context Assembly Time',value:'80',unit:'ms avg',pct:88,color:'#00FFA3'},
+      {label:'Requirement Traceability',value:'100%',unit:'RCB traced to source requirement',pct:100,color:'#00FFA3'},
     ],
     tools:['RDSG-Pattern Context Engine','Persona & Session Binding','Requirement Context Bundle Schema','Domain Holon Registry'],
     hitlText:'Context instantiation is automated end-to-end. A Domain Architect is notified only when a request cannot be resolved to any known domain holon.',
     wymore:{X:'Inbound request + WHO/WHAT/WHEN/WHERE/WHY signal',Y:'Instantiated Requirement Context Bundle',W:'Domain holon activation state',S:'Structured request intake event',D:'Relevancy-dimension classification','Λ':'Activated domain holon set',R:'100% of requests traced to a formal RCB'},
   },
   {
-    id:'shacl', label:'SHACL Enforcement', sub:'Structural Validation', x:267, color:'#3B82F6', bg:'rgba(59,130,246,.15)',
+    id:'shacl', label:'SHACL Enforcement', sub:'Structural Validation', x:267, color:'#4C8FFF', bg:'rgba(76,143,255,.15)',
     hitl:false, icon:'◈',
     title:'SHACL Structural Enforcement',
     description:'Every activated domain holon’s SHACL constraints are checked against the proposed state transition — 200+ shapes evaluated. GxP/compliance-critical violations halt immediately.',
     metrics:[
-      {label:'Active SHACL Shapes',value:'212',unit:'constraint library',pct:85,color:'#3B82F6'},
-      {label:'Constraints Evaluated',value:'38',unit:'avg per transition',pct:76,color:'#3B82F6'},
-      {label:'Violations Halted',value:'4',unit:'this cycle — critical severity',pct:40,color:'#FFB347'},
-      {label:'First-Pass Conformance',value:'99.1%',unit:'pass rate',pct:99,color:'#00E08A'},
+      {label:'Active SHACL Shapes',value:'212',unit:'constraint library',pct:85,color:'#4C8FFF'},
+      {label:'Constraints Evaluated',value:'38',unit:'avg per transition',pct:76,color:'#4C8FFF'},
+      {label:'Violations Halted',value:'4',unit:'this cycle — critical severity',pct:40,color:'#FFC24D'},
+      {label:'First-Pass Conformance',value:'99.1%',unit:'pass rate',pct:99,color:'#00FFA3'},
     ],
     tools:['SHACL Validation Engine','Rule Harmonization Engine (output)','Constraint Library v4.2','Violation Router'],
     hitlText:'Compliance-critical violations halt the transition and route to the Domain Governance Team for manual disposition before retry.',
     wymore:{X:'Proposed state-transition payload',Y:'Pass/fail verdict + violation report',W:'Current SHACL constraint library (212 shapes)',S:'Transition-candidate event',D:'SHACL shape evaluation','Λ':'Validated or halted transition',R:'Zero critical violations reach Step 2'},
   },
   {
-    id:'swrl', label:'SWRL Temporal Rules', sub:'Time-Aware Reasoning', x:445, color:'#06B6D4', bg:'rgba(6,182,212,.15)',
+    id:'swrl', label:'SWRL Temporal Rules', sub:'Time-Aware Reasoning', x:445, color:'#17D3F5', bg:'rgba(23,211,245,.15)',
     hitl:false, icon:'⬡',
     title:'SWRL Temporal Rule Evaluation',
     description:'Temporal rules — qualification windows, specification expiration, retest intervals — are applied so the transition is valid not just structurally, but at this point in time.',
     metrics:[
-      {label:'Active SWRL Rules',value:'96',unit:'temporal reasoning library',pct:80,color:'#06B6D4'},
-      {label:'Temporal Windows Checked',value:'1,240',unit:'this cycle',pct:74,color:'#06B6D4'},
-      {label:'Expired-Constraint Catches',value:'11',unit:'stale application prevented',pct:55,color:'#FFB347'},
-      {label:'Avg Reasoning Latency',value:'42',unit:'ms',pct:90,color:'#00E08A'},
+      {label:'Active SWRL Rules',value:'96',unit:'temporal reasoning library',pct:80,color:'#17D3F5'},
+      {label:'Temporal Windows Checked',value:'1,240',unit:'this cycle',pct:74,color:'#17D3F5'},
+      {label:'Expired-Constraint Catches',value:'11',unit:'stale application prevented',pct:55,color:'#FFC24D'},
+      {label:'Avg Reasoning Latency',value:'42',unit:'ms',pct:90,color:'#00FFA3'},
     ],
     tools:['SWRL Rule Engine','Temporal Interval Library','Symbolic Logic Graph','KGCL-style Change Log'],
     hitlText:'Temporal rule conflicts (e.g., overlapping qualification windows) are logged automatically; only ambiguous boundary cases route to a Knowledge Steward.',
     wymore:{X:'Validated transition + timestamp context',Y:'Temporally-qualified transition',W:'Active SWRL rule set + interval library',S:'Time-stamped transition event',D:'SWRL temporal inference','Λ':'Time-qualified, rule-consistent transition',R:'No transition applies an expired constraint'},
   },
   {
-    id:'pep', label:'PEP Compliance', sub:'Four Governance Domains', x:623, color:'#F59E0B', bg:'rgba(245,158,11,.15)',
+    id:'pep', label:'PEP Compliance', sub:'Four Governance Domains', x:623, color:'#FFAE1A', bg:'rgba(255,174,26,.15)',
     hitl:true, icon:'◇',
     title:'Policy Enforcement Point — Four-Domain Compliance',
     description:'Data, Semantic, Analytics, and AI/Trust governance are evaluated as attribute-based policy decision points derived from ontological role definitions.',
     metrics:[
-      {label:'Governance Domains Evaluated',value:'4/4',unit:'Data·Semantic·Analytics·AI-Trust',pct:100,color:'#F59E0B'},
-      {label:'Policy Decision Points Consulted',value:'6',unit:'avg per transition',pct:70,color:'#F59E0B'},
-      {label:'Cross-Domain Conflicts Resolved',value:'3',unit:'this cycle',pct:50,color:'#FFB347'},
-      {label:'Attribute-Based Checks',value:'100%',unit:'ontological role-derived',pct:100,color:'#00E08A'},
+      {label:'Governance Domains Evaluated',value:'4/4',unit:'Data·Semantic·Analytics·AI-Trust',pct:100,color:'#FFAE1A'},
+      {label:'Policy Decision Points Consulted',value:'6',unit:'avg per transition',pct:70,color:'#FFAE1A'},
+      {label:'Cross-Domain Conflicts Resolved',value:'3',unit:'this cycle',pct:50,color:'#FFC24D'},
+      {label:'Attribute-Based Checks',value:'100%',unit:'ontological role-derived',pct:100,color:'#00FFA3'},
     ],
     tools:['Policy Decision Engine (OPA-style)','Deontic Norm Library','Attribute-Based Access Control','Governance Named Graph'],
     hitlText:'The Enterprise Governance Council arbitrates cross-jurisdiction policy conflicts (e.g., overlapping regulatory obligations) before a flagged transition is allowed to proceed.',
     wymore:{X:'Time-qualified transition + requester attributes',Y:'Policy decision (permit/deny) across 4 domains',W:'Deontic norm library + governance domain state',S:'Policy evaluation request',D:'Attribute-based policy decision','Λ':'Governed, domain-cleared transition',R:'100% attribute-based access enforcement'},
   },
   {
-    id:'stpa', label:'Safety / UCA Boundary', sub:'Irreversible-Action Gate', x:801, color:'#EF4444', bg:'rgba(239,68,68,.15)',
+    id:'stpa', label:'Safety / UCA Boundary', sub:'Irreversible-Action Gate', x:801, color:'#FF5252', bg:'rgba(255,82,82,.15)',
     hitl:true, icon:'⬢',
     title:'Safety and Unsafe-Control-Action Boundary',
     description:'Unsafe control action coverage is verified against safety invariants. Irreversible actions are detected and suspended at the Simplex Action Gateway pending human authorization.',
     metrics:[
-      {label:'UCAs Screened',value:'18',unit:'this cycle',pct:72,color:'#EF4444'},
-      {label:'Irreversible Actions Held',value:'2',unit:'pending human sign-off',pct:30,color:'#FFB347'},
-      {label:'Simplex Gateway Trips',value:'1',unit:'this cycle',pct:20,color:'#FF4A6E'},
-      {label:'Safety Sign-Off Time',value:'1.4',unit:'hrs avg',pct:65,color:'#00E08A'},
+      {label:'UCAs Screened',value:'18',unit:'this cycle',pct:72,color:'#FF5252'},
+      {label:'Irreversible Actions Held',value:'2',unit:'pending human sign-off',pct:30,color:'#FFC24D'},
+      {label:'Simplex Gateway Trips',value:'1',unit:'this cycle',pct:20,color:'#FF5C7F'},
+      {label:'Safety Sign-Off Time',value:'1.4',unit:'hrs avg',pct:65,color:'#00FFA3'},
     ],
     tools:['STPA/STAMP-style UCA Spec','Simplex Action Gateway','Safety Invariant Library','Irreversibility Detector'],
     hitlText:'No autonomous action proceeds on a flagged unsafe control action — a human safety reviewer must sign off before the Simplex Action Gateway releases it.',
     wymore:{X:'Governed transition + physical/operational context',Y:'Safety clearance or held-for-review flag',W:'Safety invariant library (UCA specs)',S:'Action-proposal event',D:'UCA boundary check','Λ':'Safety-cleared or quarantined action',R:'Zero autonomous irreversible actions without sign-off'},
   },
   {
-    id:'directive', label:'Compiled AI Directive', sub:'Context Assembly', x:979, color:'#8B5CF6', bg:'rgba(139,92,246,.15)',
+    id:'directive', label:'Compiled AI Directive', sub:'Context Assembly', x:979, color:'#9D6FFF', bg:'rgba(157,111,255,.15)',
     hitl:false, icon:'◉',
     title:'Compiled AI Directive Assembly',
     description:'Governance outputs are synthesized into a single behavioral directive — the agent receives constrained operating context carrying the semantic authority of every domain holon traversed, never raw rules.',
     metrics:[
-      {label:'Directive Assembly Time',value:'110',unit:'ms avg',pct:84,color:'#8B5CF6'},
-      {label:'Compiled Policy Targets Injected',value:'4',unit:'SQL/OPA/Vector/Agent',pct:100,color:'#8B5CF6'},
-      {label:'Context Window Curated',value:'92%',unit:'relevance-filtered',pct:92,color:'#00E08A'},
-      {label:'Agent Guardrails Attached',value:'100%',unit:'every dispatched directive',pct:100,color:'#00E08A'},
+      {label:'Directive Assembly Time',value:'110',unit:'ms avg',pct:84,color:'#9D6FFF'},
+      {label:'Compiled Policy Targets Injected',value:'4',unit:'SQL/OPA/Vector/Agent',pct:100,color:'#9D6FFF'},
+      {label:'Context Window Curated',value:'92%',unit:'relevance-filtered',pct:92,color:'#00FFA3'},
+      {label:'Agent Guardrails Attached',value:'100%',unit:'every dispatched directive',pct:100,color:'#00FFA3'},
     ],
     tools:['Rule Projection Agents','Context Engineering Layer','Compiled Policy Registry','Agent Guardrail Schema'],
     hitlText:'Directive assembly is fully automated; agents receive constrained operating context, never raw rules, so no per-directive human review is required.',
     wymore:{X:'Cleared transition + compiled policy targets',Y:'Compiled AI Directive',W:'Compiled policy registry state',S:'Directive-assembly trigger',D:'Rule-projection synthesis','Λ':'Agent-ready constrained operating context',R:'100% of directives carry attached guardrails'},
   },
   {
-    id:'facade', label:'Delivery Gate', sub:'Acceptance & Audit', x:1157, color:'#22C55E', bg:'rgba(34,197,94,.15)',
+    id:'facade', label:'Delivery Gate', sub:'Acceptance & Audit', x:1157, color:'#2EE573', bg:'rgba(46,229,115,.15)',
     hitl:true, icon:'◯',
     title:'Facade — Delivery Gate & Audit',
     description:'The response is validated against acceptance criteria before leaving the holarchy. Trust score is updated across five dimensions and an audit record is committed to the Governance Named Graph.',
     metrics:[
-      {label:'Acceptance Criteria Checked',value:'100%',unit:'before response leaves holarchy',pct:100,color:'#22C55E'},
-      {label:'Trust Score Attached (avg)',value:'96.8%',unit:'5-dimensional scoring',pct:97,color:'#00E08A'},
-      {label:'Tripped Outputs Quarantined',value:'2',unit:'this cycle — excluded from training',pct:15,color:'#FF4A6E'},
-      {label:'Audit Records Committed',value:'100%',unit:'Governance Named Graph',pct:100,color:'#00E08A'},
+      {label:'Acceptance Criteria Checked',value:'100%',unit:'before response leaves holarchy',pct:100,color:'#2EE573'},
+      {label:'Trust Score Attached (avg)',value:'96.8%',unit:'5-dimensional scoring',pct:97,color:'#00FFA3'},
+      {label:'Tripped Outputs Quarantined',value:'2',unit:'this cycle — excluded from training',pct:15,color:'#FF5C7F'},
+      {label:'Audit Records Committed',value:'100%',unit:'Governance Named Graph',pct:100,color:'#00FFA3'},
     ],
     tools:['Facade Validation Engine','Trust Circuit Breaker','Governance Named Graph Audit Log','Anti-Collapse Sanitizer'],
     hitlText:'Tripped or below-threshold outputs are quarantined and excluded from training data (anti-collapse protocol) pending Domain Governance Team review.',
@@ -733,7 +771,7 @@ const STAGES = [
 const ARCH_LAYERS = [
   {
     num:'L7',name:'Enterprise Ecosystem',sub:'Consumers — ERP, PLM, regulatory/compliance hub, domain intelligence apps, BI & analytics',
-    color:'#0066CC',tools:['ERP System','PLM / Change Mgmt','Regulatory Hub','Domain Intelligence App','Quality Command Center','BI & Analytics'],
+    color:'#0A84FF',tools:['ERP System','PLM / Change Mgmt','Regulatory Hub','Domain Intelligence App','Quality Command Center','BI & Analytics'],
     role:'L7 is Y (output space) in Wymore M — all value delivered to enterprise systems and human consumers',
     wymore:'Y (output space): finished, governed data products — reports, directives, compiled policy packages, and intelligence dashboards. Every output carries provenance back to L4.',
     wymoreDetail:{
@@ -756,7 +794,7 @@ const ARCH_LAYERS = [
   },
   {
     num:'L6',name:'Holon Orchestration & UI',sub:'HITL workflows, role-based dashboards, human performance monitoring, governance persona front-ends',
-    color:'#0070C0',tools:['Orchestration Platform','HITL Pane','SHACL Viewer','Ontology Explorer','Human Perf. Monitor','Persona Dashboard'],
+    color:'#0090F0',tools:['Orchestration Platform','HITL Pane','SHACL Viewer','Ontology Explorer','Human Perf. Monitor','Persona Dashboard'],
     role:'Human-AI teaming layer — trust calibration, fatigue detection, competency maintenance, HITL authorization all enforced here',
     wymore:'Λ (output function): user-facing outputs and human governance decisions. The primary mechanism by which Wymore W-state changes become visible to humans and HITL authorizations become formal governance records.',
     wymoreDetail:{
@@ -779,7 +817,7 @@ const ARCH_LAYERS = [
   },
   {
     num:'L5',name:'Semantic Governance',sub:'The rulebook — domain ontology, SHACL shapes, SWRL rules, deontic norms, governance contract lifecycle',
-    color:'#2563EB',tools:['Graph Engine','Ontology Editor','SHACL 212+','SWRL Rules 96+','Deontic Norms','Change Log'],
+    color:'#2E7CFF',tools:['Graph Engine','Ontology Editor','SHACL 212+','SWRL Rules 96+','Deontic Norms','Change Log'],
     role:'R (performance specifications) in Wymore M — every rule a state transition Δ must satisfy before it completes; the formal governance DNA of the entire holarchy',
     wymore:'R (performance specifications): the complete set of constraints any state transition must satisfy. Nothing in the system transitions from W to W′ without satisfying the R-specifications encoded here as SHACL shapes and deontic obligations.',
     wymoreDetail:{
@@ -802,7 +840,7 @@ const ARCH_LAYERS = [
   },
   {
     num:'L4',name:'Knowledge Graph + Data Fabric',sub:'Digital thread — named graphs, federated query, vector/embedding search, governed data lakehouse',
-    color:'#0891B2',tools:['Graph Database','Named Graphs','Federated Query','Vector Search','Data Lakehouse','Semantic Metric Layer'],
+    color:'#0AB8D9',tools:['Graph Database','Named Graphs','Federated Query','Vector Search','Data Lakehouse','Semantic Metric Layer'],
     role:'W (state space) in Wymore M — complete set of valid entity states across the enterprise digital thread; living, reasoned, temporal model of operational reality',
     wymore:'W (state space): the complete, validated, reasoned state of all governed entities. Every entity has a typed, governed, versioned identity here. Time-travel snapshots enable point-in-time queries.',
     wymoreDetail:{
@@ -825,7 +863,7 @@ const ARCH_LAYERS = [
   },
   {
     num:'L3★',name:'PEP & AI Edge — Gateway Holon',sub:'Policy Enforcement Point — seven-stage holarchic traversal, Trust Circuit Breaker, Simplex Action Gateway',
-    color:'#D97706',tools:['RDSG-Pattern Gateway','Trust Circuit Breaker','Policy Decision Engine','Safety / UCA Spec','Rule Projection Runtime'],
+    color:'#F5940A',tools:['RDSG-Pattern Gateway','Trust Circuit Breaker','Policy Decision Engine','Safety / UCA Spec','Rule Projection Runtime'],
     role:'Δ (state transition function) in Wymore M — no state transition completes without passing R-specification checks; governance is structural not procedural — impossible to bypass',
     wymore:'Δ (state transition function): every proposed transition from W to W′ is evaluated here against R. The gateway is not a filter on top of the architecture — it IS the state transition mechanism. Governance cannot be bypassed because governance is the structure.',
     wymoreDetail:{
@@ -857,7 +895,7 @@ const ARCH_LAYERS = [
   },
   {
     num:'L2',name:'Digital Twin & Connectivity',sub:'Protocol adapters, digital-twin shell registry, event streaming, ingestion pipelines, API gateway',
-    color:'#059669',tools:['Protocol Adapters','Digital-Twin Registry','Event Streaming','ETL Pipeline','API Gateway','CDC Connectors'],
+    color:'#10C97F',tools:['Protocol Adapters','Digital-Twin Registry','Event Streaming','ETL Pipeline','API Gateway','CDC Connectors'],
     role:'S (admissible stimulus segments) in Wymore M — raw physical inputs typed as RDF triples conformant with L5 ontology before admission to the holarchy',
     wymore:'S (admissible stimulus segments): only stimulus segments that can be typed as RDF triples conformant with the L5 ontology are admitted. Raw sensor and operational values become semantically typed measurements with units, ranges, quality annotations, and provenance.',
     wymoreDetail:{
@@ -880,7 +918,7 @@ const ARCH_LAYERS = [
   },
   {
     num:'L1',name:'Physical / Operational Holons',sub:'Equipment, sensors, operational systems, materials — the ground truth every digital twin represents',
-    color:'#7C3AED',tools:['Equipment & Assets','Sensors & Instruments','Operational Systems','Materials & Inventory'],
+    color:'#9B4DFF',tools:['Equipment & Assets','Sensors & Instruments','Operational Systems','Materials & Inventory'],
     role:'X (input space) in Wymore M — physical reality that the holarchy receives, governs, and translates; every asset is a digital-twin-governed identity connected to the semantic layer above',
     wymore:'X (input space): the physical and operational reality of the enterprise. Each physical holon has a digital-twin identity, typed telemetry, and SHACL-governed state boundaries. The physical world enters the architecture only as typed, validated, ontology-conformant data.',
     wymoreDetail:{
@@ -904,9 +942,9 @@ const ARCH_LAYERS = [
 const GOV_DOMAINS = [
   {
     title:'Data Governance',sub:'Catalog · Lineage · Quality Gates · MDM · Access Policy',
-    icon:'◉',color:'#0070C0',
+    icon:'◉',color:'#0090F0',
     kpis:[{v:'93%',l:'Catalog coverage'},{v:'91%',l:'Data quality score'},{v:'100%',l:'Lineage automated (target)'},{v:'<5d',l:'Steward response SLA'}],
-    bars:[{l:'Catalog coverage',v:93,c:'#3B82F6'},{l:'Data quality score',v:91,c:'#00E08A'},{l:'PII classification coverage',v:88,c:'#3B82F6'},{l:'Lineage completeness',v:82,c:'#06B6D4'}],
+    bars:[{l:'Catalog coverage',v:93,c:'#4C8FFF'},{l:'Data quality score',v:91,c:'#00FFA3'},{l:'PII classification coverage',v:88,c:'#4C8FFF'},{l:'Lineage completeness',v:82,c:'#17D3F5'}],
     capabilities:[
       {title:'Unified Data Catalog',desc:'Automated discovery and business glossary linkage across every source system feeding the holarchy.'},
       {title:'End-to-End Lineage',desc:'Full provenance from source system through transformation, Knowledge Graph, to dashboard cell.'},
@@ -924,9 +962,9 @@ const GOV_DOMAINS = [
   },
   {
     title:'Semantic Governance',sub:'Ontology Registry · SHACL · Term Lifecycle · Alignment',
-    icon:'◈',color:'#A78BFA',
+    icon:'◈',color:'#B99CFF',
     kpis:[{v:'212',l:'SHACL shapes active'},{v:'88%',l:'Ontology coverage'},{v:'100%',l:'Apps using governed terms'},{v:'2 cyc',l:'Max term review window'}],
-    bars:[{l:'SHACL compliance rate',v:99.1,c:'#00E08A'},{l:'Ontology coverage',v:88,c:'#A78BFA'},{l:'External alignment coverage',v:79,c:'#A78BFA'},{l:'Change protocol adherence',v:96,c:'#A78BFA'}],
+    bars:[{l:'SHACL compliance rate',v:99.1,c:'#00FFA3'},{l:'Ontology coverage',v:88,c:'#B99CFF'},{l:'External alignment coverage',v:79,c:'#B99CFF'},{l:'Change protocol adherence',v:96,c:'#B99CFF'}],
     capabilities:[
       {title:'Centralized Ontology Registry',desc:'Version-controlled registry; every class, property, and axiom tracked from proposal through deprecation.'},
       {title:'Formal Term Lifecycle',desc:'Proposed → reviewed → approved → deprecated, governed by the Ontology Governance Council.'},
@@ -944,9 +982,9 @@ const GOV_DOMAINS = [
   },
   {
     title:'Analytics Governance',sub:'Model Registry · Semantic Metric Layer · Certification · RBAC',
-    icon:'◇',color:'#06B6D4',
+    icon:'◇',color:'#17D3F5',
     kpis:[{v:'96%',l:'Certified dashboards'},{v:'<8d',l:'Model promotion cycle'},{v:'89%',l:'Model registry completeness'},{v:'0',l:'Metric drift incidents'}],
-    bars:[{l:'Certified dashboard coverage',v:96,c:'#06B6D4'},{l:'Model registry completeness',v:89,c:'#06B6D4'},{l:'Audit log coverage',v:98,c:'#00E08A'},{l:'RBAC via ontology',v:94,c:'#06B6D4'}],
+    bars:[{l:'Certified dashboard coverage',v:96,c:'#17D3F5'},{l:'Model registry completeness',v:89,c:'#17D3F5'},{l:'Audit log coverage',v:98,c:'#00FFA3'},{l:'RBAC via ontology',v:94,c:'#17D3F5'}],
     capabilities:[
       {title:'Model Experiment & Registry',desc:'Every training run tracked with full hyperparameter, data-version, and evaluation-metric lineage.'},
       {title:'Staged Model Promotion',desc:'Experiment → candidate → staging → production, gated by statistical validation.'},
@@ -964,9 +1002,9 @@ const GOV_DOMAINS = [
   },
   {
     title:'AI / Trust Governance',sub:'Trust Circuit Breaker · Model Cards · Anti-Collapse · HITL Gates',
-    icon:'⬡',color:'#FFB347',
+    icon:'⬡',color:'#FFC24D',
     kpis:[{v:'96.8%',l:'Trust score avg'},{v:'100%',l:'HITL on safety decisions'},{v:'0',l:'Unauthorized AI actions'},{v:'92%',l:'Model card coverage'}],
-    bars:[{l:'Trust score — domain agents',v:97.2,c:'#00E08A'},{l:'Trust score — governance agents',v:96.4,c:'#00E08A'},{l:'Trust score — retrieval agents',v:96.9,c:'#00E08A'},{l:'HITL gate compliance',v:100,c:'#00E08A'}],
+    bars:[{l:'Trust score — domain agents',v:97.2,c:'#00FFA3'},{l:'Trust score — governance agents',v:96.4,c:'#00FFA3'},{l:'Trust score — retrieval agents',v:96.9,c:'#00FFA3'},{l:'HITL gate compliance',v:100,c:'#00FFA3'}],
     capabilities:[
       {title:'Dimensional Trust Scoring',desc:'Five-dimensional scoring (who/what/when/where/why) calculated continuously per deployed model.'},
       {title:'Circuit Breaker Architecture',desc:'Automatic model suspension when trust score falls below a use-case-specific threshold; zero-downtime failover.'},
@@ -985,14 +1023,14 @@ const GOV_DOMAINS = [
 ];
 
 const HITL_POINTS = [
-  {stage:'Semantic Top-Down',action:'Ontology change proposal — new domain class requires Enterprise Council approval',who:'Domain Architect + Enterprise Governance Council',status:'active',statusColor:'#00E08A',time:'2–5 days'},
-  {stage:'Semantic Bottom-Up',action:'Schema drift flagged — transformation model refactor requires mapping-graph update',who:'Data/Platform Engineer + Integration Steward',status:'complete',statusColor:'#3B82F6',time:'1–2 days'},
-  {stage:'Mapping Layers',action:'Below-threshold mapping confidence — RAG anchor requires manual confirmation',who:'Knowledge / Data Steward',status:'pending',statusColor:'#FFB347',time:'4–8 hours'},
-  {stage:'Agentic Layer',action:'Agent-proposed rule change queued for review before KGCL-style publish',who:'Relevant Domain Persona',status:'active',statusColor:'#00E08A',time:'1–3 days'},
-  {stage:'Governance Layer',action:'Cross-jurisdiction rule conflict detected by Rule Harmonization Engine',who:'Enterprise Governance Council',status:'pending',statusColor:'#FFB347',time:'3–5 days'},
-  {stage:'Virtualization Layer',action:'Compiled policy promotion to production runtime',who:'Platform Operations + Governance Council',status:'complete',statusColor:'#3B82F6',time:'1 day'},
-  {stage:'Gateway Holon (L3)',action:'Unsafe control action flagged — irreversible action held at Simplex Gateway',who:'Safety Reviewer',status:'active',statusColor:'#00E08A',time:'1–2 hours'},
-  {stage:'Delivery Gate (Facade)',action:'Trust score below threshold — output quarantined pending review',who:'Domain Governance Team',status:'pending',statusColor:'#FFB347',time:'2–4 hours'},
+  {stage:'Semantic Top-Down',action:'Ontology change proposal — new domain class requires Enterprise Council approval',who:'Domain Architect + Enterprise Governance Council',status:'active',statusColor:'#00FFA3',time:'2–5 days'},
+  {stage:'Semantic Bottom-Up',action:'Schema drift flagged — transformation model refactor requires mapping-graph update',who:'Data/Platform Engineer + Integration Steward',status:'complete',statusColor:'#4C8FFF',time:'1–2 days'},
+  {stage:'Mapping Layers',action:'Below-threshold mapping confidence — RAG anchor requires manual confirmation',who:'Knowledge / Data Steward',status:'pending',statusColor:'#FFC24D',time:'4–8 hours'},
+  {stage:'Agentic Layer',action:'Agent-proposed rule change queued for review before KGCL-style publish',who:'Relevant Domain Persona',status:'active',statusColor:'#00FFA3',time:'1–3 days'},
+  {stage:'Governance Layer',action:'Cross-jurisdiction rule conflict detected by Rule Harmonization Engine',who:'Enterprise Governance Council',status:'pending',statusColor:'#FFC24D',time:'3–5 days'},
+  {stage:'Virtualization Layer',action:'Compiled policy promotion to production runtime',who:'Platform Operations + Governance Council',status:'complete',statusColor:'#4C8FFF',time:'1 day'},
+  {stage:'Gateway Holon (L3)',action:'Unsafe control action flagged — irreversible action held at Simplex Gateway',who:'Safety Reviewer',status:'active',statusColor:'#00FFA3',time:'1–2 hours'},
+  {stage:'Delivery Gate (Facade)',action:'Trust score below threshold — output quarantined pending review',who:'Domain Governance Team',status:'pending',statusColor:'#FFC24D',time:'2–4 hours'},
 ];
 
 const PERSONAS = [
@@ -1053,7 +1091,7 @@ function renderStages() {
     const sub = document.createElementNS('http://www.w3.org/2000/svg','text');
     sub.setAttribute('x',s.x);sub.setAttribute('y',148);sub.setAttribute('text-anchor','middle');
     sub.setAttribute('font-family',"'DM Sans', sans-serif");sub.setAttribute('font-size','8');
-    sub.setAttribute('fill','rgba(170,200,230,.55)');
+    sub.setAttribute('fill','var(--lbl55)');
     sub.textContent = s.sub;
     el.appendChild(sub);
 
@@ -1061,10 +1099,10 @@ function renderStages() {
       const hb = document.createElementNS('http://www.w3.org/2000/svg','g');
       const hc = document.createElementNS('http://www.w3.org/2000/svg','circle');
       hc.setAttribute('cx',s.x+14);hc.setAttribute('cy',88);hc.setAttribute('r',7);
-      hc.setAttribute('fill','rgba(255,179,71,.15)');hc.setAttribute('stroke','#FFB347');hc.setAttribute('stroke-width','1');
+      hc.setAttribute('fill','rgba(255,194,77,.15)');hc.setAttribute('stroke','#FFC24D');hc.setAttribute('stroke-width','1');
       const ht = document.createElementNS('http://www.w3.org/2000/svg','text');
       ht.setAttribute('x',s.x+14);ht.setAttribute('y',92);ht.setAttribute('text-anchor','middle');
-      ht.setAttribute('font-size','8');ht.setAttribute('fill','#FFB347');ht.textContent='H';
+      ht.setAttribute('font-size','8');ht.setAttribute('fill','#FFC24D');ht.textContent='H';
       hb.appendChild(hc);hb.appendChild(ht);
       el.appendChild(hb);
     }
@@ -1072,7 +1110,7 @@ function renderStages() {
     const num = document.createElementNS('http://www.w3.org/2000/svg','text');
     num.setAttribute('x',s.x);num.setAttribute('y',72);num.setAttribute('text-anchor','middle');
     num.setAttribute('font-family',"'JetBrains Mono', monospace");num.setAttribute('font-size','9');
-    num.setAttribute('fill','rgba(170,200,230,.35)');
+    num.setAttribute('fill','var(--lbl35)');
     num.textContent = 'S'+(i+1);
     el.appendChild(num);
 
@@ -1241,7 +1279,7 @@ function renderArch() {
       <div class="arch-layer-main" style="flex:1">
         <div class="arch-layer-name" style="color:${l.color}">${l.name}</div>
         <div class="arch-layer-sub">${l.sub}</div>
-        <div style="font-size:9px;color:rgba(167,139,250,.6);margin-top:4px;font-family:var(--f-mono)">${l.role}</div>
+        <div style="font-size:9px;color:var(--role-txt);margin-top:4px;font-family:var(--f-mono)">${l.role}</div>
         <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px">${tools}</div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
@@ -1340,24 +1378,24 @@ function renderHITL() {
 
   const eng = document.getElementById('hf-personas');
   PERSONAS.forEach(e => {
-    const sc = e.status==='amber'?'#FFB347':'#00E08A';
+    const sc = e.status==='amber'?'#FFC24D':'#00FFA3';
     const div = document.createElement('div');
     div.style.cssText = 'display:grid;grid-template-columns:1fr 80px 80px 60px;gap:8px;align-items:center;margin-bottom:8px;font-size:11px';
     div.innerHTML = `
       <div><span style="color:var(--t1)">${e.name}</span><span style="color:var(--t3);margin-left:6px;font-size:10px">${e.role}</span></div>
-      <div><div style="font-size:9px;color:var(--t3);margin-bottom:2px">Fatigue</div><div class="hf-meter"><div class="hf-fill" style="background:${e.fatigue>.5?'#FFB347':'#00E08A'};width:${e.fatigue*100}%"></div></div></div>
-      <div><div style="font-size:9px;color:var(--t3);margin-bottom:2px">Accuracy</div><div class="hf-meter"><div class="hf-fill" style="background:#3B82F6;width:${e.accuracy}%"></div></div></div>
+      <div><div style="font-size:9px;color:var(--t3);margin-bottom:2px">Fatigue</div><div class="hf-meter"><div class="hf-fill" style="background:${e.fatigue>.5?'#FFC24D':'#00FFA3'};width:${e.fatigue*100}%"></div></div></div>
+      <div><div style="font-size:9px;color:var(--t3);margin-bottom:2px">Accuracy</div><div class="hf-meter"><div class="hf-fill" style="background:#4C8FFF;width:${e.accuracy}%"></div></div></div>
       <div style="font-family:'JetBrains Mono';font-size:11px;color:${sc};text-align:right">${e.accuracy}%</div>`;
     eng.appendChild(div);
   });
 
   const tg = document.getElementById('trust-grid');
   const buckets = [
-    {range:'0.60–0.69',acc:58,accept:71,c:'#FF4A6E'},
-    {range:'0.70–0.79',acc:72,accept:79,c:'#FFB347'},
-    {range:'0.80–0.89',acc:84,accept:88,c:'#FFB347'},
-    {range:'0.90–0.94',acc:91,accept:90,c:'#00E08A'},
-    {range:'0.95–1.00',acc:96,accept:94,c:'#00E08A'},
+    {range:'0.60–0.69',acc:58,accept:71,c:'#FF5C7F'},
+    {range:'0.70–0.79',acc:72,accept:79,c:'#FFC24D'},
+    {range:'0.80–0.89',acc:84,accept:88,c:'#FFC24D'},
+    {range:'0.90–0.94',acc:91,accept:90,c:'#00FFA3'},
+    {range:'0.95–1.00',acc:96,accept:94,c:'#00FFA3'},
   ];
   buckets.forEach(b => {
     const div = document.createElement('div');
@@ -1374,26 +1412,26 @@ function renderHITL() {
   pc.innerHTML = `
   <div style="font-size:10px;color:var(--t3);margin-bottom:8px">Without the HITL Governance Spine vs. with it — system reliability over time as AI accuracy improves</div>
   <svg width="100%" viewBox="0 0 500 100" preserveAspectRatio="xMidYMid meet">
-    <line x1="40" y1="10" x2="40" y2="80" stroke="rgba(255,255,255,.15)" stroke-width="0.5"/>
-    <line x1="40" y1="80" x2="470" y2="80" stroke="rgba(255,255,255,.15)" stroke-width="0.5"/>
-    <text x="36" y="14" text-anchor="end" font-size="8" fill="rgba(170,200,230,.5)" font-family="'JetBrains Mono'">100%</text>
-    <text x="36" y="46" text-anchor="end" font-size="8" fill="rgba(170,200,230,.5)" font-family="'JetBrains Mono'">85%</text>
-    <text x="36" y="80" text-anchor="end" font-size="8" fill="rgba(170,200,230,.5)" font-family="'JetBrains Mono'">70%</text>
-    <text x="80" y="92" text-anchor="middle" font-size="8" fill="rgba(170,200,230,.4)" font-family="'DM Sans'">Wk 0</text>
-    <text x="190" y="92" text-anchor="middle" font-size="8" fill="rgba(170,200,230,.4)" font-family="'DM Sans'">Wk 13</text>
-    <text x="300" y="92" text-anchor="middle" font-size="8" fill="rgba(170,200,230,.4)" font-family="'DM Sans'">Wk 26</text>
-    <text x="410" y="92" text-anchor="middle" font-size="8" fill="rgba(170,200,230,.4)" font-family="'DM Sans'">Wk 52</text>
-    <polyline points="80,16 190,22 300,36 410,46" fill="none" stroke="#FF4A6E" stroke-width="1.5" stroke-dasharray="4 3" opacity=".7"/>
-    <polyline points="80,16 190,15 300,14 410,12" fill="none" stroke="#00E08A" stroke-width="2"/>
-    <polyline points="80,60 190,36 300,22 410,14" fill="none" stroke="rgba(59,130,246,.7)" stroke-width="1.5" stroke-dasharray="2 2"/>
-    <circle cx="410" cy="46" r="4" fill="#FF4A6E"/>
-    <circle cx="410" cy="12" r="4" fill="#00E08A"/>
-    <circle cx="410" cy="14" r="3" fill="rgba(59,130,246,.9)"/>
+    <line x1="40" y1="10" x2="40" y2="80" stroke="var(--ov15)" stroke-width="0.5"/>
+    <line x1="40" y1="80" x2="470" y2="80" stroke="var(--ov15)" stroke-width="0.5"/>
+    <text x="36" y="14" text-anchor="end" font-size="8" fill="var(--lbl5)" font-family="'JetBrains Mono'">100%</text>
+    <text x="36" y="46" text-anchor="end" font-size="8" fill="var(--lbl5)" font-family="'JetBrains Mono'">85%</text>
+    <text x="36" y="80" text-anchor="end" font-size="8" fill="var(--lbl5)" font-family="'JetBrains Mono'">70%</text>
+    <text x="80" y="92" text-anchor="middle" font-size="8" fill="var(--lbl4)" font-family="'DM Sans'">Wk 0</text>
+    <text x="190" y="92" text-anchor="middle" font-size="8" fill="var(--lbl4)" font-family="'DM Sans'">Wk 13</text>
+    <text x="300" y="92" text-anchor="middle" font-size="8" fill="var(--lbl4)" font-family="'DM Sans'">Wk 26</text>
+    <text x="410" y="92" text-anchor="middle" font-size="8" fill="var(--lbl4)" font-family="'DM Sans'">Wk 52</text>
+    <polyline points="80,16 190,22 300,36 410,46" fill="none" stroke="#FF5C7F" stroke-width="1.5" stroke-dasharray="4 3" opacity=".7"/>
+    <polyline points="80,16 190,15 300,14 410,12" fill="none" stroke="#00FFA3" stroke-width="2"/>
+    <polyline points="80,60 190,36 300,22 410,14" fill="none" stroke="rgba(76,143,255,.7)" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <circle cx="410" cy="46" r="4" fill="#FF5C7F"/>
+    <circle cx="410" cy="12" r="4" fill="#00FFA3"/>
+    <circle cx="410" cy="14" r="3" fill="rgba(76,143,255,.9)"/>
   </svg>
-  <div style="display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)">
-    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#00E08A;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:#00E08A;display:inline-block;flex-shrink:0"></span>99% reliability — with governance spine</div>
-    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#FF4A6E;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:#FF4A6E;display:inline-block;flex-shrink:0"></span>85% reliability — without governance spine</div>
-    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:rgba(59,130,246,.9);white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:rgba(59,130,246,.9);display:inline-block;flex-shrink:0"></span>AI accuracy: 92%</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:6px;padding-top:8px;border-top:1px solid var(--ov06)">
+    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#00FFA3;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:#00FFA3;display:inline-block;flex-shrink:0"></span>99% reliability — with governance spine</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#FF5C7F;white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:#FF5C7F;display:inline-block;flex-shrink:0"></span>85% reliability — without governance spine</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:rgba(76,143,255,.9);white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:rgba(76,143,255,.9);display:inline-block;flex-shrink:0"></span>AI accuracy: 92%</div>
   </div>`;
 }
 
@@ -1412,7 +1450,7 @@ function openWymoreModal(sym, specificText, contextLabel) {
   const def = WYMORE_DEFS[sym] || {name:sym, def:''};
   const displaySym = sym === 'D' ? 'Δ' : sym;
   openModal({
-    icon: displaySym, color:'#A78BFA', title: def.name + ' (' + displaySym + ')', sub: contextLabel,
+    icon: displaySym, color:'#B99CFF', title: def.name + ' (' + displaySym + ')', sub: contextLabel,
     sections:[
       {type:'text', label:'General Definition — Wymore System Model M = (X, Y, W, S, Δ, Λ, R)', text: def.def},
       {type:'text', label:'Applied Here', text: specificText},
@@ -1422,7 +1460,7 @@ function openWymoreModal(sym, specificText, contextLabel) {
 
 // ─── GOVERNANCE FEED ENTITIES ───────────────────────────────────────────────
 const GOV_FEED_MODALS = {
-  domainTeams:{icon:'◈', color:'#A78BFA', title:'Domain Governance Teams', sub:'HSGA Governance Feed · Source',
+  domainTeams:{icon:'◈', color:'#B99CFF', title:'Domain Governance Teams', sub:'HSGA Governance Feed · Source',
     sections:[
       {type:'text', label:'Role', text:'Each business domain (Sales, Finance, Operations, Quality, Supply Chain, HR) maintains its own governance team, composed of a Domain Architect, Ontology Engineer, and Knowledge / Data Steward. These teams author domain-level SHACL shapes, propose SWRL rules, and draft deontic norms specific to their domain before submitting them upstream.'},
       {type:'kv', label:'Composition & Flow', items:[
@@ -1432,7 +1470,7 @@ const GOV_FEED_MODALS = {
         {k:'Escalation Path', v:'Enterprise Governance Council (via the Harmonization Engine on conflict)'},
       ]},
     ]},
-  harmonization:{icon:'⊕', color:'#06C9B0', title:'Rule Harmonization Engine', sub:'HSGA Governance Feed · Aggregator',
+  harmonization:{icon:'⊕', color:'#10E3C4', title:'Rule Harmonization Engine', sub:'HSGA Governance Feed · Aggregator',
     sections:[
       {type:'text', label:'Role', text:'Aggregates SHACL shapes, SWRL rules, and deontic norms submitted by every Domain Governance Team into a single, conflict-checked enforcement contract. Runs automated conflict detection across domains and routes anything it cannot resolve deterministically to the Enterprise Governance Council.'},
       {type:'metrics', label:'Live Throughput', items:[{v:'212+',l:'SHACL shapes harmonized'},{v:'96+',l:'SWRL rules harmonized'},{v:'4',l:'Domains reconciled'}]},
@@ -1443,7 +1481,7 @@ const GOV_FEED_MODALS = {
         {k:'Four Governance Domains', v:'Shared, mutually consistent policy source'},
       ]},
     ]},
-  council:{icon:'⬟', color:'#FFB347', title:'Enterprise Governance Council', sub:'HSGA Governance Feed · Final Authority',
+  council:{icon:'⬟', color:'#FFC24D', title:'Enterprise Governance Council', sub:'HSGA Governance Feed · Final Authority',
     sections:[
       {type:'text', label:'Role', text:'The top of the escalation chain. Arbitrates cross-domain and cross-jurisdiction conflicts the Rule Harmonization Engine cannot resolve automatically, and holds final sign-off authority for any change to the Enterprise Core Ontology or Upper Ontology.'},
       {type:'kv', label:'Authority & Composition', items:[
@@ -1458,65 +1496,65 @@ const GOV_FEED_MODALS = {
 // ─── LAYER DEEP-DIVES DATA ──────────────────────────────────────────────────
 const DEEP_SECTIONS = [
   {
-    id:'sem-td', icon:'▲', color:'#3B82F6',
+    id:'sem-td', icon:'▲', color:'#4C8FFF',
     title:'Semantic Layer — Top-Down',
     sub:'Enterprise ontology cascading through domain and application semantics, governed by six named personas',
     groups:[
       {label:'Ontology Stack (top-down cascade)', items:[
         {icon:'⊤', title:'Upper / Foundational Ontology', tag:'BFO-aligned', desc:'Domain-agnostic top-most categories every domain ontology specializes from.',
-          modal:{icon:'⊤',color:'#3B82F6',title:'Upper / Foundational Ontology',sub:'Semantic Layer — Top-Down · Tier 0',sections:[
+          modal:{icon:'⊤',color:'#4C8FFF',title:'Upper / Foundational Ontology',sub:'Semantic Layer — Top-Down · Tier 0',sections:[
             {type:'text',label:'Role in the Cascade',text:'Provides the domain-agnostic foundational categories (BFO-aligned: Continuant, Occurrent, Independent/Dependent Continuant) from which every enterprise, domain, and application ontology below it inherits structure. Changes here are rare and require Enterprise Governance Council approval — the entire ontology stack specializes from this tier.'},
             {type:'tags',label:'Standards Referenced',items:['BFO (Basic Formal Ontology)','ISO/IEC 21838','DOLCE-aligned patterns']},
           ]}},
         {icon:'◆', title:'Enterprise Core Ontology', tag:'Company-wide', desc:'Canonical company-wide classes and properties shared across every domain.',
-          modal:{icon:'◆',color:'#3B82F6',title:'Enterprise Core Ontology',sub:'Semantic Layer — Top-Down · Tier 1',sections:[
+          modal:{icon:'◆',color:'#4C8FFF',title:'Enterprise Core Ontology',sub:'Semantic Layer — Top-Down · Tier 1',sections:[
             {type:'text',label:'Role in the Cascade',text:'Holds the canonical, company-wide classes and properties — Customer, Product, Process, Obligation, Agreement — that every business domain specializes rather than redefines. This is the single point of truth that keeps domain ontologies from drifting into incompatible vocabularies.'},
             {type:'kv',label:'Representative Classes',items:[{k:'Customer',v:'Any party in a commercial relationship with the enterprise'},{k:'Product',v:'Any good or service offered by the enterprise'},{k:'Process',v:'A governed sequence of state transitions'},{k:'Obligation',v:'A deontic requirement binding an agent or system'}]},
           ]}},
         {icon:'◇', title:'Domain Ontologies', tag:'Per-domain', desc:'Business-domain extensions (Sales, Finance, Operations, Quality) specializing enterprise core classes.',
-          modal:{icon:'◇',color:'#3B82F6',title:'Domain Ontologies',sub:'Semantic Layer — Top-Down · Tier 2',sections:[
+          modal:{icon:'◇',color:'#4C8FFF',title:'Domain Ontologies',sub:'Semantic Layer — Top-Down · Tier 2',sections:[
             {type:'text',label:'Role in the Cascade',text:'Each business domain extends the Enterprise Core Ontology with domain-specific classes and properties. Owned and evolved by a Domain Architect, with changes reviewed through the domain governance process before promotion.'},
             {type:'tags',label:'Active Domains',items:['Sales','Finance','Operations','Quality','Supply Chain','HR']},
           ]}},
         {icon:'○', title:'Application / Local Ontologies', tag:'App-scoped', desc:'Narrow application vocabularies bound back to domain ontologies via subclass/equivalence axioms.',
-          modal:{icon:'○',color:'#3B82F6',title:'Application / Local Ontologies',sub:'Semantic Layer — Top-Down · Tier 3',sections:[
+          modal:{icon:'○',color:'#4C8FFF',title:'Application / Local Ontologies',sub:'Semantic Layer — Top-Down · Tier 3',sections:[
             {type:'text',label:'Role in the Cascade',text:'The narrowest, most implementation-adjacent tier — vocabulary scoped to a single application or system, always bound back to a domain ontology so local terms never fragment enterprise meaning.'},
             {type:'kv',label:'Binding Mechanism',items:[{k:'rdfs:subClassOf',v:'Local class specializes a domain class'},{k:'owl:equivalentClass',v:'Local class is a renamed alias of a domain class'}]},
           ]}},
       ]},
       {label:'Governance Personas', items:[
         {icon:'◉', title:'Domain Architect', tag:'Approves ontology change', desc:'Owns top-down ontology authority for a business domain; chairs domain governance review.',
-          modal:{icon:'◉',color:'#3B82F6',title:'Domain Architect',sub:'Governance Persona · Semantic Top-Down',sections:[
+          modal:{icon:'◉',color:'#4C8FFF',title:'Domain Architect',sub:'Governance Persona · Semantic Top-Down',sections:[
             {type:'text',label:'Responsibility',text:'Owns top-down ontology authority for an assigned business domain. Approves or rejects proposed new classes and properties, and chairs the domain-level governance review before any change is promoted toward the Enterprise Core Ontology.'},
             {type:'metrics',label:'Persona Telemetry',items:[{v:'91%',l:'Trust Score'},{v:'0.22',l:'Fatigue Index'},{v:'93%',l:'Decision Accuracy'}]},
             {type:'kv',label:'Governance Profile',items:[{k:'Decision Rights',v:'Approve / reject domain-level ontology changes'},{k:'Escalation Path',v:'Enterprise Governance Council'},{k:'Primary Tooling',v:'Ontology Explorer, Orchestration Platform'}]},
           ]}},
         {icon:'◈', title:'Ontology Engineer', tag:'Builds OWL/SHACL', desc:'Authors OWL/RDF ontology artifacts and SHACL shapes; manages ontology CI/CD.',
-          modal:{icon:'◈',color:'#3B82F6',title:'Ontology Engineer',sub:'Governance Persona · Semantic Top-Down',sections:[
+          modal:{icon:'◈',color:'#4C8FFF',title:'Ontology Engineer',sub:'Governance Persona · Semantic Top-Down',sections:[
             {type:'text',label:'Responsibility',text:'Authors and maintains OWL/RDF ontology artifacts and the SHACL constraint library. Manages the ontology CI/CD pipeline that tests every proposed change before deployment to the graph engine.'},
             {type:'metrics',label:'Persona Telemetry',items:[{v:'93%',l:'Trust Score'},{v:'0.31',l:'Fatigue Index'},{v:'95%',l:'Decision Accuracy'}]},
             {type:'kv',label:'Governance Profile',items:[{k:'Decision Rights',v:'Merge ontology / SHACL changes post-review'},{k:'Escalation Path',v:'Domain Architect'},{k:'Primary Tooling',v:'Ontology Registry, SHACL Validator'}]},
           ]}},
         {icon:'◆', title:'Knowledge / Data Steward', tag:'Curates mappings', desc:'Curates ontology-to-implementation mappings; resolves lineage and drift signals.',
-          modal:{icon:'◆',color:'#3B82F6',title:'Knowledge / Data Steward',sub:'Governance Persona · Semantic Top-Down',sections:[
+          modal:{icon:'◆',color:'#4C8FFF',title:'Knowledge / Data Steward',sub:'Governance Persona · Semantic Top-Down',sections:[
             {type:'text',label:'Responsibility',text:'Curates the correspondences in the Mapping Graph between top-down ontology concepts and bottom-up implementation assets. Primary responder to lineage and drift signals raised by the Drift Detection Agent.'},
             {type:'metrics',label:'Persona Telemetry',items:[{v:'81%',l:'Trust Score'},{v:'0.55',l:'Fatigue Index'},{v:'85%',l:'Decision Accuracy'}]},
             {type:'kv',label:'Governance Profile',items:[{k:'Decision Rights',v:'Confirm / reject low-confidence mapping candidates'},{k:'Escalation Path',v:'Domain Architect'},{k:'Primary Tooling',v:'Mapping Graph Console, HITL Intervention Pane'}]},
           ]}},
         {icon:'▣', title:'Compliance / Legal Reviewer', tag:'Authors deontic norms', desc:'Authors and reviews deontic norms encoding regulatory obligations as machine-enforceable constraints.',
-          modal:{icon:'▣',color:'#3B82F6',title:'Compliance / Legal Reviewer',sub:'Governance Persona · Semantic Top-Down',sections:[
+          modal:{icon:'▣',color:'#4C8FFF',title:'Compliance / Legal Reviewer',sub:'Governance Persona · Semantic Top-Down',sections:[
             {type:'text',label:'Responsibility',text:'Authors and reviews the Deontic Norm Library, translating regulatory and contractual obligations into machine-enforceable obligation / permission / prohibition statements that the gateway enforces at PEP Step 3.'},
             {type:'metrics',label:'Persona Telemetry',items:[{v:'96%',l:'Trust Score'},{v:'0.19',l:'Fatigue Index'},{v:'97%',l:'Decision Accuracy'}]},
             {type:'kv',label:'Governance Profile',items:[{k:'Decision Rights',v:'Author / retire deontic norms'},{k:'Escalation Path',v:'Enterprise Governance Council'},{k:'Primary Tooling',v:'Deontic Norm Library Editor'}]},
           ]}},
         {icon:'⬟', title:'Enterprise Governance Council Member', tag:'Final sign-off', desc:'Arbitrates cross-domain conflicts; final sign-off on enterprise-wide ontology changes.',
-          modal:{icon:'⬟',color:'#3B82F6',title:'Enterprise Governance Council Member',sub:'Governance Persona · Semantic Top-Down',sections:[
+          modal:{icon:'⬟',color:'#4C8FFF',title:'Enterprise Governance Council Member',sub:'Governance Persona · Semantic Top-Down',sections:[
             {type:'text',label:'Responsibility',text:'Arbitrates cross-domain and cross-jurisdiction conflicts that individual Domain Architects cannot resolve. Holds final sign-off authority for changes to the Enterprise Core Ontology and the Upper Ontology.'},
             {type:'metrics',label:'Persona Telemetry',items:[{v:'95%',l:'Trust Score'},{v:'0.27',l:'Fatigue Index'},{v:'96%',l:'Decision Accuracy'}]},
             {type:'kv',label:'Governance Profile',items:[{k:'Decision Rights',v:'Enterprise-wide ontology sign-off'},{k:'Escalation Path',v:'None — top of the escalation chain'},{k:'Primary Tooling',v:'Governance Named Graph Audit Console'}]},
           ]}},
         {icon:'○', title:'Business SME / Domain Expert', tag:'Validates semantics', desc:'Validates formal ontology semantics against real-world business meaning.',
-          modal:{icon:'○',color:'#3B82F6',title:'Business SME / Domain Expert',sub:'Governance Persona · Semantic Top-Down',sections:[
+          modal:{icon:'○',color:'#4C8FFF',title:'Business SME / Domain Expert',sub:'Governance Persona · Semantic Top-Down',sections:[
             {type:'text',label:'Responsibility',text:'Provides the tacit domain knowledge that formal ontology work depends on — validates that a proposed class or property actually matches how the business uses the term before it is formalized.'},
             {type:'metrics',label:'Persona Telemetry',items:[{v:'88%',l:'Trust Score'},{v:'0.34',l:'Fatigue Index'},{v:'90%',l:'Decision Accuracy'}]},
             {type:'kv',label:'Governance Profile',items:[{k:'Decision Rights',v:'Advisory — validates semantic intent'},{k:'Escalation Path',v:'Domain Architect'},{k:'Primary Tooling',v:'Ontology Explorer, Domain Intelligence App'}]},
@@ -1524,7 +1562,7 @@ const DEEP_SECTIONS = [
       ]},
       {label:'Persona Model — common schema', items:[
         {icon:'▦', title:'Common Persona Schema', tag:'Meta-model', desc:'The seven-field schema every governance persona is formally defined by across the holarchy.',
-          modal:{icon:'▦',color:'#3B82F6',title:'Common Persona Schema',sub:'Meta-model applied to all governance personas',sections:[
+          modal:{icon:'▦',color:'#4C8FFF',title:'Common Persona Schema',sub:'Meta-model applied to all governance personas',sections:[
             {type:'text',label:'Purpose',text:'Every persona referenced anywhere in the HSGA — top-down, bottom-up, or in the Human-in-the-Loop view — is instantiated from the same seven-field schema, so trust calibration, escalation, and authority scope are always comparable across roles.'},
             {type:'kv',label:'Schema Fields',items:[
               {k:'Identity & Role',v:'Named role, not an individual — a Domain Architect is a role any qualified person can hold'},
@@ -1540,467 +1578,467 @@ const DEEP_SECTIONS = [
     ]
   },
   {
-    id:'sem-bu', icon:'▼', color:'#06B6D4',
+    id:'sem-bu', icon:'▼', color:'#17D3F5',
     title:'Semantic Layer — Bottom-Up',
     sub:'Implementation-native digital asset schemas, RDF-bound and mediated into the enterprise ontology',
     groups:[
       {label:'Digital Asset Schemas (RDF-bound)', items:[
         {icon:'▤', title:'dbt / LookML Metric Models → RDF Binding', tag:'Analytics', desc:'Canonical business metrics bound to ontology concepts via RDF schema anchors.',
-          modal:{icon:'▤',color:'#06B6D4',title:'dbt / LookML Metric Models → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
+          modal:{icon:'▤',color:'#17D3F5',title:'dbt / LookML Metric Models → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
             {type:'text',label:'How it Mediates Upward',text:'Every governed metric defined in the transformation layer is anchored to a canonical ontology concept through an explicit RDF binding, so a dashboard figure and a graph query of the same concept can never silently diverge.'},
             {type:'code',label:'Example RDF Binding (Turtle)',code:':GrossRevenue_Metric a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:GrossRevenue ;\n    hsga:sourceSystem "dbt://models.finance.gross_revenue" ;\n    hsga:mappingConfidence 0.94 ;\n    hsga:owner pers:DataSteward_Finance .'},
           ]}},
         {icon:'▥', title:'Property Graph Schema → RDF Binding', tag:'Graph', desc:'Graph-native node and edge types bound to ontology concepts via RDF schema anchors.',
-          modal:{icon:'▥',color:'#06B6D4',title:'Property Graph Schema → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
+          modal:{icon:'▥',color:'#17D3F5',title:'Property Graph Schema → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
             {type:'text',label:'How it Mediates Upward',text:'Node and edge types in the operational property graph are bound to their canonical ontology counterpart, allowing federated queries to traverse across the property graph and the governed Knowledge Graph as one logical structure.'},
             {type:'code',label:'Example RDF Binding (Turtle)',code:':CustomerNode a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:Customer ;\n    hsga:sourceSystem "propgraph://node.Customer" ;\n    hsga:mappingConfidence 0.98 .'},
           ]}},
         {icon:'▧', title:'Vector DB / RAG Embedding Schema → RDF Binding', tag:'RAG', desc:'Embedding indices grounded to canonical ontology entities for reliable retrieval.',
-          modal:{icon:'▧',color:'#06B6D4',title:'Vector DB / RAG Embedding Schema → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
+          modal:{icon:'▧',color:'#17D3F5',title:'Vector DB / RAG Embedding Schema → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
             {type:'text',label:'How it Mediates Upward',text:'Embedding indices used for retrieval-augmented generation are grounded to canonical ontology entities by the RAG Grounding Agent, preventing retrieval results from drifting away from governed meaning as embeddings are refreshed.'},
             {type:'code',label:'Example RDF Binding (Turtle)',code:':ProductEmbedding a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:Product ;\n    hsga:sourceSystem "vectordb://index.product_v3" ;\n    hsga:groundedVia hsga:RAGGroundingAgent ;\n    hsga:mappingConfidence 0.89 .'},
           ]}},
         {icon:'▨', title:'3rd-Party Ontology Schema Binding', tag:'External', desc:'External industry-standard ontology terms bound to internal ontology via equivalence axioms.',
-          modal:{icon:'▨',color:'#06B6D4',title:'3rd-Party Ontology Schema Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
+          modal:{icon:'▨',color:'#17D3F5',title:'3rd-Party Ontology Schema Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
             {type:'text',label:'How it Mediates Upward',text:'External, industry-standard ontology terms are bound to the internal ontology through explicit equivalence axioms, enabling interoperability with partner systems without importing an entire foreign vocabulary.'},
             {type:'code',label:'Example RDF Binding (Turtle)',code:'ont:Supplier owl:equivalentClass ext-std:TradingPartner ;\n    hsga:mappingConfidence 0.91 ;\n    hsga:externalStandard "Industry Standard Ontology v3" .'},
           ]}},
         {icon:'▩', title:'Data Catalog Technical Schema → RDF Binding', tag:'Catalog', desc:'Cataloged table and field definitions bound to ontology concepts for lineage traceability.',
-          modal:{icon:'▩',color:'#06B6D4',title:'Data Catalog Technical Schema → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
+          modal:{icon:'▩',color:'#17D3F5',title:'Data Catalog Technical Schema → RDF Binding',sub:'Semantic Layer — Bottom-Up · Digital Asset Schema',sections:[
             {type:'text',label:'How it Mediates Upward',text:'Technical table and field definitions captured by the metadata catalog are bound to ontology concepts, closing the lineage loop from a governed business term all the way down to the physical column that stores it.'},
             {type:'code',label:'Example RDF Binding (Turtle)',code:':OrdersTable a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:SalesOrder ;\n    hsga:sourceSystem "catalog://schema.sales.orders" ;\n    hsga:mappingConfidence 0.96 .'},
           ]}},
       ]},
       {label:'Bottom-Up Actors', items:[
         {icon:'◎', title:'Lineage Ingestion Agent', tag:'Automated', desc:'Auto-discovers and ingests lineage from bottom-up systems into the Mapping Graph.',
-          modal:{icon:'◎',color:'#06B6D4',title:'Lineage Ingestion Agent',sub:'Bottom-Up Actor · Automated',sections:[
+          modal:{icon:'◎',color:'#17D3F5',title:'Lineage Ingestion Agent',sub:'Bottom-Up Actor · Automated',sections:[
             {type:'text',label:'Function',text:'Continuously scans connected implementation systems for schema and lineage changes, auto-proposing new mapping-graph correspondence candidates for steward review rather than requiring manual discovery.'},
             {type:'tags',label:'Autonomy',items:['Fully automated discovery','HITL-gated promotion to confirmed mapping']},
           ]}},
         {icon:'○', title:'Data / Platform Engineer', tag:'Human', desc:'Maintains the transformation and pipeline code that produces digital asset schemas.',
-          modal:{icon:'○',color:'#06B6D4',title:'Data / Platform Engineer',sub:'Bottom-Up Actor · Human',sections:[
+          modal:{icon:'○',color:'#17D3F5',title:'Data / Platform Engineer',sub:'Bottom-Up Actor · Human',sections:[
             {type:'text',label:'Function',text:'Owns the transformation code, pipelines, and infrastructure that generate the digital asset schemas the Mapping Graph anchors to. First responder when a schema drift signal traces back to an intentional pipeline change.'},
           ]}},
         {icon:'◇', title:'Integration Steward', tag:'Human', desc:'Coordinates schema contracts between source systems and the connectivity layer.',
-          modal:{icon:'◇',color:'#06B6D4',title:'Integration Steward',sub:'Bottom-Up Actor · Human',sections:[
+          modal:{icon:'◇',color:'#17D3F5',title:'Integration Steward',sub:'Bottom-Up Actor · Human',sections:[
             {type:'text',label:'Function',text:'Coordinates the schema contracts between source and operational systems (L1/L2) and the connectivity layer, ensuring new integrations are onboarded with a mapping-graph correspondence from day one.'},
           ]}},
         {icon:'◆', title:'Knowledge / Data Steward (mediation-facing)', tag:'Human', desc:'Confirms low-confidence mappings and resolves drift signals raised bottom-up.',
-          modal:{icon:'◆',color:'#06B6D4',title:'Knowledge / Data Steward (mediation-facing)',sub:'Bottom-Up Actor · Human',sections:[
+          modal:{icon:'◆',color:'#17D3F5',title:'Knowledge / Data Steward (mediation-facing)',sub:'Bottom-Up Actor · Human',sections:[
             {type:'text',label:'Function',text:'The same Knowledge / Data Steward persona from the top-down view, acting here as the human checkpoint for bottom-up signals — confirming or rejecting mapping candidates the Lineage Ingestion Agent proposes.'},
           ]}},
       ]},
     ]
   },
   {
-    id:'mapping', icon:'⇄', color:'#A78BFA',
+    id:'mapping', icon:'⇄', color:'#B99CFF',
     title:'Mapping Layers — Six Correspondence Types',
     sub:'The Mapping Graph — a persistent lateral holon correlating top-down ontology to bottom-up implementation',
     groups:[
       {label:'Correspondence Types', items:[
         {icon:'①', title:'Ontologies ↔ 3rd-Party Ontologies', tag:'Owner: Ontology Engineer', desc:'owl:equivalentClass / skos:exactMatch bindings to external industry-standard ontologies.',
-          modal:{icon:'①',color:'#A78BFA',title:'Ontologies ↔ 3rd-Party Ontologies',sub:'Mapping Correspondence Type 1 of 6',sections:[
+          modal:{icon:'①',color:'#B99CFF',title:'Ontologies ↔ 3rd-Party Ontologies',sub:'Mapping Correspondence Type 1 of 6',sections:[
             {type:'text',label:'Purpose & Example',text:'Aligns internal ontology classes to external, industry-standard ontologies so the enterprise can exchange governed data with partners and regulators without redefining shared vocabulary. Example: ont:Supplier owl:equivalentClass ext-std:TradingPartner.'},
             {type:'kv',label:'Governance Profile',items:[{k:'Confidence Scoring',v:'Lexical + structural similarity, reviewed on proposal'},{k:'Owner',v:'Ontology Engineer'},{k:'Tooling',v:'Alignment Mapping Tool'}]},
           ]}},
         {icon:'②', title:'Domain-to-Domain', tag:'Owner: Domain Architect', desc:'Cross-domain concept alignment — e.g., Sales "Customer" ↔ Finance "Account Holder".',
-          modal:{icon:'②',color:'#A78BFA',title:'Domain-to-Domain',sub:'Mapping Correspondence Type 2 of 6',sections:[
+          modal:{icon:'②',color:'#B99CFF',title:'Domain-to-Domain',sub:'Mapping Correspondence Type 2 of 6',sections:[
             {type:'text',label:'Purpose & Example',text:'Aligns concepts that are named differently across two business domains but refer to the same real-world entity — for example, the Sales domain’s "Customer" and the Finance domain’s "Account Holder."'},
             {type:'kv',label:'Governance Profile',items:[{k:'Confidence Scoring',v:'Domain Architect co-sign required above enterprise-core impact threshold'},{k:'Owner',v:'Domain Architect (both domains)'},{k:'Tooling',v:'Ontology Explorer, Change-Impact Analysis'}]},
           ]}},
         {icon:'③', title:'Domain-to-Operations', tag:'Owner: Data Steward', desc:'Ontology concepts mapped to operational and physical system fields (L1/L2).',
-          modal:{icon:'③',color:'#A78BFA',title:'Domain-to-Operations',sub:'Mapping Correspondence Type 3 of 6',sections:[
+          modal:{icon:'③',color:'#B99CFF',title:'Domain-to-Operations',sub:'Mapping Correspondence Type 3 of 6',sections:[
             {type:'text',label:'Purpose & Example',text:'Binds domain ontology concepts down to the operational and physical layers (L1/L2) — equipment, sensors, and source systems — so telemetry is admitted to the holarchy only after it is typed against a governed concept.'},
             {type:'kv',label:'Governance Profile',items:[{k:'Confidence Scoring',v:'Protocol-adapter schema match at ingestion'},{k:'Owner',v:'Knowledge / Data Steward'},{k:'Tooling',v:'Digital-Twin Shell Registry'}]},
           ]}},
         {icon:'④', title:'Domain-to-Digital-Asset-Schemas', tag:'Owner: Data Steward', desc:'Ontology bound to dbt models, property-graph nodes, and vector embeddings.',
-          modal:{icon:'④',color:'#A78BFA',title:'Domain-to-Digital-Asset-Schemas',sub:'Mapping Correspondence Type 4 of 6',sections:[
+          modal:{icon:'④',color:'#B99CFF',title:'Domain-to-Digital-Asset-Schemas',sub:'Mapping Correspondence Type 4 of 6',sections:[
             {type:'text',label:'Purpose & Example',text:'The mapping type behind every RDF binding in the Semantic Layer — Bottom-Up section: dbt/LookML models, property-graph nodes, vector embeddings, and catalog schemas are each bound to a canonical domain concept.'},
             {type:'kv',label:'Governance Profile',items:[{k:'Confidence Scoring',v:'Automated candidate scoring via Mapping Confidence Agent'},{k:'Owner',v:'Knowledge / Data Steward'},{k:'Tooling',v:'Mapping Graph Console'}]},
           ]}},
         {icon:'⑤', title:'Governance-and-Invariants', tag:'Owner: Compliance Reviewer', desc:'Ontology concepts bound to SHACL, SWRL, and deontic rule definitions.',
-          modal:{icon:'⑤',color:'#A78BFA',title:'Governance-and-Invariants',sub:'Mapping Correspondence Type 5 of 6',sections:[
+          modal:{icon:'⑤',color:'#B99CFF',title:'Governance-and-Invariants',sub:'Mapping Correspondence Type 5 of 6',sections:[
             {type:'text',label:'Purpose & Example',text:'Binds ontology concepts to the specific SHACL shapes, SWRL rules, and deontic norms that govern them — the correspondence type that lets the gateway know which rule library entries apply to which concept at runtime.'},
             {type:'kv',label:'Governance Profile',items:[{k:'Confidence Scoring',v:'Deterministic — rule targetClass binding, not scored'},{k:'Owner',v:'Compliance / Legal Reviewer'},{k:'Tooling',v:'Deontic Norm Library Editor, SHACL Validator'}]},
           ]}},
         {icon:'⑥', title:'Domains-to-RAG-and-AI', tag:'Owner: RAG Grounding Agent', desc:'Ontology anchors grounding RAG retrieval results and agent context.',
-          modal:{icon:'⑥',color:'#A78BFA',title:'Domains-to-RAG-and-AI',sub:'Mapping Correspondence Type 6 of 6',sections:[
+          modal:{icon:'⑥',color:'#B99CFF',title:'Domains-to-RAG-and-AI',sub:'Mapping Correspondence Type 6 of 6',sections:[
             {type:'text',label:'Purpose & Example',text:'Anchors vector-retrieval results and agent-facing context to canonical ontology entities, so retrieval-augmented generation and compiled AI directives stay grounded in governed meaning rather than drifting embedding space.'},
             {type:'kv',label:'Governance Profile',items:[{k:'Confidence Scoring',v:'Continuous — re-scored on every embedding refresh'},{k:'Owner',v:'RAG Grounding Agent (automated) + Knowledge Steward oversight'},{k:'Tooling',v:'Vector / Embedding Search Console'}]},
           ]}},
       ]},
       {label:'Pattern 1 — Ontologies ↔ 3rd-Party Ontologies: Example Correspondences', items:[
         {icon:'①', title:'ont:Supplier ↔ ext-std:TradingPartner', tag:'0.91 confidence', desc:'Internal Supplier class aligned to an external industry-standard ontology term.',
-          modal:{icon:'①',color:'#A78BFA',title:'ont:Supplier ↔ ext-std:TradingPartner',sub:'Mapping Graph Catalog · Pattern 1 of 6',sections:[
+          modal:{icon:'①',color:'#B99CFF',title:'ont:Supplier ↔ ext-std:TradingPartner',sub:'Mapping Graph Catalog · Pattern 1 of 6',sections:[
             {type:'code',label:'Correspondence',code:'ont:Supplier owl:equivalentClass ext-std:TradingPartner ;\n    hsga:mappingConfidence 0.91 ;\n    hsga:externalStandard "Industry Standard Ontology v3" .'},
           ]}},
         {icon:'①', title:'ont:Product ↔ gs1:TradeItem', tag:'0.87 confidence', desc:'Internal Product class aligned to a GS1-style external trade-item standard.',
-          modal:{icon:'①',color:'#A78BFA',title:'ont:Product ↔ gs1:TradeItem',sub:'Mapping Graph Catalog · Pattern 1 of 6',sections:[
+          modal:{icon:'①',color:'#B99CFF',title:'ont:Product ↔ gs1:TradeItem',sub:'Mapping Graph Catalog · Pattern 1 of 6',sections:[
             {type:'code',label:'Correspondence',code:'ont:Product owl:equivalentClass gs1:TradeItem ;\n    hsga:mappingConfidence 0.87 ;\n    hsga:externalStandard "GS1-style Trade Item Ontology" .'},
           ]}},
       ]},
       {label:'Pattern 2 — Domain-to-Domain: Example Correspondences', items:[
         {icon:'②', title:'sales:Customer ↔ finance:AccountHolder', tag:'0.95 confidence', desc:'Sales domain Customer aligned to Finance domain Account Holder.',
-          modal:{icon:'②',color:'#A78BFA',title:'sales:Customer ↔ finance:AccountHolder',sub:'Mapping Graph Catalog · Pattern 2 of 6',sections:[
+          modal:{icon:'②',color:'#B99CFF',title:'sales:Customer ↔ finance:AccountHolder',sub:'Mapping Graph Catalog · Pattern 2 of 6',sections:[
             {type:'code',label:'Correspondence',code:'sales:Customer owl:equivalentClass finance:AccountHolder ;\n    hsga:mappingConfidence 0.95 ;\n    hsga:coOwner "Domain Architect (Sales + Finance)" .'},
           ]}},
         {icon:'②', title:'ops:Facility ↔ logistics:Site', tag:'0.90 confidence', desc:'Operations domain Facility aligned to Logistics domain Site.',
-          modal:{icon:'②',color:'#A78BFA',title:'ops:Facility ↔ logistics:Site',sub:'Mapping Graph Catalog · Pattern 2 of 6',sections:[
+          modal:{icon:'②',color:'#B99CFF',title:'ops:Facility ↔ logistics:Site',sub:'Mapping Graph Catalog · Pattern 2 of 6',sections:[
             {type:'code',label:'Correspondence',code:'ops:Facility owl:equivalentClass logistics:Site ;\n    hsga:mappingConfidence 0.90 .'},
           ]}},
       ]},
       {label:'Pattern 3 — Domain-to-Operations: Example Correspondences', items:[
         {icon:'③', title:'ont:Equipment ↔ digitaltwin:AssetShell', tag:'0.98 confidence', desc:'Domain ontology Equipment concept bound to its digital-twin shell.',
-          modal:{icon:'③',color:'#A78BFA',title:'ont:Equipment ↔ digitaltwin:AssetShell',sub:'Mapping Graph Catalog · Pattern 3 of 6',sections:[
+          modal:{icon:'③',color:'#B99CFF',title:'ont:Equipment ↔ digitaltwin:AssetShell',sub:'Mapping Graph Catalog · Pattern 3 of 6',sections:[
             {type:'code',label:'Correspondence',code:'ont:Equipment hsga:groundedIn digitaltwin:AssetShell ;\n    hsga:mappingConfidence 0.98 .'},
           ]}},
         {icon:'③', title:'ont:Sensor ↔ scada:Tag', tag:'0.93 confidence', desc:'Domain ontology Sensor concept bound to an operational SCADA-style tag.',
-          modal:{icon:'③',color:'#A78BFA',title:'ont:Sensor ↔ scada:Tag',sub:'Mapping Graph Catalog · Pattern 3 of 6',sections:[
+          modal:{icon:'③',color:'#B99CFF',title:'ont:Sensor ↔ scada:Tag',sub:'Mapping Graph Catalog · Pattern 3 of 6',sections:[
             {type:'code',label:'Correspondence',code:'ont:Sensor hsga:groundedIn scada:Tag ;\n    hsga:mappingConfidence 0.93 .'},
           ]}},
       ]},
       {label:'Pattern 4 — Domain-to-Digital-Asset-Schemas: Example Correspondences', items:[
         {icon:'④', title:'ont:GrossRevenue ↔ dbt:models.finance.gross_revenue', tag:'0.94 confidence', desc:'Canonical metric bound to its dbt transformation model.',
-          modal:{icon:'④',color:'#A78BFA',title:'ont:GrossRevenue ↔ dbt:models.finance.gross_revenue',sub:'Mapping Graph Catalog · Pattern 4 of 6',sections:[
+          modal:{icon:'④',color:'#B99CFF',title:'ont:GrossRevenue ↔ dbt:models.finance.gross_revenue',sub:'Mapping Graph Catalog · Pattern 4 of 6',sections:[
             {type:'code',label:'Correspondence',code:':GrossRevenue_Metric a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:GrossRevenue ;\n    hsga:sourceSystem "dbt://models.finance.gross_revenue" ;\n    hsga:mappingConfidence 0.94 .'},
           ]}},
         {icon:'④', title:'ont:Customer ↔ propgraph:node.Customer', tag:'0.98 confidence', desc:'Domain ontology Customer bound to its property-graph node type.',
-          modal:{icon:'④',color:'#A78BFA',title:'ont:Customer ↔ propgraph:node.Customer',sub:'Mapping Graph Catalog · Pattern 4 of 6',sections:[
+          modal:{icon:'④',color:'#B99CFF',title:'ont:Customer ↔ propgraph:node.Customer',sub:'Mapping Graph Catalog · Pattern 4 of 6',sections:[
             {type:'code',label:'Correspondence',code:':CustomerNode a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:Customer ;\n    hsga:sourceSystem "propgraph://node.Customer" ;\n    hsga:mappingConfidence 0.98 .'},
           ]}},
       ]},
       {label:'Pattern 5 — Governance-and-Invariants: Example Correspondences', items:[
         {icon:'⑤', title:'ont:Supplier ↔ shacl:SupplierShape', tag:'Deterministic', desc:'Supplier concept bound to the SHACL shape that governs it.',
-          modal:{icon:'⑤',color:'#A78BFA',title:'ont:Supplier ↔ shacl:SupplierShape',sub:'Mapping Graph Catalog · Pattern 5 of 6',sections:[
+          modal:{icon:'⑤',color:'#B99CFF',title:'ont:Supplier ↔ shacl:SupplierShape',sub:'Mapping Graph Catalog · Pattern 5 of 6',sections:[
             {type:'code',label:'Correspondence',code:'shacl:SupplierShape sh:targetClass ont:Supplier .\n# Binding is deterministic (targetClass), not confidence-scored.'},
           ]}},
         {icon:'⑤', title:'ont:PersonalDataRecord ↔ deon:DataRetentionNorm', tag:'Deterministic', desc:'PII record concept bound to the deontic obligation that governs its retention.',
-          modal:{icon:'⑤',color:'#A78BFA',title:'ont:PersonalDataRecord ↔ deon:DataRetentionNorm',sub:'Mapping Graph Catalog · Pattern 5 of 6',sections:[
+          modal:{icon:'⑤',color:'#B99CFF',title:'ont:PersonalDataRecord ↔ deon:DataRetentionNorm',sub:'Mapping Graph Catalog · Pattern 5 of 6',sections:[
             {type:'code',label:'Correspondence',code:'deon:DataRetentionNorm deon:appliesTo ont:PersonalDataRecord ;\n    deon:enforcedAt "L3 PEP Step 3" .'},
           ]}},
       ]},
       {label:'Pattern 6 — Domains-to-RAG-and-AI: Example Correspondences', items:[
         {icon:'⑥', title:'ont:Product ↔ vectordb:index.product_v3', tag:'0.89 confidence', desc:'Product concept grounding a retrieval-augmented generation embedding index.',
-          modal:{icon:'⑥',color:'#A78BFA',title:'ont:Product ↔ vectordb:index.product_v3',sub:'Mapping Graph Catalog · Pattern 6 of 6',sections:[
+          modal:{icon:'⑥',color:'#B99CFF',title:'ont:Product ↔ vectordb:index.product_v3',sub:'Mapping Graph Catalog · Pattern 6 of 6',sections:[
             {type:'code',label:'Correspondence',code:':ProductEmbedding a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:Product ;\n    hsga:sourceSystem "vectordb://index.product_v3" ;\n    hsga:groundedVia hsga:RAGGroundingAgent ;\n    hsga:mappingConfidence 0.89 .'},
           ]}},
         {icon:'⑥', title:'ont:Policy ↔ vectordb:index.policy_v2', tag:'0.92 confidence', desc:'Governance policy concept grounding its retrieval index for agent context.',
-          modal:{icon:'⑥',color:'#A78BFA',title:'ont:Policy ↔ vectordb:index.policy_v2',sub:'Mapping Graph Catalog · Pattern 6 of 6',sections:[
+          modal:{icon:'⑥',color:'#B99CFF',title:'ont:Policy ↔ vectordb:index.policy_v2',sub:'Mapping Graph Catalog · Pattern 6 of 6',sections:[
             {type:'code',label:'Correspondence',code:':PolicyEmbedding a hsga:DigitalAssetSchema ;\n    hsga:implementsConcept ont:Policy ;\n    hsga:sourceSystem "vectordb://index.policy_v2" ;\n    hsga:groundedVia hsga:RAGGroundingAgent ;\n    hsga:mappingConfidence 0.92 .'},
           ]}},
       ]},
     ]
   },
   {
-    id:'agentic', icon:'◆', color:'#F59E0B',
+    id:'agentic', icon:'◆', color:'#FFAE1A',
     title:'Agentic Layer',
     sub:'Eight agent roles supporting mapping maintenance, rule projection, and recursive learning',
     groups:[
       {label:'Agent Roster', items:[
         {icon:'◎', title:'Lineage Ingestion Agent', tag:'Automated · Trust 97%', desc:'Discovers and ingests lineage signals from bottom-up systems.',
-          modal:{icon:'◎',color:'#F59E0B',title:'Lineage Ingestion Agent',sub:'Agentic Layer · Automated',sections:[
+          modal:{icon:'◎',color:'#FFAE1A',title:'Lineage Ingestion Agent',sub:'Agentic Layer · Automated',sections:[
             {type:'text',label:'Function',text:'Continuously scans connected implementation systems, proposing new lineage and mapping-graph candidates. Feeds the Knowledge / Data Steward review queue rather than writing directly to governed graphs.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'97%',l:'Trust Score'},{v:'Full',l:'Autonomy'},{v:'Observe',l:'Loop Stage'}]},
           ]}},
         {icon:'◈', title:'Mapping Confidence Agent', tag:'Automated · Trust 95%', desc:'Scores and monitors mapping-graph correspondence confidence, flags drift.',
-          modal:{icon:'◈',color:'#F59E0B',title:'Mapping Confidence Agent',sub:'Agentic Layer · Automated',sections:[
+          modal:{icon:'◈',color:'#FFAE1A',title:'Mapping Confidence Agent',sub:'Agentic Layer · Automated',sections:[
             {type:'text',label:'Function',text:'Continuously scores every correspondence in the Mapping Graph, flags any that fall below the governed confidence threshold, and routes flagged mappings into the HITL confirmation queue.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'95%',l:'Trust Score'},{v:'Full',l:'Autonomy'},{v:'Reason',l:'Loop Stage'}]},
           ]}},
         {icon:'⬡', title:'Rule Projection Agent', tag:'Automated · Trust 98%', desc:'Compiles canonical SHACL/SWRL into runtime-native enforcement targets.',
-          modal:{icon:'⬡',color:'#F59E0B',title:'Rule Projection Agent',sub:'Agentic Layer · Automated',sections:[
+          modal:{icon:'⬡',color:'#FFAE1A',title:'Rule Projection Agent',sub:'Agentic Layer · Automated',sections:[
             {type:'text',label:'Function',text:'Compiles the canonical SHACL/SWRL/deontic rule set into runtime-native enforcement targets (SQL, OPA policy, vector filters, agent guardrails) so the graph reasoner is never a request-time bottleneck.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'98%',l:'Trust Score'},{v:'Full',l:'Autonomy'},{v:'Adapt',l:'Loop Stage'}]},
           ]}},
         {icon:'◇', title:'Ontology Alignment Agent', tag:'HITL-gated · Trust 92%', desc:'Proposes owl:equivalentClass alignments to 3rd-party ontologies.',
-          modal:{icon:'◇',color:'#F59E0B',title:'Ontology Alignment Agent',sub:'Agentic Layer · HITL-gated',sections:[
+          modal:{icon:'◇',color:'#FFAE1A',title:'Ontology Alignment Agent',sub:'Agentic Layer · HITL-gated',sections:[
             {type:'text',label:'Function',text:'Proposes candidate owl:equivalentClass and skos:exactMatch alignments between internal ontology classes and external industry-standard ontologies. Every alignment requires Ontology Engineer confirmation before publish.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'92%',l:'Trust Score'},{v:'HITL-gated',l:'Autonomy'},{v:'Propose',l:'Loop Stage'}]},
           ]}},
         {icon:'▣', title:'Drift Detection Agent', tag:'Automated · Trust 94%', desc:'Monitors bottom-up schema changes for semantic drift against the ontology.',
-          modal:{icon:'▣',color:'#F59E0B',title:'Drift Detection Agent',sub:'Agentic Layer · Automated',sections:[
+          modal:{icon:'▣',color:'#FFAE1A',title:'Drift Detection Agent',sub:'Agentic Layer · Automated',sections:[
             {type:'text',label:'Function',text:'Watches connected digital asset schemas for structural or semantic drift against the ontology concept they are bound to, raising a review event to the Knowledge / Data Steward when confidence degrades.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'94%',l:'Trust Score'},{v:'Full',l:'Autonomy'},{v:'Observe',l:'Loop Stage'}]},
           ]}},
         {icon:'◉', title:'RAG Grounding Agent', tag:'Automated · Trust 96%', desc:'Anchors vector retrieval results to canonical ontology entities.',
-          modal:{icon:'◉',color:'#F59E0B',title:'RAG Grounding Agent',sub:'Agentic Layer · Automated',sections:[
+          modal:{icon:'◉',color:'#FFAE1A',title:'RAG Grounding Agent',sub:'Agentic Layer · Automated',sections:[
             {type:'text',label:'Function',text:'Grounds vector-retrieval and RAG results to canonical ontology entities at query time, preventing retrieval answers from citing ungoverned or stale embedding content.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'96%',l:'Trust Score'},{v:'Full',l:'Autonomy'},{v:'Reason',l:'Loop Stage'}]},
           ]}},
         {icon:'⬢', title:'Compliance Monitoring Agent', tag:'HITL-gated · Trust 97%', desc:'Continuously evaluates deontic norm adherence across domains.',
-          modal:{icon:'⬢',color:'#F59E0B',title:'Compliance Monitoring Agent',sub:'Agentic Layer · HITL-gated',sections:[
+          modal:{icon:'⬢',color:'#FFAE1A',title:'Compliance Monitoring Agent',sub:'Agentic Layer · HITL-gated',sections:[
             {type:'text',label:'Function',text:'Continuously evaluates live operational data against the Deontic Norm Library, escalating any detected obligation breach to the Compliance / Legal Reviewer rather than auto-remediating.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'97%',l:'Trust Score'},{v:'HITL-gated',l:'Autonomy'},{v:'HITL Review',l:'Loop Stage'}]},
           ]}},
         {icon:'◐', title:'Recursive Learning Agent', tag:'HITL-gated · Trust 93%', desc:'Orchestrates the Observe → Reason → Propose → HITL Review → Adapt loop.',
-          modal:{icon:'◐',color:'#F59E0B',title:'Recursive Learning Agent',sub:'Agentic Layer · HITL-gated',sections:[
+          modal:{icon:'◐',color:'#FFAE1A',title:'Recursive Learning Agent',sub:'Agentic Layer · HITL-gated',sections:[
             {type:'text',label:'Function',text:'Orchestrates the five-stage recursive learning loop across the other agent roles — sequencing observation, reasoning, proposal drafting, human review routing, and adaptation of downstream agent behavior.'},
             {type:'metrics',label:'Runtime Profile',items:[{v:'93%',l:'Trust Score'},{v:'HITL-gated',l:'Autonomy'},{v:'All 5 stages',l:'Loop Coverage'}]},
           ]}},
       ]},
       {label:'Recursive Learning Loop', items:[
         {icon:'①', title:'Observe', tag:'Signal capture', desc:'Agents capture lineage, drift, and usage signals across the holarchy.',
-          modal:{icon:'①',color:'#F59E0B',title:'Observe',sub:'Recursive Learning Loop · Stage 1 of 5',sections:[
+          modal:{icon:'①',color:'#FFAE1A',title:'Observe',sub:'Recursive Learning Loop · Stage 1 of 5',sections:[
             {type:'text',label:'What Happens',text:'Automated agents (Lineage Ingestion, Drift Detection) continuously capture signals from across the holarchy — new schemas, changed lineage, retrieval misses, rule violations — without taking any governing action yet.'}],
           }},
         {icon:'②', title:'Reason', tag:'Pattern synthesis', desc:'Signals are synthesized into candidate hypotheses about drift or improvement.',
-          modal:{icon:'②',color:'#F59E0B',title:'Reason',sub:'Recursive Learning Loop · Stage 2 of 5',sections:[
+          modal:{icon:'②',color:'#FFAE1A',title:'Reason',sub:'Recursive Learning Loop · Stage 2 of 5',sections:[
             {type:'text',label:'What Happens',text:'Observed signals are synthesized by the Mapping Confidence and RAG Grounding agents into candidate hypotheses — e.g., "this mapping has drifted" or "this retrieval anchor is now unreliable."'}],
           }},
         {icon:'③', title:'Propose', tag:'Change candidate', desc:'A concrete change candidate (mapping update, rule refinement) is drafted.',
-          modal:{icon:'③',color:'#F59E0B',title:'Propose',sub:'Recursive Learning Loop · Stage 3 of 5',sections:[
+          modal:{icon:'③',color:'#FFAE1A',title:'Propose',sub:'Recursive Learning Loop · Stage 3 of 5',sections:[
             {type:'text',label:'What Happens',text:'A concrete, reviewable change candidate is drafted — a proposed mapping-graph update, ontology alignment, or rule refinement — and queued for human review rather than applied automatically.'}],
           }},
         {icon:'④', title:'HITL Review', tag:'Human authorization', desc:'The appropriate governance persona reviews and authorizes or rejects the proposal.',
-          modal:{icon:'④',color:'#F59E0B',title:'HITL Review',sub:'Recursive Learning Loop · Stage 4 of 5',sections:[
+          modal:{icon:'④',color:'#FFAE1A',title:'HITL Review',sub:'Recursive Learning Loop · Stage 4 of 5',sections:[
             {type:'text',label:'What Happens',text:'The appropriate governance persona — usually a Knowledge / Data Steward or Ontology Engineer — reviews the proposal in the HITL Intervention Pane and authorizes, rejects, or requests revision.'}],
           }},
         {icon:'⑤', title:'Adapt', tag:'Behavior update', desc:'Authorized changes update downstream agent behavior and rule projections.',
-          modal:{icon:'⑤',color:'#F59E0B',title:'Adapt',sub:'Recursive Learning Loop · Stage 5 of 5',sections:[
+          modal:{icon:'⑤',color:'#FFAE1A',title:'Adapt',sub:'Recursive Learning Loop · Stage 5 of 5',sections:[
             {type:'text',label:'What Happens',text:'Authorized changes are published — updating the Mapping Graph, ontology, or rule library — and the Rule Projection Agent recompiles affected runtime targets. The loop returns to Observe.'}],
           }},
       ]},
     ]
   },
   {
-    id:'governance', icon:'⬟', color:'#EF4444',
+    id:'governance', icon:'⬟', color:'#FF5252',
     title:'Governance Layer & Invariants',
     sub:'Rules, constraints, and logic libraries harmonized into a single enforcement contract',
     groups:[
       {label:'Rule & Constraint Libraries', items:[
         {icon:'◈', title:'SHACL Shape Library', tag:'212+ shapes', desc:'Structural and data-quality invariants enforced at every layer boundary.',
-          modal:{icon:'◈',color:'#EF4444',title:'SHACL Shape Library',sub:'Governance Layer · Rule Library',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'SHACL Shape Library',sub:'Governance Layer · Rule Library',sections:[
             {type:'text',label:'Purpose',text:'The structural and data-quality invariant library, enforced at RDSG Step 1. 212+ shapes cover every governed domain; critical-severity violations halt a transition immediately.'},
             {type:'code',label:'Example SHACL Shape',code:'ex:SupplierShape a sh:NodeShape ;\n    sh:targetClass ont:Supplier ;\n    sh:property [\n        sh:path ont:qualificationStatus ;\n        sh:in ("Qualified" "Pending" "Suspended") ;\n        sh:minCount 1 ;\n    ] .'},
           ]}},
         {icon:'⬡', title:'SWRL Temporal Rule Library', tag:'96+ rules', desc:'Time-aware reasoning rules — expiration, qualification windows, retest intervals.',
-          modal:{icon:'⬡',color:'#EF4444',title:'SWRL Temporal Rule Library',sub:'Governance Layer · Rule Library',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'SWRL Temporal Rule Library',sub:'Governance Layer · Rule Library',sections:[
             {type:'text',label:'Purpose',text:'Temporal and logical reasoning rules evaluated at RDSG Step 2, ensuring a transition is valid not just structurally but at this specific point in time — qualification windows, expirations, and retest intervals.'},
             {type:'code',label:'Example SWRL Rule',code:'Supplier(?s) ^ qualificationExpiry(?s,?d) ^\n  temporallyBefore(?d,?now)\n  -> hasStatus(?s,"Expired")'},
           ]}},
         {icon:'▣', title:'Deontic Norm Library', tag:'Obligation / Permission / Prohibition', desc:'Regulatory and policy logic encoded as machine-enforceable obligations.',
-          modal:{icon:'▣',color:'#EF4444',title:'Deontic Norm Library',sub:'Governance Layer · Rule Library',sections:[
+          modal:{icon:'▣',color:'#FF5252',title:'Deontic Norm Library',sub:'Governance Layer · Rule Library',sections:[
             {type:'text',label:'Purpose',text:'Obligation, permission, and prohibition statements evaluated at RDSG Step 3 alongside the four governance domains — the machine-enforceable encoding of regulatory and contractual policy.'},
             {type:'code',label:'Example Deontic Norm',code:':DataRetentionNorm a deon:Obligation ;\n    deon:appliesTo ont:PersonalDataRecord ;\n    deon:requires "retain for regulated period per applicable jurisdiction" ;\n    deon:enforcedAt "L3 PEP Step 3" .'},
           ]}},
       ]},
       {label:'SHACL Shapes — Structural & Cardinality', items:[
         {icon:'◈', title:'Supplier Shape', tag:'sh:minCount / sh:maxCount', desc:'Requires qualificationStatus to be present exactly once.',
-          modal:{icon:'◈',color:'#EF4444',title:'Supplier Shape',sub:'SHACL Catalog · Structural & Cardinality',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Supplier Shape',sub:'SHACL Catalog · Structural & Cardinality',sections:[
             {type:'text',label:'Purpose',text:'Enforces that every ont:Supplier instance carries exactly one qualificationStatus value — preventing suppliers from being admitted to downstream processes without a known qualification state.'},
             {type:'code',label:'Shape Definition',code:'ex:SupplierShape a sh:NodeShape ;\n    sh:targetClass ont:Supplier ;\n    sh:property [\n        sh:path ont:qualificationStatus ;\n        sh:minCount 1 ; sh:maxCount 1 ;\n    ] .'},
           ]}},
         {icon:'◈', title:'Customer Shape', tag:'sh:minCount', desc:'Requires every customer record to carry a primary contact.',
-          modal:{icon:'◈',color:'#EF4444',title:'Customer Shape',sub:'SHACL Catalog · Structural & Cardinality',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Customer Shape',sub:'SHACL Catalog · Structural & Cardinality',sections:[
             {type:'text',label:'Purpose',text:'Ensures every ont:Customer instance has at least one primaryContact property populated — a baseline data-completeness invariant for the Sales domain.'},
             {type:'code',label:'Shape Definition',code:'ex:CustomerShape a sh:NodeShape ;\n    sh:targetClass ont:Customer ;\n    sh:property [\n        sh:path ont:primaryContact ;\n        sh:minCount 1 ;\n    ] .'},
           ]}},
       ]},
       {label:'SHACL Shapes — Value-Range & Enumeration', items:[
         {icon:'◈', title:'Qualification Status Shape', tag:'sh:in enum', desc:'Restricts qualificationStatus to a fixed, governed set of values.',
-          modal:{icon:'◈',color:'#EF4444',title:'Qualification Status Shape',sub:'SHACL Catalog · Value-Range & Enumeration',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Qualification Status Shape',sub:'SHACL Catalog · Value-Range & Enumeration',sections:[
             {type:'text',label:'Purpose',text:'Restricts the qualificationStatus property to a closed, governed enumeration, preventing ungoverned free-text status values from entering the graph.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path ont:qualificationStatus ;\n    sh:in ("Qualified" "Pending" "Suspended") ;\n] .'},
           ]}},
         {icon:'◈', title:'Risk Tier Shape', tag:'sh:in enum', desc:'Restricts riskTier to a fixed four-value enumeration.',
-          modal:{icon:'◈',color:'#EF4444',title:'Risk Tier Shape',sub:'SHACL Catalog · Value-Range & Enumeration',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Risk Tier Shape',sub:'SHACL Catalog · Value-Range & Enumeration',sections:[
             {type:'text',label:'Purpose',text:'Constrains riskTier to exactly four governed values, keeping every risk-scoring consumer (dashboards, agents, policy engine) working from the same closed vocabulary.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path ont:riskTier ;\n    sh:in ("Low" "Medium" "High" "Critical") ;\n] .'},
           ]}},
       ]},
       {label:'SHACL Shapes — Cross-Reference & Referential Integrity', items:[
         {icon:'◈', title:'Order Line Shape', tag:'sh:class', desc:'Requires every order line item to reference a valid Product instance.',
-          modal:{icon:'◈',color:'#EF4444',title:'Order Line Shape',sub:'SHACL Catalog · Cross-Reference & Referential Integrity',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Order Line Shape',sub:'SHACL Catalog · Cross-Reference & Referential Integrity',sections:[
             {type:'text',label:'Purpose',text:'Ensures every lineItem on a sales order resolves to a real, governed ont:Product instance, preventing orphaned or ungoverned product references.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path ont:lineItem ;\n    sh:class ont:Product ;\n] .'},
           ]}},
         {icon:'◈', title:'Asset Owner Shape', tag:'sh:class', desc:'Requires every physical asset to reference a valid legal-entity owner.',
-          modal:{icon:'◈',color:'#EF4444',title:'Asset Owner Shape',sub:'SHACL Catalog · Cross-Reference & Referential Integrity',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Asset Owner Shape',sub:'SHACL Catalog · Cross-Reference & Referential Integrity',sections:[
             {type:'text',label:'Purpose',text:'Enforces that every tracked physical asset resolves to a governed ont:LegalEntity owner — required for chain-of-custody and provenance queries at L1/L4.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path ont:assetOwner ;\n    sh:class ont:LegalEntity ;\n] .'},
           ]}},
       ]},
       {label:'SHACL Shapes — Domain-Specific (Four Governance Domains)', items:[
         {icon:'◈', title:'PII Field Shape', tag:'Data Governance', desc:'Requires a data-classification value on any field flagged as personal data.',
-          modal:{icon:'◈',color:'#EF4444',title:'PII Field Shape',sub:'SHACL Catalog · Domain-Specific — Data Governance',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'PII Field Shape',sub:'SHACL Catalog · Domain-Specific — Data Governance',sections:[
             {type:'text',label:'Purpose',text:'Every field bound to ont:PersonalDataRecord must carry a classification value before it can be admitted to the Knowledge Graph — the structural backbone of the Data Governance domain’s PII controls.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path ont:dataClassification ;\n    sh:minCount 1 ;\n] .'},
           ]}},
         {icon:'◈', title:'Metric Definition Shape', tag:'Analytics Governance', desc:'Requires every governed metric to declare exactly one canonical definition.',
-          modal:{icon:'◈',color:'#EF4444',title:'Metric Definition Shape',sub:'SHACL Catalog · Domain-Specific — Analytics Governance',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Metric Definition Shape',sub:'SHACL Catalog · Domain-Specific — Analytics Governance',sections:[
             {type:'text',label:'Purpose',text:'Enforces the Semantic Metric Layer’s single-definition guarantee — every metric bound into the graph must have exactly one canonical formula, structurally preventing metric drift.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path hsga:canonicalFormula ;\n    sh:maxCount 1 ; sh:minCount 1 ;\n] .'},
           ]}},
         {icon:'◈', title:'Model Card Shape', tag:'AI / Trust Governance', desc:'Requires bias assessment and intended-use fields on every production model.',
-          modal:{icon:'◈',color:'#EF4444',title:'Model Card Shape',sub:'SHACL Catalog · Domain-Specific — AI/Trust Governance',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Model Card Shape',sub:'SHACL Catalog · Domain-Specific — AI/Trust Governance',sections:[
             {type:'text',label:'Purpose',text:'Every production model registered in the Model Cards Registry must have biasAssessment and intendedUse populated before it can be promoted — the structural enforcement behind the AI/Trust domain’s model-card program.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path hsga:biasAssessment ; sh:minCount 1 ;\n] ;\nsh:property [\n    sh:path hsga:intendedUse ; sh:minCount 1 ;\n] .'},
           ]}},
       ]},
       {label:'SHACL Shapes — Safety & Irreversibility', items:[
         {icon:'◈', title:'Irreversible Action Shape', tag:'Safety', desc:'Requires a human-authorization record before an irreversible action can proceed.',
-          modal:{icon:'◈',color:'#EF4444',title:'Irreversible Action Shape',sub:'SHACL Catalog · Safety & Irreversibility',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Irreversible Action Shape',sub:'SHACL Catalog · Safety & Irreversibility',sections:[
             {type:'text',label:'Purpose',text:'Any action flagged hsga:irreversible must carry a humanAuthorization reference before it is permitted to execute — the structural backing for the Simplex Action Gateway at RDSG Step 4.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path hsga:humanAuthorization ;\n    sh:minCount 1 ;\n] .'},
           ]}},
         {icon:'◈', title:'UCA Boundary Shape', tag:'Safety', desc:'Prohibits combinations of state values classified as unsafe control actions.',
-          modal:{icon:'◈',color:'#EF4444',title:'UCA Boundary Shape',sub:'SHACL Catalog · Safety & Irreversibility',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'UCA Boundary Shape',sub:'SHACL Catalog · Safety & Irreversibility',sections:[
             {type:'text',label:'Purpose',text:'Encodes STPA/STAMP-style unsafe-control-action combinations as sh:not constraints, structurally blocking a transition from ever reaching a known-unsafe state pairing.'},
             {type:'code',label:'Shape Definition',code:'sh:not [\n    sh:property [ sh:path hsga:actionType ; sh:hasValue "Irreversible" ] ;\n    sh:property [ sh:path hsga:safetyClearance ; sh:hasValue false ] ;\n] .'},
           ]}},
       ]},
       {label:'SHACL Shapes — Lifecycle & Status', items:[
         {icon:'◈', title:'Change Request Shape', tag:'Lifecycle', desc:'Enforces valid Draft→Review→Approved→Published state transitions.',
-          modal:{icon:'◈',color:'#EF4444',title:'Change Request Shape',sub:'SHACL Catalog · Lifecycle & Status',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Change Request Shape',sub:'SHACL Catalog · Lifecycle & Status',sections:[
             {type:'text',label:'Purpose',text:'Constrains a change request’s status property to the governed lifecycle enumeration, preventing a request from skipping review or being published without approval.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path hsga:status ;\n    sh:in ("Draft" "Review" "Approved" "Published") ;\n] .'},
           ]}},
         {icon:'◈', title:'Deprecation Shape', tag:'Lifecycle', desc:'Requires a supersededBy reference whenever a term is marked deprecated.',
-          modal:{icon:'◈',color:'#EF4444',title:'Deprecation Shape',sub:'SHACL Catalog · Lifecycle & Status',sections:[
+          modal:{icon:'◈',color:'#FF5252',title:'Deprecation Shape',sub:'SHACL Catalog · Lifecycle & Status',sections:[
             {type:'text',label:'Purpose',text:'Any ontology term marked status=Deprecated must reference its replacement via supersededBy — keeping the ontology navigable even as terms retire.'},
             {type:'code',label:'Shape Definition',code:'sh:property [\n    sh:path hsga:supersededBy ;\n    sh:minCount 1 ;\n    sh:condition [ sh:path hsga:status ; sh:hasValue "Deprecated" ] ;\n] .'},
           ]}},
       ]},
       {label:'SWRL Rules — Temporal Expiration', items:[
         {icon:'⬡', title:'Qualification Expiry Rule', tag:'Temporal', desc:'Marks a supplier Expired once its qualification date has passed.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Qualification Expiry Rule',sub:'SWRL Catalog · Temporal Expiration',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Qualification Expiry Rule',sub:'SWRL Catalog · Temporal Expiration',sections:[
             {type:'text',label:'Purpose',text:'Ensures qualification status reflects reality at query time rather than at the time it was last manually updated — evaluated continuously at RDSG Step 2.'},
             {type:'code',label:'Rule Definition',code:'Supplier(?s) ^ qualificationExpiry(?s,?d) ^\n  temporallyBefore(?d,?now)\n  -> hasStatus(?s,"Expired")'},
           ]}},
         {icon:'⬡', title:'Contract Renewal Window Rule', tag:'Temporal', desc:'Flags a contract for review 30 days before its renewal date.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Contract Renewal Window Rule',sub:'SWRL Catalog · Temporal Expiration',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Contract Renewal Window Rule',sub:'SWRL Catalog · Temporal Expiration',sections:[
             {type:'text',label:'Purpose',text:'Proactively surfaces contracts approaching renewal so a governance persona can review terms before automatic rollover — feeds the HITL review queue.'},
             {type:'code',label:'Rule Definition',code:'Contract(?c) ^ renewalDate(?c,?d) ^\n  withinDays(?d,?now,30)\n  -> needsReview(?c,true)'},
           ]}},
       ]},
       {label:'SWRL Rules — Subsumption & Classification', items:[
         {icon:'⬡', title:'Preferred Supplier Classification Rule', tag:'Classification', desc:'Classifies a supplier as Preferred after four consecutive high-performance quarters.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Preferred Supplier Classification Rule',sub:'SWRL Catalog · Subsumption & Classification',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Preferred Supplier Classification Rule',sub:'SWRL Catalog · Subsumption & Classification',sections:[
             {type:'text',label:'Purpose',text:'Infers a PreferredSupplier classification from sustained performance history rather than requiring manual tagging, keeping the classification consistent and auditable.'},
             {type:'code',label:'Rule Definition',code:'Supplier(?s) ^ consecutiveHighScoreQuarters(?s,?n) ^\n  swrlb:greaterThanOrEqual(?n,4)\n  -> hasType(?s,PreferredSupplier)'},
           ]}},
         {icon:'⬡', title:'Regulated Product Classification Rule', tag:'Classification', desc:'Classifies a product as Regulated if it contains a regulated ingredient.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Regulated Product Classification Rule',sub:'SWRL Catalog · Subsumption & Classification',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Regulated Product Classification Rule',sub:'SWRL Catalog · Subsumption & Classification',sections:[
             {type:'text',label:'Purpose',text:'Automatically propagates regulated status from ingredient-level data to the product level, ensuring compliance controls apply even when a product record itself was never manually flagged.'},
             {type:'code',label:'Rule Definition',code:'Product(?p) ^ containsIngredient(?p,?i) ^\n  RegulatedIngredient(?i)\n  -> hasType(?p,RegulatedProduct)'},
           ]}},
       ]},
       {label:'SWRL Rules — Cross-Domain Consistency', items:[
         {icon:'⬡', title:'Customer / Account-Holder TaxID Consistency Rule', tag:'Cross-Domain', desc:'Flags a mismatch when Sales and Finance disagree on a shared tax identifier.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Customer / Account-Holder TaxID Consistency Rule',sub:'SWRL Catalog · Cross-Domain Consistency',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Customer / Account-Holder TaxID Consistency Rule',sub:'SWRL Catalog · Cross-Domain Consistency',sections:[
             {type:'text',label:'Purpose',text:'Continuously checks that the Domain-to-Domain mapping between Sales "Customer" and Finance "Account Holder" stays consistent on shared identifying attributes, catching silent data drift between domains.'},
             {type:'code',label:'Rule Definition',code:'Customer(?c) ^ AccountHolder(?a) ^ correspondsTo(?c,?a) ^\n  taxID(?c,?t1) ^ taxID(?a,?t2) ^ differentFrom(?t1,?t2)\n  -> hasMismatch(?c,?a)'},
           ]}},
         {icon:'⬡', title:'Inventory / Facility Location Consistency Rule', tag:'Cross-Domain', desc:'Flags inventory records whose location does not match the logistics facility registry.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Inventory / Facility Location Consistency Rule',sub:'SWRL Catalog · Cross-Domain Consistency',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Inventory / Facility Location Consistency Rule',sub:'SWRL Catalog · Cross-Domain Consistency',sections:[
             {type:'text',label:'Purpose',text:'Verifies the Domain-to-Operations mapping between ontology-level inventory records and physical facility registrations stays synchronized, surfacing drift before it corrupts fulfillment logic.'},
             {type:'code',label:'Rule Definition',code:'InventoryRecord(?i) ^ facilityLocation(?i,?l1) ^\n  registeredFacility(?l2) ^ differentFrom(?l1,?l2)\n  -> hasLocationMismatch(?i)'},
           ]}},
       ]},
       {label:'SWRL Rules — Escalation Triggers', items:[
         {icon:'⬡', title:'Low-Confidence Mapping Escalation Rule', tag:'Escalation', desc:'Routes any mapping-graph correspondence below the confidence threshold to a steward.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Low-Confidence Mapping Escalation Rule',sub:'SWRL Catalog · Escalation Triggers',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Low-Confidence Mapping Escalation Rule',sub:'SWRL Catalog · Escalation Triggers',sections:[
             {type:'text',label:'Purpose',text:'Automatically queues any mapping-graph correspondence scoring below the governed confidence threshold for Knowledge / Data Steward review, rather than letting it silently degrade downstream queries.'},
             {type:'code',label:'Rule Definition',code:'Mapping(?m) ^ confidenceScore(?m,?c) ^\n  swrlb:lessThan(?c,0.75)\n  -> routeToSteward(?m)'},
           ]}},
         {icon:'⬡', title:'UCA-Detected Hold Rule', tag:'Escalation', desc:'Holds an action and notifies the safety reviewer when a UCA is detected.',
-          modal:{icon:'⬡',color:'#EF4444',title:'UCA-Detected Hold Rule',sub:'SWRL Catalog · Escalation Triggers',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'UCA-Detected Hold Rule',sub:'SWRL Catalog · Escalation Triggers',sections:[
             {type:'text',label:'Purpose',text:'The rule-level trigger behind RDSG Step 4 — the moment an action is classified as an unsafe control action, it is held at the Simplex Action Gateway and the safety reviewer queue is notified.'},
             {type:'code',label:'Rule Definition',code:'Action(?a) ^ classifiedAsUCA(?a,true)\n  -> holdAction(?a) ^ notifySafetyReviewer(?a)'},
           ]}},
       ]},
       {label:'SWRL Rules — Derived Properties', items:[
         {icon:'⬡', title:'Total Exposure Computation Rule', tag:'Derived', desc:'Computes a customer’s total financial exposure from open orders.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Total Exposure Computation Rule',sub:'SWRL Catalog · Derived Properties',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Total Exposure Computation Rule',sub:'SWRL Catalog · Derived Properties',sections:[
             {type:'text',label:'Purpose',text:'Derives a totalExposure property rather than requiring it to be manually maintained, ensuring risk-scoring logic always reflects the current state of open orders.'},
             {type:'code',label:'Rule Definition',code:'Customer(?c) ^ openOrders(?c,?orders) ^\n  swrlb:sum(?total,?orders)\n  -> totalExposure(?c,?total)'},
           ]}},
         {icon:'⬡', title:'Risk Tier Inference Rule', tag:'Derived', desc:'Infers riskTier from credit score and payment history.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Risk Tier Inference Rule',sub:'SWRL Catalog · Derived Properties',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Risk Tier Inference Rule',sub:'SWRL Catalog · Derived Properties',sections:[
             {type:'text',label:'Purpose',text:'Infers the governed riskTier enumeration value from underlying credit and payment data, keeping the derived classification structurally consistent with the Risk Tier Shape’s allowed values.'},
             {type:'code',label:'Rule Definition',code:'Customer(?c) ^ creditScore(?c,?s) ^ paymentHistory(?c,?h) ^\n  computeRiskTier(?s,?h,?tier)\n  -> riskTier(?c,?tier)'},
           ]}},
       ]},
       {label:'SWRL Rules — Safety Preconditions', items:[
         {icon:'⬡', title:'Safety Invariant Precondition Rule', tag:'Safety', desc:'Blocks an action unless its governing safety invariant currently holds.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Safety Invariant Precondition Rule',sub:'SWRL Catalog · Safety Preconditions',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Safety Invariant Precondition Rule',sub:'SWRL Catalog · Safety Preconditions',sections:[
             {type:'text',label:'Purpose',text:'A general-purpose precondition rule: any action bound to a safety invariant cannot be marked executable while that invariant is false, forming part of the Safety / UCA Boundary check at RDSG Step 4.'},
             {type:'code',label:'Rule Definition',code:'Action(?a) ^ governedBy(?a,?inv) ^ invariantHolds(?inv,false)\n  -> executable(?a,false)'},
           ]}},
         {icon:'⬡', title:'Irreversible Action Approval Rule', tag:'Safety', desc:'Requires prior human approval before an irreversible action executes.',
-          modal:{icon:'⬡',color:'#EF4444',title:'Irreversible Action Approval Rule',sub:'SWRL Catalog · Safety Preconditions',sections:[
+          modal:{icon:'⬡',color:'#FF5252',title:'Irreversible Action Approval Rule',sub:'SWRL Catalog · Safety Preconditions',sections:[
             {type:'text',label:'Purpose',text:'The rule-level companion to the Irreversible Action SHACL Shape — enforces at the reasoning level that priorApproval must be true before an irreversible action can proceed past the Simplex Action Gateway.'},
             {type:'code',label:'Rule Definition',code:'Action(?a) ^ isIrreversible(?a,true) ^ priorApproval(?a,false)\n  -> executable(?a,false)'},
           ]}},
       ]},
       {label:'Harmonization & Consumers', items:[
         {icon:'⊕', title:'Rule Harmonization Engine', tag:'Aggregator', desc:'Aggregates all three rule libraries into a single, conflict-checked enforcement contract.',
-          modal:{icon:'⊕',color:'#EF4444',title:'Rule Harmonization Engine',sub:'Governance Layer · Harmonization',sections:[
+          modal:{icon:'⊕',color:'#FF5252',title:'Rule Harmonization Engine',sub:'Governance Layer · Harmonization',sections:[
             {type:'text',label:'Role',text:'Aggregates SHACL shapes, SWRL rules, and deontic norms from the Domain Governance Teams into a single, conflict-checked enforcement contract, and routes cross-jurisdiction conflicts to the Enterprise Governance Council.'}],
           }},
         {icon:'◆', title:'Gateway Holon (L3) Consumer', tag:'Runtime enforcement', desc:'Consumes harmonized rules for live enforcement at every state transition.',
-          modal:{icon:'◆',color:'#EF4444',title:'Gateway Holon (L3) Consumer',sub:'Governance Layer · Consumer',sections:[
+          modal:{icon:'◆',color:'#FF5252',title:'Gateway Holon (L3) Consumer',sub:'Governance Layer · Consumer',sections:[
             {type:'text',label:'Role',text:'The RDSG-pattern gateway consumes the harmonized rule set directly — SHACL at Step 1, SWRL at Step 2, deontic norms at Step 3 — as the live enforcement mechanism for every state transition.'}],
           }},
         {icon:'◐', title:'Virtualization Layer Consumer', tag:'Compiled targets', desc:'Consumes harmonized rules to produce compiled, runtime-native policy targets.',
-          modal:{icon:'◐',color:'#EF4444',title:'Virtualization Layer Consumer',sub:'Governance Layer · Consumer',sections:[
+          modal:{icon:'◐',color:'#FF5252',title:'Virtualization Layer Consumer',sub:'Governance Layer · Consumer',sections:[
             {type:'text',label:'Role',text:'The Rule Projection Agent compiles the harmonized rule set into runtime-native enforcement targets (SQL, OPA, vector filters, agent guardrails), removing the graph reasoner from the request-time critical path.'}],
           }},
         {icon:'◆', title:'Agentic Layer Consumer', tag:'Agent guardrails', desc:'Every dispatched agent directive carries harmonized-rule-derived guardrails.',
-          modal:{icon:'◆',color:'#EF4444',title:'Agentic Layer Consumer',sub:'Governance Layer · Consumer',sections:[
+          modal:{icon:'◆',color:'#FF5252',title:'Agentic Layer Consumer',sub:'Governance Layer · Consumer',sections:[
             {type:'text',label:'Role',text:'Every Compiled AI Directive dispatched to an agent carries guardrails derived from the harmonized rule set, so agents receive constrained operating context rather than raw rules.'}],
           }},
         {icon:'▦', title:'Four Governance Domains Consumer', tag:'Policy source', desc:'Data, Semantic, Analytics, and AI/Trust governance all draw policy from the same harmonized source.',
-          modal:{icon:'▦',color:'#EF4444',title:'Four Governance Domains Consumer',sub:'Governance Layer · Consumer',sections:[
+          modal:{icon:'▦',color:'#FF5252',title:'Four Governance Domains Consumer',sub:'Governance Layer · Consumer',sections:[
             {type:'text',label:'Role',text:'The Data, Semantic, Analytics, and AI/Trust governance domains all draw their attribute-based policy decisions from the same harmonized rule source, keeping domain-level enforcement mutually consistent.'}],
           }},
       ]},
     ]
   },
   {
-    id:'virtualization', icon:'◐', color:'#22C55E',
+    id:'virtualization', icon:'◐', color:'#2EE573',
     title:'Virtualization Layer',
     sub:'Context Engineering and Semantic Optimization, compiled for runtime delivery',
     groups:[
       {label:'Context Engineering', items:[
         {icon:'⊙', title:'Relevancy-Dimension Filtering', tag:'WHO/WHAT/WHEN/WHERE/WHY', desc:'Every request filtered against the five relevancy dimensions before context assembly.',
-          modal:{icon:'⊙',color:'#22C55E',title:'Relevancy-Dimension Filtering',sub:'Virtualization Layer · Context Engineering',sections:[
+          modal:{icon:'⊙',color:'#2EE573',title:'Relevancy-Dimension Filtering',sub:'Virtualization Layer · Context Engineering',sections:[
             {type:'text',label:'Technique',text:'Every inbound request is filtered against the five relevancy dimensions — WHO/WHAT/WHEN/WHERE/WHY — before any context is assembled, ensuring only relevant domain holons and knowledge are activated.'}],
           }},
         {icon:'◎', title:'RCB Assembly & Session/Persona Binding', tag:'Stage 0', desc:'Requirement Context Bundle assembly binds each request to a session and persona identity.',
-          modal:{icon:'◎',color:'#22C55E',title:'RCB Assembly & Session/Persona Binding',sub:'Virtualization Layer · Context Engineering',sections:[
+          modal:{icon:'◎',color:'#2EE573',title:'RCB Assembly & Session/Persona Binding',sub:'Virtualization Layer · Context Engineering',sections:[
             {type:'text',label:'Technique',text:'The same Requirement Context Bundle assembly performed at RDSG Stage 0, viewed from the virtualization side: every request is bound to a session and persona identity so context stays authorized and traceable.'}],
           }},
         {icon:'▤', title:'Context Window Curation', tag:'92% relevance-filtered', desc:'Only relevance-filtered content is admitted into the agent context window.',
-          modal:{icon:'▤',color:'#22C55E',title:'Context Window Curation',sub:'Virtualization Layer · Context Engineering',sections:[
+          modal:{icon:'▤',color:'#2EE573',title:'Context Window Curation',sub:'Virtualization Layer · Context Engineering',sections:[
             {type:'text',label:'Technique',text:'Curates the final context window delivered to an agent so that roughly 92% of admitted content is directly relevance-filtered, reducing both latency and the chance of ungoverned context leaking into a directive.'}],
           }},
       ]},
       {label:'Semantic Optimization', items:[
         {icon:'⬡', title:'Compiled Policy Registry', tag:'4 runtime targets', desc:'Stores rule-projection outputs across four runtime-native target formats.',
-          modal:{icon:'⬡',color:'#22C55E',title:'Compiled Policy Registry',sub:'Virtualization Layer · Semantic Optimization',sections:[
+          modal:{icon:'⬡',color:'#2EE573',title:'Compiled Policy Registry',sub:'Virtualization Layer · Semantic Optimization',sections:[
             {type:'text',label:'Technique',text:'Stores the Rule Projection Agent’s compiled output across four runtime-native target formats — SQL, OPA policy, vector filters, and agent guardrails — versioned and ready for low-latency lookup.'}],
           }},
         {icon:'◈', title:'Rule Projection Caching', tag:'Latency reduction', desc:'Caches compiled rule projections to keep the graph reasoner off the request-time path.',
-          modal:{icon:'◈',color:'#22C55E',title:'Rule Projection Caching',sub:'Virtualization Layer · Semantic Optimization',sections:[
+          modal:{icon:'◈',color:'#2EE573',title:'Rule Projection Caching',sub:'Virtualization Layer · Semantic Optimization',sections:[
             {type:'text',label:'Technique',text:'Caches compiled rule projections so the graph reasoner is invoked only when the canonical rule library changes, not on every request — the mechanism that keeps RDSG traversal fast at enterprise scale.'}],
           }},
         {icon:'◇', title:'Runtime-Native Target Compilation', tag:'SQL / OPA / Vector / Agent', desc:'Canonical SHACL/SWRL/deontic rules compiled into four enforcement-native formats.',
-          modal:{icon:'◇',color:'#22C55E',title:'Runtime-Native Target Compilation',sub:'Virtualization Layer · Semantic Optimization',sections:[
+          modal:{icon:'◇',color:'#2EE573',title:'Runtime-Native Target Compilation',sub:'Virtualization Layer · Semantic Optimization',sections:[
             {type:'text',label:'Technique',text:'The compilation step itself: canonical SHACL/SWRL/deontic definitions are translated into SQL constraints, OPA policy, vector-search filters, and agent guardrail schemas — one canonical source, four enforcement-native outputs.'}],
           }},
       ]},
       {label:'Runtime Delivery Outputs', items:[
         {icon:'◯', title:'Gateway Facade (L3)', tag:'Delivery Gate', desc:'Compiled context and policy delivered to the RDSG Facade for final acceptance checks.',
-          modal:{icon:'◯',color:'#22C55E',title:'Gateway Facade (L3)',sub:'Virtualization Layer · Runtime Output',sections:[
+          modal:{icon:'◯',color:'#2EE573',title:'Gateway Facade (L3)',sub:'Virtualization Layer · Runtime Output',sections:[
             {type:'text',label:'Delivery Target',text:'Compiled context and policy targets are delivered to the Facade delivery gate, where acceptance criteria and trust scoring are applied before a response leaves the holarchy.'}],
           }},
         {icon:'◉', title:'L6 Orchestration UI', tag:'Human-facing', desc:'Compiled outputs surface in HITL dashboards and persona-facing applications.',
-          modal:{icon:'◉',color:'#22C55E',title:'L6 Orchestration UI',sub:'Virtualization Layer · Runtime Output',sections:[
+          modal:{icon:'◉',color:'#2EE573',title:'L6 Orchestration UI',sub:'Virtualization Layer · Runtime Output',sections:[
             {type:'text',label:'Delivery Target',text:'Compiled, curated context surfaces directly in L6 human-facing applications — the HITL Intervention Pane, Ontology Explorer, and Human Performance Monitor — pre-filtered for the viewing persona.'}],
           }},
         {icon:'▦', title:'L7 Enterprise Ecosystem', tag:'Consumer systems', desc:'Harmonized, compiled outputs feed ERP, PLM, and enterprise BI consumers.',
-          modal:{icon:'▦',color:'#22C55E',title:'L7 Enterprise Ecosystem',sub:'Virtualization Layer · Runtime Output',sections:[
+          modal:{icon:'▦',color:'#2EE573',title:'L7 Enterprise Ecosystem',sub:'Virtualization Layer · Runtime Output',sections:[
             {type:'text',label:'Delivery Target',text:'The outermost delivery target — harmonized, compiled outputs feed L7 enterprise consumer systems (ERP, PLM, regulatory hub, BI/analytics) as governed, audit-traced data products.'}],
           }},
       ]},
@@ -2071,8 +2109,8 @@ function jumpToSection(id) {
 function openModal(data) {
   const icon = document.getElementById('modal-icon');
   icon.textContent = data.icon || '◎';
-  icon.style.background = (data.color||'#3B82F6')+'22';
-  icon.style.color = data.color||'#3B82F6';
+  icon.style.background = (data.color||'#4C8FFF')+'22';
+  icon.style.color = data.color||'#4C8FFF';
   const titleEl = document.getElementById('modal-title');
   titleEl.textContent = data.title || '';
   titleEl.style.color = data.color||'var(--t1)';
@@ -2130,6 +2168,19 @@ function showTab(tab) {
       document.querySelectorAll('.gov-bar-fill').forEach(el=>{el.style.width=el.dataset.w;});
     },200);
   }
+}
+
+// ─── THEME TOGGLE ────────────────────────────────────────────────────────────
+let currentTheme = 'dark';
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  if (currentTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  const lbl = document.getElementById('theme-toggle-label');
+  if (lbl) lbl.textContent = currentTheme === 'dark' ? 'Dark' : 'Light';
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────────────

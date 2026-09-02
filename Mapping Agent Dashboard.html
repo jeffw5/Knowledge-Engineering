@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Mapping Agent Operational Dashboard</title>
+<style>
+  :root {
+    --navy: #1F3864; --navy-dark: #142544; --blue: #2E75B6; --blue-light: #E8F1FA;
+    --green: #1E7B34; --green-light: #E7F6EB; --red: #B3261E; --red-light: #FBEAE9;
+    --amber: #9C6500; --amber-light: #FCF3DC; --gray: #667085; --gray-light: #F2F4F7;
+    --border: #D7DCE3; --bg: #F5F7FA; --card: #FFFFFF; --text: #1D2433;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "Segoe UI", Arial, sans-serif; background: var(--bg); color: var(--text); }
+  header { background: var(--navy); color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 17px; margin: 0; font-weight: 600; }
+  header .sub { font-size: 12px; color: #B9C6DE; margin-top: 2px; }
+  nav { display: flex; gap: 4px; background: var(--navy-dark); padding: 0 16px; }
+  nav button { background: none; border: none; color: #C9D5E8; padding: 12px 16px; font-size: 13px; cursor: pointer; border-bottom: 3px solid transparent; }
+  nav button:hover { color: #fff; }
+  nav button.active { color: #fff; border-bottom: 3px solid var(--blue); font-weight: 600; }
+  main { padding: 18px 20px 60px; max-width: 1400px; margin: 0 auto; }
+  .tabpane { display: none; }
+  .tabpane.active { display: block; }
+  .grid { display: grid; gap: 14px; }
+  .grid-cards { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px; position: relative; }
+  .card h3 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--gray); }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .panel h2 { margin: 0 0 12px; font-size: 15px; }
+  .btn { background: var(--blue); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; font-weight: 600; }
+  .btn:hover { background: var(--navy); }
+  .btn.secondary { background: var(--gray-light); color: var(--text); border: 1px solid var(--border); }
+  .btn.secondary:hover { background: #e8ebef; }
+  .btn.danger { background: var(--red); }
+  .btn.danger:hover { background: #8f1e18; }
+  .btn.small { padding: 4px 9px; font-size: 12px; }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--gray); font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: .03em; background: var(--gray-light); }
+  tr:hover td { background: #FAFBFC; }
+  tr.clickable-row { cursor: pointer; }
+  tr.clickable-row:hover td { background: #EEF5FC; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge.committed { background: var(--green-light); color: var(--green); }
+  .badge.rejected { background: var(--red-light); color: var(--red); }
+  .badge.quarantined { background: var(--amber-light); color: var(--amber); }
+  .badge.no_match { background: var(--gray-light); color: var(--gray); }
+  .badge.healthy { background: var(--green-light); color: var(--green); }
+  .badge.tripped { background: var(--red-light); color: var(--red); }
+  .badge.human { background: var(--blue-light); color: var(--blue); }
+  .badge.tag-clean { background: var(--green-light); color: var(--green); }
+  .badge.tag-shacl-fail, .badge.tag-swrl-fail, .badge.tag-pep-fail { background: var(--red-light); color: var(--red); }
+  .badge.tag-cross-domain { background: var(--blue-light); color: var(--blue); }
+  .agent-card { cursor: pointer; transition: box-shadow .12s, border-color .12s; }
+  .agent-card:hover { border-color: var(--blue); box-shadow: 0 2px 10px rgba(46,117,182,.16); }
+  .agent-card .state-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .agent-card .domain-name { font-weight: 700; font-size: 13.5px; }
+  .bar-bg { background: var(--gray-light); border-radius: 6px; height: 8px; overflow: hidden; margin: 4px 0 6px; }
+  .bar-fill { height: 100%; border-radius: 6px; }
+  .meta-line { font-size: 11.5px; color: var(--gray); margin: 2px 0; }
+  .dot-row { display: flex; gap: 3px; flex-wrap: wrap; margin: 6px 0; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .dot.pass { background: var(--green); }
+  .dot.fail { background: var(--red); }
+  #log { font-family: "SF Mono", Consolas, monospace; font-size: 12px; background: #0F1720; color: #D7E3F4; border-radius: 8px; padding: 12px; height: 260px; overflow-y: auto; line-height: 1.5; }
+  #log .logrow { white-space: pre-wrap; padding: 1px 4px; border-radius: 3px; cursor: pointer; }
+  #log .logrow:hover { background: rgba(255,255,255,.08); }
+  #log .l-committed { color: #7EE2A8; }
+  #log .l-rejected { color: #FF9B93; }
+  #log .l-quarantined { color: #FFCE7A; }
+  #log .l-no_match { color: #9AA7BD; }
+  #log .l-reconciled { color: #8FC7FF; }
+  #log .l-info { color: #C9D5E8; }
+  .helptext { font-size: 12.5px; color: var(--gray); margin: 0 0 12px; line-height: 1.5; }
+  input[type=text], input[type=number], textarea, select { font-family: inherit; font-size: 13px; padding: 7px 9px; border: 1px solid var(--border); border-radius: 6px; width: 100%; }
+  textarea { min-height: 60px; font-family: "SF Mono", Consolas, monospace; font-size: 12px; }
+  label { font-size: 12px; color: var(--gray); font-weight: 600; display: block; margin-bottom: 3px; }
+  .field { margin-bottom: 10px; }
+  .checkbox-cell { text-align: center; }
+  .flex-2 { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; }
+  /* Workflow builder */
+  .wf-layout { display: grid; grid-template-columns: 230px 1fr; gap: 16px; }
+  .palette-group { margin-bottom: 14px; }
+  .palette-group h4 { font-size: 11.5px; text-transform: uppercase; color: var(--gray); margin: 0 0 6px; letter-spacing: .04em; }
+  .palette-item { background: var(--blue-light); border: 1px solid #BBD6EF; border-radius: 7px; padding: 7px 9px; margin-bottom: 6px; font-size: 12.5px; cursor: grab; user-select: none; }
+  .palette-item.agent-item { background: var(--gray-light); border-color: var(--border); }
+  .palette-item small { display: block; color: var(--gray); font-size: 10.5px; margin-top: 2px; }
+  #canvas { position: relative; background: #FBFCFE repeating-linear-gradient(0deg, transparent, transparent 23px, #EEF1F5 24px), repeating-linear-gradient(90deg, transparent, transparent 23px, #EEF1F5 24px); border: 2px dashed var(--border); border-radius: 10px; height: 560px; overflow: auto; }
+  #canvas.dragover { border-color: var(--blue); background-color: #F1F7FD; }
+  #canvas-inner { position: relative; width: 100%; height: 100%; min-height: 560px; min-width: 900px; }
+  .wf-node { position: absolute; width: 150px; background: #fff; border: 1.5px solid var(--navy); border-radius: 8px; padding: 8px 10px; font-size: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); cursor: move; }
+  .wf-node.agent { border-color: var(--blue); }
+  .wf-node .rm { position: absolute; top: -8px; right: -8px; background: var(--red); color: #fff; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; line-height: 18px; text-align: center; cursor: pointer; border: 2px solid #fff; }
+  .wf-node .label { font-weight: 700; }
+  .wf-node .sub { color: var(--gray); font-size: 10.5px; }
+  .wf-node.selected { outline: 2px solid var(--amber); }
+  .wf-node.pulse { animation: pulse 0.55s ease; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(46,117,182,.6);} 100% { box-shadow: 0 0 0 14px rgba(46,117,182,0);} }
+  .node-badge { position: absolute; bottom: -9px; right: 6px; background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 1px 6px; font-size: 10px; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,.12); white-space: nowrap; }
+  #edges { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+  .warn { background: var(--amber-light); color: var(--amber); border: 1px solid #EAD8A6; border-radius: 7px; padding: 8px 10px; font-size: 12.5px; margin-bottom: 10px; }
+  .toolbar-inline { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .roster-hint { font-size: 11px; color: var(--gray); margin-top: 6px; }
+  footer { text-align: center; font-size: 11.5px; color: var(--gray); padding: 20px; }
+  .search-box { max-width: 320px; margin-bottom: 10px; }
+  .empty { color: var(--gray); font-style: italic; padding: 14px 4px; font-size: 12.5px; }
+  .explain-box { background: var(--blue-light); border: 1px solid #BBD6EF; border-radius: 8px; padding: 10px 12px; font-size: 12.5px; margin-bottom: 12px; line-height: 1.55; }
+  .explain-box summary { font-weight: 700; cursor: pointer; }
+  .explain-box[open] summary { margin-bottom: 8px; }
+  .wf-status { font-size: 12.5px; color: var(--blue); font-weight: 600; min-height: 18px; margin: 4px 0 10px; }
+  .agent-toggle-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .agent-toggle { display: flex; align-items: center; gap: 5px; background: var(--gray-light); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; font-size: 11.5px; cursor: pointer; }
+  .agent-toggle input { width: auto; padding: 0; }
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(15,23,32,.55); display: flex; align-items: flex-start; justify-content: center; z-index: 1000; padding: 4vh 16px; overflow-y: auto; }
+  .modal-box { background: #fff; border-radius: 12px; width: min(760px, 96vw); box-shadow: 0 12px 40px rgba(0,0,0,.3); margin-bottom: 4vh; }
+  .modal-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .modal-header h3 { margin: 0; font-size: 16px; }
+  .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--gray); line-height: 1; padding: 2px 6px; }
+  .modal-close:hover { color: var(--text); }
+  .modal-body { padding: 16px 20px; }
+  .modal-body p { margin: 0 0 10px; font-size: 13px; line-height: 1.6; }
+  .modal-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .kv-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 10px; }
+  .kv-table td { padding: 5px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .kv-table td:first-child { color: var(--gray); font-weight: 600; width: 150px; }
+  .hitl-result-box { border-radius: 8px; padding: 10px 12px; font-size: 12.5px; margin-top: 8px; border: 1px solid var(--border); }
+  .hitl-result-box.pass { background: var(--green-light); border-color: #BFE3C8; color: var(--green); }
+  .hitl-result-box.fail { background: var(--red-light); border-color: #E8B4B0; color: var(--red); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Domain-Sovereign Mapping Agent — Operational Dashboard</h1>
+    <div class="sub">In-browser simulation of the chassis/cartridge pipeline · runs entirely client-side, no server</div>
+  </div>
+  <div class="sub" id="clock"></div>
+</header>
+
+<nav>
+  <button class="tab-btn active" data-tab="dashboard">Operational Dashboard</button>
+  <button class="tab-btn" data-tab="workflow">Workflow Builder</button>
+  <button class="tab-btn" data-tab="demand">Demand</button>
+  <button class="tab-btn" data-tab="hitl">Human-in-the-Loop</button>
+  <button class="tab-btn" data-tab="finished">Finished Work</button>
+</nav>
+
+<main>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section class="tabpane active" id="tab-dashboard">
+    <div class="panel">
+      <div class="row" style="justify-content: space-between;">
+        <div>
+          <h2 style="margin:0;">Run the agents</h2>
+          <p class="helptext" style="margin:6px 0 0;">Runs the selected cartridges over whatever is checked in the Demand queue. Each artifact is routed by content, proposed on by its domain agent(s), passed through the deterministic validation gate, and — if it passes — committed to the KGCL log below. Click any agent card, log line, or run-history row for detail.</p>
+        </div>
+        <div class="row">
+          <button class="btn" id="btn-run-all">Run all 9 agents</button>
+          <button class="btn secondary" id="btn-run-selected">Run selected agents only</button>
+          <button class="btn secondary" id="btn-clear-state">Reset simulation</button>
+        </div>
+      </div>
+      <div class="agent-toggle-row" id="agent-toggle-row"></div>
+      <div id="dash-warn"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Circuit breaker &amp; drift monitor</h2>
+      <p class="helptext">Rejection rate is tracked per agent over its last 10 proposals. Crossing 40% trips that agent's breaker only — no other agent is paused. Value-drift is the same rolling rejection rate expressed as a coefficient. Click a card for full agent detail; use "Run only this agent" to test one domain in isolation.</p>
+      <div class="grid grid-cards" id="monitor-cards"></div>
+    </div>
+
+    <div class="flex-2">
+      <div class="panel">
+        <h2>Execution log</h2>
+        <p class="helptext" style="margin:0 0 8px;">Click any line for the full artifact/proposal/validation detail.</p>
+        <div id="log"></div>
+      </div>
+      <div class="panel">
+        <h2>Recent workflow runs</h2>
+        <p class="helptext" style="margin:0 0 8px;">Click a row to see which artifacts and outcomes made up that run.</p>
+        <div id="run-history"><div class="empty">No runs yet — click "Run all 9 agents" above, or build a workflow.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WORKFLOW BUILDER ================= -->
+  <section class="tabpane" id="tab-workflow">
+    <div class="panel">
+      <h2>Drag &amp; drop agentic workflow orchestration</h2>
+      <details class="explain-box">
+        <summary>How this works (click to expand)</summary>
+        <div>
+          <p style="margin:0 0 6px;"><strong>Palette →Canvas:</strong> drag a pipeline-stage tile or a domain-agent tile from the left onto the canvas. Click one tile, then another, to draw a connecting line between them (this is purely visual — it illustrates the flow, it doesn't change what runs).</p>
+          <p style="margin:0 0 6px;"><strong>What actually controls the run:</strong> only the <em>agent</em> tiles you place matter functionally — they decide which domain cartridges participate. The five pipeline-stage tiles (Router, Validation, Reconciliation, Commit, Monitor) are optional on the canvas; they always execute internally regardless, dragging them on just animates that step during a run.</p>
+          <p style="margin:0;"><strong>Fastest way to see it work:</strong> click "Load a 3-agent starter pipeline" below for an instant, ready-to-run example, or just drag one agent tile onto the canvas and click Run.</p>
+        </div>
+      </details>
+      <div class="wf-layout">
+        <div>
+          <div class="palette-group">
+            <h4>Pipeline stages (optional, visual only)</h4>
+            <div class="palette-item" draggable="true" data-type="router">Content &amp; Context Router<small>Tags WHO/WHAT/WHEN/WHERE/WHY, routes by domain</small></div>
+            <div class="palette-item" draggable="true" data-type="validation">Deterministic Validation Gate<small>SHACL → SWRL → PEP, in order</small></div>
+            <div class="palette-item" draggable="true" data-type="reconciliation">Cross-Domain Reconciliation<small>Links multi-domain mappings</small></div>
+            <div class="palette-item" draggable="true" data-type="commit">KGCL Commit<small>Writes governed mapping to the graph</small></div>
+            <div class="palette-item" draggable="true" data-type="monitor">Drift &amp; Governance Monitor<small>MTBH / value-drift / circuit breaker</small></div>
+          </div>
+          <div class="palette-group" id="agent-palette">
+            <h4>Domain agents (drive the run)</h4>
+          </div>
+        </div>
+        <div>
+          <div class="toolbar-inline">
+            <button class="btn" id="btn-run-workflow" disabled>Run this workflow</button>
+            <button class="btn secondary" id="btn-load-default">Load a 3-agent starter pipeline</button>
+            <button class="btn secondary" id="btn-load-roster">Load full 9-agent roster</button>
+            <button class="btn secondary" id="btn-clear-edges">Clear connections</button>
+            <button class="btn secondary" id="btn-clear-canvas">Clear canvas</button>
+          </div>
+          <div id="wf-warn"></div>
+          <div class="wf-status" id="wf-status"></div>
+          <div id="canvas"><div id="canvas-inner"><svg id="edges"></svg></div></div>
+          <p class="roster-hint">Tip: after a run, each agent tile on canvas shows a small badge (✓committed / ✗rejected+quarantined) from its most recent participation. Canvas scrolls if a preset is wider than the visible area.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DEMAND ================= -->
+  <section class="tabpane" id="tab-demand">
+    <div class="panel">
+      <div class="row" style="justify-content: space-between;">
+        <div>
+          <h2 style="margin:0;">Demand — artifacts waiting to be mapped</h2>
+          <p class="helptext" style="margin:6px 0 0;">Check the artifacts you want included the next time you click Run. A simulation set of 63 artifacts is preloaded across all nine domains — clean passes plus deliberate SHACL/SWRL/PEP failures and cross-domain scenarios — or add your own below.</p>
+        </div>
+        <div class="row">
+          <button class="btn secondary small" id="btn-select-all">Select all</button>
+          <button class="btn secondary small" id="btn-select-none">Select none</button>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:12px;">
+        <label style="margin:0;">Simulation preset:</label>
+        <select id="preset-select" style="width:auto; min-width:240px;">
+          <option value="">— choose a preset —</option>
+          <option value="all">Select everything (63 artifacts)</option>
+          <option value="none">Select nothing</option>
+          <option value="clean-only">Clean run only — every artifact should pass</option>
+          <option value="failures-only">Failures only — every artifact should fail one gate</option>
+          <option value="cross-domain">Cross-domain showcase — reconciliation demo (3 artifacts)</option>
+          <option value="engineering-stress">Engineering stress test — reliably trips that agent's breaker</option>
+        </select>
+        <button class="btn secondary small" id="btn-apply-preset">Apply preset</button>
+      </div>
+      <table>
+        <thead><tr><th></th><th>ID</th><th>Domain(s)</th><th>Tag</th><th>Category</th><th>Content preview</th></tr></thead>
+        <tbody id="demand-body"></tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2>Add a custom artifact to the queue</h2>
+      <div class="flex-2">
+        <div>
+          <div class="field"><label>Content text</label><textarea id="cust-text" placeholder="Describe the artifact — the router and agents read this text."></textarea></div>
+        </div>
+        <div>
+          <div class="field"><label>Category</label>
+            <select id="cust-category">
+              <option>data structure</option><option>document</option><option>business rule</option>
+              <option>constraint</option><option>process map</option><option>event</option>
+              <option>measure</option><option>persona</option><option>outcome</option>
+            </select>
+          </div>
+          <div class="field"><label>Metadata (JSON object)</label><textarea id="cust-meta">{}</textarea></div>
+        </div>
+      </div>
+      <button class="btn" id="btn-add-artifact">Add to demand queue</button>
+    </div>
+  </section>
+
+  <!-- ================= HUMAN IN THE LOOP ================= -->
+  <section class="tabpane" id="tab-hitl">
+    <div class="panel">
+      <h2>Human-in-the-loop review</h2>
+      <p class="helptext">Every proposal from the last runs, newest first. Click "Review" to open the artifact in a popup where you can edit its text/metadata, leave training guidance, retest the agent live, and then commit or reject.</p>
+      <table>
+        <thead><tr><th>Artifact</th><th>Domain</th><th>Proposed concept</th><th>Status</th><th>Detail</th><th></th></tr></thead>
+        <tbody id="hitl-body"></tbody>
+      </table>
+    </div>
+    <div class="panel">
+      <h2>Training feedback log</h2>
+      <table>
+        <thead><tr><th>Time</th><th>Domain</th><th>Artifact</th><th>Note</th></tr></thead>
+        <tbody id="feedback-body"><tr><td colspan="4" class="empty">No feedback recorded yet.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= FINISHED WORK ================= -->
+  <section class="tabpane" id="tab-finished">
+    <div class="panel">
+      <div class="row" style="justify-content: space-between;">
+        <h2 style="margin:0;">Finished work — committed KGCL mappings</h2>
+        <div class="row">
+          <input type="text" class="search-box" id="finished-search" placeholder="Filter by artifact, concept, or domain...">
+          <button class="btn secondary small" id="btn-export">Export JSON</button>
+        </div>
+      </div>
+      <p class="helptext" style="margin:0 0 8px;">Click a row to see the full mapping-assertion record: the artifact node, the domain concept node, and the WHO/WHAT/WHEN/WHERE/WHY context frame.</p>
+      <table>
+        <thead><tr><th>Artifact</th><th>Concept (WHAT)</th><th>Agent (WHO)</th><th>Domain (WHERE)</th><th>Confidence / rationale (WHY)</th><th>Committed (WHEN)</th></tr></thead>
+        <tbody id="finished-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer>State lives in memory for this browser tab only — reload to reset. A pure-JS port of the Python chassis/cartridge pilot; see the accompanying README for the production architecture.</footer>
+
+<div id="modal-root"></div>
+
+<script>
+/* =========================================================================
+   DATA: the nine-agent roster, ported from ontology.py
+   ========================================================================= */
+const ONTOLOGY = {
+  finance: { label: "Finance / FP&A", owner: "FP&A Domain Governance Team", concepts: [
+    { uri:"fin:ForecastingProcess", category:"process map", keywords:["forecast","forecasting","projection","variance","quarterly","budget"], required:["owner","cadence"], swrl:"varianceBounded", pep:["sox"] },
+    { uri:"fin:BudgetVarianceRule", category:"business rule", keywords:["variance","threshold","budget","deviation","tolerance"], required:["threshold","applies_to"], pep:["sox"] },
+    { uri:"fin:ForecastAccuracyMeasure", category:"measure", keywords:["accuracy","measure","kpi","metric","forecast"], required:["unit","target"] },
+    { uri:"fin:CFOPersona", category:"persona", keywords:["cfo","finance leader","persona","stakeholder"], required:["access_scope"], pep:["security"] },
+    { uri:"fin:QuarterCloseEvent", category:"event", keywords:["quarter close","close","reporting period","fiscal"], required:["timestamp_type"] },
+    { uri:"fin:BudgetDocument", category:"document", keywords:["budget document","planning document","annual budget","budget narrative"], required:["version","owner"] },
+    { uri:"fin:QuarterlyOutcome", category:"outcome", keywords:["outcome","result","quarterly performance","decision"], required:["decision_tier"] },
+  ]},
+  requirements: { label: "Requirements Engineering", owner: "Requirements Domain Governance Team", concepts: [
+    { uri:"req:RequirementSpecDocument", category:"document", keywords:["requirement spec","requirements specification","requirement document","req-"], required:["version","requirement_id"] },
+    { uri:"req:TraceabilityConstraint", category:"constraint", keywords:["traceability","requirements traceability","linked requirement","parent requirement"], required:["linked_requirement_id"] },
+  ]},
+  mbse: { label: "Systems Engineering (MBSE)", owner: "MBSE Domain Governance Team", concepts: [
+    { uri:"mbse:SystemModelSchema", category:"data structure", keywords:["system model","mbse","model-based systems engineering","sysml"], required:["model_type"] },
+    { uri:"mbse:IntegrationTestEvent", category:"event", keywords:["integration test","hw-sw integration","test phase"], required:["test_phase"] },
+  ]},
+  systems_safety: { label: "Systems Safety (STPA/STAMP)", owner: "Systems Safety Domain Governance Team", concepts: [
+    { uri:"safety:UnsafeControlActionConstraint", category:"constraint", keywords:["unsafe control action","stpa","hazard analysis","uca"], required:["hazard_id"] },
+    { uri:"safety:HazardEvent", category:"event", keywords:["hazard event","hazard","safety review","stamp"], required:["severity"], swrl:"severityEnum" },
+  ]},
+  knowledge_systems: { label: "Knowledge Systems", owner: "Knowledge Systems Domain Governance Team", concepts: [
+    { uri:"ks:VocabularyDocument", category:"document", keywords:["vocabulary","taxonomy","vocabulary document","steward"], required:["version","steward"] },
+    { uri:"ks:OntologyEngineerPersona", category:"persona", keywords:["ontology engineer","knowledge system","vocabulary steward","persona"], required:["access_scope"], pep:["security"] },
+  ]},
+  enterprise_architecture: { label: "Enterprise Architecture", owner: "Architecture Domain Governance Team", concepts: [
+    { uri:"ea:ArchitectureDecisionProcess", category:"process map", keywords:["architecture decision","adr","architecture review","enterprise architecture"], required:["owner","decision_id"] },
+    { uri:"ea:ArchitectureAlignmentMeasure", category:"measure", keywords:["architecture alignment","target state","conformance","measure"], required:["unit","target"] },
+  ]},
+  decision_analysis: { label: "Decision Analysis", owner: "Decision Analysis Domain Governance Team", concepts: [
+    { uri:"da:ScenarioOutcome", category:"outcome", keywords:["scenario outcome","decision analysis","scenario planning","tradeoff review"], required:["decision_tier"] },
+    { uri:"da:DecisionMakerPersona", category:"persona", keywords:["decision maker","executive stakeholder","decision analysis","persona"], required:["access_scope"], pep:["security"] },
+  ]},
+  engineering: { label: "Engineering (extra)", owner: "Engineering Domain Governance Team", concepts: [
+    { uri:"eng:UserAccountSchema", category:"data structure", keywords:["schema","user","account","fields","data structure","record","user account schema"], required:["fields"] },
+    { uri:"eng:DeploymentApprovalRule", category:"business rule", keywords:["deploy","deployment","release","approval","gate","deployment approval","deployment gate","release gate"], required:["approver_role"], pep:["risk"] },
+    { uri:"eng:IncidentEvent", category:"event", keywords:["incident","outage","severity","alert","pagerduty","incident event"], required:["severity"], swrl:"severityEnum" },
+    { uri:"eng:ReleaseCadenceMeasure", category:"measure", keywords:["cadence","release frequency","deploys per week","measure","metric","release cadence"], required:["unit"] },
+    { uri:"eng:OnCallPersona", category:"persona", keywords:["on-call","oncall","engineer","persona","rotation","on call"], required:["access_scope"], pep:["security"] },
+    { uri:"eng:DataRetentionConstraint", category:"constraint", keywords:["retention","data retention","constraint","expire","ttl"], required:["retention_days"] },
+  ]},
+  legal: { label: "Legal (extra)", owner: "Legal Domain Governance Team", concepts: [
+    { uri:"legal:ContractDocument", category:"document", keywords:["contract","agreement","nda","counterparty","legal document"], required:["version","counterparty"] },
+    { uri:"legal:NDAConstraint", category:"constraint", keywords:["nda","confidentiality","non-disclosure","constraint"], required:["counterparty_type"], pep:["legal"] },
+  ]},
+};
+
+const DOMAIN_SIGNAL_KEYWORDS = {
+  finance: ["budget","forecast","variance","fiscal","sox","cfo","quarter","financial outcome","quarterly outcome","kpi","accuracy"],
+  requirements: ["requirement spec","requirements specification","requirement document","req-","traceability"],
+  mbse: ["system model","mbse","model-based systems engineering","sysml","integration test","hw-sw"],
+  systems_safety: ["unsafe control action","stpa","hazard","uca","stamp","safety review"],
+  knowledge_systems: ["vocabulary","taxonomy","ontology engineer","knowledge system","steward"],
+  enterprise_architecture: ["architecture decision","adr","architecture review","enterprise architecture","architecture alignment","target state"],
+  decision_analysis: ["scenario outcome","decision analysis","scenario planning","tradeoff review","decision maker","executive stakeholder"],
+  engineering: ["deployment approval","deployment gate","release gate","incident event","outage","user account schema","on call","oncall","pagerduty","data retention","release cadence"],
+  legal: ["contract","nda","counterparty","legal review","agreement","legal document"],
+};
+
+const SWRL_RULES = {
+  varianceBounded: (m) => (m.variance_pct !== undefined && m.variance_pct > 5)
+    ? `SWRL violation: forecast variance ${m.variance_pct}% exceeds the 5% obligation bound` : null,
+  severityEnum: (m) => {
+    const allowed = ["low","medium","high","critical"];
+    return (m.severity !== undefined && !allowed.includes(m.severity))
+      ? `SWRL violation: severity '${m.severity}' is not a member of the defined severity enumeration` : null;
+  },
+};
+
+const PEP_RULES = {
+  sox: (m) => !m.sox_reviewed ? "PEP violation: financial process artifacts require sox_reviewed=true (Compliance PEP)" : null,
+  security: (m) => {
+    const scope = m.access_scope;
+    if (!scope) return "PEP violation: persona artifacts require an explicit access_scope (Security PEP)";
+    if (scope === "public" || scope === "public-unrestricted") return `PEP violation: access_scope '${scope}' is too broad for a governed persona (Security PEP)`;
+    return null;
+  },
+  risk: (m) => !m.approver_role ? "PEP violation: deployment rules require an approver_role (Risk PEP)" : null,
+  legal: (m) => !m.legal_reviewed ? "PEP violation: contract artifacts require legal_reviewed=true (Legal PEP)" : null,
+};
+
+/* tag: clean | shacl-fail | swrl-fail | pep-fail | cross-domain -- drives the Demand-tab presets */
+const DEFAULT_ARTIFACTS = [
+  // ---- Finance / FP&A (10) ----
+  { id:"FIN-01", category:"process map", tag:"clean", text:"Quarterly forecasting process: finance runs a rolling budget forecast each quarter, tracking variance against plan.", metadata:{owner:"fin-analytics-team", cadence:"quarterly", variance_pct:3, sox_reviewed:true} },
+  { id:"FIN-02", category:"document", tag:"clean", text:"Annual budget planning document and budget narrative for FY26, covering the planning document workflow.", metadata:{version:"v3.2", owner:"fpna-team"} },
+  { id:"FIN-03", category:"measure", tag:"clean", text:"Forecast accuracy measure: a KPI/metric tracking how close quarterly forecasts land to actuals.", metadata:{unit:"%", target:95} },
+  { id:"FIN-04", category:"outcome", tag:"clean", text:"Quarterly financial outcome and result summary feeding the strategic decision review.", metadata:{decision_tier:"Tier 3 - Strategic"} },
+  { id:"FIN-05", category:"event", tag:"clean", text:"Quarter close event marking the end of the fiscal reporting period.", metadata:{timestamp_type:"fiscal_quarter_end"} },
+  { id:"FIN-06", category:"business rule", tag:"shacl-fail", text:"Budget variance rule defining the deviation tolerance threshold for department budgets.", metadata:{threshold:5, sox_reviewed:true} },
+  { id:"FIN-07", category:"business rule", tag:"clean", text:"Budget variance rule applied to the marketing department, defining the deviation tolerance threshold before escalation.", metadata:{threshold:5, applies_to:"marketing-dept", sox_reviewed:true} },
+  { id:"FIN-08", category:"persona", tag:"clean", text:"CFO persona representing the finance leader stakeholder with authority over budget approvals.", metadata:{access_scope:"finance-exec"} },
+  { id:"FIN-09", category:"process map", tag:"swrl-fail", text:"Monthly forecasting process update: the finance team's projection now shows a widening variance against the original quarterly budget.", metadata:{owner:"fin-analytics-team", cadence:"monthly", variance_pct:12, sox_reviewed:true} },
+  { id:"FIN-10", category:"process map", tag:"pep-fail", text:"Ad hoc forecasting process draft for a new product line, tracking projected variance against a rough budget.", metadata:{owner:"product-fin-team", cadence:"ad-hoc", variance_pct:2} },
+
+  // ---- Requirements Engineering (6) ----
+  { id:"REQ-01", category:"document", tag:"clean", text:"Requirements specification document capturing the requirement spec for the onboarding feature, tracked as REQ-118.", metadata:{version:"v2", requirement_id:"REQ-118"} },
+  { id:"REQ-02", category:"constraint", tag:"clean", text:"Traceability constraint linking this requirement back to its parent requirement for full requirements traceability.", metadata:{linked_requirement_id:"REQ-100"} },
+  { id:"REQ-03", category:"document", tag:"clean", text:"Requirements specification document for the payments retry logic, tracked under requirement REQ-204, version 3.", metadata:{version:"v3", requirement_id:"REQ-204"} },
+  { id:"REQ-04", category:"document", tag:"shacl-fail", text:"Draft requirement spec document circulated for early review before formal requirement tracking begins.", metadata:{version:"v0.1"} },
+  { id:"REQ-05", category:"constraint", tag:"clean", text:"Traceability constraint linking the retry-logic requirement to its parent requirement in the payments epic.", metadata:{linked_requirement_id:"REQ-200"} },
+  { id:"REQ-06", category:"constraint", tag:"shacl-fail", text:"Traceability constraint noted informally during a requirements review meeting, not yet linked to a parent requirement.", metadata:{} },
+
+  // ---- Systems Engineering / MBSE (6) ----
+  { id:"MBSE-01", category:"data structure", tag:"clean", text:"System model schema describing the model-based systems engineering (MBSE) representation of the braking subsystem.", metadata:{model_type:"SysML-block-definition"} },
+  { id:"MBSE-02", category:"event", tag:"clean", text:"Integration test event marking completion of the hardware/software (hw-sw) integration test phase.", metadata:{test_phase:"HW-SW integration"} },
+  { id:"MBSE-03", category:"data structure", tag:"clean", text:"System model schema for the propulsion subsystem, an MBSE representation built with SysML block definitions.", metadata:{model_type:"SysML-internal-block"} },
+  { id:"MBSE-04", category:"data structure", tag:"shacl-fail", text:"Early system model sketch for the braking subsystem, not yet formalized as an MBSE artifact.", metadata:{} },
+  { id:"MBSE-05", category:"event", tag:"clean", text:"Integration test event confirming successful hardware/software (hw-sw) integration for the sensor suite.", metadata:{test_phase:"sensor HW-SW integration"} },
+  { id:"MBSE-06", category:"event", tag:"shacl-fail", text:"Integration test log entry recorded during an ad hoc bench test, no formal test phase assigned yet.", metadata:{} },
+
+  // ---- Systems Safety / STPA-STAMP (6) ----
+  { id:"SAFE-01", category:"constraint", tag:"clean", text:"Unsafe control action constraint identified during the STPA hazard analysis for the braking system.", metadata:{hazard_id:"HAZ-04"} },
+  { id:"SAFE-02", category:"event", tag:"clean", text:"Hazard event logged during the STAMP safety review with an assigned severity.", metadata:{severity:"high"} },
+  { id:"SAFE-03", category:"constraint", tag:"clean", text:"A second unsafe control action constraint from the STPA hazard analysis, this one covering the steering subsystem.", metadata:{hazard_id:"HAZ-07"} },
+  { id:"SAFE-04", category:"constraint", tag:"shacl-fail", text:"Preliminary unsafe control action note from an early STPA workshop, hazard identifier not yet assigned.", metadata:{} },
+  { id:"SAFE-05", category:"event", tag:"clean", text:"Hazard event captured during the STAMP safety review of the steering subsystem, with severity recorded.", metadata:{severity:"critical"} },
+  { id:"SAFE-06", category:"event", tag:"swrl-fail", text:"Hazard event logged during a safety review with a severity rating outside the standard scale.", metadata:{severity:"catastrophic-plus"} },
+
+  // ---- Knowledge Systems (6) ----
+  { id:"KS-01", category:"document", tag:"clean", text:"Vocabulary document defining core taxonomy terms, maintained by the knowledge systems steward.", metadata:{version:"v5", steward:"k.patel"} },
+  { id:"KS-02", category:"persona", tag:"clean", text:"Ontology engineer persona granted access within the knowledge system governance program.", metadata:{access_scope:"ontology-authoring"} },
+  { id:"KS-03", category:"document", tag:"clean", text:"Updated vocabulary document for the supply-chain taxonomy, version 6, maintained by the knowledge systems steward.", metadata:{version:"v6", steward:"k.patel"} },
+  { id:"KS-04", category:"document", tag:"shacl-fail", text:"Draft vocabulary document circulated informally, not yet assigned a steward of record.", metadata:{version:"v0.9"} },
+  { id:"KS-05", category:"persona", tag:"clean", text:"Second ontology engineer persona granted read access within the knowledge system for a new hire.", metadata:{access_scope:"ontology-readonly"} },
+  { id:"KS-06", category:"persona", tag:"pep-fail", text:"Ontology engineer persona requested with broad, unrestricted access across the knowledge system.", metadata:{access_scope:"public"} },
+
+  // ---- Enterprise Architecture (6) ----
+  { id:"EA-01", category:"process map", tag:"clean", text:"Architecture decision process documenting the enterprise architecture review for a new platform ADR-027.", metadata:{owner:"architecture-review-board", decision_id:"ADR-027"} },
+  { id:"EA-02", category:"measure", tag:"clean", text:"Architecture alignment measure tracking conformance to the enterprise architecture target state.", metadata:{unit:"%", target:90} },
+  { id:"EA-03", category:"process map", tag:"clean", text:"Architecture decision process for the new data platform, an enterprise architecture review tracked as ADR-031.", metadata:{owner:"architecture-review-board", decision_id:"ADR-031"} },
+  { id:"EA-04", category:"process map", tag:"shacl-fail", text:"Informal architecture review discussion ahead of a formal architecture decision record being drafted.", metadata:{owner:"architecture-review-board"} },
+  { id:"EA-05", category:"measure", tag:"clean", text:"A second architecture alignment measure tracking conformance to the target state for the data platform.", metadata:{unit:"%", target:85} },
+  { id:"EA-06", category:"measure", tag:"shacl-fail", text:"Early architecture alignment measure draft, target state conformance level not yet finalized.", metadata:{unit:"%"} },
+
+  // ---- Decision Analysis (6) ----
+  { id:"DA-01", category:"outcome", tag:"clean", text:"Scenario outcome from the decision analysis scenario planning exercise for the strategic tradeoff review.", metadata:{decision_tier:"Tier 3 - Strategic"} },
+  { id:"DA-02", category:"persona", tag:"clean", text:"Decision maker persona representing the executive stakeholder in this decision analysis review.", metadata:{access_scope:"executive-readonly"} },
+  { id:"DA-03", category:"outcome", tag:"clean", text:"A second scenario outcome from the decision analysis exercise, this one modeling the tactical response to a supply disruption.", metadata:{decision_tier:"Tier 2 - Tactical"} },
+  { id:"DA-04", category:"outcome", tag:"shacl-fail", text:"Draft scenario outcome sketched during a decision analysis brainstorm, tier not yet assigned.", metadata:{} },
+  { id:"DA-05", category:"persona", tag:"clean", text:"Second decision maker persona representing a regional executive stakeholder in the tradeoff review.", metadata:{access_scope:"regional-exec-readonly"} },
+  { id:"DA-06", category:"persona", tag:"pep-fail", text:"Decision maker persona requested with unrestricted public access for a cross-functional review.", metadata:{access_scope:"public"} },
+
+  // ---- Engineering, extra (9) ----
+  { id:"ENG-01", category:"data structure", tag:"clean", text:"User account schema: the data structure record with fields for a user account.", metadata:{fields:["id","email","created_at"]} },
+  { id:"ENG-02", category:"persona", tag:"clean", text:"On-call engineer persona describing the rotation and responsibilities during an on-call shift.", metadata:{access_scope:"prod-readonly"} },
+  { id:"ENG-03", category:"business rule", tag:"shacl-fail", text:"Deployment approval rule: release gate requiring sign-off before a deployment can proceed.", metadata:{} },
+  { id:"ENG-04", category:"event", tag:"swrl-fail", text:"Incident event: an outage alert routed through PagerDuty with an assigned severity.", metadata:{severity:"extreme"} },
+  { id:"ENG-05", category:"persona", tag:"pep-fail", text:"On-call engineer persona for the new rotation, describing engineer responsibilities.", metadata:{access_scope:"public"} },
+  { id:"ENG-06", category:"constraint", tag:"clean", text:"Data retention constraint: log data retention and expiry (TTL) policy for the engineering domain.", metadata:{retention_days:90} },
+  { id:"ENG-07", category:"measure", tag:"clean", text:"Release cadence measure tracking deploys per week as the release frequency metric for the platform team.", metadata:{unit:"deploys/week"} },
+  { id:"ENG-08", category:"constraint", tag:"shacl-fail", text:"Data retention discussion notes from a planning meeting -- no formal retention constraint or policy defining when data should expire has been written yet.", metadata:{} },
+  { id:"ENG-09", category:"business rule", tag:"cross-domain", text:"The deployment approval gate for a production release also triggers a budget variance review before the release ships.", metadata:{approver_role:"release-manager", threshold:5, applies_to:"engineering-releases", sox_reviewed:true} },
+
+  // ---- Legal, extra (6) ----
+  { id:"LEG-01", category:"document", tag:"clean", text:"Vendor contract agreement and NDA counterparty legal document under review before signature.", metadata:{version:"v1.0", counterparty:"Acme Vendor Corp"} },
+  { id:"LEG-02", category:"constraint", tag:"clean", text:"Non-disclosure confidentiality constraint applying to the counterparty NDA.", metadata:{counterparty_type:"external-vendor", legal_reviewed:true} },
+  { id:"LEG-03", category:"document", tag:"clean", text:"Second vendor contract agreement, a legal document covering a new counterparty engagement, under active negotiation.", metadata:{version:"v2.0", counterparty:"Globex Supply Co"} },
+  { id:"LEG-04", category:"document", tag:"shacl-fail", text:"Draft contract agreement text circulated internally before the counterparty has been finalized.", metadata:{version:"v0.5"} },
+  { id:"LEG-05", category:"constraint", tag:"pep-fail", text:"Non-disclosure confidentiality constraint drafted for a new counterparty NDA, pending formal legal sign-off.", metadata:{counterparty_type:"external-partner"} },
+  { id:"LEG-06", category:"constraint", tag:"clean", text:"A second non-disclosure confidentiality constraint applying to a joint venture counterparty agreement, cleared by legal.", metadata:{counterparty_type:"joint-venture-partner", legal_reviewed:true} },
+
+  // ---- Cross-domain showcase, extra (2, beyond ENG-09) ----
+  { id:"XDOM-01", category:"process map", tag:"cross-domain", text:"Architecture decision process for a new propulsion control system requires both an enterprise architecture review and a systems safety hazard analysis sign-off before approval.", metadata:{owner:"architecture-review-board", decision_id:"ADR-040", hazard_id:"HAZ-11", severity:"high"} },
+  { id:"XDOM-02", category:"document", tag:"cross-domain", text:"The vocabulary document defining core architecture decision terminology also doubles as an enterprise architecture review reference, maintained by the knowledge systems steward.", metadata:{version:"v7", steward:"k.patel", owner:"architecture-review-board", decision_id:"ADR-041"} },
+];
+
+/* =========================================================================
+   ENGINE: router, heuristic backend, validation gate, monitor, chassis
+   ========================================================================= */
+const state = {
+  demand: DEFAULT_ARTIFACTS.map(a => ({ ...a, selected: true })),
+  monitor: {},          // agentId -> { window: [bool], tripped, tripReason }
+  kgclLog: [],
+  lastRunOutcomes: [],  // for HITL tab / log clicks, newest first
+  trainingFeedback: [],
+  runHistory: [],
+  workflow: { nodes: [], edges: [] },
+  nodeSeq: 0,
+  nodeStats: {},         // domain -> { committed, rejected, quarantined, noMatch } from most recent run
+  agentSelection: Object.fromEntries(Object.keys(ONTOLOGY).map(d => [d, true])),
+};
+const BREAKER_THRESHOLD = 0.4;
+const STOPWORDS = new Set(["the","and","this","that","with","from","into","should","would","could","artifact","concept","domain","agent","after","before","being","been","were","have","has","for","not","yet","will","when","what","where","which","about"]);
+
+function normalize(text) {
+  return text.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
+}
+
+function matchDomains(text) {
+  const norm = normalize(text);
+  const hits = Object.keys(DOMAIN_SIGNAL_KEYWORDS).filter(d => DOMAIN_SIGNAL_KEYWORDS[d].some(sig => norm.includes(sig)));
+  return hits.length ? hits : Object.keys(ONTOLOGY);
+}
+
+function proposeForDomain(text, domain) {
+  const norm = normalize(text);
+  const scored = [];
+  for (const concept of ONTOLOGY[domain].concepts) {
+    const hits = concept.keywords.filter(kw => norm.includes(kw));
+    if (!hits.length) continue;
+    const confidence = Math.min(1, hits.length / concept.keywords.length + 0.1 * (hits.length - 1));
+    scored.push({ concept, confidence: Math.round(confidence * 100) / 100, evidence: "matched keywords: " + hits.join(", ") });
+  }
+  scored.sort((a, b) => b.confidence - a.confidence);
+  return scored;
+}
+
+function validateProposal(metadata, concept) {
+  const missing = concept.required.filter(p => !(p in metadata));
+  if (missing.length) {
+    return { passed:false, stage:"shacl", reason:`SHACL violation: missing required propert${missing.length===1?"y":"ies"}: ${missing.join(", ")}` };
+  }
+  if (concept.swrl) {
+    const err = SWRL_RULES[concept.swrl](metadata);
+    if (err) return { passed:false, stage:"swrl", reason: err };
+  }
+  if (concept.pep) {
+    for (const tag of concept.pep) {
+      const err = PEP_RULES[tag](metadata);
+      if (err) return { passed:false, stage:"pep", reason: err };
+    }
+  }
+  return { passed:true };
+}
+
+function getHealth(agentId) {
+  if (!state.monitor[agentId]) state.monitor[agentId] = { window: [], tripped:false, tripReason:"", sinceLastRejection:0 };
+  return state.monitor[agentId];
+}
+function monitorRecord(agentId, accepted) {
+  const h = getHealth(agentId);
+  h.window.push(accepted);
+  if (h.window.length > 10) h.window.shift();
+  h.sinceLastRejection = accepted ? (h.sinceLastRejection||0) + 1 : 0;
+  if (h.window.length >= 3) {
+    const rejectionRate = 1 - (h.window.filter(Boolean).length / h.window.length);
+    if (rejectionRate > BREAKER_THRESHOLD && !h.tripped) {
+      h.tripped = true;
+      h.tripReason = `rejection rate ${Math.round(rejectionRate*100)}% over last ${h.window.length} proposals exceeds the ${Math.round(BREAKER_THRESHOLD*100)}% threshold`;
+    }
+  }
+}
+function valueDrift(agentId) {
+  const h = getHealth(agentId);
+  if (!h.window.length) return 0;
+  return Math.round((1 - h.window.filter(Boolean).length / h.window.length) * 100) / 100;
+}
+function resetBreaker(agentId) {
+  const h = getHealth(agentId);
+  h.tripped = false; h.tripReason = ""; h.window = []; h.sinceLastRejection = 0;
+}
+
+function processArtifactForDomain(artifact, domain) {
+  const agentId = "agent::" + domain;
+  if (getHealth(agentId).tripped) {
+    return { status:"quarantined", detail:`circuit breaker tripped for ${agentId}`, domain, agentId };
+  }
+  const proposals = proposeForDomain(artifact.text, domain);
+  if (!proposals.length) {
+    monitorRecord(agentId, false);
+    return { status:"no_match", detail:"no candidate concept above threshold", domain, agentId };
+  }
+  const top = proposals[0];
+  const result = validateProposal(artifact.metadata, top.concept);
+  if (!result.passed) {
+    monitorRecord(agentId, false);
+    return { status:"rejected", detail:`[${result.stage}] ${result.reason}`, domain, agentId, conceptUri: top.concept.uri, confidence: top.confidence };
+  }
+  monitorRecord(agentId, true);
+  const record = { what: top.concept.uri, who: agentId, when: new Date().toLocaleString(), where: domain, why: `confidence=${top.confidence} (${top.evidence})`, artifact_id: artifact.id, confidence: top.confidence };
+  state.kgclLog.unshift(record);
+  return { status:"committed", detail:`confidence=${top.confidence}`, domain, agentId, conceptUri: top.concept.uri, confidence: top.confidence, record };
+}
+
+function statusClass(status) { return status; }
+
+function runPipeline(artifacts, allowedDomains, mode) {
+  let committed = 0, rejected = 0, quarantined = 0, noMatch = 0;
+  const runOutcomes = [];
+  const perDomain = {};
+  allowedDomains.forEach(d => perDomain[d] = { committed:0, rejected:0, quarantined:0, noMatch:0 });
+
+  for (const artifact of artifacts) {
+    const matched = matchDomains(artifact.text).filter(d => allowedDomains.includes(d));
+    if (!matched.length) {
+      runOutcomes.push({ artifactId: artifact.id, text: artifact.text, metadata: artifact.metadata, domain: "(none)", status: "no_match", detail: "no agent in this run claims this artifact" });
+      continue;
+    }
+    const accepted = [];
+    for (const domain of matched) {
+      const outcome = processArtifactForDomain(artifact, domain);
+      const entry = { artifactId: artifact.id, text: artifact.text, metadata: { ...artifact.metadata }, ...outcome };
+      state.lastRunOutcomes.unshift(entry);
+      runOutcomes.push(entry);
+      if (!perDomain[domain]) perDomain[domain] = { committed:0, rejected:0, quarantined:0, noMatch:0 };
+      if (outcome.status === "committed") { committed++; perDomain[domain].committed++; accepted.push(outcome.record); }
+      else if (outcome.status === "rejected") { rejected++; perDomain[domain].rejected++; }
+      else if (outcome.status === "quarantined") { quarantined++; perDomain[domain].quarantined++; }
+      else { noMatch++; perDomain[domain].noMatch++; }
+    }
+    if (accepted.length > 1) {
+      const domains = [...new Set(accepted.map(r => r.where))].sort();
+      runOutcomes.push({ artifactId: artifact.id, text: artifact.text, metadata: artifact.metadata, domain: domains.join(", "), status: "reconciled", detail: `linked across ${domains.length} domains: ${domains.join(", ")}` });
+    }
+  }
+
+  Object.keys(perDomain).forEach(d => { state.nodeStats[d] = perDomain[d]; });
+  renderLog(runOutcomes);
+  state.runHistory.unshift({ time: new Date().toLocaleString(), mode, domains: allowedDomains, count: artifacts.length, committed, rejected, quarantined, noMatch, outcomes: runOutcomes });
+  renderAll();
+  updateNodeBadges();
+  return { committed, rejected, quarantined, noMatch };
+}
+
+/* =========================================================================
+   MODAL SYSTEM
+   ========================================================================= */
+function openModal(title, bodyHtml, footerHtml) {
+  const root = document.getElementById("modal-root");
+  root.innerHTML = `
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header"><h3>${title}</h3><button class="modal-close" id="modal-close-btn">&times;</button></div>
+        <div class="modal-body">${bodyHtml}</div>
+        ${footerHtml ? `<div class="modal-footer">${footerHtml}</div>` : ""}
+      </div>
+    </div>`;
+  document.getElementById("modal-close-btn").addEventListener("click", closeModal);
+  document.getElementById("modal-overlay").addEventListener("click", (e) => { if (e.target.id === "modal-overlay") closeModal(); });
+}
+function closeModal() { document.getElementById("modal-root").innerHTML = ""; }
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c])); }
+
+function openAgentDetailModal(domain) {
+  const agentId = "agent::" + domain;
+  const h = getHealth(agentId);
+  const drift = valueDrift(agentId);
+  const dots = h.window.map(pass => `<span class="dot ${pass ? "pass" : "fail"}"></span>`).join("") || '<span class="empty" style="padding:0;">no proposals yet</span>';
+  const concepts = ONTOLOGY[domain].concepts.map(c => `<li><code>${c.uri}</code> — ${c.category}, requires: ${c.required.join(", ") || "(none)"}${c.swrl ? ", SWRL-checked" : ""}${c.pep ? `, PEP: ${c.pep.join(", ")}` : ""}</li>`).join("");
+  const recent = state.lastRunOutcomes.filter(o => o.domain === domain).slice(0, 8)
+    .map(o => `<tr><td>${esc(o.artifactId)}</td><td><span class="badge ${o.status}">${o.status.replace("_"," ")}</span></td><td>${esc(o.detail||"")}</td></tr>`).join("")
+    || `<tr><td colspan="3" class="empty">No proposals from this agent yet.</td></tr>`;
+  const body = `
+    <table class="kv-table">
+      <tr><td>Domain agent</td><td><strong>${ONTOLOGY[domain].label}</strong></td></tr>
+      <tr><td>Governance owner</td><td>${ONTOLOGY[domain].owner}</td></tr>
+      <tr><td>Breaker state</td><td><span class="badge ${h.tripped?"tripped":"healthy"}">${h.tripped?"TRIPPED":"healthy"}</span></td></tr>
+      <tr><td>Value-drift coefficient</td><td>${drift.toFixed(2)}</td></tr>
+      <tr><td>MTBH proxy</td><td>${h.sinceLastRejection||0} artifact(s) since last rejection</td></tr>
+      <tr><td>Rolling window (oldest→newest)</td><td><div class="dot-row">${dots}</div></td></tr>
+    </table>
+    <p><strong>Concepts owned by this cartridge:</strong></p>
+    <ul style="font-size:12.5px; margin:0 0 12px; padding-left:18px;">${concepts}</ul>
+    <p><strong>Recent proposals</strong></p>
+    <table><thead><tr><th>Artifact</th><th>Status</th><th>Detail</th></tr></thead><tbody>${recent}</tbody></table>
+  `;
+  const footer = `
+    <button class="btn secondary" id="modal-run-agent">Run only this agent</button>
+    ${h.tripped ? `<button class="btn danger" id="modal-reset-agent">Reset breaker</button>` : ""}
+    <button class="btn secondary" id="modal-close-btn2">Close</button>
+  `;
+  openModal(`Agent detail — ${ONTOLOGY[domain].label}`, body, footer);
+  document.getElementById("modal-close-btn2").addEventListener("click", closeModal);
+  document.getElementById("modal-run-agent").addEventListener("click", () => { closeModal(); runSingleAgent(domain); });
+  const resetBtn = document.getElementById("modal-reset-agent");
+  if (resetBtn) resetBtn.addEventListener("click", () => {
+    resetBreaker(agentId);
+    state.trainingFeedback.unshift({ time: new Date().toLocaleString(), domain, artifact: "(operational)", note: "Circuit breaker manually reset after human review." });
+    closeModal();
+    renderAll();
+  });
+}
+
+function openOutcomeDetailModal(entry) {
+  const body = `
+    <table class="kv-table">
+      <tr><td>Artifact ID</td><td>${esc(entry.artifactId)}</td></tr>
+      <tr><td>Domain (WHERE)</td><td>${esc(entry.domain)}</td></tr>
+      <tr><td>Proposed concept (WHAT)</td><td>${esc(entry.conceptUri || "—")}${entry.confidence!==undefined ? ` (confidence ${entry.confidence})` : ""}</td></tr>
+      <tr><td>Status</td><td><span class="badge ${entry.status}">${entry.status.replace("_"," ")}</span></td></tr>
+      <tr><td>Detail (WHY)</td><td>${esc(entry.detail || "")}</td></tr>
+      <tr><td>Artifact text</td><td>${esc(entry.text || "")}</td></tr>
+      <tr><td>Metadata</td><td><code>${esc(JSON.stringify(entry.metadata || {}))}</code></td></tr>
+    </table>
+  `;
+  const footer = `<button class="btn secondary" id="modal-goto-hitl">Open in Human-in-the-Loop</button><button class="btn secondary" id="modal-close-btn2">Close</button>`;
+  openModal(`Outcome detail — ${esc(entry.artifactId)}`, body, footer);
+  document.getElementById("modal-close-btn2").addEventListener("click", closeModal);
+  document.getElementById("modal-goto-hitl").addEventListener("click", () => {
+    closeModal();
+    document.querySelector('.tab-btn[data-tab="hitl"]').click();
+  });
+}
+
+function openRecordDetailModal(rec) {
+  const body = `
+    <p class="helptext" style="margin-bottom:12px;">This is the mapping-assertion record in the graph-model terms discussed for the architecture: an <strong>artifact node</strong>, linked <code>about</code> a <strong>domain concept node</strong>, resolved by an agent, with the 5W context frame bound to the assertion itself.</p>
+    <table class="kv-table">
+      <tr><td>Artifact node (about)</td><td>${esc(rec.artifact_id)}</td></tr>
+      <tr><td>Domain concept node (resolvesTo / WHAT)</td><td><code>${esc(rec.what)}</code></td></tr>
+      <tr><td>WHO (resolving agent)</td><td>${esc(rec.who)}</td></tr>
+      <tr><td>WHERE (domain)</td><td>${esc(rec.where)}</td></tr>
+      <tr><td>WHEN (committed)</td><td>${esc(rec.when)}</td></tr>
+      <tr><td>WHY (rationale)</td><td>${esc(rec.why)}</td></tr>
+      <tr><td>Confidence</td><td>${rec.confidence}</td></tr>
+    </table>
+  `;
+  openModal(`KGCL record — ${esc(rec.artifact_id)}`, body, `<button class="btn secondary" id="modal-close-btn2">Close</button>`);
+  document.getElementById("modal-close-btn2").addEventListener("click", closeModal);
+}
+
+function openRunDetailModal(run) {
+  const rows = (run.outcomes || []).map(o => `<tr><td>${esc(o.artifactId)}</td><td>${esc(o.domain)}</td><td><span class="badge ${o.status}">${o.status.replace("_"," ")}</span></td><td>${esc(o.detail||"")}</td></tr>`).join("")
+    || `<tr><td colspan="4" class="empty">No outcome detail stored for this run.</td></tr>`;
+  const body = `
+    <table class="kv-table">
+      <tr><td>Time</td><td>${esc(run.time)}</td></tr>
+      <tr><td>Mode</td><td>${esc(run.mode)}</td></tr>
+      <tr><td>Agents</td><td>${run.domains.map(d => ONTOLOGY[d] ? ONTOLOGY[d].label : d).join(", ")}</td></tr>
+      <tr><td>Result</td><td>${run.committed} committed / ${run.rejected} rejected / ${run.quarantined} quarantined</td></tr>
+    </table>
+    <table><thead><tr><th>Artifact</th><th>Domain</th><th>Status</th><th>Detail</th></tr></thead><tbody>${rows}</tbody></table>
+  `;
+  openModal(`Run detail — ${esc(run.time)}`, body, `<button class="btn secondary" id="modal-close-btn2">Close</button>`);
+  document.getElementById("modal-close-btn2").addEventListener("click", closeModal);
+}
+
+/* ---- Human-in-the-loop popup: notes, guidance, live retest ---- */
+function openHITLModal(idx) {
+  const o = state.lastRunOutcomes[idx];
+  if (!o || o.domain === "(none)") return;
+  const domain = o.domain;
+  const concepts = ONTOLOGY[domain].concepts;
+  const defaultUri = o.conceptUri || (concepts[0] && concepts[0].uri);
+  const conceptOptions = concepts.map(c => `<option value="${c.uri}" ${c.uri===defaultUri?"selected":""}>${c.uri} (${c.category})</option>`).join("");
+
+  const body = `
+    <table class="kv-table">
+      <tr><td>Artifact</td><td>${esc(o.artifactId)}</td></tr>
+      <tr><td>Domain agent</td><td>${ONTOLOGY[domain].label}</td></tr>
+      <tr><td>Original outcome</td><td><span class="badge ${o.status}">${o.status.replace("_"," ")}</span> — ${esc(o.detail||"")}</td></tr>
+    </table>
+    <div class="field"><label>Artifact text (editable)</label><textarea id="hitl-text">${esc(o.text||"")}</textarea></div>
+    <div class="field"><label>Metadata JSON (editable)</label><textarea id="hitl-meta">${esc(JSON.stringify(o.metadata||{}, null, 2))}</textarea></div>
+    <div class="field"><label>Target concept</label><select id="hitl-concept">${conceptOptions}</select></div>
+    <div class="field"><label>Training guidance / reviewer note</label><textarea id="hitl-note" placeholder="e.g. 'this should map to CFOPersona because it describes an executive budget owner, not a process'"></textarea></div>
+    <label class="row" style="font-weight:400; cursor:pointer;"><input type="checkbox" id="hitl-merge" checked style="width:auto;"> Merge significant words from the guidance note into this concept's matching vocabulary (affects future runs this session too)</label>
+    <div id="hitl-result"></div>
+  `;
+  const footer = `
+    <button class="btn secondary" id="hitl-retest">Retest agent</button>
+    <button class="btn secondary" id="hitl-save-note">Save note only</button>
+    <button class="btn" id="hitl-approve">Approve as-is</button>
+    <button class="btn danger" id="hitl-reject">Reject</button>
+  `;
+  openModal(`Human-in-the-loop — ${esc(o.artifactId)}`, body, footer);
+
+  document.getElementById("hitl-retest").addEventListener("click", () => {
+    let metadata;
+    try { metadata = JSON.parse(document.getElementById("hitl-meta").value || "{}"); }
+    catch (e) { document.getElementById("hitl-result").innerHTML = `<div class="hitl-result-box fail">Metadata must be valid JSON.</div>`; return; }
+    const text = document.getElementById("hitl-text").value;
+    const selectedUri = document.getElementById("hitl-concept").value;
+    const note = document.getElementById("hitl-note").value.trim();
+    const merge = document.getElementById("hitl-merge").checked;
+    const concept = concepts.find(c => c.uri === selectedUri);
+    if (merge && note) {
+      const words = [...new Set(note.toLowerCase().replace(/[^a-z0-9\s]/g," ").split(/\s+/).filter(w => w.length >= 4 && !STOPWORDS.has(w)))];
+      const added = words.filter(w => !concept.keywords.includes(w));
+      concept.keywords.push(...added);
+    }
+    const proposals = proposeForDomain(text, domain);
+    const match = proposals.find(p => p.concept.uri === selectedUri);
+    const validation = validateProposal(metadata, concept);
+    const resultBox = document.getElementById("hitl-result");
+    if (validation.passed) {
+      resultBox.innerHTML = `<div class="hitl-result-box pass">Retest passed. New confidence for ${selectedUri}: ${match ? match.confidence : 0}. This artifact would now COMMIT.</div>`;
+      const footer2 = document.querySelector(".modal-footer");
+      if (!document.getElementById("hitl-commit")) {
+        const commitBtn = document.createElement("button");
+        commitBtn.className = "btn"; commitBtn.id = "hitl-commit"; commitBtn.textContent = "Commit corrected mapping";
+        footer2.insertBefore(commitBtn, footer2.firstChild);
+        commitBtn.addEventListener("click", () => {
+          const record = { what: selectedUri, who: "agent::"+domain, when: new Date().toLocaleString(), where: domain, why: `human-guided retest: ${note || "(no note)"} — confidence=${match?match.confidence:0}`, artifact_id: o.artifactId, confidence: match?match.confidence:0 };
+          state.kgclLog.unshift(record);
+          o.humanResolved = true; o.status = "committed"; o.conceptUri = selectedUri; o.detail = "human-guided retest, committed";
+          logFeedbackNote(domain, o.artifactId, note || "Retested and committed after guidance.");
+          closeModal(); renderAll();
+        });
+      }
+    } else {
+      resultBox.innerHTML = `<div class="hitl-result-box fail">Retest still fails at [${validation.stage}]: ${esc(validation.reason)}</div>`;
+    }
+  });
+
+  document.getElementById("hitl-save-note").addEventListener("click", () => {
+    const note = document.getElementById("hitl-note").value.trim();
+    if (!note) { closeModal(); return; }
+    logFeedbackNote(domain, o.artifactId, note);
+    closeModal(); renderAll();
+  });
+
+  document.getElementById("hitl-approve").addEventListener("click", () => {
+    const note = document.getElementById("hitl-note").value.trim();
+    const record = { what:o.conceptUri||"(unspecified)", who:o.agentId, when:new Date().toLocaleString(), where:o.domain, why:`human override: approved despite "${o.detail}"`, artifact_id:o.artifactId, confidence:o.confidence||0 };
+    state.kgclLog.unshift(record);
+    o.humanResolved = true; o.status = "committed"; o.detail = "human override: " + o.detail;
+    logFeedbackNote(o.domain, o.artifactId, note || `Approved despite gate rejection: ${o.detail}`);
+    closeModal(); renderAll();
+  });
+
+  document.getElementById("hitl-reject").addEventListener("click", () => {
+    const note = document.getElementById("hitl-note").value.trim();
+    o.humanResolved = true; o.status = "rejected";
+    logFeedbackNote(o.domain, o.artifactId, note || "Rejected by reviewer.");
+    closeModal(); renderAll();
+  });
+}
+
+function logFeedbackNote(domain, artifact, note) {
+  state.trainingFeedback.unshift({ time: new Date().toLocaleString(), domain, artifact, note });
+}
+
+/* =========================================================================
+   RENDERING
+   ========================================================================= */
+function renderAgentToggleRow() {
+  const el = document.getElementById("agent-toggle-row");
+  el.innerHTML = Object.keys(ONTOLOGY).map(d => `
+    <label class="agent-toggle"><input type="checkbox" data-agent-toggle="${d}" ${state.agentSelection[d] ? "checked" : ""}> ${ONTOLOGY[d].label}</label>
+  `).join("");
+  el.querySelectorAll("[data-agent-toggle]").forEach(cb => cb.addEventListener("change", () => {
+    state.agentSelection[cb.getAttribute("data-agent-toggle")] = cb.checked;
+  }));
+}
+
+function renderMonitorCards() {
+  const el = document.getElementById("monitor-cards");
+  el.innerHTML = "";
+  for (const domain of Object.keys(ONTOLOGY)) {
+    const agentId = "agent::" + domain;
+    const h = getHealth(agentId);
+    const drift = valueDrift(agentId);
+    const barColor = h.tripped ? "var(--red)" : drift > 0.2 ? "var(--amber)" : "var(--green)";
+    const card = document.createElement("div");
+    card.className = "card agent-card";
+    card.innerHTML = `
+      <div class="state-row">
+        <span class="domain-name">${ONTOLOGY[domain].label}</span>
+        <span class="badge ${h.tripped ? "tripped" : "healthy"}">${h.tripped ? "TRIPPED" : "healthy"}</span>
+      </div>
+      <div class="meta-line">Value-drift coefficient: ${drift.toFixed(2)}</div>
+      <div class="bar-bg"><div class="bar-fill" style="width:${Math.round(drift*100)}%; background:${barColor};"></div></div>
+      <div class="meta-line">MTBH proxy: ${h.sinceLastRejection||0} artifact(s) since last rejection</div>
+      ${h.tripped ? `<div class="meta-line" style="color:var(--red);">${h.tripReason}</div>` : ""}
+      <div class="row" style="margin-top:8px;">
+        <button class="btn small secondary" data-run-one="${domain}">Run only this agent</button>
+        ${h.tripped ? `<button class="btn small danger" data-reset="${agentId}">Reset breaker</button>` : ""}
+      </div>
+    `;
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("button")) return;
+      openAgentDetailModal(domain);
+    });
+    el.appendChild(card);
+  }
+  el.querySelectorAll("[data-reset]").forEach(btn => btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const agentId = btn.getAttribute("data-reset");
+    resetBreaker(agentId);
+    state.trainingFeedback.unshift({ time: new Date().toLocaleString(), domain: agentId.replace("agent::",""), artifact: "(operational)", note: "Circuit breaker manually reset after human review." });
+    renderAll();
+  }));
+  el.querySelectorAll("[data-run-one]").forEach(btn => btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    runSingleAgent(btn.getAttribute("data-run-one"));
+  }));
+}
+
+function runSingleAgent(domain) {
+  const selected = state.demand.filter(a => a.selected);
+  if (!selected.length) { document.getElementById("dash-warn").innerHTML = '<div class="warn">No artifacts selected — check some in the Demand tab first.</div>'; return; }
+  document.getElementById("dash-warn").innerHTML = "";
+  runPipeline(selected, [domain], `single agent: ${ONTOLOGY[domain].label}`);
+}
+
+function renderRunHistory() {
+  const el = document.getElementById("run-history");
+  if (!state.runHistory.length) { el.innerHTML = '<div class="empty">No runs yet — click "Run all 9 agents" above, or build a workflow.</div>'; return; }
+  el.innerHTML = "<table><thead><tr><th>Time</th><th>Mode</th><th>Agents</th><th>Committed</th><th>Rejected</th><th>Quarantined</th></tr></thead><tbody>" +
+    state.runHistory.slice(0,12).map((r,i) => `<tr class="clickable-row" data-run-idx="${i}"><td>${r.time}</td><td>${esc(r.mode)}</td><td>${r.domains.length}</td><td>${r.committed}</td><td>${r.rejected}</td><td>${r.quarantined}</td></tr>`).join("") +
+    "</tbody></table>";
+  el.querySelectorAll("[data-run-idx]").forEach(row => row.addEventListener("click", () => {
+    openRunDetailModal(state.runHistory[+row.getAttribute("data-run-idx")]);
+  }));
+}
+
+function renderLog(newEntries) {
+  const el = document.getElementById("log");
+  const frag = document.createDocumentFragment();
+  newEntries.slice().reverse().forEach(o => {
+    const cls = o.status === "reconciled" ? "reconciled" : o.status;
+    const line = document.createElement("div");
+    line.className = "logrow l-" + cls;
+    let text;
+    if (o.status === "reconciled") text = `${o.artifactId.padEnd(12)} RECONCILED -- ${o.detail}`;
+    else if (o.status === "committed") text = `${o.artifactId.padEnd(12)} [${o.domain}] COMMITTED -> ${o.conceptUri} (${o.detail})`;
+    else if (o.status === "rejected") text = `${o.artifactId.padEnd(12)} [${o.domain}] REJECTED ${o.detail}`;
+    else if (o.status === "quarantined") text = `${o.artifactId.padEnd(12)} [${o.domain}] QUARANTINED -- ${o.detail}`;
+    else text = `${o.artifactId.padEnd(12)} [${o.domain}] NO MATCH -- ${o.detail}`;
+    line.textContent = text;
+    line.addEventListener("click", () => openOutcomeDetailModal(o));
+    frag.insertBefore(line, frag.firstChild);
+  });
+  el.insertBefore(frag, el.firstChild);
+  while (el.children.length > 400) el.removeChild(el.lastChild);
+}
+
+function renderDemand() {
+  const body = document.getElementById("demand-body");
+  body.innerHTML = state.demand.map((a,i) => {
+    const domains = matchDomains(a.text).map(d => ONTOLOGY[d] ? ONTOLOGY[d].label.split(" ")[0] : d).join(", ");
+    return `
+    <tr class="clickable-row" data-preview-idx="${i}">
+      <td class="checkbox-cell" onclick="event.stopPropagation();"><input type="checkbox" data-idx="${i}" ${a.selected?"checked":""}></td>
+      <td>${esc(a.id)}</td>
+      <td>${esc(domains)}</td>
+      <td><span class="badge tag-${a.tag||"clean"}">${(a.tag||"clean").replace("-"," ")}</span></td>
+      <td>${esc(a.category)}</td>
+      <td>${esc(a.text.slice(0,80))}${a.text.length>80?"…":""}</td>
+    </tr>`;
+  }).join("");
+  body.querySelectorAll("input[type=checkbox]").forEach(cb => cb.addEventListener("change", () => {
+    state.demand[+cb.getAttribute("data-idx")].selected = cb.checked;
+  }));
+  body.querySelectorAll("[data-preview-idx]").forEach(row => row.addEventListener("click", () => {
+    const a = state.demand[+row.getAttribute("data-preview-idx")];
+    const domains = matchDomains(a.text);
+    openModal(`Artifact preview — ${esc(a.id)}`, `
+      <table class="kv-table">
+        <tr><td>Category</td><td>${esc(a.category)}</td></tr>
+        <tr><td>Tag</td><td><span class="badge tag-${a.tag||"clean"}">${(a.tag||"clean").replace("-"," ")}</span></td></tr>
+        <tr><td>Would route to</td><td>${domains.map(d=>ONTOLOGY[d]?ONTOLOGY[d].label:d).join(", ")}</td></tr>
+        <tr><td>Text</td><td>${esc(a.text)}</td></tr>
+        <tr><td>Metadata</td><td><code>${esc(JSON.stringify(a.metadata))}</code></td></tr>
+      </table>
+    `, `<button class="btn secondary" id="modal-close-btn2">Close</button>`);
+    document.getElementById("modal-close-btn2").addEventListener("click", closeModal);
+  }));
+}
+
+function applyPreset(name) {
+  if (!name) return;
+  if (name === "all") state.demand.forEach(a => a.selected = true);
+  else if (name === "none") state.demand.forEach(a => a.selected = false);
+  else if (name === "clean-only") state.demand.forEach(a => a.selected = a.tag === "clean");
+  else if (name === "failures-only") state.demand.forEach(a => a.selected = a.tag !== "clean");
+  else if (name === "cross-domain") state.demand.forEach(a => a.selected = a.tag === "cross-domain");
+  else if (name === "engineering-stress") state.demand.forEach(a => a.selected = a.id.startsWith("ENG-"));
+  renderDemand();
+}
+
+function renderHITL() {
+  const body = document.getElementById("hitl-body");
+  if (!state.lastRunOutcomes.length) { body.innerHTML = '<tr><td colspan="6" class="empty">No proposals yet — run the agents first.</td></tr>'; }
+  else {
+    body.innerHTML = state.lastRunOutcomes.slice(0,60).map((o,i) => `
+      <tr>
+        <td>${esc(o.artifactId)}</td>
+        <td>${esc(o.domain)}</td>
+        <td>${esc(o.conceptUri || "—")}${o.confidence!==undefined ? ` (${o.confidence})` : ""}</td>
+        <td><span class="badge ${o.status}">${o.status.replace("_"," ")}</span>${o.humanResolved?` <span class="badge human">reviewed</span>`:""}</td>
+        <td style="max-width:220px;">${esc(o.detail||"")}</td>
+        <td>${o.domain !== "(none)" ? `<button class="btn small" data-review="${i}">Review →</button>` : ""}</td>
+      </tr>`).join("");
+    body.querySelectorAll("[data-review]").forEach(btn => btn.addEventListener("click", () => openHITLModal(+btn.getAttribute("data-review"))));
+  }
+  const fb = document.getElementById("feedback-body");
+  fb.innerHTML = state.trainingFeedback.length ? state.trainingFeedback.slice(0,40).map(f => `<tr><td>${esc(f.time)}</td><td>${esc(f.domain)}</td><td>${esc(f.artifact)}</td><td>${esc(f.note)}</td></tr>`).join("")
+    : '<tr><td colspan="4" class="empty">No feedback recorded yet.</td></tr>';
+}
+
+function renderFinished(filter) {
+  const body = document.getElementById("finished-body");
+  const rows = state.kgclLog.filter(r => !filter || JSON.stringify(r).toLowerCase().includes(filter.toLowerCase()));
+  body.innerHTML = rows.length ? rows.map((r,i) => `
+    <tr class="clickable-row" data-rec-idx="${state.kgclLog.indexOf(r)}"><td>${esc(r.artifact_id)}</td><td>${esc(r.what)}</td><td>${esc(r.who)}</td><td>${esc(r.where)}</td><td>${esc(r.why)}</td><td>${esc(r.when)}</td></tr>
+  `).join("") : '<tr><td colspan="6" class="empty">No committed mappings yet.</td></tr>';
+  body.querySelectorAll("[data-rec-idx]").forEach(row => row.addEventListener("click", () => {
+    openRecordDetailModal(state.kgclLog[+row.getAttribute("data-rec-idx")]);
+  }));
+}
+
+function renderAll() {
+  renderAgentToggleRow();
+  renderMonitorCards();
+  renderRunHistory();
+  renderDemand();
+  renderHITL();
+  renderFinished(document.getElementById("finished-search").value);
+  renderWorkflowWarn();
+  updateNodeBadges();
+}
+
+/* =========================================================================
+   WORKFLOW BUILDER (drag & drop)
+   ========================================================================= */
+const STAGE_TYPES = ["router","validation","reconciliation","commit","monitor"];
+const STAGE_LABELS = { router:"Content & Context Router", validation:"Deterministic Validation Gate", reconciliation:"Cross-Domain Reconciliation", commit:"KGCL Commit", monitor:"Drift & Governance Monitor" };
+
+function buildAgentPalette() {
+  const el = document.getElementById("agent-palette");
+  for (const domain of Object.keys(ONTOLOGY)) {
+    const item = document.createElement("div");
+    item.className = "palette-item agent-item";
+    item.draggable = true;
+    item.setAttribute("data-type", "agent");
+    item.setAttribute("data-domain", domain);
+    item.innerHTML = `${ONTOLOGY[domain].label}<small>owns: ${[...new Set(ONTOLOGY[domain].concepts.map(c=>c.category))].join(", ")}</small>`;
+    el.appendChild(item);
+  }
+}
+
+function initDragDrop() {
+  document.querySelectorAll(".palette-item").forEach(item => {
+    item.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("type", item.getAttribute("data-type"));
+      e.dataTransfer.setData("domain", item.getAttribute("data-domain") || "");
+    });
+  });
+  const canvas = document.getElementById("canvas");
+  canvas.addEventListener("dragover", (e) => { e.preventDefault(); canvas.classList.add("dragover"); });
+  canvas.addEventListener("dragleave", () => canvas.classList.remove("dragover"));
+  canvas.addEventListener("drop", (e) => {
+    e.preventDefault();
+    canvas.classList.remove("dragover");
+    const type = e.dataTransfer.getData("type");
+    const domain = e.dataTransfer.getData("domain");
+    if (!type) return;
+    const rect = document.getElementById("canvas-inner").getBoundingClientRect();
+    const x = Math.max(4, e.clientX - rect.left - 75);
+    const y = Math.max(4, e.clientY - rect.top - 25);
+    addNode(type, domain, x, y);
+  });
+}
+
+function addNode(type, domain, x, y) {
+  const id = "n" + (state.nodeSeq++);
+  state.workflow.nodes.push({ id, type, domain, x, y });
+  renderWorkflow();
+  return id;
+}
+
+let connectFrom = null;
+function renderWorkflow() {
+  const canvasInner = document.getElementById("canvas-inner");
+  canvasInner.querySelectorAll(".wf-node").forEach(n => n.remove());
+  let maxX = 900, maxY = 560;
+  for (const node of state.workflow.nodes) {
+    maxX = Math.max(maxX, node.x + 200);
+    maxY = Math.max(maxY, node.y + 120);
+    const div = document.createElement("div");
+    div.className = "wf-node" + (node.type === "agent" ? " agent" : "");
+    div.style.left = node.x + "px";
+    div.style.top = node.y + "px";
+    div.setAttribute("data-id", node.id);
+    const label = node.type === "agent" ? ONTOLOGY[node.domain].label : STAGE_LABELS[node.type];
+    const sub = node.type === "agent" ? "domain agent" : "pipeline stage";
+    let badge = "";
+    if (node.type === "agent" && state.nodeStats[node.domain]) {
+      const s = state.nodeStats[node.domain];
+      badge = `<span class="node-badge">✓${s.committed} ✗${s.rejected + s.quarantined}</span>`;
+    }
+    div.innerHTML = `<span class="rm" data-rm="${node.id}">×</span><div class="label">${label}</div><div class="sub">${sub}</div>${badge}`;
+    canvasInner.appendChild(div);
+
+    div.addEventListener("click", (e) => {
+      if (e.target.classList.contains("rm")) return;
+      if (!connectFrom) { connectFrom = node.id; div.classList.add("selected"); }
+      else if (connectFrom === node.id) { connectFrom = null; div.classList.remove("selected"); }
+      else {
+        state.workflow.edges.push({ from: connectFrom, to: node.id });
+        document.querySelectorAll(".wf-node.selected").forEach(s => s.classList.remove("selected"));
+        connectFrom = null;
+        renderWorkflow();
+      }
+    });
+
+    div.addEventListener("mousedown", (e) => {
+      if (e.target.classList.contains("rm")) return;
+      e.preventDefault();
+      const startX = e.clientX, startY = e.clientY;
+      const origX = node.x, origY = node.y;
+      function onMove(ev) {
+        node.x = Math.max(0, origX + (ev.clientX - startX));
+        node.y = Math.max(0, origY + (ev.clientY - startY));
+        div.style.left = node.x + "px"; div.style.top = node.y + "px";
+        drawEdges();
+      }
+      function onUp() { document.removeEventListener("mousemove", onMove); document.removeEventListener("mouseup", onUp); }
+      document.addEventListener("mousemove", onMove);
+      document.addEventListener("mouseup", onUp);
+    });
+
+    div.querySelector(".rm").addEventListener("click", () => {
+      state.workflow.nodes = state.workflow.nodes.filter(n => n.id !== node.id);
+      state.workflow.edges = state.workflow.edges.filter(ed => ed.from !== node.id && ed.to !== node.id);
+      renderWorkflow();
+    });
+  }
+  canvasInner.style.width = maxX + "px";
+  canvasInner.style.height = maxY + "px";
+  drawEdges();
+  renderWorkflowWarn();
+}
+
+function drawEdges() {
+  const svg = document.getElementById("edges");
+  svg.innerHTML = "";
+  const nodeById = Object.fromEntries(state.workflow.nodes.map(n => [n.id, n]));
+  for (const edge of state.workflow.edges) {
+    const a = nodeById[edge.from], b = nodeById[edge.to];
+    if (!a || !b) continue;
+    const x1 = a.x + 75, y1 = a.y + 25, x2 = b.x + 75, y2 = b.y + 25;
+    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+    line.setAttribute("x1", x1); line.setAttribute("y1", y1);
+    line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+    line.setAttribute("stroke", "#2E75B6"); line.setAttribute("stroke-width", "2");
+    line.setAttribute("marker-end", "url(#arrowhead)");
+    svg.appendChild(line);
+  }
+  svg.innerHTML = `<defs><marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#2E75B6"/></marker></defs>` + svg.innerHTML;
+}
+
+function updateNodeBadges() {
+  document.querySelectorAll("#canvas .wf-node").forEach(div => {
+    const existing = div.querySelector(".node-badge");
+    if (existing) existing.remove();
+  });
+  const nodeById = state.workflow.nodes;
+  for (const node of nodeById) {
+    if (node.type !== "agent" || !state.nodeStats[node.domain]) continue;
+    const div = document.querySelector(`.wf-node[data-id="${node.id}"]`);
+    if (!div) continue;
+    const s = state.nodeStats[node.domain];
+    const badge = document.createElement("span");
+    badge.className = "node-badge";
+    badge.textContent = `✓${s.committed} ✗${s.rejected + s.quarantined}`;
+    div.appendChild(badge);
+  }
+}
+
+// Only agent tiles gate the Run button -- pipeline-stage tiles are optional/visual.
+function renderWorkflowWarn() {
+  const el = document.getElementById("wf-warn");
+  const nodes = state.workflow.nodes;
+  const agentDomains = [...new Set(nodes.filter(n => n.type === "agent").map(n => n.domain))];
+  const presentStages = STAGE_TYPES.filter(t => nodes.some(n => n.type === t));
+  const runBtn = document.getElementById("btn-run-workflow");
+  if (agentDomains.length === 0) {
+    el.innerHTML = `<div class="warn">Drag at least one domain-agent tile onto the canvas (from "Domain agents" on the left) to enable Run. Pipeline-stage tiles are optional -- they animate the flow, but the governance sequence always runs regardless.</div>`;
+    if (runBtn) runBtn.disabled = true;
+  } else {
+    const missing = STAGE_TYPES.filter(t => !presentStages.includes(t));
+    el.innerHTML = `<div class="warn" style="background:var(--green-light); color:var(--green); border-color:#BFE3C8;">Ready — will run ${agentDomains.length} agent(s): ${agentDomains.map(d=>ONTOLOGY[d].label).join(", ")}.${missing.length ? ` (${missing.map(t=>STAGE_LABELS[t]).join(", ")} tile(s) not on canvas — those steps still run, they just won't animate.)` : ""}</div>`;
+    if (runBtn) runBtn.disabled = false;
+  }
+}
+
+function loadWorkflowPreset(domains) {
+  state.workflow = { nodes: [], edges: [] };
+  state.nodeSeq = 0;
+  const routerId = addNode("router", "", 340, 20);
+  const agentIds = [];
+  domains.forEach((d, i) => {
+    const col = i % 5, row = Math.floor(i / 5);
+    agentIds.push(addNode("agent", d, 20 + col * 170, 110 + row * 90));
+  });
+  const stageY = 110 + Math.ceil(domains.length / 5) * 90 + 30;
+  const validationId = addNode("validation", "", 20, stageY);
+  const reconciliationId = addNode("reconciliation", "", 20, stageY + 90);
+  const commitId = addNode("commit", "", 20, stageY + 180);
+  const monitorId = addNode("monitor", "", 220, stageY + 180);
+  agentIds.forEach(aid => {
+    state.workflow.edges.push({ from: routerId, to: aid });
+    state.workflow.edges.push({ from: aid, to: validationId });
+  });
+  state.workflow.edges.push({ from: validationId, to: reconciliationId });
+  state.workflow.edges.push({ from: reconciliationId, to: commitId });
+  state.workflow.edges.push({ from: validationId, to: monitorId });
+  renderWorkflow();
+}
+
+async function pulseStagesThenRun() {
+  const statusEl = document.getElementById("wf-status");
+  try {
+    const agentDomains = [...new Set(state.workflow.nodes.filter(n => n.type === "agent").map(n => n.domain))];
+    if (!agentDomains.length) { statusEl.textContent = "Add at least one agent tile to the canvas first."; return; }
+    const selected = state.demand.filter(a => a.selected);
+    if (!selected.length) { statusEl.textContent = "No artifacts selected in Demand -- nothing to run."; return; }
+
+    const seen = new Set();
+    const order = ["router", "agent", "validation", "reconciliation", "commit", "monitor"];
+    for (const type of order) {
+      const nodesOfType = state.workflow.nodes.filter(n => n.type === type && !seen.has(n.id));
+      for (const n of nodesOfType) {
+        seen.add(n.id);
+        statusEl.textContent = `Now executing: ${n.type === "agent" ? ONTOLOGY[n.domain].label : STAGE_LABELS[n.type]}...`;
+        const div = document.querySelector(`.wf-node[data-id="${n.id}"]`);
+        if (div) { div.classList.add("pulse"); await new Promise(r => setTimeout(r, 180)); div.classList.remove("pulse"); }
+      }
+    }
+    statusEl.textContent = "Running pipeline...";
+    const result = runPipeline(selected, agentDomains, "custom workflow");
+    statusEl.textContent = `Run complete -- ${result.committed} committed / ${result.rejected} rejected / ${result.quarantined} quarantined. See the Dashboard tab for the full log.`;
+  } catch (err) {
+    document.getElementById("wf-warn").innerHTML = `<div class="warn" style="background:var(--red-light); color:var(--red); border-color:#E8B4B0;">Workflow run failed: ${esc(err.message)}</div>`;
+    console.error(err);
+  }
+}
+
+/* =========================================================================
+   WIRING
+   ========================================================================= */
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".tabpane").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("tab-" + btn.getAttribute("data-tab")).classList.add("active");
+  });
+});
+
+document.getElementById("btn-run-all").addEventListener("click", () => {
+  const selected = state.demand.filter(a => a.selected);
+  if (!selected.length) { document.getElementById("dash-warn").innerHTML = '<div class="warn">No artifacts selected — check some in the Demand tab first.</div>'; return; }
+  document.getElementById("dash-warn").innerHTML = "";
+  runPipeline(selected, Object.keys(ONTOLOGY), "all agents");
+});
+
+document.getElementById("btn-run-selected").addEventListener("click", () => {
+  const domains = Object.keys(ONTOLOGY).filter(d => state.agentSelection[d]);
+  if (!domains.length) { document.getElementById("dash-warn").innerHTML = '<div class="warn">No agents selected — check at least one toggle above.</div>'; return; }
+  const selected = state.demand.filter(a => a.selected);
+  if (!selected.length) { document.getElementById("dash-warn").innerHTML = '<div class="warn">No artifacts selected — check some in the Demand tab first.</div>'; return; }
+  document.getElementById("dash-warn").innerHTML = "";
+  runPipeline(selected, domains, `selected agents (${domains.length})`);
+});
+
+document.getElementById("btn-clear-state").addEventListener("click", () => {
+  state.monitor = {}; state.kgclLog = []; state.lastRunOutcomes = []; state.trainingFeedback = []; state.runHistory = []; state.nodeStats = {};
+  document.getElementById("log").innerHTML = "";
+  renderAll();
+});
+
+document.getElementById("btn-select-all").addEventListener("click", () => { state.demand.forEach(a => a.selected = true); renderDemand(); });
+document.getElementById("btn-select-none").addEventListener("click", () => { state.demand.forEach(a => a.selected = false); renderDemand(); });
+document.getElementById("btn-apply-preset").addEventListener("click", () => applyPreset(document.getElementById("preset-select").value));
+
+document.getElementById("btn-add-artifact").addEventListener("click", () => {
+  const text = document.getElementById("cust-text").value.trim();
+  const category = document.getElementById("cust-category").value;
+  let metadata = {};
+  try { metadata = JSON.parse(document.getElementById("cust-meta").value || "{}"); }
+  catch (e) { alert("Metadata must be valid JSON, e.g. {\"owner\": \"me\"}"); return; }
+  if (!text) { alert("Add some content text first."); return; }
+  state.demand.push({ id: "CUSTOM-" + (state.demand.length+1), category, tag:"clean", text, metadata, selected: true });
+  document.getElementById("cust-text").value = "";
+  document.getElementById("cust-meta").value = "{}";
+  renderDemand();
+});
+
+document.getElementById("finished-search").addEventListener("input", (e) => renderFinished(e.target.value));
+document.getElementById("btn-export").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state.kgclLog, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "kgcl_log.json";
+  a.click();
+});
+
+document.getElementById("btn-run-workflow").addEventListener("click", pulseStagesThenRun);
+document.getElementById("btn-clear-edges").addEventListener("click", () => { state.workflow.edges = []; renderWorkflow(); });
+document.getElementById("btn-clear-canvas").addEventListener("click", () => { state.workflow = { nodes: [], edges: [] }; state.nodeSeq = 0; renderWorkflow(); });
+document.getElementById("btn-load-default").addEventListener("click", () => loadWorkflowPreset(["finance","engineering","legal"]));
+document.getElementById("btn-load-roster").addEventListener("click", () => loadWorkflowPreset(Object.keys(ONTOLOGY)));
+
+function tickClock() { document.getElementById("clock").textContent = new Date().toLocaleString(); }
+setInterval(tickClock, 1000); tickClock();
+
+/* init */
+buildAgentPalette();
+initDragDrop();
+renderWorkflow();
+renderAll();
+</script>
+</body>
+</html>

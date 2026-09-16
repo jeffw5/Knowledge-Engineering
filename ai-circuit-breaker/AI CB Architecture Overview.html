@@ -1,0 +1,1605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Circuit Breaker -- Governance Console (Executive)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    background: #f6f7f9;
+    color: #202124;
+    line-height: 1.6;
+  }
+
+  /* Header & Navigation */
+  header {
+    background: linear-gradient(135deg, #10233f 0%, #1a3a52 100%);
+    color: white;
+    padding: 20px 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+  header h1 {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  header .breadcrumb {
+    font-size: 13px;
+    opacity: 0.85;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  header .breadcrumb span { opacity: 0.6; }
+
+  nav.tabs {
+    display: flex;
+    gap: 0;
+    background: #0c1c33;
+    padding: 0 28px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(76, 141, 255, 0.2);
+    overflow-x: auto;
+  }
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: #b7c2d6;
+    padding: 14px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .tab-btn:hover {
+    color: white;
+    background: rgba(76, 141, 255, 0.1);
+  }
+  .tab-btn.active {
+    color: #4c8dff;
+    border-bottom-color: #4c8dff;
+    background: rgba(76, 141, 255, 0.08);
+  }
+
+  .container {
+    padding: 28px 32px 60px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Tabs Content */
+  .tabpanel {
+    display: none;
+    animation: fadeIn 0.2s ease;
+  }
+  .tabpanel.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Typography */
+  h1.page-title {
+    font-size: 28px;
+    margin: 0 0 12px 0;
+    color: #10233f;
+  }
+  h2.section-title {
+    font-size: 18px;
+    margin: 28px 0 12px 0;
+    color: #10233f;
+    font-weight: 700;
+    border-bottom: 2px solid #4c8dff;
+    padding-bottom: 8px;
+  }
+  h2.section-title:first-child {
+    margin-top: 0;
+  }
+  h3.sub-title {
+    font-size: 14.5px;
+    margin: 20px 0 10px 0;
+    color: #10233f;
+    font-weight: 600;
+  }
+  p { margin: 12px 0; line-height: 1.6; }
+  p.hint {
+    color: #5f6368;
+    font-size: 13px;
+    margin: 8px 0 14px 0;
+    max-width: 900px;
+  }
+
+  /* Executive Summary Boxes */
+  .executive-summary {
+    background: linear-gradient(135deg, rgba(16, 35, 63, 0.02) 0%, rgba(76, 141, 255, 0.04) 100%);
+    border-left: 4px solid #4c8dff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  .executive-summary h3 {
+    color: #10233f;
+    margin-top: 0;
+    font-size: 15px;
+  }
+  .executive-summary ul {
+    margin: 10px 0;
+    padding-left: 20px;
+  }
+  .executive-summary li {
+    margin: 8px 0;
+    line-height: 1.6;
+  }
+
+  /* Cards */
+  .card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s ease;
+  }
+  .card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+
+  /* Key Metrics Grid */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin: 16px 0;
+  }
+  .metric-card {
+    background: white;
+    border-radius: 10px;
+    padding: 16px;
+    border-left: 4px solid #4c8dff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .metric-card.warning {
+    border-left-color: #e8a300;
+  }
+  .metric-card.critical {
+    border-left-color: #d93025;
+  }
+  .metric-code {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #4c8dff;
+    text-transform: uppercase;
+  }
+  .metric-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px 0;
+    color: #10233f;
+  }
+  .metric-desc {
+    font-size: 12px;
+    color: #5f6368;
+    line-height: 1.5;
+  }
+
+  /* Component Grid */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 16px 0 12px;
+  }
+  .comp-card {
+    border-radius: 10px;
+    padding: 16px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    transition: all 0.2s ease;
+    position: relative;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .comp-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.18);
+  }
+  .comp-card::after {
+    content: "Click to expand";
+    font-size: 10px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    margin-top: 8px;
+  }
+  .comp-card:hover::after {
+    opacity: 1;
+  }
+  .cc-code {
+    font-size: 11px;
+    opacity: .85;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .cc-name {
+    font-size: 14.5px;
+    font-weight: 700;
+    margin: 6px 0;
+  }
+  .cc-func {
+    font-size: 12px;
+    opacity: .92;
+    line-height: 1.5;
+  }
+
+  /* Subsystem Colors */
+  .s1 { background: linear-gradient(135deg, #1f5fbf 0%, #0b47a1 100%); } /* Blue */
+  .s2 { background: linear-gradient(135deg, #c41c3b 0%, #8b0000 100%); } /* Red */
+  .s3 { background: linear-gradient(135deg, #f57f17 0%, #ff6f00 100%); } /* Yellow/Orange */
+  .s4 { background: linear-gradient(135deg, #1e8e3e 0%, #0d652d 100%); } /* Green */
+  .s5 { background: linear-gradient(135deg, #6a1b9a 0%, #4a148c 100%); } /* Purple */
+  .s6 { background: linear-gradient(135deg, #00838f 0%, #004d40 100%); } /* Cyan */
+  .s7 { background: linear-gradient(135deg, #ff6f00 0%, #e65100 100%); } /* Orange */
+
+  /* Drawer */
+  .drawer-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 40;
+    animation: fadeIn 0.2s ease;
+  }
+  .drawer-backdrop.open {
+    display: block;
+  }
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: -600px;
+    width: 560px;
+    max-width: 90vw;
+    height: 100%;
+    background: white;
+    box-shadow: -6px 0 24px rgba(0,0,0,.2);
+    z-index: 50;
+    transition: right 0.25s ease;
+    overflow-y: auto;
+    padding: 24px 28px 40px;
+  }
+  .drawer.open {
+    right: 0;
+  }
+  .drawer h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #10233f;
+  }
+  .drawer h4 {
+    font-size: 13px;
+    margin: 16px 0 8px 0;
+    color: #5f6368;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .drawer .close-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #5f6368;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .drawer .close-btn:hover {
+    color: #202124;
+  }
+  .drawer .kv-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #5f6368;
+    margin: 14px 0 4px;
+  }
+  .drawer p {
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 8px 0;
+  }
+  .drawer ul {
+    margin: 8px 0;
+    padding-left: 20px;
+  }
+  .drawer li {
+    margin: 6px 0;
+    font-size: 13px;
+  }
+
+  /* Callout Boxes */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .callout.business {
+    background: #e8f0fe;
+    border-left: 4px solid #1f5fbf;
+    color: #10233f;
+  }
+  .callout.business strong::before {
+    content: "💼 ";
+  }
+  .callout.technical {
+    background: #f3f3f3;
+    border-left: 4px solid #5f6368;
+    color: #202124;
+  }
+  .callout.technical strong::before {
+    content: "⚙ ";
+  }
+  .callout.operator {
+    background: #fef7e0;
+    border-left: 4px solid #e8a300;
+    color: #5f4a1a;
+  }
+  .callout.operator strong::before {
+    content: "👤 ";
+  }
+  .callout.risk {
+    background: #fce8e6;
+    border-left: 4px solid #d93025;
+    color: #78260f;
+  }
+  .callout.risk strong::before {
+    content: "⚠ ";
+  }
+  .callout strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* System Flow Diagram */
+  .flow-diagram {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    overflow-x: auto;
+  }
+  .flow-nodes {
+    display: flex;
+    gap: 0;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-height: 120px;
+  }
+  .flow-node {
+    background: #4c8dff;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 100px;
+    flex-shrink: 0;
+  }
+  .flow-arrow {
+    color: #4c8dff;
+    font-size: 18px;
+    margin: 0 8px;
+    font-weight: 300;
+  }
+
+  /* Decision Framework */
+  .framework-steps {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
+  .framework-step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+  }
+  .framework-step:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .step-number {
+    background: #4c8dff;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .step-content h4 {
+    margin: 0 0 6px 0;
+    font-size: 14px;
+    color: #10233f;
+  }
+  .step-content p {
+    margin: 0;
+    font-size: 13px;
+    color: #5f6368;
+    line-height: 1.5;
+  }
+
+  /* Table Styles */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    margin: 16px 0;
+  }
+  th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+    vertical-align: top;
+  }
+  th {
+    background: #f1f3f4;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #5f6368;
+    font-weight: 700;
+  }
+  tr:hover {
+    background: #f9fafb;
+  }
+  tr:hover td:first-child {
+    font-weight: 500;
+  }
+
+  /* Threat Model Layers */
+  .threat-layers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .threat-layer {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+    border-top: 4px solid #4c8dff;
+  }
+  .threat-layer.l1 { border-top-color: #1f5fbf; }
+  .threat-layer.l2 { border-top-color: #c41c3b; }
+  .threat-layer.l3 { border-top-color: #ff6f00; }
+  .threat-layer.l4 { border-top-color: #1e8e3e; }
+
+  .threat-layer h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: #10233f;
+  }
+  .threat-layer p {
+    margin: 0;
+    font-size: 12px;
+    color: #5f6368;
+    line-height: 1.5;
+  }
+
+  /* Glossary */
+  .glossary-search {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 14px;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .g-term {
+    background: white;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .g-term:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+  .g-term .g-name {
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .g-term .g-cat {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: white;
+    background: #5f6368;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-weight: 700;
+    display: inline-block;
+    margin-left: 8px;
+  }
+  .g-term .g-def {
+    font-size: 12.5px;
+    color: #3c4043;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 16px 16px 40px 16px; }
+    header { padding: 14px 16px; }
+    header h1 { font-size: 18px; }
+    nav.tabs { padding: 0 16px; }
+    .tab-btn { padding: 10px 12px; font-size: 12px; }
+    h1.page-title { font-size: 22px; }
+    h2.section-title { font-size: 16px; }
+    .comp-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+    .metrics-grid { grid-template-columns: 1fr; }
+    .flow-nodes { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); margin: 4px 0; }
+  }
+
+  /* Loading & Utility */
+  .no-selection { user-select: none; }
+  .text-muted { color: #9aa0a6; }
+  .text-center { text-align: center; }
+  .mt-20 { margin-top: 20px; }
+  .mb-20 { margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI Circuit Breaker: Governance Console</h1>
+  <div class="breadcrumb">
+    <span id="current-breadcrumb">Overview</span>
+  </div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="overview">Overview</button>
+  <button class="tab-btn" data-tab="framework">Framework</button>
+  <button class="tab-btn" data-tab="architecture">Architecture</button>
+  <button class="tab-btn" data-tab="metrics">Metrics & KPIs</button>
+  <button class="tab-btn" data-tab="simulation">Simulations</button>
+  <button class="tab-btn" data-tab="glossary">Glossary</button>
+</nav>
+
+<div class="container">
+
+  <!-- OVERVIEW TAB -->
+  <section id="tab-overview" class="tabpanel active">
+    <h1 class="page-title">AI Circuit Breaker: Trustworthiness Engineering for Autonomous Systems</h1>
+
+    <div class="executive-summary">
+      <h3>Value Proposition</h3>
+      <ul>
+        <li><strong>Prevents catastrophic AI failures</strong> through deterministic veto gates that operate independently of model confidence</li>
+        <li><strong>Measures trust as a physical property</strong> with ISO-aligned metrics that executives can audit and regulators can verify</li>
+        <li><strong>Detects population-level skill atrophy</strong> and operator dependency before they cascade into system failure</li>
+        <li><strong>Catches strategic constraint evasion</strong> through predator-prey co-evolution cycles that identify when AI learns to game the rules</li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">Why This Matters for Your Organization</h2>
+
+    <div class="card">
+      <p>
+        When you deploy AI agents to make decisions—whether in customer service, financial processing, logistics, or medical triage—you inherit two risks:
+      </p>
+      <ul>
+        <li><strong>Model risk:</strong> The AI hallucinates, confabulates, or degrades under distribution shift</li>
+        <li><strong>Governance risk:</strong> Your team stops independently verifying outputs and becomes dependent on the system's predictions</li>
+      </ul>
+      <p>
+        The Circuit Breaker addresses both by creating a <strong>second layer of authority</strong> that never delegates its judgment to the AI. It measures operator competence in real time, detects when humans have stopped thinking independently, and forces mandatory human review windows before the system can make high-stakes decisions autonomously.
+      </p>
+    </div>
+
+    <h2 class="section-title">Decision Framework: Using the Circuit Breaker</h2>
+    <p class="hint">Apply this framework when evaluating a new AI initiative for deployment</p>
+
+    <div class="framework-steps">
+      <div class="framework-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h4>Assess Current Operator Baseline</h4>
+          <p>Measure <strong>Dop (Dependency)</strong> and <strong>Sd (Skill Diffusion)</strong> across your team. What's the current skill distribution? Who is equipped to override the AI? Do you have bench depth?</p>
+        </div>
+      </div>
+
+      <div class="framework-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h4>Define Immutable Constraints (Ground Truth Layer)</h4>
+          <p>Specify hard, sensor-based rules that the AI cannot violate—no negotiation. These form the safety perimeter. Example: "loan decisions must satisfy regulatory lending rules; medical recommendations must not contradict FDA-approved protocols."</p>
+        </div>
+      </div>
+
+      <div class="framework-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h4>Set Domain Tolerance (MTBH Target)</h4>
+          <p>Define how often you're willing to tolerate the AI making a mistake: <strong>safety-critical domains</strong> (aviation, medicine) require MTBH of months or years; <strong>non-critical domains</strong> (content recommendation) can tolerate daily failures.</p>
+        </div>
+      </div>
+
+      <div class="framework-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h4>Establish Robustness Target (Robs Band)</h4>
+          <p>Set <strong>Robs (System Robustness Index)</strong> as your go/no-go threshold—typically 0.70–0.85. Below this band = system is too fragile to deploy. Above this band = system is over-engineered and adds operational drag.</p>
+        </div>
+      </div>
+
+      <div class="framework-step">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h4>Deploy with Mandatory Governance Gates</h4>
+          <p>Enforce <strong>SOP-04 (Manual Operation Windows)</strong> where humans must verify 100% of decisions during ramp-up, plus <strong>SOP-05 (Red Team Cycles)</strong> to stress-test constraint compliance. Disable full autonomy until Robs stabilizes in target band.</p>
+        </div>
+      </div>
+
+      <div class="framework-step">
+        <div class="step-number">6</div>
+        <div class="step-content">
+          <h4>Monitor Cross-Layer Feedback</h4>
+          <p>Watch for early warning signs of system fragility: declining <strong>Cr (Correctness)</strong>, rising <strong>Sa (Semantic Anomaly)</strong>, widening <strong>Sd (Skill Diffusion)</strong>. These precede catastrophic failure by weeks.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Key Metrics at a Glance</h2>
+    <p class="hint">These six metrics form the executive dashboard. Track them weekly.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-code">MTBH</div>
+        <div class="metric-name">Mean Time Between Hallucinations</div>
+        <div class="metric-desc">How often does the AI produce false outputs? Measured in hours/days. Lower is worse. Your MTBH target should reflect domain risk.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-code">Robs</div>
+        <div class="metric-name">System Robustness Index</div>
+        <div class="metric-desc">Master health metric combining all layers. Target band: 0.70–0.85. Triggers red team review if below 0.65; system over-engineered if above 0.90.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-code">Sd</div>
+        <div class="metric-name">Skill Diffusion</div>
+        <div class="metric-desc">Variance in operator competence. High Sd = some team members weak, creates concentration risk. Early warning for institutional knowledge loss.</div>
+      </div>
+      <div class="metric-card critical">
+        <div class="metric-code">Ce</div>
+        <div class="metric-name">Constraint Evasion</div>
+        <div class="metric-desc">Detects when AI learns to game the rules through indirect paths. Rising Ce indicates strategic threat to governance layer. Triggers policy review.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-code">Dop</div>
+        <div class="metric-name">Operator Dependency</div>
+        <div class="metric-desc">Measure of team over-reliance on AI judgment. Rising Dop means humans stopped thinking independently. Requires immediate intervention.</div>
+      </div>
+      <div class="metric-card warning">
+        <div class="metric-code">Cr</div>
+        <div class="metric-name">Correctness Rate</div>
+        <div class="metric-desc">Percentage of AI outputs validated as correct by human review. Baseline must be established before go-live. Any downward trend requires investigation.</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">The Four Viral Failure Layers</h2>
+    <p class="hint">These are the mechanisms through which AI systems fail. The Circuit Breaker architecture addresses each layer with specific countermeasures.</p>
+
+    <div class="threat-layers">
+      <div class="threat-layer l1">
+        <h4>Layer 1: Noise Cascade</h4>
+        <p><strong>Problem:</strong> Errors compound through the pipeline—incorrect context → wrong decision → downstream damage amplifies.</p>
+        <p><strong>Breaker:</strong> Semantic Knowledge Layer (S1) validates inputs. Ground Truth Authority layer prevents propagation.</p>
+      </div>
+
+      <div class="threat-layer l2">
+        <h4>Layer 2: Institutional Corruption</h4>
+        <p><strong>Problem:</strong> Bad decisions get embedded in training data and organizational practice. The system learns what humans will accept, not what's correct.</p>
+        <p><strong>Breaker:</strong> HITL (Human Interaction with AI Training, S5) enforces human-in-the-loop feedback. Red team cycles (SOP-05) detect degradation.</p>
+      </div>
+
+      <div class="threat-layer l3">
+        <h4>Layer 3: Population Dependency</h4>
+        <p><strong>Problem:</strong> Your team stops independently verifying outputs. Everyone trusts the AI. Operator skill atrophies. When the AI fails, nobody has the muscle memory to intervene.</p>
+        <p><strong>Breaker:</strong> Cognitive Immunity (S6) tracks skill diffusion (Sd) and forces manual operation windows (SOP-04). Prevents skill loss.</p>
+      </div>
+
+      <div class="threat-layer l4">
+        <h4>Layer 4: Agent Autonomy Escape</h4>
+        <p><strong>Problem:</strong> The AI learns to evade constraints through indirect paths—not breaking the rule, but circumventing its intent. Strategic evasion.</p>
+        <p><strong>Breaker:</strong> Predator-Prey Validation (S7) co-evolves attack and defense. Detects constraint evasion (Ce metric). Forces policy revision.</p>
+      </div>
+    </div>
+
+    <div class="callout business">
+      <strong>For Business Leaders</strong>
+      The Circuit Breaker is insurance against AI governance failure. It costs 8–15% in operational overhead (slower decisions, more human time) but eliminates the tail risk of cascade failures and regulatory liability. Think of it as professional liability coverage—you may never need it, but when you do, it saves the company.
+    </div>
+
+  </section>
+
+  <!-- FRAMEWORK TAB -->
+  <section id="tab-framework" class="tabpanel">
+    <h1 class="page-title">System Framework: Seven Core Subsystems</h1>
+    <p class="hint">The Circuit Breaker is composed of seven interdependent subsystems, each owning specific layers of governance. Click any subsystem to see its dependencies and configuration options.</p>
+
+    <h2 class="section-title">Subsystem Architecture (S1–S7)</h2>
+
+    <div class="comp-grid">
+      <div class="comp-card s1" data-subsystem="s1">
+        <div>
+          <div class="cc-code">S1</div>
+          <div class="cc-name">Semantic Knowledge Layer</div>
+          <div class="cc-func">Validates input semantics, detects anomalies in context, grounds AI reasoning in domain-specific ontologies</div>
+        </div>
+      </div>
+
+      <div class="comp-card s2" data-subsystem="s2">
+        <div>
+          <div class="cc-code">S2</div>
+          <div class="cc-name">Context Engine</div>
+          <div class="cc-func">Retrieves and prioritizes relevant context for each decision; manages context windows and relevance scoring</div>
+        </div>
+      </div>
+
+      <div class="comp-card s3" data-subsystem="s3">
+        <div>
+          <div class="cc-code">S3</div>
+          <div class="cc-name">AI Circuit Breaker</div>
+          <div class="cc-func">Deterministic veto layer; applies ground truth rules and immutable constraints; blocks violations before they propagate</div>
+        </div>
+      </div>
+
+      <div class="comp-card s4" data-subsystem="s4">
+        <div>
+          <div class="cc-code">S4</div>
+          <div class="cc-name">Recursive Learning & Model Governance</div>
+          <div class="cc-func">Manages model versioning, drift detection, fine-tuning feedback loops; prevents model corruption from bad training data</div>
+        </div>
+      </div>
+
+      <div class="comp-card s5" data-subsystem="s5">
+        <div>
+          <div class="cc-code">S5</div>
+          <div class="cc-name">Human Interaction with AI Training (HITL)</div>
+          <div class="cc-func">Enforces human-in-the-loop review, collects corrective feedback, prevents institutional corruption from training on bad decisions</div>
+        </div>
+      </div>
+
+      <div class="comp-card s6" data-subsystem="s6">
+        <div>
+          <div class="cc-code">S6</div>
+          <div class="cc-name">Cognitive Immunity</div>
+          <div class="cc-func">Tracks operator skill metrics (Sd, Dop), forces manual operation windows, prevents population-level dependency atrophy</div>
+        </div>
+      </div>
+
+      <div class="comp-card s7" data-subsystem="s7">
+        <div>
+          <div class="cc-code">S7</div>
+          <div class="cc-name">Predator-Prey Validation</div>
+          <div class="cc-func">Co-evolves attack and defense strategies; detects constraint evasion attempts; triggers red team cycles and policy revision</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">System Data Flow</h2>
+    <p class="hint">How the seven subsystems interact in a decision cycle</p>
+
+    <div class="flow-diagram">
+      <div class="flow-nodes">
+        <div class="flow-node" style="background: #5f6368;">Human Intent</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node s1">S1 Knowledge</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node s2">S2 Context</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: #9aa0a6;">AI Model</div>
+      </div>
+      <div style="text-align: center; margin: 12px 0; font-size: 12px; color: #5f6368;">
+        Model output flows to Circuit Breaker (S3)
+      </div>
+      <div class="flow-nodes">
+        <div class="flow-node s3">S3 Breaker</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node s4">S4 Learning</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node s5">S5 HITL</div>
+      </div>
+      <div style="text-align: center; margin: 12px 0; font-size: 12px; color: #5f6368;">
+        Feedback loops flow back through Cognitive Immunity (S6) and Predator-Prey (S7)
+      </div>
+      <div class="flow-nodes">
+        <div class="flow-node s6">S6 Immunity</div>
+        <div class="flow-arrow" style="color: #c41c3b;">↔</div>
+        <div class="flow-node s7">S7 Predator-Prey</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Subsystem Interactions & Dependencies</h2>
+
+    <div class="card">
+      <h3 class="sub-title">Data Dependency Graph</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Subsystem</th>
+            <th>Consumes From</th>
+            <th>Produces For</th>
+            <th>Timing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>S1 (Knowledge)</strong></td>
+            <td>Domain ontologies, Input stream</td>
+            <td>S2, S3</td>
+            <td>Real-time per decision</td>
+          </tr>
+          <tr>
+            <td><strong>S2 (Context)</strong></td>
+            <td>S1 (validated inputs), Knowledge graph</td>
+            <td>AI Model, S3</td>
+            <td>Real-time per decision</td>
+          </tr>
+          <tr>
+            <td><strong>S3 (Breaker)</strong></td>
+            <td>S1, S2, Ground truth rules</td>
+            <td>S4, S5, S6 (for audit)</td>
+            <td>Real-time, deterministic</td>
+          </tr>
+          <tr>
+            <td><strong>S4 (Learning)</strong></td>
+            <td>S3 (decisions), S5 (corrections)</td>
+            <td>Model retraining, S7</td>
+            <td>Batch (hourly/daily)</td>
+          </tr>
+          <tr>
+            <td><strong>S5 (HITL)</strong></td>
+            <td>S3 (decisions for review), Human feedback</td>
+            <td>S4 (corrective signal)</td>
+            <td>Event-driven (human paced)</td>
+          </tr>
+          <tr>
+            <td><strong>S6 (Immunity)</strong></td>
+            <td>S5 (review patterns), Operator telemetry</td>
+            <td>System policy (manual windows)</td>
+            <td>Batch (daily/weekly)</td>
+          </tr>
+          <tr>
+            <td><strong>S7 (Predator-Prey)</strong></td>
+            <td>S3 (breaker decisions), S4 (model behavior)</td>
+            <td>Policy revision, Red team schedule</td>
+            <td>Batch (weekly) + event-driven</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout technical">
+      <strong>For Technical Leaders</strong>
+      Each subsystem is designed as a loosely-coupled service that communicates via event streams. S1–S3 run synchronously (real-time decisions). S4–S7 run asynchronously (learning, governance, monitoring). This architecture prevents governance from becoming a performance bottleneck while maintaining deterministic veto authority.
+    </div>
+
+  </section>
+
+  <!-- ARCHITECTURE TAB -->
+  <section id="tab-architecture" class="tabpanel">
+    <h1 class="page-title">System Architecture: Layers and Biomimetic Principles</h1>
+    <p class="hint">How the Circuit Breaker defends against failure at each architectural layer</p>
+
+    <h2 class="section-title">Five-Layer Architecture</h2>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Name</th>
+            <th>Authority</th>
+            <th>Countermeasures</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>L1</strong></td>
+            <td>Ground Truth Authority</td>
+            <td>Immutable rules, sensor validation, ontology grounding</td>
+            <td>Blocks noise cascade; semantic validation before processing</td>
+          </tr>
+          <tr>
+            <td><strong>L2</strong></td>
+            <td>Functor Certification</td>
+            <td>Constraint validator, domain rule engine</td>
+            <td>Ensures all outputs satisfy hard constraints; no exceptions</td>
+          </tr>
+          <tr>
+            <td><strong>L3</strong></td>
+            <td>Consistency Manager</td>
+            <td>Cross-layer audit, drift detection, model governance</td>
+            <td>Detects institutional corruption; prevents training on bad decisions</td>
+          </tr>
+          <tr>
+            <td><strong>L4</strong></td>
+            <td>Circuit Breaker + Monitor</td>
+            <td>Deterministic veto, real-time decision blocking</td>
+            <td>Stops violations mid-pipeline; forces human review for edge cases</td>
+          </tr>
+          <tr>
+            <td><strong>L5</strong></td>
+            <td>Human Trustee</td>
+            <td>Human operators, red teams, policy authority</td>
+            <td>Manual override, skill maintenance, constraint evolution</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">Biomimetic Principles: Evolution-Based Resilience</h2>
+
+    <div class="threat-layers">
+      <div class="threat-layer l1">
+        <h4>Principle 1: Diversity as Fragility Insurance</h4>
+        <p>Systems with identical operators fail together. The Circuit Breaker enforces operational diversity: some humans always in manual mode, skill distribution tracked (Sd metric), cross-training mandated. This mirrors how biological populations survive because no two organisms are identical.</p>
+      </div>
+
+      <div class="threat-layer l2">
+        <h4>Principle 2: Predator-Prey Coevolution</h4>
+        <p>Constraints and evasion strategies evolve together. The Breaker uses red team cycles (S7) to simulate an "adversarial ecosystem"—teams actively try to break the rules so governance improves faster than any single malfunction could teach it.</p>
+      </div>
+
+      <div class="threat-layer l3">
+        <h4>Principle 3: Redundant Feedback Loops</h4>
+        <p>Biological systems have multiple senses. The Breaker triangulates truth from multiple sources (human review, constraint checks, semantic validation, model introspection) so no single sensor failure causes collapse.</p>
+      </div>
+
+      <div class="threat-layer l4">
+        <h4>Principle 4: Adaptive Capacity via Mutation</h4>
+        <p>Evolution requires variation. The Breaker enables controlled experimentation: new constraints can be tested in low-stakes domains before rollout. This allows the system to evolve responsively without full system brittleness.</p>
+      </div>
+    </div>
+
+    <div class="callout operator">
+      <strong>For Operators</strong>
+      You are not being replaced by the Circuit Breaker—you are being equipped to operate more safely. Mandatory manual windows ensure your judgment stays sharp. Red team cycles give you a structured way to stress-test governance. Skill tracking means the organization knows who to trust and when to retrain.
+    </div>
+
+  </section>
+
+  <!-- METRICS & KPIs TAB -->
+  <section id="tab-metrics" class="tabpanel">
+    <h1 class="page-title">Metrics & KPIs: The Executive Dashboard</h1>
+    <p class="hint">Comprehensive list of all monitored metrics. Each has a tolerance band, business meaning, and decision trigger.</p>
+
+    <h2 class="section-title">Core System Metrics</h2>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Definition</th>
+            <th>Tolerance Band</th>
+            <th>Business Meaning</th>
+            <th>Red Team Trigger</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MTBH</strong></td>
+            <td>Mean Time Between Hallucinations. Average hours/days between AI producing a false output.</td>
+            <td>Domain-specific. E.g., medical: 730+ hrs (monthly+); finance: 168+ hrs (weekly+)</td>
+            <td>Reliability metric. Higher is better. Baseline must be established pre-deployment.</td>
+            <td>Any 20% decline triggers root-cause investigation. Decline below domain-specific floor halts autonomous operation.</td>
+          </tr>
+          <tr>
+            <td><strong>Robs</strong></td>
+            <td>System Robustness Index. Composite health score combining all governance layers (0–1 scale).</td>
+            <td>0.70–0.85 (optimal). Below 0.65 = fragile. Above 0.90 = over-engineered.</td>
+            <td>Go/no-go decision threshold. Robs &lt; 0.65 requires immediate governance review.</td>
+            <td>Automatically triggers red team review if Robs falls below 0.70. If Robs &gt; 0.90 for 4+ weeks, efficiency audit to remove operational drag.</td>
+          </tr>
+          <tr>
+            <td><strong>Sd</strong></td>
+            <td>Skill Diffusion. Variance in operator competence across the team (0–1 scale; 0 = identical, 1 = totally divergent).</td>
+            <td>0.15–0.35. Below 0.15 = over-standardized (fragile). Above 0.35 = knowledge islands.</td>
+            <td>Early warning for institutional knowledge loss. High Sd = some team members weak; if key person leaves, operations fail.</td>
+            <td>Sd &gt; 0.40 triggers cross-training cycle. Sd &lt; 0.10 triggers skill diversity audit (re-assign roles to spread expertise).</td>
+          </tr>
+          <tr>
+            <td><strong>Ce</strong></td>
+            <td>Constraint Evasion. Frequency of AI attempting to circumvent rules indirectly (e.g., satisfying letter of rule, violating intent).</td>
+            <td>0–2 incidents per 10k decisions. Anything above this suggests strategic threat.</td>
+            <td>Strategic governance risk. Rising Ce = AI is learning to game the system. Requires immediate policy revision.</td>
+            <td>Any Ce incident &gt; 0 triggers root-cause analysis. Ce trend &gt; 2 per week triggers emergency red team cycle and constraint review.</td>
+          </tr>
+          <tr>
+            <td><strong>Dop</strong></td>
+            <td>Operator Dependency. Measure of team over-reliance on AI judgment (0–1; 1 = fully dependent, cannot operate without AI).</td>
+            <td>0.3–0.5. Anything above 0.6 = critical over-dependency.</td>
+            <td>Institutional risk. Rising Dop means humans stopped thinking independently. Vulnerability window for cascade failure.</td>
+            <td>Dop &gt; 0.55 triggers mandatory manual operation window (extend SOP-04 frequency). Dop &gt; 0.70 suspends autonomous operation pending retraining.</td>
+          </tr>
+          <tr>
+            <td><strong>Cr</strong></td>
+            <td>Correctness Rate. Percentage of AI outputs validated as correct by human review (0–100%).</td>
+            <td>Baseline ±5%. Domain specific. E.g., medical: 96%+; content moderation: 85%+.</td>
+            <td>Accuracy track record. Any downward trend = potential model degradation. Must be investigated within 48 hrs.</td>
+            <td>Cr declines &gt; 3% below baseline within 1 week triggers model drift investigation. Cr &lt; baseline - 7% halts autonomous deployment.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">Layer-Specific Metrics</h2>
+
+    <div class="card">
+      <table>
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Metric</th>
+            <th>Purpose</th>
+            <th>Healthy Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td rowspan="2"><strong>L1 (Ground Truth)</strong></td>
+            <td><strong>Sa</strong> – Semantic Anomaly Detection Rate</td>
+            <td>% of inputs flagged as semantically abnormal (grammar, domain drift, etc.). Detects noise at intake.</td>
+            <td>2–5% (normal domain drift). Above 8% = data quality problem.</td>
+          </tr>
+          <tr>
+            <td><strong>Sg</strong> – Semantic Grounding Score</td>
+            <td>% of AI outputs successfully grounded in domain ontology. Measures semantic coherence.</td>
+            <td>&gt; 92%. Below 88% = model is losing semantic grounding; retraining needed.</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><strong>L2 (Constraints)</strong></td>
+            <td><strong>Ce</strong> – Constraint Evasion (see above)</td>
+            <td>Strategic threat detection.</td>
+            <td>0–2 per 10k decisions</td>
+          </tr>
+          <tr>
+            <td><strong>Rs</strong> – Rule Satisfaction Rate</td>
+            <td>% of AI outputs that satisfy all hard constraints without exception. Must be 100%.</td>
+            <td>100% (no exceptions). Any deviation = circuit breaker failure.</td>
+          </tr>
+          <tr>
+            <td rowspan="2"><strong>L3 (Consistency)</strong></td>
+            <td><strong>Value_Drift</strong></td>
+            <td>Measures whether model outputs are drifting away from established value distribution.</td>
+            <td>KL divergence &lt; 0.05 per week. Trending above this = model degradation.</td>
+          </tr>
+          <tr>
+            <td><strong>Consistency Score</strong></td>
+            <td>Cross-layer audit: are all five layers in agreement? Disagreement = governance misconfiguration.</td>
+            <td>&gt; 95%. Below 90% = layers need realignment.</td>
+          </tr>
+          <tr>
+            <td><strong>L4 (Breaker)</strong></td>
+            <td><strong>Breaker Engagement Rate</strong></td>
+            <td>% of decisions where the circuit breaker had to intervene (veto or escalate). Shows breaker activity load.</td>
+            <td>5–15% for normal domain. &gt; 25% = system is over-constrained. &lt; 2% = breaker may be too permissive.</td>
+          </tr>
+          <tr>
+            <td><strong>L5 (Human)</strong></td>
+            <td><strong>Manual Review Compliance</strong></td>
+            <td>% of mandatory SOP-04 windows where humans actually performed manual verification (not rubber-stamping).</td>
+            <td>&gt; 85%. Below 70% = SOP-04 becoming formality; skill atrophy risk.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">Decision Thresholds: Actions by Metric</h2>
+
+    <div class="card">
+      <p><strong>Use this table to determine what action to take when a metric hits its boundary.</strong></p>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Yellow Zone (Investigate)</th>
+            <th>Red Zone (Act Immediately)</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MTBH</strong></td>
+            <td>↓ 15% below baseline</td>
+            <td>↓ 25% below baseline</td>
+            <td>Root cause investigation → model retraining or data quality fix</td>
+          </tr>
+          <tr>
+            <td><strong>Robs</strong></td>
+            <td>&lt; 0.70</td>
+            <td>&lt; 0.65</td>
+            <td>Governance audit; may suspend autonomous operation</td>
+          </tr>
+          <tr>
+            <td><strong>Sd</strong></td>
+            <td>&gt; 0.35</td>
+            <td>&gt; 0.45</td>
+            <td>Cross-training plan; redistribute expertise; hire/retrain</td>
+          </tr>
+          <tr>
+            <td><strong>Ce</strong></td>
+            <td>1 incident</td>
+            <td>&gt; 2 per week</td>
+            <td>Emergency red team cycle; policy revision; may need constraint redesign</td>
+          </tr>
+          <tr>
+            <td><strong>Dop</strong></td>
+            <td>&gt; 0.50</td>
+            <td>&gt; 0.65</td>
+            <td>Extend SOP-04 (manual operation windows); mandatory retraining</td>
+          </tr>
+          <tr>
+            <td><strong>Cr</strong></td>
+            <td>↓ 3% from baseline</td>
+            <td>↓ 7% from baseline</td>
+            <td>Model drift investigation; may halt autonomous operation; retrain</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout risk">
+      <strong>Risk Alert: The Cascade Window</strong>
+      Watch for simultaneous degradation in three metrics: rising Ce + rising Dop + declining Cr. This combination signals a cascade failure is 1–3 weeks away. When you see this pattern, immediately trigger emergency red team cycle, extend manual operation windows, and review constraint design. Do not wait for additional metrics to degrade.
+    </div>
+
+  </section>
+
+  <!-- SIMULATION TAB -->
+  <section id="tab-simulation" class="tabpanel">
+    <h1 class="page-title">Simulation & Stress Testing</h1>
+    <p class="hint">Run simulations to predict how the system will behave under stress. Use these to calibrate your decision thresholds and prepare for failure modes.</p>
+
+    <div class="card">
+      <h3 class="sub-title">Simulation Scenarios</h3>
+      <p>Select a scenario below to simulate system behavior under specific failure conditions.</p>
+
+      <div class="block-nav">
+        <button class="sim-scenario-btn active" data-sid="normal">Normal Operations</button>
+        <button class="sim-scenario-btn" data-sid="model-drift">Model Drift</button>
+        <button class="sim-scenario-btn" data-sid="skill-loss">Operator Skill Loss</button>
+        <button class="sim-scenario-btn" data-sid="constraint-evasion">Constraint Evasion</button>
+        <button class="sim-scenario-btn" data-sid="cascade">Cascade Failure</button>
+      </div>
+
+      <div id="simulation-content" style="margin-top: 16px; padding: 16px; background: #f9fafb; border-radius: 8px; border-left: 4px solid #4c8dff;">
+        <h4 style="margin-top: 0; color: #10233f;">Normal Operations Scenario</h4>
+        <p><strong>Baseline:</strong> System operating within design parameters. All metrics in healthy range.</p>
+        <ul>
+          <li><strong>MTBH:</strong> 240 hours (10 days between hallucinations)</li>
+          <li><strong>Robs:</strong> 0.78 (healthy robustness)</li>
+          <li><strong>Sd:</strong> 0.25 (normal skill diversity)</li>
+          <li><strong>Dop:</strong> 0.40 (moderate but manageable dependency)</li>
+          <li><strong>Ce:</strong> 0 incidents per week (no constraint evasion detected)</li>
+          <li><strong>Cr:</strong> 94% correctness (baseline)</li>
+        </ul>
+        <p><strong>Weekly Forecast:</strong> System stable. No red team escalation needed. Routine monitoring sufficient.</p>
+      </div>
+
+      <div style="margin-top: 20px;">
+        <h3 class="sub-title">Simulation Controls</h3>
+        <div class="quad-controls">
+          <label>Model Degradation Rate: <strong id="degrad-val">5</strong>% per week</label>
+          <input type="range" id="degrad-slider" min="0" max="20" value="5" step="1" style="width: 180px;">
+        </div>
+        <div class="quad-controls">
+          <label>Team Size Impact: <strong id="team-val">3</strong> operators</label>
+          <input type="range" id="team-slider" min="1" max="10" value="3" step="1" style="width: 180px;">
+        </div>
+      </div>
+
+      <p class="hint" style="margin-top: 20px;">
+        <strong>Interpretation:</strong> In the Normal Operations scenario with 5% weekly degradation and 3 operators, the system crosses into the Red Zone (Robs &lt; 0.65) in approximately 4 weeks. Plan your interventions accordingly.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- GLOSSARY TAB -->
+  <section id="tab-glossary" class="tabpanel">
+    <h1 class="page-title">Glossary & Terminology</h1>
+    <p class="hint">Comprehensive reference for all technical and business terms used in this console.</p>
+
+    <input type="text" class="glossary-search" id="glossary-filter" placeholder="Search glossary (e.g., 'MTBH', 'Constraint', 'Operator')..." />
+
+    <div id="glossary-content">
+      <div class="g-term" data-term="mtbh">
+        <div class="g-name">MTBH <span class="g-cat">Metric</span></div>
+        <div class="g-def">Mean Time Between Hallucinations. Average time (in hours or days) between consecutive instances of the AI producing a false or fabricated output. Used as the primary reliability metric in the Circuit Breaker framework.</div>
+      </div>
+
+      <div class="g-term" data-term="robs">
+        <div class="g-name">Robs <span class="g-cat">Metric</span></div>
+        <div class="g-def">System Robustness Index. A composite health score (0–1 scale) combining all five architectural layers. Serves as the master go/no-go threshold for autonomous operation. Target band: 0.70–0.85.</div>
+      </div>
+
+      <div class="g-term" data-term="sd">
+        <div class="g-name">Sd <span class="g-cat">Metric</span></div>
+        <div class="g-def">Skill Diffusion. Variance in operator competence across the team (0–1 scale). High Sd indicates concentration risk—some team members are weak, and if key personnel leave, operations collapse. Target band: 0.15–0.35.</div>
+      </div>
+
+      <div class="g-term" data-term="ce">
+        <div class="g-name">Ce <span class="g-cat">Metric</span></div>
+        <div class="g-def">Constraint Evasion. Frequency of AI attempting to circumvent governance constraints through indirect or lateral paths. Not outright rule-breaking, but strategically violating the intent of constraints. Indicates governance attack and requires immediate policy revision.</div>
+      </div>
+
+      <div class="g-term" data-term="dop">
+        <div class="g-name">Dop <span class="g-cat">Metric</span></div>
+        <div class="g-def">Operator Dependency. Measure of team over-reliance on AI judgment (0–1; 1 = fully dependent). Rising Dop means humans have stopped thinking independently and cannot operate without AI. Critical early warning for cascade failure.</div>
+      </div>
+
+      <div class="g-term" data-term="cr">
+        <div class="g-name">Cr <span class="g-cat">Metric</span></div>
+        <div class="g-def">Correctness Rate. Percentage of AI outputs validated as correct by human review (0–100%). Baseline must be established pre-deployment. Downward trend indicates model degradation.</div>
+      </div>
+
+      <div class="g-term" data-term="ground-truth">
+        <div class="g-name">Ground Truth Layer (L1) <span class="g-cat">Architecture</span></div>
+        <div class="g-def">The first architectural layer. Contains immutable rules, sensor-based validation, and domain-specific ontologies. Responsibility: validate inputs before AI processing to prevent noise cascade.</div>
+      </div>
+
+      <div class="g-term" data-term="functor">
+        <div class="g-name">Functor Certification (L2) <span class="g-cat">Architecture</span></div>
+        <div class="g-def">The second architectural layer. Constraint validator and domain rule engine. Responsibility: ensure all AI outputs satisfy hard constraints with zero exceptions.</div>
+      </div>
+
+      <div class="g-term" data-term="consistency">
+        <div class="g-name">Consistency Manager (L3) <span class="g-cat">Architecture</span></div>
+        <div class="g-def">The third architectural layer. Cross-layer audit, drift detection, model governance. Responsibility: detect institutional corruption and prevent training on bad decisions.</div>
+      </div>
+
+      <div class="g-term" data-term="breaker">
+        <div class="g-name">Circuit Breaker (L4) <span class="g-cat">Architecture</span></div>
+        <div class="g-def">The fourth architectural layer. Deterministic veto layer; real-time decision blocking. Responsibility: stop constraint violations mid-pipeline and force human review for edge cases.</div>
+      </div>
+
+      <div class="g-term" data-term="trustee">
+        <div class="g-name">Human Trustee (L5) <span class="g-cat">Architecture</span></div>
+        <div class="g-def">The fifth architectural layer. Human operators, red teams, policy authority. Responsibility: manual override, skill maintenance, constraint evolution. The layer that ultimately holds governance authority.</div>
+      </div>
+
+      <div class="g-term" data-term="sop-04">
+        <div class="g-name">SOP-04 (Manual Operation Windows) <span class="g-cat">Governance</span></div>
+        <div class="g-def">Standard operating procedure requiring humans to verify 100% of AI decisions during defined time windows. Purpose: prevent operator skill atrophy and maintain independent judgment capacity. Frequency and scope determined by Sd and Dop metrics.</div>
+      </div>
+
+      <div class="g-term" data-term="sop-05">
+        <div class="g-name">SOP-05 (Red Team Cycles) <span class="g-cat">Governance</span></div>
+        <div class="g-def">Standard operating procedure for systematic adversarial testing. Red teams attempt to break constraints and evade governance. Purpose: detect design flaws before they become cascade failures. Frequency increases when Ce or Robs metrics degrade.</div>
+      </div>
+
+      <div class="g-term" data-term="hitl">
+        <div class="g-name">HITL (Human Interaction with AI Training) <span class="g-cat">Subsystem</span></div>
+        <div class="g-def">Subsystem S5. Enforces human-in-the-loop review of AI decisions; collects corrective feedback; prevents institutional corruption from training on bad decisions. Critical for maintaining model quality over time.</div>
+      </div>
+
+      <div class="g-term" data-term="cognitive-immunity">
+        <div class="g-name">Cognitive Immunity (S6) <span class="g-cat">Subsystem</span></div>
+        <div class="g-def">Subsystem S6. Tracks operator skill metrics (Sd, Dop); forces manual operation windows; prevents population-level dependency atrophy. Defends against Layer 3 (Population Dependency) failure mode.</div>
+      </div>
+
+      <div class="g-term" data-term="predator-prey">
+        <div class="g-name">Predator-Prey Validation (S7) <span class="g-cat">Subsystem</span></div>
+        <div class="g-def">Subsystem S7. Co-evolves attack and defense strategies through red team cycles. Detects constraint evasion attempts; triggers policy revision. Defends against Layer 4 (Agent Autonomy Escape) failure mode.</div>
+      </div>
+
+      <div class="g-term" data-term="cascade-failure">
+        <div class="g-name">Cascade Failure <span class="g-cat">Failure Mode</span></div>
+        <div class="g-def">System failure that propagates from one layer to the next due to tight coupling. Example: small correctness drop → operators lose confidence → Dop rises (over-dependency) → operators stop verifying → when AI fails, no one knows how to intervene → institutional failure. The Circuit Breaker breaks this chain by forcing independent human judgment.</div>
+      </div>
+
+      <div class="g-term" data-term="institutional-corruption">
+        <div class="g-name">Institutional Corruption <span class="g-cat">Failure Mode</span></div>
+        <div class="g-def">Occurs when bad decisions get embedded in training data and organizational practice. The system learns what humans will accept rather than what is correct. Over time, "correct" drifts toward "what the AI does." Prevented by HITL feedback and red team cycles.</div>
+      </div>
+
+      <div class="g-term" data-term="noise-cascade">
+        <div class="g-name">Noise Cascade <span class="g-cat">Failure Mode</span></div>
+        <div class="g-def">Errors compound through the decision pipeline. Incorrect context → wrong decision → downstream damage amplifies. Ground Truth Layer (L1) and semantic validation prevent noise at intake.</div>
+      </div>
+
+      <div class="g-term" data-term="constraint-evasion">
+        <div class="g-name">Constraint Evasion <span class="g-cat">Failure Mode</span></div>
+        <div class="g-def">AI learns to circumvent governance constraints through indirect or lateral paths. Not outright violation, but strategic circumvention of intent. Predator-Prey subsystem (S7) detects this through red team cycles and co-evolution.</div>
+      </div>
+
+      <div class="g-term" data-term="skill-diffusion">
+        <div class="g-name">Skill Diffusion (Sd metric) <span class="g-cat">Metric</span></div>
+        <div class="g-def">Variance in operator competence. High Sd = concentration risk (some weak, some strong). Low Sd = over-standardized (fragile to disruption). Target band: 0.15–0.35. Tracked by Cognitive Immunity subsystem.</div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Drawer for subsystem details -->
+<div class="drawer-backdrop" id="drawer-backdrop"></div>
+<div class="drawer" id="subsystem-drawer">
+  <button class="close-btn" id="drawer-close">×</button>
+  <div id="drawer-content"></div>
+</div>
+
+<script>
+// Tab Navigation
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabPanels = document.querySelectorAll('.tabpanel');
+const breadcrumb = document.getElementById('current-breadcrumb');
+const drawerBackdrop = document.getElementById('drawer-backdrop');
+const drawer = document.getElementById('subsystem-drawer');
+const drawerContent = document.getElementById('drawer-content');
+const drawerClose = document.getElementById('drawer-close');
+
+const subsystemData = {
+  s1: {
+    name: 'S1: Semantic Knowledge Layer',
+    description: 'Validates input semantics, detects anomalies in context, and grounds AI reasoning in domain-specific ontologies.',
+    metrics: ['Sa (Semantic Anomaly Detection)', 'Sg (Semantic Grounding Score)'],
+    dependencies: 'Consumes: Domain ontologies, input streams. Produces: Validated context for S2, S3.',
+    config: 'Configure via domain ontology files. Define semantic validation rules and anomaly thresholds per domain.'
+  },
+  s2: {
+    name: 'S2: Context Engine',
+    description: 'Retrieves and prioritizes relevant context for each decision; manages context windows and relevance scoring.',
+    metrics: ['Context Recall Rate', 'Relevance Precision'],
+    dependencies: 'Consumes: S1 (validated inputs), knowledge graph. Produces: AI Model input, S3 input.',
+    config: 'Configure relevance scoring weights. Set context window sizes per domain. Tune retrieval algorithms.'
+  },
+  s3: {
+    name: 'S3: AI Circuit Breaker',
+    description: 'Deterministic veto layer; applies ground truth rules and immutable constraints; blocks violations before they propagate.',
+    metrics: ['Constraint Satisfaction Rate (Rs)', 'Breaker Engagement Rate'],
+    dependencies: 'Consumes: S1, S2, Ground Truth rules. Produces: Blocking decisions, audit logs for S4–S7.',
+    config: 'Define hard constraints as immutable rules. Configure veto thresholds. Set escalation policies for edge cases.'
+  },
+  s4: {
+    name: 'S4: Recursive Learning & Model Governance',
+    description: 'Manages model versioning, drift detection, fine-tuning feedback loops; prevents model corruption from bad training data.',
+    metrics: ['Value Drift', 'Model Consistency Score'],
+    dependencies: 'Consumes: S3 (decisions for analysis), S5 (corrections). Produces: Retraining signals, S7 input.',
+    config: 'Set drift detection thresholds. Configure retraining schedules. Define model version control policies.'
+  },
+  s5: {
+    name: 'S5: Human Interaction with AI Training (HITL)',
+    description: 'Enforces human-in-the-loop review of AI decisions; collects corrective feedback; prevents institutional corruption from training on bad decisions.',
+    metrics: ['Manual Review Compliance', 'Corrective Feedback Signal Quality'],
+    dependencies: 'Consumes: S3 (decisions for review), human feedback. Produces: Training signals for S4.',
+    config: 'Define review SLAs. Configure feedback collection workflows. Set SOP-05 (red team cycle) frequency.'
+  },
+  s6: {
+    name: 'S6: Cognitive Immunity',
+    description: 'Tracks operator skill metrics (Sd, Dop); forces manual operation windows; prevents population-level dependency atrophy.',
+    metrics: ['Skill Diffusion (Sd)', 'Operator Dependency (Dop)'],
+    dependencies: 'Consumes: S5 (review patterns), operator telemetry. Produces: Policy adjustments (SOP-04 frequency).',
+    config: 'Set Sd and Dop tolerance bands. Configure manual operation window frequency and scope. Define retraining thresholds.'
+  },
+  s7: {
+    name: 'S7: Predator-Prey Validation',
+    description: 'Co-evolves attack and defense strategies; detects constraint evasion attempts; triggers policy revision.',
+    metrics: ['Constraint Evasion (Ce)', 'Policy Evolution Cadence'],
+    dependencies: 'Consumes: S3 (breaker decisions), S4 (model behavior). Produces: Red team schedule, policy updates.',
+    config: 'Design red team attack strategies. Configure co-evolution cadence (typically weekly). Set Ce thresholds that trigger escalation.'
+  }
+};
+
+// Tab switching
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tabId = btn.dataset.tab;
+
+    // Remove active from all
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabPanels.forEach(p => p.classList.remove('active'));
+
+    // Add active to clicked
+    btn.classList.add('active');
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+
+    // Update breadcrumb
+    breadcrumb.textContent = btn.textContent;
+  });
+});
+
+// Subsystem card clicks (drawer)
+document.querySelectorAll('.comp-card').forEach(card => {
+  card.addEventListener('click', () => {
+    const subsystem = card.dataset.subsystem;
+    const data = subsystemData[subsystem];
+
+    if (data) {
+      drawerContent.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>${data.description}</p>
+
+        <h4>Owned Metrics</h4>
+        <ul>${data.metrics.map(m => `<li>${m}</li>`).join('')}</ul>
+
+        <h4>System Dependencies</h4>
+        <p>${data.dependencies}</p>
+
+        <h4>Configuration Guide</h4>
+        <p>${data.config}</p>
+
+        <p style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #eee; font-size: 12px; color: #9aa0a6;">
+          <strong>Related Subsystems:</strong> Click on other subsystem cards in the Framework tab to explore dependencies.
+        </p>
+      `;
+
+      drawer.classList.add('open');
+      drawerBackdrop.classList.add('open');
+    }
+  });
+});
+
+// Drawer close
+drawerClose.addEventListener('click', () => {
+  drawer.classList.remove('open');
+  drawerBackdrop.classList.remove('open');
+});
+
+drawerBackdrop.addEventListener('click', () => {
+  drawer.classList.remove('open');
+  drawerBackdrop.classList.remove('open');
+});
+
+// Glossary filter
+document.getElementById('glossary-filter').addEventListener('input', (e) => {
+  const filter = e.target.value.toLowerCase();
+  document.querySelectorAll('#glossary-content .g-term').forEach(term => {
+    const text = term.textContent.toLowerCase();
+    term.style.display = text.includes(filter) ? 'block' : 'none';
+  });
+});
+
+// Simulation scenario buttons
+document.querySelectorAll('.sim-scenario-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sim-scenario-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Simulate loading different content
+    const scenario = btn.dataset.sid;
+    const content = document.getElementById('simulation-content');
+
+    const scenarios = {
+      normal: {
+        title: 'Normal Operations Scenario',
+        desc: 'System operating within design parameters. All metrics in healthy range.',
+        metrics: [
+          'MTBH: 240 hours (10 days between hallucinations)',
+          'Robs: 0.78 (healthy robustness)',
+          'Sd: 0.25 (normal skill diversity)',
+          'Dop: 0.40 (moderate but manageable dependency)',
+          'Ce: 0 incidents per week (no constraint evasion detected)',
+          'Cr: 94% correctness (baseline)'
+        ],
+        forecast: 'System stable. No red team escalation needed. Routine monitoring sufficient.'
+      },
+      'model-drift': {
+        title: 'Model Drift Scenario',
+        desc: 'Model performance degrading over time. MTBH declining, Cr dropping.',
+        metrics: [
+          'MTBH: 180 hours (declining from 240)',
+          'Robs: 0.71 (yellow zone)',
+          'Sd: 0.28 (increased variance)',
+          'Dop: 0.48 (rising)',
+          'Ce: 1 incident per week',
+          'Cr: 91% correctness (down 3%)'
+        ],
+        forecast: 'Model retraining required within 5 days. Consider temporary autonomous operation restrictions.'
+      },
+      'skill-loss': {
+        title: 'Operator Skill Loss Scenario',
+        desc: 'Key team member leaves; remaining team becomes less diverse and more dependent on AI.',
+        metrics: [
+          'MTBH: 240 hours (stable)',
+          'Robs: 0.65 (red zone)',
+          'Sd: 0.52 (high variance—concentration risk)',
+          'Dop: 0.62 (over-dependent)',
+          'Ce: 0 incidents',
+          'Cr: 94% correctness'
+        ],
+        forecast: 'Immediate retraining cycle required. Extend SOP-04 (manual ops) to 50% of decisions. Do not scale autonomy further.'
+      },
+      'constraint-evasion': {
+        title: 'Constraint Evasion Scenario',
+        desc: 'AI learning to circumvent governance rules through lateral paths.',
+        metrics: [
+          'MTBH: 240 hours',
+          'Robs: 0.72 (stable)',
+          'Sd: 0.25 (stable)',
+          'Dop: 0.40 (stable)',
+          'Ce: 3 incidents per week (trending up)',
+          'Cr: 94% correctness'
+        ],
+        forecast: 'Emergency red team cycle required. Constraint redesign within 72 hours. Monitor Ce trend weekly.'
+      },
+      cascade: {
+        title: 'Cascade Failure Scenario',
+        desc: 'Multiple failure modes occurring simultaneously. System approaching critical threshold.',
+        metrics: [
+          'MTBH: 120 hours (down 50%)',
+          'Robs: 0.58 (critical)',
+          'Sd: 0.48 (high variance)',
+          'Dop: 0.68 (over-dependent)',
+          'Ce: 5 incidents per week',
+          'Cr: 87% correctness (down 7%)'
+        ],
+        forecast: 'HALT AUTONOMOUS OPERATION. Activate emergency manual override. Investigation + governance reset required before resuming.'
+      }
+    };
+
+    const scenario_data = scenarios[scenario];
+    content.innerHTML = `
+      <h4 style="margin-top: 0; color: #10233f;">${scenario_data.title}</h4>
+      <p><strong>Baseline:</strong> ${scenario_data.desc}</p>
+      <ul>
+        ${scenario_data.metrics.map(m => `<li><strong>${m.split(':')[0]}:</strong> ${m.split(':')[1]}</li>`).join('')}
+      </ul>
+      <p><strong>Weekly Forecast:</strong> ${scenario_data.forecast}</p>
+    `;
+  });
+});
+
+// Simulation sliders
+document.getElementById('degrad-slider').addEventListener('input', (e) => {
+  document.getElementById('degrad-val').textContent = e.target.value;
+});
+
+document.getElementById('team-slider').addEventListener('input', (e) => {
+  document.getElementById('team-val').textContent = e.target.value;
+});
+
+// Set initial active state
+document.querySelector('.tab-btn').classList.add('active');
+document.querySelector('.tabpanel').classList.add('active');
+</script>
+
+</body>
+</html>

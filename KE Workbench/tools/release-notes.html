@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Release Notes</title>
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<script src="../assets/ke-registry.js"></script>
+<script src="../assets/ke-releases.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:13.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:900px;margin:0 auto;padding:28px 28px 64px}
+.eyebrow{font:700 11px/1.2 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+.eyebrow .sep{color:var(--ke-faint);margin:0 6px}
+h1{font-size:28px;letter-spacing:-.012em;margin:8px 0 4px}
+.lede{color:var(--ke-ink2);max-width:720px}
+.toc{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}
+.toc a{font-size:12px;font-weight:600;color:var(--ke-ink2);text-decoration:none;border:1px solid var(--ke-line);background:var(--ke-surface);border-radius:14px;padding:3px 11px}
+.toc a:hover{border-color:var(--ke-accent);color:var(--ke-accent)}
+.toc a.cur{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink)}
+.rel{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);margin-top:18px;scroll-margin-top:16px}
+.rel-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--ke-line-soft)}
+.rel-h .v{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.rel-h .t{font-weight:600;color:var(--ke-ink2)}
+.rel-h .d{margin-left:auto;font-size:12px;color:var(--ke-muted);font-variant-numeric:tabular-nums}
+.cur-tag{font:700 10px/1 var(--ke-sans);letter-spacing:.06em;text-transform:uppercase;background:var(--ke-ok-soft);color:var(--ke-ok);border-radius:4px;padding:3px 6px}
+.rel-b{padding:6px 18px 14px}
+.grp{margin-top:10px}
+.grp-h{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.grp-h.new{color:var(--ke-ok)} .grp-h.improved{color:var(--ke-accent)} .grp-h.fixed{color:var(--ke-warn)} .grp-h.removed{color:var(--ke-bad)}
+ul{list-style:none}
+li{position:relative;padding:3px 0 3px 16px;color:var(--ke-ink)}
+li::before{content:"";position:absolute;left:3px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--ke-line)}
+.foot{margin-top:22px;font-size:12px;color:var(--ke-muted)}
+code{font-family:var(--ke-mono);font-size:.9em}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Reference <span class="sep">•</span> Workbench release <span id="cur"></span></div>
+  <h1>Release Notes</h1>
+  <p class="lede">What changed in each release of the KE Workbench — new tools and features, improvements, and fixes. The newest release is first.</p>
+  <nav class="toc" id="toc"></nav>
+  <div id="list"></div>
+  <p class="foot">The notes live in <code>assets/ke-releases.js</code>; add an entry there for each release and bump <code>version</code> in <code>assets/ke-registry.js</code> to match.</p>
+</div>
+<script>
+(function () {
+  const R = window.KE_RELEASES || [], cur = (window.KE_REGISTRY || {}).version || (R[0] && R[0].version) || '';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const label = { new: 'New', improved: 'Improved', fixed: 'Fixed', removed: 'Removed' };
+  const fmt = d => { try { return new Date(d + 'T12:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) { return d; } };
+  document.getElementById('cur').textContent = cur;
+  document.getElementById('toc').innerHTML = R.map(r => `<a href="#v${esc(r.version)}" class="${r.version === cur ? 'cur' : ''}">${esc(r.version)}</a>`).join('');
+  document.getElementById('list').innerHTML = R.map(r => `
+    <section class="rel" id="v${esc(r.version)}">
+      <div class="rel-h"><span class="v">${esc(r.version)}</span><span class="t">${esc(r.title || '')}</span>${r.version === cur ? '<span class="cur-tag">Current</span>' : ''}<span class="d">${esc(fmt(r.date))}</span></div>
+      <div class="rel-b">${r.groups.map(g => `<div class="grp"><div class="grp-h ${g.kind}">${label[g.kind] || esc(g.kind)}</div><ul>${g.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>
+    </section>`).join('');
+  document.getElementById('toc').addEventListener('click', ev => {
+    const a = ev.target.closest('a'); if (!a) return; ev.preventDefault();
+    const el = document.querySelector(a.getAttribute('href')); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  if (location.hash && document.querySelector(location.hash)) document.querySelector(location.hash).scrollIntoView();
+})();
+</script>
+</body>
+</html>

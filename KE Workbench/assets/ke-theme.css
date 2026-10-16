@@ -1,0 +1,61 @@
+/* ==========================================================================
+   KE Workbench — shared design tokens
+   Derived from "Semantic Governance: Services, Architecture & Integration"
+   v1.8 Draft (document palette and type), extended with a dark theme.
+   Tokens only; no element resets, so including this file in an existing
+   tool never changes its layout.
+   ========================================================================== */
+:root{
+  /* Type — the guide is set in Liberation Sans / Liberation Mono */
+  --ke-sans:"Liberation Sans",Arial,"Helvetica Neue",Helvetica,system-ui,sans-serif;
+  --ke-mono:"Liberation Mono","Cascadia Code",Consolas,Menlo,monospace;
+
+  /* Light (document) palette */
+  --ke-bg:#F4F6F9;          /* app canvas */
+  --ke-surface:#FFFFFF;     /* cards, panels — the page of the guide */
+  --ke-sunk:#F7F9FB;        /* inputs, wells */
+  --ke-band:#EEF3F9;        /* table header band in the guide */
+  --ke-line:#D5DBE1;        /* rules and table borders in the guide */
+  --ke-line-soft:#E6EAEE;
+  --ke-ink:#1F2933;         /* headings and body text */
+  --ke-ink2:#3E4A55;
+  --ke-muted:#5F6B76;       /* subtitles, running footers */
+  --ke-faint:#8B949D;
+  --ke-accent:#2F6DB5;      /* section eyebrows, h2 headings */
+  --ke-accent-ink:#FFFFFF;
+  --ke-accent-soft:#E3EDF8;
+  --ke-draft:#B03A2E;       /* the DRAFT mark */
+  --ke-ok:#2E7D4F;  --ke-ok-soft:#E5F3EA;
+  --ke-warn:#9A6A00; --ke-warn-soft:#FBF1D9;
+  --ke-bad:#B03A2E; --ke-bad-soft:#FBEAE8;
+  /* Artifact kinds (vocabulary · taxonomy · ontology), used consistently */
+  --ke-kind-voc:#2E7D4F; --ke-kind-tax:#1F6E8C; --ke-kind-ont:#5B3FB0;
+  --ke-shadow:0 1px 2px rgba(31,41,51,.06),0 2px 8px rgba(31,41,51,.05);
+  --ke-radius:6px; --ke-radius-lg:10px;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --ke-bg:#0F141A;
+  --ke-surface:#161D25;
+  --ke-sunk:#121820;
+  --ke-band:#1C2632;
+  --ke-line:#2B3642;
+  --ke-line-soft:#222C37;
+  --ke-ink:#E4EAF0;
+  --ke-ink2:#C3CDD6;
+  --ke-muted:#95A2AE;
+  --ke-faint:#6C7884;
+  --ke-accent:#6FA3E0;
+  --ke-accent-ink:#0B1520;
+  --ke-accent-soft:#1A2B40;
+  --ke-draft:#E07A6E;
+  --ke-ok:#4FC283;  --ke-ok-soft:#14301F;
+  --ke-warn:#E2B04A; --ke-warn-soft:#352A10;
+  --ke-bad:#EE7B70; --ke-bad-soft:#3A1C1A;
+  --ke-kind-voc:#4FC283; --ke-kind-tax:#5FB3D2; --ke-kind-ont:#A68CF0;
+  --ke-shadow:0 1px 2px rgba(0,0,0,.4),0 2px 10px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+
+/* When a tool runs inside the workbench, its own window chrome is redundant */
+html.ke-embedded .ke-hide-embedded{display:none!important}

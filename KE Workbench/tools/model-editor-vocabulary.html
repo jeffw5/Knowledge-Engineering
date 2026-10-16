@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocabulary Editor</title>
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<script src="../assets/ke-sparql.js"></script>
+<script src="../assets/ke-rules.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:var(--ke-mono);font-size:.92em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ke-accent);outline-offset:2px;border-radius:4px}
+.hidden{display:none!important}
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
+header.top{padding:14px 20px 12px;border-bottom:1px solid var(--ke-line);background:var(--ke-surface);display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.eyebrow{font:700 10.5px/1.4 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+.eyebrow .sep{color:var(--ke-faint);margin:0 5px}
+h1{font-size:21px;letter-spacing:-.01em;margin-top:2px}
+.lede{color:var(--ke-ink2);font-size:12.5px;max-width:640px}
+.grow{flex:1;min-width:260px}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--ke-line);background:var(--ke-surface);font-size:12.5px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.btn:hover:not(:disabled){border-color:var(--ke-accent)}
+.btn.pri{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink)}
+.btn.bad{color:var(--ke-bad);border-color:var(--ke-bad)}
+.btn.sm{height:26px;padding:0 9px;font-size:11.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.status{font-size:12px;color:var(--ke-muted)}
+.status.bad{color:var(--ke-bad)} .status.ok{color:var(--ke-ok)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.main{display:grid;grid-template-columns:240px minmax(260px,330px) minmax(380px,1fr);min-height:0}
+.col{min-height:0;overflow:auto;border-right:1px solid var(--ke-line)}
+.col:last-child{border-right:0}
+.sec{padding:12px 14px;border-bottom:1px solid var(--ke-line-soft)}
+.sec h3{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.inp{width:100%;min-width:0;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:5px 8px;font-size:12px}
+.inp:focus{outline:none;border-color:var(--ke-accent)}
+.vlist{display:grid;grid-template-columns:minmax(0,1fr);gap:1px}
+.vitem{min-width:0;display:flex;gap:6px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:6px 8px;border-radius:6px;font-size:12.5px;color:var(--ke-ink2)}
+.vitem:hover{background:var(--ke-band)}
+.vitem.on{background:var(--ke-accent-soft);color:var(--ke-ink);font-weight:700}
+.vitem .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vitem .e{font:700 10.5px var(--ke-sans);color:var(--ke-bad)}
+.vitem .e.z{color:var(--ke-ok)}
+/* terms */
+.thead{position:sticky;top:0;z-index:2;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);padding:10px 12px;display:grid;gap:8px}
+.scheme{display:flex;gap:8px;align-items:center;width:100%;text-align:left;border:1px solid var(--ke-line);background:var(--ke-surface);border-radius:8px;padding:8px 10px}
+.scheme.on{border-color:var(--ke-accent);background:var(--ke-accent-soft)}
+.scheme b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tree{padding:6px 0 30px}
+.node{display:flex;align-items:center;gap:4px;padding:3px 10px 3px 0;cursor:pointer;font-size:12.5px;white-space:nowrap}
+.node:hover{background:var(--ke-sunk)}
+.node.on{background:var(--ke-accent-soft);font-weight:700}
+.node .tw{width:18px;height:18px;flex:none;border:0;background:none;color:var(--ke-faint);font-size:10px;border-radius:3px}
+.node .tw:hover{color:var(--ke-ink);background:var(--ke-band)}
+.node .lb{overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.dot.err{background:var(--ke-bad)} .dot.warn{background:var(--ke-warn)}
+.dot.mod{background:var(--ke-accent)}
+.newterm{display:grid;gap:6px;padding:10px 12px;border-bottom:1px solid var(--ke-line-soft);background:var(--ke-sunk)}
+/* editor */
+.ed{padding:16px 20px 40px;max-width:820px}
+.ed h2{font-size:18px;letter-spacing:-.005em;word-break:break-word}
+.ed .iri{font-family:var(--ke-mono);font-size:11px;color:var(--ke-muted);word-break:break-all;margin-top:2px}
+.finds{margin-top:10px;display:grid;gap:5px}
+.find{border-left:3px solid var(--ke-bad);background:var(--ke-bad-soft);padding:6px 10px;border-radius:0 6px 6px 0;font-size:12px}
+.find.warn{border-color:var(--ke-warn);background:var(--ke-warn-soft)}
+.find b{font-size:11px;margin-right:6px}
+.okline{margin-top:10px;font-size:12px;color:var(--ke-ok)}
+.grp{margin-top:16px;border:1px solid var(--ke-line);border-radius:10px;background:var(--ke-surface)}
+.grp-h{padding:8px 12px;border-bottom:1px solid var(--ke-line-soft);font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted)}
+.grp-b{padding:10px 12px 12px;display:grid;gap:10px}
+.fld label{display:block;font:600 11.5px/1.3 var(--ke-sans);color:var(--ke-ink2);margin-bottom:4px}
+.fld label .hint{font-weight:400;color:var(--ke-muted);margin-left:6px}
+.fld input:not([type=checkbox]),.fld textarea,.fld select{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:6px 8px;font-size:12.5px}
+.fld textarea{min-height:64px;resize:vertical;line-height:1.45}
+.fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--ke-accent)}
+.fld .ro{font-size:12.5px;color:var(--ke-ink2);word-break:break-word}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.chip{display:inline-flex;gap:4px;align-items:center;background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:4px;padding:1px 2px 1px 7px;font-size:12px}
+.chip.link{cursor:pointer;color:var(--ke-accent)}
+.chip button{border:0;background:none;color:var(--ke-faint);width:18px;height:18px;border-radius:3px}
+.chip button:hover{color:var(--ke-bad);background:var(--ke-bad-soft)}
+.chips input{flex:1;min-width:140px;background:transparent;border:1px dashed var(--ke-line);border-radius:4px;padding:2px 6px;font-size:12px}
+.notes{display:grid;gap:4px;font-size:12px;color:var(--ke-ink2)}
+.notes div{background:var(--ke-sunk);border-radius:4px;padding:4px 8px}
+.empty{padding:40px 20px;text-align:center;color:var(--ke-muted)}
+.empty b{display:block;color:var(--ke-ink);font-size:14px;margin-bottom:4px}
+footer.bar{border-top:1px solid var(--ke-line);background:var(--ke-surface);padding:9px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+footer.bar .sum{font-size:12.5px}
+.toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);background:var(--ke-ink);color:var(--ke-surface);padding:8px 14px;border-radius:8px;font-size:12.5px;z-index:50;display:none;max-width:80vw}
+.toast.bad{background:var(--ke-bad);color:#fff}
+@media (max-width:1100px){ .main{grid-template-columns:200px 1fr} .col.edcol{grid-column:1 / -1;border-top:1px solid var(--ke-line)} .main{overflow:auto} .col{overflow:visible} }
+@media (max-width:720px){ .main{grid-template-columns:1fr} .two{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="grow">
+      <div class="eyebrow">Knowledge engineering <span class="sep">•</span> Model editor <span class="sep">•</span> §3.2 · §3.3 · §3.7</div>
+      <h1>Model Editor (Vocabulary)</h1>
+      <p class="lede">Edit an ingested vocabulary: its own metadata and every term — labels, definition, notes, broader and related terms, status. Conformance is re-checked as you type; Save writes the .ttl and .trig and loads the folder into GraphDB.</p>
+    </div>
+    <div class="row" style="min-width:320px;flex:0 1 460px;flex-wrap:nowrap">
+      <input class="inp mono" id="folder" style="flex:1;width:auto" placeholder="Folder with ingested .ttl files" aria-label="Folder with ingested files">
+      <button class="btn sm" id="folderGo">Open</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <aside class="col">
+      <div class="sec">
+        <h3>Vocabularies <span class="status" id="vcount"></span></h3>
+        <div class="vlist" id="vlist"><div class="status">Loading…</div></div>
+      </div>
+    </aside>
+
+    <section class="col" id="tcol">
+      <div class="thead">
+        <button class="scheme" id="schemeBtn" disabled><span class="dot" id="schemeDot"></span><b id="schemeName">No vocabulary open</b><span class="status">metadata</span></button>
+        <div class="row"><input class="inp" id="q" placeholder="Find a term…" aria-label="Find a term" style="flex:1"><button class="btn sm" id="newBtn" disabled>+ New term</button></div>
+        <label class="status" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="onlyErr"> Only terms with errors</label>
+      </div>
+      <div class="newterm hidden" id="newForm">
+        <div class="fld"><input class="inp" id="nLabel" placeholder="Preferred label, e.g. Data product owner" aria-label="New term label"></div>
+        <div class="fld"><input class="inp" id="nParent" list="termList" placeholder="Broader term (empty = top concept)" aria-label="Broader term"></div>
+        <div class="row"><button class="btn sm pri" id="nGo">Add term</button><button class="btn sm" id="nCancel">Cancel</button><span class="status" id="nMsg"></span></div>
+      </div>
+      <div class="tree" id="tree"></div>
+    </section>
+
+    <section class="col edcol" id="editor"><div class="empty"><b>Open a vocabulary</b>Pick one on the left. Its terms appear in the middle; select the vocabulary header or a term to edit it.</div></section>
+  </div>
+
+  <footer class="bar">
+    <span class="sum" id="sum">No changes.</span>
+    <span style="flex:1"></span>
+    <span class="status" id="saveStatus"></span>
+    <button class="btn" id="discardBtn" disabled>Discard changes</button>
+    <button class="btn" id="saveOnlyBtn" disabled title="Write the .ttl and .trig without loading">Save files only</button>
+    <button class="btn pri" id="saveBtn" disabled>Save &amp; load into GraphDB</button>
+  </footer>
+</div>
+<datalist id="termList"></datalist>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const S = window.KE_SPARQL, K = window.KE_RULES;
+  const RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', RDFS = 'http://www.w3.org/2000/01/rdf-schema#',
+        OWL = 'http://www.w3.org/2002/07/owl#', SKOS = 'http://www.w3.org/2004/02/skos/core#', DCT = 'http://purl.org/dc/terms/',
+        XSD = 'http://www.w3.org/2001/XMLSchema#', VANN = 'http://purl.org/vocab/vann/';
+  const STATUSES = ['Draft', 'Candidate', 'Released', 'Deprecated', 'Retired'];
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const plural = (n, w, pw) => `${n.toLocaleString()} ${n === 1 ? w : (pw || w + 's')}`;
+  const ls = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = 'none', bad ? 6000 : 2600); }
+  const qp = new URLSearchParams(location.search);
+
+  let policyJ = { baseUrl: 'https://www.insperity.com/', author: '' }, POL = null, CORE = '';
+  let folder = '', files = [], file = null, graph = '', quads = [], loadedAt = null;
+  let sel = null, open = new Set(), changes = new Map(), touched = new Set(), findings = new Map(), idx = null;
+
+  // ── terms and literals ────────────────────────────────────────────────
+  const N = v => ({ t: 'iri', v }), L = (v, lang) => ({ t: 'lit', v, lang }), P = (v, dt) => ({ t: 'lit', v, dt });
+  const isT = (t, v) => t && t.t === 'iri' && t.v === v;
+  const isEn = o => o.t === 'lit' && (!o.lang || o.lang === 'en');
+  const fromArr = a => a[0] === 'I' ? N(a[1]) : a[0] === 'B' ? { t: 'bnode', v: a[1] } : { t: 'lit', v: a[1], lang: a[2] ? a[2].toLowerCase() : undefined, dt: a[3] || undefined };
+  const toArr = t => t.t === 'iri' ? ['I', t.v] : t.t === 'bnode' ? ['B', t.v] : ['L', t.v, t.lang || '', t.dt || ''];
+  function reindex() {
+    idx = { s: new Map(), kids: new Map() };
+    for (const q of quads) if (q.s.t === 'iri') { if (!idx.s.has(q.s.v)) idx.s.set(q.s.v, []); idx.s.get(q.s.v).push(q); }
+  }
+  const objs = (s, p) => (idx.s.get(s) || []).filter(q => q.p.v === p).map(q => q.o);
+  const iris = (s, p) => objs(s, p).filter(o => o.t === 'iri').map(o => o.v);
+  const lits = (s, p) => objs(s, p).filter(isEn).map(o => o.v);
+  const lit1 = (s, p) => lits(s, p)[0] || '';
+  const plain1 = (s, p) => { const o = objs(s, p).find(o => o.t === 'lit'); return o ? o.v : ''; };
+  const ln = u => K.localName(u || '');
+  const label = s => lit1(s, SKOS + 'prefLabel') || lit1(s, RDFS + 'label') || ln(s);
+  const concepts = () => [...idx.s.keys()].filter(s => iris(s, RDF + 'type').includes(SKOS + 'Concept'));
+  const drop = pred => { quads = quads.filter(q => !pred(q)); };
+  const add = (s, p, o) => { if (!quads.some(q => isT(q.s, s) && q.p.v === p && q.o.t === o.t && q.o.v === o.v && (q.o.lang || '') === (o.lang || ''))) quads.push({ s: N(s), p: N(p), o, g: graph }); };
+
+  // edits: each records a change (kept per term and field, first old value and latest new value)
+  function note(term, field, old, nw, kind) {
+    const k = term + '\u0001' + field;
+    const prev = changes.get(k);
+    changes.set(k, { term, field, kind: kind || 'edit', old: prev ? prev.old : old, new: nw, label: label(term) });
+    if (changes.get(k).old === nw && !kind) changes.delete(k);
+    touched.add(term);
+    afterEdit();
+  }
+  function setLit(s, p, v) {
+    const old = lits(s, p).join(' | ');
+    drop(q => isT(q.s, s) && q.p.v === p && isEn(q.o));
+    if (v) add(s, p, L(v, 'en'));
+    reindex(); return old;
+  }
+  function setLits(s, p, arr) {
+    const old = lits(s, p).join(' | ');
+    drop(q => isT(q.s, s) && q.p.v === p && isEn(q.o));
+    arr.filter(Boolean).forEach(v => add(s, p, L(v, 'en')));
+    reindex(); return old;
+  }
+  function setPlain(s, p, v, dt) {
+    const old = plain1(s, p);
+    drop(q => isT(q.s, s) && q.p.v === p && q.o.t === 'lit');
+    if (v) add(s, p, dt ? P(v, dt) : P(v));
+    reindex(); return old;
+  }
+  function setIri(s, p, v) {
+    const old = iris(s, p)[0] || '';
+    drop(q => isT(q.s, s) && q.p.v === p && q.o.t === 'iri');
+    if (v) add(s, p, N(v));
+    reindex(); return old;
+  }
+
+  // ── load ──────────────────────────────────────────────────────────────
+  async function loadPolicy() {
+    try { const r = await fetch('/api/ingest/policy'); const j = await r.json(); if (j.ok) policyJ = j; } catch (e) {}
+    POL = K.policyFrom(policyJ); CORE = (policyJ.baseUrl || 'https://www.insperity.com/') + 'ontology/core/';
+  }
+  async function loadFolder(dir) {
+    if (dirty() && !confirmLeave()) return;
+    $('vlist').innerHTML = '<div class="status">Loading…</div>';
+    let d;
+    try { const r = await fetch('/api/ingest/review-files?' + new URLSearchParams({ dir: dir || '' })); d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command).' : 'Server answered ' + r.status }; }
+    catch (e) { d = { ok: false, error: e.message }; }
+    if (!d.ok) { $('vlist').innerHTML = `<div class="status bad">${esc(d.error)}</div>`; return; }
+    folder = d.dir; $('folder').value = d.dir; if (d.dir) ls.set('ke-review-folder', d.dir);
+    files = d.files.filter(f => f.kind === 'vocabulary').sort((a, b) => a.title.localeCompare(b.title));
+    $('vcount').textContent = files.length ? files.length : '';
+    renderVList();
+  }
+  function renderVList() {
+    $('vlist').innerHTML = files.length ? files.map(f => `<button class="vitem ${file && file.path === f.path ? 'on' : ''}" data-path="${esc(f.path)}" title="${esc(f.name)}"><span class="nm">${esc(f.title)}</span>${f.errors != null ? `<span class="e ${f.errors ? '' : 'z'}">${f.errors || '✓'}</span>` : ''}</button>`).join('')
+      : `<div class="status">${folder ? 'No ingested vocabularies in this folder.' : 'Type the folder an ingestion run wrote to, then Open.'}</div>`;
+  }
+  $('vlist').addEventListener('click', e => { const b = e.target.closest('[data-path]'); if (b) openFile(b.dataset.path); });
+  $('folderGo').addEventListener('click', () => loadFolder($('folder').value.trim()));
+  $('folder').addEventListener('keydown', e => { if (e.key === 'Enter') loadFolder($('folder').value.trim()); });
+
+  const dirty = () => changes.size > 0;
+  function confirmLeave() { toast('Save or discard your changes first', true); return false; }
+  async function openFile(path, focusTerm) {
+    if (dirty() && (!file || file.path !== path) && !confirmLeave()) return;
+    $('editor').innerHTML = '<div class="empty">Reading…</div>';
+    let d;
+    try { const r = await fetch('/api/ingest/review-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paths: [path] }) }); d = await r.json(); }
+    catch (e) { d = { ok: false, error: e.message }; }
+    const f = d.ok && d.files[0];
+    if (!f || !f.ok) { $('editor').innerHTML = `<div class="empty"><b>Could not read the file</b>${esc((f && f.error) || d.error || '')}</div>`; return; }
+    file = files.find(x => x.path === path) || { path, title: path.split('/').pop(), name: path.split('/').pop() };
+    graph = f.graph; quads = f.triples.map(t => ({ s: fromArr(t[0]), p: fromArr(t[1]), o: fromArr(t[2]), g: graph }));
+    changes = new Map(); touched = new Set(); loadedAt = Date.now();
+    ls.set('ke-vocab-file', path);
+    reindex(); check();
+    open = new Set(iris(graph, SKOS + 'hasTopConcept'));
+    sel = focusTerm && idx.s.has(focusTerm) ? focusTerm : graph;
+    if (focusTerm) revealPath(focusTerm);
+    $('schemeBtn').disabled = false; $('newBtn').disabled = false;
+    renderVList(); renderTree(); renderEditor(); renderSum();
+  }
+
+  // ── conformance (live) ────────────────────────────────────────────────
+  function check() {
+    const res = K.runChecks(quads, { bases: [policyJ.baseUrl || 'https://www.insperity.com/'], policy: POL });
+    findings = new Map();
+    res.findings.filter(f => f.sev === 'error' || f.sev === 'warn').forEach(f => { if (!findings.has(f.iri)) findings.set(f.iri, []); findings.get(f.iri).push(f); });
+    if (file) file.errors = res.findings.filter(f => f.sev === 'error').length;
+  }
+  const errOf = s => (findings.get(s) || []).some(f => f.sev === 'error') ? 'err' : (findings.get(s) || []).length ? 'warn' : '';
+  let chkT = null;
+  function afterEdit() {
+    clearTimeout(chkT);
+    chkT = setTimeout(() => { check(); renderVList(); renderTree(); renderFinds(); renderSum(); }, 250);
+    renderSum();
+  }
+
+  // ── tree ──────────────────────────────────────────────────────────────
+  function parentsOf(s) { return [...new Set([...iris(s, SKOS + 'broader'), ...quads.filter(q => q.p.v === SKOS + 'narrower' && isT(q.o, s) && q.s.t === 'iri').map(q => q.s.v)])].filter(p => p !== s && idx.s.has(p)); }
+  function childrenOf(s) { return [...new Set([...iris(s, SKOS + 'narrower'), ...quads.filter(q => q.p.v === SKOS + 'broader' && isT(q.o, s) && q.s.t === 'iri').map(q => q.s.v)])].filter(c => c !== s && idx.s.has(c)); }
+  function revealPath(s) { const seen = new Set(); (function up(x) { parentsOf(x).forEach(p => { if (!seen.has(p)) { seen.add(p); open.add(p); up(p); } }); })(s); }
+  function renderTree() {
+    if (!file) { $('tree').innerHTML = ''; return; }
+    $('schemeName').textContent = label(graph); $('schemeBtn').classList.toggle('on', sel === graph);
+    $('schemeDot').className = 'dot ' + errOf(graph);
+    const all = concepts(), q = $('q').value.trim().toLowerCase(), onlyErr = $('onlyErr').checked;
+    $('termList').innerHTML = all.map(s => `<option value="${esc(label(s) + ' · ' + ln(s))}">`).join('');
+    const byLabel = (a, b) => label(a).localeCompare(label(b));
+    let h = '';
+    if (q || onlyErr) {
+      const hits = all.filter(s => (!q || (label(s) + ' ' + lits(s, SKOS + 'altLabel').join(' ') + ' ' + ln(s)).toLowerCase().includes(q)) && (!onlyErr || errOf(s) === 'err')).sort(byLabel);
+      h = hits.length ? hits.map(s => nodeHtml(s, 0, false)).join('') : '<div class="empty" style="padding:20px">No matching terms</div>';
+    } else {
+      const roots = all.filter(s => !parentsOf(s).length).sort(byLabel);
+      const seen = new Set();
+      const walk = (s, d) => {
+        if (seen.has(s + '@' + d) || d > 12) return; seen.add(s + '@' + d);
+        const kids = childrenOf(s).sort(byLabel);
+        h += nodeHtml(s, d, kids.length > 0);
+        if (open.has(s)) kids.forEach(c => walk(c, d + 1));
+      };
+      roots.forEach(r => walk(r, 0));
+      if (!roots.length) h = '<div class="empty" style="padding:20px">No terms yet — add one with + New term</div>';
+    }
+    $('tree').innerHTML = h;
+  }
+  function nodeHtml(s, d, hasKids) {
+    const e = errOf(s), mod = [...changes.values()].some(c => c.term === s);
+    return `<div class="node ${s === sel ? 'on' : ''}" data-t="${esc(s)}" style="padding-left:${6 + d * 16}px">
+      ${hasKids ? `<button class="tw" data-tw="${esc(s)}" aria-label="${open.has(s) ? 'Collapse' : 'Expand'}">${open.has(s) ? '▾' : '▸'}</button>` : '<span class="tw"></span>'}
+      <span class="lb">${esc(label(s))}</span>${mod ? '<span class="dot mod" title="Changed"></span>' : ''}${e ? `<span class="dot ${e}" title="${e === 'err' ? 'Conformance error' : 'Warning'}"></span>` : ''}</div>`;
+  }
+  $('tree').addEventListener('click', e => {
+    const tw = e.target.closest('[data-tw]');
+    if (tw) { const s = tw.dataset.tw; open.has(s) ? open.delete(s) : open.add(s); renderTree(); return; }
+    const n = e.target.closest('[data-t]'); if (n) select(n.dataset.t);
+  });
+  $('schemeBtn').addEventListener('click', () => select(graph));
+  $('q').addEventListener('input', renderTree); $('onlyErr').addEventListener('change', renderTree);
+  function select(s) { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); sel = s; revealPath(s); renderTree(); renderEditor(); const n = document.querySelector(`.node[data-t="${CSS.escape(s)}"]`); if (n) n.scrollIntoView({ block: 'nearest' }); }
+
+  // ── editor ────────────────────────────────────────────────────────────
+  const statusOf = s => { const v = iris(s, CORE + 'hasLifecycleStatus')[0]; return v ? ln(v) : ''; };
+  const pickIri = v => { const m = String(v).match(/·\s*([^\s·]+)\s*$/); const id = m ? m[1] : v.trim(); const hit = concepts().find(s => ln(s) === id) || concepts().find(s => label(s).toLowerCase() === String(v).trim().toLowerCase()); return hit || null; };
+  function chipList(id, values, opts) {
+    return `<div class="chips" id="${id}">${values.map(v => `<span class="chip ${opts.link ? 'link' : ''}" ${opts.link ? `data-go="${esc(v)}"` : ''}>${esc(opts.link ? label(v) : v)}${opts.ro ? '' : `<button data-rm="${esc(v)}" aria-label="Remove">×</button>`}</span>`).join('')}${opts.ro ? (values.length ? '' : '<span class="status">none</span>') : `<input ${opts.list ? 'list="termList"' : ''} data-add placeholder="${esc(opts.ph || 'Add…')}" aria-label="${esc(opts.ph || 'Add')}">`}</div>`;
+  }
+  function renderFinds() {
+    const el = $('finds'); if (!el || !sel) return;
+    const fs = findings.get(sel) || [];
+    el.innerHTML = fs.length ? fs.map(f => `<div class="find ${f.sev === 'warn' ? 'warn' : ''}"><b>${f.sev === 'warn' ? 'Warning' : 'Error'}</b>${esc(f.detail)}</div>`).join('') : '<div class="okline">✓ Meets the Part III checks</div>';
+  }
+  function renderEditor() {
+    const el = $('editor');
+    if (!file || !sel) { el.innerHTML = '<div class="empty"><b>Open a vocabulary</b>Pick one on the left.</div>'; return; }
+    return sel === graph ? renderScheme(el) : renderTerm(el, sel);
+  }
+  function renderScheme(el) {
+    const s = graph, changeNotes = lits(s, SKOS + 'changeNote');
+    el.innerHTML = `<div class="ed">
+      <div class="eyebrow">Vocabulary · ${esc(file.name)}</div>
+      <h2>${esc(label(s))}</h2><div class="iri">${esc(s)}</div>
+      <div class="finds" id="finds"></div>
+      <div class="grp"><div class="grp-h">Identification</div><div class="grp-b">
+        <div class="fld"><label for="sTitle">Title <span class="hint">preferred label, rdfs:label and dct:title together; sentence case, no acronyms</span></label><input id="sTitle" value="${esc(label(s))}"></div>
+        <div class="fld"><label>Alternative labels</label>${chipList('sAlt', lits(s, SKOS + 'altLabel'), { ph: 'Add an alternative label and press Enter' })}</div>
+        <div class="fld"><label for="sDesc">Description <span class="hint">what the vocabulary covers</span></label><textarea id="sDesc" style="min-height:90px">${esc(lit1(s, DCT + 'description'))}</textarea></div>
+      </div></div>
+      <div class="grp"><div class="grp-h">Release</div><div class="grp-b">
+        <div class="two">
+          <div class="fld"><label for="sVer">Version <span class="hint">MAJOR.MINOR.PATCH (§3.3)</span></label><input id="sVer" class="mono" value="${esc(plain1(s, OWL + 'versionInfo'))}"></div>
+          <div class="fld"><label for="sStatus">Lifecycle status</label><select id="sStatus">${STATUSES.map(x => `<option ${statusOf(s) === x ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+        </div>
+        <div class="two">
+          <div class="fld"><label for="sCreator">Creator</label><input id="sCreator" value="${esc(plain1(s, DCT + 'creator'))}"></div>
+          <div class="fld"><label for="sContrib">Contributor</label><input id="sContrib" value="${esc(plain1(s, DCT + 'contributor'))}"></div>
+        </div>
+        <div class="two">
+          <div class="fld"><label for="sLang">Language</label><input id="sLang" value="${esc(plain1(s, DCT + 'language'))}"></div>
+          <div class="fld"><label>Created · modified</label><div class="ro">${esc(plain1(s, DCT + 'created') || '—')} · ${esc(plain1(s, DCT + 'modified') || '—')}</div></div>
+        </div>
+        <div class="fld"><label>Namespace</label><div class="ro mono">${esc(plain1(s, VANN + 'preferredNamespaceUri') || s)}</div></div>
+      </div></div>
+      <div class="grp"><div class="grp-h">Notes</div><div class="grp-b">
+        <div class="fld"><label for="sEdNote">Editorial note</label><textarea id="sEdNote">${esc(lits(s, SKOS + 'editorialNote').join('\n\n'))}</textarea></div>
+        <div class="fld"><label>Change notes <span class="hint">a new one is added when you save</span></label><div class="notes">${changeNotes.length ? changeNotes.map(n => `<div>${esc(n)}</div>`).join('') : '<span class="status">none</span>'}</div></div>
+        <div class="fld"><label>Top concepts</label>${chipList('sTop', iris(s, SKOS + 'hasTopConcept'), { link: true, ro: true })}</div>
+      </div></div>
+    </div>`;
+    renderFinds();
+    bind('sTitle', v => { if (!v) { toast('The title cannot be empty', true); return false; } const old = label(s); setLit(s, SKOS + 'prefLabel', v); setLit(s, RDFS + 'label', v); setLit(s, DCT + 'title', v); note(s, 'title', old, v); el.querySelector('h2').textContent = v; });
+    bind('sDesc', v => note(s, 'description', setLit(s, DCT + 'description', v), v));
+    bind('sVer', v => { if (v && !/^\d+\.\d+\.\d+$/.test(v)) { toast('Use MAJOR.MINOR.PATCH, for example 0.2.0', true); return false; } const old = setPlain(s, OWL + 'versionInfo', v); if (iris(s, OWL + 'versionIRI').length) setIri(s, OWL + 'versionIRI', s.replace(/[#/]?$/, '/') + v + '/'); note(s, 'version', old, v); });
+    bind('sStatus', v => note(s, 'lifecycle status', ln(setIri(s, CORE + 'hasLifecycleStatus', CORE + v)), v));
+    bind('sCreator', v => note(s, 'creator', setPlain(s, DCT + 'creator', v), v));
+    bind('sContrib', v => note(s, 'contributor', setPlain(s, DCT + 'contributor', v), v));
+    bind('sLang', v => note(s, 'language', setPlain(s, DCT + 'language', v), v));
+    bind('sEdNote', v => note(s, 'editorial note', setLits(s, SKOS + 'editorialNote', v.split(/\n\s*\n/).map(x => x.trim())), v));
+    bindChips('sAlt', () => lits(s, SKOS + 'altLabel'), arr => note(s, 'alternative labels', setLits(s, SKOS + 'altLabel', arr), arr.join(' | ')));
+    wireGo(el);
+  }
+  function renderTerm(el, s) {
+    const pars = iris(s, SKOS + 'broader'), kids = childrenOf(s), top = iris(s, SKOS + 'topConceptOf').length > 0;
+    el.innerHTML = `<div class="ed">
+      <div class="eyebrow">Term · ${esc(label(graph))}</div>
+      <h2>${esc(label(s))}</h2><div class="iri">${esc(s)}</div>
+      <div class="finds" id="finds"></div>
+      <div class="grp"><div class="grp-h">Labels</div><div class="grp-b">
+        <div class="fld"><label for="tLabel">Preferred label <span class="hint">sentence case, no acronyms (spell them out; put the acronym in the alternative labels)</span></label><input id="tLabel" value="${esc(lit1(s, SKOS + 'prefLabel'))}"></div>
+        <div class="fld"><label>Alternative labels <span class="hint">synonyms, acronyms</span></label>${chipList('tAlt', lits(s, SKOS + 'altLabel'), { ph: 'Add and press Enter' })}</div>
+        <div class="fld"><label>Hidden labels <span class="hint">misspellings and search terms</span></label>${chipList('tHidden', lits(s, SKOS + 'hiddenLabel'), { ph: 'Add and press Enter' })}</div>
+        <div class="fld"><label for="tId">Identifier <span class="hint">the last part of the IRI; changing it renames the term in this vocabulary</span></label><input id="tId" class="mono" value="${esc(ln(s))}"></div>
+      </div></div>
+      <div class="grp"><div class="grp-h">Meaning</div><div class="grp-b">
+        <div class="fld"><label for="tDef">Definition <span class="hint">genus + differentia: “A [broader term] that [what sets it apart].”</span></label><textarea id="tDef" placeholder="${pars.length ? esc('A ' + label(pars[0]).toLowerCase() + ' that …') : 'A … that …'}">${esc(lits(s, SKOS + 'definition').join('\n\n'))}</textarea></div>
+        <div class="fld"><label for="tScope">Scope note <span class="hint">what is in and out</span></label><textarea id="tScope" style="min-height:44px">${esc(lits(s, SKOS + 'scopeNote').join('\n\n'))}</textarea></div>
+        <div class="fld"><label for="tExample">Example</label><textarea id="tExample" style="min-height:44px">${esc(lits(s, SKOS + 'example').join('\n\n'))}</textarea></div>
+        <div class="fld"><label for="tEdNote">Editorial note</label><textarea id="tEdNote" style="min-height:44px">${esc(lits(s, SKOS + 'editorialNote').join('\n\n'))}</textarea></div>
+      </div></div>
+      <div class="grp"><div class="grp-h">Relations</div><div class="grp-b">
+        <div class="fld"><label>Broader <span class="hint">parent terms</span></label>${chipList('tBroader', pars, { link: true, list: true, ph: 'Add a broader term…' })}</div>
+        <label class="fld" style="display:flex;gap:6px;align-items:center;font-size:12px"><input type="checkbox" id="tTop" ${top ? 'checked' : ''}> Top concept of the vocabulary</label>
+        <div class="fld"><label>Narrower <span class="hint">terms that name this one as broader</span></label>${chipList('tNarrower', kids, { link: true, ro: true })}</div>
+        <div class="fld"><label>Related</label>${chipList('tRelated', iris(s, SKOS + 'related'), { link: true, list: true, ph: 'Add a related term…' })}</div>
+      </div></div>
+      <div class="grp"><div class="grp-h">Release</div><div class="grp-b">
+        <div class="two">
+          <div class="fld"><label for="tStatus">Lifecycle status</label><select id="tStatus"><option value="">—</option>${STATUSES.map(x => `<option ${statusOf(s) === x ? 'selected' : ''}>${x}</option>`).join('')}</select></div>
+          <div class="fld"><label for="tVer">Version</label><input id="tVer" class="mono" value="${esc(plain1(s, OWL + 'versionInfo'))}"></div>
+        </div>
+        <div class="fld"><label>Creator · created · modified</label><div class="ro">${esc(plain1(s, DCT + 'creator') || '—')} · ${esc(plain1(s, DCT + 'created') || '—')} · ${esc(plain1(s, DCT + 'modified') || '—')}</div></div>
+      </div></div>
+      <div class="grp"><div class="grp-h">Remove</div><div class="grp-b">
+        <div class="status">${kids.length ? `Its ${plural(kids.length, 'narrower term')} move up to ${pars.length ? esc(pars.map(label).join(', ')) : 'the top of the vocabulary'}. ` : ''}Every statement about it and every link to it in this vocabulary is removed.</div>
+        <div class="row"><button class="btn sm bad" id="tDelete">Remove “${esc(label(s))}”</button></div>
+      </div></div>
+    </div>`;
+    renderFinds();
+    bind('tLabel', v => { if (!v) { toast('The preferred label cannot be empty', true); return false; } const old = setLit(s, SKOS + 'prefLabel', v); if (lits(s, RDFS + 'label').length) setLit(s, RDFS + 'label', v); note(s, 'preferred label', old, v); el.querySelector('h2').textContent = v; });
+    bind('tDef', v => note(s, 'definition', setLits(s, SKOS + 'definition', [v.replace(/\s+/g, ' ').trim()]), v));
+    bind('tScope', v => note(s, 'scope note', setLits(s, SKOS + 'scopeNote', v.split(/\n\s*\n/).map(x => x.trim())), v));
+    bind('tExample', v => note(s, 'example', setLits(s, SKOS + 'example', v.split(/\n\s*\n/).map(x => x.trim())), v));
+    bind('tEdNote', v => note(s, 'editorial note', setLits(s, SKOS + 'editorialNote', v.split(/\n\s*\n/).map(x => x.trim())), v));
+    bind('tStatus', v => note(s, 'lifecycle status', ln(setIri(s, CORE + 'hasLifecycleStatus', v ? CORE + v : '')), v));
+    bind('tVer', v => { if (v && !/^\d+\.\d+\.\d+$/.test(v)) { toast('Use MAJOR.MINOR.PATCH', true); return false; } note(s, 'version', setPlain(s, OWL + 'versionInfo', v), v); });
+    bind('tId', v => rename(s, v));
+    bindChips('tAlt', () => lits(s, SKOS + 'altLabel'), arr => note(s, 'alternative labels', setLits(s, SKOS + 'altLabel', arr), arr.join(' | ')));
+    bindChips('tHidden', () => lits(s, SKOS + 'hiddenLabel'), arr => note(s, 'hidden labels', setLits(s, SKOS + 'hiddenLabel', arr), arr.join(' | ')));
+    bindChips('tBroader', () => iris(s, SKOS + 'broader'), arr => setBroader(s, arr), true);
+    bindChips('tRelated', () => iris(s, SKOS + 'related'), arr => setRelated(s, arr), true);
+    $('tTop').addEventListener('change', () => setTop(s, $('tTop').checked));
+    $('tDelete').addEventListener('click', () => removeTerm(s));
+    wireGo(el);
+  }
+  function wireGo(el) { el.querySelectorAll('[data-go]').forEach(c => c.addEventListener('click', e => { if (!e.target.closest('button')) select(c.dataset.go); })); }
+  function bind(id, fn) {
+    const el = $(id); if (!el) return;
+    el.dataset.init = el.value;
+    el.addEventListener('change', () => { const v = el.value.trim(); if (v === el.dataset.init.trim()) return; const r = fn(v); if (r !== false) el.dataset.init = el.value; });
+    if (el.tagName === 'INPUT') el.addEventListener('keydown', e => { if (e.key === 'Enter') el.blur(); });
+  }
+  function bindChips(id, get, set, isIri) {
+    const box = $(id); if (!box) return;
+    box.addEventListener('click', e => { const b = e.target.closest('[data-rm]'); if (!b) return; set(get().filter(v => v !== b.dataset.rm)); renderEditor(); renderTree(); });
+    const inp = box.querySelector('[data-add]'); if (!inp) return;
+    const commit = () => {
+      const raw = inp.value.trim(); if (!raw) return;
+      let v = raw;
+      if (isIri) { v = pickIri(raw); if (!v) { toast('No term with that label in this vocabulary', true); return; } if (v === sel) { toast('A term cannot point at itself', true); return; } }
+      if (get().includes(v)) { inp.value = ''; return; }
+      set([...get(), v]); renderEditor(); renderTree();
+      const again = $(id) && $(id).querySelector('[data-add]'); if (again) again.focus();
+    };
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
+    inp.addEventListener('change', () => { if (isIri && pickIri(inp.value)) commit(); });
+  }
+
+  // ── structural edits ──────────────────────────────────────────────────
+  function setBroader(s, arr) {
+    const old = iris(s, SKOS + 'broader');
+    old.filter(p => !arr.includes(p)).forEach(p => drop(q => (isT(q.s, s) && q.p.v === SKOS + 'broader' && isT(q.o, p)) || (isT(q.s, p) && q.p.v === SKOS + 'narrower' && isT(q.o, s))));
+    arr.filter(p => !old.includes(p)).forEach(p => { add(s, SKOS + 'broader', N(p)); add(p, SKOS + 'narrower', N(s)); });
+    if (arr.length && !old.length) setTopRaw(s, false);
+    if (!arr.length) setTopRaw(s, true);       // a term with no broader term is a top concept
+    reindex(); note(s, 'broader', old.map(label).join(', '), arr.map(label).join(', '));
+  }
+  function setRelated(s, arr) {
+    const old = iris(s, SKOS + 'related');
+    old.filter(p => !arr.includes(p)).forEach(p => drop(q => (isT(q.s, s) && q.p.v === SKOS + 'related' && isT(q.o, p)) || (isT(q.s, p) && q.p.v === SKOS + 'related' && isT(q.o, s))));
+    arr.filter(p => !old.includes(p)).forEach(p => { add(s, SKOS + 'related', N(p)); add(p, SKOS + 'related', N(s)); });
+    reindex(); note(s, 'related', old.map(label).join(', '), arr.map(label).join(', '));
+  }
+  function setTopRaw(s, on) {
+    drop(q => (isT(q.s, s) && q.p.v === SKOS + 'topConceptOf') || (isT(q.s, graph) && q.p.v === SKOS + 'hasTopConcept' && isT(q.o, s)));
+    if (on) { add(s, SKOS + 'topConceptOf', N(graph)); add(graph, SKOS + 'hasTopConcept', N(s)); }
+  }
+  function setTop(s, on) { setTopRaw(s, on); reindex(); note(s, 'top concept', on ? 'no' : 'yes', on ? 'yes' : 'no'); renderTree(); }
+  function rename(s, v) {
+    if (!/^[A-Za-z0-9][A-Za-z0-9-]*$/.test(v)) { toast('Use letters, digits and hyphens', true); return false; }
+    const to = s.replace(/[^\/#]+$/, v);
+    if (to === s) return;
+    if (idx.s.has(to)) { toast('That identifier is already used in this vocabulary', true); return false; }
+    quads.forEach(q => ['s', 'p', 'o'].forEach(k => { if (isT(q[k], s)) q[k] = N(to); }));
+    add(to, SKOS + 'historyNote', L('Identifier changed from ' + s + ' in the Model Editor.', 'en'));
+    [...changes.values()].forEach(c => { if (c.term === s) c.term = to; });
+    if (open.has(s)) { open.delete(s); open.add(to); }
+    touched.delete(s); reindex(); sel = to;
+    note(to, 'identifier', ln(s), v, 'rename');
+    toast('Renamed. Other models that point at the old identifier keep pointing at it until they are updated.');
+    renderTree(); renderEditor();
+  }
+  function removeTerm(s) {
+    const lbl = label(s), pars = iris(s, SKOS + 'broader'), kids = childrenOf(s);
+    kids.forEach(c => {
+      drop(q => (isT(q.s, c) && q.p.v === SKOS + 'broader' && isT(q.o, s)) || (isT(q.s, s) && q.p.v === SKOS + 'narrower' && isT(q.o, c)));
+      if (pars.length) pars.forEach(p => { add(c, SKOS + 'broader', N(p)); add(p, SKOS + 'narrower', N(c)); });
+      else setTopRaw(c, true);
+      touched.add(c);
+    });
+    drop(q => isT(q.s, s) || isT(q.o, s));
+    reindex();
+    [...changes.keys()].forEach(k => { if (changes.get(k).term === s) changes.delete(k); });
+    changes.set(s + '\u0001removed', { term: s, field: 'term', kind: 'remove', old: lbl, new: '', label: lbl });
+    touched.delete(s);
+    sel = pars[0] || graph; afterEdit(); renderTree(); renderEditor();
+    toast(`Removed “${lbl}”${kids.length ? ` — ${plural(kids.length, 'narrower term')} moved up` : ''}`);
+  }
+
+  // ── new term ──────────────────────────────────────────────────────────
+  $('newBtn').addEventListener('click', () => { $('newForm').classList.remove('hidden'); $('nParent').value = sel && sel !== graph ? label(sel) + ' · ' + ln(sel) : ''; $('nMsg').textContent = ''; $('nLabel').focus(); });
+  $('nCancel').addEventListener('click', () => $('newForm').classList.add('hidden'));
+  $('nLabel').addEventListener('keydown', e => { if (e.key === 'Enter') $('nGo').click(); });
+  $('nGo').addEventListener('click', () => {
+    const lbl = $('nLabel').value.trim().replace(/\s+/g, ' ');
+    if (!lbl) { $('nMsg').textContent = 'Give it a preferred label'; return; }
+    const parent = $('nParent').value.trim() ? pickIri($('nParent').value) : null;
+    if ($('nParent').value.trim() && !parent) { $('nMsg').textContent = 'No term with that label'; return; }
+    const id = lbl.toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    const base = graph.replace(/[#/]?$/, '/'), s = base + id;
+    if (idx.s.has(s)) { $('nMsg').textContent = 'A term with that identifier already exists'; return; }
+    const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+    add(s, RDF + 'type', N(SKOS + 'Concept'));
+    add(s, SKOS + 'prefLabel', L(lbl, 'en'));
+    add(s, SKOS + 'inScheme', N(graph));
+    if (parent) { add(s, SKOS + 'broader', N(parent)); add(parent, SKOS + 'narrower', N(s)); open.add(parent); }
+    else { add(s, SKOS + 'topConceptOf', N(graph)); add(graph, SKOS + 'hasTopConcept', N(s)); }
+    const ver = plain1(graph, OWL + 'versionInfo'); if (ver) add(s, OWL + 'versionInfo', P(ver));
+    add(s, CORE + 'hasLifecycleStatus', N(CORE + 'Draft'));
+    if (policyJ.author) add(s, DCT + 'creator', P(policyJ.author));
+    add(s, DCT + 'created', P(now, XSD + 'dateTime'));
+    reindex();
+    changes.set(s + '\u0001added', { term: s, field: 'term', kind: 'add', old: '', new: lbl, label: lbl });
+    touched.add(s);
+    $('newForm').classList.add('hidden'); $('nLabel').value = '';
+    afterEdit(); select(s);
+    setTimeout(() => $('tDef') && $('tDef').focus(), 50);
+  });
+
+  // ── save (and load) ───────────────────────────────────────────────────
+  function renderSum() {
+    const n = changes.size, terms = new Set([...changes.values()].map(c => c.term)).size;
+    $('sum').innerHTML = !file ? 'No vocabulary open.' : n ? `<b>${plural(n, 'change')}</b> to ${plural(terms, 'term')} in <b>${esc(label(graph))}</b> — not saved yet.` : `<b>${esc(label(graph))}</b> · ${plural(concepts().length, 'term')} · no unsaved changes.`;
+    $('saveBtn').disabled = $('saveOnlyBtn').disabled = $('discardBtn').disabled = !n;
+  }
+  $('discardBtn').addEventListener('click', () => { if (file) { changes = new Map(); openFile(file.path, sel !== graph ? sel : null); } });
+  const describe = c => c.kind === 'add' ? [`Add “${c.new}”`, 'New term'] : c.kind === 'remove' ? [`Remove “${c.old}”`, 'Term removed; narrower terms moved up'] : c.kind === 'rename' ? [`New identifier for “${c.label}”`, `${c.old} → ${c.new}`] : [`${c.field.charAt(0).toUpperCase() + c.field.slice(1)} of “${c.label}”`, `${c.old ? '“' + String(c.old).slice(0, 300) + '” → ' : ''}“${String(c.new).slice(0, 600)}”`];
+  async function save(andLoad) {
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();   // commit a field still being typed in
+    await new Promise(r => setTimeout(r, 0));
+    if (!changes.size) return;
+    const stamp = new Date().toISOString().replace(/\.\d+Z$/, 'Z'), day = stamp.slice(0, 10);
+    const list = [...changes.values()];
+    const base = policyJ.baseUrl || 'https://www.insperity.com/', author = policyJ.author || '';
+    const before = quads.map(q => ({ ...q }));
+    const dt = P(stamp, XSD + 'dateTime');
+    [...touched, graph].forEach(t => { if (idx.s.has(t)) { drop(q => isT(q.s, t) && q.p.v === DCT + 'modified'); add(t, DCT + 'modified', dt); } });
+    const kinds = { add: 0, remove: 0, rename: 0, edit: 0 }; list.forEach(c => kinds[c.kind]++);
+    const parts = [kinds.edit && plural(kinds.edit, 'edit'), kinds.add && plural(kinds.add, 'term') + ' added', kinds.remove && plural(kinds.remove, 'term') + ' removed', kinds.rename && plural(kinds.rename, 'identifier') + ' changed'].filter(Boolean);
+    add(graph, SKOS + 'changeNote', L(`${day}: Model Editor — ${parts.join(', ')}.`, 'en'));
+    reindex();
+    const I = S.iri, Lit = S.lit;
+    const rid = `${base}resource/change-log/ChangeRecord/${stamp.replace(/[:-]/g, '')}-editor`, RID = I(rid);
+    const rec = [`${RID} a prov:Activity , dct:ProvenanceStatement ; rdfs:label ${Lit('Model Editor (Vocabulary), ' + stamp, 'en')} ;`,
+      `dct:description ${Lit(`${parts.join(', ')} in ${label(graph)}.`, 'en')} ;`,
+      author ? `dct:creator ${Lit(author)} ;` : '', `prov:startedAtTime "${stamp}"^^xsd:dateTime ;`,
+      `prov:generated ${I(graph)} ;`, `dct:hasPart ${list.map((c, i) => I(rid + '/' + (i + 1))).join(' , ')} .`];
+    list.forEach((c, i) => { const [w, d] = describe(c); rec.push(`${I(rid + '/' + (i + 1))} a prov:Entity ; rdfs:label ${Lit(w, 'en')} ; rdfs:comment ${Lit(d, 'en')} ; dct:subject ${I(c.term)} ; dct:type ${Lit(c.kind)} ; prov:wasGeneratedBy ${RID} .`); });
+    $('saveBtn').disabled = $('saveOnlyBtn').disabled = true; $('saveStatus').className = 'status'; $('saveStatus').textContent = 'Saving…';
+    try {
+      const r = await fetch('/api/ingest/review-save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ changeLog: base + 'graph/change-log', record: rec.filter(Boolean).join('\n'), files: [{ path: file.path, graph, triples: quads.map(q => [toArr(q.s), toArr(q.p), toArr(q.o)]) }] }) });
+      const d = r.ok ? await r.json() : { ok: false, error: 'Server answered ' + r.status };
+      if (!d.ok) throw new Error(d.error);
+      const n = list.length; changes = new Map(); touched = new Set();
+      let msg = `Saved ${plural(n, 'change')} to ${file.name} and its .trig`;
+      if (andLoad) {
+        $('saveStatus').textContent = msg + ' · loading into GraphDB…';
+        let ld;
+        try { const r2 = await fetch('/api/ingest/load-folder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ dir: folder, repo: S.repo() }) }); ld = await r2.json(); }
+        catch (e) { ld = { ok: false, error: e.message }; }
+        const bad = (ld.results || []).filter(x => !x.ok);
+        if (ld.error || bad.length) { $('saveStatus').className = 'status bad'; $('saveStatus').textContent = msg + ', but loading into GraphDB failed: ' + (ld.error || bad[0].error); renderSum(); renderTree(); return; }
+        msg += ` · loaded ${plural(ld.results.filter(x => x.mode === 'replaced').length, 'model')} into ${ld.repo}`;
+        try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+      }
+      $('saveStatus').className = 'status ok'; $('saveStatus').textContent = msg; toast(msg);
+      check(); renderVList(); renderSum(); renderTree(); renderEditor();
+    } catch (e) {
+      quads = before; reindex();
+      $('saveStatus').className = 'status bad'; $('saveStatus').textContent = 'Not saved: ' + e.message; renderSum();
+    }
+  }
+  $('saveBtn').addEventListener('click', () => save(true));
+  $('saveOnlyBtn').addEventListener('click', () => save(false));
+  window.addEventListener('beforeunload', e => { if (dirty()) { e.preventDefault(); e.returnValue = ''; } });
+  document.addEventListener('keydown', e => { if ((e.metaKey || e.ctrlKey) && e.key === 's') { e.preventDefault(); if (dirty()) save(true); } });
+
+  // ── start ─────────────────────────────────────────────────────────────
+  (async () => {
+    await loadPolicy();
+    await loadFolder(qp.get('folder') || ls.get('ke-review-folder', ''));
+    const f = qp.get('file') || ls.get('ke-vocab-file', '');
+    if (f && (files.some(x => x.path === f) || qp.get('file'))) openFile(f, qp.get('term'));
+  })();
+})();
+</script>
+</body>
+</html>

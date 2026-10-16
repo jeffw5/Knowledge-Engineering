@@ -1,0 +1,94 @@
+{
+  "_comment": "KE Ingest configuration. Standards: Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III. Edit this file, not the script, to change naming, authorship or generated text.",
+  "baseUrl": "https://www.insperity.com/",
+  "author": "Jeffrey Wallk",
+  "initialVersion": "0.1.0",
+  "lifecycleStatus": "Draft",
+  "standardsRef": "Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III",
+  "_sourceNamespaces": "How legacy namespaces map onto the §3.2 URI patterns. {kind} is ontology|taxonomy|vocabulary; the domain keeps the core-/domain- tier so the holarchy naming (vocabulary-core-name → /vocabulary/core-name/) is preserved.",
+  "sourceNamespaces": [
+    {
+      "pattern": "^https?://vocabularies\\.verizon\\.com/(?P<domain>[a-z0-9-]+)/?(?P<local>.*)$",
+      "kind": "vocabulary"
+    },
+    {
+      "pattern": "^https?://ontologies\\.verizon\\.com/upperontology/(?P<local>.*)$",
+      "kind": "ontology",
+      "domain": "core"
+    },
+    {
+      "pattern": "^https?://ontologies\\.verizon\\.com/(?P<kind>ontology|taxonomy)-(?P<domain>[a-z0-9-]+)/(?P<local>.*)$"
+    },
+    {
+      "pattern": "^https://www\\.insperity\\.com/(?P<kind>ontology|taxonomy|vocabulary|shapes)/(?P<domain>[a-z0-9-]+)/(?P<local>.*)$"
+    }
+  ],
+  "_assets": "Titles and descriptions generated for each asset header, keyed by kind/domain.",
+  "assets": {
+    "vocabulary/core-asset": {
+      "title": "Core asset vocabulary",
+      "description": "A controlled vocabulary of preferred terms, synonyms and definitions for the kinds of asset an organization controls (physical, biological, human and digital) and for the digital assets that data, analytics, knowledge and artificial intelligence work produces: data, data products, analytics, artifacts, digital agents and intellectual property. It supplies the terms that the classes of the core asset ontology are anchored to.",
+      "editorialNote": "Some definitions in this vocabulary were first drafted with the assistance of generative artificial intelligence tools."
+    },
+    "ontology/core-asset": {
+      "title": "Core asset ontology",
+      "description": "The core ontology of assets: resources an organization controls from which it expects future economic benefit. It arranges physical, biological, human and digital assets, and the digital assets that data and knowledge work produces (data, data products, analytics, artifacts, agents, intellectual property), into one class hierarchy, with each class linked to its term in the core asset vocabulary. Domain ontologies specialize these classes."
+    },
+    "taxonomy/core-issue": {
+      "title": "Core issue taxonomy",
+      "description": "A taxonomy for classifying issues (defects, problems, incidents and requests) so that teams track, prioritize and resolve them in a consistent way."
+    },
+    "shapes/core-asset": {
+      "title": "Core asset shapes",
+      "description": "SHACL shapes that constrain how assets, data products and analytic products relate to lifecycles, value streams, personas and parties."
+    }
+  },
+  "_renames": "Identifier and label fixes required by §3.2 (singular nouns, self-describing names). The original label is kept as skos:altLabel.",
+  "renames": {
+    "taxonomy/core-issue/Major": {
+      "local": "MajorDefect",
+      "label": "Major defect"
+    },
+    "taxonomy/core-issue/Minor": {
+      "local": "MinorDefect",
+      "label": "Minor defect"
+    },
+    "taxonomy/core-issue/Needs": {
+      "local": "Need",
+      "label": "Need"
+    }
+  },
+  "_definitions": "Definitions written for terms that had none (genus + differentia, §3.7). Each is flagged with an editorial note for review.",
+  "definitions": {
+    "taxonomy/core-issue/Issue": "A matter raised by a person or system that a responsible team must track, prioritize and resolve.",
+    "taxonomy/core-issue/Defect": "An issue in which a product, service or system does not conform to its specified requirements.",
+    "taxonomy/core-issue/MajorDefect": "A defect that prevents or severely impairs an essential function and has no acceptable workaround.",
+    "taxonomy/core-issue/MinorDefect": "A defect that impairs a non-essential function or that has an acceptable workaround.",
+    "taxonomy/core-issue/Problem": "An issue that disrupts or threatens normal operation and whose cause must be investigated and removed.",
+    "taxonomy/core-issue/Incident": "A problem that causes an unplanned interruption to a service or a reduction in its quality.",
+    "taxonomy/core-issue/Request": "An issue raised to ask for information, a service or a change rather than to report a fault.",
+    "taxonomy/core-issue/Need": "A request for a capability, resource or change that the requester requires to reach an objective.",
+    "taxonomy/core-issue/Question": "A request that asks for information or clarification."
+  },
+  "_keepCase": "Words kept capitalized when labels are converted to sentence case.",
+  "keepCase": [
+    "Insperity",
+    "SHACL",
+    "OWL",
+    "SKOS"
+  ],
+  "_reviewNotes": "Modeling questions the ingester can't decide. They are listed in the report under Review; nothing in the model is changed.",
+  "reviewNotes": {
+    "ontology/core-asset": [
+      "HumanAsset is a subclass of both Biological asset and taxonomy core-party Person, but its definition describes workforce skills, knowledge and experience (an intangible). Decide whether it is a person, or a capability that a person bears.",
+      "PhysicalAsset is a subclass of taxonomy core-product Individual product, which makes every physical asset a product. Check this is intended.",
+      "Data engineering, Design thinking, Feature decomposition, Knowledge engineering, Operational readiness, Quality engineering, Solution architecture and System engineering sit under Artifact, but their definitions describe practices or states, not artifacts. Consider classes for the artifacts they produce (for example Solution architecture description).",
+      "Asset is a root class. Align it to the core ontology (for example a BFO-aligned parent) before the ontology moves to Candidate."
+    ],
+    "taxonomy/core-issue": [
+      "Incident is a subclass of Problem. In ITIL practice an incident is an interruption and a problem is its underlying cause, so they are usually siblings under Issue. The written definitions follow the current hierarchy.",
+      "The core issue vocabulary was not part of this run. dc:subject links point to the IRIs it will have once it is ingested with the same rules.",
+      "Issue is a root class. Align it to the core ontology before the taxonomy moves to Candidate."
+    ]
+  }
+}

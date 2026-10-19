@@ -1,0 +1,134 @@
+# RO extract for the Insperity core domain ontology
+# A small reference module (MIREOT style): the BFO 2020, RO and IAO relations the core ontology specializes
+# that are not in the BFO and RO Core files loaded under Reference ontologies.
+#   * BFO 2020 relations: the OBO PURL bfo.owl carries the BFO classes only, so its relations are declared here,
+#     with their labels, definitions, inverses and characteristics copied from BFO 2020 core (ISO/IEC 21838-2,
+#     BFO-2020/21838-2/owl/bfo-core.ttl, CC BY 4.0). Loading the full bfo-core.ttl instead makes them duplicates,
+#     which is harmless.
+#   * RO: has input, has output (not in RO Core).
+#   * IAO: is about.
+# Terms keep their OBO IRIs; nothing here is ingested or renamed. Load it with Ingestion › Reference ontologies.
+
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.insperity.com/reference/ro-extract/>
+  a owl:Ontology ;
+  rdfs:label "RO extract for the core domain ontology"@en ;
+  dct:title "RO extract for the core domain ontology"@en ;
+  dct:description "The BFO 2020, Relation Ontology and Information Artifact Ontology relations that the core domain ontology specializes and that the BFO and RO Core reference files do not supply."@en ;
+  dct:source <http://purl.obolibrary.org/obo/bfo/2020/bfo-core.ttl> , <http://purl.obolibrary.org/obo/ro.owl> , <http://purl.obolibrary.org/obo/iao.owl> ;
+  dct:license <https://creativecommons.org/licenses/by/4.0/> ;
+  owl:imports <http://purl.obolibrary.org/obo/bfo.owl> ;
+  owl:versionInfo "0.1.0" ;
+  dct:created "2026-10-18"^^xsd:date .
+
+# ── BFO 2020 temporal relations between occurrents ──
+obo:BFO_0000117 a owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "has occurrent part"@en ;
+  skos:definition "b has occurrent part c =Def c occurrent part of b"@en ;
+  owl:inverseOf obo:BFO_0000132 ;
+  rdfs:domain obo:BFO_0000003 ; rdfs:range obo:BFO_0000003 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000132 a owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "occurrent part of"@en ;
+  skos:definition "(Elucidation) occurrent part of is a relation between occurrents b and c when b is part of c"@en ;
+  rdfs:domain obo:BFO_0000003 ; rdfs:range obo:BFO_0000003 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000062 a owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "preceded by"@en ;
+  skos:definition "b preceded by c =Def b precedes c"@en ;
+  owl:inverseOf obo:BFO_0000063 ;
+  rdfs:domain obo:BFO_0000003 ; rdfs:range obo:BFO_0000003 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000063 a owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "precedes"@en ;
+  skos:definition "(Elucidation) precedes is a relation between occurrents o, o' such that if t is the temporal extent of o & t' is the temporal extent of o' then either the last instant of o is before the first instant of o' or the last instant of o is the first instant of o' & neither o nor o' are temporal instants"@en ;
+  rdfs:domain obo:BFO_0000003 ; rdfs:range obo:BFO_0000003 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000199 a owl:ObjectProperty , owl:FunctionalProperty ;
+  rdfs:label "occupies temporal region"@en ;
+  skos:definition "p occupies temporal region t =Def p is a process or process boundary & the spatiotemporal region occupied by p temporally projects onto t"@en ;
+  rdfs:range obo:BFO_0000008 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+# ── BFO 2020 relations between occurrents and continuants ──
+obo:BFO_0000055 a owl:ObjectProperty ;
+  rdfs:label "realizes"@en ;
+  skos:definition "(Elucidation) realizes is a relation between a process b and realizable entity c such that c inheres in some d & for all t, if b has participant d then c exists & the type instantiated by b is correlated with the type instantiated by c"@en ;
+  rdfs:domain obo:BFO_0000015 ; rdfs:range obo:BFO_0000017 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000054 a owl:ObjectProperty ;
+  rdfs:label "has realization"@en ;
+  skos:altLabel "realized in"@en ;
+  skos:definition "b has realization c =Def c realizes b"@en ;
+  owl:inverseOf obo:BFO_0000055 ;
+  rdfs:domain obo:BFO_0000017 ; rdfs:range obo:BFO_0000015 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000066 a owl:ObjectProperty ;
+  rdfs:label "occurs in"@en ;
+  skos:definition "b occurs in c =Def b is a process or a process boundary & c is a material entity or site & there exists a spatiotemporal region r & b occupies spatiotemporal region r & for all time t, if b exists at t then c exists at t & there exist spatial regions s and s' where b spatially projects onto s at t & c occupies spatial region s' at t & s is a continuant part of s' at t"@en ;
+  owl:inverseOf obo:BFO_0000183 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000183 a owl:ObjectProperty ;
+  rdfs:label "environs"@en ;
+  skos:altLabel "contains process"@en ;
+  skos:definition "b environs c =Def c occurs in b"@en ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+# ── BFO 2020 relations between independent continuants ──
+obo:BFO_0000115 a owl:ObjectProperty ;
+  rdfs:label "has member part"@en ;
+  skos:definition "b has member part c =Def c member part of b"@en ;
+  owl:inverseOf obo:BFO_0000129 ;
+  rdfs:domain obo:BFO_0000040 ; rdfs:range obo:BFO_0000040 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000129 a owl:ObjectProperty ;
+  rdfs:label "member part of"@en ;
+  skos:definition "b member part of c =Def b is an object & c is a material entity & there is some time t such that b continuant part of c at t & there is a mutually exhaustive and pairwise disjoint partition of c into objects x1, ..., xn (for some n ≠ 1) with b = xi (for some 1 <= i <= n)"@en ;
+  rdfs:domain obo:BFO_0000040 ; rdfs:range obo:BFO_0000040 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000171 a owl:ObjectProperty ;
+  rdfs:label "located in"@en ;
+  skos:definition "b located in c =Def b is an independent continuant & c is an independent & neither is a spatial region & there is some time t such that the spatial region which b occupies at t is continuant part of the spatial region which c occupies at t"@en ;
+  owl:inverseOf obo:BFO_0000124 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+obo:BFO_0000124 a owl:ObjectProperty ;
+  rdfs:label "location of"@en ;
+  skos:definition "b location of c =Def c located in b"@en ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/bfo.owl> .
+
+# ── RO: inputs and outputs of processes (not in RO Core) ──
+obo:RO_0002233 a owl:ObjectProperty ;
+  rdfs:label "has input"@en ;
+  skos:definition "p has input c iff: p is a process, c is a material entity, c is a participant in p, c is present at the start of p, and the state of c is modified during p."@en ;
+  rdfs:subPropertyOf obo:RO_0000057 ;
+  rdfs:domain obo:BFO_0000015 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/ro.owl> .
+
+obo:RO_0002234 a owl:ObjectProperty ;
+  rdfs:label "has output"@en ;
+  skos:definition "p has output c iff c is a participant in p, c is present at the end of p, and c is not present in the same state at the beginning of p."@en ;
+  rdfs:subPropertyOf obo:RO_0000057 ;
+  rdfs:domain obo:BFO_0000015 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/ro.owl> .
+
+# ── IAO: aboutness ──
+obo:IAO_0000136 a owl:ObjectProperty ;
+  rdfs:label "is about"@en ;
+  skos:definition "A (currently) primitive relation that relates an information artifact to an entity."@en ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/iao.owl> .

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Manager</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--ke-bg);color:var(--ke-ink);font:13px/1.4 var(--ke-sans);display:flex;overflow:hidden}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  .opacity-50{opacity:.45}
+  .cursor-not-allowed{cursor:default!important}
+  #sidebar{background:var(--ke-surface);display:flex;flex-direction:column;flex:none;min-height:0}
+  .sb-head{padding:12px 14px 10px;border-bottom:1px solid var(--ke-line-soft);display:flex;flex-direction:column;gap:8px}
+  .title{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;margin:0}
+  .title .k{width:10px;height:10px;border-radius:2px;background:var(--ke-accent)}
+  .repo{display:flex;gap:6px;align-items:center}
+  .repo label{font-size:11px;color:var(--ke-muted);white-space:nowrap}
+  .in{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;min-width:0}
+  .btn{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 11px;cursor:pointer;white-space:nowrap}
+  .btn:hover:not(:disabled){border-color:var(--ke-accent);color:var(--ke-accent)}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.primary{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink);font-weight:700}
+  .btn.primary:hover:not(:disabled){filter:brightness(1.08);color:var(--ke-accent-ink)}
+  .btn.danger:hover:not(:disabled){border-color:var(--ke-bad);color:var(--ke-bad)}
+  .btn.sm{padding:3px 9px;font-size:12px}
+  .tabs{display:flex;border-bottom:1px solid var(--ke-line);padding:0 8px}
+  .tab{flex:1;background:none;border:0;border-bottom:2px solid transparent;padding:8px 2px 7px;cursor:pointer;color:var(--ke-muted);font-size:12px;font-weight:600;display:flex;gap:5px;align-items:center;justify-content:center}
+  .tab:hover{color:var(--ke-ink)}
+  .tab.on{color:var(--ke-accent);border-bottom-color:var(--ke-accent)}
+  .tab .n{font-size:10px;font-weight:700;color:var(--ke-faint);background:var(--ke-band);border-radius:8px;padding:0 5px}
+  .tab.on .n{color:var(--ke-accent);background:var(--ke-accent-soft)}
+  .filter{padding:8px 10px 6px}
+  #modelListWrapper{flex:1;overflow:auto;padding:2px 0 12px}
+  .item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;border-left:3px solid transparent;padding:6px 12px;cursor:pointer}
+  .item:hover{background:var(--ke-band)}
+  .item.on{background:var(--ke-accent-soft);border-left-color:var(--ke-accent)}
+  .item .tx{min-width:0;flex:1}
+  .item .lb{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .item .ln{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--ke-mono);font-size:10.5px;color:var(--ke-faint)}
+  .kchip{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.04em;border-radius:3px;padding:1px 4px;color:#fff;flex:none;min-width:30px;text-align:center}
+  .kchip.vocab{background:var(--ke-kind-voc)} .kchip.tax{background:var(--ke-kind-tax)} .kchip.owl{background:var(--ke-kind-ont)} .kchip.other{background:var(--ke-faint)}
+  :root[data-theme="dark"] .kchip{color:#0B1520}
+  .hint{color:var(--ke-faint);font-size:12px;padding:10px 14px}
+  .hint.bad{color:var(--ke-bad)}
+  .sb-foot{padding:10px 12px;border-top:1px solid var(--ke-line)}
+  .sb-foot .btn{width:100%}
+  #sidebar-resizer{width:5px;flex:none;cursor:col-resize;background:var(--ke-line)}
+  #sidebar-resizer:hover{background:var(--ke-accent)}
+  .main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);flex-wrap:wrap}
+  .bar .who{flex:1;min-width:200px}
+  #currentAssetTitle{font-size:15px;font-weight:700;margin:0}
+  #currentAssetUri{font-family:var(--ke-mono);font-size:11px;color:var(--ke-muted);margin:2px 0 0;word-break:break-all}
+  .acts{display:flex;gap:6px;flex-wrap:wrap}
+  .work{flex:1;display:flex;flex-direction:column;gap:12px;padding:14px 16px;min-height:0;overflow:hidden}
+  .card{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);box-shadow:var(--ke-shadow)}
+  #metaPanel{padding:12px 14px}
+  #metaPanel h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);margin:0 0 10px}
+  .grid2{display:grid;grid-template-columns:1fr 220px;gap:12px}
+  .fl{display:block;font-size:11px;color:var(--ke-muted);margin-bottom:4px}
+  #metaFrameWrap{flex:1;min-height:0;overflow:hidden}
+  #metaFrame{width:100%;height:100%;border:0;display:block}
+  #metaFrameEmpty{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;color:var(--ke-faint);border:1.5px dashed var(--ke-line);border-radius:var(--ke-radius-lg)}
+  #btnToggleTtl{background:none;border:0;color:var(--ke-muted);font-size:12px;cursor:pointer;padding:0;display:flex;gap:6px;align-items:center}
+  #btnToggleTtl:hover{color:var(--ke-accent)}
+  #ttlPanelWrap{height:240px;margin-top:6px}
+  #ttlEditor{width:100%;height:100%;resize:none;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:12px;font:12px/1.5 var(--ke-mono);color:var(--ke-ink2)}
+  #ttlEditor:focus,.in:focus{outline:none;border-color:var(--ke-accent)}
+  @media (max-width:800px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <aside id="sidebar" style="width:320px;min-width:220px;max-width:640px">
+    <div class="sb-head">
+      <h1 class="title"><span class="k"></span>Model Manager</h1>
+      <div class="repo">
+        <label for="repoId">Repository</label>
+        <input id="repoId" class="in" type="text" value="value-kb">
+        <button class="btn sm" onclick="refreshSidebar()" title="Reload the asset list">Refresh</button>
+      </div>
+      <input id="graphdbUrl" type="hidden" value="http://localhost:7200">
+    </div>
+    <div class="tabs">
+      <button onclick="switchTab('vocab')" id="tab-vocab" class="tab on">Voc <span class="n" id="n-vocab"></span></button>
+      <button onclick="switchTab('tax')" id="tab-tax" class="tab">Tax <span class="n" id="n-tax"></span></button>
+      <button onclick="switchTab('owl')" id="tab-owl" class="tab">Ont <span class="n" id="n-owl"></span></button>
+      <button onclick="switchTab('all')" id="tab-all" class="tab" title="Assets that don't follow the vocabulary/taxonomy/ontology naming convention or base URL — the cleanup list">Other <span class="n" id="n-all"></span></button>
+    </div>
+    <div class="filter"><input id="assetFilter" class="in" placeholder="Filter assets" oninput="renderSidebarList(_lastFiltered)"></div>
+    <div id="modelListWrapper"><div id="modelList"><div class="hint">Loading assets…</div></div></div>
+    <div class="sb-foot"><button class="btn" onclick="prepareCreateNew()">+ Create new asset</button></div>
+  </aside>
+  <div id="sidebar-resizer" title="Drag to resize · double-click to reset"></div>
+
+  <main class="main">
+    <div class="bar">
+      <div class="who">
+        <h2 id="currentAssetTitle">No asset selected</h2>
+        <p id="currentAssetUri"></p>
+      </div>
+      <div class="acts">
+        <button id="btnVisualize" class="btn" onclick="openVisualizer()" disabled>Visualize</button>
+        <button id="btnEditNodes" class="btn" onclick="openModelEditor()" disabled>Open in Ontology editor</button>
+        <button id="btnVocEditor" class="btn hidden" onclick="openVocEditor()" disabled>Open in Vocabulary editor</button>
+        <button id="btnTaxEditor" class="btn hidden" onclick="openTaxEditor()" disabled>Open in Taxonomy editor</button>
+        <button id="btnSave" class="btn primary" onclick="saveAsset()" disabled>Save</button>
+        <button id="btnDelete" class="btn danger" onclick="deleteAsset()" disabled>Delete</button>
+      </div>
+    </div>
+
+    <div class="work">
+      <div id="metaPanel" class="card hidden">
+        <h3>New asset</h3>
+        <div class="grid2">
+          <div><label class="fl" for="newGraphUri">Named graph IRI</label><input id="newGraphUri" class="in" type="text" placeholder="https://www.insperity.com/taxonomy/{domain}/"></div>
+          <div><label class="fl" for="newGraphType">Asset type</label>
+            <select id="newGraphType" class="in"><option value="vocab">SKOS vocabulary</option><option value="tax">Taxonomy</option><option value="owl">OWL ontology</option></select></div>
+        </div>
+      </div>
+      <div id="metaFrameWrap" class="card hidden"><iframe id="metaFrame" title="Metadata editor"></iframe></div>
+      <div id="metaFrameEmpty">Select an asset on the left to edit its metadata here.</div>
+      <div style="flex:none">
+        <button onclick="toggleTtlPanel()" id="btnToggleTtl"><span id="ttlToggleIcon">▶</span> Advanced: Turtle (.ttl) serialization</button>
+        <div id="ttlPanelWrap" class="hidden"><textarea id="ttlEditor" spellcheck="false" placeholder="# Select an asset or click Create new to write Turtle here…"></textarea></div>
+      </div>
+    </div>
+  </main>
+    <script>
+        let currentTab = 'vocab'; // 'vocab', 'tax', or 'owl'
+        let selectedGraphUri = null;
+        let isCreateMode = false;
+
+        function scrollListHorizontal(val) {
+            const wrapper = document.getElementById('modelListWrapper');
+            const list    = document.getElementById('modelList');
+            const maxScroll = list.scrollWidth - wrapper.clientWidth;
+            if (maxScroll > 0) {
+                wrapper.scrollLeft = (val / 100) * maxScroll;
+            }
+        }
+
+        // Reset slider when list refreshes
+        function resetSlider() {
+            const slider = document.getElementById('listScrollSlider');
+            if (slider) { slider.value = 0; }
+            const wrapper = document.getElementById('modelListWrapper');
+            if (wrapper) { wrapper.scrollLeft = 0; }
+        }
+
+        function getBaseUrl() {
+            const repo = document.getElementById('repoId').value;
+            return `/graphdb/repositories/${repo}`;
+        }
+
+        function switchTab(tab) {
+            currentTab = tab;
+            ['vocab', 'tax', 'owl', 'all'].forEach(t => document.getElementById('tab-' + t).classList.toggle('on', t === tab));
+            try { localStorage.setItem('ke-mm-tab', tab); } catch (e) {}
+            if (_allAssets) applyTab(); else refreshSidebar();
+        }
+
+        // Compliance rule (single source of truth, used to classify every graph):
+        //   compliant = URI starts with the enablingvalue host AND contains a type keyword.
+        //   Voc / Tax / Ont = compliant assets carrying that keyword.
+        //   Other = the exact complement: every graph NOT in Voc ∪ Tax ∪ Ont.
+        // KE Workbench: compliant base URLs are a workbench setting (Semantic
+        // Governance v1.8 §3.2 sets https://www.insperity.com as the base URL;
+        // the legacy enablingvalue.com host stays accepted until migrated).
+        const DEFAULT_BASE_URLS = ["https://www.insperity.com/", "https://www.enablingvalue.com/"];
+        function compliantHosts() {
+            try {
+                const v = JSON.parse(localStorage.getItem('ke-base-urls') || 'null');
+                if (Array.isArray(v) && v.length) return v.map(s => String(s).toLowerCase());
+            } catch (e) {}
+            return DEFAULT_BASE_URLS.map(s => s.toLowerCase());
+        }
+        function classifyGraph(uri) {
+            const u = (uri || '').toLowerCase();
+            const compliantHost = compliantHosts().some(h => u.startsWith(h));
+            if (compliantHost && u.includes('vocabular')) return 'vocab';
+            if (compliantHost && u.includes('taxonom'))   return 'tax';
+            if (compliantHost && u.includes('ontolog'))   return 'owl';
+            return 'other';   // wrong host, or right host but no type keyword
+        }
+
+        // 1. READ / REVIEW: list model RESOURCES by rdf:type from ALL locations —
+        // default graph, named graphs, and FROM NAMED — so nothing is missed.
+        // One row per asset: the same asset can match in the default graph and in
+        // a named graph, and can carry several labels — group by the asset IRI.
+        let _allAssets = null, _lastFiltered = [];
+        async function refreshSidebar() {
+            const endpoint = getBaseUrl();
+            const q = `PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+                   PREFIX owl:  <http://www.w3.org/2002/07/owl#>
+                   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                   PREFIX dct:  <http://purl.org/dc/terms/>
+                   SELECT ?graph (SAMPLE(?en) AS ?enLabel) (SAMPLE(?any) AS ?anyLabel) WHERE {
+                     { { ?graph a skos:ConceptScheme } UNION { ?graph a owl:Ontology } }
+                     UNION
+                     { GRAPH ?g { { ?graph a skos:ConceptScheme } UNION { ?graph a owl:Ontology } } }
+                     OPTIONAL { ?graph rdfs:label|dct:title ?en FILTER(LANG(?en) = "en") }
+                     OPTIONAL { ?graph rdfs:label|dct:title ?any }
+                     FILTER(isIRI(?graph))
+                   } GROUP BY ?graph ORDER BY ?graph`;
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/sparql-results+json' },
+                    body: new URLSearchParams({ query: q })
+                });
+                if (!response.ok) throw new Error('GraphDB answered ' + response.status);
+                const data = await response.json();
+                const seen = new Map();
+                data.results.bindings.forEach(b => {
+                    const uri = b.graph.value;
+                    if (seen.has(uri)) return;
+                    const label = (b.enLabel && b.enLabel.value) || (b.anyLabel && b.anyLabel.value) || '';
+                    seen.set(uri, { uri, label: label.trim(), kind: classifyGraph(uri) });
+                });
+                _allAssets = [...seen.values()].sort((a, b) => (a.label || a.uri).localeCompare(b.label || b.uri));
+                applyTab();
+            } catch (err) {
+                document.getElementById('modelList').innerHTML = '<div class="hint bad">Could not reach GraphDB. Check that proxy.py is running and the repository ID is right.</div>';
+                console.error(err);
+            }
+        }
+        function applyTab() {
+            const counts = { vocab: 0, tax: 0, owl: 0, all: 0 };
+            _allAssets.forEach(a => counts[a.kind === 'other' ? 'all' : a.kind]++);
+            Object.keys(counts).forEach(k => document.getElementById('n-' + k).textContent = counts[k]);
+            _lastFiltered = _allAssets.filter(a => currentTab === 'all' ? a.kind === 'other' : a.kind === currentTab);
+            renderSidebarList(_lastFiltered);
+        }
+        function shortNameOf(uri) { return uri.replace(/[\/#]+$/, '').split('/').pop().split('#').pop() || uri; }
+        function renderSidebarList(list) {
+            const container = document.getElementById('modelList');
+            const q = (document.getElementById('assetFilter').value || '').trim().toLowerCase();
+            const shown = (list || []).filter(a => !q || a.label.toLowerCase().includes(q) || a.uri.toLowerCase().includes(q));
+            if (!shown.length) { container.innerHTML = `<div class="hint">${q ? 'No assets match.' : 'No assets in this group.'}</div>`; return; }
+            const chip = { vocab: 'VOC', tax: 'TAX', owl: 'ONT', other: '?' };
+            container.innerHTML = '';
+            shown.forEach(a => {
+                const btn = document.createElement('button');
+                btn.className = 'item' + (selectedGraphUri === a.uri ? ' on' : '');
+                btn.title = a.uri;
+                const kindForChip = a.kind === 'other' ? ({ vocab: 'vocab', taxo: 'tax', onto: 'owl' }[modelKindOf(a.uri)]) : a.kind;
+                btn.innerHTML = `<span class="kchip ${kindForChip}">${chip[kindForChip]}</span><span class="tx"><span class="lb"></span><span class="ln"></span></span>`;
+                btn.querySelector('.lb').textContent = a.label || shortNameOf(a.uri);
+                btn.querySelector('.ln').textContent = shortNameOf(a.uri);
+                btn.onclick = () => loadAssetDetails(a.uri);
+                container.appendChild(btn);
+            });
+        }
+
+        // ── TTL panel toggle (advanced/optional, collapsed by default) ──
+        function toggleTtlPanel() {
+            const wrap = document.getElementById('ttlPanelWrap');
+            const icon = document.getElementById('ttlToggleIcon');
+            const isHidden = wrap.classList.contains('hidden');
+            wrap.classList.toggle('hidden', !isHidden ? true : false);
+            if (isHidden) { wrap.classList.remove('hidden'); icon.textContent = '▼'; }
+            else { wrap.classList.add('hidden'); icon.textContent = '▶'; }
+        }
+
+        // Map asset kind -> metadata editor file (same convention as before)
+        function metaFileFor(uri) {
+            const kind = modelKindOf(uri);
+            return kind === 'taxo'  ? 'model-metadata-tax.html'
+                 : kind === 'vocab' ? 'model-metadata-skos.html'
+                 : 'model-metadata-owl.html';
+        }
+
+        // Load the appropriate metadata editor into the embedded iframe
+        function loadMetaFrame(uri) {
+            const repo = document.getElementById('repoId').value;
+            const file = metaFileFor(uri);
+            const url = `${file}?uri=${encodeURIComponent(uri)}&repo=${encodeURIComponent(repo)}&embedded=1`;
+            document.getElementById('metaFrame').src = url;
+            document.getElementById('metaFrameWrap').classList.remove('hidden');
+            document.getElementById('metaFrameEmpty').classList.add('hidden');
+        }
+
+        function clearMetaFrame() {
+            document.getElementById('metaFrame').src = 'about:blank';
+            document.getElementById('metaFrameWrap').classList.add('hidden');
+            document.getElementById('metaFrameEmpty').classList.remove('hidden');
+        }
+
+        // 2. REVIEW: Fetch raw Turtle code using the Statements Graph Protocol API
+        async function loadAssetDetails(uri) {
+            isCreateMode = false;
+            selectedGraphUri = uri;
+            document.getElementById('metaPanel').classList.add('hidden');
+            
+            document.getElementById('currentAssetTitle').innerText = ((_allAssets || []).find(a => a.uri === uri) || {}).label || shortNameOf(uri);
+            document.getElementById('currentAssetUri').innerText = uri;
+
+            if (!uri) { alert("No graph context for this asset."); return; }
+
+            // Load metadata editor inline
+            loadMetaFrame(uri);
+            if (_allAssets) renderSidebarList(_lastFiltered);
+            toggleActionButtons(true);
+
+            // Also keep the optional TTL view in sync (advanced/debug use)
+            const statementsUrl = `${getBaseUrl()}/statements?context=${encodeURIComponent('<' + uri + '>')}`;
+            try {
+                const response = await fetch(statementsUrl, {
+                    method: 'GET',
+                    headers: { 'Accept': 'text/turtle' }
+                });
+                if(!response.ok) throw new Error("Could not pull serialization context.");
+                const ttlData = await response.text();
+                
+                document.getElementById('ttlEditor').value = ttlData;
+                toggleActionButtons(true);
+            } catch (err) {
+                document.getElementById('ttlEditor').value = '# Could not load the statements of this graph.';
+            }
+        }
+
+        // (openMetadataEditor removed — metadata now loads inline via loadMetaFrame)
+
+        // Open the visualizer in a new tab for the currently selected asset
+        function openVisualizer() {
+            if (!selectedGraphUri) {
+                alert("No asset selected.");
+                return;
+            }
+            const repo = document.getElementById('repoId').value;
+            const url = `model-visualize.html?uri=${encodeURIComponent(selectedGraphUri)}&repo=${encodeURIComponent(repo)}`;
+            window.open(url, '_blank');
+        }
+
+        // Open the model editor in a new tab for the currently selected OWL asset
+        function openModelEditor() {
+            if (!selectedGraphUri) { alert("No asset selected."); return; }
+            const repo = document.getElementById('repoId').value;
+            // KE Workbench: the Ontology Model Editor talks to GraphDB through the proxy.
+            const url = `model-editor-ontology.html`
+                + `?ontology=${encodeURIComponent(selectedGraphUri)}`
+                + `&graph=${encodeURIComponent(selectedGraphUri)}`
+                + `&repo=${encodeURIComponent(repo)}`;
+            window.open(url, '_blank');
+        }
+
+        // Detect model kind from the asset IRI's name (matches the editors' convention).
+        // vocabulary-… → 'vocab', taxonomy-… → 'taxo', otherwise → 'onto'.
+        function modelKindOf(uri) {
+            const name = (uri || '').toLowerCase();
+            if (/vocabular/.test(name)) return 'vocab';
+            if (/taxonom/.test(name))   return 'taxo';
+            return 'onto';
+        }
+
+        // Open the vocabulary editor for the selected vocabulary model
+        function openVocEditor() {
+            if (!selectedGraphUri) { alert("No asset selected."); return; }
+            const repo = document.getElementById('repoId').value;
+            const endpoint = `${document.getElementById('graphdbUrl').value}/repositories/${repo}`;
+            const url = `voc-editor.html`
+                + `?endpoint=${encodeURIComponent(endpoint)}`
+                + `&scheme=${encodeURIComponent(selectedGraphUri)}`
+                + `&graph=${encodeURIComponent(selectedGraphUri)}`;
+            window.open(url, '_blank');
+        }
+
+        // Open the taxonomy editor for the selected taxonomy model
+        function openTaxEditor() {
+            if (!selectedGraphUri) { alert("No asset selected."); return; }
+            const repo = document.getElementById('repoId').value;
+            const url = `model-editor-taxonomy.html`
+                + `?scheme=${encodeURIComponent(selectedGraphUri)}`
+                + `&graph=${encodeURIComponent(selectedGraphUri)}`
+                + `&repo=${encodeURIComponent(repo)}`;
+            window.open(url, '_blank');
+        }
+
+        function prepareCreateNew() {
+            isCreateMode = true;
+            selectedGraphUri = null;
+            
+            document.getElementById('currentAssetTitle').innerText = "Create new asset";
+            document.getElementById('currentAssetUri').innerText = "Define metadata configuration and properties below.";
+            document.getElementById('metaPanel').classList.remove('hidden');
+            
+            // Starter template setup
+            document.getElementById('ttlEditor').value = `@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n# Construct your Turtle nodes below.\n# Naming & URI standards (Semantic Governance v1.8 §3.2): base URL https://www.insperity.com,\n# slash namespaces, full words (no acronyms), sentence-case labels, one skos:ConceptScheme per taxonomy.\n<https://www.insperity.com/taxonomy/compliance/> a skos:ConceptScheme ;\n    rdfs:label "Compliance taxonomy"@en ;\n    owl:versionInfo "0.1.0" .`;
+            toggleActionButtons(false);
+            document.getElementById('btnSave').disabled = false;
+            document.getElementById('btnSave').classList.remove('opacity-50', 'cursor-not-allowed');
+            clearMetaFrame();
+            document.getElementById('btnVisualize').disabled = true;
+            document.getElementById('btnVisualize').classList.add('opacity-50', 'cursor-not-allowed');
+            // Create mode has no metadata iframe — auto-expand the TTL editor
+            document.getElementById('ttlPanelWrap').classList.remove('hidden');
+            document.getElementById('ttlToggleIcon').textContent = '▼';
+        }
+
+        // 3. SAVE — for an existing asset, delegate to the embedded metadata
+        // editor's own (proven) save logic via postMessage. For Create New
+        // mode (no asset loaded yet, raw Turtle authoring), fall back to the
+        // original TTL PUT — there's no metadata editor loaded in that case.
+        let _saveResolve = null;
+        window.addEventListener('message', (ev) => {
+            if (!ev.data || typeof ev.data !== 'object') return;
+            if (ev.data.type === 'ev-metadata-saved') {
+                if (_saveResolve) { _saveResolve({ ok: true, uriChanged: !!ev.data.uriChanged, newUri: ev.data.newUri || null }); _saveResolve = null; }
+            } else if (ev.data.type === 'ev-metadata-save-failed') {
+                if (_saveResolve) { _saveResolve({ ok: false, error: ev.data.error || 'Unknown error' }); _saveResolve = null; }
+            } else if (ev.data.type === 'ev-metadata-uri-renamed') {
+                // The Rename URI modal inside the iframe was used directly
+                // (independent of the main Save button). This message was
+                // previously dropped entirely — Model Manager kept pointing
+                // at the OLD URI, so Edit Nodes / tree editor would load
+                // the stale graph and show zero concepts after a rename.
+                const newUri = ev.data.newUri;
+                if (newUri && newUri !== selectedGraphUri) {
+                    console.log('[model-manager] URI renamed inside metadata editor:', selectedGraphUri, '->', newUri);
+                    selectedGraphUri = newUri;
+                    refreshSidebar();
+                    document.getElementById('currentAssetTitle').innerText = newUri.replace(/[\/#]+$/, '').split('/').pop().split('#').pop() || newUri;
+                    document.getElementById('currentAssetUri').innerText = `Graph context: ${newUri}`;
+                }
+            }
+        });
+
+        function requestIframeSave(timeoutMs = 20000) {
+            return new Promise((resolve) => {
+                _saveResolve = resolve;
+                const frame = document.getElementById('metaFrame');
+                try {
+                    frame.contentWindow.postMessage({ type: 'ev-request-save' }, '*');
+                } catch(e) {
+                    resolve({ ok: false, error: 'Could not reach metadata editor frame: ' + e.message });
+                    _saveResolve = null;
+                    return;
+                }
+                setTimeout(() => {
+                    if (_saveResolve) {
+                        _saveResolve({ ok: false, error: 'Metadata editor did not respond (timeout). It may not support embedded save yet.' });
+                        _saveResolve = null;
+                    }
+                }, timeoutMs);
+            });
+        }
+
+        async function saveAsset() {
+            const btn = document.getElementById('btnSave');
+
+            // CREATE MODE: no metadata editor loaded — raw Turtle PUT (unchanged from before)
+            if (isCreateMode) {
+                let targetUri = document.getElementById('newGraphUri').value.trim();
+                if(!targetUri) {
+                    alert("A complete target graph context URI string path is required!");
+                    return;
+                }
+                const statementsUrl = `${getBaseUrl()}/statements?context=${encodeURIComponent('<' + targetUri + '>')}`;
+                const ttlPayload = document.getElementById('ttlEditor').value;
+                try {
+                    const response = await fetch(statementsUrl, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'text/turtle' },
+                        body: ttlPayload
+                    });
+                    if(response.ok) {
+                        alert("Asset context pushed successfully!");
+                        currentTab = document.getElementById('newGraphType').value;
+                        switchTab(currentTab);
+                        loadAssetDetails(targetUri);
+                    } else {
+                        throw new Error("Push payload modification rejected.");
+                    }
+                } catch (err) {
+                    alert("Failed processing updates. Check Turtle syntax grammar rules.");
+                }
+                return;
+            }
+
+            // EXISTING ASSET: delegate to the embedded metadata editor's own
+            // save logic (atomic-payload pattern, includes URI-rename cascade
+            // if the editor detects the URI field changed).
+            if (!selectedGraphUri) { alert("No asset selected."); return; }
+
+            btn.disabled = true;
+            const origLabel = btn.textContent;
+            btn.textContent = 'Saving…';
+
+            const result = await requestIframeSave();
+
+            btn.disabled = false;
+            btn.textContent = origLabel;
+
+            if (result.ok) {
+                if (result.uriChanged && result.newUri) {
+                    // The asset's URI was renamed during save — the iframe's own
+                    // rename cascade already handled member migration & graph move.
+                    // Just update our pointer and reload everything fresh.
+                    selectedGraphUri = result.newUri;
+                }
+                refreshSidebar();
+                loadAssetDetails(selectedGraphUri); // reload to confirm persisted state
+            } else {
+                alert("Save failed: " + result.error);
+            }
+        }
+
+        // 4. DELETE: Remove ONLY the selected named graph. Hard-guarded against
+        // unscoped deletes — an empty/blank context would clear the whole repo,
+        // so we refuse to issue the request unless a concrete graph IRI is set.
+        async function deleteAsset() {
+            const ctx = (selectedGraphUri || '').trim();
+            if (!ctx) {
+                alert("No asset selected — refusing to delete. (An unscoped delete would clear the entire repository.)");
+                return;
+            }
+            if (!/^https?:\/\//i.test(ctx)) {
+                alert("Selected graph IRI looks invalid — refusing to delete:\n" + ctx);
+                return;
+            }
+            if (!confirm(`Delete ONLY this graph and its statements?\n\n${ctx}\n\nNothing else in the repository will be touched.`)) return;
+
+            // RDF4J statements endpoint: scope to a single named graph via the
+            // N-Triples-encoded context (angle brackets). Without this, DELETE on
+            // /statements removes ALL statements in the repository.
+            const statementsUrl = `${getBaseUrl()}/statements?context=${encodeURIComponent('<' + ctx + '>')}`;
+
+            try {
+                const response = await fetch(statementsUrl, { method: 'DELETE' });
+                if(response.ok) {
+                    alert("Graph removed: " + ctx);
+                    resetWorkspace();
+                    refreshSidebar();
+                } else {
+                    throw new Error("Deletion request failed.");
+                }
+            } catch (err) {
+                alert("Could not process graph deletion.");
+            }
+        }
+
+        function resetWorkspace() {
+            selectedGraphUri = null;
+            isCreateMode = false;
+            document.getElementById('currentAssetTitle').innerText = "No asset selected";
+            document.getElementById('currentAssetUri').innerText = "";
+            document.getElementById('ttlEditor').value = "";
+            document.getElementById('metaPanel').classList.add('hidden');
+            clearMetaFrame();
+            toggleActionButtons(false);
+        }
+
+        function toggleActionButtons(enabled) {
+            const btnSave = document.getElementById('btnSave');
+            const btnDelete = document.getElementById('btnDelete');
+            const btnVisualize = document.getElementById('btnVisualize');
+            const btnEditNodes = document.getElementById('btnEditNodes');
+            const btnVocEditor = document.getElementById('btnVocEditor');
+            const btnTaxEditor = document.getElementById('btnTaxEditor');
+
+            // Decide which single editor button is relevant for this asset's kind.
+            const kind = modelKindOf(selectedGraphUri);
+            const editorButtons = [btnEditNodes, btnVocEditor, btnTaxEditor];
+            // Hide all three first; reveal the one matching the kind (only for existing assets).
+            editorButtons.forEach(b => b.classList.add('hidden'));
+            const activeEditorBtn = !isCreateMode
+                ? (kind === 'vocab' ? btnVocEditor : kind === 'taxo' ? btnTaxEditor : btnEditNodes)
+                : null;
+            if (activeEditorBtn) activeEditorBtn.classList.remove('hidden');
+
+            if(enabled) {
+                btnSave.disabled = false; btnDelete.disabled = false;
+                btnSave.classList.remove('opacity-50', 'cursor-not-allowed');
+                btnDelete.classList.remove('opacity-50', 'cursor-not-allowed');
+                // Metadata/Visualize/editor only make sense for existing assets, not new ones
+                if (!isCreateMode) {
+                    btnVisualize.disabled = false;
+                    btnVisualize.classList.remove('opacity-50', 'cursor-not-allowed');
+                    if (activeEditorBtn) {
+                        activeEditorBtn.disabled = false;
+                        activeEditorBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            } else {
+                btnSave.disabled = true; btnDelete.disabled = true;
+                btnVisualize.disabled = true;
+                editorButtons.forEach(b => { b.disabled = true; b.classList.add('opacity-50', 'cursor-not-allowed'); });
+                btnSave.classList.add('opacity-50', 'cursor-not-allowed');
+                btnDelete.classList.add('opacity-50', 'cursor-not-allowed');
+                btnVisualize.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // ── Sidebar resize ──
+        (function() {
+            const SB_KEY = 'ev_mm_sidebar_w';
+            const sidebar = document.getElementById('sidebar');
+            const handle  = document.getElementById('sidebar-resizer');
+            const MIN = 200, MAX = 640;
+            const saved = parseInt(localStorage.getItem(SB_KEY), 10);
+            if (saved >= MIN && saved <= MAX) sidebar.style.width = saved + 'px';
+
+            let dragging = false;
+            handle.addEventListener('mousedown', e => {
+                dragging = true;
+                
+                document.body.style.cursor = 'col-resize';
+                document.body.style.userSelect = 'none';
+                e.preventDefault();
+            });
+            window.addEventListener('mousemove', e => {
+                if (!dragging) return;
+                let w = e.clientX - sidebar.getBoundingClientRect().left;
+                w = Math.max(MIN, Math.min(MAX, w));
+                sidebar.style.width = w + 'px';
+            });
+            window.addEventListener('mouseup', () => {
+                if (!dragging) return;
+                dragging = false;
+                
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+                localStorage.setItem(SB_KEY, parseInt(sidebar.style.width, 10));
+            });
+            // double-click resets to default
+            handle.addEventListener('dblclick', () => {
+                sidebar.style.width = '320px';
+                localStorage.removeItem(SB_KEY);
+            });
+            // subtle hover cue
+            handle.addEventListener('mouseenter', () => { if (!dragging) handle.style.background = '#4b5563'; });
+        })();
+        // Start: restore the last tab and load the list.
+        (function () {
+            let t = null; try { t = localStorage.getItem('ke-mm-tab'); } catch (e) {}
+            if (['vocab', 'tax', 'owl', 'all'].includes(t)) { currentTab = t; ['vocab', 'tax', 'owl', 'all'].forEach(x => document.getElementById('tab-' + x).classList.toggle('on', x === t)); }
+            document.getElementById('repoId').addEventListener('change', refreshSidebar);
+            document.addEventListener('DOMContentLoaded', refreshSidebar);
+        })();
+    </script>
+</body>
+</html>

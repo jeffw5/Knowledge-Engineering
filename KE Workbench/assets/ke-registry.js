@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '1.8.0',
+  version: '2.2.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -93,7 +93,7 @@ window.KE_REGISTRY = {
         { id: 'release-notes', code: 'RN', file: 'tools/release-notes.html', title: 'Release Notes', isNew: true,
           desc: 'What changed in each workbench release: new tools and features, improvements and fixes.',
           functions: ['Artifact versioning'], std: [] },
-        { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v1.8_DRAFT.pdf', title: 'Semantic Governance v1.8',
+        { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v1.9_DRAFT.pdf', title: 'Semantic Governance v1.9',
           desc: 'The standards guide: services, architecture and integration, and Part III knowledge engineering standards.',
           functions: [], std: [] }
       ]

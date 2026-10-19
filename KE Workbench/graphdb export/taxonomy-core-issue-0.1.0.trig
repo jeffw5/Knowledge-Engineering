@@ -1,0 +1,662 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-issue/> {
+  <https://www.insperity.com/taxonomy/core-issue/> a skos:ConceptScheme;
+    rdfs:label "Core issue taxonomy"@en;
+    skos:prefLabel "Core issue taxonomy"@en;
+    skos:hasTopConcept issuetax:complaint, issuetax:defect, issuetax:exception, issuetax:incident,
+      issuetax:nonconformance, issuetax:problem, issuetax:question-gap, issuetax:risk;
+    terms:description "A taxonomy for classifying issues (defects, problems, incidents and requests) so that teams track, prioritize and resolve them in a consistent way."@en;
+    terms:title "Core issue taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Issue taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-issue/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:complaint a skos:Concept;
+    skos:prefLabel "Complaint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue that is an expression of dissatisfaction by a party about a product, service, or interaction."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Customer complaint"@en, "Grievance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/> .
+  
+  issuetax:defect a skos:Concept;
+    skos:prefLabel "Defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue that is a fault in an artifact causing it to differ from its specification or intended meaning."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Bug"@en, "Fault"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject issuevoc:defect;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:narrower issuetax:artificial-intelligence-output-defect, issuetax:knowledge-defect,
+      issuetax:data-defect, issuetax:software-defect .
+  
+  issuetax:exception a skos:Concept;
+    skos:prefLabel "Exception"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue that is an approved or detected departure from the normal rule or path."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Deviation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:narrower issuetax:policy-exception, issuetax:process-exception-issue .
+  
+  issuetax:incident a skos:Concept;
+    skos:prefLabel "Incident"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue that is an unplanned interruption or reduction in the quality of a service."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Service incident"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject issuevoc:incident;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:narrower issuetax:performance-degradation, issuetax:privacy-incident, issuetax:security-incident,
+      issuetax:service-outage .
+  
+  issuetax:nonconformance a skos:Concept;
+    skos:prefLabel "Nonconformance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue in which a requirement, norm, or control is not met."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Noncompliance"@en, "Nonconformity"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:narrower issuetax:audit-finding, issuetax:control-deficiency, issuetax:norm-violation,
+      issuetax:service-level-breach .
+  
+  issuetax:problem a skos:Concept;
+    skos:prefLabel "Problem"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue that is the underlying cause of one or more incidents or defects."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Root cause problem"@en;
+    skos:scopeNote "Problems are resolved by removing the cause, incidents by restoring service."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject issuevoc:problem;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/> .
+  
+  issuetax:question-gap a skos:Concept;
+    skos:prefLabel "Question gap"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue in which a question cannot be answered from governed knowledge."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Knowledge gap"@en, "Unanswered question"@en, "Zero-result search"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/> .
+  
+  issuetax:risk a skos:Concept;
+    skos:prefLabel "Risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An issue that is the effect of uncertainty on objectives, expressed as a possible event and its consequence."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:altLabel "Risk item"@en;
+    skos:scopeNote "A risk has not yet occurred; once it occurs it is recorded as an incident or nonconformance."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:narrower issuetax:artificial-intelligence-risk, issuetax:compliance-risk, issuetax:financial-risk,
+      issuetax:information-security-risk, issuetax:operational-risk, issuetax:strategic-risk .
+  
+  issuetax:artificial-intelligence-output-defect a skos:Concept;
+    skos:prefLabel "Artificial intelligence output defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A defect in content generated by an artificial intelligence agent."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:defect;
+    skos:altLabel "AI output defect"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower issuetax:hallucination, issuetax:incorrect-citation, issuetax:policy-violating-output,
+      issuetax:ungrounded-answer .
+  
+  issuetax:hallucination a skos:Concept;
+    skos:prefLabel "Hallucination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artificial intelligence output defect in which the output states something that is not supported by governed facts or sources."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:artificial-intelligence-output-defect;
+    skos:altLabel "Confabulation"@en, "Fabricated answer"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:incorrect-citation a skos:Concept;
+    skos:prefLabel "Incorrect citation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artificial intelligence output defect in which an answer cites a source that does not support it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:artificial-intelligence-output-defect;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:policy-violating-output a skos:Concept;
+    skos:prefLabel "Policy violating output"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artificial intelligence output defect in which the output breaches a guardrail or policy."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:artificial-intelligence-output-defect;
+    skos:altLabel "Guardrail breach"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:ungrounded-answer a skos:Concept;
+    skos:prefLabel "Ungrounded answer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artificial intelligence output defect in which an answer does not cite the governed terms and sources it relied on."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:artificial-intelligence-output-defect;
+    skos:altLabel "Missing citation"@en, "Untraceable answer"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:artificial-intelligence-risk a skos:Concept;
+    skos:prefLabel "Artificial intelligence risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk arising from the design, data, or use of an artificial intelligence system."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:risk;
+    skos:altLabel "AI risk"@en, "Model risk"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:audit-finding a skos:Concept;
+    skos:prefLabel "Audit finding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A nonconformance identified and recorded during an audit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:nonconformance;
+    skos:altLabel "Finding"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:classification-defect a skos:Concept;
+    skos:prefLabel "Classification defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge defect in which a term is placed under the wrong parent or has no path to the core."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:knowledge-defect;
+    skos:altLabel "Misclassification"@en, "Orphan term"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:knowledge-defect a skos:Concept;
+    skos:prefLabel "Knowledge defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A defect in a governed vocabulary, taxonomy, ontology, mapping, or rule."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:defect;
+    skos:altLabel "Design-time defect"@en, "Semantic defect"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower issuetax:classification-defect, issuetax:definition-defect, issuetax:label-defect,
+      issuetax:mapping-defect, issuetax:rule-defect .
+  
+  issuetax:compliance-risk a skos:Concept;
+    skos:prefLabel "Compliance risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk of failing to meet a legal, regulatory, or contractual obligation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:risk;
+    skos:altLabel "Regulatory risk"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:control-deficiency a skos:Concept;
+    skos:prefLabel "Control deficiency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A nonconformance in which a control is missing, poorly designed, or not operating as intended."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:nonconformance;
+    skos:altLabel "Control gap"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:data-defect a skos:Concept;
+    skos:prefLabel "Data defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A defect in data values or records."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:defect;
+    skos:altLabel "Data quality issue"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower issuetax:duplicate-record, issuetax:inconsistent-value, issuetax:invalid-value,
+      issuetax:missing-value, issuetax:stale-value .
+  
+  issuetax:duplicate-record a skos:Concept;
+    skos:prefLabel "Duplicate record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data defect in which the same entity is recorded more than once."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:data-defect;
+    skos:altLabel "Duplicate"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:inconsistent-value a skos:Concept;
+    skos:prefLabel "Inconsistent value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data defect in which values about the same fact disagree across records or systems."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:data-defect;
+    skos:altLabel "Conflicting value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:invalid-value a skos:Concept;
+    skos:prefLabel "Invalid value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data defect in which a value does not conform to its allowed type, format, or range."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:data-defect;
+    skos:altLabel "Malformed value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:missing-value a skos:Concept;
+    skos:prefLabel "Missing value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data defect in which a required value is absent."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:data-defect;
+    skos:altLabel "Incomplete record"@en, "Null value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:stale-value a skos:Concept;
+    skos:prefLabel "Stale value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data defect in which a value is older than its required freshness."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:data-defect;
+    skos:altLabel "Outdated value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:software-defect a skos:Concept;
+    skos:prefLabel "Software defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A defect in software code or configuration."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:defect;
+    skos:altLabel "Code defect"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:definition-defect a skos:Concept;
+    skos:prefLabel "Definition defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge defect in which a term's definition is missing, circular, ambiguous, or wrong."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:knowledge-defect;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:policy-exception a skos:Concept;
+    skos:prefLabel "Policy exception"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An exception in which a party is permitted to depart from a policy for a stated reason and period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:exception;
+    skos:altLabel "Exemption"@en, "Waiver"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:process-exception-issue a skos:Concept;
+    skos:prefLabel "Process exception issue"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An exception in which a process step cannot complete along its expected path and needs handling."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:exception;
+    skos:altLabel "Process exception case"@en, "Work exception"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:financial-risk a skos:Concept;
+    skos:prefLabel "Financial risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk of monetary loss or adverse financial outcome."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:risk;
+    skos:altLabel "Credit risk"@en, "Market risk"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:performance-degradation a skos:Concept;
+    skos:prefLabel "Performance degradation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An incident in which a service is available but slower or less reliable than its service level."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:incident;
+    skos:altLabel "Slowdown"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:privacy-incident a skos:Concept;
+    skos:prefLabel "Privacy incident"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An incident in which personal information is accessed, used, or disclosed without authorization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:incident;
+    skos:altLabel "Data breach"@en, "Privacy breach"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:security-incident a skos:Concept;
+    skos:prefLabel "Security incident"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An incident that compromises the confidentiality, integrity, or availability of information or systems."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:incident;
+    skos:altLabel "Cybersecurity incident"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:service-outage a skos:Concept;
+    skos:prefLabel "Service outage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An incident in which a service is unavailable to its users."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:incident;
+    skos:altLabel "Downtime"@en, "Outage"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:information-security-risk a skos:Concept;
+    skos:prefLabel "Information security risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk to the confidentiality, integrity, or availability of information."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:risk;
+    skos:altLabel "Cybersecurity risk"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:label-defect a skos:Concept;
+    skos:prefLabel "Label defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge defect in which a label is missing, duplicated, colliding, or uses an unapproved acronym."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:knowledge-defect;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:mapping-defect a skos:Concept;
+    skos:prefLabel "Mapping defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge defect in which a source element is mapped to the wrong term or not mapped."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:knowledge-defect;
+    skos:altLabel "Unmapped element"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:rule-defect a skos:Concept;
+    skos:prefLabel "Rule defect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge defect in which a rule has a gap, overlap, or incorrect outcome."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:knowledge-defect;
+    skos:altLabel "Decision table gap"@en, "Decision table overlap"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:norm-violation a skos:Concept;
+    skos:prefLabel "Norm violation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A nonconformance in which an obligation or prohibition in a law, regulation, or policy is breached."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:nonconformance;
+    skos:altLabel "Compliance violation"@en, "Regulatory violation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:service-level-breach a skos:Concept;
+    skos:prefLabel "Service level breach"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A nonconformance in which a committed service level is not met."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:nonconformance;
+    skos:altLabel "SLA breach"@en, "Service level agreement breach"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:operational-risk a skos:Concept;
+    skos:prefLabel "Operational risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk of loss from failed processes, people, systems, or external events."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:risk;
+    owl:versionInfo "0.1.0";
+    dc:subject domainfinancevoc:operational-risk;
+    core:hasLifecycleStatus core:Draft .
+  
+  issuetax:strategic-risk a skos:Concept;
+    skos:prefLabel "Strategic risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk that threatens the organization's direction or competitive position."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-issue/>;
+    skos:broader issuetax:risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

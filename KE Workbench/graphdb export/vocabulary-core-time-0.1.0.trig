@@ -1,0 +1,423 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-time/> {
+  <https://www.insperity.com/vocabulary/core-time/> a skos:ConceptScheme;
+    rdfs:label "Core time vocabulary"@en;
+    skos:prefLabel "Core time vocabulary"@en;
+    skos:hasTopConcept timevoc:time;
+    terms:description "The indefinite continued progress of existence and events in the past, present, and future regarded as a whole."@en;
+    terms:title "Core time vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T16:59:24.459Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Time"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-time/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:time a skos:Concept;
+    skos:prefLabel "Time"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:23:50.870Z"^^xsd:dateTime;
+    skos:definition "The indefinite continued progress of existence and events in the past, present, and future regarded as a whole."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-time/>;
+    skos:narrower timevoc:absolute, timevoc:episodic, timevoc:relative .
+  
+  timevoc:absolute a skos:Concept;
+    skos:prefLabel "Absolute"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A specific point in time, measurable and independent of other events."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:time;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:day, timevoc:hour, timevoc:minute, timevoc:month, timevoc:quarter,
+      timevoc:second, timevoc:week, timevoc:year .
+  
+  timevoc:episodic a skos:Concept;
+    skos:prefLabel "Episodic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Occurring in episodes or distinct periods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:time;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:full-period, timevoc:multiple-periods, timevoc:partial-period .
+  
+  timevoc:relative a skos:Concept;
+    skos:prefLabel "Relative"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:time;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:current, timevoc:future, timevoc:past .
+  
+  timevoc:day a skos:Concept;
+    skos:prefLabel "Day"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time equal to 24 hours."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:hour a skos:Concept;
+    skos:prefLabel "Hour"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time equal to 60 minutes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:minute a skos:Concept;
+    skos:prefLabel "Minute"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time equal to 60 seconds."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:month a skos:Concept;
+    skos:prefLabel "Month"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time typically consisting of 28-31 days, representing approximately one cycle of the moon’s phases."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:quarter a skos:Concept;
+    skos:prefLabel "Quarter"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time equal to three months."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:second a skos:Concept;
+    skos:prefLabel "Second"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time, a fraction of a minute."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:subsecond .
+  
+  timevoc:week a skos:Concept;
+    skos:prefLabel "Week"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time equal to seven days."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:year a skos:Concept;
+    skos:prefLabel "Year"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A unit of time equal to 12 months or approximately 365 days, representing the time it takes for the Earth to orbit the sun."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:absolute;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:subsecond a skos:Concept;
+    skos:prefLabel "Subsecond"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:second;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:full-period a skos:Concept;
+    skos:prefLabel "Full period"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "The complete duration of a specific time frame."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:episodic;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:daily, timevoc:weekly, timevoc:yearly .
+  
+  timevoc:multiple-periods a skos:Concept;
+    skos:prefLabel "Multiple periods"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Spanning across more than one time period."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:episodic;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:bi-weekly .
+  
+  timevoc:partial-period a skos:Concept;
+    skos:prefLabel "Partial period"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A portion or subset of a complete time period."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:episodic;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower timevoc:mid-year, timevoc:twice-per-week .
+  
+  timevoc:daily a skos:Concept;
+    skos:prefLabel "Daily"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Occurring every day."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:full-period;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:weekly a skos:Concept;
+    skos:prefLabel "Weekly"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Occurring every week."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:full-period;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:yearly a skos:Concept;
+    skos:prefLabel "Yearly"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Occurring every year."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:full-period;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:bi-weekly a skos:Concept;
+    skos:prefLabel "Bi-Weekly"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Occurring every two weeks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:multiple-periods;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:mid-year a skos:Concept;
+    skos:prefLabel "Mid year"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "The middle point of a year."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:partial-period;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:twice-per-week a skos:Concept;
+    skos:prefLabel "Twice per week"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "Occurring two times each week."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:partial-period;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:current a skos:Concept;
+    skos:prefLabel "Current"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "The present moment in time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:relative;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:future a skos:Concept;
+    skos:prefLabel "Future"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "The complete duration of a specific time frame."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:relative;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  timevoc:past a skos:Concept;
+    skos:prefLabel "Past"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:51:46.840Z"^^xsd:dateTime;
+    skos:definition "A point in time before the present."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-time/>;
+    skos:broader timevoc:relative;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

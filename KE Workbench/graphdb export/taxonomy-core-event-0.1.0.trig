@@ -1,0 +1,769 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-event/> {
+  <https://www.insperity.com/taxonomy/core-event/> a skos:ConceptScheme;
+    rdfs:label "Core event taxonomy"@en;
+    skos:prefLabel "Core event taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-event/business-event>,
+      <https://www.insperity.com/taxonomy/core-event/change-event>, <https://www.insperity.com/taxonomy/core-event/governance-event>,
+      <https://www.insperity.com/taxonomy/core-event/interaction-event>, <https://www.insperity.com/taxonomy/core-event/process-event>,
+      <https://www.insperity.com/taxonomy/core-event/system-event>, <https://www.insperity.com/taxonomy/core-event/time-event>;
+    terms:description "Classification of occurrences that happen at a point or short span in time and can start, end, or result from a process step."@en;
+    terms:title "Core event taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Event taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-event/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/business-event> a skos:Concept;
+    skos:prefLabel "Business event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event that changes the state of a business relationship, agreement, or transaction."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:example "Employee termination; client contract signed."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/agreement-event>, <https://www.insperity.com/taxonomy/core-event/party-event>,
+      <https://www.insperity.com/taxonomy/core-event/transaction-event> .
+  
+  <https://www.insperity.com/taxonomy/core-event/change-event> a skos:Concept;
+    skos:prefLabel "Change event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event that records a change in data, configuration, or governed knowledge."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/configuration-change>,
+      <https://www.insperity.com/taxonomy/core-event/data-change>, <https://www.insperity.com/taxonomy/core-event/knowledge-change>,
+      <https://www.insperity.com/taxonomy/core-event/regulatory-change> .
+  
+  <https://www.insperity.com/taxonomy/core-event/governance-event> a skos:Concept;
+    skos:prefLabel "Governance event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event in which a governance decision or control outcome is recorded."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/approval-denied>, <https://www.insperity.com/taxonomy/core-event/approval-granted>,
+      <https://www.insperity.com/taxonomy/core-event/audit-completed>, <https://www.insperity.com/taxonomy/core-event/control-failure-detected>,
+      <https://www.insperity.com/taxonomy/core-event/release-published> .
+  
+  <https://www.insperity.com/taxonomy/core-event/interaction-event> a skos:Concept;
+    skos:prefLabel "Interaction event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event in which a party communicates with the organization or one of its systems."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:altLabel "Engagement event"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/answer-delivery>, <https://www.insperity.com/taxonomy/core-event/feedback-submission>,
+      <https://www.insperity.com/taxonomy/core-event/inquiry>, <https://www.insperity.com/taxonomy/core-event/notification-delivery>,
+      <https://www.insperity.com/taxonomy/core-event/request-submission> .
+  
+  <https://www.insperity.com/taxonomy/core-event/process-event> a skos:Concept;
+    skos:prefLabel "Process event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event that marks a change in the execution state of a process or process step."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/escalation-raised>, <https://www.insperity.com/taxonomy/core-event/handoff>,
+      <https://www.insperity.com/taxonomy/core-event/process-completion>, <https://www.insperity.com/taxonomy/core-event/process-exception>,
+      <https://www.insperity.com/taxonomy/core-event/process-start> .
+  
+  <https://www.insperity.com/taxonomy/core-event/system-event> a skos:Concept;
+    skos:prefLabel "System event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event that is generated by a software system about its own operation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:altLabel "Technical event"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/availability-change>,
+      <https://www.insperity.com/taxonomy/core-event/job-completion>, <https://www.insperity.com/taxonomy/core-event/message-receipt>,
+      <https://www.insperity.com/taxonomy/core-event/system-alert> .
+  
+  <https://www.insperity.com/taxonomy/core-event/time-event> a skos:Concept;
+    skos:prefLabel "Time event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An event that occurs because a point in time is reached."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:altLabel "Scheduled event"@en, "Temporal event"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-event/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/deadline-reached>, <https://www.insperity.com/taxonomy/core-event/effective-date-reached>,
+      <https://www.insperity.com/taxonomy/core-event/expiration-reached>, <https://www.insperity.com/taxonomy/core-event/period-end>,
+      <https://www.insperity.com/taxonomy/core-event/period-start> .
+  
+  <https://www.insperity.com/taxonomy/core-event/agreement-amendment> a skos:Concept;
+    skos:prefLabel "Agreement amendment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement event in which the terms of an existing agreement are changed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/agreement-event>;
+    skos:altLabel "Contract amendment"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/agreement-event> a skos:Concept;
+    skos:prefLabel "Agreement event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A business event that creates, changes, or ends an agreement between parties."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/business-event>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/agreement-amendment>,
+      <https://www.insperity.com/taxonomy/core-event/agreement-execution>, <https://www.insperity.com/taxonomy/core-event/agreement-renewal>,
+      <https://www.insperity.com/taxonomy/core-event/agreement-termination> .
+  
+  <https://www.insperity.com/taxonomy/core-event/agreement-execution> a skos:Concept;
+    skos:prefLabel "Agreement execution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement event in which parties sign or accept an agreement and it becomes binding."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/agreement-event>;
+    skos:altLabel "Contract signing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/agreement-renewal> a skos:Concept;
+    skos:prefLabel "Agreement renewal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement event in which an agreement is extended for a further term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/agreement-event>;
+    skos:altLabel "Contract renewal"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/agreement-termination> a skos:Concept;
+    skos:prefLabel "Agreement termination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement event in which an agreement ends before or at its expiry."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/agreement-event>;
+    skos:altLabel "Cancellation"@en, "Contract termination"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/answer-delivery> a skos:Concept;
+    skos:prefLabel "Answer delivery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An interaction event in which an artificial intelligence agent or person returns an answer to a question."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/interaction-event>;
+    skos:altLabel "Assistant answer"@en, "Response"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/approval-denied> a skos:Concept;
+    skos:prefLabel "Approval denied"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance event in which an authorized party rejects an item."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/governance-event>;
+    skos:altLabel "Rejection"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/approval-granted> a skos:Concept;
+    skos:prefLabel "Approval granted"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance event in which an authorized party approves an item."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/governance-event>;
+    skos:altLabel "Approval"@en, "Sign-off"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject processvoc:approval;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/audit-completed> a skos:Concept;
+    skos:prefLabel "Audit completed"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance event in which an audit concludes with recorded findings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/governance-event>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/availability-change> a skos:Concept;
+    skos:prefLabel "Availability change"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A system event in which a system becomes available or unavailable."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/system-event>;
+    skos:altLabel "Outage end"@en, "Outage start"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/party-event> a skos:Concept;
+    skos:prefLabel "Party event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A business event that changes the status or attributes of a party."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/business-event>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/life-event>, <https://www.insperity.com/taxonomy/core-event/party-change>,
+      <https://www.insperity.com/taxonomy/core-event/party-offboarding>, <https://www.insperity.com/taxonomy/core-event/party-onboarding> .
+  
+  <https://www.insperity.com/taxonomy/core-event/transaction-event> a skos:Concept;
+    skos:prefLabel "Transaction event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A business event in which value is exchanged or committed between parties."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/business-event>;
+    skos:example "Payment issued; order placed."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-event/enrollment>, <https://www.insperity.com/taxonomy/core-event/order-placement>,
+      <https://www.insperity.com/taxonomy/core-event/payment>, <https://www.insperity.com/taxonomy/core-event/refund> .
+  
+  <https://www.insperity.com/taxonomy/core-event/configuration-change> a skos:Concept;
+    skos:prefLabel "Configuration change"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A change event in which settings of a system or service are altered."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/change-event>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/data-change> a skos:Concept;
+    skos:prefLabel "Data change"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A change event in which a stored record is created, updated, or deleted."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/change-event>;
+    skos:altLabel "Change data capture event"@en, "Record change"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/knowledge-change> a skos:Concept;
+    skos:prefLabel "Knowledge change"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A change event in which a governed term, rule, mapping, or shape is created, changed, or deprecated."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/change-event>;
+    skos:altLabel "Ontology change"@en, "Taxonomy change"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/regulatory-change> a skos:Concept;
+    skos:prefLabel "Regulatory change"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A change event in which a law, regulation, or official guidance is enacted, amended, or repealed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/change-event>;
+    skos:altLabel "Legislative change"@en, "Norm amendment"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/control-failure-detected> a skos:Concept;
+    skos:prefLabel "Control failure detected"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance event in which a control or quality gate does not pass."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/governance-event>;
+    skos:altLabel "Circuit breaker trip"@en, "Gate failure"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/deadline-reached> a skos:Concept;
+    skos:prefLabel "Deadline reached"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A time event that marks the latest time by which an action must be completed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/time-event>;
+    skos:altLabel "Due date reached"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/effective-date-reached> a skos:Concept;
+    skos:prefLabel "Effective date reached"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A time event that marks when a rule, policy, agreement, or change takes effect."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/time-event>;
+    skos:altLabel "Effective date"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/enrollment> a skos:Concept;
+    skos:prefLabel "Enrollment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A transaction event in which a party elects to participate in an offering or plan."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/transaction-event>;
+    skos:altLabel "Election"@en, "Sign-up"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/escalation-raised> a skos:Concept;
+    skos:prefLabel "Escalation raised"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A process event in which work is referred to a higher authority or specialist."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/process-event>;
+    skos:altLabel "Escalation"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domaininformationtechnologyvoc:escalation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/expiration-reached> a skos:Concept;
+    skos:prefLabel "Expiration reached"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A time event that marks when a right, agreement, or document ceases to be valid."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/time-event>;
+    skos:altLabel "Expiration"@en, "Expiry"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/feedback-submission> a skos:Concept;
+    skos:prefLabel "Feedback submission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An interaction event in which a party rates or comments on a service or answer."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/interaction-event>;
+    skos:altLabel "Answer rating"@en, "Feedback"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/release-published> a skos:Concept;
+    skos:prefLabel "Release published"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance event in which a versioned artifact is promoted to an environment."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/governance-event>;
+    skos:altLabel "Deployment"@en, "Release"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/handoff> a skos:Concept;
+    skos:prefLabel "Handoff"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A process event in which responsibility for work passes from one party or role to another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/process-event>;
+    skos:altLabel "Transfer of work"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/inquiry> a skos:Concept;
+    skos:prefLabel "Inquiry"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An interaction event in which a party asks a question or requests information."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/interaction-event>;
+    skos:altLabel "Query"@en, "Question asked"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/notification-delivery> a skos:Concept;
+    skos:prefLabel "Notification delivery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An interaction event in which the organization sends information to a party."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/interaction-event>;
+    skos:altLabel "Notification sent"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/request-submission> a skos:Concept;
+    skos:prefLabel "Request submission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An interaction event in which a party submits a request for action."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/interaction-event>;
+    skos:altLabel "Service request submitted"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/job-completion> a skos:Concept;
+    skos:prefLabel "Job completion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A system event that marks the end of a scheduled or batch job."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/system-event>;
+    skos:altLabel "Batch completion"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/life-event> a skos:Concept;
+    skos:prefLabel "Life event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party event in which a change in a person's personal circumstances occurs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/party-event>;
+    skos:altLabel "Qualifying life event"@en;
+    skos:example "Marriage; birth of a child."@en;
+    skos:scopeNote "Personal circumstances such as marriage, birth, or loss of other coverage; domain ontologies specialize this."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/message-receipt> a skos:Concept;
+    skos:prefLabel "Message receipt"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A system event in which a system receives a message or file from another system."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/system-event>;
+    skos:altLabel "File received"@en, "Inbound message"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/order-placement> a skos:Concept;
+    skos:prefLabel "Order placement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A transaction event in which a party requests goods or services under stated terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/transaction-event>;
+    skos:altLabel "Order"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:order;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/party-change> a skos:Concept;
+    skos:prefLabel "Party change"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party event in which identifying, contact, or status attributes of a party change."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/party-event>;
+    skos:altLabel "Job change"@en, "Status change"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/party-offboarding> a skos:Concept;
+    skos:prefLabel "Party offboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party event in which an active relationship with a party ends."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/party-event>;
+    skos:altLabel "Client exit"@en, "Party exit"@en, "Termination"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/party-onboarding> a skos:Concept;
+    skos:prefLabel "Party onboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party event in which a party is registered and begins an active relationship with the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/party-event>;
+    skos:altLabel "Client onboarding"@en, "Hire"@en, "Party registration"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/payment> a skos:Concept;
+    skos:prefLabel "Payment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A transaction event in which money is transferred from one party to another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/transaction-event>;
+    skos:altLabel "Disbursement"@en, "Payment issued"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/period-end> a skos:Concept;
+    skos:prefLabel "Period end"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A time event that marks the end of a defined period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/time-event>;
+    skos:altLabel "Period close"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/period-start> a skos:Concept;
+    skos:prefLabel "Period start"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A time event that marks the beginning of a defined period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/time-event>;
+    skos:example "Start of a pay period; start of a plan year."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/process-completion> a skos:Concept;
+    skos:prefLabel "Process completion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A process event that marks the successful end of a process or process step instance."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/process-event>;
+    skos:altLabel "Step completed"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/process-exception> a skos:Concept;
+    skos:prefLabel "Process exception"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A process event that marks a deviation from the expected path of a process step."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/process-event>;
+    skos:altLabel "Exception raised"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/process-start> a skos:Concept;
+    skos:prefLabel "Process start"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A process event that marks the beginning of a process or process step instance."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/process-event>;
+    skos:altLabel "Step started"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/refund> a skos:Concept;
+    skos:prefLabel "Refund"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A transaction event in which money is returned to a party."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/transaction-event>;
+    skos:altLabel "Reversal"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-event/system-alert> a skos:Concept;
+    skos:prefLabel "System alert"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A system event that signals a condition requiring attention."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-event/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-event/system-event>;
+    skos:altLabel "Alarm"@en, "Alert"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

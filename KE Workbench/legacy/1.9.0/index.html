@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KE Workbench</title>
+<link rel="stylesheet" href="assets/ke-theme.css">
+<script>
+  // Apply the saved theme before first paint
+  (function(){var t=null;try{t=localStorage.getItem('ke-theme')}catch(e){}
+    if(t!=='light'&&t!=='dark'){try{t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch(e){t='light'}}
+    document.documentElement.setAttribute('data-theme',t);})();
+  window.KE_SHELL = true;
+</script>
+<script src="assets/ke-registry.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:13px;line-height:1.45;
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ke-accent);outline-offset:2px;border-radius:4px}
+
+.app{display:grid;grid-template-columns:var(--sb-w,252px) 1fr;height:100vh;height:100dvh}
+.app.collapsed{--sb-w:56px}
+
+/* ── Sidebar ─────────────────────────────────────────── */
+.sb{background:var(--ke-surface);border-right:1px solid var(--ke-line);display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.brand{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;border-bottom:1px solid var(--ke-line-soft);min-height:58px}
+.mark{width:28px;height:28px;border-radius:6px;background:var(--ke-ink);color:var(--ke-surface);display:grid;place-items:center;
+  font:700 11px/1 var(--ke-sans);letter-spacing:.04em;flex:none}
+.brand-t{font-weight:700;font-size:14px;letter-spacing:-.005em;white-space:nowrap}
+.brand-s{font-size:10.5px;color:var(--ke-muted);white-space:nowrap}
+.nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 8px 16px}
+.grp{margin-top:14px}
+.grp:first-child{margin-top:4px}
+.eyebrow{font:700 10px/1.2 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent);
+  padding:0 8px 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eyebrow span{color:var(--ke-faint);font-weight:400}
+.item{display:flex;align-items:center;gap:9px;width:100%;padding:6px 8px;border-radius:6px;text-align:left;
+  color:var(--ke-ink2);position:relative;white-space:nowrap}
+.item:hover{background:var(--ke-band);color:var(--ke-ink)}
+.item.on{background:var(--ke-accent-soft);color:var(--ke-ink);font-weight:600}
+.item.on::before{content:"";position:absolute;left:-8px;top:6px;bottom:6px;width:3px;border-radius:0 3px 3px 0;background:var(--ke-accent)}
+.code{width:26px;height:20px;flex:none;border-radius:4px;border:1px solid var(--ke-line);display:grid;place-items:center;
+  font:700 9.5px/1 var(--ke-mono);color:var(--ke-muted);background:var(--ke-sunk);letter-spacing:.02em}
+.item.on .code{border-color:var(--ke-accent);color:var(--ke-accent)}
+.item .nm{flex:1;overflow:hidden;text-overflow:ellipsis}
+.live{width:6px;height:6px;border-radius:50%;background:var(--ke-faint);flex:none}
+.live.ok{background:var(--ke-ok)} .live.off{background:var(--ke-faint)}
+.newtag{font:700 8.5px/1 var(--ke-sans);letter-spacing:.06em;color:var(--ke-accent);border:1px solid var(--ke-accent);
+  border-radius:3px;padding:2px 3px;flex:none}
+.sb-foot{border-top:1px solid var(--ke-line-soft);padding:10px 14px;font-size:10.5px;color:var(--ke-muted);line-height:1.5}
+.sb-foot a{color:var(--ke-accent);text-decoration:none;cursor:pointer}
+.sb-foot a:hover{text-decoration:underline}
+.draft{color:var(--ke-draft);font-weight:700;letter-spacing:.08em}
+.collapsed .brand-x,.collapsed .eyebrow,.collapsed .item .nm,.collapsed .item .live,.collapsed .newtag,.collapsed .sb-foot{display:none}
+.collapsed .item{justify-content:center;padding:6px 0}
+.collapsed .grp{margin-top:10px;padding-top:10px;border-top:1px solid var(--ke-line-soft)}
+.collapsed .grp:first-child{border-top:0;padding-top:0}
+.collapsed .brand{justify-content:center;padding:14px 0 12px}
+
+/* ── Main ─────────────────────────────────────────────── */
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{display:flex;align-items:stretch;height:44px;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);flex:none}
+.iconbtn{width:38px;display:grid;place-items:center;color:var(--ke-muted);flex:none}
+.iconbtn:hover{color:var(--ke-ink);background:var(--ke-band)}
+.iconbtn svg{width:16px;height:16px}
+.tabs{flex:1;display:flex;align-items:stretch;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;min-width:0}
+.tabs::-webkit-scrollbar{display:none}
+.tab{display:flex;align-items:center;gap:7px;padding:0 6px 0 12px;max-width:230px;min-width:0;border-right:1px solid var(--ke-line-soft);
+  color:var(--ke-muted);position:relative;flex:none;cursor:pointer;user-select:none}
+.tab:hover{color:var(--ke-ink);background:var(--ke-sunk)}
+.tab.on{color:var(--ke-ink);background:var(--ke-bg)}
+.tab.on::after{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--ke-accent)}
+.tab .tt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.tab .tc{font:700 9px/1 var(--ke-mono);color:var(--ke-faint)}
+.tab.on .tc{color:var(--ke-accent)}
+.tab .x{width:20px;height:20px;border-radius:4px;display:grid;place-items:center;color:var(--ke-faint);font-size:14px;line-height:1}
+.tab .x:hover{background:var(--ke-line-soft);color:var(--ke-ink)}
+.tab.pinned{padding-right:12px}
+.ctrls{display:flex;align-items:center;gap:6px;padding:0 10px;flex:none;border-left:1px solid var(--ke-line-soft)}
+.pill{display:flex;align-items:center;gap:7px;height:28px;padding:0 10px;border:1px solid var(--ke-line);border-radius:14px;
+  color:var(--ke-ink2);font-size:11.5px;white-space:nowrap;background:var(--ke-surface)}
+.pill:hover{border-color:var(--ke-accent)}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--ke-faint)}
+.pill.ok .dot{background:var(--ke-ok);box-shadow:0 0 0 3px var(--ke-ok-soft)}
+.pill.off .dot{background:var(--ke-warn)}
+.theme{display:flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:14px;border:1px solid var(--ke-line);
+  color:var(--ke-ink2);font-size:11.5px;background:var(--ke-surface)}
+.theme:hover{border-color:var(--ke-accent);color:var(--ke-ink)}
+.theme svg{width:14px;height:14px}
+.theme .sun{display:none}
+[data-theme="dark"] .theme .sun{display:block}
+[data-theme="dark"] .theme .moon{display:none}
+.tool-acts{display:flex;border-left:1px solid var(--ke-line-soft)}
+.stage{flex:1;position:relative;min-height:0;background:var(--ke-bg)}
+.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:var(--ke-bg)}
+.stage iframe.on{display:block}
+.loading{position:absolute;inset:0;display:none;place-items:center;color:var(--ke-muted);font-size:12px;pointer-events:none}
+.loading.on{display:grid}
+
+/* ── Settings popover ─────────────────────────────────── */
+.pop{position:fixed;top:50px;right:12px;width:min(380px,calc(100vw - 24px));background:var(--ke-surface);border:1px solid var(--ke-line);
+  border-radius:var(--ke-radius-lg);box-shadow:0 10px 40px rgba(0,0,0,.18);z-index:30;display:none}
+.pop.on{display:block}
+.pop h3{font-size:13px;padding:14px 16px 0}
+.pop .sub{font-size:11.5px;color:var(--ke-muted);padding:2px 16px 0}
+.pop .body{padding:12px 16px 16px;display:grid;gap:12px}
+.fld label{display:block;font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted);margin-bottom:5px}
+.fld input,.fld textarea,.fld select{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:7px 9px;font-size:12px}
+.fld textarea{font-family:var(--ke-mono);font-size:11.5px;min-height:62px;resize:vertical}
+.fld .hint{font-size:11px;color:var(--ke-muted);margin-top:4px}
+.fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--ke-accent)}
+.row{display:flex;gap:8px;justify-content:flex-end;align-items:center}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--ke-line);font-size:12px;font-weight:600;background:var(--ke-surface)}
+.btn:hover{border-color:var(--ke-accent)}
+.btn.pri{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink)}
+.msg{font-size:11.5px;color:var(--ke-muted);margin-right:auto}
+.msg.ok{color:var(--ke-ok)} .msg.bad{color:var(--ke-bad)}
+.scrim{position:fixed;inset:0;z-index:20;display:none}
+.scrim.on{display:block}
+
+/* ── Narrow screens: sidebar becomes a drawer ─────────── */
+@media (max-width:860px){
+  .app,.app.collapsed{grid-template-columns:1fr}
+  .sb{position:fixed;inset:0 auto 0 0;width:270px;z-index:25;transform:translateX(-100%);transition:transform .2s ease;box-shadow:0 0 40px rgba(0,0,0,.25)}
+  .app.drawer .sb{transform:none}
+  .app.drawer .scrim{display:block;background:rgba(0,0,0,.25)}
+  .collapsed .brand-x,.collapsed .eyebrow,.collapsed .item .nm,.collapsed .item .live,.collapsed .newtag,.collapsed .sb-foot{display:revert}
+  .pill .lbl{display:none}
+  .theme .lbl{display:none}
+  .tool-acts{display:none}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sb" id="sb" aria-label="Workbench navigation">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">KE</div>
+      <div class="brand-x">
+        <div class="brand-t">KE Workbench</div>
+        <div class="brand-s">Semantic governance · Part III</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sb-foot">
+      Standards: <a data-open="guide">Semantic Governance v1.8</a> <span class="draft">DRAFT</span><br>
+      Part III · Knowledge Engineering
+    </div>
+  </aside>
+  <div class="scrim" id="drawerScrim"></div>
+
+  <main class="main">
+    <div class="top">
+      <button class="iconbtn" id="sbToggle" title="Toggle navigation" aria-label="Toggle navigation">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 4h11M2.5 8h11M2.5 12h11"/></svg>
+      </button>
+      <div class="tabs" id="tabs" role="tablist"></div>
+      <div class="tool-acts">
+        <button class="iconbtn" id="reloadBtn" title="Reload this tool" aria-label="Reload this tool">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 8a5 5 0 1 1-1.6-3.7"/><path d="M13 2.5v3h-3"/></svg>
+        </button>
+        <button class="iconbtn" id="popoutBtn" title="Open this tool in its own window" aria-label="Open in new window">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5h4.5V7"/><path d="M13.5 2.5 7.5 8.5"/><path d="M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3"/></svg>
+        </button>
+      </div>
+      <div class="ctrls">
+        <button class="pill" id="gdbPill" title="GraphDB connection and workbench settings">
+          <span class="dot"></span><span class="lbl" id="gdbLbl">GraphDB…</span>
+        </button>
+        <button class="theme" id="themeBtn" aria-label="Toggle light / dark mode">
+          <svg class="moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8Z"/></svg>
+          <svg class="sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg>
+          <span class="lbl" id="themeLbl">Light</span>
+        </button>
+      </div>
+    </div>
+    <div class="stage" id="stage"><div class="loading" id="loading">Loading…</div></div>
+  </main>
+</div>
+
+<div class="scrim" id="popScrim"></div>
+<div class="pop" id="pop" role="dialog" aria-label="Workbench settings">
+  <h3>Graph store &amp; standards</h3>
+  <div class="sub" id="popSub">Tools reach GraphDB through proxy.py at <code>/graphdb/</code>.</div>
+  <div class="body">
+    <div class="fld">
+      <label for="repoIn">Repository</label>
+      <input id="repoIn" list="repoList" placeholder="value-kb" autocomplete="off">
+      <datalist id="repoList"></datalist>
+      <div class="hint">Used by Model Manager, Standards Conformance and the overview counts.</div>
+    </div>
+    <div class="fld">
+      <label for="baseIn">Compliant base URLs</label>
+      <textarea id="baseIn" spellcheck="false"></textarea>
+      <div class="hint">One per line. §3.2 sets <code>https://www.insperity.com</code>; add legacy hosts while assets migrate.</div>
+    </div>
+    <div class="row">
+      <span class="msg" id="popMsg"></span>
+      <button class="btn" id="testBtn">Test connection</button>
+      <button class="btn pri" id="saveBtn">Save</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const R = window.KE_REGISTRY, T = window.KE_TOOLS;
+  const OVERVIEW = { id:'overview', code:'OV', file:'tools/workbench-overview.html', title:'Overview', pinned:true };
+  T.overview = OVERVIEW;
+  const DEFAULT_BASES = ['https://www.insperity.com/','https://www.enablingvalue.com/'];
+  const $ = s => document.querySelector(s);
+  const ls = {
+    get(k, d){ try{ const v = localStorage.getItem(k); return v === null ? d : v; }catch(e){ return d; } },
+    set(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+  };
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const base = new URL('.', location.href);   // folder that holds index.html
+
+  // ── Theme ────────────────────────────────────────────
+  function theme(){ return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+  function broadcast(msg){
+    (function walk(w){ try{ w.postMessage(msg, '*'); }catch(e){} for (let i = 0; i < w.frames.length; i++) walk(w.frames[i]); })(window);
+  }
+  function setTheme(t){
+    document.documentElement.setAttribute('data-theme', t);
+    ls.set('ke-theme', t);
+    $('#themeLbl').textContent = t === 'dark' ? 'Dark' : 'Light';
+    document.querySelectorAll('.stage iframe').forEach(f => f.style.colorScheme = t);
+    broadcast({ type:'ke-theme', theme:t });
+  }
+  $('#themeBtn').addEventListener('click', () => setTheme(theme() === 'dark' ? 'light' : 'dark'));
+  $('#themeLbl').textContent = theme() === 'dark' ? 'Dark' : 'Light';
+
+  // ── Navigation ───────────────────────────────────────
+  function renderNav(){
+    const live = gdb.ok ? 'ok' : 'off';
+    let h = `<div class="grp"><button class="item" data-open="overview"><span class="code">OV</span><span class="nm">Overview</span></button></div>`;
+    R.groups.forEach((g, i) => {
+      h += `<div class="grp"><div class="eyebrow">${String(i+1).padStart(2,'0')} · ${esc(g.label)}</div>`;
+      g.tools.filter(t => !t.hidden).forEach(t => {
+        h += `<button class="item" data-open="${t.id}" title="${esc(t.title)}"><span class="code">${t.code}</span><span class="nm">${esc(t.title)}</span>`
+          + (t.isNew ? `<span class="newtag">NEW</span>` : '')
+          + (t.live ? `<span class="live ${live}" title="Reads GraphDB"></span>` : '') + `</button>`;
+      });
+      h += `</div>`;
+    });
+    $('#nav').innerHTML = h;
+    markNav();
+  }
+  function markNav(){
+    const a = tabs.find(t => t.key === active);
+    document.querySelectorAll('.nav .item').forEach(b => b.classList.toggle('on', !!a && b.dataset.open === a.toolId && !a.extra));
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-open]');
+    if (!b || b.closest('.stage')) return;
+    openTool(b.dataset.open);
+    $('#app').classList.remove('drawer');
+  });
+
+  // ── Tabs ─────────────────────────────────────────────
+  let tabs = [], active = null;
+  const frames = {};   // key → iframe
+
+  function toolForPath(path){
+    const file = path.replace(/^\//,'').split(/[?#]/)[0];
+    return Object.values(T).find(t => file.endsWith(t.file));
+  }
+  function keyFor(url){ return url; }
+  function labelFor(tool, url){
+    let title = tool ? tool.title : 'Tool';
+    try {
+      const u = new URL(url, base);
+      const asset = u.searchParams.get('uri') || u.searchParams.get('ontology') || u.searchParams.get('scheme');
+      if (asset) title += ' · ' + (asset.replace(/[\/#]+$/,'').split(/[\/#]/).pop() || asset);
+    } catch(e){}
+    return title;
+  }
+
+  function persist(){
+    ls.set('ke-tabs', JSON.stringify(tabs.map(t => ({ key:t.key, url:t.url, toolId:t.toolId, title:t.title, extra:t.extra }))));
+    ls.set('ke-active', active || '');
+    const a = tabs.find(t => t.key === active);
+    if (a && !a.extra) history.replaceState(null, '', '#/' + a.toolId); else if (a) history.replaceState(null, '', '#');
+  }
+
+  function openTool(id){
+    const t = T[id]; if (!t) return;
+    openUrl(t.file, t, false);
+  }
+
+  async function openUrl(url, tool, extra){
+    const key = keyFor(url);
+    if (!tabs.find(t => t.key === key)) {
+      tool = tool || toolForPath(new URL(url, base).pathname.replace(base.pathname, ''));
+      const tab = { key, url, toolId: tool ? tool.id : 'unknown', title: labelFor(tool, url), extra: !!extra, code: tool ? tool.code : '··' };
+      if (tool && tool.pinned) tabs.unshift(tab); else tabs.push(tab);
+    }
+    activate(key);
+  }
+
+  function ensureFrame(tab){
+    if (frames[tab.key]) return frames[tab.key];
+    const f = document.createElement('iframe');
+    f.title = tab.title;
+    f.style.colorScheme = theme();
+    f.setAttribute('allow', 'clipboard-write');
+    $('#loading').classList.add('on');
+    f.addEventListener('load', () => { if (tab.key === active) $('#loading').classList.remove('on'); });
+    $('#stage').appendChild(f);
+    frames[tab.key] = f;
+    const abs = new URL(tab.url, base);
+    if (/\.html?$/i.test(abs.pathname)) {
+      fetch(abs.href, { method:'HEAD' }).then(r => {
+        if (r.ok || r.status === 405) f.src = abs.href; else f.srcdoc = missingDoc(tab, abs);
+      }).catch(() => { f.src = abs.href; });
+    } else {
+      f.src = abs.href;
+    }
+    return f;
+  }
+
+  function missingDoc(tab, abs){
+    const file = abs.pathname.split('/').pop();
+    const dark = theme() === 'dark';
+    return `<!doctype html><meta charset="utf-8"><body style="margin:0;font:13px/1.6 Arial,sans-serif;background:${dark?'#0F141A':'#F4F6F9'};color:${dark?'#E4EAF0':'#1F2933'};display:grid;place-items:center;height:100vh">
+      <div style="max-width:440px;padding:24px;border:1px solid ${dark?'#2B3642':'#D5DBE1'};border-radius:10px;background:${dark?'#161D25':'#fff'}">
+      <div style="font:700 10px Arial;letter-spacing:.09em;text-transform:uppercase;color:${dark?'#6FA3E0':'#2F6DB5'}">Not included in this workbench</div>
+      <h2 style="font-size:18px;margin:8px 0">${esc(file)}</h2>
+      <p style="margin:0;color:${dark?'#95A2AE':'#5F6B76'}">The page that opened this tab links to <code>${esc(file)}</code>, which wasn't part of the files the workbench was built from. Copy it into the <code>tools/</code> folder next to the other pages and reload.</p></div>`;
+  }
+
+  function activate(key){
+    const tab = tabs.find(t => t.key === key); if (!tab) return;
+    active = key;
+    const f = ensureFrame(tab);
+    Object.entries(frames).forEach(([k, fr]) => fr.classList.toggle('on', k === key));
+    if (f.contentDocument && f.contentDocument.readyState === 'complete' && f.src) $('#loading').classList.remove('on');
+    renderTabs(); markNav(); persist();
+    document.title = (tab.toolId === 'overview' ? '' : tab.title + ' — ') + 'KE Workbench';
+  }
+
+  function closeTab(key){
+    const i = tabs.findIndex(t => t.key === key);
+    if (i < 0 || tabs[i].toolId === 'overview') return;
+    tabs.splice(i, 1);
+    if (frames[key]) { frames[key].remove(); delete frames[key]; }
+    if (active === key) activate((tabs[i] || tabs[i-1] || tabs[0]).key); else { renderTabs(); persist(); }
+  }
+
+  function renderTabs(){
+    $('#tabs').innerHTML = tabs.map(t => {
+      const pinned = t.toolId === 'overview';
+      return `<div class="tab ${t.key === active ? 'on' : ''} ${pinned ? 'pinned' : ''}" role="tab" aria-selected="${t.key === active}" data-key="${esc(t.key)}" title="${esc(t.title)}">
+        <span class="tc">${esc(t.code || '')}</span><span class="tt">${esc(t.title)}</span>
+        ${pinned ? '' : `<span class="x" data-close="${esc(t.key)}" title="Close tab" aria-label="Close tab">×</span>`}</div>`;
+    }).join('');
+    const on = $('#tabs .tab.on'); if (on) on.scrollIntoView({ block:'nearest', inline:'nearest' });
+  }
+  $('#tabs').addEventListener('click', e => {
+    const x = e.target.closest('[data-close]'); if (x) { closeTab(x.dataset.close); return; }
+    const t = e.target.closest('.tab'); if (t) activate(t.dataset.key);
+  });
+  $('#tabs').addEventListener('auxclick', e => { const t = e.target.closest('.tab'); if (t && e.button === 1) closeTab(t.dataset.key); });
+
+  $('#reloadBtn').addEventListener('click', () => {
+    const f = frames[active]; if (!f) return;
+    try { f.contentWindow.location.reload(); } catch(e) { f.src = f.src; }
+  });
+  $('#popoutBtn').addEventListener('click', () => {
+    const tab = tabs.find(t => t.key === active); if (tab) window.open(new URL(tab.url, base).href, '_blank');
+  });
+
+  // Messages from tools (via assets/ke-bridge.js)
+  function tabForSource(src){
+    const k = Object.keys(frames).find(k => frames[k].contentWindow === src);
+    return tabs.find(t => t.key === k);
+  }
+  window.addEventListener('message', e => {
+    const d = e.data; if (!d || typeof d !== 'object') return;
+    if (d.type === 'ke-open') {
+      if (d.tool && T[d.tool]) { openTool(d.tool); return; }
+      if (!d.url) return;
+      const u = new URL(d.url, location.href);
+      if (u.origin !== location.origin) return;
+      const rel = u.pathname.startsWith(base.pathname) ? u.pathname.slice(base.pathname.length) : u.pathname;
+      const tool = toolForPath(rel);
+      openUrl(rel + u.search + u.hash, tool, !!u.search);
+    } else if (d.type === 'ke-close') {
+      const t = tabForSource(e.source); if (t) closeTab(t.key);
+    } else if (d.type === 'ke-title') {
+      const t = tabForSource(e.source);
+      if (t && t.toolId === 'unknown' && d.title) { t.title = d.title; renderTabs(); persist(); }
+    } else if (d.type === 'ke-settings-changed') {
+      loadSettings(); ping();
+    }
+  });
+
+  // ── Sidebar toggle ───────────────────────────────────
+  $('#sbToggle').addEventListener('click', () => {
+    const app = $('#app');
+    if (matchMedia('(max-width:860px)').matches) app.classList.toggle('drawer');
+    else { app.classList.toggle('collapsed'); ls.set('ke-sb-collapsed', app.classList.contains('collapsed') ? '1' : '0'); }
+  });
+  $('#drawerScrim').addEventListener('click', () => $('#app').classList.remove('drawer'));
+  if (ls.get('ke-sb-collapsed', '0') === '1') $('#app').classList.add('collapsed');
+
+  // ── GraphDB status & settings ────────────────────────
+  const gdb = { ok:false, repos:[], checked:false };
+  function repo(){ return ls.get('ke-repo', 'value-kb') || 'value-kb'; }
+  function loadSettings(){
+    $('#repoIn').value = repo();
+    let bases = DEFAULT_BASES;
+    try { const v = JSON.parse(ls.get('ke-base-urls', 'null')); if (Array.isArray(v) && v.length) bases = v; } catch(e){}
+    $('#baseIn').value = bases.join('\n');
+  }
+  async function ping(){
+    try {
+      const r = await fetch('/graphdb/rest/repositories', { headers:{ Accept:'application/json' }, cache:'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const data = await r.json();
+      gdb.repos = (Array.isArray(data) ? data : []).map(x => x.id).filter(Boolean);
+      gdb.ok = true;
+    } catch(e) { gdb.ok = false; gdb.repos = []; }
+    gdb.checked = true;
+    const pill = $('#gdbPill');
+    pill.classList.toggle('ok', gdb.ok); pill.classList.toggle('off', !gdb.ok);
+    $('#gdbLbl').textContent = gdb.ok ? 'GraphDB · ' + repo() : 'GraphDB offline';
+    pill.title = gdb.ok ? 'Connected through proxy.py — click for settings' : 'GraphDB not reachable. Run proxy.py (python3 proxy.py) with GraphDB on :7200, then open http://localhost:3000/';
+    $('#repoList').innerHTML = gdb.repos.map(r => `<option value="${esc(r)}">`).join('');
+    document.querySelectorAll('.nav .live').forEach(d => { d.classList.toggle('ok', gdb.ok); d.classList.toggle('off', !gdb.ok); });
+    broadcast({ type:'ke-graphdb', ok:gdb.ok, repos:gdb.repos, repo:repo() });
+    return gdb.ok;
+  }
+  window.KE_GDB = gdb;
+  function openPop(on){ $('#pop').classList.toggle('on', on); $('#popScrim').classList.toggle('on', on); if (on) { loadSettings(); $('#popMsg').textContent = ''; $('#popMsg').className = 'msg'; } }
+  $('#gdbPill').addEventListener('click', () => openPop(!$('#pop').classList.contains('on')));
+  $('#popScrim').addEventListener('click', () => openPop(false));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { openPop(false); $('#app').classList.remove('drawer'); } });
+  $('#testBtn').addEventListener('click', async () => {
+    $('#popMsg').textContent = 'Checking…'; $('#popMsg').className = 'msg';
+    const ok = await ping();
+    $('#popMsg').textContent = ok ? `Connected · ${gdb.repos.length} repositories` : 'Not reachable — is proxy.py running?';
+    $('#popMsg').className = 'msg ' + (ok ? 'ok' : 'bad');
+  });
+  $('#saveBtn').addEventListener('click', () => {
+    ls.set('ke-repo', $('#repoIn').value.trim() || 'value-kb');
+    const bases = $('#baseIn').value.split(/\s+/).map(s => s.trim()).filter(Boolean).map(s => s.endsWith('/') ? s : s + '/');
+    ls.set('ke-base-urls', JSON.stringify(bases.length ? bases : DEFAULT_BASES));
+    broadcast({ type:'ke-settings', repo: repo(), bases });
+    ping(); openPop(false);
+  });
+
+  // ── Boot ─────────────────────────────────────────────
+  renderNav();
+  let saved = [];
+  try { saved = JSON.parse(ls.get('ke-tabs', '[]')) || []; } catch(e){}
+  tabs = [{ key:OVERVIEW.file, url:OVERVIEW.file, toolId:'overview', title:'Overview', code:'OV' }];
+  saved.forEach(s => { if (s && s.key && s.toolId !== 'overview' && !tabs.find(t => t.key === s.key)) {
+    const tool = T[s.toolId]; tabs.push({ ...s, code: tool ? tool.code : '··' }); } });
+  const hashId = (location.hash.match(/^#\/([\w-]+)/) || [])[1];
+  if (hashId && T[hashId]) openTool(hashId);
+  else activate(tabs.find(t => t.key === ls.get('ke-active', '')) ? ls.get('ke-active', '') : OVERVIEW.file);
+  window.addEventListener('hashchange', () => {
+    const id = (location.hash.match(/^#\/([\w-]+)/) || [])[1];
+    if (id && T[id]) openTool(id);
+  });
+  ping();
+  setInterval(() => { if (!document.hidden) ping(); }, 30000);
+})();
+</script>
+</body>
+</html>

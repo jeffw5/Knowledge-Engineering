@@ -1,0 +1,562 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-policy/> {
+  <https://www.insperity.com/taxonomy/core-policy/> a skos:ConceptScheme;
+    rdfs:label "Core policy taxonomy"@en;
+    skos:prefLabel "Core policy taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-policy/contractual-instrument>,
+      <https://www.insperity.com/taxonomy/core-policy/guideline>, <https://www.insperity.com/taxonomy/core-policy/legal-norm-source>,
+      <https://www.insperity.com/taxonomy/core-policy/norm>, <https://www.insperity.com/taxonomy/core-policy/organizational-policy>,
+      <https://www.insperity.com/taxonomy/core-policy/procedure>, <https://www.insperity.com/taxonomy/core-policy/standard>;
+    terms:description "Classification of policies and other normative sources, the governing statements that impose obligations, permissions, and prohibitions on parties and process steps."@en;
+    terms:title "Core policy taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Policy taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-policy/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/contractual-instrument> a skos:Concept;
+    skos:prefLabel "Contractual instrument"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy that arises from an agreement between parties and binds them to its terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "Agreement"@en, "Contract"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-policy/client-service-agreement>,
+      <https://www.insperity.com/taxonomy/core-policy/data-processing-agreement>, <https://www.insperity.com/taxonomy/core-policy/plan-document>,
+      <https://www.insperity.com/taxonomy/core-policy/service-level-agreement>, <https://www.insperity.com/taxonomy/core-policy/terms-of-service> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/guideline> a skos:Concept;
+    skos:prefLabel "Guideline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy that recommends good practice without mandating it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "Best practice"@en, "Guidance note"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/legal-norm-source> a skos:Concept;
+    skos:prefLabel "Legal norm source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy issued by a public authority with the force of law."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "Legal source"@en, "Regulatory source"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-policy/agency-guidance>, <https://www.insperity.com/taxonomy/core-policy/court-decision>,
+      <https://www.insperity.com/taxonomy/core-policy/executive-order>, <https://www.insperity.com/taxonomy/core-policy/regulation>,
+      <https://www.insperity.com/taxonomy/core-policy/statute> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/norm> a skos:Concept;
+    skos:prefLabel "Norm"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy statement that qualifies an action or state as obligatory, permitted, or prohibited for a party in a jurisdiction and period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "Deontic statement"@en, "Legal norm"@en;
+    skos:scopeNote "Norms link to steps with governedBy and to their source with a source relation; each has a jurisdiction and effective period."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-policy/obligation>, <https://www.insperity.com/taxonomy/core-policy/permission>,
+      <https://www.insperity.com/taxonomy/core-policy/prohibition>, <https://www.insperity.com/taxonomy/core-policy/right> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/organizational-policy> a skos:Concept;
+    skos:prefLabel "Organizational policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy issued by an organization to govern its own conduct and that of its workers and agents."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "Company policy"@en, "Internal policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-policy/acceptable-use-policy>,
+      <https://www.insperity.com/taxonomy/core-policy/code-of-conduct>, <https://www.insperity.com/taxonomy/core-policy/data-classification-policy>,
+      <https://www.insperity.com/taxonomy/core-policy/financial-control-policy>, <https://www.insperity.com/taxonomy/core-policy/information-security-policy>,
+      <https://www.insperity.com/taxonomy/core-policy/privacy-policy>, <https://www.insperity.com/taxonomy/core-policy/records-retention-policy>,
+      <https://www.insperity.com/taxonomy/core-policy/responsible-artificial-intelligence-policy>,
+      <https://www.insperity.com/taxonomy/core-policy/workforce-policy> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/procedure> a skos:Concept;
+    skos:prefLabel "Procedure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy that specifies the steps to carry out an activity in a consistent way."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "SOP"@en, "Standard operating procedure"@en, "Work instruction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/standard> a skos:Concept;
+    skos:prefLabel "Standard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A policy that is a documented agreement on specifications or practices adopted voluntarily or by reference."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:altLabel "Specification"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject requirementsvoc:specification;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-policy/industry-standard>,
+      <https://www.insperity.com/taxonomy/core-policy/internal-standard>, <https://www.insperity.com/taxonomy/core-policy/international-standard> .
+  
+  <https://www.insperity.com/taxonomy/core-policy/acceptable-use-policy> a skos:Concept;
+    skos:prefLabel "Acceptable use policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that governs permitted use of systems and data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/agency-guidance> a skos:Concept;
+    skos:prefLabel "Agency guidance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A legal norm source issued by an agency to interpret or apply law without the force of regulation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/legal-norm-source>;
+    skos:altLabel "Notice"@en, "Guidance"@en, "Interpretive letter"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/client-service-agreement> a skos:Concept;
+    skos:prefLabel "Client service agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A contractual instrument that sets the services, fees, and responsibilities between the organization and a client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/contractual-instrument>;
+    skos:altLabel "Client agreement"@en, "Co-employment agreement"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/code-of-conduct> a skos:Concept;
+    skos:prefLabel "Code of conduct"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that states expected ethical behavior."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Code of ethics"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/data-processing-agreement> a skos:Concept;
+    skos:prefLabel "Data processing agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A contractual instrument that governs how one party processes personal data for another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/contractual-instrument>;
+    skos:altLabel "Data protection agreement"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/plan-document> a skos:Concept;
+    skos:prefLabel "Plan document"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A contractual instrument that sets the legally binding terms of a benefit or retirement plan."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/contractual-instrument>;
+    skos:altLabel "Plan terms"@en, "SPD"@en, "Summary plan description"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/service-level-agreement> a skos:Concept;
+    skos:prefLabel "Service level agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A contractual instrument that commits measurable service levels and remedies."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/contractual-instrument>;
+    skos:altLabel "SLA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/terms-of-service> a skos:Concept;
+    skos:prefLabel "Terms of service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A contractual instrument that sets the conditions for using a service or application."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/contractual-instrument>;
+    skos:altLabel "Terms of use"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/court-decision> a skos:Concept;
+    skos:prefLabel "Court decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A legal norm source that is a ruling by a court establishing or interpreting law."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/legal-norm-source>;
+    skos:altLabel "Case law"@en, "Judicial decision"@en, "Precedent"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/data-classification-policy> a skos:Concept;
+    skos:prefLabel "Data classification policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that defines classification levels and the handling each requires."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Information classification policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/executive-order> a skos:Concept;
+    skos:prefLabel "Executive order"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A legal norm source issued by a head of government directing government operations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/legal-norm-source>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/financial-control-policy> a skos:Concept;
+    skos:prefLabel "Financial control policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that governs spending, approval authority, and financial reporting."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Delegation of authority policy"@en, "Expense policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/industry-standard> a skos:Concept;
+    skos:prefLabel "Industry standard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A standard published by an industry or professional body."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/standard>;
+    skos:altLabel "Industry specification"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/information-security-policy> a skos:Concept;
+    skos:prefLabel "Information security policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that protects information and systems."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Security policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/internal-standard> a skos:Concept;
+    skos:prefLabel "Internal standard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A standard adopted by the organization for its own work."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/standard>;
+    skos:altLabel "Company standard"@en;
+    skos:example "Naming conventions; documentation standards."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/international-standard> a skos:Concept;
+    skos:prefLabel "International standard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A standard published by an international standards body."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/standard>;
+    skos:altLabel "Consensus standard"@en, "ISO standard"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/regulation> a skos:Concept;
+    skos:prefLabel "Regulation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A legal norm source issued by a regulatory agency under statutory authority."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/legal-norm-source>;
+    skos:altLabel "Administrative rule"@en, "Code of Federal Regulations section"@en,
+      "Rule"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:regulation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/statute> a skos:Concept;
+    skos:prefLabel "Statute"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A legal norm source enacted by a legislative body."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/legal-norm-source>;
+    skos:altLabel "Act"@en, "Federal statute"@en, "Law"@en, "State law"@en;
+    skos:example "Fair Labor Standards Act."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/obligation> a skos:Concept;
+    skos:prefLabel "Obligation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A norm that requires a party to perform an action or achieve a state."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/norm>;
+    skos:altLabel "Duty"@en, "Requirement to act"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/permission> a skos:Concept;
+    skos:prefLabel "Permission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A norm that allows a party to perform an action without requiring it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/norm>;
+    skos:altLabel "Authorization"@en, "Allowance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/prohibition> a skos:Concept;
+    skos:prefLabel "Prohibition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A norm that forbids a party from performing an action."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/norm>;
+    skos:altLabel "Ban"@en, "Restriction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/right> a skos:Concept;
+    skos:prefLabel "Right"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A norm that entitles a party to an action, benefit, or protection from another party."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/norm>;
+    skos:altLabel "Entitlement"@en, "Claim right"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainsecurityvoc:entitlement;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/privacy-policy> a skos:Concept;
+    skos:prefLabel "Privacy policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that governs collection, use, and disclosure of personal information."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Data privacy policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/records-retention-policy> a skos:Concept;
+    skos:prefLabel "Records retention policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that defines how long records are kept and how they are disposed of."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Retention schedule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/responsible-artificial-intelligence-policy>
+    a skos:Concept;
+    skos:prefLabel "Responsible artificial intelligence policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that governs the design, use, and oversight of artificial intelligence."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "AI use policy"@en, "Responsible AI policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-policy/workforce-policy> a skos:Concept;
+    skos:prefLabel "Workforce policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organizational policy that governs employment practices, leave, conduct, and pay."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-policy/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-policy/organizational-policy>;
+    skos:altLabel "Employee handbook policy"@en, "Human resources policy"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

@@ -166,6 +166,8 @@ footer.bar .sum{font-size:12.5px}
   const qp = new URLSearchParams(location.search);
 
   let policyJ = { baseUrl: 'https://www.insperity.com/', author: '' }, POL = null, CORE = '';
+  let DEFS = { key: false };
+  fetch('/api/ingest/define-status').then(r => r.ok ? r.json() : null).then(d => { if (d) { DEFS = d; if (sel && sel !== graph) renderEditor(); } }).catch(() => {});
   let folder = '', files = [], file = null, graph = '', quads = [], loadedAt = null;
   let sel = null, open = new Set(), changes = new Map(), touched = new Set(), findings = new Map(), idx = null;
 
@@ -370,7 +372,7 @@ footer.bar .sum{font-size:12.5px}
           <div class="fld"><label for="sLang">Language</label><input id="sLang" value="${esc(plain1(s, DCT + 'language'))}"></div>
           <div class="fld"><label>Created · modified</label><div class="ro">${esc(plain1(s, DCT + 'created') || '—')} · ${esc(plain1(s, DCT + 'modified') || '—')}</div></div>
         </div>
-        <div class="fld"><label>Namespace</label><div class="ro mono">${esc(plain1(s, VANN + 'preferredNamespaceUri') || s)}</div></div>
+        <div class="fld"><label>Namespace</label><div class="ro mono">${esc(plain1(s, 'http://www.linkedmodel.org/schema/vaem#namespace') || plain1(s, VANN + 'preferredNamespaceUri') || s)}${plain1(s, VANN + 'preferredNamespacePrefix') ? ' · prefix ' + esc(plain1(s, VANN + 'preferredNamespacePrefix')) : ''}</div></div>
       </div></div>
       <div class="grp"><div class="grp-h">Notes</div><div class="grp-b">
         <div class="fld"><label for="sEdNote">Editorial note</label><textarea id="sEdNote">${esc(lits(s, SKOS + 'editorialNote').join('\n\n'))}</textarea></div>
@@ -403,7 +405,8 @@ footer.bar .sum{font-size:12.5px}
         <div class="fld"><label for="tId">Identifier <span class="hint">the last part of the IRI; changing it renames the term in this vocabulary</span></label><input id="tId" class="mono" value="${esc(ln(s))}"></div>
       </div></div>
       <div class="grp"><div class="grp-h">Meaning</div><div class="grp-b">
-        <div class="fld"><label for="tDef">Definition <span class="hint">genus + differentia: “A [broader term] that [what sets it apart].”</span></label><textarea id="tDef" placeholder="${pars.length ? esc('A ' + label(pars[0]).toLowerCase() + ' that …') : 'A … that …'}">${esc(lits(s, SKOS + 'definition').join('\n\n'))}</textarea></div>
+        <div class="fld"><label for="tDef">Definition <span class="hint">genus + differentia: “A [broader term] that [what sets it apart].”</span></label><textarea id="tDef" placeholder="${pars.length ? esc('A ' + label(pars[0]).toLowerCase() + ' that …') : 'A … that …'}">${esc(lits(s, SKOS + 'definition').join('\n\n'))}</textarea>
+          <div class="row" style="margin-top:6px"><button class="btn sm" id="tGenDef" ${DEFS.key ? '' : `disabled title="Needs an Anthropic API key in ${esc(DEFS.keyFile || '~/.ke-workbench.env')}"`}>✦ Write with Claude</button><span class="status">${DEFS.key ? 'Replaces the definition; you can edit it before saving.' : 'Needs an Anthropic API key (see Release Notes 1.9.0).'}</span></div></div>
         <div class="fld"><label for="tScope">Scope note <span class="hint">what is in and out</span></label><textarea id="tScope" style="min-height:44px">${esc(lits(s, SKOS + 'scopeNote').join('\n\n'))}</textarea></div>
         <div class="fld"><label for="tExample">Example</label><textarea id="tExample" style="min-height:44px">${esc(lits(s, SKOS + 'example').join('\n\n'))}</textarea></div>
         <div class="fld"><label for="tEdNote">Editorial note</label><textarea id="tEdNote" style="min-height:44px">${esc(lits(s, SKOS + 'editorialNote').join('\n\n'))}</textarea></div>
@@ -429,6 +432,25 @@ footer.bar .sum{font-size:12.5px}
     renderFinds();
     bind('tLabel', v => { if (!v) { toast('The preferred label cannot be empty', true); return false; } const old = setLit(s, SKOS + 'prefLabel', v); if (lits(s, RDFS + 'label').length) setLit(s, RDFS + 'label', v); note(s, 'preferred label', old, v); el.querySelector('h2').textContent = v; });
     bind('tDef', v => note(s, 'definition', setLits(s, SKOS + 'definition', [v.replace(/\s+/g, ' ').trim()]), v));
+    $('tGenDef').addEventListener('click', async () => {
+      const b = $('tGenDef'); b.disabled = true; b.textContent = 'Writing…';
+      const par = iris(s, SKOS + 'broader')[0], kids = childrenOf(s), sib = par ? childrenOf(par).filter(x => x !== s) : [];
+      const it = { id: s, label: label(s), kind: 'vocabulary term', scheme: label(graph) };
+      if (par) { it.broader = label(par); const pd = lit1(par, SKOS + 'definition'); if (pd) it.broader_definition = pd; }
+      const alts = lits(s, SKOS + 'altLabel'); if (alts.length) it.alternative_labels = alts;
+      if (kids.length) it.narrower = kids.slice(0, 12).map(label);
+      if (sib.length) it.siblings = sib.slice(0, 12).map(label);
+      try {
+        const r = await fetch('/api/ingest/define', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: [it] }) });
+        const d = await r.json(), t = (d.definitions || {})[s];
+        if (!t) throw new Error(d.error || 'No definition came back');
+        const old = setLits(s, SKOS + 'definition', [t]);
+        drop(q => isT(q.s, s) && q.p.v === SKOS + 'editorialNote' && /Definition written/.test(q.o.v));
+        add(s, SKOS + 'editorialNote', L(`Definition written by ${d.model} in the Model Editor on ${new Date().toISOString().slice(0, 10)}; review before the term moves to Candidate.`, 'en'));
+        reindex(); note(s, 'definition', old, t); renderEditor();
+        toast('Definition written by ' + d.model + ' — edit it if needed, then save');
+      } catch (e) { toast(e.message, true); b.disabled = false; b.textContent = '✦ Write with Claude'; }
+    });
     bind('tScope', v => note(s, 'scope note', setLits(s, SKOS + 'scopeNote', v.split(/\n\s*\n/).map(x => x.trim())), v));
     bind('tExample', v => note(s, 'example', setLits(s, SKOS + 'example', v.split(/\n\s*\n/).map(x => x.trim())), v));
     bind('tEdNote', v => note(s, 'editorial note', setLits(s, SKOS + 'editorialNote', v.split(/\n\s*\n/).map(x => x.trim())), v));
@@ -532,6 +554,7 @@ footer.bar .sum{font-size:12.5px}
     const now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
     add(s, RDF + 'type', N(SKOS + 'Concept'));
     add(s, SKOS + 'prefLabel', L(lbl, 'en'));
+    add(s, RDFS + 'label', L(lbl, 'en'));          // §3.11: preferred label and rdfs:label on every term
     add(s, SKOS + 'inScheme', N(graph));
     if (parent) { add(s, SKOS + 'broader', N(parent)); add(parent, SKOS + 'narrower', N(s)); open.add(parent); }
     else { add(s, SKOS + 'topConceptOf', N(graph)); add(graph, SKOS + 'hasTopConcept', N(s)); }

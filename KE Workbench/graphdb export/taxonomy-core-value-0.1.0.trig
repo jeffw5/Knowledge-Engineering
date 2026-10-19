@@ -1,0 +1,496 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-value/> {
+  <https://www.insperity.com/taxonomy/core-value/> a skos:ConceptScheme;
+    rdfs:label "Core value taxonomy"@en;
+    skos:prefLabel "Core value taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-value/economic-value>,
+      <https://www.insperity.com/taxonomy/core-value/information-value>, <https://www.insperity.com/taxonomy/core-value/risk-reduction-value>,
+      <https://www.insperity.com/taxonomy/core-value/societal-value>, <https://www.insperity.com/taxonomy/core-value/stakeholder-value>,
+      <https://www.insperity.com/taxonomy/core-value/value-proposition>, <https://www.insperity.com/taxonomy/core-value/value-stream>;
+    terms:description "Classification of value, the benefit or worth that stakeholders receive from offerings, capabilities, and process outcomes, and of the structures used to describe how it is delivered."@en;
+    terms:title "Core value taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Value taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-value/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/economic-value> a skos:Concept;
+    skos:prefLabel "Economic value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value expressed as a financial gain, saving, or avoided cost."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Financial value"@en, "Monetary value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/capital-efficiency>,
+      <https://www.insperity.com/taxonomy/core-value/cost-avoidance>, <https://www.insperity.com/taxonomy/core-value/cost-reduction>,
+      <https://www.insperity.com/taxonomy/core-value/productivity-gain>, <https://www.insperity.com/taxonomy/core-value/revenue-growth> .
+  
+  <https://www.insperity.com/taxonomy/core-value/information-value> a skos:Concept;
+    skos:prefLabel "Information value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value from better knowledge, decisions, and trust."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Decision value"@en, "Knowledge value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/decision-quality>, <https://www.insperity.com/taxonomy/core-value/reuse-value>,
+      <https://www.insperity.com/taxonomy/core-value/trust-and-transparency> .
+  
+  <https://www.insperity.com/taxonomy/core-value/risk-reduction-value> a skos:Concept;
+    skos:prefLabel "Risk reduction value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value from lowering the likelihood or impact of adverse events."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Protection value"@en, "Risk mitigation value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/compliance-assurance>,
+      <https://www.insperity.com/taxonomy/core-value/loss-avoidance>, <https://www.insperity.com/taxonomy/core-value/resilience> .
+  
+  <https://www.insperity.com/taxonomy/core-value/societal-value> a skos:Concept;
+    skos:prefLabel "Societal value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value that benefits communities or the wider public beyond direct stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Public value"@en, "Social value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/community-value>, <https://www.insperity.com/taxonomy/core-value/environmental-value> .
+  
+  <https://www.insperity.com/taxonomy/core-value/stakeholder-value> a skos:Concept;
+    skos:prefLabel "Stakeholder value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value experienced by a particular group of stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Experience value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/client-value>, <https://www.insperity.com/taxonomy/core-value/employee-value>,
+      <https://www.insperity.com/taxonomy/core-value/partner-value>, <https://www.insperity.com/taxonomy/core-value/shareholder-value> .
+  
+  <https://www.insperity.com/taxonomy/core-value/value-proposition> a skos:Concept;
+    skos:prefLabel "Value proposition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value-related statement of the benefits an offering or capability delivers to a stakeholder and why it is preferable to alternatives."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Offer value statement"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:value-proposition;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/client-value-proposition>,
+      <https://www.insperity.com/taxonomy/core-value/employee-value-proposition> .
+  
+  <https://www.insperity.com/taxonomy/core-value/value-stream> a skos:Concept;
+    skos:prefLabel "Value stream"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value-related structure that is an end-to-end sequence of stages delivering an outcome to a stakeholder."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:altLabel "Value chain"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject valuestreamvoc:value-stream;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-value/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-value/customer-value-stream>,
+      <https://www.insperity.com/taxonomy/core-value/internal-value-stream> .
+  
+  <https://www.insperity.com/taxonomy/core-value/capital-efficiency> a skos:Concept;
+    skos:prefLabel "Capital efficiency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An economic value from using less capital or working capital for the same outcome."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/economic-value>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/client-value> a skos:Concept;
+    skos:prefLabel "Client value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A stakeholder value experienced by client organizations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/stakeholder-value>;
+    skos:altLabel "Customer value"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainmarketingvoc:customer-value;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/client-value-proposition> a skos:Concept;
+    skos:prefLabel "Client value proposition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value proposition addressed to clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/value-proposition>;
+    skos:altLabel "Customer value proposition"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/community-value> a skos:Concept;
+    skos:prefLabel "Community value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A societal value that benefits the communities where the organization and its clients operate."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/societal-value>;
+    skos:altLabel "Community benefit"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/compliance-assurance> a skos:Concept;
+    skos:prefLabel "Compliance assurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk reduction value from meeting legal, regulatory, and contractual obligations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/risk-reduction-value>;
+    skos:altLabel "Regulatory assurance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/cost-avoidance> a skos:Concept;
+    skos:prefLabel "Cost avoidance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An economic value from preventing spending that would otherwise occur."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/economic-value>;
+    skos:altLabel "Avoided cost"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/cost-reduction> a skos:Concept;
+    skos:prefLabel "Cost reduction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An economic value from lowering current spending."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/economic-value>;
+    skos:altLabel "Cost savings"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/customer-value-stream> a skos:Concept;
+    skos:prefLabel "Customer value stream"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value stream that delivers an outcome to an external client or worker."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/value-stream>;
+    skos:altLabel "Operational value stream"@en, "Prospect to client value stream"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/decision-quality> a skos:Concept;
+    skos:prefLabel "Decision quality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information value from making decisions that are faster, more consistent, and better informed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/information-value>;
+    skos:altLabel "Better decisions"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/productivity-gain> a skos:Concept;
+    skos:prefLabel "Productivity gain"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An economic value from producing more output with the same resources."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/economic-value>;
+    skos:altLabel "Efficiency gain"@en, "Time savings"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/revenue-growth> a skos:Concept;
+    skos:prefLabel "Revenue growth"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An economic value from increased sales, retention, or pricing."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/economic-value>;
+    skos:altLabel "Revenue increase"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/employee-value> a skos:Concept;
+    skos:prefLabel "Employee value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A stakeholder value experienced by workers, such as security, wellbeing, and growth."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/stakeholder-value>;
+    skos:altLabel "Employee experience"@en, "Worker value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/employee-value-proposition> a skos:Concept;
+    skos:prefLabel "Employee value proposition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value proposition addressed to current and prospective workers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/value-proposition>;
+    skos:altLabel "Employer brand promise"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/environmental-value> a skos:Concept;
+    skos:prefLabel "Environmental value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A societal value from reducing harm to or improving the natural environment."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/societal-value>;
+    skos:altLabel "Planet value"@en, "Sustainability value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/reuse-value> a skos:Concept;
+    skos:prefLabel "Reuse value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information value from defining knowledge once and reusing it across services and domains."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/information-value>;
+    skos:altLabel "Single source of truth value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/trust-and-transparency> a skos:Concept;
+    skos:prefLabel "Trust and transparency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information value from answers and records that can be traced, explained, and verified."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/information-value>;
+    skos:altLabel "Transparency"@en, "Trust"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/internal-value-stream> a skos:Concept;
+    skos:prefLabel "Internal value stream"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A value stream that delivers an outcome to an internal stakeholder."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/value-stream>;
+    skos:altLabel "Development value stream"@en, "Enabling value stream"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/loss-avoidance> a skos:Concept;
+    skos:prefLabel "Loss avoidance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk reduction value from preventing fraud, errors, penalties, or incidents."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/risk-reduction-value>;
+    skos:altLabel "Penalty avoidance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/partner-value> a skos:Concept;
+    skos:prefLabel "Partner value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A stakeholder value experienced by suppliers, carriers, and partners."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/stakeholder-value>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/resilience> a skos:Concept;
+    skos:prefLabel "Resilience"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A risk reduction value from the ability to continue and recover when disruption occurs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/risk-reduction-value>;
+    skos:altLabel "Business continuity"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainfinancevoc:business-continuity;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-value/shareholder-value> a skos:Concept;
+    skos:prefLabel "Shareholder value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A stakeholder value experienced by owners and investors."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-value/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-value/stakeholder-value>;
+    skos:altLabel "Owner value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

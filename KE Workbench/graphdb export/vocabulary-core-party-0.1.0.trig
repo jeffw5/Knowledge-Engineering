@@ -1,0 +1,659 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-party/> {
+  <https://www.insperity.com/vocabulary/core-party/> a skos:ConceptScheme;
+    rdfs:label "Core party vocabulary"@en;
+    skos:prefLabel "Core party vocabulary"@en;
+    skos:hasTopConcept partyvoc:party;
+    terms:description "A general term referring to any individual or group involved in a transaction or interaction."@en;
+    terms:title "Core party vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T16:57:05.783Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Party"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-party/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:party a skos:Concept;
+    skos:prefLabel "Party"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:20:50.757Z"^^xsd:dateTime;
+    skos:definition "A general term referring to any individual or group involved in a transaction or interaction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-party/>;
+    skos:narrower partyvoc:organization, partyvoc:person, partyvoc:vendor .
+  
+  partyvoc:organization a skos:Concept;
+    skos:prefLabel "Organization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A structured group of people with a common purpose, such as a business, charity, or government agency."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:party;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:business-unit, partyvoc:commercial, partyvoc:corporate-services,
+      partyvoc:executive-team, partyvoc:network-technology, partyvoc:virtual-team .
+  
+  partyvoc:person a skos:Concept;
+    skos:prefLabel "Person"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "An individual, typically an employee, customer, or partner."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:party;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:vendor a skos:Concept;
+    skos:prefLabel "Vendor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A third-party company that provides goods or services to an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:party;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:business-unit a skos:Concept;
+    skos:prefLabel "Business unit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A distinct and often independently operated segment of a company (e.g., Verizon Business Group, Verizon Consumer Group)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:organization;
+    skos:altLabel "BU"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:edai .
+  
+  partyvoc:commercial a skos:Concept;
+    skos:prefLabel "Commercial"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Relating to the business and revenue-generating activities of a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:organization;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:corporate-services a skos:Concept;
+    skos:prefLabel "Corporate services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Centralized functions that support the entire organization, such as finance, HR, legal, and IT."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:organization;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:finance, partyvoc:human-resources, partyvoc:legal-and-security,
+      partyvoc:strategy .
+  
+  partyvoc:executive-team a skos:Concept;
+    skos:prefLabel "Executive team"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The top leadership team of an organization, typically consisting of the CEO and other C-level executives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:organization;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:chief-financial-officer, partyvoc:chief-human-resources-officer,
+      partyvoc:chief-operations-officer .
+  
+  partyvoc:network-technology a skos:Concept;
+    skos:prefLabel "Network technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The infrastructure and technologies used to build and operate communication networks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:organization;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:artificial-intelligence-and-data, partyvoc:global-network-and-technology .
+  
+  partyvoc:virtual-team a skos:Concept;
+    skos:prefLabel "Virtual team"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A group of people working together from different locations using technology to communicate and collaborate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:organization;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:edai a skos:Concept;
+    skos:prefLabel "EDAI"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T14:27:32.350Z"^^xsd:dateTime;
+    skos:definition "Responsible for foundational data and analytics, data integration, definition and standards, as well as governance across the ecosystem."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:business-unit;
+    skos:altLabel "Enterprise Data Analytics & Insights, Intelligence, Innovation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:data-and-artificial-intelligence .
+  
+  partyvoc:data-and-artificial-intelligence a skos:Concept;
+    skos:prefLabel "Data & artificial intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The collection, processing, and interpretation of data to extract meaningful insights and support decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:edai;
+    skos:altLabel "Data & Analytics"@en, "D&A"@en, "Data & AI"@en, "Data & Artificial Intelligence"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:data-and-artificial-intelligence-governance, partyvoc:data-and-artificial-intelligence-hub-and-spoke .
+  
+  partyvoc:data-and-artificial-intelligence-governance a skos:Concept;
+    skos:prefLabel "Data & artificial intelligence governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T14:24:26.179Z"^^xsd:dateTime;
+    skos:definition "Establishes data management policies, processes and technologies across Verizon."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:data-and-artificial-intelligence;
+    skos:altLabel "DAG"@en, "Data & Analytics Governance"@en, "Data & Artificial Intelligence Governance"@en,
+      "Data & AI governance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:end-to-end-governance .
+  
+  partyvoc:data-and-artificial-intelligence-hub-and-spoke a skos:Concept;
+    skos:prefLabel "Data & artificial intelligence hub & spoke"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A model for organizing data and analytics resources where a central “hub” provides common tools and governance, while “spokes” represent specific business units or functions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:data-and-artificial-intelligence;
+    skos:altLabel "Data & Analytics Hub & Spoke"@en, "D&A Hub & Spoke"@en, "Data & Artificial Intelligence Hub & Spoke"@en,
+      "Data & AI hub & spoke"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:end-to-end-governance a skos:Concept;
+    skos:prefLabel "End to end governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T14:25:56.254Z"^^xsd:dateTime;
+    skos:definition "Establish the data management policies, processes, and enabling technologies necessary to ensure data is Trusted, Available, and Governed to service the needs of customers, employees, business stakeholders is management end to end."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:data-and-artificial-intelligence-governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:finance a skos:Concept;
+    skos:prefLabel "Finance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The management of an organization’s money, including budgeting, investing, and reporting."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:corporate-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:audit, partyvoc:controller, partyvoc:financial-planning-and-analytics,
+      partyvoc:investor-relations, partyvoc:tax, partyvoc:treasurer .
+  
+  partyvoc:human-resources a skos:Concept;
+    skos:prefLabel "Human resources"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The department responsible for managing employee-related matters, including recruitment, compensation, benefits, and training."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:corporate-services;
+    skos:altLabel "HR"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:career-development, partyvoc:compensation, partyvoc:environmental-health-and-safety,
+      partyvoc:health-and-benefits, partyvoc:talent-management, partyvoc:work-life-balance .
+  
+  partyvoc:legal-and-security a skos:Concept;
+    skos:prefLabel "Legal & security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Providing legal counsel and ensuring the security of the organization’s assets and information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:corporate-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partyvoc:corporate-security, partyvoc:corporate-tax, partyvoc:global-clearance,
+      partyvoc:labor-and-employee-relations, partyvoc:litigation, partyvoc:network-and-product-intellectual-property,
+      partyvoc:privacy, partyvoc:strategic-business-operations .
+  
+  partyvoc:strategy a skos:Concept;
+    skos:prefLabel "Strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A high-level plan to achieve long-term goals and objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:corporate-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:audit a skos:Concept;
+    skos:prefLabel "Audit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "An independent examination of an organization’s financial records and operations to ensure accuracy and compliance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:controller a skos:Concept;
+    skos:prefLabel "Controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A senior financial executive responsible for accounting operations, financial reporting, and internal controls."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:financial-planning-and-analytics a skos:Concept;
+    skos:prefLabel "Financial planning & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The process of forecasting, budgeting, and analyzing financial performance to support strategic decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:finance;
+    skos:altLabel "FPAS"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:investor-relations a skos:Concept;
+    skos:prefLabel "Investor relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Communicating financial information and performance to investors and the public."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:tax a skos:Concept;
+    skos:prefLabel "Tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Managing an organization’s tax obligations and compliance with tax laws."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:treasurer a skos:Concept;
+    skos:prefLabel "Treasurer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "A senior executive responsible for managing an organization’s cash flow, investments, and risk."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:career-development a skos:Concept;
+    skos:prefLabel "Career development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Supporting employees in planning and advancing their careers within the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:human-resources;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:compensation a skos:Concept;
+    skos:prefLabel "Compensation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The total rewards package offered to employees, including salary, benefits, and incentives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:human-resources;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:environmental-health-and-safety a skos:Concept;
+    skos:prefLabel "Environmental health & safety"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Ensuring the health and safety of employees and minimizing the organization’s environmental impact."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:human-resources;
+    skos:altLabel "EHS"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:health-and-benefits a skos:Concept;
+    skos:prefLabel "Health & benefits"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Providing employees with health insurance, retirement plans, and other benefits."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:human-resources;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:talent-management a skos:Concept;
+    skos:prefLabel "Talent management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Attracting, developing, and retaining skilled employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:human-resources;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:work-life-balance a skos:Concept;
+    skos:prefLabel "Work life balance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Creating a work environment that supports employees in balancing their work and personal lives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:human-resources;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:corporate-security a skos:Concept;
+    skos:prefLabel "Corporate security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Protecting the organization’s physical and digital assets from threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:corporate-tax a skos:Concept;
+    skos:prefLabel "Corporate tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Managing the organization’s corporate income tax obligations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:global-clearance a skos:Concept;
+    skos:prefLabel "Global clearance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The process of obtaining necessary approvals and clearances for international business operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:labor-and-employee-relations a skos:Concept;
+    skos:prefLabel "Labor & employee relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Managing relationships with employees and labor unions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:litigation a skos:Concept;
+    skos:prefLabel "Litigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Resolving legal disputes through the court system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:network-and-product-intellectual-property a skos:Concept;
+    skos:prefLabel "Network & product intellectual property"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Protecting the organization’s patents, trademarks, and copyrights related to its network and products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:privacy a skos:Concept;
+    skos:prefLabel "Privacy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Protecting the confidentiality of personal information collected and used by the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:strategic-business-operations a skos:Concept;
+    skos:prefLabel "Strategic business operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Planning and executing strategic initiatives to achieve business objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:legal-and-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:chief-financial-officer a skos:Concept;
+    skos:prefLabel "Chief financial officer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The senior executive responsible for managing the organization’s finances."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:executive-team;
+    skos:altLabel "CFO"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:chief-human-resources-officer a skos:Concept;
+    skos:prefLabel "Chief human resources officer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The senior executive responsible for managing the organization’s human resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:executive-team;
+    skos:altLabel "CHRO"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:chief-operations-officer a skos:Concept;
+    skos:prefLabel "Chief operations officer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The senior executive responsible for overseeing the day-to-day operations of the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:executive-team;
+    skos:altLabel "COO"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:artificial-intelligence-and-data a skos:Concept;
+    skos:prefLabel "Artificial intelligence & data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "The use of artificial intelligence and data analytics to improve business processes and decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:network-technology;
+    skos:altLabel "AI&D"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  partyvoc:global-network-and-technology a skos:Concept;
+    skos:prefLabel "Global network & technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:52.864Z"^^xsd:dateTime;
+    skos:definition "Verizon’s worldwide network infrastructure and technology capabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-party/>;
+    skos:broader partyvoc:network-technology;
+    skos:altLabel "GNT"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

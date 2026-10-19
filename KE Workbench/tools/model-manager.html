@@ -171,7 +171,7 @@
         //   Voc / Tax / Ont = compliant assets carrying that keyword.
         //   Other = the exact complement: every graph NOT in Voc ∪ Tax ∪ Ont.
         // KE Workbench: compliant base URLs are a workbench setting (Semantic
-        // Governance v1.8 §3.2 sets https://www.insperity.com as the base URL;
+        // Governance v1.9 §3.2 sets https://www.insperity.com as the base URL;
         // the legacy enablingvalue.com host stays accepted until migrated).
         const DEFAULT_BASE_URLS = ["https://www.insperity.com/", "https://www.enablingvalue.com/"];
         function compliantHosts() {
@@ -392,7 +392,7 @@
             document.getElementById('metaPanel').classList.remove('hidden');
             
             // Starter template setup
-            document.getElementById('ttlEditor').value = `@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n# Construct your Turtle nodes below.\n# Naming & URI standards (Semantic Governance v1.8 §3.2): base URL https://www.insperity.com,\n# slash namespaces, full words (no acronyms), sentence-case labels, one skos:ConceptScheme per taxonomy.\n<https://www.insperity.com/taxonomy/compliance/> a skos:ConceptScheme ;\n    rdfs:label "Compliance taxonomy"@en ;\n    owl:versionInfo "0.1.0" .`;
+            document.getElementById('ttlEditor').value = `@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n@prefix owl: <http://www.w3.org/2002/07/owl#> .\n@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n# Construct your Turtle nodes below.\n# Naming & URI standards (Semantic Governance v1.9 §3.2): base URL https://www.insperity.com,\n# slash namespaces, full words (no acronyms), sentence-case labels, one skos:ConceptScheme per taxonomy.\n<https://www.insperity.com/taxonomy/compliance/> a skos:ConceptScheme ;\n    rdfs:label "Compliance taxonomy"@en ;\n    owl:versionInfo "0.1.0" .`;
             toggleActionButtons(false);
             document.getElementById('btnSave').disabled = false;
             document.getElementById('btnSave').classList.remove('opacity-50', 'cursor-not-allowed');

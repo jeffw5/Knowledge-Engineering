@@ -1,0 +1,705 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-party/> {
+  <https://www.insperity.com/taxonomy/core-party/> a owl:Ontology;
+    rdfs:label "Core party taxonomy"@en;
+    terms:description "The party taxonomy categorizes entities such as organizations (companies, agencies), persons (individuals, contacts) and vendors (suppliers of goods or services) which helps to effectively manage relationships and interactions with various internal & external entities."@en;
+    terms:title "Core party taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T02:09:15Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en,
+      "2026-10-17: Conformance Review before release — 1 term removed."@en, "2026-10-17: Conformance Review before release — 1 label changed."@en,
+      "2026-10-17: Conformance Review before release — 1 definition changed."@en;
+    terms:created "2024-08-29T17:21:12.502Z"^^xsd:dateTime;
+    skos:altLabel "Taxonomy | Core | Party"@en;
+    owl:versionInfo "0.1.0";
+    owl:imports <https://www.insperity.com/ontology/core/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/core-party/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-party/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Person a owl:Class;
+    rdfs:subClassOf partytax:Party;
+    rdfs:label "Person"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Person"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-10-01T19:45:51.149Z"^^xsd:dateTime;
+    skos:definition "An individual, typically an employee, customer, or partner."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:person;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Party a owl:Class;
+    rdfs:label "Party"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Party"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T02:09:15Z"^^xsd:dateTime;
+    terms:created "2024-09-04T17:55:47.470Z"^^xsd:dateTime;
+    skos:definition "n abstract, top-level generalized entity representing any autonomous human actor (Individual / Natural Person) or legally recognized group, collective, or organization (Institution / Legal Entity) that has agency, can incur legal rights and obligations, possess assets, or enter into transactions and relationships within an enterprise ecosystem."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:party;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:BusinessUnit a owl:Class;
+    rdfs:subClassOf partytax:Organization;
+    rdfs:label "Business unit"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Business unit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:57:55Z"^^xsd:dateTime;
+    terms:created "2024-09-04T21:26:59.196Z"^^xsd:dateTime;
+    skos:definition "A distinct and often independently operated segment of a company (e.g., the organization's Business Group, the organization's Consumer Group)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:business-unit;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:CorporateServices a owl:Class;
+    rdfs:subClassOf partytax:Organization;
+    rdfs:label "Corporate services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Corporate services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "Centralized functions that support the entire organization, such as finance, HR, legal, and IT."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:corporate-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:DataAi a owl:Class;
+    rdfs:subClassOf partytax:Edai;
+    rdfs:label "Data & artificial intelligence"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Data & artificial intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "The collection, processing, and interpretation of data to extract meaningful insights and support decision-making."@en;
+    skos:altLabel "Data & AI"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:data-and-artificial-intelligence;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:ExecutiveTeam a owl:Class;
+    rdfs:subClassOf partytax:Organization;
+    rdfs:label "Executive team"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Executive team"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "The top leadership team of an organization, typically consisting of the CEO and other C-level executives."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:executive-team;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:NetworkTechnology a owl:Class;
+    rdfs:subClassOf partytax:Organization;
+    rdfs:label "Network technology"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Network technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "The infrastructure and technologies used to build and operate communication networks."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:network-technology;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Organization a owl:Class;
+    rdfs:subClassOf partytax:Party;
+    rdfs:label "Organization"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Organization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T21:24:53.451Z"^^xsd:dateTime;
+    skos:definition "A structured group of people with a common purpose, such as a business, charity, or government agency."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:organization;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Strategy a owl:Class;
+    rdfs:subClassOf partytax:CorporateServices;
+    rdfs:label "Strategy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "A high-level plan to achieve long-term goals and objectives."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:strategy;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Edai a owl:Class;
+    rdfs:subClassOf partytax:BusinessUnit;
+    rdfs:label "Enterprise data & artificial intelligence"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Enterprise data & artificial intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:59:40Z"^^xsd:dateTime;
+    terms:created "2025-10-31T14:30:43.430Z"^^xsd:dateTime;
+    skos:definition "Responsible for foundational data and analytics, data integration, definition and standards, as well as governance across the ecosystem."@en;
+    skos:altLabel "EDAI"@en, "Enterprise Data & AI"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:edai;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:DataAiGovernance a owl:Class;
+    rdfs:subClassOf partytax:DataAi;
+    rdfs:label "Data & artificial intelligence governance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Data & artificial intelligence governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:58:03Z"^^xsd:dateTime;
+    terms:created "2025-10-31T14:30:43.430Z"^^xsd:dateTime;
+    skos:definition "Establishes data management policies, processes and technologies across the organization."@en;
+    skos:altLabel "Data & AI governance"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:data-and-artificial-intelligence-governance;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:EndToEndGovernance a owl:Class;
+    rdfs:subClassOf partytax:DataAiGovernance;
+    rdfs:label "End to end governance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "End to end governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-10-31T14:30:43.430Z"^^xsd:dateTime;
+    skos:definition "Establish the data management policies, processes, and enabling technologies necessary to ensure data is Trusted, Available, and Governed to service the needs of customers, employees, business stakeholders is management end to end."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:end-to-end-governance;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:DataAiHubSpoke a owl:Class;
+    rdfs:subClassOf partytax:DataAi;
+    rdfs:label "Data & artificial intelligence hub & spoke"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Data & artificial intelligence hub & spoke"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-11-22T16:18:35.354Z"^^xsd:dateTime;
+    skos:definition "A model for organizing data and analytics resources where a central “hub” provides common tools and governance, while “spokes” represent specific business units or functions."@en;
+    skos:altLabel "Data & AI hub & spoke"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:data-and-artificial-intelligence-hub-and-spoke;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Commercial a owl:Class;
+    rdfs:subClassOf partytax:Organization;
+    rdfs:label "Commercial"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Commercial"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "Relating to the business and revenue-generating activities of a company."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:commercial;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Finance a owl:Class;
+    rdfs:subClassOf partytax:CorporateServices;
+    rdfs:label "Finance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Finance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "The management of an organization’s money, including budgeting, investing, and reporting."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:finance;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Audit a owl:Class;
+    rdfs:subClassOf partytax:Finance;
+    rdfs:label "Audit"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Audit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:44:32.025Z"^^xsd:dateTime;
+    skos:definition "An independent examination of an organization’s financial records and operations to ensure accuracy and compliance."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:audit;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Controller a owl:Class;
+    rdfs:subClassOf partytax:Finance;
+    rdfs:label "Controller"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:44:32.025Z"^^xsd:dateTime;
+    skos:definition "A senior financial executive responsible for accounting operations, financial reporting, and internal controls."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:controller;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:FinancialPlanningAnalytics a owl:Class;
+    rdfs:subClassOf partytax:Finance;
+    rdfs:label "Financial planning & analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Financial planning & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:44:32.025Z"^^xsd:dateTime;
+    skos:definition "The process of forecasting, budgeting, and analyzing financial performance to support strategic decision-making."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:financial-planning-and-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:InvestorRelations a owl:Class;
+    rdfs:subClassOf partytax:Finance;
+    rdfs:label "Investor relations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Investor relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:44:32.025Z"^^xsd:dateTime;
+    skos:definition "Communicating financial information and performance to investors and the public."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:investor-relations;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Tax a owl:Class;
+    rdfs:subClassOf partytax:Finance;
+    rdfs:label "Tax"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:44:32.025Z"^^xsd:dateTime;
+    skos:definition "Managing an organization’s tax obligations and compliance with tax laws."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:tax;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Treasurer a owl:Class;
+    rdfs:subClassOf partytax:Finance;
+    rdfs:label "Treasurer"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Treasurer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:44:32.025Z"^^xsd:dateTime;
+    skos:definition "A senior executive responsible for managing an organization’s cash flow, investments, and risk."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:treasurer;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:HumanResources a owl:Class;
+    rdfs:subClassOf partytax:CorporateServices;
+    rdfs:label "Human resources"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Human resources"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "The department responsible for managing employee-related matters, including recruitment, compensation, benefits, and training."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:human-resources;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:CareerDevelopment a owl:Class;
+    rdfs:subClassOf partytax:HumanResources;
+    rdfs:label "Career development"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Career development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Supporting employees in planning and advancing their careers within the organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:career-development;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Compensation a owl:Class;
+    rdfs:subClassOf partytax:HumanResources;
+    rdfs:label "Compensation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Compensation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "The total rewards package offered to employees, including salary, benefits, and incentives."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:compensation;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:EnvironmentalHealthSafety a owl:Class;
+    rdfs:subClassOf partytax:HumanResources;
+    rdfs:label "Environmental health & safety"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Environmental health & safety"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Ensuring the health and safety of employees and minimizing the organization’s environmental impact."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:environmental-health-and-safety;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:HealthBenefits a owl:Class;
+    rdfs:subClassOf partytax:HumanResources;
+    rdfs:label "Health & benefits"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Health & benefits"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Providing employees with health insurance, retirement plans, and other benefits."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:health-and-benefits;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:TalentManagement a owl:Class;
+    rdfs:subClassOf partytax:HumanResources;
+    rdfs:label "Talent management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Talent management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Attracting, developing, and retaining skilled employees."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:talent-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:WorkLifeBalance a owl:Class;
+    rdfs:subClassOf partytax:HumanResources;
+    rdfs:label "Work life balance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Work life balance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Creating a work environment that supports employees in balancing their work and personal lives."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:work-life-balance;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:LegalSecurity a owl:Class;
+    rdfs:subClassOf partytax:CorporateServices;
+    rdfs:label "Legal & security"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Legal & security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:33:12.742Z"^^xsd:dateTime;
+    skos:definition "Providing legal counsel and ensuring the security of the organization’s assets and information."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:legal-and-security;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:CorporateSecurity a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Corporate security"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Corporate security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Protecting the organization’s physical and digital assets from threats."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:corporate-security;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:CorporateTax a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Corporate tax"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Corporate tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Managing the organization’s corporate income tax obligations."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:corporate-tax;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:GlobalClearance a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Global clearance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Global clearance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "The process of obtaining necessary approvals and clearances for international business operations."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:global-clearance;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:LaborEmployeeRelations a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Labor & employee relations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Labor & employee relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Managing relationships with employees and labor unions."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:labor-and-employee-relations;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Litigation a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Litigation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Litigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Resolving legal disputes through the court system."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:litigation;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:NetworkProductIntellectualProperty a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Network & product intellectual property"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Network & product intellectual property"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Protecting the organization’s patents, trademarks, and copyrights related to its network and products."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:network-and-product-intellectual-property;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Privacy a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Privacy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Privacy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Protecting the confidentiality of personal information collected and used by the organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:privacy;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:StrategicBusinessOperations a owl:Class;
+    rdfs:subClassOf partytax:LegalSecurity;
+    rdfs:label "Strategic business operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Strategic business operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T22:53:06.218Z"^^xsd:dateTime;
+    skos:definition "Planning and executing strategic initiatives to achieve business objectives."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:strategic-business-operations;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:ChiefFinancialOfficer a owl:Class;
+    rdfs:subClassOf partytax:ExecutiveTeam;
+    rdfs:label "Chief financial officer"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Chief financial officer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T23:06:14.401Z"^^xsd:dateTime;
+    skos:definition "The senior executive responsible for managing the organization’s finances."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:chief-financial-officer;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:ChiefHumanResourcesOfficer a owl:Class;
+    rdfs:subClassOf partytax:ExecutiveTeam;
+    rdfs:label "Chief human resources officer"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Chief human resources officer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T23:06:14.401Z"^^xsd:dateTime;
+    skos:definition "The senior executive responsible for managing the organization’s human resources."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:chief-human-resources-officer;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:ChiefOperationsOfficer a owl:Class;
+    rdfs:subClassOf partytax:ExecutiveTeam;
+    rdfs:label "Chief operations officer"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Chief operations officer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T23:06:14.401Z"^^xsd:dateTime;
+    skos:definition "The senior executive responsible for overseeing the day-to-day operations of the organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:chief-operations-officer;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:ArtificialIntelligenceData a owl:Class;
+    rdfs:subClassOf partytax:NetworkTechnology;
+    rdfs:label "Artificial intelligence & data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Artificial intelligence & data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-04T23:06:14.401Z"^^xsd:dateTime;
+    skos:definition "The use of artificial intelligence and data analytics to improve business processes and decision-making."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:artificial-intelligence-and-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:VirtualTeam a owl:Class;
+    rdfs:subClassOf partytax:Organization;
+    rdfs:label "Virtual team"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Virtual team"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T18:44:53.379Z"^^xsd:dateTime;
+    skos:definition "A group of people working together from different locations using technology to communicate and collaborate."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:virtual-team;
+    core:hasLifecycleStatus core:Draft .
+  
+  partytax:Vendor a owl:Class;
+    rdfs:subClassOf partytax:Party;
+    rdfs:label "Vendor"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-party/>;
+    skos:prefLabel "Vendor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T18:44:53.379Z"^^xsd:dateTime;
+    skos:definition "A third-party company that provides goods or services to an organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject partyvoc:vendor;
+    core:hasLifecycleStatus core:Draft .
+}

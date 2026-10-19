@@ -1,10 +1,26 @@
 {
-  "_comment": "KE Ingest configuration. Standards: Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III. Edit this file, not the script, to change naming, authorship or generated text.",
+  "_comment": "KE Ingest configuration. Standards: Semantic Governance: Services, Architecture & Integration v1.9 (Draft), Part III. Edit this file, not the script, to change naming, authorship or generated text.",
   "baseUrl": "https://www.insperity.com/",
   "author": "Jeffrey Wallk",
   "initialVersion": "0.1.0",
   "lifecycleStatus": "Draft",
-  "standardsRef": "Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III",
+  "standardsRef": "Semantic Governance: Services, Architecture & Integration v1.9 (Draft), Part III",
+  "_header311": "Part III §3.11 header fields written on every asset. publisher: the organization IRI (registration authority). conformsTo: the IRI of the guide edition the asset is validated against. ontologyConformsTo: the top-level ontology every ontology is aligned to (BFO 2020, ISO/IEC 21838-2). defaultSubject: the domain taxonomy concept used as dcterms:subject when an asset under \"assets\" has no \"subject\" of its own. authorIri (optional): a person IRI written as dcterms:creator instead of the author name. taxonomiesAsSkos: taxonomies authored as OWL classes are converted to SKOS (§3.11); set false to keep them as OWL.",
+  "publisher": "https://www.insperity.com/resource/core/Organization/insperity",
+  "conformsTo": [
+    "https://www.insperity.com/standard/semantic-governance/1.9/"
+  ],
+  "ontologyConformsTo": [
+    "http://purl.obolibrary.org/obo/bfo/2020/bfo.owl"
+  ],
+  "defaultSubject": "https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture",
+  "taxonomiesAsSkos": true,
+  "_loadBlockingRules": "Conformance rules whose errors stop a load into GraphDB (Ingestion, Conformance Review, Model Editor (Vocabulary)); Load into GraphDB… offers Load anyway. Names as in the ingestion report. [] turns the gate off.",
+  "loadBlockingRules": [
+    "Base URL (§3.2)",
+    "No other organization's content",
+    "Valid dates (ISO 8601)"
+  ],
   "_sourceNamespaces": "How legacy namespaces map onto the §3.2 URI patterns. {kind} is ontology|taxonomy|vocabulary; the domain keeps the core-/domain- tier so the holarchy naming (vocabulary-core-name → /vocabulary/core-name/) is preserved. The last rule catches the legacy hyphenated form on any host (…/ontology-domain-governance/1.0, …/taxonomy-core-process#Term).",
   "sourceNamespaces": [
     {

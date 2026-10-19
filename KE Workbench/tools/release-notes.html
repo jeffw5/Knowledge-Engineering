@@ -29,7 +29,7 @@ h1{font-size:28px;letter-spacing:-.012em;margin:8px 0 4px}
 .rel-b{padding:6px 18px 14px}
 .grp{margin-top:10px}
 .grp-h{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
-.grp-h.new{color:var(--ke-ok)} .grp-h.improved{color:var(--ke-accent)} .grp-h.fixed{color:var(--ke-warn)} .grp-h.removed{color:var(--ke-bad)}
+.grp-h.new{color:var(--ke-ok)} .grp-h.improved{color:var(--ke-accent)} .grp-h.fixed{color:var(--ke-warn)} .grp-h.removed{color:var(--ke-bad)} .grp-h.breaking{color:var(--ke-bad)}
 ul{list-style:none}
 li{position:relative;padding:3px 0 3px 16px;color:var(--ke-ink)}
 li::before{content:"";position:absolute;left:3px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--ke-line)}
@@ -50,7 +50,7 @@ code{font-family:var(--ke-mono);font-size:.9em}
 (function () {
   const R = window.KE_RELEASES || [], cur = (window.KE_REGISTRY || {}).version || (R[0] && R[0].version) || '';
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const label = { new: 'New', improved: 'Improved', fixed: 'Fixed', removed: 'Removed' };
+  const label = { breaking: 'Breaking changes', new: 'New', improved: 'Improved', fixed: 'Fixed', removed: 'Removed' };
   const fmt = d => { try { return new Date(d + 'T12:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) { return d; } };
   document.getElementById('cur').textContent = cur;
   document.getElementById('toc').innerHTML = R.map(r => `<a href="#v${esc(r.version)}" class="${r.version === cur ? 'cur' : ''}">${esc(r.version)}</a>`).join('');

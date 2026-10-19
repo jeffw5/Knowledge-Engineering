@@ -1,0 +1,399 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-location/> {
+  <https://www.insperity.com/vocabulary/core-location/> a skos:ConceptScheme;
+    rdfs:label "Core location vocabulary"@en;
+    skos:prefLabel "Core location vocabulary"@en;
+    skos:hasTopConcept locationvoc:location;
+    terms:description "A position or point in physical or digital space."@en;
+    terms:title "Core location vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T16:56:48.365Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Location"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-location/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:location a skos:Concept;
+    skos:prefLabel "Location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:20:32.397Z"^^xsd:dateTime;
+    skos:definition "A position or point in physical or digital space."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:altLabel "Place"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-location/>;
+    skos:narrower locationvoc:geospatial, locationvoc:logical, locationvoc:physical .
+  
+  locationvoc:geospatial a skos:Concept;
+    skos:prefLabel "Geospatial"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "Relating to or involving the geographic location and spatial information of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:location;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower locationvoc:latitude, locationvoc:longitude, locationvoc:polygon .
+  
+  locationvoc:logical a skos:Concept;
+    skos:prefLabel "Logical"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A non-physical address or identifier that refers to a location or resource based on its function or purpose within a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:location;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower locationvoc:email-address, locationvoc:internationalized-resource-identifier,
+      locationvoc:phone-number, locationvoc:port-number, locationvoc:uniform-resource-identifier,
+      locationvoc:uniform-resource-locator .
+  
+  locationvoc:physical a skos:Concept;
+    skos:prefLabel "Physical"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A tangible location in the real world that can be identified by its geographic coordinates and/or a physical address."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:location;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower locationvoc:post-office-box, locationvoc:street-address .
+  
+  locationvoc:latitude a skos:Concept;
+    skos:prefLabel "Latitude"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "The angular distance, measured in degrees, north or south of the equator (ranging from -90° to +90°)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:geospatial;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:longitude a skos:Concept;
+    skos:prefLabel "Longitude"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "The angular distance, measured in degrees, east or west of the prime meridian (ranging from -180° to +180°)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:geospatial;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:polygon a skos:Concept;
+    skos:prefLabel "Polygon"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A closed geometric shape on a map defined by a connected sequence of latitude and longitude pairs, representing an area."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:geospatial;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:email-address a skos:Concept;
+    skos:prefLabel "Email address"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "An electronic address used to send and receive email messages."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:logical;
+    skos:altLabel "Electronic Mail Address"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:internationalized-resource-identifier a skos:Concept;
+    skos:prefLabel "Internationalized resource identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A standardized text string that uniquely identifies a resource; a generalization of URI that allows for Unicode characters."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:logical;
+    skos:altLabel "IRI"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:phone-number a skos:Concept;
+    skos:prefLabel "Phone number"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A numerical sequence used to identify and connect to a specific telephone line."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:logical;
+    skos:altLabel "Telephone Number"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:port-number a skos:Concept;
+    skos:prefLabel "Port number"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A numerical identifier that distinguishes a specific process or service on a networked device, used alongside an IP address."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:logical;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:uniform-resource-identifier a skos:Concept;
+    skos:prefLabel "Uniform resource identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A standardized string of characters used to identify a resource on a network, typically used for the World Wide Web."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:logical;
+    skos:altLabel "URI"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:uniform-resource-locator a skos:Concept;
+    skos:prefLabel "Uniform resource locator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A type of URI that specifies the location of a resource on a network and the protocol for retrieving it; often used interchangeably with URI."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:logical;
+    skos:altLabel "URL"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:post-office-box a skos:Concept;
+    skos:prefLabel "Post office box"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A uniquely addressable box at a post office used for receiving mail."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:physical;
+    skos:altLabel "Post Office Box"@en, "PO box"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:street-address a skos:Concept;
+    skos:prefLabel "Street address"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A standardized way of identifying the location of a building or property on a street, typically including house number, street name, and city."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:physical;
+    skos:altLabel "Address"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower locationvoc:city, locationvoc:province, locationvoc:region, locationvoc:state,
+      locationvoc:street-name, locationvoc:street-number, locationvoc:zip-code .
+  
+  locationvoc:city a skos:Concept;
+    skos:prefLabel "City"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A large human settlement with defined boundaries and a local government."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:province a skos:Concept;
+    skos:prefLabel "Province"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "An administrative division within a country or state, often with its own level of government."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:region a skos:Concept;
+    skos:prefLabel "Region"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A geographical area with common characteristics or purpose, often less formally defined than a province or state."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:state a skos:Concept;
+    skos:prefLabel "State"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A political subdivision of a country with its own government and jurisdiction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:street-name a skos:Concept;
+    skos:prefLabel "Street name"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "The official name given to a street within a city or town."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:street-number a skos:Concept;
+    skos:prefLabel "Street number"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A unique number assigned to a building or property on a street, used for identification purposes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationvoc:zip-code a skos:Concept;
+    skos:prefLabel "ZIP code"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:45:26.239Z"^^xsd:dateTime;
+    skos:definition "A postal code system used to efficiently sort and deliver mail to specific geographic areas."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-location/>;
+    skos:broader locationvoc:street-address;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

@@ -1,6 +1,6 @@
 # KE Workbench
 
-One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* v1.8 (Draft).
+One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* v1.9 (Draft), including the §3.11 metadata field set.
 
 ## Run it
 
@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **1.3.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **2.2.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -53,8 +53,8 @@ Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, 
 The classic `model-editor.html` is replaced in the navigation by two focused editors. It is still in `tools/` (hidden from the nav).
 
 **Model Editor (Taxonomy)** — choose a taxonomy (any asset whose IRI contains "taxonomy"; tick *all* to see every scheme and ontology). It works with both kinds of taxonomy in the repository:
-- **OWL taxonomies** (`owl:Ontology` with `owl:Class` terms, as in `taxonomy-core-*`): members are classes with `rdfs:isDefinedBy` the taxonomy, in its named graph, or in its namespace (`IRI/…` or `IRI#…`) unless defined by another model; broader/narrower is `rdfs:subClassOf`. A vocabulary term dropped in reuses the class already linked to it by `dc:subject` (or a class with the same label); otherwise a new class is created in the taxonomy's namespace, named from the label in PascalCase, with `rdfs:label`, `rdfs:isDefinedBy` and `dc:subject` pointing back to the vocabulary term.
-- **SKOS taxonomies** (`skos:ConceptScheme`): `skos:inScheme`, `skos:broader`/`skos:narrower`, `skos:topConceptOf`/`skos:hasTopConcept`.
+- **SKOS taxonomies** (`skos:ConceptScheme`, the only kind from 2.0.0 on): `skos:inScheme`, `skos:broader`/`skos:narrower`, `skos:topConceptOf`/`skos:hasTopConcept`. A vocabulary term dropped in reuses the concept already linked to it (`core:hasPrimaryTerm`, `dcterms:subject` or legacy `dc:subject`) or a concept with the same label; otherwise a new concept is created in the taxonomy's namespace, named from the label in UpperCamelCase, with the label, the vocabulary term's definition, `core:hasPrimaryTerm` and `dcterms:subject` pointing back to the vocabulary term. The vocabulary term itself never joins the taxonomy's scheme.
+- **OWL taxonomies** (`owl:Ontology` with `owl:Class` terms, from before 2.0.0; re-ingest to convert them): members are classes with `rdfs:isDefinedBy` the taxonomy, in its named graph, or in its namespace; broader/narrower is `rdfs:subClassOf`. New classes are linked the same way, with `core:hasPrimaryTerm` and `dcterms:subject`.
 
 Pick a vocabulary on the left and select terms (Ctrl/⌘-click, Shift-click, *All*). Dragging uses the mouse directly (press, move, release); a label follows the pointer and the drop target is highlighted.
 - Drop **on** a term: the dragged terms become its narrower terms (moving them from their old place).
@@ -75,7 +75,7 @@ Model Manager links to `voc-editor.html`, which wasn't among the source files (i
 
 ## Standards Conformance rules
 
-Base URL · URI pattern · identifier case · no acronyms in identifiers · no acronyms in preferred labels · label present with `@en` · sentence-case labels · definition present · genus + differentia · named parent class · `rdfs:isDefinedBy` · property domain and range · restricted OWL constructs · concept in scheme with one prefLabel · no version in term IRIs · semantic version on releases · one scheme per taxonomy with top concepts flagged · no other organization's content · no broken references. Approved acronyms come from the ingestion configuration.
+Base URL · URI pattern · identifier case · no acronyms in identifiers · no acronyms in preferred labels · label present with `@en` · sentence-case labels · definition present · genus + differentia · named parent class · `rdfs:isDefinedBy` · property domain and range · restricted OWL constructs · concept in scheme with one prefLabel · no version in term IRIs · semantic version (and version IRI) on releases · one scheme per taxonomy with top concepts flagged · no other organization's content · no broken references · taxonomy term in a vocabulary · primary vocabulary term · taxonomies stay in SKOS · asset header fields (§3.11) · valid dates. Approved acronyms come from the ingestion configuration.
 
 ## Ingestion (1.4.0)
 
@@ -118,7 +118,47 @@ Conformance Review's **Save & load into GraphDB** does the same for its correcti
 
 ## Taxonomy terms in vocabularies (1.8.0)
 
-Every taxonomy term must name its vocabulary term (`dc:subject`), and that term must exist in a vocabulary — §3.8, reported as an error.
+Every taxonomy term must name its vocabulary term, and that term must exist in a vocabulary — reported as an error. From 2.0.0 the link is `core:hasPrimaryTerm` plus `dcterms:subject` (§3.11); `dc:subject` is still read.
 
 - **Ingestion** links a term automatically when its preferred or alternative label matches a vocabulary term (this run's vocabularies, then the ones already in the destination; the same-domain vocabulary wins). Unmatched terms are reported.
 - **Conformance Review › Not in a vocabulary**: *Link* a matching term, search for another, or *Add to vocabulary* (choose the vocabulary and the broader term). Tick several terms to add them in one go; parents are added first, so the hierarchy carries over. **Save & load into GraphDB** writes both files and loads them.
+
+## Duplicates and generated definitions (1.9.0)
+
+- **Duplicates**: when several source files describe the same asset, Ingestion uses the largest (most terms; set `"duplicates": "largest-file"` in the configuration to compare bytes instead) and lists the others as skipped.
+- **Shared namespaces**: a header such as `…/taxonomy/core/IssueTaxonomy` becomes its own asset, `…/taxonomy/core-issue/`.
+- **Definitions written by Claude**: create `~/.ke-workbench.env` with one line, `ANTHROPIC_API_KEY=sk-ant-…`. Then tick *Write missing definitions with Claude* on the Ingestion page, or use **✦ Write with Claude** in Conformance Review (one term, or several under *Missing definitions*) and in the Model Editor (Vocabulary). Every generated definition carries an editorial note asking for review before the term moves to Candidate. `"definitionModel"` in the configuration picks the model.
+
+## Semantic Governance v1.9 (2.0.0)
+
+A MAJOR release: what ingestion writes changes in ways that break consumers of 1.x output, so re-ingest your sources and load the new files.
+
+- **Taxonomies are SKOS.** A taxonomy authored as OWL classes is converted (`owl:Class` → `skos:Concept`, `rdfs:subClassOf` → `skos:broader`). `"taxonomiesAsSkos": false` keeps the old behavior.
+- **Taxonomy concept IRIs are UpperCamelCase** (`…/taxonomy/core-process/ApprovalStep`); vocabulary terms stay hyphenated. `crosswalk.csv` maps old IRIs to new ones.
+- **Links to vocabulary terms** are `core:hasPrimaryTerm` and `dcterms:subject`. `dcterms:source` on each taxonomy lists the vocabularies it draws on.
+- **§3.11 header fields** on every asset: `vaem:namespace` (replaces `vann:preferredNamespaceUri`), `vann:preferredNamespacePrefix`, `owl:versionIRI`, `dcterms:publisher`, `dcterms:conformsTo`, `dcterms:subject`. Set them in the configuration: `publisher`, `conformsTo`, `ontologyConformsTo`, `defaultSubject` (or `"subject"` per asset under `assets`), and optionally `authorIri`.
+- **Dates** keep their type: a date alone is `xsd:date`.
+- **Numbered labels** move the number to `skos:notation`; `&` in a preferred label becomes "and".
+- **Loading into GraphDB is blocked** while a file has terms outside the base URL, another organization's content or an invalid date (`"loadBlockingRules"` lists the rule names; `[]` turns the gate off). *Load into GraphDB…* lists the errors and offers *Load anyway*.
+- The 1.9.0 copies of every file this release changed are in `legacy/1.9.0/`.
+
+## BFO as the top-level ontology (2.1.0)
+
+BFO 2020 (ISO/IEC 21838-2) is the top-level ontology the core domain ontology is aligned to; the RO Core relations are anchored to it (§3.10). Neither is ingested: both keep their own IRIs.
+
+- **Ingestion › Reference ontologies** loads them into GraphDB, each into its own named graph (`http://purl.obolibrary.org/obo/bfo.owl`, `http://purl.obolibrary.org/obo/ro/core.owl`). Give a URL (defaults: the OBO addresses) or the path of a downloaded file. The workbench fetches the file and reads its format, so GraphDB needs no internet access.
+- Only the core domain ontology ties into BFO: its classes have BFO parents and its relations are subproperties of BFO or RO relations. Vocabularies and taxonomies reach BFO through `core:formalizedBy` to a core class; they carry no BFO links of their own.
+- **Model Editor (Ontology)** no longer has a Load BFO button; with BFO loaded, tick it in the Models list and draw *is a* from a core class to a BFO class.
+
+## Core domain ontology (2.2.0)
+
+The core domain ontology is authored in `ingest/core/ontology-core.source.ttl` and its shapes in `ingest/core/shapes-core.source.ttl`. Build them into KE Baseline with
+
+    python3 ingest/build_core.py            # --out "../KE Baseline" by default; --no-taxonomies to leave the taxonomies alone
+
+The build adds labels, rdfs:isDefinedBy, governance and §3.11 header fields, runs the Part III checks and a lineage check, and writes `core:formalizedBy` into the core taxonomies from `ingest/core/formalized-by.csv` (rows without a core class are listed for review).
+
+Stack: BFO 2020 ← RO Core + RO extract ← core domain ontology (`/ontology/core/`) ← domain ontologies. Taxonomy concepts point up with `core:formalizedBy`; ontology classes name their vocabulary term with `core:hasPrimaryTerm`.
+
+Load order in GraphDB: Ingestion › Reference ontologies › Load all three (BFO, RO Core, `reference/ro-extract.ttl`), then the KE Baseline files. Run `KE Baseline/graphdb-drop-superseded-core.rq` once to remove the old core-domain ontology and core-* shapes graphs.
+

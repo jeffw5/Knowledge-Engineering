@@ -1,0 +1,380 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-decision/> {
+  <https://www.insperity.com/taxonomy/core-decision/> a skos:ConceptScheme;
+    rdfs:label "Core decision taxonomy"@en;
+    skos:prefLabel "Core decision taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-decision/decision-model>,
+      <https://www.insperity.com/taxonomy/core-decision/operational-decision>, <https://www.insperity.com/taxonomy/core-decision/strategic-decision>,
+      <https://www.insperity.com/taxonomy/core-decision/tactical-decision>;
+    terms:description "Classification of decisions, the determinations of an outcome or course of action made by a party or automated agent, and of the models used to make them."@en;
+    terms:title "Core decision taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Decision taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-decision/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/decision-model> a skos:Concept;
+    skos:prefLabel "Decision model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision-related information artifact that specifies how a decision is made from its inputs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:altLabel "Decision logic specification"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-decision/decision-requirements-graph>,
+      <https://www.insperity.com/taxonomy/core-decision/decision-table>, <https://www.insperity.com/taxonomy/core-decision/decision-tree>,
+      <https://www.insperity.com/taxonomy/core-decision/predictive-decision-model>, <https://www.insperity.com/taxonomy/core-decision/scoring-model> .
+  
+  <https://www.insperity.com/taxonomy/core-decision/operational-decision> a skos:Concept;
+    skos:prefLabel "Operational decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision made repeatedly in the course of day-to-day work, often by rules or agents."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:altLabel "Day-to-day decision"@en, "Transactional decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-decision/allocation-decision>,
+      <https://www.insperity.com/taxonomy/core-decision/answer-decision>, <https://www.insperity.com/taxonomy/core-decision/approval-decision>,
+      <https://www.insperity.com/taxonomy/core-decision/classification-decision>, <https://www.insperity.com/taxonomy/core-decision/compliance-determination>,
+      <https://www.insperity.com/taxonomy/core-decision/eligibility-determination>, <https://www.insperity.com/taxonomy/core-decision/exception-decision>,
+      <https://www.insperity.com/taxonomy/core-decision/pricing-decision>, <https://www.insperity.com/taxonomy/core-decision/prioritization-decision>,
+      <https://www.insperity.com/taxonomy/core-decision/routing-decision> .
+  
+  <https://www.insperity.com/taxonomy/core-decision/strategic-decision> a skos:Concept;
+    skos:prefLabel "Strategic decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision that sets long-term direction, scope, or major resource commitments."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:altLabel "Executive decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-decision/> .
+  
+  <https://www.insperity.com/taxonomy/core-decision/tactical-decision> a skos:Concept;
+    skos:prefLabel "Tactical decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision that translates strategy into plans, budgets, and allocations for a medium term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:altLabel "Management decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-decision/> .
+  
+  <https://www.insperity.com/taxonomy/core-decision/allocation-decision> a skos:Concept;
+    skos:prefLabel "Allocation decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that distributes resources or amounts among recipients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/answer-decision> a skos:Concept;
+    skos:prefLabel "Answer decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision by an artificial intelligence agent on whether to answer, ask, escalate, or decline."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Respond or escalate decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/approval-decision> a skos:Concept;
+    skos:prefLabel "Approval decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that accepts or rejects a request or item."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Authorization decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/classification-decision> a skos:Concept;
+    skos:prefLabel "Classification decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that assigns an item to a category."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Categorization"@en, "Triage decision"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:categorization;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/compliance-determination> a skos:Concept;
+    skos:prefLabel "Compliance determination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that establishes whether an obligation applies and is met."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Compliance decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/decision-requirements-graph> a skos:Concept;
+    skos:prefLabel "Decision requirements graph"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision model that shows decisions, their input data, knowledge sources, and dependencies."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/decision-model>;
+    skos:altLabel "DRD"@en, "Decision requirements diagram"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/decision-table> a skos:Concept;
+    skos:prefLabel "Decision table"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision model that maps combinations of input conditions to outputs in rows governed by a hit policy."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/decision-model>;
+    skos:altLabel "DMN decision table"@en, "Rule table"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/decision-tree> a skos:Concept;
+    skos:prefLabel "Decision tree"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision model that reaches an outcome through a sequence of branching tests."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/decision-model>;
+    skos:altLabel "Decision flow"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/predictive-decision-model> a skos:Concept;
+    skos:prefLabel "Predictive decision model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision model whose output is produced by a trained machine learning model."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/decision-model>;
+    skos:altLabel "Machine learning decision model"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/scoring-model> a skos:Concept;
+    skos:prefLabel "Scoring model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision model that combines weighted factors into a score compared to cut-offs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/decision-model>;
+    skos:altLabel "Scorecard"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/eligibility-determination> a skos:Concept;
+    skos:prefLabel "Eligibility determination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that establishes whether a party qualifies for something."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Eligibility decision"@en, "Qualification decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/exception-decision> a skos:Concept;
+    skos:prefLabel "Exception decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision on whether and how to handle a departure from a rule or path."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Override decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/pricing-decision> a skos:Concept;
+    skos:prefLabel "Pricing decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that sets a price, rate, or fee."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Quote decision"@en, "Rating decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/prioritization-decision> a skos:Concept;
+    skos:prefLabel "Prioritization decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that orders work by importance or urgency."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Ranking decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-decision/routing-decision> a skos:Concept;
+    skos:prefLabel "Routing decision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An operational decision that selects where work or a request goes next."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-decision/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-decision/operational-decision>;
+    skos:altLabel "Assignment decision"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

@@ -1,0 +1,509 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-capability/> {
+  <https://www.insperity.com/taxonomy/core-capability/> a skos:ConceptScheme;
+    rdfs:label "Core capability taxonomy"@en;
+    skos:prefLabel "Core capability taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>,
+      <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>,
+      <https://www.insperity.com/taxonomy/core-capability/strategic-capability>, <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    terms:description "Classification of business capabilities, the abilities an organization has or needs to achieve outcomes, independent of how they are organized or implemented."@en;
+    terms:title "Core capability taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Capability taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-capability/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability> a
+      skos:Concept;
+    skos:prefLabel "Customer-facing capability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A capability for creating and delivering value to clients and their workers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:altLabel "Core capability"@en, "Value delivery capability"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-capability/client-relationship-management>,
+      <https://www.insperity.com/taxonomy/core-capability/client-support-management>, <https://www.insperity.com/taxonomy/core-capability/marketing-management>,
+      <https://www.insperity.com/taxonomy/core-capability/offering-management>, <https://www.insperity.com/taxonomy/core-capability/sales-management>,
+      <https://www.insperity.com/taxonomy/core-capability/service-delivery-management> .
+  
+  <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>
+    a skos:Concept;
+    skos:prefLabel "Information and knowledge capability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A capability for managing and using data, knowledge, and artificial intelligence."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:altLabel "Data and artificial intelligence capability"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-capability/analytics-management>,
+      <https://www.insperity.com/taxonomy/core-capability/artificial-intelligence-management>,
+      <https://www.insperity.com/taxonomy/core-capability/content-management>, <https://www.insperity.com/taxonomy/core-capability/data-management>,
+      <https://www.insperity.com/taxonomy/core-capability/knowledge-management>, <https://www.insperity.com/taxonomy/core-capability/semantic-management> .
+  
+  <https://www.insperity.com/taxonomy/core-capability/strategic-capability> a skos:Concept;
+    skos:prefLabel "Strategic capability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A capability for setting direction and shaping the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:altLabel "Direction-setting capability"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-capability/enterprise-architecture-management>,
+      <https://www.insperity.com/taxonomy/core-capability/innovation-management>, <https://www.insperity.com/taxonomy/core-capability/performance-management>,
+      <https://www.insperity.com/taxonomy/core-capability/portfolio-management>, <https://www.insperity.com/taxonomy/core-capability/strategy-management> .
+  
+  <https://www.insperity.com/taxonomy/core-capability/supporting-capability> a skos:Concept;
+    skos:prefLabel "Supporting capability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A capability that enables strategic and customer-facing capabilities."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:altLabel "Enabling capability"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-capability/facilities-management>,
+      <https://www.insperity.com/taxonomy/core-capability/financial-management>, <https://www.insperity.com/taxonomy/core-capability/legal-management>,
+      <https://www.insperity.com/taxonomy/core-capability/procurement-management>, <https://www.insperity.com/taxonomy/core-capability/risk-and-compliance-management>,
+      <https://www.insperity.com/taxonomy/core-capability/technology-management>, <https://www.insperity.com/taxonomy/core-capability/workforce-management> .
+  
+  <https://www.insperity.com/taxonomy/core-capability/analytics-management> a skos:Concept;
+    skos:prefLabel "Analytics management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information and knowledge capability to analyze data and report insights."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>;
+    skos:altLabel "Analytics"@en, "BI"@en, "Business intelligence"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject capabilityvoc:business-intelligence;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/artificial-intelligence-management>
+    a skos:Concept;
+    skos:prefLabel "Artificial intelligence management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information and knowledge capability to develop, deploy, monitor, and govern artificial intelligence systems responsibly."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>;
+    skos:altLabel "AI governance capability"@en, "AI management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/client-relationship-management>
+    a skos:Concept;
+    skos:prefLabel "Client relationship management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A customer-facing capability to acquire, understand, serve, and retain clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>;
+    skos:altLabel "Account management"@en, "Customer management"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject technicalservicesvoc:account-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/client-support-management> a skos:Concept;
+    skos:prefLabel "Client support management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A customer-facing capability to answer inquiries and resolve requests."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>;
+    skos:altLabel "Customer service management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/content-management> a skos:Concept;
+    skos:prefLabel "Content management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information and knowledge capability to create, publish, and retain documents and content."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>;
+    skos:altLabel "Document management"@en, "Records management"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainlegalvoc:document-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/marketing-management> a skos:Concept;
+    skos:prefLabel "Marketing management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A customer-facing capability to generate awareness and demand."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/offering-management> a skos:Concept;
+    skos:prefLabel "Offering management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A customer-facing capability to define, price, and evolve products and services."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>;
+    skos:altLabel "Product management"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject capabilityvoc:product-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/sales-management> a skos:Concept;
+    skos:prefLabel "Sales management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A customer-facing capability to pursue and win new and renewed business."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>;
+    skos:altLabel "Selling"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/service-delivery-management> a
+      skos:Concept;
+    skos:prefLabel "Service delivery management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A customer-facing capability to fulfil services to agreed levels."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/customer-facing-capability>;
+    skos:altLabel "Service management"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainmarketingvoc:service-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/data-management> a skos:Concept;
+    skos:prefLabel "Data management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information and knowledge capability to acquire, define, store, and govern data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>;
+    skos:altLabel "Data governance capability"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject capabilityvoc:data-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/enterprise-architecture-management>
+    a skos:Concept;
+    skos:prefLabel "Enterprise architecture management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A strategic capability to design and govern the structure of business, information, and technology."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/strategic-capability>;
+    skos:altLabel "Architecture management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/facilities-management> a skos:Concept;
+    skos:prefLabel "Facilities management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to provide and maintain workplaces."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    owl:versionInfo "0.1.0";
+    dc:subject domaininformationtechnologyvoc:facilities-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/financial-management> a skos:Concept;
+    skos:prefLabel "Financial management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to plan, record, report, and control money."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    skos:altLabel "Finance management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/knowledge-management> a skos:Concept;
+    skos:prefLabel "Knowledge management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information and knowledge capability to capture, organize, and share knowledge."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>;
+    skos:altLabel "Knowledge engineering capability"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domaininformationtechnologyvoc:knowledge-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/semantic-management> a skos:Concept;
+    skos:prefLabel "Semantic management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information and knowledge capability to define and govern shared meaning through vocabularies, taxonomies, and ontologies."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/information-and-knowledge-capability>;
+    skos:altLabel "Ontology management"@en, "Semantic governance capability"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject technicalservicesvoc:ontology-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/innovation-management> a skos:Concept;
+    skos:prefLabel "Innovation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A strategic capability to generate, test, and scale new ideas."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/strategic-capability>;
+    owl:versionInfo "0.1.0";
+    dc:subject domaininformationtechnologyvoc:innovation-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/legal-management> a skos:Concept;
+    skos:prefLabel "Legal management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to manage agreements, legal advice, and disputes."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    skos:altLabel "Legal affairs management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/performance-management> a skos:Concept;
+    skos:prefLabel "Performance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A strategic capability to set targets, measure results, and drive improvement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/strategic-capability>;
+    skos:altLabel "Enterprise performance management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/portfolio-management> a skos:Concept;
+    skos:prefLabel "Portfolio management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A strategic capability to select and balance investments in initiatives and offerings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/strategic-capability>;
+    skos:altLabel "Investment management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/procurement-management> a skos:Concept;
+    skos:prefLabel "Procurement management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to source and manage suppliers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    skos:altLabel "Supplier management"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domaininformationtechnologyvoc:supplier-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/risk-and-compliance-management>
+    a skos:Concept;
+    skos:prefLabel "Risk and compliance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to identify and treat risks and meet obligations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    skos:altLabel "GRC"@en, "Governance, risk, and compliance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/strategy-management> a skos:Concept;
+    skos:prefLabel "Strategy management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A strategic capability to define, communicate, and adjust strategy and objectives."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/strategic-capability>;
+    skos:altLabel "Strategic planning capability"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/technology-management> a skos:Concept;
+    skos:prefLabel "Technology management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to plan, build, run, and secure technology."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    skos:altLabel "Information technology management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-capability/workforce-management> a skos:Concept;
+    skos:prefLabel "Workforce management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supporting capability to attract, pay, develop, and retain people."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-capability/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-capability/supporting-capability>;
+    skos:altLabel "Human capital management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

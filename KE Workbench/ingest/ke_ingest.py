@@ -2,7 +2,7 @@
 """
 KE Ingest — bring legacy knowledge artifacts (vocabularies, taxonomies, ontologies)
 into line with the Part III standards of "Semantic Governance: Services,
-Architecture & Integration" v1.8 (Draft).
+Architecture & Integration" v1.9 (Draft), including the §3.11 metadata field set.
 
 What it does, per run:
   1. Reads every Turtle, N-Triples or RDF/XML file given and works out what each one is (SKOS vocabulary,
@@ -21,6 +21,21 @@ What it does, per run:
   6. Moves SHACL shapes into their own shapes graph.
   7. Checks the output against the Part III rules and writes a report, an
      old→new IRI crosswalk and a PROV-O change record.
+
+v1.9 changes:
+  - Taxonomies are always SKOS (§3.11): a taxonomy authored as OWL classes is converted
+    (owl:Class → skos:Concept, rdfs:subClassOf → skos:broader). Config "taxonomiesAsSkos": false
+    turns this off.
+  - Taxonomy concept IRIs are UpperCamelCase; vocabulary term IRIs stay lower-case hyphenated.
+  - Links from a taxonomy concept to its vocabulary term are written as core:hasPrimaryTerm and
+    dcterms:subject (dc:subject is still read on input).
+  - Asset headers carry the §3.11 fields: vaem:namespace, vann:preferredNamespacePrefix,
+    owl:versionIRI, dcterms:publisher, dcterms:conformsTo, dcterms:subject and, on taxonomies,
+    dcterms:source (the vocabularies its concepts draw on). Values come from the config.
+  - Dates keep their datatype: a date-only value is written as xsd:date, never as an invalid
+    xsd:dateTime.
+  - Numbered labels ("01. Data governance") lose the number, which moves to skos:notation;
+    "&" in a preferred label is spelled out as "and".
 
 No third-party packages: runs with the Python 3.8+ standard library.
 Inputs: .ttl .nt (Turtle/N-Triples) and .rdf .rdfs .owl .xml (RDF/XML; .owl is sniffed).
@@ -46,6 +61,8 @@ DCT = 'http://purl.org/dc/terms/'
 DC = 'http://purl.org/dc/elements/1.1/'
 SH = 'http://www.w3.org/ns/shacl#'
 VANN = 'http://purl.org/vocab/vann/'
+VAEM = 'http://www.linkedmodel.org/schema/vaem#'
+SUBJECT_IN = (DC + 'subject', DCT + 'subject')     # predicates read as a link to a vocabulary term (plus core:hasPrimaryTerm)
 PROV = 'http://www.w3.org/ns/prov#'
 
 # Terms: ('I', iri) | ('B', id) | ('L', lexical, lang, datatype)
@@ -356,8 +373,10 @@ PRED_ORDER = [RDF + 'type', RDFS + 'label', SKOS + 'prefLabel', DCT + 'title', S
               SKOS + 'definition', DCT + 'description', SKOS + 'scopeNote', SKOS + 'example', SKOS + 'notation',
               RDFS + 'subClassOf', OWL + 'equivalentClass', RDFS + 'subPropertyOf', RDFS + 'domain', RDFS + 'range',
               SKOS + 'inScheme', SKOS + 'topConceptOf', SKOS + 'broader', SKOS + 'narrower', SKOS + 'hasTopConcept',
-              RDFS + 'isDefinedBy', DC + 'subject', SH + 'targetClass', SH + 'path', SH + 'class', SH + 'property',
-              OWL + 'imports', VANN + 'preferredNamespaceUri', DCT + 'language',
+              RDFS + 'isDefinedBy', 'https://www.insperity.com/ontology/core/hasPrimaryTerm', DCT + 'subject', DC + 'subject',
+              'https://www.insperity.com/ontology/core/formalizedBy', SH + 'targetClass', SH + 'path', SH + 'class', SH + 'property',
+              OWL + 'imports', VAEM + 'namespace', VANN + 'preferredNamespacePrefix', DCT + 'language', DCT + 'source',
+              DCT + 'publisher', DCT + 'conformsTo',
               None,  # everything not listed goes here
               SKOS + 'editorialNote', SKOS + 'changeNote',
               OWL + 'versionInfo', OWL + 'versionIRI']
@@ -480,6 +499,19 @@ def upper_camel(label):
 def split_camel(name):
     return re.sub(r'(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])', ' ', name)
 
+def label_number(label):
+    """'01. Data strategy' → ('01', 'Data strategy'); a label without a leading number → (None, label)."""
+    m = re.fullmatch(r'\s*(\d+(?:\.\d+)*)[.)]?\s+(.+)', label or '')
+    return (m.group(1), m.group(2)) if m and not re.match(r'\d', m.group(2)) else (None, label)
+
+def date_lit(value):
+    """A dct:created/dct:modified value with the right datatype: xsd:date for a date alone, else xsd:dateTime."""
+    v = value.strip()
+    if re.fullmatch(r'\d{4}-\d{2}-\d{2}', v): return L(v, None, XSD + 'date')
+    if re.fullmatch(r'\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:?\d{2})?', v):
+        return L(v.replace(' ', 'T'), None, XSD + 'dateTime')
+    return None
+
 # ─────────────────────────────────────────────────────────────────────────────
 # Ingestion
 # ─────────────────────────────────────────────────────────────────────────────
@@ -570,7 +602,10 @@ class Ingest:
         self.base = cfg['baseUrl'].rstrip('/') + '/'
         self.CORE = self.base + 'ontology/core/'
         self.HAS_STATUS = self.CORE + 'hasLifecycleStatus'
+        self.HAS_PRIMARY = self.CORE + 'hasPrimaryTerm'
+        self.notations = {}        # new IRI → number taken out of a numbered label
         self.author = cfg['author']
+        self.author_term = I(cfg['authorIri']) if cfg.get('authorIri') else L(cfg['author'])
         self.version = cfg['initialVersion']
         self.now = now
         self.day = now.date()
@@ -589,6 +624,7 @@ class Ingest:
         self.orphans = collections.Counter()
         self.bare = collections.Counter()
         self.foreign = collections.Counter()
+        self.missing_defs = []          # (asset key, term) with no definition anywhere, for generation
         self.sources = []          # loaded files
         self.outputs = {}          # asset key → {graph, subjects, header}
 
@@ -641,15 +677,53 @@ class Ingest:
             raise IngestError(f'declares {len(headers)} assets ({", ".join(h[1] for h in headers[:3])}); split it into one file per asset')
         h = headers[0]
         c = self.classify(h[1])
+        if not c and h[1].startswith(REFERENCE_NS):
+            raise IngestError(f'is a reference ontology ({h[1]}): it keeps its own IRIs and is never ingested. Load it under '
+                              'Reference ontologies further down this page (BFO source or RO Core source: this file\'s path), or with GraphDB › Import')
         if not c:
             raise IngestError(f'header {h[1]} matches no sourceNamespaces pattern in the config; add one for its namespace')
-        kind, domain, _ = c
+        kind, domain, hlocal = c
+        ns_domain = None
+        m = re.fullmatch(r'([A-Z][A-Za-z0-9]*?)(Taxonomy|Vocabulary|Ontology|Scheme)?', hlocal or '')
+        if hlocal and m:
+            # the header is a named resource inside a namespace that several files share (e.g.
+            # …/taxonomy/core/IssueTaxonomy and …/taxonomy/core/PartyTaxonomy): one asset per file,
+            # named after the header — core + Issue → core-issue
+            ns_domain, domain = domain, f'{domain}-{slug(split_camel(m.group(1)))}'
         scheme = I(SKOS + 'ConceptScheme') in g[h].get(RDF + 'type', [])
+        if kind == 'taxonomy' and not scheme and self.cfg.get('taxonomiesAsSkos', True) not in (False, 'false', '0', 0):
+            n, lost = self.owl_taxonomy_to_skos(g, h)
+            scheme = True
+            self.note(self.key(kind, domain), 'fixed', f'Taxonomy authored as OWL converted to SKOS (§3.11): {n} classes became concepts, '
+                      f'rdfs:subClassOf became skos:broader' + (f'; {lost} OWL restrictions dropped (they belong in the ontology)' if lost else ''))
         terms = sum(1 for s, ps in g.items() if s[0] == 'I' and s != h and
                     any(t in ps.get(RDF + 'type', []) for t in (I(SKOS + 'Concept'), I(OWL + 'Class'), I(RDFS + 'Class'))))
-        return dict(path=str(path), name=pathlib.Path(path).name, format=fmt, graph=g, header=h, kind=kind, domain=domain,
+        return dict(path=str(path), name=pathlib.Path(path).name, format=fmt, graph=g, header=h, kind=kind, domain=domain, ns_domain=ns_domain,
                     triples=len(triples), terms=terms, key=self.key(kind, domain), scheme=scheme,
                     label=self.pref(g[h]), new_iri=self.asset_iri(kind, domain))
+
+    @staticmethod
+    def owl_taxonomy_to_skos(g, h):
+        """Rewrite, in place, a taxonomy authored as OWL classes as a SKOS concept scheme.
+        Returns (classes converted, restrictions dropped)."""
+        hp = g[h]
+        hp[RDF + 'type'] = [t for t in hp.get(RDF + 'type', []) if t != I(OWL + 'Ontology')] + [I(SKOS + 'ConceptScheme')]
+        for p in (OWL + 'imports', OWL + 'versionIRI', OWL + 'priorVersion'):
+            hp.pop(p, None)                  # a scheme imports nothing; its concepts point to classes with core:formalizedBy
+        n = lost = 0
+        for s, ps in g.items():
+            if s[0] != 'I' or s == h: continue
+            types = ps.get(RDF + 'type', [])
+            if I(OWL + 'Class') not in types or s[1].startswith((OWL, RDFS, RDF, XSD)): continue
+            n += 1
+            ps[RDF + 'type'] = [t for t in types if t not in (I(OWL + 'Class'), I(RDFS + 'Class'))] + [I(SKOS + 'Concept')]
+            parents = ps.pop(RDFS + 'subClassOf', [])
+            named = [x for x in parents if x[0] == 'I' and x[1] != OWL + 'Thing']
+            lost += sum(1 for x in parents if x[0] == 'B')
+            if named: ps.setdefault(SKOS + 'broader', []).extend(x for x in named if x not in ps.get(SKOS + 'broader', []))
+            for p in (RDFS + 'isDefinedBy', OWL + 'equivalentClass', OWL + 'disjointWith'):
+                ps.pop(p, None)
+        return n, lost
 
     def load(self, path):
         src = self.inspect(path)
@@ -672,6 +746,12 @@ class Ingest:
         m = re.fullmatch(r'\s*\((.+)\)\s*', lab)
         if m:
             fixes.append(f'parentheses removed from "{lab}"'); lab = m.group(1)
+        num, rest = label_number(lab)
+        if num:
+            fixes.append(f'number "{num}" moved from the label to skos:notation'); lab = rest
+        if '&' in lab:
+            fixes.append(f'"&" spelled out as "and" in "{lab}"')
+            lab = re.sub(r'\s*&\s*', ' and ', lab).strip()
         alts = self.lits(ps, SKOS + 'altLabel')
         defs = self.lits(ps, SKOS + 'definition') + self.lits(ps, RDFS + 'comment')
         new, done = self.policy.expand_label(lab, alts, defs)
@@ -702,10 +782,17 @@ class Ingest:
                     o, hit = self.org_term(lab, s[1])
                     if o:
                         self.dropped[s[1]] = f'names {o["name"]} ("{hit}")'; continue
-                    new = new_asset + slug(lab)
-                    self.labels[new] = sentence_case(lab, self.keep)
+                    newlab = None
+                    if kind == 'taxonomy':        # taxonomy concepts: UpperCamelCase (§3.11); vocabulary terms: hyphenated
+                        local, newlab = self.renamed(kind, domain, upper_camel(lab))
+                        new = new_asset + local
+                        kindname = 'taxonomy concept'
+                    else:
+                        new = new_asset + slug(lab)
+                        kindname = 'vocabulary term'
+                    self.labels[new] = newlab or sentence_case(lab, self.keep)
+                    num, _ = label_number(self.pref(ps))
                     if fixes: self.fixes[new] += fixes
-                    kindname = 'vocabulary term'
                 elif I(OWL + 'Class') in types or I(RDFS + 'Class') in types:
                     c = self.classify(s[1])
                     local = c[2] if c else s[1].rstrip('/').split('/')[-1].split('#')[-1]
@@ -718,10 +805,13 @@ class Ingest:
                         local = upper_camel(lab)          # identifier follows the spelled-out label
                     local = upper_camel(local) if not re.fullmatch(r'[A-Z][A-Za-z0-9]*', local) else local
                     owner = c[:2] if c else (kind, domain)
+                    if src.get('ns_domain') and c and c[:2] == (kind, src['ns_domain']):
+                        owner = (kind, domain)            # shared namespace: the term belongs to this file's asset
                     new = self.asset_iri(*owner) + local
                     self.labels[new] = newlab or sentence_case(lab, self.keep)
                     if fixes: self.fixes[new] += fixes
                     kindname = 'class'
+                    num = None
                 elif any(t in types for t in (I(OWL + 'ObjectProperty'), I(OWL + 'DatatypeProperty'), I(OWL + 'AnnotationProperty'), I(RDF + 'Property'))):
                     c = self.classify(s[1])
                     if not c or not c[2]:
@@ -731,8 +821,26 @@ class Ingest:
                     new = self.asset_iri(*c[:2]) + local
                     self.labels[new] = sentence_case(self.pref(ps) or split_camel(local), self.keep)
                     kindname = 'property'
+                    num = None
                 else:
                     continue
+                sep = '-' if kindname == 'vocabulary term' else ''
+                if new in seen and (num or new in self.notations):
+                    # a numbered label that, without its number, repeats another term's label: keep the two apart
+                    if num:                        # this term is the numbered one
+                        alt = new + sep + num.replace('.', '-')
+                        self.labels[alt] = self.labels[new]; other = seen[new]
+                        self.labels[new] = self.labels.get(new)
+                        new = alt
+                    else:                          # the term seen earlier was the numbered one: move it
+                        n0 = self.notations.pop(new); old0 = seen.pop(new)
+                        alt = new + sep + n0.replace('.', '-')
+                        self.cross[old0] = alt; self.labels[alt] = self.labels[new]; self.notations[alt] = n0; seen[alt] = old0
+                        self.fixes[alt] += self.fixes.pop(new, [])
+                        other = old0
+                    self.note(src['key'], 'warn', f'{short_iri(s[1])} and {short_iri(other)} have the same label once the number is removed; '
+                              f'the numbered one is kept apart as {short_iri(alt)}; merge or rename one in Conformance Review')
+                if num: self.notations[new] = num
                 if new in seen:
                     self.note(src['key'], 'error', f'Two terms would share {new}: {seen[new]} and {s[1]}')
                 seen[new] = s[1]
@@ -788,16 +896,15 @@ class Ingest:
     def governance(self, g, s, created):
         self.add(g, s, I(self.HAS_STATUS), I(self.CORE + self.cfg['lifecycleStatus']))
         self.add(g, s, I(OWL + 'versionInfo'), L(self.version))
-        self.add(g, s, I(DCT + 'creator'), L(self.author))
+        self.add(g, s, I(DCT + 'creator'), self.author_term)
         self.add(g, s, I(DCT + 'created'), created or self.now_lit)
         self.add(g, s, I(DCT + 'modified'), self.now_lit)
 
     @staticmethod
     def earliest(ps):
-        ds = [o for o in ps.get(DCT + 'created', []) if o[0] == 'L']
+        ds = [d for d in (date_lit(o[1]) for o in ps.get(DCT + 'created', []) if o[0] == 'L') if d]
         if not ds: return None
-        o = min(ds, key=lambda x: x[1])
-        return L(o[1], None, XSD + 'dateTime')
+        return min(ds, key=lambda x: x[1])
 
     def copy_bnode(self, srcg, dstg, b, key):
         """Copy a blank-node structure (restrictions, property shapes), re-pointing IRIs."""
@@ -810,7 +917,7 @@ class Ingest:
         vocab_terms = {}          # new vocabulary IRI → source predicates (for filling class metadata)
         vocab_by_label = {}       # (vocab asset, normalized label) → new IRI
         for src in self.sources:
-            if not src['scheme']: continue
+            if src['kind'] != 'vocabulary': continue      # a SKOS taxonomy is not a vocabulary to link to
             for s, ps in src['graph'].items():
                 if s[0] == 'I' and I(SKOS + 'Concept') in ps.get(RDF + 'type', []) and s[1] in self.cross:
                     new = self.cross[s[1]]
@@ -876,7 +983,8 @@ class Ingest:
 
                 for p, objs in ps.items():
                     if p in self.REBUILT: continue
-                    if p not in self.KEEP_TERM:
+                    is_subj = p in SUBJECT_IN or p == self.HAS_PRIMARY
+                    if p not in self.KEEP_TERM and not is_subj and p != self.CORE + 'formalizedBy':
                         self.removed[key][p] += len(objs); continue
                     for ob in objs:
                         if ob[0] == 'I' and ob[1] in self.dropped:
@@ -892,19 +1000,25 @@ class Ingest:
                             if not ps.get(SKOS + 'definition') and self.looks_like_definition(ob[1]):
                                 continue                          # moved to skos:definition below
                         if ob[0] == 'B': self.copy_bnode(g, dst, ob, key)
-                        if p == DC + 'subject':
+                        if is_subj:
+                            if ob[0] != 'I': continue
                             ob = I(self.subject_link(key, new[1], ob[1], label, vocab_terms, vocab_by_label))
+                            self.add(dst, new, I(DCT + 'subject'), ob)
+                            continue
                         elif p == SKOS + 'altLabel' and ob[0] == 'L':
                             ob = L(ob[1], ob[2] or 'en')
                         else:
                             ob = self.map_term(ob)
                         self.add(dst, new, I(p), ob)
 
-                # labels
+                # labels (§3.11: skos:prefLabel and rdfs:label on every term)
                 self.add(dst, new, I(SKOS + 'prefLabel'), L(label, 'en'))
-                if not is_concept: self.add(dst, new, I(RDFS + 'label'), L(label, 'en'))
-                if orig_label and orig_label.lower() != label.lower():
-                    self.add(dst, new, I(SKOS + 'altLabel'), L(sentence_case(orig_label, self.keep), 'en'))
+                self.add(dst, new, I(RDFS + 'label'), L(label, 'en'))
+                if new[1] in self.notations:
+                    self.add(dst, new, I(SKOS + 'notation'), L(self.notations[new[1]]))
+                old_alt = sentence_case(label_number(orig_label)[1], self.keep) if orig_label else ''
+                if old_alt and old_alt.lower() != label.lower():
+                    self.add(dst, new, I(SKOS + 'altLabel'), L(old_alt, 'en'))
                     self.note(key, 'renamed', f'{short_iri(s[1])} → {short_iri(new[1])} ("{orig_label}" → "{label}")')
                 elif orig_label and orig_label != label:
                     self.note(key, 'label', f'"{orig_label}" → "{label}"')
@@ -918,13 +1032,18 @@ class Ingest:
                         self.note(key, 'fixed', f'{short_iri(new[1])}: definition was stored as an alternative label; moved to skos:definition')
                 for fx in self.fixes.get(new[1], []):
                     self.note(key, 'fixed', f'{short_iri(new[1])}: {fx}')
-                linked = [x for x in dst[new].get(I(DC + 'subject'), [])] if new in dst else []
+                linked = [x for x in dst[new].get(I(DCT + 'subject'), [])] if new in dst else []
                 if defs:
                     d = defs[0]; self.add(dst, new, I(SKOS + 'definition'), L(clean(d[1]), d[2] or 'en'))
                 else:
                     filled = False
                     for lk in linked:
                         vps = vocab_terms.get(lk[1])
+                        ev = getattr(self, 'extra_vocab', {}).get(lk[1])
+                        if not vps and ev and ev[3]:      # a vocabulary already in the destination folder
+                            self.add(dst, new, I(SKOS + 'definition'), L(clean(ev[3]), 'en')); filled = True
+                            self.note(key, 'filled', f'{short_iri(new[1])}: definition taken from its vocabulary term')
+                            break
                         if vps:
                             for d in vps.get(SKOS + 'definition', []):
                                 self.add(dst, new, I(SKOS + 'definition'), L(clean(d[1]), d[2] or 'en')); filled = True
@@ -943,6 +1062,7 @@ class Ingest:
                             self.note(key, 'generated', f'{short_iri(new[1])}: definition written ("{gen}")')
                         else:
                             self.note(key, 'warn', f'{short_iri(new[1])}: no definition found or configured')
+                            self.missing_defs.append((key, new))
 
                 # ownership and scheme membership
                 if is_concept:
@@ -956,12 +1076,14 @@ class Ingest:
                         self.add(dst, b, I(SKOS + 'narrower'), new)
                 else:
                     self.add(dst, new, I(RDFS + 'isDefinedBy'), I(asset))
-                if src['kind'] == 'taxonomy' and not dst[new].get(I(DC + 'subject')):
+                if src['kind'] == 'taxonomy' and not dst[new].get(I(DCT + 'subject')):
                     alts = [a[1] for a in ps.get(SKOS + 'altLabel', []) if a[0] == 'L']
                     hit = self.vocab_match(label, alts, src['domain'], vocab_by_label)
                     if hit:
-                        self.add(dst, new, I(DC + 'subject'), I(hit))
+                        self.add(dst, new, I(DCT + 'subject'), I(hit))
                         self.note(key, 'fixed', f'{short_iri(new[1])}: linked to vocabulary term {short_iri(hit)} (same label)')
+                if src['kind'] == 'taxonomy':
+                    self.primary_term(key, dst, new, label, vocab_terms)
                 self.governance(dst, new, self.earliest(ps))
                 o['subjects'].append(new)
 
@@ -974,6 +1096,22 @@ class Ingest:
                     # a broader target defined in this graph is always in subjects; anything else is a stray
                     self.note(self.key_of(o), 'warn', f'Reference to undefined term {s[1]}')
                     del o['graph'][s]
+
+    def primary_term(self, key, dst, new, label, vocab_terms):
+        """core:hasPrimaryTerm: the one vocabulary term that names the concept (§3.11). Of the concept's
+        dcterms:subject terms, the one whose label matches; else the only one; else left for review."""
+        if dst[new].get(I(self.HAS_PRIMARY)): return
+        subs = [x for x in dst[new].get(I(DCT + 'subject'), []) if x[0] == 'I' and '/vocabulary/' in x[1]]
+        if not subs: return
+        def vlabel(t):
+            ps = vocab_terms.get(t[1])
+            if ps: return self.labels.get(t[1], self.pref(ps)).lower()
+            ev = getattr(self, 'extra_vocab', {}).get(t[1])
+            return ev[0].lower() if ev else ''
+        same = [x for x in subs if vlabel(x) == label.lower()]
+        pick = same[0] if same else (subs[0] if len(subs) == 1 else None)
+        if pick: self.add(dst, new, I(self.HAS_PRIMARY), pick)
+        else: self.note(key, 'warn', f'{short_iri(new[1])}: {len(subs)} vocabulary terms and none named like the concept; choose its primary term')
 
     def surviving_parents(self, old, p, seen=None):
         """Parents of a removed term that are not removed themselves (walking up)."""
@@ -1016,7 +1154,7 @@ class Ingest:
         names = {x.strip().lower() for x in [label] + alts if x and x.strip()}
         same = self.asset_iri('vocabulary', domain)
         hits = [iri for (va, l), iri in vocab_by_label.items() if l in names]
-        for t, (pref, a2, scheme) in getattr(self, 'extra_vocab', {}).items():
+        for t, (pref, a2, scheme, _d) in getattr(self, 'extra_vocab', {}).items():
             if pref.lower() in names or any(x.lower() in names for x in a2):
                 hits.append(t)
         hits = list(dict.fromkeys(hits))
@@ -1107,20 +1245,44 @@ class Ingest:
         if not meta.get('title'):
             self.note(key, 'generated', f'Title written: "{title}" (add an entry under "assets" in the config to change it)')
         self.add(dst, asset, I(DCT + 'language'), L('en'))
-        self.add(dst, asset, I(VANN + 'preferredNamespaceUri'), L(asset[1], None, XSD + 'anyURI'))
         if not src['scheme']:
             for imp in hp.get(OWL + 'imports', []):
                 self.add(dst, asset, I(OWL + 'imports'), I(self.map_iri(imp[1])))
-            self.add(dst, asset, I(OWL + 'versionIRI'), I(asset[1] + self.version + '/'))
+        self.header_311(dst, asset, key)
         if meta.get('editorialNote'): self.add(dst, asset, I(SKOS + 'editorialNote'), L(meta['editorialNote'], 'en'))
         self.add(dst, asset, I(SKOS + 'changeNote'), L(
             f'{self.version} ({self.day:%Y-%m-%d}): ingested into the {self.base} namespace; IRIs, labels and metadata '
             f'brought into line with {self.cfg["standardsRef"]}.', 'en'))
         self.governance(dst, asset, self.earliest(hp))
-        self.add(dst, asset, I(DCT + 'contributor'), L(self.author))
+        self.add(dst, asset, I(DCT + 'contributor'), self.author_term)
         for p, objs in hp.items():
             if p not in self.REBUILT and p not in (RDF + 'type', OWL + 'imports', DCT + 'title', DCT + 'description', SKOS + 'altLabel'):
                 self.removed[key][p] += len(objs)
+
+    def prefix_name(self, kind, domain):
+        """Namespace prefix by the naming convention: core-process taxonomy → processtax, domain-finance vocabulary → domainfinancevoc."""
+        name = domain.replace('core-', '').replace('-', '') or domain
+        return {'ontology': name, 'taxonomy': name + 'tax', 'vocabulary': name + 'voc', 'shapes': name + 'shp'}[kind]
+
+    def header_311(self, g, asset, key):
+        """The §3.11 header fields every vocabulary, taxonomy, ontology and shapes graph carries."""
+        kind, domain = key.split('/', 1)
+        meta = self.cfg.get('assets', {}).get(key, {})
+        self.add(g, asset, I(VAEM + 'namespace'), L(asset[1], None, XSD + 'anyURI'))
+        self.add(g, asset, I(VANN + 'preferredNamespacePrefix'), L(meta.get('prefix') or self.prefix_name(kind, domain)))
+        self.add(g, asset, I(OWL + 'versionIRI'), I(asset[1] + self.version + '/'))
+        if self.cfg.get('publisher'):
+            self.add(g, asset, I(DCT + 'publisher'), I(self.cfg['publisher']))
+        else:
+            self.note(key, 'warn', 'No dcterms:publisher: set "publisher" (an organization IRI) in the config')
+        conf = list(self.cfg.get('conformsTo', []) or [])
+        if kind == 'ontology': conf += list(self.cfg.get('ontologyConformsTo', []) or [])
+        for c in conf: self.add(g, asset, I(DCT + 'conformsTo'), I(c))
+        if not conf: self.note(key, 'warn', 'No dcterms:conformsTo: set "conformsTo" (the IRI of the guide edition) in the config')
+        subj = meta.get('subject') or self.cfg.get('defaultSubject')
+        for x in ([subj] if isinstance(subj, str) else subj or []):
+            self.add(g, asset, I(DCT + 'subject'), I(x))
+        if not subj: self.note(key, 'warn', f'No dcterms:subject: add "subject" (a domain taxonomy concept) under assets/{key} in the config')
 
     def describe(self, src, o):
         """One-sentence description built from what the asset contains."""
@@ -1137,7 +1299,9 @@ class Ingest:
             items = items[:6]
             return items[0] if len(items) == 1 else ', '.join(items[:-1]) + ' and ' + items[-1]
         topic = src['domain'].replace('core-', '').replace('domain-', '').replace('-', ' ')
-        if src['scheme']:
+        if src['scheme'] and src['kind'] == 'taxonomy':
+            text = f'A taxonomy of {n} concept{"s" if n != 1 else ""} for classifying {topic}'
+        elif src['scheme']:
             text = f'A controlled vocabulary of {n} {topic} term{"s" if n != 1 else ""} with preferred labels, synonyms and definitions'
         elif src['kind'] == 'taxonomy':
             text = f'A taxonomy of {n} class{"es" if n != 1 else ""} for classifying {topic}'
@@ -1159,14 +1323,21 @@ class Ingest:
                 self.add(g, asset, I(DCT + 'title'), L(title, 'en'))
                 if meta.get('description'): self.add(g, asset, I(DCT + 'description'), L(meta['description'], 'en'))
                 self.add(g, asset, I(DCT + 'language'), L('en'))
-                self.add(g, asset, I(VANN + 'preferredNamespaceUri'), L(asset[1], None, XSD + 'anyURI'))
-                self.add(g, asset, I(OWL + 'versionIRI'), I(asset[1] + self.version + '/'))
                 self.add(g, asset, I(SKOS + 'changeNote'), L(
                     f'{self.version} ({self.day:%Y-%m-%d}): shapes moved out of the {domain} ontology into their own shapes graph '
                     f'under {self.base}shapes/, as {self.cfg["standardsRef"]} requires.', 'en'))
                 self.governance(g, asset, min((self.earliest(src['graph'][src['header']]) for src in o['sources']),
                                               key=lambda x: x[1] if x else '9', default=None))
-                self.add(g, asset, I(DCT + 'contributor'), L(self.author))
+                self.add(g, asset, I(DCT + 'contributor'), self.author_term)
+                self.header_311(g, asset, key)
+            if o['kind'] == 'taxonomy':
+                # dcterms:source: the vocabularies whose terms the concepts draw on (§3.11)
+                for v in sorted({x[1] for sub in o['subjects'] for x in g.get(sub, {}).get(I(DCT + 'subject'), [])
+                                 if x[0] == 'I' and '/vocabulary/' in x[1] and x[1].startswith(self.base)}):
+                    parts = v[len(self.base):].split('/')
+                    if len(parts) >= 3: self.add(g, asset, I(DCT + 'source'), I(self.asset_iri('vocabulary', parts[1])))
+                if not g[asset].get(I(DCT + 'source')):
+                    self.note(key, 'warn', 'No dcterms:source: none of the concepts is linked to a vocabulary term')
             if o['kind'] == 'vocabulary': continue
             refs = set()
             for s in o['subjects']:
@@ -1188,9 +1359,10 @@ class Ingest:
     # ── writing ──────────────────────────────────────────────────────────────
     def prefixes_for(self, key, o):
         px = {'rdf': RDF, 'rdfs': RDFS, 'owl': OWL, 'xsd': XSD, 'skos': SKOS, 'dct': DCT, 'dc': DC,
-              'vann': VANN, 'core': self.CORE, 'sh': SH}
+              'vann': VANN, 'vaem': VAEM, 'core': self.CORE, 'sh': SH}
         kind, domain = key.split('/', 1)
-        px[{'vocabulary': 'voc', 'taxonomy': 'tax', 'ontology': 'ont', 'shapes': 'shp'}[kind]] = self.asset_iri(kind, domain)
+        own = self.cfg.get('assets', {}).get(key, {}).get('prefix') or self.prefix_name(kind, domain)
+        px[own if own not in px else {'vocabulary': 'voc', 'taxonomy': 'tax', 'ontology': 'ont', 'shapes': 'shp'}[kind]] = self.asset_iri(kind, domain)
         seen = {}
         for s, ps in o['graph'].items():
             for objs in list(ps.values()) + [[s]]:
@@ -1210,7 +1382,8 @@ class Ingest:
     def order_subjects(self, o):
         """Header first, then terms top-down by hierarchy, alphabetically within a level."""
         g, subs = o['graph'], o['subjects']
-        parent_p = I(SKOS + 'broader') if o['kind'] == 'vocabulary' else I(RDFS + 'subClassOf')
+        is_scheme = I(SKOS + 'ConceptScheme') in g.get(o['header'], {}).get(TYPE, [])
+        parent_p = I(SKOS + 'broader') if is_scheme else I(RDFS + 'subClassOf')
         inset = set(subs)
         kids = collections.defaultdict(list); roots = []
         for s in subs:
@@ -1275,6 +1448,11 @@ def short_iri(v):
 # ─────────────────────────────────────────────────────────────────────────────
 # Part III conformance checks (same rules as the workbench's Standards Conformance tool)
 # ─────────────────────────────────────────────────────────────────────────────
+REFERENCE_NS = ('http://purl.obolibrary.org/obo/', 'https://purl.obolibrary.org/obo/', 'http://www.w3.org/', 'http://purl.org/')   # BFO, RO, IAO, W3C and DCMI vocabularies
+
+STANDARD_NS = ('http://www.w3.org/', 'https://www.w3.org/', 'http://purl.org/', 'http://purl.obolibrary.org/', 'http://www.linkedmodel.org/',
+               'http://xmlns.com/', 'https://schema.org/', 'http://schema.org/', 'http://qudt.org/')
+
 def check(triples, base, policy=None, vocab=None):
     ents = collections.OrderedDict()
     for s, p, o in triples:
@@ -1288,7 +1466,12 @@ def check(triples, base, policy=None, vocab=None):
         kind = ('ontology' if OWL + 'Ontology' in types else 'scheme' if SKOS + 'ConceptScheme' in types else
                 'concept' if SKOS + 'Concept' in types else 'class' if OWL + 'Class' in types else
                 'shape' if SH + 'NodeShape' in types else None)
-        if not kind: continue
+        if not kind:
+            # any other typed term from outside the base URL (an individual or a datatype left over from
+            # another organization's ontology) is still foreign content
+            if types and not iri.startswith(base) and not iri.startswith(STANDARD_NS):
+                r('Base URL (§3.2)', 'error', iri, 'term from another ontology (' + ', '.join(sorted(t.rsplit('#', 1)[-1].rsplit('/', 1)[-1] for t in types)) + ')')
+            continue
         counted[kind] += 1
         lits = lambda p: [o for o in e.get(p, []) if o[0] == 'L']
         prefs = lits(SKOS + 'prefLabel') or lits(RDFS + 'label')
@@ -1304,6 +1487,12 @@ def check(triples, base, policy=None, vocab=None):
             if kind in ('class', 'concept', 'shape') and len(segs) != 3: r('URI pattern (§3.2)', 'warn', iri, 'expected {kind}/{domain}/{Term}')
         if kind == 'class' and not re.fullmatch(r'[A-Z][A-Za-z0-9]*', local): r('Identifier case (§3.2)', 'warn', iri, 'class not UpperCamelCase')
         if kind == 'concept' and segs and segs[0] == 'vocabulary' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', local): r('Identifier case (§3.2)', 'warn', iri, 'vocabulary term not lower-case hyphenated')
+        if kind == 'concept' and segs and segs[0] == 'taxonomy' and not re.fullmatch(r'[A-Z][A-Za-z0-9]*', local): r('Identifier case (§3.11)', 'warn', iri, 'taxonomy concept not UpperCamelCase')
+        if kind == 'class' and segs and segs[0] == 'taxonomy': r('Taxonomies stay in SKOS (§3.11)', 'warn', iri, 'OWL class in a taxonomy')
+        for p_ in (DCT + 'created', DCT + 'modified', DCT + 'issued'):
+            for d_ in e.get(p_, []):
+                if d_[0] == 'L' and d_[3] in (XSD + 'date', XSD + 'dateTime') and (date_lit(d_[1]) or ('', '', '', ''))[3] != d_[3]:
+                    r('Valid dates (ISO 8601)', 'error', iri, f'{short(p_)} "{d_[1]}" is not a valid {d_[3].split("#")[1]}')
         if kind == 'shape' and not re.fullmatch(r'[A-Z][A-Za-z0-9]*Shape', local): r('Identifier case (§3.2)', 'warn', iri, 'shape not {Class}Shape')
         if kind in ('class', 'shape') and CAMEL_ACR.search(local): r('No acronyms in identifiers (§3.2)', 'error', iri, local)
         for l in prefs:
@@ -1346,14 +1535,26 @@ def check(triples, base, policy=None, vocab=None):
         if kind in ('ontology', 'scheme'):
             v = lits(OWL + 'versionInfo')
             if not v or not re.fullmatch(r'\d+\.\d+\.\d+', v[0][1]): r('Semantic version on releases (§3.3)', 'warn', iri, 'versionInfo not MAJOR.MINOR.PATCH')
-            if kind == 'ontology' and not e.get(OWL + 'versionIRI'): r('Semantic version on releases (§3.3)', 'warn', iri, 'no owl:versionIRI')
-        if vocab is not None and kind in ('class', 'concept') and segs[:1] == ['taxonomy']:
-            subj = [o[1] for o in e.get(DC + 'subject', []) if o[0] == 'I']
-            if not subj:
-                r('Taxonomy term in a vocabulary (§3.8)', 'error', iri, 'not linked to a vocabulary term (no dc:subject)')
-            elif not any(x in vocab for x in subj):
-                r('Taxonomy term in a vocabulary (§3.8)', 'error', iri, 'dc:subject points at ' + ', '.join(short_iri(x) for x in subj) + ', which is in no vocabulary')
+            if not e.get(OWL + 'versionIRI'): r('Semantic version on releases (§3.3)', 'warn', iri, 'no owl:versionIRI')
+            want = [(VAEM + 'namespace', 'vaem:namespace'), (VANN + 'preferredNamespacePrefix', 'vann:preferredNamespacePrefix'),
+                    (DCT + 'title', 'dcterms:title'), (DCT + 'description', 'dcterms:description'), (DCT + 'language', 'dcterms:language'),
+                    (DCT + 'creator', 'dcterms:creator'), (DCT + 'publisher', 'dcterms:publisher'), (DCT + 'subject', 'dcterms:subject'),
+                    (DCT + 'conformsTo', 'dcterms:conformsTo'), (DCT + 'created', 'dcterms:created'), (DCT + 'modified', 'dcterms:modified')]
+            if segs[:1] == ['taxonomy']: want.append((DCT + 'source', 'dcterms:source'))
+            miss = [n for p_, n in want if not e.get(p_)]
+            if miss: r('Asset header fields (§3.11)', 'warn', iri, 'missing ' + ', '.join(miss))
             if kind == 'scheme' and not e.get(SKOS + 'hasTopConcept'): r('One scheme, top concepts flagged (E.3)', 'error', iri, 'no top concepts')
+        if vocab is not None and kind in ('class', 'concept') and segs[:1] == ['taxonomy']:
+            primary = base + 'ontology/core/hasPrimaryTerm'
+            subj = [o[1] for p_ in SUBJECT_IN + (primary,) for o in e.get(p_, []) if o[0] == 'I']
+            if not subj:
+                r('Taxonomy term in a vocabulary (§3.11)', 'error', iri, 'not linked to a vocabulary term (no core:hasPrimaryTerm or dcterms:subject)')
+            elif not any(x in vocab for x in subj):
+                r('Taxonomy term in a vocabulary (§3.11)', 'error', iri, 'linked to ' + ', '.join(short_iri(x) for x in subj) + ', which is in no vocabulary')
+            elif not e.get(primary):
+                r('Taxonomy term in a vocabulary (§3.11)', 'warn', iri, 'no core:hasPrimaryTerm')
+            if e.get(DC + 'subject'):
+                r('Dublin Core terms (§3.11)', 'info', iri, 'dc:subject (Dublin Core 1.1): use dcterms:subject')
     return counted, res
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1464,7 +1665,49 @@ def collect(paths, recursive=False):
     return out
 
 
-def scan(paths, cfg, recursive=False):
+def align_domains(srcs, known=(), log=None):
+    """A file named after the singular (core-rule) joins the plural domain already in use (core-rules),
+    so the same subject never ends up as two assets. known: domains already in the destination."""
+    have = {x['domain'] for x in srcs} | set(known)
+    for x in srcs:
+        d = x['domain']
+        alt = d + 's' if not d.endswith('s') else None
+        if alt and d not in known and alt in have and alt != d:
+            x['domain'] = alt; x['key'] = f"{x['kind']}/{alt}"
+            x['new_iri'] = x['new_iri'].replace(f'/{d}/', f'/{alt}/')
+            if log: log(f'note  {x["name"]}: domain {d} → {alt} (same subject as the existing {alt})')
+    return srcs
+
+
+def known_domains(dest, ttl_dir='ttl'):
+    d = pathlib.Path(dest) / ttl_dir
+    return {h['iri'].rstrip('/').split('/')[-1] for h in folder_plan(d)['current']} if d.is_dir() else set()
+
+
+def pick_largest(srcs, cfg):
+    """Several files for the same asset: keep the largest — most terms (config duplicates: "most-terms",
+    the default) or most bytes ("largest-file"). Returns (kept, [(dropped, winner)])."""
+    rule = cfg.get('duplicates', 'most-terms')
+    size = (lambda x: (pathlib.Path(x['path']).stat().st_size, x['terms'])) if rule == 'largest-file' else \
+           (lambda x: (x['terms'], pathlib.Path(x['path']).stat().st_size))
+    by = collections.OrderedDict()
+    for x in srcs:
+        by.setdefault(x['key'], []).append(x)
+    kept, dropped = [], []
+    for key, xs in by.items():
+        xs = sorted(xs, key=size, reverse=True)
+        kept.append(xs[0]); dropped += [(x, xs[0]) for x in xs[1:]]
+    return kept, dropped
+
+
+def dup_reason(x, w, cfg):
+    unit = 'bytes' if cfg.get('duplicates') == 'largest-file' else 'terms'
+    a = pathlib.Path(w['path']).stat().st_size if unit == 'bytes' else w['terms']
+    b = pathlib.Path(x['path']).stat().st_size if unit == 'bytes' else x['terms']
+    return f'same asset as {w["name"]} ({w["new_iri"]}); the larger file is used: {a:,} {unit} there, {b:,} here'
+
+
+def scan(paths, cfg, recursive=False, known=()):
     """What each file is and where it would go — nothing is written."""
     ing = Ingest(cfg, datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0))
     rows = []
@@ -1479,10 +1722,16 @@ def scan(paths, cfg, recursive=False):
         except IngestError as e:
             row.update(ok=False, error=str(e))
         rows.append(row)
-    keys = collections.Counter(r['new_iri'] for r in rows if r.get('ok'))
+    srcs = [dict(path=r['path'], name=r['name'], key=f"{r['kind']}/{r['domain']}", kind=r['kind'], domain=r['domain'], new_iri=r['new_iri'], terms=r['terms'], row=r)
+            for r in rows if r.get('ok')]
+    align_domains(srcs, known)
+    for x in srcs:
+        x['row'].update(domain=x['domain'], new_iri=x['new_iri'])
+    _, dropped = pick_largest(srcs, cfg)
+    lost = {x['path']: dup_reason(x, w, cfg) for x, w in dropped}
     for r in rows:
-        if r.get('ok') and keys[r['new_iri']] > 1:
-            r['warning'] = 'another selected file maps to the same asset; only the first is ingested'
+        if r['path'] in lost:
+            r.update(ok=False, duplicate=True, error=lost[r['path']])
     return rows
 
 
@@ -1537,7 +1786,7 @@ def folder_plan(ttl_dir):
 
 def vocab_index(ttl_dir, exclude=()):
     """Every vocabulary term in the current vocabulary files of an output folder:
-    {term IRI: (preferred label, [alternative labels], vocabulary IRI)}."""
+    {term IRI: (preferred label, [alternative labels], vocabulary IRI, definition)}."""
     out = {}
     d = pathlib.Path(ttl_dir)
     if not d.is_dir():
@@ -1557,7 +1806,8 @@ def vocab_index(ttl_dir, exclude=()):
                 pref = next((o[1] for o in e.get(SKOS + 'prefLabel', []) if o[0] == 'L'), '')
                 alts = [o[1] for o in e.get(SKOS + 'altLabel', []) if o[0] == 'L']
                 scheme = next((o[1] for o in e.get(SKOS + 'inScheme', []) if o[0] == 'I'), h['iri'])
-                out[t] = (pref, alts, scheme)
+                dfn = next((o[1] for o in e.get(SKOS + 'definition', []) if o[0] == 'L'), '')
+                out[t] = (pref, alts, scheme, dfn)
     return out
 
 
@@ -1603,6 +1853,109 @@ def archive_superseded(dest, ttl_dir, trig_dir, stamp, log=print):
     return moved
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Definitions written by Claude (Anthropic API), for terms that have none
+# ─────────────────────────────────────────────────────────────────────────────
+KEY_FILE = pathlib.Path.home() / '.ke-workbench.env'
+
+
+def anthropic_key():
+    """ANTHROPIC_API_KEY from the environment, or from ~/.ke-workbench.env (KEY=value lines)."""
+    import os
+    k = os.environ.get('ANTHROPIC_API_KEY', '').strip()
+    if k:
+        return k
+    try:
+        for line in KEY_FILE.read_text(encoding='utf-8').splitlines():
+            m = re.match(r'\s*(?:export\s+)?ANTHROPIC_API_KEY\s*=\s*["\']?([^"\'\s]+)', line)
+            if m:
+                return m.group(1)
+    except OSError:
+        pass
+    return ''
+
+
+DEF_RULES = (
+    'Write one definition per term, following Semantic Governance Part III §3.7:\n'
+    '- one sentence in genus + differentia form: "A [genus] that [what sets it apart]." (or "An …")\n'
+    '- the genus is the broader term when one is given, otherwise the nearest general category\n'
+    '- do not use the term itself or its words to define it (no circular definitions)\n'
+    '- no acronyms or abbreviations; spell everything out\n'
+    '- no company, product or brand names, and no references to any particular organization\n'
+    '- plain, precise business English, at most 35 words, ending with a full stop\n'
+    '- keep it consistent with the broader term\'s definition and distinct from the sibling terms\n'
+    'Answer with JSON only: {"definitions": [{"id": "<id>", "definition": "<text>"}]}')
+
+
+def generate_definitions(items, cfg, log=print):
+    """items: [{id, label, kind, scheme, broader, broader_definition, alternative_labels, narrower, siblings,
+    scope_note}]. Returns ({id: definition}, model, error). Calls the Anthropic Messages API in batches."""
+    import urllib.request, urllib.error
+    key = anthropic_key()
+    if not key:
+        return {}, None, ('No Anthropic API key. Put ANTHROPIC_API_KEY=… in ' + str(KEY_FILE) +
+                          ' (or the environment) and try again; the workbench reads it on each request.')
+    model = cfg.get('definitionModel') or 'claude-sonnet-5-5'
+    out, err = {}, None
+    for i in range(0, len(items), 25):
+        batch = items[i:i + 25]
+        body = {'model': model, 'max_tokens': 4000, 'system': 'You write definitions for controlled vocabularies and taxonomies. ' + DEF_RULES,
+                'messages': [{'role': 'user', 'content': 'Terms:\n' + json.dumps(batch, ensure_ascii=False, indent=1)}]}
+        import os
+        req = urllib.request.Request(os.environ.get('KE_ANTHROPIC_URL', 'https://api.anthropic.com/v1/messages'), data=json.dumps(body).encode('utf-8'), method='POST',
+                                     headers={'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'})
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                resp = json.loads(r.read().decode('utf-8'))
+            text = ''.join(c.get('text', '') for c in resp.get('content', []) if c.get('type') == 'text')
+            m = re.search(r'\{.*\}', text, re.S)
+            for d in (json.loads(m.group(0)).get('definitions', []) if m else []):
+                if d.get('id') and d.get('definition'):
+                    out[d['id']] = clean(d['definition'])
+            log(f'definitions: {len(out)} of {min(i + 25, len(items))} written by {model}')
+        except urllib.error.HTTPError as e:
+            err = f'Anthropic API answered {e.code}: {e.read().decode("utf-8", "replace")[:300]}'; break
+        except Exception as e:                 # network, timeout, malformed answer
+            err = f'{type(e).__name__}: {e}'; break
+    return out, model, err
+
+
+def define_missing(ing, log=print):
+    """Ingestion: write definitions for the terms that still have none."""
+    items, where = [], {}
+    for key, t in ing.missing_defs:
+        o = ing.outputs.get(key)
+        if not o or t not in o['graph']: continue
+        g = o['graph']; ps = g[t]
+        lab = lambda x: next((l[1] for l in g.get(x, {}).get(I(SKOS + 'prefLabel'), []) + g.get(x, {}).get(I(RDFS + 'label'), []) if l[0] == 'L'), x[1].rstrip('/').split('/')[-1])
+        par = (ps.get(I(SKOS + 'broader'), []) + [p for p in ps.get(I(RDFS + 'subClassOf'), []) if p[0] == 'I'])[:1]
+        pdef = next((l[1] for l in g.get(par[0], {}).get(I(SKOS + 'definition'), []) if l[0] == 'L'), '') if par else ''
+        kids = [x for x, xp in g.items() if any(b == t for b in xp.get(I(SKOS + 'broader'), []) + xp.get(I(RDFS + 'subClassOf'), []))]
+        sibs = [x for x, xp in g.items() if par and x != t and any(b == par[0] for b in xp.get(I(SKOS + 'broader'), []) + xp.get(I(RDFS + 'subClassOf'), []))]
+        it = {'id': t[1], 'label': lab(t), 'kind': key.split('/')[0] + ' term', 'scheme': ing.pref_out(g[o['header']]) or key}
+        if par: it.update(broader=lab(par[0]), broader_definition=pdef)
+        alts = [a[1] for a in ps.get(I(SKOS + 'altLabel'), []) if a[0] == 'L']
+        if alts: it['alternative_labels'] = alts
+        if kids: it['narrower'] = [lab(k) for k in kids[:12]]
+        if sibs: it['siblings'] = [lab(k) for k in sibs[:12]]
+        items.append(it); where[t[1]] = (key, t)
+    if not items:
+        return 0
+    defs, model, err = generate_definitions(items, ing.cfg, log)
+    if err:
+        log('definitions: ' + err)
+        for key in {k for k, _ in where.values()}:
+            ing.note(key, 'warn', 'definitions were not generated: ' + err)
+    for iri, text in defs.items():
+        key, t = where.get(iri, (None, None))
+        if not key: continue
+        g = ing.outputs[key]['graph']
+        ing.add(g, t, I(SKOS + 'definition'), L(text, 'en'))
+        ing.add(g, t, I(SKOS + 'editorialNote'), L(f'Definition written by {model} during ingestion on {ing.day:%Y-%m-%d}; review before the term moves to Candidate.', 'en'))
+        ing.note(key, 'generated', f'{short_iri(iri)}: definition written ("{text}")')
+    return len(defs)
+
+
 def run(paths, dest, cfg, ttl_dir='ttl', trig_dir='trig', recursive=False, timestamp=None, overrides=None, log=print):
     """Ingest the given files/folders into dest/ttl_dir and dest/trig_dir. Returns a summary dict."""
     cfg = json.loads(json.dumps(cfg))
@@ -1618,20 +1971,31 @@ def run(paths, dest, cfg, ttl_dir='ttl', trig_dir='trig', recursive=False, times
     dest = pathlib.Path(dest).expanduser()
     ing = Ingest(cfg, now); ing.day = local_day
     skipped = []
+    read = []
     for f in collect(paths, recursive):
         try:
-            src = ing.load(f)
-            log(f'read  {f.name}: {src["format"]}, {src["kind"]}/{src["domain"]}, {src["triples"]} triples')
+            src = ing.inspect(f)
+            read.append(src)
+            log(f'read  {f.name}: {src["format"]}, {src["kind"]}/{src["domain"]}, {src["terms"]} terms, {src["triples"]} triples')
         except IngestError as e:
             skipped.append(dict(name=f.name, path=str(f), error=str(e)))
             log(f'skip  {f.name}: {e}')
+    align_domains(read, known_domains(dest, ttl_dir), log)
+    kept, dropped = pick_largest(read, cfg)
+    for x, w in dropped:
+        skipped.append(dict(name=x['name'], path=x['path'], error=dup_reason(x, w, cfg), duplicate=True))
+        log(f'skip  {x["name"]}: {dup_reason(x, w, cfg)}')
+    ing.sources = kept
     if not ing.sources:
         return dict(ok=False, error='No file could be ingested.', skipped=skipped)
     for key, notes in cfg.get('reviewNotes', {}).items():
         if any(s['key'] == key for s in ing.sources):
             for n in notes: ing.note(key, 'warn', n)
     ing.extra_vocab = vocab_index(dest / ttl_dir)        # vocabularies already in the destination
-    ing.build_crosswalk(); ing.transform(); ing.finish_headers()
+    ing.build_crosswalk(); ing.transform()
+    if cfg.get('generateDefinitions') in (True, 'true', '1', 1):
+        define_missing(ing, log)
+    ing.finish_headers()
     keep_corrected(dest, ttl_dir, trig_dir, [f'{k.replace("/", "-")}-{ing.version}' for k in ing.outputs], f'{ing.now:%Y-%m-%dT%H%M%SZ}', log)
     files = ing.write(dest, ttl_dir, trig_dir)
 
@@ -1684,10 +2048,12 @@ def main(argv=None):
     ap.add_argument('--trig-dir', default='trig', help='subfolder for TriG files (default: trig)')
     ap.add_argument('-r', '--recursive', action='store_true', help='also read subfolders of input folders')
     ap.add_argument('-c', '--config', default=None, help='config file (default: ke-ingest.config.json next to this script)')
+    ap.add_argument('--define', action='store_true', help='write missing definitions with Claude (needs ANTHROPIC_API_KEY or ~/.ke-workbench.env)')
     ap.add_argument('--timestamp', help='ISO 8601 time to stamp as dct:modified (default: now)')
     a = ap.parse_args(argv)
     cfg, _ = load_config(a.config)
-    res = run(a.inputs, a.out, cfg, a.ttl_dir, a.trig_dir, a.recursive, a.timestamp)
+    res = run(a.inputs, a.out, cfg, a.ttl_dir, a.trig_dir, a.recursive, a.timestamp,
+              {'generateDefinitions': True} if a.define else None)
     if not res['ok']:
         raise SystemExit(res['error'])
 

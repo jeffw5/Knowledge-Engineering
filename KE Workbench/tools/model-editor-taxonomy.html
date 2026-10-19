@@ -138,7 +138,7 @@
         <div><i style="background:var(--ke-accent)"></i>Drop <b>on</b> a term → becomes its narrower term</div>
         <div><i style="background:var(--ke-ok)"></i>Drop on the <b>top edge</b> of a term → becomes its broader term</div>
         <div style="margin-top:4px">Hold <b>Alt/⌥</b> while dropping to add a second broader term instead of moving.</div>
-        <div style="margin-top:4px">In an OWL taxonomy a vocabulary term becomes a class named after its label, linked back with <code>dc:subject</code> (an existing linked or same-named class is reused).</div>
+        <div style="margin-top:4px">A vocabulary term dropped here becomes a taxonomy concept named after its label (UpperCamelCase), with its label and definition, linked back with <code>core:hasPrimaryTerm</code> and <code>dcterms:subject</code> (§3.11). A concept already linked to that term, or with the same label, is reused.</div>
       </div>
       <h3 style="margin-top:18px">Selected</h3>
       <div id="selInfo" class="kv"><span class="k">Nothing selected.</span></div>
@@ -161,9 +161,12 @@
   let assets = [];
   let scheme = null, graph = null;        // taxonomy being edited; writes go to `graph` (null = default graph)
   let mode = 'owl';                        // 'owl': owl:Class + rdfs:subClassOf · 'skos': skos:Concept + skos:broader
-  let subjOf = new Map();                  // vocabulary concept -> taxonomy class (dc:subject link)
-  let newClasses = new Map();              // class IRI minted this session -> {label, subject}
-  const DCSUBJ = 'http://purl.org/dc/elements/1.1/subject';
+  let subjOf = new Map();                  // vocabulary term -> taxonomy concept or class that names it (§3.11 link)
+  let newClasses = new Map();              // concept/class IRI minted this session -> {label, subject}
+  // links from a taxonomy term to its vocabulary term: core:hasPrimaryTerm + dcterms:subject; dc:subject is read for older data
+  const DCSUBJ = 'http://purl.org/dc/elements/1.1/subject', DCTSUBJ = NS.dct + 'subject';
+  const coreOf = iri => ((String(iri).match(/^(https?:\/\/[^\/]+\/)/) || [])[1] || 'https://www.insperity.com/') + 'ontology/core/';
+  const subjPattern = (c, v, s) => `{ ${c} <${coreOf(s)}hasPrimaryTerm> ${v} } UNION { ${c} <${DCTSUBJ}> ${v} } UNION { ${c} <${DCSUBJ}> ${v} }`;
   const labels = new Map();               // iri -> label
   let parents = new Map();                // iri -> Set(parent iri) — in-scheme only
   let inScheme = new Set();
@@ -266,7 +269,7 @@
       if (mode === 'owl') {
         member = owlMemberPattern(s, gs);
         rows = await S.select(`SELECT DISTINCT ?c ?b WHERE { ${member} OPTIONAL { ?c rdfs:subClassOf ?b FILTER(isIRI(?b)) } FILTER(isIRI(?c)) }`);
-        const sub = await S.select(`SELECT DISTINCT ?c ?v WHERE { ${member} ?c <${DCSUBJ}> ?v FILTER(isIRI(?v)) }`);
+        const sub = await S.select(`SELECT DISTINCT ?c ?v WHERE { ${member} ${subjPattern('?c', '?v', s)} FILTER(isIRI(?v)) }`);
         subjOf = new Map(); sub.forEach(r => { if (!subjOf.has(r.v)) subjOf.set(r.v, r.c); });
       } else {
         member = `{ ${anyG(`?c skos:inScheme ${I}`, 1)} } UNION { ${anyG(`${I} skos:hasTopConcept ?c`, 2)} } UNION { ${anyG(`?c skos:topConceptOf ${I}`, 3)} }`;
@@ -275,7 +278,8 @@
              ${member}
              OPTIONAL { { ${anyG('?c skos:broader ?b', 4)} } UNION { ${anyG('?b skos:narrower ?c', 5)} } }
            }`);
-        subjOf = new Map();
+        const sub = await S.select(`SELECT DISTINCT ?c ?v WHERE { ${member} ${subjPattern('?c', '?v', s)} FILTER(isIRI(?v)) }`);
+        subjOf = new Map(); sub.forEach(r => { if (!subjOf.has(r.v)) subjOf.set(r.v, r.c); });
       }
       await fetchLabels(member);
       parents = new Map(); inScheme = new Set(); newClasses = new Map();
@@ -286,9 +290,10 @@
     } catch (e) { $('treeBody').innerHTML = '<div class="hint">Could not load this taxonomy.</div>'; toast(e.message, true); }
   }
 
-  // A vocabulary term dropped on an OWL taxonomy becomes (or reuses) a class there.
+  // A vocabulary term dropped on a taxonomy becomes (or reuses) a concept there — a class in an OWL taxonomy.
+  // The taxonomy never takes the vocabulary term itself as a member (§3.11: the concept names it with core:hasPrimaryTerm).
   function classFor(v) {
-    if (mode !== 'owl' || inScheme.has(v) || !vocTerms.some(t => t.iri === v)) return v;
+    if (inScheme.has(v) || !vocTerms.some(t => t.iri === v)) return v;
     if (subjOf.has(v)) return subjOf.get(v);
     const l = label(v), key = l.trim().toLowerCase();
     for (const c of inScheme) if (label(c).trim().toLowerCase() === key) { subjOf.set(v, c); return c; }
@@ -297,7 +302,7 @@
     newClasses.set(iri, { label: l, subject: v }); labels.set(iri, l); subjOf.set(v, iri);
     return iri;
   }
-  function inTaxonomy(v) { return mode === 'owl' ? (subjOf.has(v) && inScheme.has(subjOf.get(v))) || [...inScheme].some(c => label(c).trim().toLowerCase() === label(v).trim().toLowerCase()) : inScheme.has(v); }
+  function inTaxonomy(v) { return inScheme.has(v) || (subjOf.has(v) && inScheme.has(subjOf.get(v))) || [...inScheme].some(c => label(c).trim().toLowerCase() === label(v).trim().toLowerCase()); }
 
   async function openVocabulary(v) {
     S.lsSet('ke-voc-last', v || '');
@@ -382,7 +387,7 @@
 
   // ---------------------------------------------------------------- diff + save
   function diff() {
-    if (!orig) return { ins: [], dels: [], touched: [], lines: [] };
+    if (!orig) return { ins: [], dels: [], drops: [], copies: [], touched: [], lines: [] };
     const touched = new Set();
     const all = new Set([...orig.inScheme, ...inScheme]);
     const ps = (snap, i) => snap.parents.get(i) || new Set();
@@ -393,7 +398,7 @@
       if (pa.size !== pb.size || [...pa].some(x => !pb.has(x))) touched.add(i);
     });
     const I = S.iri, Sc = S.iri(scheme);
-    const ins = [], dels = [], drops = [], lines = [];   // dels: single triples; drops: classes removed entirely
+    const ins = [], dels = [], drops = [], lines = [], copies = [];   // dels: single triples; drops: classes removed entirely; copies: new terms that take the vocabulary definition
     const BROADER = mode === 'owl' ? 'rdfs:subClassOf' : 'skos:broader';
     touched.forEach(i => {
       const T = I(i);
@@ -402,7 +407,7 @@
       if (mode === 'owl') {
         if (!wasIn && isIn) {
           const nc = newClasses.get(i);
-          if (nc) ins.push(`${T} a owl:Class ; rdfs:label ${S.lit(nc.label)} ; rdfs:isDefinedBy ${Sc} ; <${DCSUBJ}> ${I(nc.subject)} .`);
+          if (nc) { ins.push(`${T} a owl:Class ; rdfs:label ${S.lit(nc.label)} ; rdfs:isDefinedBy ${Sc} ; <${coreOf(scheme)}hasPrimaryTerm> ${I(nc.subject)} ; <${DCTSUBJ}> ${I(nc.subject)} .`); copies.push(i); }
           else ins.push(`${T} rdfs:isDefinedBy ${Sc} .`);
         }
         if (wasIn && !isIn) drops.push(i);
@@ -412,7 +417,12 @@
         pb.forEach(p => { if (!pa.has(p)) ins.push(`${T} rdfs:subClassOf ${I(p)} .`); });
       } else {
         const wasTop = wasIn && pa.size === 0, isTop = isIn && pb.size === 0;
-        if (!wasIn && isIn) ins.push(`${T} a skos:Concept .`, `${T} skos:inScheme ${Sc} .`);
+        if (!wasIn && isIn) {
+          ins.push(`${T} a skos:Concept .`, `${T} skos:inScheme ${Sc} .`);
+          const nc = newClasses.get(i), C = coreOf(scheme), now = `"${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}"^^<http://www.w3.org/2001/XMLSchema#dateTime>`;
+          if (nc) { ins.push(`${T} skos:prefLabel ${S.lit(nc.label, 'en')} ; rdfs:label ${S.lit(nc.label, 'en')} ; <${C}hasPrimaryTerm> ${I(nc.subject)} ; <${DCTSUBJ}> ${I(nc.subject)} ;`
+            + ` <${C}hasLifecycleStatus> <${C}Draft> ; dct:created ${now} ; dct:modified ${now} .`); copies.push(i); }
+        }
         if (wasIn && !isIn) dels.push(`${T} skos:inScheme ${Sc}`);
         pa.forEach(p => { if (!pb.has(p)) dels.push(`${T} skos:broader ${I(p)}`, `${I(p)} skos:narrower ${T}`); });
         pb.forEach(p => { if (!pa.has(p)) ins.push(`${T} skos:broader ${I(p)} .`, `${I(p)} skos:narrower ${T} .`); });
@@ -424,7 +434,7 @@
       else if (!wasIn) lines.push(['add', `<b>${esc(label(i))}</b> ${newClasses.has(i) ? 'created' : 'added'} ${pb.size ? 'under ' + esc(names(pb)) : 'at top level'}`]);
       else lines.push(['move', `<b>${esc(label(i))}</b> → ${pb.size ? 'under ' + esc(names(pb)) : 'top level'}`]);
     });
-    return { ins, dels, drops, touched: [...touched], lines };
+    return { ins, dels, drops, copies, touched: [...touched], lines };
   }
   function dirtyCount() { return orig ? diff().touched.length : 0; }
 
@@ -445,6 +455,12 @@
       const body = d.ins.join('\n  ');
       ops.push(graph ? `INSERT DATA { GRAPH ${S.iri(graph)} {\n  ${body}\n} }` : `INSERT DATA {\n  ${body}\n}`);
     }
+    // new concepts take the definition of the vocabulary term they name (edit it later if the taxonomy needs its own)
+    (d.copies || []).forEach(c => {
+      const nc = newClasses.get(c); if (!nc) return;
+      const tpl = `${S.iri(c)} skos:definition ?d`;
+      ops.push(`INSERT { ${graph ? `GRAPH ${S.iri(graph)} { ${tpl} }` : tpl} } WHERE { { ${S.iri(nc.subject)} skos:definition ?d } UNION { GRAPH ?gd { ${S.iri(nc.subject)} skos:definition ?d } } FILTER(LANG(?d) = "en" || LANG(?d) = "") }`);
+    });
     $('btnSave').disabled = true; $('btnSave').textContent = 'Saving…';
     try {
       await S.update(ops.join(' ;\n'));

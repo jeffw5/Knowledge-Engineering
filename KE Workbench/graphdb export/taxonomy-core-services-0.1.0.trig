@@ -1,0 +1,1471 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-services/> {
+  <https://www.insperity.com/taxonomy/core-services/> a owl:Ontology;
+    rdfs:label "Core services taxonomy"@en;
+    terms:description "The service taxonomy categorizes services to help Verizon align services with business goals. Business services focus on high-level organizational outcomes, functional services group activities to deliver business value, and technical services support functional services through specific technology-based functions."@en;
+    terms:title "Core services taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2024-09-05T03:49:47.301Z"^^xsd:dateTime;
+    skos:altLabel "Taxonomy | Core | Services"@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:Services a owl:Class;
+    rdfs:label "Services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-10T09:54:14.532Z"^^xsd:dateTime;
+    skos:definition "Intangible activities or benefits provided by one party to another, often in exchange for payment."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:services .
+  
+  servicestax:BusinessServices a owl:Class;
+    rdfs:subClassOf servicestax:Services;
+    rdfs:label "Business services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Business services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "A service provided to a business to support its core operations or achieve specific business outcomes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:business-services .
+  
+  servicestax:CommercialServices a owl:Class;
+    rdfs:subClassOf servicestax:BusinessServices;
+    rdfs:label "Commercial services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Commercial services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "Services designed for use by businesses and organizations, as opposed to individual consumers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:commercial-services .
+  
+  servicestax:ContractManagement a owl:Class;
+    rdfs:subClassOf servicestax:CommercialServices;
+    rdfs:label "Contract management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Contract management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "The process of managing contracts with customers, vendors, partners, or employees."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:contract-management .
+  
+  servicestax:DemandManagement a owl:Class;
+    rdfs:subClassOf servicestax:CommercialServices, servicestax:CustomerServices;
+    rdfs:label "Demand management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Demand management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of forecasting, influencing, and fulfilling customer demand for products and services."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:demand-management .
+  
+  servicestax:CustomerServices a owl:Class;
+    rdfs:subClassOf servicestax:BusinessServices;
+    rdfs:label "Customer services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Customer services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "Support provided to customers before, during, and after a purchase. It encompasses all interactions a customer has with a company."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:customer-services .
+  
+  servicestax:MarketingManagement a owl:Class;
+    rdfs:subClassOf servicestax:CommercialServices;
+    rdfs:label "Marketing management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Marketing management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "The process of planning, executing, and measuring marketing campaigns to achieve specific business goals."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:marketing-management .
+  
+  servicestax:Advertising a owl:Class;
+    rdfs:subClassOf servicestax:MarketingManagement;
+    rdfs:label "Advertising"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Advertising"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "A form of marketing communication that uses paid media to reach a target audience with persuasive messages."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:advertising .
+  
+  servicestax:CampaignManagement a owl:Class;
+    rdfs:subClassOf servicestax:MarketingManagement;
+    rdfs:label "Campaign management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Campaign management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "The process of planning, executing, and measuring marketing campaigns across multiple channels."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:campaign-management .
+  
+  servicestax:CompetitiveAnalysis a owl:Class;
+    rdfs:subClassOf servicestax:MarketingManagement;
+    rdfs:label "Competitive analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Competitive analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and evaluating competitors to understand their strengths, weaknesses, and strategies."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:competitive-analysis .
+  
+  servicestax:CompetitiveBenchmarking a owl:Class;
+    rdfs:subClassOf servicestax:CompetitiveAnalysis;
+    rdfs:label "Competitive benchmarking"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Competitive benchmarking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of comparing a company’s products, services, and processes against those of its competitors or industry best practices."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:competitive-benchmarking .
+  
+  servicestax:IndustryStandards a owl:Class;
+    rdfs:subClassOf servicestax:CompetitiveAnalysis;
+    rdfs:label "Industry standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Industry standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Established norms, guidelines, or specifications that define acceptable quality, performance, or safety levels within a particular industry."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:industry-standards .
+  
+  servicestax:Innovation a owl:Class;
+    rdfs:subClassOf servicestax:CompetitiveAnalysis;
+    rdfs:label "Innovation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Innovation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of introducing new ideas, products, services, or processes that create value."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:innovation .
+  
+  servicestax:MarketDifferentiation a owl:Class;
+    rdfs:subClassOf servicestax:CompetitiveAnalysis;
+    rdfs:label "Market differentiation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Market differentiation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of creating a unique value proposition for a product or service that distinguishes it from competitors in the minds of customers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:market-differentiation .
+  
+  servicestax:MarketingMonitoringMeasurement a owl:Class;
+    rdfs:subClassOf servicestax:MarketingManagement;
+    rdfs:label "Marketing monitoring & measurement"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Marketing monitoring & measurement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of tracking, analyzing, and reporting on the performance of marketing campaigns and activities."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:marketing-monitoring-and-measurement .
+  
+  servicestax:ChurnPredictionModeling a owl:Class;
+    rdfs:subClassOf servicestax:MarketingMonitoringMeasurement;
+    rdfs:label "Churn prediction modeling"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Churn prediction modeling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The use of statistical techniques to identify customers who are likely to stop using a product or service."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:churn-prediction-modeling .
+  
+  servicestax:CustomerSegmentation a owl:Class;
+    rdfs:subClassOf servicestax:MarketingMonitoringMeasurement;
+    rdfs:label "Customer segmentation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Customer segmentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of dividing a customer base into groups with similar characteristics, needs, or behaviors."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:customer-segmentation .
+  
+  servicestax:PricingManagement a owl:Class;
+    rdfs:subClassOf servicestax:CommercialServices;
+    rdfs:label "Pricing management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Pricing management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "The process of setting and adjusting prices for products and services to maximize profitability."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:pricing-management .
+  
+  servicestax:RetailOperations a owl:Class;
+    rdfs:subClassOf servicestax:CommercialServices;
+    rdfs:label "Retail operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Retail operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "All activities related to selling goods or services directly to consumers for their personal use."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:retail-operations .
+  
+  servicestax:SalesOperations a owl:Class;
+    rdfs:subClassOf servicestax:CommercialServices;
+    rdfs:label "Sales operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Sales operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "All activities that support the sales process, including sales forecasting, territory planning, and sales training."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:sales-operations .
+  
+  servicestax:SalesAccount a owl:Class;
+    rdfs:subClassOf servicestax:SalesOperations;
+    rdfs:label "Sales account"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Sales account"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "A record of a company’s interactions with a specific customer."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:sales-account .
+  
+  servicestax:SalesServices a owl:Class;
+    rdfs:subClassOf servicestax:SalesOperations;
+    rdfs:label "Sales services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Sales services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "Services that support the sales process, such as lead generation, sales training, and sales automation."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:sales-services .
+  
+  servicestax:CustomerSupport a owl:Class;
+    rdfs:subClassOf servicestax:CustomerServices;
+    rdfs:label "Customer support"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Customer support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Technical assistance provided to customers experiencing issues with a product or service. Focuses on resolving specific problems."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:customer-support .
+  
+  servicestax:ExperienceManagement a owl:Class;
+    rdfs:subClassOf servicestax:CustomerServices;
+    rdfs:label "Experience management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Experience management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Strategically managing all aspects of customer interactions to foster positive experiences and build brand loyalty."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:experience-management .
+  
+  servicestax:Communications a owl:Class;
+    rdfs:subClassOf servicestax:ExperienceManagement;
+    rdfs:label "Communications"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Communications"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The exchange of information between two or more parties."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:communications .
+  
+  servicestax:CustomerServiceDisruption a owl:Class;
+    rdfs:subClassOf servicestax:ExperienceManagement;
+    rdfs:label "Customer service disruption"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Customer service disruption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "An unexpected event or situation that interrupts normal customer service operations and negatively impacts customer experience."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:customer-service-disruption .
+  
+  servicestax:JourneyMapping a owl:Class;
+    rdfs:subClassOf servicestax:ExperienceManagement;
+    rdfs:label "Journey mapping"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Journey mapping"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Visualizing the steps a customer takes when interacting with a company, from initial awareness to purchase and beyond."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:journey-mapping .
+  
+  servicestax:IncidentManagement a owl:Class;
+    rdfs:subClassOf servicestax:CustomerServices;
+    rdfs:label "Incident management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Incident management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Processes for responding to and resolving service interruptions or degradations to minimize impact on users."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:incident-management .
+  
+  servicestax:SubscriptionManagement a owl:Class;
+    rdfs:subClassOf servicestax:CustomerServices;
+    rdfs:label "Subscription management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Subscription management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Managing the lifecycle of recurring subscriptions, including billing, renewals, upgrades, and cancellations."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:subscription-management .
+  
+  servicestax:NetworkServices a owl:Class;
+    rdfs:subClassOf servicestax:BusinessServices;
+    rdfs:label "Network services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Network services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "Services related to the design, implementation, and maintenance of computer networks."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:network-services .
+  
+  servicestax:Communication a owl:Class;
+    rdfs:subClassOf servicestax:NetworkServices;
+    rdfs:label "Communication"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The exchange of information, ideas, or feelings between two or more parties. Effective communication is crucial for successful service delivery."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject servicesvoc:communication .
+  
+  servicestax:Entertainment a owl:Class;
+    rdfs:subClassOf servicestax:NetworkServices;
+    rdfs:label "Entertainment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Entertainment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Activities or experiences designed to provide enjoyment or amusement."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:NetworkSupport a owl:Class;
+    rdfs:subClassOf servicestax:NetworkServices;
+    rdfs:label "Network support"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Network support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "Technical assistance provided to users of a computer network."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:QualityOfService a owl:Class;
+    rdfs:subClassOf servicestax:NetworkServices;
+    rdfs:label "Quality of service"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Quality of service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "A measure of the performance of a network or service, often defined in terms of availability, bandwidth, latency, and error rates."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ServiceActivation a owl:Class;
+    rdfs:subClassOf servicestax:NetworkServices;
+    rdfs:label "Service activation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Service activation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of making a service available to a customer."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ServicePlanning a owl:Class;
+    rdfs:subClassOf servicestax:NetworkServices;
+    rdfs:label "Service planning"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Service planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T04:07:31.119Z"^^xsd:dateTime;
+    skos:definition "The process of designing, developing, and implementing new services."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ProductServices a owl:Class;
+    rdfs:subClassOf servicestax:BusinessServices;
+    rdfs:label "Product services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Product services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "Services that are offered in conjunction with a physical product, such as installation, maintenance, or repair."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:FunctionalServices a owl:Class;
+    rdfs:subClassOf servicestax:Services;
+    rdfs:label "Functional services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Functional services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:56:09.230Z"^^xsd:dateTime;
+    skos:definition "A service that supports a specific business function, such as human resources, finance, or marketing."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:BusinessOperations a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Business operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Business operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The day-to-day activities that a company engages in to achieve its business goals."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DataAnalyticServices a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Data & analytic services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Data & analytic services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Services related to the collection, storage, analysis, and visualization of data."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:FinancialAnalytics a owl:Class;
+    rdfs:subClassOf servicestax:DataAnalyticServices;
+    rdfs:label "Financial analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Financial analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The use of data analysis techniques to extract insights from financial data."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:GovernanceServices a owl:Class;
+    rdfs:subClassOf servicestax:DataAnalyticServices;
+    rdfs:label "Governance services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Governance services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Services related to the establishment and enforcement of policies, procedures, and standards within an organization."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DetectiveControls a owl:Class;
+    rdfs:subClassOf servicestax:GovernanceServices;
+    rdfs:label "Detective controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Detective controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Security controls designed to detect security incidents that have already occurred."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DataInvestigations a owl:Class;
+    rdfs:subClassOf servicestax:DetectiveControls;
+    rdfs:label "Data investigations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Data investigations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Processes for examining data to uncover facts, detect anomalies, and resolve issues."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:MeasurementServices a owl:Class;
+    rdfs:subClassOf servicestax:DetectiveControls, servicestax:OperationsManagement;
+    rdfs:label "Measurement services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Measurement services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime, "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "Services related to the collection and analysis of data to track performance against key indicators."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:OperationsManagement a owl:Class;
+    rdfs:subClassOf servicestax:BusinessOperations, servicestax:DetectiveControls;
+    rdfs:label "Operations management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Operations management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime, "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "Managing the processes and resources involved in delivering services to customers."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ExceptionMonitoring a owl:Class;
+    rdfs:subClassOf servicestax:MeasurementServices;
+    rdfs:label "Exception monitoring"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Exception monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and responding to events or conditions that deviate from expected patterns."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:AccessManagement a owl:Class;
+    rdfs:subClassOf servicestax:ExceptionMonitoring;
+    rdfs:label "Access management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Access management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of controlling who has access to what resources."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ApprovalManagement a owl:Class;
+    rdfs:subClassOf servicestax:ExceptionMonitoring;
+    rdfs:label "Approval management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Approval management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of routing requests for approval through the appropriate channels."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:OnboardingManagement a owl:Class;
+    rdfs:subClassOf servicestax:ExceptionMonitoring;
+    rdfs:label "Onboarding management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Onboarding management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of integrating new employees, customers, or partners into an organization."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:MonitoringServices a owl:Class;
+    rdfs:subClassOf servicestax:DetectiveControls, servicestax:OperationsManagement;
+    rdfs:label "Monitoring services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Monitoring services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime, "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "Services that provide ongoing observation and analysis of systems, applications, or networks."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:AvailabilityManagement a owl:Class;
+    rdfs:subClassOf servicestax:OperationsManagement;
+    rdfs:label "Availability management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Availability management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that systems, applications, and services are available to users when needed."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:CapacityManagement a owl:Class;
+    rdfs:subClassOf servicestax:OperationsManagement;
+    rdfs:label "Capacity management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Capacity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that there is sufficient service capacity to meet current and future business requirements."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:Investigation a owl:Class;
+    rdfs:subClassOf servicestax:OperationsManagement;
+    rdfs:label "Investigation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Investigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "A systematic examination or inquiry to discover and examine the facts of an incident, allegation, etc., to establish the truth."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:CausalFactorAnalysis a owl:Class;
+    rdfs:subClassOf servicestax:Investigation, servicestax:IssueManagement;
+    rdfs:label "Causal factor analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Causal factor analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Identifying the underlying causes of an incident or problem to prevent recurrence."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:IssueManagement a owl:Class;
+    rdfs:subClassOf servicestax:DetectiveControls, servicestax:OperationsManagement;
+    rdfs:label "Issue management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Issue management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of capturing, tracking, prioritizing, and resolving issues that arise."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:Diagnostics a owl:Class;
+    rdfs:subClassOf servicestax:Investigation;
+    rdfs:label "Diagnostics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Diagnostics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "Techniques and tools used to identify the root cause of a problem or issue."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ImpactAnalysis a owl:Class;
+    rdfs:subClassOf servicestax:Investigation;
+    rdfs:label "Impact analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "Assessing the potential consequences of an incident, change, or decision."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:IssueMitigation a owl:Class;
+    rdfs:subClassOf servicestax:IssueManagement;
+    rdfs:label "Issue mitigation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Issue mitigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The actions taken to reduce or minimize the negative impact or severity of an adverse event, risk, or issue. It's about lessening the harm caused by something, whether that's a potential problem or one that has already occurred."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:IssueResolution a owl:Class;
+    rdfs:subClassOf servicestax:IssueManagement;
+    rdfs:label "Issue resolution"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Issue resolution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, analyzing, and finding solutions to problems or issues, aiming to restore functionality, resolve conflicts, or improve processes. It involves a systematic approach to address problems effectively and efficiently."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ProcessRecasting a owl:Class;
+    rdfs:subClassOf servicestax:OperationsManagement;
+    rdfs:label "Process recasting"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Process recasting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-20T21:04:50.822Z"^^xsd:dateTime;
+    skos:definition "The fundamental rethinking and radical redesign of business processes to achieve dramatic improvements in performance."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:LifecycleStandards a owl:Class;
+    rdfs:subClassOf servicestax:GovernanceServices;
+    rdfs:label "Lifecycle standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Lifecycle standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Standards that define the stages that a product or service goes through from inception to retirement."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:CommunicationsEngagementManagement a owl:Class;
+    rdfs:subClassOf servicestax:LifecycleStandards;
+    rdfs:label "Communications & engagement management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Communications & engagement management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Strategies and processes for effective communication and engagement with stakeholders."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DefineLifecycleControls a owl:Class;
+    rdfs:subClassOf servicestax:LifecycleStandards;
+    rdfs:label "Define lifecycle controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Define lifecycle controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Security controls that are implemented throughout the entire lifecycle of a system, application, or data set."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DefineOperationalControls a owl:Class;
+    rdfs:subClassOf servicestax:LifecycleStandards;
+    rdfs:label "Define operational controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Define operational controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Security controls that are implemented to protect systems and data during their day-to-day operation."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DefinePolicyControls a owl:Class;
+    rdfs:subClassOf servicestax:LifecycleStandards;
+    rdfs:label "Define policy controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Define policy controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Security controls that are implemented through policies, procedures, and guidelines."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DefineTargetOperatingModel a owl:Class;
+    rdfs:subClassOf servicestax:LifecycleStandards;
+    rdfs:label "Define target operating model"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Define target operating model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "A description of the desired state of an organization’s business operations."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:PreventiveControls a owl:Class;
+    rdfs:subClassOf servicestax:GovernanceServices;
+    rdfs:label "Preventive controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Preventive controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Security controls that are designed to prevent security incidents from occurring."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DigitalAssetInventoryOnboarding a owl:Class;
+    rdfs:subClassOf servicestax:PreventiveControls;
+    rdfs:label "Digital asset inventory onboarding"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Digital asset inventory onboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:48:53.866Z"^^xsd:dateTime;
+    skos:definition "The process of adding new digital assets to an inventory management system."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:CatalogServices a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetInventoryOnboarding;
+    rdfs:label "Catalog services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Catalog services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "Services that provide a centralized repository of information about products, services, or other assets."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:CertificationServices a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetInventoryOnboarding;
+    rdfs:label "Certification services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Certification services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "Services that provide independent verification that a product, service, or system meets certain standards."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ClassificationServices a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetInventoryOnboarding;
+    rdfs:label "Classification services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Classification services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "Services that categorize data or assets based on predefined criteria."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:EnrichmentServices a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetInventoryOnboarding;
+    rdfs:label "Enrichment services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Enrichment services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "Services that enhance the value of data by adding additional information to it."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ProfilingServices a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetInventoryOnboarding;
+    rdfs:label "Profiling services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Profiling services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "Services that create profiles of individuals or entities based on their characteristics and behavior."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DigitalAssetsOrderManagement a owl:Class;
+    rdfs:subClassOf servicestax:PreventiveControls;
+    rdfs:label "Digital assets order management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Digital assets order management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "The process of receiving, processing, and fulfilling orders for digital assets."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DigitalAssetsOrderEntry a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetsOrderManagement;
+    rdfs:label "Digital assets order entry"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Digital assets order entry"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "The process of entering orders for digital assets into a system."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DigitalAssetsOrderFulfillment a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetsOrderManagement;
+    rdfs:label "Digital assets order fulfillment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Digital assets order fulfillment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "The process of delivering digital assets to customers."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:SearchDiscovery a owl:Class;
+    rdfs:subClassOf servicestax:DigitalAssetsOrderManagement;
+    rdfs:label "Search & discovery"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Search & discovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T13:03:34.157Z"^^xsd:dateTime;
+    skos:definition "Tools and processes that enable users to find the information or assets they need."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:LifecycleManagement a owl:Class;
+    rdfs:subClassOf servicestax:PreventiveControls;
+    rdfs:label "Lifecycle management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Lifecycle management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:50:02.335Z"^^xsd:dateTime;
+    skos:definition "The process of managing the entire lifecycle of a product, service, or asset."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ProductCertification a owl:Class;
+    rdfs:subClassOf servicestax:PreventiveControls;
+    rdfs:label "Product certification"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Product certification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:53:33.286Z"^^xsd:dateTime;
+    skos:definition "The process of confirming that a product meets certain standards or requirements."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ThirdPartyDataSharing a owl:Class;
+    rdfs:subClassOf servicestax:PreventiveControls;
+    rdfs:label "Third party data sharing"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Third party data sharing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:48:53.866Z"^^xsd:dateTime;
+    skos:definition "The exchange of data between an organization and a third party."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:MetricsAsAService a owl:Class;
+    rdfs:subClassOf servicestax:DataAnalyticServices;
+    rdfs:label "Metrics as a service"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Metrics as a service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "A cloud computing service model in which a third-party provider collects, aggregates, and provides access to metrics from various sources."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:NetworkAnalytics a owl:Class;
+    rdfs:subClassOf servicestax:DataAnalyticServices;
+    rdfs:label "Network analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Network analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The collection, analysis, and visualization of network data to improve network performance, security, and troubleshooting."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:DataStewardship a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Data stewardship"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Data stewardship"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The practice of ensuring the responsible use and management of data assets."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:FinancialServices a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Financial services"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Financial services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Managing the financial aspects of service provision, including budgeting, cost control, and revenue generation."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:KnowledgeExploration a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Knowledge exploration"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Knowledge exploration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of discovering and extracting insights from data."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:OrderEntry a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Order entry"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Order entry"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of receiving and processing customer orders."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:OrderFulfillment a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Order fulfillment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Order fulfillment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Fulfilling customer orders accurately and efficiently, from order processing to delivery."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:PolicyManagement a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Policy management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Policy management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Defining, documenting, implementing, and enforcing policies related to service provision."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:RiskManagement a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Risk management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Identifying, assessing, and mitigating potential risks that could impact service delivery."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:SecurityManagement a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Security management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Security management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, assessing, and mitigating security risks."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ServiceLevelManagement a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Service level management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Service level management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Defining, agreeing upon, monitoring, and reporting on service level targets."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ServiceResourceAssignment a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Service resource assignment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Service resource assignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Allocating resources effectively to meet service demands."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ServiceUsageTracking a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Service usage tracking"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Service usage tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Monitoring and analyzing how users are utilizing services."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:ThreatManagement a owl:Class;
+    rdfs:subClassOf servicestax:FunctionalServices;
+    rdfs:label "Threat management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-services/>;
+    skos:prefLabel "Threat management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T12:44:39.321Z"^^xsd:dateTime;
+    skos:definition "Identifying, analyzing, and responding to threats that could disrupt or compromise services."@en;
+    owl:versionInfo "0.1.0" .
+  
+  servicestax:Entertainment dc:subject servicesvoc:entertainment;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:NetworkSupport dc:subject servicesvoc:network-support;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:QualityOfService dc:subject servicesvoc:quality-of-service;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ServiceActivation dc:subject servicesvoc:service-activation;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ServicePlanning dc:subject servicesvoc:service-planning;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ProductServices dc:subject servicesvoc:product-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:FunctionalServices dc:subject servicesvoc:functional-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:BusinessOperations dc:subject servicesvoc:business-operations;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DataAnalyticServices dc:subject servicesvoc:data-and-analytic-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:FinancialAnalytics dc:subject servicesvoc:financial-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:GovernanceServices dc:subject servicesvoc:governance-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DetectiveControls dc:subject servicesvoc:detective-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DataInvestigations dc:subject servicesvoc:data-investigations;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:MeasurementServices dc:subject servicesvoc:measurement-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:OperationsManagement dc:subject servicesvoc:operations-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ExceptionMonitoring dc:subject servicesvoc:exception-monitoring;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:AccessManagement dc:subject servicesvoc:access-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ApprovalManagement dc:subject servicesvoc:approval-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:OnboardingManagement dc:subject servicesvoc:onboarding-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:MonitoringServices dc:subject servicesvoc:monitoring-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:AvailabilityManagement dc:subject servicesvoc:availability-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CapacityManagement dc:subject servicesvoc:capacity-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Investigation dc:subject servicesvoc:investigation;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CausalFactorAnalysis dc:subject servicesvoc:causal-factor-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:IssueManagement dc:subject servicesvoc:issue-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Diagnostics dc:subject servicesvoc:diagnostics;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ImpactAnalysis dc:subject servicesvoc:impact-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:IssueMitigation dc:subject servicesvoc:issue-mitigation;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:IssueResolution dc:subject servicesvoc:issue-resolution;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ProcessRecasting dc:subject servicesvoc:process-recasting;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:LifecycleStandards dc:subject servicesvoc:lifecycle-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CommunicationsEngagementManagement dc:subject servicesvoc:communications-and-engagement-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DefineLifecycleControls dc:subject servicesvoc:define-lifecycle-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DefineOperationalControls dc:subject servicesvoc:define-operational-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DefinePolicyControls dc:subject servicesvoc:define-policy-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DefineTargetOperatingModel dc:subject servicesvoc:define-target-operating-model;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:PreventiveControls dc:subject servicesvoc:preventive-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DigitalAssetInventoryOnboarding dc:subject servicesvoc:digital-asset-inventory-onboarding;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CatalogServices dc:subject servicesvoc:catalog-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CertificationServices dc:subject servicesvoc:certification-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ClassificationServices dc:subject servicesvoc:classification-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:EnrichmentServices dc:subject servicesvoc:enrichment-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ProfilingServices dc:subject servicesvoc:profiling-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DigitalAssetsOrderManagement dc:subject servicesvoc:digital-assets-order-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DigitalAssetsOrderEntry dc:subject servicesvoc:digital-assets-order-entry;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DigitalAssetsOrderFulfillment dc:subject servicesvoc:digital-assets-order-fulfillment;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:SearchDiscovery dc:subject servicesvoc:search-and-discovery;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:LifecycleManagement dc:subject servicesvoc:lifecycle-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ProductCertification dc:subject servicesvoc:product-certification;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ThirdPartyDataSharing dc:subject servicesvoc:third-party-data-sharing;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:MetricsAsAService dc:subject servicesvoc:metrics-as-a-service;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:NetworkAnalytics dc:subject servicesvoc:network-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DataStewardship dc:subject servicesvoc:data-stewardship;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:FinancialServices dc:subject servicesvoc:financial-services;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:KnowledgeExploration dc:subject servicesvoc:knowledge-exploration;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:OrderEntry dc:subject servicesvoc:order-entry;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:OrderFulfillment dc:subject servicesvoc:order-fulfillment;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:PolicyManagement dc:subject servicesvoc:policy-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:RiskManagement dc:subject servicesvoc:risk-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:SecurityManagement dc:subject servicesvoc:security-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ServiceLevelManagement dc:subject servicesvoc:service-level-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ServiceResourceAssignment dc:subject servicesvoc:service-resource-assignment;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ServiceUsageTracking dc:subject servicesvoc:service-usage-tracking;
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ThreatManagement dc:subject servicesvoc:threat-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-services/> owl:imports <https://www.insperity.com/taxonomy/core-services-technicalservices/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/core-services/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-services/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Services core:hasLifecycleStatus core:Draft .
+  
+  servicestax:BusinessServices core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CommercialServices core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ContractManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:DemandManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CustomerServices core:hasLifecycleStatus core:Draft .
+  
+  servicestax:MarketingManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Advertising core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CampaignManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CompetitiveAnalysis core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CompetitiveBenchmarking core:hasLifecycleStatus core:Draft .
+  
+  servicestax:IndustryStandards core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Innovation core:hasLifecycleStatus core:Draft .
+  
+  servicestax:MarketDifferentiation core:hasLifecycleStatus core:Draft .
+  
+  servicestax:MarketingMonitoringMeasurement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ChurnPredictionModeling core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CustomerSegmentation core:hasLifecycleStatus core:Draft .
+  
+  servicestax:PricingManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:RetailOperations core:hasLifecycleStatus core:Draft .
+  
+  servicestax:SalesOperations core:hasLifecycleStatus core:Draft .
+  
+  servicestax:SalesAccount core:hasLifecycleStatus core:Draft .
+  
+  servicestax:SalesServices core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CustomerSupport core:hasLifecycleStatus core:Draft .
+  
+  servicestax:ExperienceManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Communications core:hasLifecycleStatus core:Draft .
+  
+  servicestax:CustomerServiceDisruption core:hasLifecycleStatus core:Draft .
+  
+  servicestax:JourneyMapping core:hasLifecycleStatus core:Draft .
+  
+  servicestax:IncidentManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:SubscriptionManagement core:hasLifecycleStatus core:Draft .
+  
+  servicestax:NetworkServices core:hasLifecycleStatus core:Draft .
+  
+  servicestax:Communication core:hasLifecycleStatus core:Draft .
+}

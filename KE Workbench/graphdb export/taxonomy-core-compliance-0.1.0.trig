@@ -1,0 +1,1716 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-compliance/> {
+  <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/EnergyResourceOntology.owl#currencyTypeEnum>
+    a rdfs:Datatype;
+    owl:equivalentClass _:node11225 .
+  
+  <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/EnergyResourceOntology.owl#energyUnitEnum>
+    a rdfs:Datatype;
+    owl:equivalentClass _:node11241 .
+  
+  <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/EnergyResourceOntology.owl#capacityUnitEnum>
+    a rdfs:Datatype;
+    owl:equivalentClass _:node11218 .
+  
+  <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/EnergyResourceOntology.owl#weightUnitEnum>
+    a rdfs:Datatype;
+    owl:equivalentClass _:node11247 .
+  
+  <https://www.auto.tuwien.ac.at/downloads/thinkhome/ontology/EnergyResourceOntology.owl#areaUnitEnum>
+    a rdfs:Datatype;
+    owl:equivalentClass _:node11209 .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Align_with_1VZData>
+    a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#CustomerProblem>
+    a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#ProductOrderItem>
+    a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#ProductUsage>
+    a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#ResourceNumber>
+    a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Sector> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Tower> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Antenna> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#BasebandUnit> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#RRH> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Radio> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSite> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#EnodeB> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#GNodeB> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSiteRouter> a
+      owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CU> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#DU> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Card> a owl:NamedIndividual .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Interface> a owl:NamedIndividual .
+  
+  <https://www.insperity.com/taxonomy/core-compliance/> a owl:Ontology;
+    rdfs:label "Core compliance taxonomy"@en;
+    terms:description "The compliance taxonomy organizes and categorizes Verizon’s compliance obligations to effectively manage compliance risks, streamline audits and ensure adherence to relevant legal and ethical requirements."@en;
+    terms:title "Core compliance taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:altLabel "Taxonomy | Core | Compliance"@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:Compliance a owl:Class;
+    rdfs:label "Compliance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-10-02T18:03:28.133Z"^^xsd:dateTime;
+    skos:definition "Adherence to laws, regulations, policies, and ethical standards relevant to an organization’s operations."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:Documentation a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Documentation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Documentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Formal records, procedures, and guidelines that provide evidence of compliance efforts and serve as a reference for employees."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:Regulation a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Regulation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Regulation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Mandatory rules or laws imposed by government or regulatory bodies to govern specific industries or activities, including data protection and privacy."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:Controls a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Mechanisms and procedures implemented to ensure compliance with regulations and internal policies."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:AnalyticsAiModelControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Analytics & artificial intelligence model controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Analytics & artificial intelligence model controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Specific controls focused on the development, deployment, and use of analytics and AI models to ensure fairness, accuracy, and ethical considerations."@en;
+    skos:altLabel "Analytics & AI model controls"@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:ChangeManagementControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Change management controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Change management controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Processes and procedures designed to manage and control changes to systems, processes, and data to maintain compliance throughout the change lifecycle."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:ComplianceAuditsControlsReporting a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Compliance audits & controls reporting"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Compliance audits & controls reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Systematic evaluations and reports that assess the effectiveness of compliance controls and identify areas for improvement."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:DataAccessControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Data access controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data access controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Security measures that regulate who can access specific data based on their roles and responsibilities within an organization."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:DataLifecycleControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Data lifecycle controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data lifecycle controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T19:37:28.192Z"^^xsd:dateTime;
+    skos:definition "Security measures applied throughout the lifecycle of data (collection, use, storage, archival, deletion) to ensure confidentiality, integrity, and availability."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:DataPrivacyDataProtectionControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Data privacy & data protection controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data privacy & data protection controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Mechanisms and policies implemented to protect sensitive information from unauthorized access, use, disclosure, or destruction, ensuring compliance with privacy regulations."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:DataQualityControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Data quality controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data quality controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Processes and procedures used to ensure the accuracy, completeness, consistency, and reliability of data throughout its lifecycle."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:DataRetentionDeletionControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Data retention & deletion controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data retention & deletion controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Policies and procedures that define how long data should be stored, archived, and eventually deleted based on legal, regulatory, and business requirements."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:DataSharingCollaborationControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Data sharing & collaboration controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data sharing & collaboration controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Rules and guidelines for sharing data internally and externally while maintaining compliance with privacy, security, and data governance regulations."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:EthicalAiAnalyticsControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Ethical artificial intelligence & analytics controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Ethical artificial intelligence & analytics controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Measures implemented to address ethical considerations in the development and use of AI and analytics, ensuring fairness, transparency, and accountability."@en;
+    skos:altLabel "Ethical AI & analytics controls"@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:ExplanationContextualRelevanceControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Explanation & contextual relevance controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Explanation & contextual relevance controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Mechanisms that provide clear explanations for AI and analytics outputs, ensuring transparency and understanding of how decisions are made."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:MetricsKpiMonitoringControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Metrics & key performance indicator monitoring controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Metrics & key performance indicator monitoring controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Processes for tracking and monitoring key performance indicators related to compliance, identifying potential risks and areas for improvement."@en;
+    skos:altLabel "Metrics & KPI monitoring controls"@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:PerformanceScalabilityControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Performance & scalability controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Performance & scalability controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Measures that ensure compliance solutions can handle increasing data volumes and user demands while maintaining performance and efficiency."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:SemanticKnowledgeControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Semantic knowledge controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Semantic knowledge controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Controls related to the management and use of semantic knowledge within AI and analytics systems, ensuring accuracy, consistency, and relevance of data interpretations."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:VisualizationReportingControls a owl:Class;
+    rdfs:subClassOf compliancetax:Controls;
+    rdfs:label "Visualization & reporting controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Visualization & reporting controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Guidelines and best practices for creating clear, accurate, and compliant visualizations and reports from data analysis."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:EnterpriseStandards a owl:Class;
+    rdfs:subClassOf compliancetax:Documentation;
+    rdfs:label "Enterprise standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Enterprise standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "High-level principles and requirements that apply to all aspects of an organization’s operations, including compliance."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:ArchitectureStandard a owl:Class;
+    rdfs:subClassOf compliancetax:EnterpriseStandards;
+    rdfs:label "Architecture standard"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Architecture standard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Specific guidelines and best practices for designing and maintaining IT systems and infrastructure to ensure compliance."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:KnowledgeEngineeringStandard a owl:Class;
+    rdfs:subClassOf compliancetax:EnterpriseStandards;
+    rdfs:label "Knowledge engineering standard"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Knowledge engineering standard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Standards for the creation, management, and use of information as designed by Knowledge Engineering Governance."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:MetricsGovernanceStandards a owl:Class;
+    rdfs:subClassOf compliancetax:EnterpriseStandards;
+    rdfs:label "Metrics governance standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Metrics governance standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Guidelines and procedures for defining, collecting, analyzing, and reporting metrics related to compliance and performance."@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:ModelManagementResponsibleAiStandards a owl:Class;
+    rdfs:subClassOf compliancetax:EnterpriseStandards;
+    rdfs:label "Model management & responsible artificial intelligence standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Model management & responsible artificial intelligence standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Best practices and guidelines for managing the lifecycle of AI models, ensuring their responsible and ethical development and deployment."@en;
+    skos:altLabel "Model management & responsible AI standards"@en;
+    owl:versionInfo "0.1.0" .
+  
+  compliancetax:ThirdPartyDataGovernanceStandards a owl:Class;
+    rdfs:subClassOf compliancetax:EnterpriseStandards;
+    rdfs:label "Third party data governance standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Third party data governance standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Requirements and guidelines for governing the use of data obtained from external sources to ensure compliance and data protection."@en .
+  
+  compliancetax:IndustryStandards a owl:Class;
+    rdfs:subClassOf compliancetax:Documentation;
+    rdfs:label "Industry standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Industry standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-10-16T18:19:22.052Z"^^xsd:dateTime;
+    skos:definition "Established norms and best practices within a specific industry sector, often developed and promoted by professional organizations or regulatory bodies."@en .
+  
+  compliancetax:DamaDmbok2DataManagementFramework a owl:Class;
+    rdfs:subClassOf compliancetax:IndustryStandards;
+    rdfs:label "DAMA-DMBOK2 data management framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "DAMA-DMBOK2 data management framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "A comprehensive framework developed by DAMA International that provides a structured approach to data management. It outlines globally recognized principles, best practices, and functions to effectively manage data assets within an organization."@en .
+  
+  compliancetax:DataGovernance a owl:Class;
+    rdfs:subClassOf compliancetax:DamaDmbok2DataManagementFramework;
+    rdfs:label "Data governance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "The overall framework and practices for managing data assets throughout their lifecycle, ensuring data quality, integrity, and compliance."@en .
+  
+  compliancetax:DataArchitectures a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data architectures"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data architectures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "The design, implementation, and management of an organization’s data architecture to ensure data accessibility, consistency, and security."@en .
+  
+  compliancetax:DataIntegrationInteroperability a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data integration & interoperability"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data integration & interoperability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "The ability to combine data from different sources and systems seamlessly, ensuring data consistency and accessibility."@en .
+  
+  compliancetax:DataModelingDesign a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data modeling & design"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data modeling & design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "The process of creating a conceptual, logical, and physical representation of data structures to support business requirements."@en .
+  
+  compliancetax:DataQuality a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data quality"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data quality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "Refers to the overall health, reliability, and trustworthiness of data, ensuring it meets defined standards for accuracy, completeness, consistency, and timeliness."@en .
+  
+  compliancetax:DataSecurity a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data security"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "Within the DAMA-DMBOK2 framework, data security focuses on protecting data from unauthorized access, use, disclosure, disruption, modification, or destruction. It encompasses technical, organizational, and legal controls to ensure confidentiality, integrity, and availability of data."@en .
+  
+  compliancetax:DataStorageOperations a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data storage & operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data storage & operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "The processes and technologies involved in storing, managing, and securing data throughout its lifecycle."@en .
+  
+  compliancetax:DataWarehousingBusinessIntelligence a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Data warehousing & business intelligence"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data warehousing & business intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "The collection, storage, and analysis of large datasets to support strategic decision-making within an organization."@en .
+  
+  compliancetax:DocumentContentManagement a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Document & content management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Document & content management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "This area of DAMA-DMBOK2 deals with managing information assets stored in various formats, including electronic documents, paper records, and digital content. It covers aspects like capture, storage, retrieval, version control, retention, and disposition of documents and content."@en .
+  
+  compliancetax:Metadata a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Metadata"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Metadata"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "Data about data, providing context, definitions, and lineage information to support data governance initiatives."@en .
+  
+  compliancetax:ReferenceMasterData a owl:Class;
+    rdfs:subClassOf compliancetax:DataGovernance;
+    rdfs:label "Reference & master data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Reference & master data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-28T15:32:54.915Z"^^xsd:dateTime;
+    skos:definition "DAMA-DMBOK2 defines reference data as relatively static data used to classify and categorize other data, such as country codes or product categories. Master data, on the other hand, represents core business entities like customers, products, and employees, providing a single, consistent view of these entities across the organization."@en .
+  
+  compliancetax:DataManagementCapabilityAssessmentModel a owl:Class;
+    rdfs:subClassOf compliancetax:IndustryStandards;
+    rdfs:label "Data management capability assessment model"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data management capability assessment model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A framework used to evaluate an organization’s data management maturity and identify areas for improvement across various aspects like governance, processes, and technology."@en .
+  
+  compliancetax:01DataStrategyBusinessCase a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "01. data strategy & business case"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "01. data strategy & business case"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A roadmap outlining how an organization will leverage data to achieve its business objectives, encompassing aspects like collection, storage, analysis, and governance."@en .
+  
+  compliancetax:DataManagementBusinessCase a owl:Class;
+    rdfs:subClassOf compliancetax:01DataStrategyBusinessCase;
+    rdfs:label "Data management business case"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data management business case"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A justification for investments in data management initiatives, demonstrating the value and return on investment (ROI) for the organization."@en .
+  
+  compliancetax:DataManagementStrategy a owl:Class;
+    rdfs:subClassOf compliancetax:01DataStrategyBusinessCase;
+    rdfs:label "Data management strategy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data management strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A roadmap outlining how an organization will leverage data to achieve its business objectives, encompassing aspects like collection, storage, analysis, and governance."@en .
+  
+  compliancetax:02DataManagementProgramFunding a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "02. data management program & funding"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "02. data management program & funding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A structured initiative with defined goals, objectives, and resources allocated to implement and maintain effective data management practices."@en .
+  
+  compliancetax:03BusinessDataArchitecture a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "03. business & data architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "03. business & data architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A blueprint of an organization’s structure, processes, and functions, providing context for data management initiatives."@en .
+  
+  compliancetax:BusinessArchitecture a owl:Class;
+    rdfs:subClassOf compliancetax:03BusinessDataArchitecture;
+    rdfs:label "Business architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Business architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A blueprint of an organization’s structure, processes, and functions, providing context for data management initiatives."@en .
+  
+  compliancetax:DataArchitectureServiceModel a owl:Class;
+    rdfs:subClassOf compliancetax:03BusinessDataArchitecture;
+    rdfs:label "Data architecture service model"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data architecture service model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "This refers to how data architecture supports the service models within an organization."@en .
+  
+  compliancetax:04DataTechnologyArchitecture a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "04. data & technology architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "04. data & technology architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A roadmap outlining how data is structured, stored, processed, and accessed within an organization’s technological landscape."@en .
+  
+  compliancetax:05DataQualityManagement a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "05. data quality management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "05. data quality management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Processes and activities implemented to ensure data accuracy, completeness, consistency, timeliness, and relevance for its intended use."@en .
+  
+  compliancetax:06DataGovernance a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "06. data governance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "06. data governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A framework of policies, procedures, roles, and responsibilities that ensures data is managed effectively and ethically throughout its lifecycle."@en .
+  
+  compliancetax:07DataControlEnvironment a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "07. data control environment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "07. data control environment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The overall environment, including policies, procedures, and technologies, established to protect data confidentiality, integrity, and availability."@en .
+  
+  compliancetax:08AnalyticsManagement a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "08. analytics management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "08. analytics management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The process of managing analytical activities, including defining business requirements, developing models, deploying solutions, and monitoring performance."@en .
+  
+  compliancetax:09KnowledgeManagement a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "09. knowledge management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "09. knowledge management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The systematic process of capturing, storing, sharing, and applying organizational knowledge to improve decision-making and performance."@en .
+  
+  compliancetax:10ArtificialIntelligenceManagement a owl:Class;
+    rdfs:subClassOf compliancetax:DataManagementCapabilityAssessmentModel;
+    rdfs:label "10. artificial intelligence management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "10. artificial intelligence management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Governance and oversight of AI systems throughout their lifecycle, addressing ethical considerations, bias mitigation, and risk management."@en .
+  
+  compliancetax:InternationalStandardsOrganization a owl:Class;
+    rdfs:subClassOf compliancetax:IndustryStandards;
+    rdfs:label "International standards organization"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "International standards organization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime .
+  
+  compliancetax:Iso13250TopicMaps a owl:Class;
+    rdfs:subClassOf compliancetax:InternationalStandardsOrganization;
+    rdfs:label "ISO 13250 topic maps"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "ISO 13250 topic maps"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A standard for representing knowledge structures and their associations, facilitating information retrieval and knowledge sharing."@en .
+  
+  compliancetax:Iso19763MetamodelFrameworkForInteroperability a owl:Class;
+    rdfs:subClassOf compliancetax:InternationalStandardsOrganization;
+    rdfs:label "ISO 19763 metamodel framework for interoperability"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "ISO 19763 metamodel framework for interoperability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A framework for developing and aligning metadata schemas to enhance interoperability between different systems."@en .
+  
+  compliancetax:Iso25964InternationalStandardForThesauri a owl:Class;
+    rdfs:subClassOf compliancetax:InternationalStandardsOrganization;
+    rdfs:label "ISO 25964 international standard for thesauri"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "ISO 25964 international standard for thesauri"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A standard for developing and maintaining controlled vocabularies (thesauri) to improve information retrieval and knowledge organization."@en .
+  
+  compliancetax:Iso5964MultilingualThesauri a owl:Class;
+    rdfs:subClassOf compliancetax:InternationalStandardsOrganization;
+    rdfs:label "ISO 5964 multilingual thesauri"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "ISO 5964 multilingual thesauri"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An extension of ISO 25964, providing guidelines for developing and managing multilingual thesauri."@en;
+    skos:altLabel "ISO 5964 multilingual thesauri"@en .
+  
+  compliancetax:NationalInstituteOfStandardsTechnology a owl:Class;
+    rdfs:subClassOf compliancetax:IndustryStandards;
+    rdfs:label "National institute of standards & technology"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "National institute of standards & technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Guidelines, controls, and best practices designed to enhance cybersecurity, particularly for federal agencies and organizations dealing with sensitive data, ensuring compliance with government standards and regulations"@en .
+  
+  compliancetax:ArtificialIntelligenceRiskManagementFramework a owl:Class;
+    rdfs:subClassOf compliancetax:NationalInstituteOfStandardsTechnology;
+    rdfs:label "Artificial intelligence risk management framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Artificial intelligence risk management framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Guidance for managing risks associated with AI systems, promoting trustworthy and responsible AI development and deployment."@en .
+  
+  compliancetax:CybersecurityFramework a owl:Class;
+    rdfs:subClassOf compliancetax:NationalInstituteOfStandardsTechnology;
+    rdfs:label "Cybersecurity framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Cybersecurity framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A voluntary framework providing guidelines for organizations to manage and reduce cybersecurity risks."@en .
+  
+  compliancetax:PrivacyFramework a owl:Class;
+    rdfs:subClassOf compliancetax:NationalInstituteOfStandardsTechnology;
+    rdfs:label "Privacy framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Privacy framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A tool to help organizations identify and manage privacy risks, aligning with fair information practices."@en .
+  
+  compliancetax:RiskManagementFramework a owl:Class;
+    rdfs:subClassOf compliancetax:NationalInstituteOfStandardsTechnology;
+    rdfs:label "Risk management framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Risk management framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A process for identifying, assessing, and mitigating potential risks to an organization’s operations and objectives."@en .
+  
+  compliancetax:TmForumStandards a owl:Class;
+    rdfs:subClassOf compliancetax:IndustryStandards;
+    rdfs:label "TMForum standards"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "TMForum standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Developed by the global association TM Forum, are industry best practices and standards for operational management systems, particularly for service providers and telecom operators, aiming to facilitate digital business operations and integration."@en .
+  
+  compliancetax:OpenDigitalArchitecture a owl:Class;
+    rdfs:subClassOf compliancetax:TmForumStandards;
+    rdfs:label "Open digital architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Open digital architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A TMForum framework for building agile and scalable digital business operations, enabling interoperability and innovation."@en .
+  
+  compliancetax:BusinessArchitectures a owl:Class;
+    rdfs:subClassOf compliancetax:OpenDigitalArchitecture;
+    rdfs:label "Business architectures"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Business architectures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "TMForum grouping for ODA"@en .
+  
+  compliancetax:CapabilityFramework a owl:Class;
+    rdfs:subClassOf compliancetax:BusinessArchitectures;
+    rdfs:label "Capability framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Capability framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A structured set of capabilities required to support specific business functions or processes."@en .
+  
+  compliancetax:ProcessFramework a owl:Class;
+    rdfs:subClassOf compliancetax:BusinessArchitectures;
+    rdfs:label "Process framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Process framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A collection of standardized processes and best practices for specific business functions in the TMForum ODA."@en .
+  
+  compliancetax:ValueStreamFramework a owl:Class;
+    rdfs:subClassOf compliancetax:BusinessArchitectures;
+    rdfs:label "Value stream framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Value stream framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A methodology for identifying and optimizing the steps involved in delivering value to customers."@en .
+  
+  compliancetax:DeploymentRuntime a owl:Class;
+    rdfs:subClassOf compliancetax:OpenDigitalArchitecture;
+    rdfs:label "Deployment & runtime"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Deployment & runtime"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Standards and guidelines for deploying and managing software and services in operational environments."@en .
+  
+  compliancetax:OperationsFrameworks a owl:Class;
+    rdfs:subClassOf compliancetax:DeploymentRuntime;
+    rdfs:label "Operations frameworks"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Operations frameworks"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Best practices and guidelines for managing IT operations, ensuring service availability and performance."@en .
+  
+  compliancetax:Governance a owl:Class;
+    rdfs:subClassOf compliancetax:OpenDigitalArchitecture;
+    rdfs:label "Governance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Frameworks for establishing and maintaining effective governance over services and resources."@en .
+  
+  compliancetax:Implementation a owl:Class;
+    rdfs:subClassOf compliancetax:OpenDigitalArchitecture;
+    rdfs:label "Implementation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Implementation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Methodologies and best practices for implementing TMForum standards and frameworks."@en .
+  
+  compliancetax:OpenApIs a owl:Class;
+    rdfs:subClassOf compliancetax:Implementation;
+    rdfs:label "Open application programming interfaces"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Open application programming interfaces"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Application Programming Interfaces that adhere to open standards, promoting interoperability and integration in the TMForum ODA model."@en;
+    skos:altLabel "Open apis"@en .
+  
+  compliancetax:InformationSystems a owl:Class;
+    rdfs:subClassOf compliancetax:OpenDigitalArchitecture;
+    rdfs:label "Information systems"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Information systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "Integrated systems that collect, store, process, and distribute information to support decision-making and business operations."@en .
+  
+  compliancetax:DataArchitecture a owl:Class;
+    rdfs:subClassOf compliancetax:InformationSystems;
+    rdfs:label "Data architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Data architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A blueprint for how data is structured, stored, processed, and accessed within an organization’s information systems."@en .
+  
+  compliancetax:FunctionalArchitecture a owl:Class;
+    rdfs:subClassOf compliancetax:InformationSystems;
+    rdfs:label "Functional architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Functional architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A high-level design of an information system, outlining its major functions and their interactions."@en .
+  
+  compliancetax:FunctionalFramework a owl:Class;
+    rdfs:subClassOf compliancetax:InformationSystems;
+    rdfs:label "Functional framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Functional framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A structured set of functions and processes that support a specific business area or activity."@en .
+  
+  compliancetax:InformationFramework a owl:Class;
+    rdfs:subClassOf compliancetax:InformationSystems;
+    rdfs:label "Information framework"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Information framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T18:25:45.787Z"^^xsd:dateTime;
+    skos:definition "A conceptual model that defines the structure, relationships, and flow of information within an organization."@en .
+  
+  compliancetax:Environmental a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Environmental"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Environmental"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Relating to the natural world and the impact of human activities on the environment."@en .
+  
+  compliancetax:EnergyConsumption a owl:Class;
+    rdfs:subClassOf compliancetax:Environmental;
+    rdfs:label "Energy consumption"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Energy consumption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The amount of energy used by an organization, often measured in kilowatt-hours (kWh) or megawatt-hours (MWh)."@en .
+  
+  compliancetax:WasteManagement a owl:Class;
+    rdfs:subClassOf compliancetax:Environmental;
+    rdfs:label "Waste management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Waste management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The collection, transportation, processing, and disposal of waste materials generated by an organization’s operations."@en .
+  
+  compliancetax:Guideline a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Guideline"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Guideline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A set of recommendations or best practices that provide guidance on achieving compliance but are not mandatory."@en .
+  
+  compliancetax:Licensing a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Licensing"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Licensing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Legal agreements that grant permission to use software, data, or other intellectual property, often with specific compliance obligations."@en .
+  
+  compliancetax:CaliforniaConsumerPrivacyAct a owl:Class;
+    rdfs:subClassOf compliancetax:Regulation;
+    rdfs:label "California consumer privacy act"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "California consumer privacy act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A California law that enhances privacy rights and consumer protection for residents of California, with implications for businesses handling their data."@en .
+  
+  compliancetax:GeneralDataProtectionRegulation a owl:Class;
+    rdfs:subClassOf compliancetax:Regulation;
+    rdfs:label "General data protection regulation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "General data protection regulation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A comprehensive data protection regulation applicable to organizations operating within the European Union or processing the personal data of EU residents."@en .
+  
+  compliancetax:PersonalDataProtectionAct a owl:Class;
+    rdfs:subClassOf compliancetax:Regulation;
+    rdfs:label "Personal data protection act"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Personal data protection act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Legislation designed to protect the personal information of individuals, often with specific requirements for data collection, storage, and use."@en .
+  
+  compliancetax:ProtectionOfPersonalInformationAct a owl:Class;
+    rdfs:subClassOf compliancetax:Regulation;
+    rdfs:label "Protection of personal information act"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Protection of personal information act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "Legislation similar to PDPA, focusing on safeguarding personal information and outlining individual rights regarding their data."@en .
+  
+  compliancetax:SocialImpact a owl:Class;
+    rdfs:subClassOf compliancetax:Compliance;
+    rdfs:label "Social impact"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Social impact"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The effects, both positive and negative, that an organization’s actions and operations have on society and the well-being of communities."@en .
+  
+  compliancetax:CommunityRelations a owl:Class;
+    rdfs:subClassOf compliancetax:SocialImpact;
+    rdfs:label "Community relations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Community relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An organization’s interactions and engagement with the communities in which it operates, aiming to build positive relationships and contribute to community development."@en .
+  
+  compliancetax:PublicSafety a owl:Class;
+    rdfs:subClassOf compliancetax:SocialImpact;
+    rdfs:label "Public safety"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-compliance/>;
+    skos:prefLabel "Public safety"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "The protection and well-being of the general public, often a shared responsibility between organizations and government agencies."@en .
+  
+  _:node11209 a rdfs:Datatype .
+  
+  _:node11210 a rdf:List;
+    rdf:first "SquareCentimeters";
+    rdf:rest _:node11211 .
+  
+  _:node11211 a rdf:List;
+    rdf:first "SquareFeet";
+    rdf:rest _:node11212 .
+  
+  _:node11212 a rdf:List;
+    rdf:first "SquareInches";
+    rdf:rest _:node11213 .
+  
+  _:node11213 a rdf:List;
+    rdf:first "SquareKilometers";
+    rdf:rest _:node11214 .
+  
+  _:node11214 a rdf:List;
+    rdf:first "SquareMeters";
+    rdf:rest _:node11215 .
+  
+  _:node11215 a rdf:List;
+    rdf:first "SquareMiles";
+    rdf:rest _:node11216 .
+  
+  _:node11216 a rdf:List;
+    rdf:first "SquareMillimeters";
+    rdf:rest _:node11217 .
+  
+  _:node11217 a rdf:List;
+    rdf:first "SquareYards";
+    rdf:rest rdf:nil .
+  
+  _:node11218 a rdfs:Datatype .
+  
+  _:node11219 a rdf:List;
+    rdf:first "Barrels";
+    rdf:rest _:node11220 .
+  
+  _:node11220 a rdf:List;
+    rdf:first "CubicMetres";
+    rdf:rest _:node11221 .
+  
+  _:node11221 a rdf:List;
+    rdf:first "Litres";
+    rdf:rest _:node11222 .
+  
+  _:node11222 a rdf:List;
+    rdf:first "LooseCubicMetres";
+    rdf:rest _:node11223 .
+  
+  _:node11223 a rdf:List;
+    rdf:first "Lumen";
+    rdf:rest _:node11224 .
+  
+  _:node11224 a rdf:List;
+    rdf:first "Steres";
+    rdf:rest rdf:nil .
+  
+  _:node11225 a rdfs:Datatype .
+  
+  _:node11226 a rdf:List;
+    rdf:first "AustralianDollar";
+    rdf:rest _:node11227 .
+  
+  _:node11227 a rdf:List;
+    rdf:first "CanadianDollars";
+    rdf:rest _:node11228 .
+  
+  _:node11228 a rdf:List;
+    rdf:first "EnglishPound";
+    rdf:rest _:node11229 .
+  
+  _:node11229 a rdf:List;
+    rdf:first "Euros";
+    rdf:rest _:node11230 .
+  
+  _:node11230 a rdf:List;
+    rdf:first "Franc";
+    rdf:rest _:node11231 .
+  
+  _:node11231 a rdf:List;
+    rdf:first "IndianRupee";
+    rdf:rest _:node11232 .
+  
+  _:node11232 a rdf:List;
+    rdf:first "Mark";
+    rdf:rest _:node11233 .
+  
+  _:node11233 a rdf:List;
+    rdf:first "NewZealandDollar";
+    rdf:rest _:node11234 .
+  
+  _:node11234 a rdf:List;
+    rdf:first "Pesos";
+    rdf:rest _:node11235 .
+  
+  _:node11235 a rdf:List;
+    rdf:first "Real";
+    rdf:rest _:node11236 .
+  
+  _:node11236 a rdf:List;
+    rdf:first "Ruble";
+    rdf:rest _:node11237 .
+  
+  _:node11237 a rdf:List;
+    rdf:first "TaiwanDollar";
+    rdf:rest _:node11238 .
+  
+  _:node11238 a rdf:List;
+    rdf:first "USDollars";
+    rdf:rest _:node11239 .
+  
+  _:node11239 a rdf:List;
+    rdf:first "Yen";
+    rdf:rest _:node11240 .
+  
+  _:node11240 a rdf:List;
+    rdf:first "Yuan";
+    rdf:rest rdf:nil .
+  
+  _:node11241 a rdfs:Datatype .
+  
+  _:node11242 a rdf:List;
+    rdf:first "KiloWattHours";
+    rdf:rest _:node11243 .
+  
+  _:node11243 a rdf:List;
+    rdf:first "MegaWattHours";
+    rdf:rest _:node11244 .
+  
+  _:node11244 a rdf:List;
+    rdf:first "WattHours";
+    rdf:rest _:node11245 .
+  
+  _:node11245 a rdf:List;
+    rdf:first "WattPeaks";
+    rdf:rest _:node11246 .
+  
+  _:node11246 a rdf:List;
+    rdf:first "WattSeconds";
+    rdf:rest rdf:nil .
+  
+  _:node11247 a rdfs:Datatype .
+  
+  _:node11248 a rdf:List;
+    rdf:first "Grams";
+    rdf:rest _:node11249 .
+  
+  _:node11249 a rdf:List;
+    rdf:first "KiloGrams";
+    rdf:rest rdf:nil .
+  
+  compliancetax:ThirdPartyDataGovernanceStandards owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:third-party-data-governance-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:IndustryStandards owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:industry-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DamaDmbok2DataManagementFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:dama-dmbok2-data-management-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataGovernance owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-governance;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataArchitectures owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-architectures;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataIntegrationInteroperability owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-integration-and-interoperability;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataModelingDesign owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-modeling-and-design;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataQuality owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-quality;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataSecurity owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-security;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataStorageOperations owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-storage-and-operations;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataWarehousingBusinessIntelligence owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-warehousing-and-business-intelligence;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DocumentContentManagement owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:document-and-content-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Metadata owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:metadata;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ReferenceMasterData owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:reference-and-master-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataManagementCapabilityAssessmentModel owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-management-capability-assessment-model;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:01DataStrategyBusinessCase owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:01-data-strategy-and-business-case;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataManagementBusinessCase owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-management-business-case;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataManagementStrategy owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-management-strategy;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:02DataManagementProgramFunding owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:02-data-management-program-and-funding;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:03BusinessDataArchitecture owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:03-business-and-data-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:BusinessArchitecture owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:business-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataArchitectureServiceModel owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-architecture-service-model;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:04DataTechnologyArchitecture owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:04-data-and-technology-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:05DataQualityManagement owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:05-data-quality-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:06DataGovernance owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:06-data-governance;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:07DataControlEnvironment owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:07-data-control-environment;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:08AnalyticsManagement owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:08-analytics-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:09KnowledgeManagement owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:09-knowledge-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:10ArtificialIntelligenceManagement owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:10-artificial-intelligence-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:InternationalStandardsOrganization owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:international-standards-organization;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Iso13250TopicMaps owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:iso-13250-topic-maps;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Iso19763MetamodelFrameworkForInteroperability owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:iso-19763-metamodel-framework-for-interoperability;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Iso25964InternationalStandardForThesauri owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:iso-25964-international-standard-for-thesauri;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Iso5964MultilingualThesauri owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:iso-5964-multilingual-thesauri;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:NationalInstituteOfStandardsTechnology owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:national-institute-of-standards-and-technology;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ArtificialIntelligenceRiskManagementFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:artificial-intelligence-risk-management-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:CybersecurityFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:cybersecurity-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:PrivacyFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:privacy-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:RiskManagementFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:risk-management-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:TmForumStandards owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:tmforum-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:OpenDigitalArchitecture owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:open-digital-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:BusinessArchitectures owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:business-architectures;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:CapabilityFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:capability-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ProcessFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:process-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ValueStreamFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:value-stream-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DeploymentRuntime owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:deployment-and-runtime;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:OperationsFrameworks owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:operations-frameworks;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Governance owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:governance;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Implementation owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:implementation;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:OpenApIs owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:open-application-programming-interfaces;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:InformationSystems owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:information-systems;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataArchitecture owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:data-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:FunctionalArchitecture owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:functional-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:FunctionalFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:functional-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:InformationFramework owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:information-framework;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Environmental owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:environmental;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:EnergyConsumption owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:energy-consumption;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:WasteManagement owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:waste-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Guideline owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:guideline;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Licensing owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:licensing;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:CaliforniaConsumerPrivacyAct owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:california-consumer-privacy-act;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:GeneralDataProtectionRegulation owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:general-data-protection-regulation;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:PersonalDataProtectionAct owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:personal-data-protection-act;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ProtectionOfPersonalInformationAct owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:protection-of-personal-information-act;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:SocialImpact owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:social-impact;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:CommunityRelations owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:community-relations;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:PublicSafety owl:versionInfo "0.1.0";
+    dc:subject compliancevoc:public-safety;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Compliance dc:subject compliancevoc:compliance;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Documentation dc:subject compliancevoc:documentation;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Regulation dc:subject compliancevoc:regulation;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:Controls dc:subject compliancevoc:controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:AnalyticsAiModelControls dc:subject compliancevoc:analytics-and-artificial-intelligence-model-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ChangeManagementControls dc:subject compliancevoc:change-management-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ComplianceAuditsControlsReporting dc:subject compliancevoc:compliance-audits-and-controls-reporting;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataAccessControls dc:subject compliancevoc:data-access-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataLifecycleControls dc:subject compliancevoc:data-lifecycle-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataPrivacyDataProtectionControls dc:subject compliancevoc:data-privacy-and-data-protection-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataQualityControls dc:subject compliancevoc:data-quality-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataRetentionDeletionControls dc:subject compliancevoc:data-retention-and-deletion-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:DataSharingCollaborationControls dc:subject compliancevoc:data-sharing-and-collaboration-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:EthicalAiAnalyticsControls dc:subject compliancevoc:ethical-artificial-intelligence-and-analytics-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ExplanationContextualRelevanceControls dc:subject compliancevoc:explanation-and-contextual-relevance-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:MetricsKpiMonitoringControls dc:subject compliancevoc:metrics-and-key-performance-indicator-monitoring-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:PerformanceScalabilityControls dc:subject compliancevoc:performance-and-scalability-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:SemanticKnowledgeControls dc:subject compliancevoc:semantic-knowledge-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:VisualizationReportingControls dc:subject compliancevoc:visualization-and-reporting-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:EnterpriseStandards dc:subject compliancevoc:enterprise-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ArchitectureStandard dc:subject compliancevoc:architecture-standard;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:KnowledgeEngineeringStandard dc:subject compliancevoc:knowledge-engineering-standard;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:MetricsGovernanceStandards dc:subject compliancevoc:metrics-governance-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  compliancetax:ModelManagementResponsibleAiStandards dc:subject compliancevoc:model-management-and-responsible-artificial-intelligence-standards;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-compliance/> owl:imports <https://www.insperity.com/ontology/domain-governance/>,
+      <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/core-compliance/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-compliance/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  _:node11209 owl:oneOf _:node11210 .
+  
+  _:node11218 owl:oneOf _:node11219 .
+  
+  _:node11225 owl:oneOf _:node11226 .
+  
+  _:node11241 owl:oneOf _:node11242 .
+  
+  _:node11247 owl:oneOf _:node11248 .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Align_with_1VZData>
+    skos:Related <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#OwnsResourceDetails> .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#CustomerProblem>
+    skos:Related <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Customer_Name> .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#ProductOrderItem>
+    skos:Related <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Customer_MDM> .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#ProductUsage>
+    skos:Related <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Customer_Usage> .
+  
+  <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#ResourceNumber>
+    skos:Related <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Customer_Telephone_Number> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Sector> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isManyof>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Tower> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Antenna> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isManyof>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#BasebandUnit>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isOneOf> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#RRH>,
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Radio> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#BasebandUnit> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isManyof>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSite>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isOneOf> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#EnodeB>,
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#GNodeB>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasMany> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Antenna>,
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Radio> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#DU> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isManyof>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CU> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Card> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isManyof>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Interface> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Interface> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isManyof>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSiteRouter>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasOne> <http://www.semanticweb.org/milsh69/ontologies/2024/2/end-to-end-governance-example#Card> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSiteRouter> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isOneOf>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSite>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasMany> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Interface> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CU> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#isOneOf>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#GNodeB>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasMany> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#DU> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Tower> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasMany>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Sector> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSite> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasMany>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#BasebandUnit>;
+    <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasOne> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CellSiteRouter> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#RRH> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasOne>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Antenna> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Radio> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasOne>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#Antenna> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#EnodeB> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasOne>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#BasebandUnit> .
+  
+  <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#GNodeB> <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#hasOne>
+      <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#BasebandUnit>, <http://www.semanticweb.org/wallkje/ontologies/2024/VZ-Ontology#CU> .
+}

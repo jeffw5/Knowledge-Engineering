@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Standards Conformance</title>
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<script src="../assets/ke-turtle.js"></script>
+<script src="../assets/ke-rules.js"></script>
+<script src="../assets/ke-sample.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:var(--ke-mono);font-size:.9em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 28px 64px}
+.eyebrow{font:700 11px/1.2 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+.eyebrow .sep{color:var(--ke-faint)}
+h1{font-size:28px;letter-spacing:-.012em;margin:8px 0 4px}
+.lede{color:var(--ke-ink2);max-width:780px}
+.panel{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);margin-top:18px}
+.panel-h{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--ke-line-soft);flex-wrap:wrap}
+.panel-h .t{font-weight:700;font-size:14px}
+.panel-b{padding:14px 16px 16px}
+.seg{display:inline-flex;border:1px solid var(--ke-line);border-radius:7px;overflow:hidden;background:var(--ke-sunk)}
+.seg button{border:0;background:none;padding:6px 14px;font-size:12.5px;font-weight:600;color:var(--ke-muted)}
+.seg button.on{background:var(--ke-surface);color:var(--ke-ink);box-shadow:inset 0 -2px 0 var(--ke-accent)}
+.grid{display:grid;grid-template-columns:1fr 2fr auto;gap:12px;align-items:end}
+.fld label{display:block;font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted);margin-bottom:5px}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:7px 9px;font-size:12.5px}
+.fld textarea{font-family:var(--ke-mono);font-size:11.5px;min-height:170px;resize:vertical;line-height:1.45;tab-size:4}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--ke-accent)}
+.hint{font-size:11.5px;color:var(--ke-muted);margin-top:6px}
+.btn{height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--ke-line);background:var(--ke-surface);font-size:12.5px;font-weight:600;white-space:nowrap}
+.btn:hover{border-color:var(--ke-accent)}
+.btn.pri{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.status{font-size:12px;color:var(--ke-muted)}
+.status.bad{color:var(--ke-bad)} .status.ok{color:var(--ke-ok)}
+.hidden{display:none!important}
+.drop{border:1.5px dashed var(--ke-line);border-radius:8px}
+.drop.over{border-color:var(--ke-accent);background:var(--ke-accent-soft)}
+
+/* score strip */
+.score{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--ke-line-soft)}
+.sc{padding:12px 16px;border-left:1px solid var(--ke-line-soft)}
+.sc:first-child{border-left:0}
+.sc .k{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted)}
+.sc .v{font-size:22px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.sc .s{font-size:11px;color:var(--ke-muted)}
+.v.err{color:var(--ke-bad)} .v.wrn{color:var(--ke-warn)} .v.inf{color:var(--ke-accent)} .v.okc{color:var(--ke-ok)}
+
+/* rule list */
+.rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+.rule{display:grid;grid-template-columns:18px 1fr auto;gap:2px 10px;padding:10px 16px;border-bottom:1px solid var(--ke-line-soft);text-align:left;background:none;border-left:0;border-right:0;border-top:0;width:100%}
+.rule:hover{background:var(--ke-sunk)}
+.rule.on{background:var(--ke-accent-soft)}
+.rule .ic{grid-row:span 2;width:16px;height:16px;border-radius:50%;margin-top:2px;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff}
+.ic.pass{background:var(--ke-ok)} .ic.error{background:var(--ke-bad)} .ic.warn{background:var(--ke-warn)} .ic.info{background:var(--ke-accent)} .ic.na{background:var(--ke-line)}
+.rule .rt{font-weight:700;font-size:13px}
+.rule .rs{font:400 11px/1.2 var(--ke-mono);color:var(--ke-muted);margin-left:6px}
+.rule .rn{font-size:12px;font-variant-numeric:tabular-nums;color:var(--ke-muted);white-space:nowrap;text-align:right}
+.rule .rn b{color:var(--ke-ink)}
+.rule .rd{overflow-wrap:anywhere;font-size:11.5px;color:var(--ke-muted);grid-column:2 / span 2;line-height:1.4}
+
+/* findings */
+.filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{border:1px solid var(--ke-line);background:var(--ke-surface);border-radius:14px;padding:3px 10px;font-size:11.5px;font-weight:600;color:var(--ke-muted)}
+.chip.on{border-color:var(--ke-accent);color:var(--ke-accent);background:var(--ke-accent-soft)}
+.search{width:240px;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:5px 9px;font-size:12px}
+.tw{overflow:auto;max-height:560px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{position:sticky;top:0;background:var(--ke-band);text-align:left;font-weight:700;padding:8px 10px;border-bottom:1px solid var(--ke-line);white-space:nowrap;z-index:1}
+td{padding:8px 10px;border-bottom:1px solid var(--ke-line-soft);vertical-align:top}
+td.iri{font-family:var(--ke-mono);font-size:11.5px;word-break:break-all;color:var(--ke-ink2);max-width:340px}
+td.iri b{color:var(--ke-ink);font-weight:700}
+.sev{display:inline-block;font:700 9.5px/1 var(--ke-sans);letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:3px}
+.sev.error{background:var(--ke-bad-soft);color:var(--ke-bad)} .sev.warn{background:var(--ke-warn-soft);color:var(--ke-warn)} .sev.info{background:var(--ke-accent-soft);color:var(--ke-accent)}
+.empty{padding:28px 16px;text-align:center;color:var(--ke-muted)}
+
+/* name checker */
+.nc{display:grid;grid-template-columns:160px 1.4fr 1fr;gap:10px}
+.nc-out{margin-top:10px;display:grid;gap:6px}
+.nc-item{display:flex;gap:8px;align-items:flex-start;font-size:12.5px}
+.nc-item .ic{width:14px;height:14px;border-radius:50%;flex:none;margin-top:3px}
+
+@media (max-width:860px){
+  .wrap{padding:20px 16px 48px}
+  .grid,.nc{grid-template-columns:1fr}
+  .score{grid-template-columns:repeat(2,1fr)}
+  .sc:nth-child(odd){border-left:0}
+  .sc{border-top:1px solid var(--ke-line-soft)}
+  .rules{grid-template-columns:1fr}
+  .search{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Appendix E <span class="sep">•</span> Section E.3 <span class="sep">•</span> Standards checklist</div>
+  <h1>Standards Conformance</h1>
+  <p class="lede">Checks vocabularies, taxonomies and ontologies against the Part III standards: base URL and URI patterns, naming, acronyms, term definition fields, taxonomy rules and versioning. Read straight from GraphDB, or load a Turtle file to check it before import.</p>
+
+  <!-- Source -->
+  <div class="panel">
+    <div class="panel-h">
+      <span class="t">Source</span>
+      <div class="seg" role="tablist">
+        <button class="on" data-src="gdb">GraphDB</button>
+        <button data-src="ttl">Turtle file</button>
+      </div>
+    </div>
+    <div class="panel-b" id="src-gdb">
+      <div class="grid">
+        <div class="fld"><label for="repo">Repository</label><input id="repo" placeholder="value-kb"></div>
+        <div class="fld"><label for="graph">Named graph</label>
+          <select id="graph"><option value="">All named graphs</option></select></div>
+        <div class="row"><button class="btn" id="loadGraphs">List graphs</button><button class="btn pri" id="runGdb">Run checks</button></div>
+      </div>
+      <div class="hint">Reads only the predicates the checks need (type, labels, definition, parents, domain and range, scheme membership, versions) from named graphs. Triples in the default graph are skipped — Model Manager's <b>Set Named Graph</b> moves them.</div>
+      <div class="status" id="gdbStatus" style="margin-top:8px"></div>
+    </div>
+    <div class="panel-b hidden" id="src-ttl">
+      <div class="fld drop" id="drop"><textarea id="ttl" spellcheck="false" placeholder="Paste Turtle here, or drop a .ttl file…" aria-label="Turtle source"></textarea></div>
+      <div class="row" style="margin-top:10px">
+        <label class="btn" style="display:inline-flex;align-items:center">Choose file…<input type="file" id="file" accept=".ttl,.turtle,.txt,text/turtle" hidden></label>
+        <button class="btn" id="sample">Load sample</button>
+        <span style="flex:1"></span>
+        <span class="status" id="ttlStatus"></span>
+        <button class="btn pri" id="runTtl">Run checks</button>
+      </div>
+      <div class="hint">The file is parsed in your browser and never uploaded. The sample mixes the §3.7 worked example with terms that break the standards on purpose.</div>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div class="panel hidden" id="results">
+    <div class="score" id="score"></div>
+    <div class="panel-h"><span class="t">Rules</span><span class="status" id="srcLbl"></span></div>
+    <div class="rules" id="rules"></div>
+    <div class="panel-h" style="border-top:1px solid var(--ke-line-soft)">
+      <span class="t">Findings <span class="status" id="fCount"></span></span>
+      <div class="filters">
+        <button class="chip on" data-sev="all">All</button>
+        <button class="chip" data-sev="error">Errors</button>
+        <button class="chip" data-sev="warn">Warnings</button>
+        <button class="chip" data-sev="info">Info</button>
+        <input class="search" id="q" placeholder="Filter by IRI, label or message…" aria-label="Filter findings">
+        <button class="btn" id="csv">Export CSV</button>
+      </div>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>Severity</th><th>Rule</th><th>Term</th><th>Finding</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+
+  <!-- Name checker -->
+  <div class="panel">
+    <div class="panel-h"><span class="t">Check a single term</span><span class="status">Before you mint an IRI</span></div>
+    <div class="panel-b">
+      <div class="nc">
+        <div class="fld"><label for="ncKind">Kind</label>
+          <select id="ncKind">
+            <option value="class">Class</option><option value="objprop">Object property</option><option value="dataprop">Data property</option>
+            <option value="concept">Concept</option><option value="ontology">Ontology</option><option value="scheme">Concept scheme</option>
+          </select></div>
+        <div class="fld"><label for="ncIri">IRI</label><input id="ncIri" spellcheck="false" value="https://www.insperity.com/ontology/payroll/PayrollRun"></div>
+        <div class="fld"><label for="ncLabel">Preferred label (@en)</label><input id="ncLabel" value="Payroll run"></div>
+      </div>
+      <div class="fld" style="margin-top:10px"><label for="ncDef">Definition</label><input id="ncDef" value="A scheduled process step that calculates and issues pay for one pay period."></div>
+      <div class="nc-out" id="ncOut"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const K = window.KE_RULES;
+  function setting(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : v; } catch(e) { return d; } }
+  function bases(){ try { const v = JSON.parse(setting('ke-base-urls','null')); if (Array.isArray(v) && v.length) return v; } catch(e){} return ['https://www.insperity.com/','https://www.enablingvalue.com/']; }
+  $('#repo').value = setting('ke-repo', 'value-kb') || 'value-kb';
+  // Approved acronyms and organizations, shared with Ingestion and Conformance Review
+  let POLICY = null;
+  fetch('/api/ingest/policy').then(r => r.ok ? r.json() : null).then(j => { if (j && j.ok) POLICY = K.policyFrom(j); }).catch(() => {});
+
+  // Source tabs
+  document.querySelectorAll('[data-src]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-src]').forEach(x => x.classList.toggle('on', x === b));
+    $('#src-gdb').classList.toggle('hidden', b.dataset.src !== 'gdb');
+    $('#src-ttl').classList.toggle('hidden', b.dataset.src !== 'ttl');
+  }));
+
+  // ── GraphDB ─────────────────────────────────────────
+  const endpoint = () => `/graphdb/repositories/${encodeURIComponent($('#repo').value.trim() || 'value-kb')}`;
+  async function sparql(q){
+    const r = await fetch(endpoint(), { method:'POST', headers:{ 'Content-Type':'application/x-www-form-urlencoded', Accept:'application/sparql-results+json' }, body:new URLSearchParams({ query:q }) });
+    if (!r.ok) throw new Error((await r.text()).slice(0, 200) || 'HTTP ' + r.status);
+    return (await r.json()).results.bindings;
+  }
+  function gstatus(m, cls){ $('#gdbStatus').textContent = m; $('#gdbStatus').className = 'status ' + (cls || ''); }
+  $('#loadGraphs').addEventListener('click', async () => {
+    gstatus('Listing graphs…');
+    try {
+      const b = await sparql(`SELECT ?g (COUNT(*) AS ?n) WHERE { GRAPH ?g { ?s ?p ?o } } GROUP BY ?g ORDER BY ?g`);
+      const sel = $('#graph'), cur = sel.value;
+      sel.innerHTML = '<option value="">All named graphs</option>' + b.map(x => `<option value="${esc(x.g.value)}">${esc(x.g.value)} (${x.n.value})</option>`).join('');
+      sel.value = cur;
+      gstatus(`${b.length} named graphs`, 'ok');
+    } catch(e) { gstatus('GraphDB not reachable — run proxy.py and open the workbench at localhost:3000. ' + e.message, 'bad'); }
+  });
+  function term(b){
+    if (!b) return null;
+    if (b.type === 'uri') return { t:'iri', v:b.value };
+    if (b.type === 'bnode') return { t:'bnode', v:b.value };
+    return { t:'lit', v:b.value, lang:b['xml:lang'] ? b['xml:lang'].toLowerCase() : undefined, dt:b.datatype };
+  }
+  $('#runGdb').addEventListener('click', async () => {
+    const g = $('#graph').value;
+    const values = K.PREDICATES.map(p => `<${p}>`).join(' ');
+    const q = `SELECT ?g ?s ?p ?o WHERE { VALUES ?p { ${values} } ${g ? `GRAPH <${g}> { ?s ?p ?o } BIND(<${g}> AS ?g)` : 'GRAPH ?g { ?s ?p ?o }'} FILTER(isIRI(?s)) } LIMIT 200000`;
+    gstatus('Reading graph…'); $('#runGdb').disabled = true;
+    try {
+      const b = await sparql(q);
+      const quads = b.map(x => ({ s:term(x.s), p:term(x.p), o:term(x.o), g:x.g ? x.g.value : g }));
+      gstatus(`${quads.length.toLocaleString()} statements read`, 'ok');
+      // every vocabulary term in the repository, so taxonomy terms can be checked against them
+      let vocab = null;
+      try { vocab = new Set((await sparql(`SELECT DISTINCT ?c WHERE { GRAPH ?vg { ?c a <http://www.w3.org/2004/02/skos/core#Concept> } FILTER(CONTAINS(STR(?vg), "/vocabulary/")) }`)).map(x => x.c.value)); } catch (e) {}
+      show(K.runChecks(quads, { bases:bases(), policy:POLICY, vocab }), 'GraphDB · ' + ($('#repo').value || 'value-kb') + (g ? ' · ' + g : ' · all named graphs'));
+    } catch(e) { gstatus('Could not read GraphDB — ' + e.message, 'bad'); }
+    $('#runGdb').disabled = false;
+  });
+
+  // ── Turtle ──────────────────────────────────────────
+  function tstatus(m, cls){ $('#ttlStatus').textContent = m; $('#ttlStatus').className = 'status ' + (cls || ''); }
+  let fileName = '';
+  $('#sample').addEventListener('click', () => { $('#ttl').value = window.KE_SAMPLE_TTL; fileName = 'sample.ttl'; tstatus('Sample loaded'); });
+  function readFile(f){ const r = new FileReader(); r.onload = () => { $('#ttl').value = r.result; fileName = f.name; tstatus(f.name + ' · ' + Math.round(f.size/1024) + ' KB'); }; r.readAsText(f); }
+  $('#file').addEventListener('change', e => { if (e.target.files[0]) readFile(e.target.files[0]); });
+  const drop = $('#drop');
+  ['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) readFile(f); });
+  $('#runTtl').addEventListener('click', () => {
+    const src = $('#ttl').value;
+    if (!src.trim()) { tstatus('Paste Turtle or load a file first', 'bad'); return; }
+    try {
+      const t0 = performance.now();
+      const { triples } = parseTurtle(src, { base:'https://www.insperity.com/' });
+      const g = fileName || 'pasted turtle';
+      tstatus(`${triples.length.toLocaleString()} triples parsed in ${Math.round(performance.now() - t0)} ms`, 'ok');
+      show(K.runChecks(triples.map(t => ({ ...t, g })), { bases:bases(), policy:POLICY }), 'Turtle · ' + g);
+    } catch(e) { tstatus('Parse error — ' + e.message, 'bad'); }
+  });
+
+  // ── Results ─────────────────────────────────────────
+  let RES = null, sevFilter = 'all', ruleFilter = null;
+  const SEV_ORDER = { error:0, warn:1, info:2 };
+  function show(res, label){
+    RES = res; ruleFilter = null; sevFilter = 'all';
+    document.querySelectorAll('[data-sev]').forEach(c => c.classList.toggle('on', c.dataset.sev === 'all'));
+    $('#results').classList.remove('hidden');
+    $('#srcLbl').textContent = label;
+    const n = s => res.findings.filter(f => f.sev === s).length;
+    const applicable = res.rules.filter(r => r.checked > 0), passing = applicable.filter(r => !r.failed).length;
+    const plural = w => /ty$/.test(w) ? w.slice(0, -1) + 'ies' : /ss$/.test(w) ? w + 'es' : w + 's';
+    const kinds = Object.entries(res.stats.kinds).map(([k, v]) => { const w = (K.KIND_LABEL[k] || k).toLowerCase(); return `${v} ${v === 1 ? w : plural(w)}`; }).join(' · ');
+    $('#score').innerHTML = `
+      <div class="sc"><div class="k">Terms checked</div><div class="v">${res.stats.entities.toLocaleString()}</div><div class="s">${esc(kinds || 'no declared terms found')}</div></div>
+      <div class="sc"><div class="k">Rules passing</div><div class="v okc">${passing}<span style="color:var(--ke-faint);font-weight:400"> / ${applicable.length}</span></div><div class="s">of the rules that applied</div></div>
+      <div class="sc"><div class="k">Errors</div><div class="v err">${n('error')}</div><div class="s">block Draft → Candidate</div></div>
+      <div class="sc"><div class="k">Warnings</div><div class="v wrn">${n('warn')}</div><div class="s">fix before release</div></div>
+      <div class="sc"><div class="k">Info</div><div class="v inf">${n('info')}</div><div class="s">review</div></div>`;
+    renderRules(); renderRows();
+    $('#results').scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+  function renderRules(){
+    $('#rules').innerHTML = RES.rules.map(r => {
+      const st = !r.checked ? 'na' : r.failed ? r.sev : 'pass';
+      const mark = st === 'pass' ? '✓' : st === 'na' ? '–' : '!';
+      return `<button class="rule ${ruleFilter === r.id ? 'on' : ''}" data-rule="${r.id}" ${r.failed ? '' : 'disabled style="cursor:default"'}>
+        <span class="ic ${st}" aria-label="${st}">${mark}</span>
+        <span><span class="rt">${esc(r.title)}</span><span class="rs">§${esc(r.sec)}</span></span>
+        <span class="rn">${r.checked ? `<b>${r.failed}</b> / ${r.checked}` : 'n/a'}</span>
+        <span class="rd">${esc(r.desc)}</span></button>`;
+    }).join('');
+  }
+  $('#rules').addEventListener('click', e => {
+    const b = e.target.closest('[data-rule]'); if (!b || b.disabled) return;
+    ruleFilter = ruleFilter === b.dataset.rule ? null : b.dataset.rule; renderRules(); renderRows();
+  });
+  document.querySelectorAll('[data-sev]').forEach(c => c.addEventListener('click', () => {
+    sevFilter = c.dataset.sev; document.querySelectorAll('[data-sev]').forEach(x => x.classList.toggle('on', x === c)); renderRows();
+  }));
+  $('#q').addEventListener('input', renderRows);
+  function filtered(){
+    const q = $('#q').value.trim().toLowerCase();
+    return RES.findings.filter(f => (sevFilter === 'all' || f.sev === sevFilter) && (!ruleFilter || f.rule === ruleFilter)
+      && (!q || (f.iri + ' ' + f.label + ' ' + f.detail).toLowerCase().includes(q)))
+      .sort((a, b) => SEV_ORDER[a.sev] - SEV_ORDER[b.sev] || a.rule.localeCompare(b.rule) || a.iri.localeCompare(b.iri));
+  }
+  function renderRows(){
+    const rows = filtered(), titles = Object.fromEntries(RES.rules.map(r => [r.id, r.title]));
+    $('#fCount').textContent = `· ${rows.length.toLocaleString()} of ${RES.findings.length.toLocaleString()}`;
+    if (!RES.findings.length) { $('#rows').innerHTML = '<tr><td colspan="4" class="empty">No findings — every applicable rule passed.</td></tr>'; return; }
+    $('#rows').innerHTML = rows.slice(0, 2000).map(f => {
+      const ln = K.localName(f.iri), pre = f.iri.slice(0, f.iri.length - ln.length);
+      return `<tr><td><span class="sev ${f.sev}">${f.sev === 'warn' ? 'warning' : f.sev}</span></td>
+        <td>${esc(titles[f.rule] || f.rule)}<div class="status mono">§${esc(f.sec)}</div></td>
+        <td class="iri" title="${esc(f.iri)}">${esc(pre)}<b>${esc(ln)}</b>${f.label ? `<div style="font-family:var(--ke-sans);color:var(--ke-muted)">${esc(f.label)}</div>` : ''}</td>
+        <td>${esc(f.detail)}</td></tr>`;
+    }).join('') + (rows.length > 2000 ? `<tr><td colspan="4" class="empty">Showing the first 2,000 — export CSV for all ${rows.length.toLocaleString()}.</td></tr>` : '')
+      || '<tr><td colspan="4" class="empty">Nothing matches these filters.</td></tr>';
+  }
+  $('#csv').addEventListener('click', () => {
+    if (!RES) return;
+    const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const lines = [['severity','rule','section','iri','kind','label','finding'].join(',')].concat(
+      filtered().map(f => [f.sev, f.rule, f.sec, f.iri, f.kind, f.label, f.detail].map(q).join(',')));
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type:'text/csv' }));
+    a.download = 'standards-conformance-' + new Date().toISOString().slice(0, 10) + '.csv';
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  });
+
+  // ── Single-term checker ─────────────────────────────
+  const TYPE = { class:'http://www.w3.org/2002/07/owl#Class', objprop:'http://www.w3.org/2002/07/owl#ObjectProperty',
+    dataprop:'http://www.w3.org/2002/07/owl#DatatypeProperty', concept:'http://www.w3.org/2004/02/skos/core#Concept',
+    ontology:'http://www.w3.org/2002/07/owl#Ontology', scheme:'http://www.w3.org/2004/02/skos/core#ConceptScheme' };
+  // Rules that need context beyond one term are left out here
+  const NC_RULES = ['base-url','uri-pattern','name-case','acronym-id','acronym-label','sentence-case','definition','genus','versioned-term'];
+  function nameCheck(){
+    const kind = $('#ncKind').value, iri = $('#ncIri').value.trim(), label = $('#ncLabel').value.trim(), def = $('#ncDef').value.trim();
+    if (!/^https?:\/\//.test(iri)) { $('#ncOut').innerHTML = '<div class="nc-item status">Enter a full http(s) IRI.</div>'; return; }
+    const s = { t:'iri', v:iri }, quads = [{ s, p:{ t:'iri', v:'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' }, o:{ t:'iri', v:TYPE[kind] }, g:'check' }];
+    if (label) quads.push({ s, p:{ t:'iri', v:'http://www.w3.org/2004/02/skos/core#prefLabel' }, o:{ t:'lit', v:label, lang:'en' }, g:'check' });
+    if (def) quads.push({ s, p:{ t:'iri', v:'http://www.w3.org/2004/02/skos/core#definition' }, o:{ t:'lit', v:def, lang:'en' }, g:'check' });
+    const res = K.runChecks(quads, { bases:bases(), policy:POLICY });
+    const rel = res.rules.filter(r => NC_RULES.includes(r.id) && r.checked);
+    if (!res.stats.entities) { $('#ncOut').innerHTML = '<div class="nc-item status">That IRI is in an external vocabulary namespace, so the Company rules don\'t apply.</div>'; return; }
+    $('#ncOut').innerHTML = rel.map(r => {
+      const f = res.findings.find(x => x.rule === r.id);
+      return `<div class="nc-item"><span class="ic ${f ? r.sev : 'pass'}"></span><span><b>${esc(r.title)}</b> <span class="status mono">§${esc(r.sec)}</span> — ${f ? esc(f.detail) : '<span style="color:var(--ke-ok)">passes</span>'}</span></div>`;
+    }).join('');
+  }
+  ['#ncKind','#ncIri','#ncLabel','#ncDef'].forEach(s => $(s).addEventListener('input', nameCheck));
+  nameCheck();
+
+  window.addEventListener('message', e => {
+    if (e.data && e.data.type === 'ke-settings') { if (e.data.repo) $('#repo').value = e.data.repo; nameCheck(); }
+  });
+})();
+</script>
+</body>
+</html>

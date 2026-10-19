@@ -1,0 +1,330 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-rules/> {
+  <https://www.insperity.com/vocabulary/core-rules/> a skos:ConceptScheme;
+    rdfs:label "Core rules vocabulary"@en;
+    skos:prefLabel "Core rules vocabulary"@en;
+    skos:hasTopConcept rulesvoc:rules;
+    terms:description "Statements that define or restrict an organization's activities, guiding decision-making and ensuring actions align with business strategy, ultimately streamlining operations and enhancing efficiency."@en;
+    terms:title "Core rules vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T16:58:45.094Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Rules"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-rules/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:rules a skos:Concept;
+    skos:prefLabel "Rules"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:23:12.511Z"^^xsd:dateTime;
+    skos:definition "Statements that define or restrict an organization's activities, guiding decision-making and ensuring actions align with business strategy, ultimately streamlining operations and enhancing efficiency."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:narrower rulesvoc:decision-logic, rulesvoc:process-flow, rulesvoc:structural-rule .
+  
+  rulesvoc:decision-logic a skos:Concept;
+    skos:prefLabel "Decision logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Core of what is typically referred to as 'business rules.' When a business decision needs to be made, the business rules are the individual statements of business logic that determine the result of the decision."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:rules;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower rulesvoc:action-enabler-rule, rulesvoc:constraint-rule, rulesvoc:derivation-rule,
+      rulesvoc:guideline .
+  
+  rulesvoc:process-flow a skos:Concept;
+    skos:prefLabel "Process flow"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Rules that purely direct the movement through a process flow (or workflow, etc.)"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:rules;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:structural-rule a skos:Concept;
+    skos:prefLabel "Structural rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Defines the fundamental structure and organization of data, concepts, and knowledge, ensuring consistency and facilitating analysis, and is often considered a \"definitional rule\"."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:rules;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower rulesvoc:facts, rulesvoc:terms .
+  
+  rulesvoc:action-enabler-rule a skos:Concept;
+    skos:prefLabel "Action enabler rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Process based rules that test conditions and upon finding them true, initiate another business event, message or other activity"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:decision-logic;
+    skos:example "IF <condition> THEN action"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:constraint-rule a skos:Concept;
+    skos:prefLabel "Constraint rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Rules used for validation of data"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:decision-logic;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower rulesvoc:mandatory-constraint, rulesvoc:operation-constraint, rulesvoc:stimulus-and-response,
+      rulesvoc:structure-constraint .
+  
+  rulesvoc:derivation-rule a skos:Concept;
+    skos:prefLabel "Derivation rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Also known as the Eligibility Rule, a set of conditions or logic that determines whether a specific characteristic or value should be derived or assigned based on other existing data or values."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:decision-logic;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower rulesvoc:computation-rule, rulesvoc:inference-rule .
+  
+  rulesvoc:guideline a skos:Concept;
+    skos:prefLabel "Guideline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Rule that does not reject the transaction; they merely warn about an undesirable circumstance. Usually translates to warning messages."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:decision-logic;
+    skos:example "<term> SHOULD HAVE <at least, at most, exactly n of> <term>"@en, "<term> SHOULD BE IN LIST <a,b,c>"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:mandatory-constraint a skos:Concept;
+    skos:prefLabel "Mandatory constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Rules that reject the attempted business transaction"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:constraint-rule;
+    skos:example "<term> MUST HAVE <at least, at most, exactly n of> <term>"@en, "<term> MUST BE IN LIST <a,b,c>"@en;
+    skos:scopeNote "Grammar to use during rule documentation not implementation."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:operation-constraint a skos:Concept;
+    skos:prefLabel "Operation constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Places restrictions before and after a given operation"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:constraint-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:stimulus-and-response a skos:Concept;
+    skos:prefLabel "Stimulus & response"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Require conditions to be true prior to an action being taken"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:constraint-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:structure-constraint a skos:Concept;
+    skos:prefLabel "Structure constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Authoritative constraint that established policies around classes, objects and the relationships between them that should not be disregarded"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:constraint-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:computation-rule a skos:Concept;
+    skos:prefLabel "Computation rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Rule that creates new information from existing information based on mathematical calculation or use of algorithm. Result is a piece of knowledge inferred, but not simply known."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:derivation-rule;
+    skos:example "<term> IS COMPUTED AS <formula>"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:inference-rule a skos:Concept;
+    skos:prefLabel "Inference rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Specify that if certain facts are true, a particular conclusion can be determined."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:derivation-rule;
+    skos:example "IF <term> <operator> <term> THEN <term> <operator> <term>"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:facts a skos:Concept;
+    skos:prefLabel "Facts"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Word or phrase used by the business"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:structural-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulesvoc:terms a skos:Concept;
+    skos:prefLabel "Terms"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:49:47.371Z"^^xsd:dateTime;
+    skos:definition "Relationships between two business concepts expressed as a statement connecting terms through prepositions and verbs into sensible business-relevant observations"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-rules/>;
+    skos:broader rulesvoc:structural-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

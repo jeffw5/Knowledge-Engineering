@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxonomy Metadata Editor</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans h-screen flex flex-col">
+
+<!-- Header -->
+<div class="border-b border-gray-700 flex items-center justify-between px-6 flex-shrink-0" style="min-height:56px;background:#1e2030;">
+    <div>
+        <div class="flex items-center gap-3">
+            <h1 class="text-base font-bold text-amber-400">🌳 Taxonomy Metadata Editor</h1>
+            <span class="text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider bg-amber-900 text-amber-300">owl:Class Taxonomy</span>
+        </div>
+        <p id="assetUri" class="text-xs text-gray-500 italic truncate max-w-lg mt-0.5"></p>
+    </div>
+    <div class="flex gap-2 flex-shrink-0">
+        <button onclick="openRenameModal()" class="bg-violet-700 hover:bg-violet-600 text-white font-bold py-1.5 px-3 rounded text-sm transition">✏️ Rename URI</button>
+        <button onclick="saveAndClose()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-1.5 px-3 rounded text-sm transition">💾 Save</button>
+        <button onclick="window.close()" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-1.5 px-3 rounded text-sm transition">Cancel</button>
+    </div>
+</div>
+
+<div id="status" class="hidden px-6 py-2 text-sm flex-shrink-0"></div>
+
+<div class="flex-1 overflow-y-auto p-6 max-w-3xl w-full space-y-4">
+
+    <!-- Identity block -->
+    <div class="border border-gray-700 rounded p-3 space-y-3" style="background:#1a1d2e;">
+        <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Asset URI</label>
+            <div id="display_uri" class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs font-mono text-amber-300 break-all select-all"></div>
+        </div>
+        <div>
+            <div class="flex items-center justify-between mb-1">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Named Graph</label>
+                <button onclick="openSetGraphModal()" class="text-xs bg-violet-800 hover:bg-violet-700 text-white px-2 py-0.5 rounded transition">⊕ Set Named Graph</button>
+            </div>
+            <div id="display_graph" class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs font-mono break-all select-all"></div>
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Repository</label>
+            <div id="display_repo" class="w-full bg-gray-900 border border-gray-700 rounded p-2 text-xs font-mono text-gray-400"></div>
+        </div>
+        <div id="member-count-display" class="text-xs text-gray-500"></div>
+    </div>
+
+    <!-- Core labels -->
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">rdfs:label</label>
+            <input id="f_label" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">dct:title</label>
+            <input id="f_title" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500">
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">dct:description</label>
+        <textarea id="f_description" rows="3" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500 resize-none"></textarea>
+    </div>
+
+    <!-- Creators -->
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">dct:creator <span class="text-gray-600 normal-case">(comma-separated)</span></label>
+            <input id="f_creator" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">dct:contributor <span class="text-gray-600 normal-case">(comma-separated)</span></label>
+            <input id="f_contributor" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500">
+        </div>
+    </div>
+
+    <!-- Dates -->
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">dct:created</label>
+            <input id="f_created" type="text" placeholder="2026-01-01T00:00:00Z" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm font-mono focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">dct:modified <span class="text-gray-600 normal-case">(auto on save)</span></label>
+            <input id="f_modified" type="text" readonly class="w-full rounded p-2 text-sm font-mono text-gray-500" style="background:#0f1117;border:1px solid #374151;">
+        </div>
+    </div>
+
+    <!-- Taxonomy-specific -->
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">owl:versionInfo</label>
+            <input id="f_version" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500">
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">vaem:namespace</label>
+            <input id="f_namespace" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm font-mono focus:outline-none focus:border-amber-500">
+        </div>
+    </div>
+
+    <div>
+        <label class="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">skos:changeNote</label>
+        <input id="f_changeNote" type="text" class="w-full bg-gray-800 border border-gray-700 rounded p-2 text-sm focus:outline-none focus:border-amber-500">
+    </div>
+
+    <!-- CONCEPTS PANEL — quick list, edit, add, delete -->
+    <div class="border border-gray-700 rounded p-3" style="background:#1a1d2e;">
+        <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-amber-400 uppercase tracking-wider">Concepts</h3>
+            <div class="flex gap-2 items-center">
+                <input id="concept_filter" type="text" placeholder="Filter…"
+                    class="bg-gray-800 border border-gray-700 rounded px-2 py-1 text-xs w-36 focus:outline-none focus:border-amber-500"
+                    oninput="renderConceptList()">
+                <button onclick="openAddConceptForm()" class="bg-emerald-700 hover:bg-emerald-600 text-white text-xs font-bold px-2 py-1 rounded transition">+ Add Concept</button>
+            </div>
+        </div>
+
+        <!-- Add-concept inline form (hidden by default) -->
+        <div id="add_concept_form" class="hidden bg-gray-800 border border-emerald-700 rounded p-3 mb-3 space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Label</label>
+                    <input id="new_concept_label" type="text" placeholder="New concept label"
+                        class="w-full bg-gray-900 border border-gray-700 rounded p-1.5 text-xs focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-500 mb-1">Parent (rdfs:subClassOf)</label>
+                    <select id="new_concept_parent" class="w-full bg-gray-900 border border-gray-700 rounded p-1.5 text-xs focus:outline-none focus:border-emerald-500">
+                        <option value="">— Top-level (no parent) —</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-2 justify-end">
+                <button onclick="closeAddConceptForm()" class="text-xs bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded transition">Cancel</button>
+                <button onclick="addConcept()" class="text-xs bg-emerald-700 hover:bg-emerald-600 text-white font-bold px-3 py-1 rounded transition">Create</button>
+            </div>
+        </div>
+
+        <div id="concept_list_status" class="text-xs text-gray-500 mb-2"></div>
+        <div id="concept_list" class="space-y-1 max-h-96 overflow-y-auto"></div>
+    </div>
+
+</div>
+
+<!-- RENAME MODAL -->
+<div id="renameModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center;">
+    <div style="background:#1a1d2e;border:1px solid #3730a3;border-radius:10px;padding:28px;width:580px;max-width:95vw;">
+        <h2 style="color:#818cf8;font-size:14px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px;">✏️ Rename Taxonomy URI</h2>
+        <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Current URI</label>
+            <div id="rename_old" style="background:#0f1117;border:1px solid #2d3148;border-radius:4px;padding:8px;font-size:11px;font-family:monospace;color:#6366f1;word-break:break-all;"></div>
+        </div>
+        <div style="margin-bottom:8px;">
+            <label style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">New URI</label>
+            <input id="rename_new" type="text" style="width:100%;background:#0f1117;border:1px solid #4f46e5;border-radius:4px;padding:8px;font-size:11px;font-family:monospace;color:#e2e8f0;outline:none;">
+        </div>
+        <div id="rename_preview" style="margin-bottom:16px;font-size:11px;color:#6b7280;font-style:italic;line-height:1.6;"></div>
+        <div id="rename_status" style="display:none;margin-bottom:12px;padding:8px 12px;border-radius:4px;font-size:12px;"></div>
+        <div style="background:#1e2035;border:1px solid #374151;border-radius:6px;padding:10px;margin-bottom:16px;font-size:11px;color:#9ca3af;line-height:1.6;">
+            ⚠️ Migrates this taxonomy's owl:Class members (via rdfs:isDefinedBy) to the new URI and moves the named graph. Updates all triples where this URI appears as subject, object, or named graph.
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button onclick="closeRenameModal()" style="background:#374151;color:#e2e8f0;border:none;padding:8px 16px;border-radius:4px;font-size:12px;cursor:pointer;">Cancel</button>
+            <button onclick="previewRename()" style="background:#4f46e5;color:white;border:none;padding:8px 16px;border-radius:4px;font-size:12px;cursor:pointer;">🔍 Preview Impact</button>
+            <button id="rename_confirm_btn" onclick="executeRename()" style="background:#7c3aed;color:white;border:none;padding:8px 16px;border-radius:4px;font-size:12px;cursor:pointer;display:none;">⚡ Execute Rename</button>
+        </div>
+    </div>
+</div>
+
+<!-- SET NAMED GRAPH MODAL -->
+<div id="setGraphModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;align-items:center;justify-content:center;">
+    <div style="background:#1a1d2e;border:1px solid #5b21b6;border-radius:10px;padding:28px;width:580px;max-width:95vw;">
+        <h2 style="color:#a78bfa;font-size:14px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:16px;">⊕ Set Named Graph</h2>
+        <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Asset URI</label>
+            <div id="sg_asset_uri" style="background:#0f1117;border:1px solid #2d3148;border-radius:4px;padding:8px;font-size:11px;font-family:monospace;color:#6366f1;word-break:break-all;"></div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Named Graph URI</label>
+            <input id="sg_graph_uri" type="text" style="width:100%;background:#0f1117;border:1px solid #5b21b6;border-radius:4px;padding:8px;font-size:11px;font-family:monospace;color:#e2e8f0;outline:none;">
+            <div style="font-size:10px;color:#6b7280;margin-top:4px;">Typically the same as the Asset URI.</div>
+        </div>
+        <div style="margin-bottom:12px;">
+            <label style="display:block;font-size:11px;color:#6b7280;text-transform:uppercase;margin-bottom:4px;">Scope</label>
+            <select id="sg_scope" style="width:100%;background:#0f1117;border:1px solid #374151;border-radius:4px;padding:8px;font-size:11px;color:#e2e8f0;outline:none;">
+                <option value="members">This asset + its members, by rdfs:isDefinedBy (recommended)</option>
+                <option value="subject">Only triples where Asset URI is subject</option>
+                <option value="all">All triples currently in default graph</option>
+            </select>
+        </div>
+        <div id="sg_status" style="display:none;margin-bottom:12px;padding:8px 12px;border-radius:4px;font-size:12px;"></div>
+        <div style="background:#1e2035;border:1px solid #374151;border-radius:6px;padding:10px;margin-bottom:16px;font-size:11px;color:#9ca3af;line-height:1.6;">
+            ⚠️ Moves matching triples from the default graph into the specified named graph.
+        </div>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button onclick="closeSetGraphModal()" style="background:#374151;color:#e2e8f0;border:none;padding:8px 16px;border-radius:4px;font-size:12px;cursor:pointer;">Cancel</button>
+            <button onclick="previewSetGraph()" style="background:#4f46e5;color:white;border:none;padding:8px 16px;border-radius:4px;font-size:12px;cursor:pointer;">Preview Impact</button>
+            <button id="sg_confirm_btn" onclick="executeSetGraph()" style="background:#7c3aed;color:white;border:none;padding:8px 16px;border-radius:4px;font-size:12px;cursor:pointer;display:none;">⚡ Move to Named Graph</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const params  = new URLSearchParams(window.location.search);
+let assetUri  = params.get('uri');
+let assetGraphs = [];
+let repoId    = params.get('repo') || 'value-kb';
+const isEmbedded = params.get('embedded') === '1';
+let _renameOccurred = false;
+
+document.getElementById('assetUri').textContent     = assetUri || '(no asset)';
+document.getElementById('display_uri').textContent  = assetUri || '—';
+document.getElementById('display_repo').textContent = `http://localhost:7200/repositories/${repoId}`;
+
+function getBaseUrl() { return `/graphdb/repositories/${repoId}`; }
+
+// ── Embedded-mode postMessage bridge (same contract as the other editors) ──
+if (isEmbedded) {
+    window.addEventListener('message', (ev) => {
+        if (!ev.data || ev.data.type !== 'ev-request-save') return;
+        saveAndClose();
+    });
+}
+
+function notifyParentSaved() {
+    if (!window.parent || window.parent === window) return;
+    window.parent.postMessage({
+        type: 'ev-metadata-saved',
+        uriChanged: _renameOccurred,
+        newUri: _renameOccurred ? assetUri : null
+    }, '*');
+}
+
+function notifyParentSaveFailed(errMsg) {
+    if (!window.parent || window.parent === window) return;
+    window.parent.postMessage({ type: 'ev-metadata-save-failed', error: errMsg }, '*');
+}
+
+const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
+const OWL  = 'http://www.w3.org/2002/07/owl#';
+
+const FIELDS = [
+    { id:'f_label',       pred:RDFS+'label',                            lang:'en' },
+    { id:'f_title',       pred:'http://purl.org/dc/terms/title',        lang:'en' },
+    { id:'f_description', pred:'http://purl.org/dc/terms/description',  lang:'en' },
+    { id:'f_creator',     pred:'http://purl.org/dc/terms/creator',      multi:true },
+    { id:'f_contributor', pred:'http://purl.org/dc/terms/contributor',  multi:true },
+    { id:'f_created',     pred:'http://purl.org/dc/terms/created',      datatype:'http://www.w3.org/2001/XMLSchema#dateTime' },
+    { id:'f_modified',    pred:'http://purl.org/dc/terms/modified',     datatype:'http://www.w3.org/2001/XMLSchema#dateTime', readonly:true },
+    { id:'f_version',     pred:OWL+'versionInfo' },
+    { id:'f_namespace',   pred:'http://www.linkedmodel.org/schema/vaem#namespace' },
+    { id:'f_changeNote',  pred:'http://www.w3.org/2004/02/skos/core#changeNote' },
+];
+
+// ── Load metadata (header fields) — same proven pattern as OWL editor ──
+async function loadMetadata() {
+    if (!assetUri) return;
+    try {
+        // ── Detect which slash-form actually exists in GraphDB ──────────────
+        // Stripping the slash unconditionally breaks taxonomies that were
+        // minted WITH a trailing slash (their rdfs:isDefinedBy / scheme IRI
+        // really does end in '/'). Instead: check which form has triples,
+        // and adopt that exact form. This makes every downstream query
+        // (member discovery, rename, Preview Impact) operate on the IRI
+        // that's actually stored, not a guessed canonical form.
+        const candidates = assetUri.endsWith('/')
+            ? [assetUri, assetUri.replace(/\/+$/, '')]
+            : [assetUri, assetUri + '/'];
+
+        let resolvedUri = null;
+        for (const candidate of candidates) {
+            const checkQ = `SELECT (COUNT(*) AS ?n) WHERE { { <${candidate}> ?p ?o } UNION { GRAPH <${candidate}> { ?s ?p ?o } } UNION { ?s ?p <${candidate}> } }`;
+            const checkR = await fetch(getBaseUrl(), {
+                method:'POST',
+                headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},
+                body: new URLSearchParams({query:checkQ})
+            });
+            const checkD = await checkR.json();
+            const n = parseInt(checkD.results.bindings[0]?.n?.value || '0');
+            console.log('[loadMetadata] checking form', JSON.stringify(candidate), '-> ', n, 'triples found');
+            if (n > 0) { resolvedUri = candidate; break; }
+        }
+
+        if (resolvedUri && resolvedUri !== assetUri) {
+            console.log('[loadMetadata] Resolved to actual stored form:', JSON.stringify(resolvedUri), '(URL had:', JSON.stringify(assetUri), ')');
+            assetUri = resolvedUri;
+            document.getElementById('assetUri').textContent = assetUri;
+            document.getElementById('display_uri').textContent = assetUri;
+        } else if (!resolvedUri) {
+            console.warn('[loadMetadata] Neither slash form of', JSON.stringify(assetUri), 'has any triples in GraphDB.');
+        }
+
+        const gq = `SELECT DISTINCT ?g WHERE { GRAPH ?g { <${assetUri}> ?p ?o } } LIMIT 5`;
+        const gr = await fetch(getBaseUrl(), {
+            method:'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},
+            body: new URLSearchParams({query:gq})
+        });
+        const gd = await gr.json();
+        assetGraphs = gd.results.bindings.map(b => b.g.value);
+
+        const gel = document.getElementById('display_graph');
+        if (assetGraphs.length > 0) {
+            gel.textContent = assetGraphs.join('\n');
+            gel.style.color = '#34d399';
+        } else {
+            gel.textContent = '\u26a0 Default graph only \u2014 use \u2295 Set Named Graph to fix';
+            gel.style.color = '#f59e0b';
+        }
+
+        let ngQuery = `SELECT ?p ?o WHERE { BIND("dummy" AS ?p) FILTER(1=0) }`;
+        if (assetGraphs.length > 0) {
+            ngQuery = `SELECT ?p ?o WHERE { GRAPH <${assetGraphs[0]}> { <${assetUri}> ?p ?o . } }`;
+        }
+        const dgQuery = `SELECT ?p ?o WHERE { <${assetUri}> ?p ?o . }`;
+
+        const [ngResp, dgResp] = await Promise.all([
+            fetch(getBaseUrl(), {method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},body:new URLSearchParams({query:ngQuery})}),
+            fetch(getBaseUrl(), {method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},body:new URLSearchParams({query:dgQuery})})
+        ]);
+
+        const [ngData, dgData] = await Promise.all([ngResp.json(), dgResp.json()]);
+
+        const byPred = {};
+        dgData.results.bindings.forEach(b => {
+            if (!byPred[b.p.value]) byPred[b.p.value] = [];
+            byPred[b.p.value].push(b.o.value);
+        });
+        ngData.results.bindings.forEach(b => {
+            byPred[b.p.value] = byPred[b.p.value] || [];
+            if (!byPred[b.p.value].includes(b.o.value)) byPred[b.p.value].unshift(b.o.value);
+        });
+
+        const ngPreds = new Set(ngData.results.bindings.map(b => b.p.value));
+
+        FIELDS.forEach(f => {
+            const el = document.getElementById(f.id);
+            if (!el) return;
+            const vals = byPred[f.pred] || [];
+            const ngVals = ngPreds.has(f.pred)
+                ? ngData.results.bindings.filter(b => b.p.value === f.pred).map(b => b.o.value)
+                : vals;
+            el.value = f.multi ? ngVals.join(', ') : (ngVals[0] || '');
+        });
+
+        // Show member class count for context
+        await refreshMemberCount();
+
+        // Snapshot original field values for change-note diffing on save
+        snapshotOriginalValues();
+
+        // Load the Concepts panel (separate, isolated from header save/rename logic)
+        await loadConceptList();
+
+    } catch(err) { showStatus('Failed to load: ' + err.message, true); }
+}
+
+// ── Original-value snapshot (for change-note generation) ──────────────────
+let _originalValues = {};
+function snapshotOriginalValues() {
+    _originalValues = {};
+    FIELDS.forEach(f => {
+        const el = document.getElementById(f.id);
+        if (el) _originalValues[f.id] = el.value;
+    });
+}
+
+// ═══════════════════════════════════════════════════════════
+//  AUTOFILL LAYER (taxonomy variant — rdfs:label/dct:title pairing,
+//  same as OWL editor since taxonomies use the same predicate set)
+// ═══════════════════════════════════════════════════════════
+
+const AUTOFILL_OWNER = 'Jeffrey Wallk';
+
+function _val(id) { return (document.getElementById(id)?.value || '').trim(); }
+function _set(id, v) { const el = document.getElementById(id); if (el) el.value = v; }
+
+function labelFromUri(uri) {
+    if (!uri) return '';
+    const local = uri.replace(/[\/#]+$/, '').split(/[\/#]/).pop() || '';
+    if (!local) return '';
+    return local.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' | ');
+}
+
+function incrementVersion(v) {
+    // Semantic Governance v1.8 §3.3: semantic versioning MAJOR.MINOR.PATCH.
+    // A metadata-only save is a documentation change, so it bumps PATCH.
+    // Empty → 0.1.0 (first draft); legacy "1.3" → "1.3.1".
+    const s = (v || '').trim();
+    if (!s) return '0.1.0';
+    const m = s.match(/^v?(\d+)(?:\.(\d+))?(?:\.(\d+))?/);
+    if (!m) return '0.1.0';
+    const major = +m[1], minor = +(m[2] || 0), patch = m[3] !== undefined ? +m[3] + 1 : (m[2] !== undefined ? 1 : 0);
+    return `${major}.${minor}.${patch}`;
+}
+
+const CHANGE_NOTE_TRACKED_FIELDS = ['f_label', 'f_title', 'f_description', 'f_created'];
+function buildChangeNote() {
+    const changes = [];
+    CHANGE_NOTE_TRACKED_FIELDS.forEach(id => {
+        const f = FIELDS.find(x => x.id === id);
+        if (!f) return;
+        const cur = _val(id);
+        const orig = (_originalValues[id] || '').trim();
+        if (cur === orig) return;
+        const label = id.replace('f_', '');
+        if (!orig && cur) changes.push(`${label} set`);
+        else if (orig && !cur) changes.push(`${label} cleared`);
+        else changes.push(`${label} updated`);
+    });
+    if (!changes.length) return '';
+    const date = new Date().toISOString().slice(0, 10);
+    return `[${date}] ${changes.join(', ')}`;
+}
+
+// Apply all autofills. Reads form values, writes form values.
+async function applyAutofills() {
+    // 0. Capture change note BEFORE any autofill mutates a tracked field
+    const noteAddition = buildChangeNote();
+
+    // 1. Label & Title match each other
+    let label = _val('f_label');
+    let title = _val('f_title');
+    if (label && !title) _set('f_title', label);
+    else if (title && !label) _set('f_label', title);
+    else if (!label && !title) {
+        const derived = labelFromUri(assetUri);
+        if (derived) { _set('f_label', derived); _set('f_title', derived); }
+    } else if (label !== title) {
+        _set('f_title', label);
+    }
+
+    // 2. dct:creator and dct:contributor — ALWAYS exactly "Jeffrey Wallk"
+    _set('f_creator', AUTOFILL_OWNER);
+    _set('f_contributor', AUTOFILL_OWNER);
+
+    // 3. owl:versionInfo: semantic version — 0.1.0 if empty, else PATCH bump
+    _set('f_version', incrementVersion(_val('f_version')));
+
+    // 4. vaem:namespace = named graph (no trailing slash, per app convention)
+    const ng = (typeof assetGraphs !== 'undefined' && assetGraphs.length > 0) ? assetGraphs[0] : assetUri;
+    if (ng) _set('f_namespace', ng.replace(/\/+$/, ''));
+
+    // 5. Change note: append pre-captured list of changed editable fields
+    if (noteAddition) {
+        const existing = _val('f_changeNote');
+        _set('f_changeNote', existing ? `${existing}; ${noteAddition}` : noteAddition);
+    }
+}
+
+// Load member count display
+async function refreshMemberCount() {
+    try {
+        const q = `PREFIX owl: <${OWL}> PREFIX rdfs: <${RDFS}>
+SELECT (COUNT(DISTINCT ?c) AS ?n) WHERE {
+  ?c a owl:Class .
+  ?c rdfs:isDefinedBy <${assetUri}> .
+}`;
+        const n = await countTriples(q);
+        const el = document.getElementById('member-count-display');
+        if (el) el.textContent = `${n} owl:Class member${n===1?'':'s'} (via rdfs:isDefinedBy)`;
+    } catch(e) {}
+}
+
+// ═══════════════════════════════════════════════════════════
+//  CONCEPTS PANEL — list, inline edit, add, delete
+//  Fully isolated from header save/rename logic above. Every
+//  write here is its own immediate sparqlUpdate — nothing here
+//  is batched into saveAndClose's atomic payload, and nothing
+//  here is touched by executeRename's member-cascade logic.
+// ═══════════════════════════════════════════════════════════
+
+let _concepts = []; // [{iri, label, parentIri, parentLabel}]
+
+async function loadConceptList() {
+    const statusEl = document.getElementById('concept_list_status');
+    if (statusEl) statusEl.textContent = 'Loading concepts…';
+    try {
+        const q = `PREFIX owl: <${OWL}> PREFIX rdfs: <${RDFS}>
+SELECT ?c ?label ?parent ?parentLabel WHERE {
+  ?c a owl:Class .
+  ?c rdfs:isDefinedBy <${assetUri}> .
+  OPTIONAL { ?c rdfs:label ?label . FILTER(LANG(?label)='en' || LANG(?label)='') }
+  OPTIONAL {
+    ?c rdfs:subClassOf ?parent .
+    OPTIONAL { ?parent rdfs:label ?parentLabel . FILTER(LANG(?parentLabel)='en' || LANG(?parentLabel)='') }
+  }
+} ORDER BY ?label`;
+        const r = await fetch(getBaseUrl(), {
+            method:'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},
+            body: new URLSearchParams({query:q})
+        });
+        const d = await r.json();
+
+        // Group by concept IRI (a concept may have multiple subClassOf rows if poly-hierarchy)
+        const byIri = new Map();
+        d.results.bindings.forEach(b => {
+            const iri = b.c.value;
+            if (!byIri.has(iri)) {
+                byIri.set(iri, { iri, label: b.label?.value || localName(iri), parents: [] });
+            }
+            if (b.parent) {
+                byIri.get(iri).parents.push({ iri: b.parent.value, label: b.parentLabel?.value || localName(b.parent.value) });
+            }
+        });
+        _concepts = [...byIri.values()].sort((a,b) => a.label.localeCompare(b.label));
+
+        if (statusEl) statusEl.textContent = `${_concepts.length} concept${_concepts.length===1?'':'s'}`;
+        renderConceptList();
+        populateParentDropdown();
+    } catch(err) {
+        if (statusEl) statusEl.textContent = 'Failed to load concepts: ' + err.message;
+        console.error('[loadConceptList] ERROR:', err);
+    }
+}
+
+function populateParentDropdown() {
+    const sel = document.getElementById('new_concept_parent');
+    if (!sel) return;
+    const current = sel.value;
+    sel.innerHTML = '<option value="">— Top-level (no parent) —</option>' +
+        _concepts.map(c => `<option value="${esc(c.iri)}">${esc(c.label)}</option>`).join('');
+    sel.value = current;
+}
+
+function renderConceptList() {
+    const filter = (document.getElementById('concept_filter')?.value || '').toLowerCase();
+    const listEl = document.getElementById('concept_list');
+    if (!listEl) return;
+
+    const filtered = filter
+        ? _concepts.filter(c => c.label.toLowerCase().includes(filter) || c.iri.toLowerCase().includes(filter))
+        : _concepts;
+
+    if (!filtered.length) {
+        listEl.innerHTML = '<div class="text-xs text-gray-600 italic py-2">No concepts found.</div>';
+        return;
+    }
+
+    listEl.innerHTML = filtered.map(c => {
+        const parentNames = c.parents.length ? c.parents.map(p => esc(p.label)).join(', ') : '— top-level —';
+        return `
+        <div class="bg-gray-800 border border-gray-700 rounded p-2 text-xs">
+            <div class="flex items-center justify-between gap-2">
+                <div class="flex-1 min-w-0">
+                    <div class="font-semibold text-gray-200 truncate">${esc(c.label)}</div>
+                    <div class="text-gray-500 truncate" style="font-size:10px">${esc(c.iri)}</div>
+                    <div class="text-gray-500" style="font-size:10px">Parent: ${parentNames}</div>
+                </div>
+                <div class="flex gap-1 flex-shrink-0">
+                    <button onclick="openEditConceptForm('${esc(c.iri)}')" class="bg-indigo-700 hover:bg-indigo-600 text-white px-2 py-1 rounded transition" title="Edit">✎</button>
+                    <button onclick="deleteConcept('${esc(c.iri)}')" class="bg-rose-800 hover:bg-rose-700 text-white px-2 py-1 rounded transition" title="Delete">🗑</button>
+                </div>
+            </div>
+            <div id="edit_row_${btoa(c.iri).replace(/[^a-zA-Z0-9]/g,'')}" class="hidden mt-2 pt-2 border-t border-gray-700 space-y-2"></div>
+        </div>`;
+    }).join('');
+}
+
+function conceptRowId(iri) {
+    return 'edit_row_' + btoa(iri).replace(/[^a-zA-Z0-9]/g,'');
+}
+
+function openEditConceptForm(iri) {
+    const c = _concepts.find(x => x.iri === iri);
+    if (!c) return;
+    const row = document.getElementById(conceptRowId(iri));
+    if (!row) return;
+
+    const isOpen = !row.classList.contains('hidden');
+    // Close any other open edit rows first
+    document.querySelectorAll('[id^="edit_row_"]').forEach(el => el.classList.add('hidden'));
+    if (isOpen) return; // was open, now closed — done
+
+    const parentOptions = _concepts
+        .filter(x => x.iri !== iri) // can't be its own parent
+        .map(x => `<option value="${esc(x.iri)}" ${c.parents[0]?.iri === x.iri ? 'selected':''}>${esc(x.label)}</option>`)
+        .join('');
+
+    row.innerHTML = `
+        <div>
+            <label class="block text-gray-500 mb-1" style="font-size:10px">Label</label>
+            <input id="ec_label_${btoa(iri).replace(/[^a-zA-Z0-9]/g,'')}" type="text" value="${esc(c.label)}"
+                class="w-full bg-gray-900 border border-gray-700 rounded p-1.5 text-xs focus:outline-none focus:border-indigo-500">
+        </div>
+        <div>
+            <label class="block text-gray-500 mb-1" style="font-size:10px">Parent (rdfs:subClassOf)</label>
+            <select id="ec_parent_${btoa(iri).replace(/[^a-zA-Z0-9]/g,'')}"
+                class="w-full bg-gray-900 border border-gray-700 rounded p-1.5 text-xs focus:outline-none focus:border-indigo-500">
+                <option value="">— Top-level (no parent) —</option>
+                ${parentOptions}
+            </select>
+        </div>
+        <div class="flex gap-2 justify-end">
+            <button onclick="closeEditConceptForm('${esc(iri)}')" class="bg-gray-700 hover:bg-gray-600 px-2 py-1 rounded transition">Cancel</button>
+            <button onclick="saveConceptEdit('${esc(iri)}')" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold px-2 py-1 rounded transition">Save</button>
+        </div>`;
+    row.classList.remove('hidden');
+}
+
+function closeEditConceptForm(iri) {
+    const row = document.getElementById(conceptRowId(iri));
+    if (row) row.classList.add('hidden');
+}
+
+async function saveConceptEdit(iri) {
+    const safeId = btoa(iri).replace(/[^a-zA-Z0-9]/g,'');
+    const newLabel = document.getElementById('ec_label_'+safeId)?.value.trim();
+    const newParent = document.getElementById('ec_parent_'+safeId)?.value || '';
+
+    if (!newLabel) { alert('Label cannot be empty.'); return; }
+
+    try {
+        // Update label (both rdfs:label and skos:prefLabel if present, for consistency)
+        await sparqlUpdate(`PREFIX rdfs: <${RDFS}>
+DELETE { <${iri}> rdfs:label ?l } WHERE { <${iri}> rdfs:label ?l };
+INSERT DATA { <${iri}> rdfs:label "${escLit(newLabel)}"@en }`);
+
+        // Update parent (rdfs:subClassOf) — replace existing single-parent link.
+        // Note: this assumes single-parent for the inline editor; poly-hierarchy
+        // concepts should be managed in the tree editor instead.
+        await sparqlUpdate(`PREFIX rdfs: <${RDFS}>
+DELETE { <${iri}> rdfs:subClassOf ?p } WHERE { <${iri}> rdfs:subClassOf ?p }`);
+        if (newParent) {
+            await sparqlUpdate(`PREFIX rdfs: <${RDFS}>
+INSERT DATA { <${iri}> rdfs:subClassOf <${newParent}> }`);
+        }
+
+        closeEditConceptForm(iri);
+        await loadConceptList();
+        await refreshMemberCount();
+    } catch(err) {
+        alert('Failed to save concept: ' + err.message);
+        console.error('[saveConceptEdit] ERROR:', err);
+    }
+}
+
+async function deleteConcept(iri) {
+    const c = _concepts.find(x => x.iri === iri);
+    const label = c ? c.label : iri;
+    const hasChildren = _concepts.some(x => x.parents.some(p => p.iri === iri));
+    if (hasChildren) {
+        if (!confirm(`"${label}" has child concepts pointing to it as their parent. Deleting it will leave those children without this parent (they'll become top-level unless they have another parent). Continue?`)) return;
+    } else {
+        if (!confirm(`Delete concept "${label}"? This removes all its triples. This cannot be undone.`)) return;
+    }
+    try {
+        await sparqlUpdate(`DELETE { <${iri}> ?p ?o } WHERE { <${iri}> ?p ?o }`);
+        await sparqlUpdate(`DELETE { ?s ?p <${iri}> } WHERE { ?s ?p <${iri}> }`);
+        await loadConceptList();
+        await refreshMemberCount();
+    } catch(err) {
+        alert('Failed to delete concept: ' + err.message);
+        console.error('[deleteConcept] ERROR:', err);
+    }
+}
+
+function openAddConceptForm() {
+    document.getElementById('add_concept_form').classList.remove('hidden');
+    document.getElementById('new_concept_label').value = '';
+    document.getElementById('new_concept_parent').value = '';
+    populateParentDropdown();
+    setTimeout(() => document.getElementById('new_concept_label').focus(), 50);
+}
+
+function closeAddConceptForm() {
+    document.getElementById('add_concept_form').classList.add('hidden');
+}
+
+function slugify(label) {
+    return label.replace(/[^a-zA-Z0-9]+/g, '');
+}
+
+async function addConcept() {
+    const label = document.getElementById('new_concept_label').value.trim();
+    const parentIri = document.getElementById('new_concept_parent').value || '';
+    if (!label) { alert('Enter a label for the new concept.'); return; }
+
+    const base = assetUri.replace(/\/+$/, '') + '/';
+    let slug = slugify(label);
+    if (!slug) { alert('Label must contain at least one letter or number.'); return; }
+
+    // Ensure the new IRI doesn't collide with an existing concept
+    let candidateIri = base + slug;
+    let suffix = 2;
+    while (_concepts.some(c => c.iri === candidateIri)) {
+        candidateIri = base + slug + suffix;
+        suffix++;
+    }
+
+    try {
+        const g = assetGraphs.length > 0 ? assetGraphs[0] : assetUri;
+        const lines = [
+            `<${candidateIri}> a <${OWL}Class> .`,
+            `<${candidateIri}> rdfs:label "${escLit(label)}"@en .`,
+            `<${candidateIri}> rdfs:isDefinedBy <${assetUri}> .`
+        ];
+        if (parentIri) lines.push(`<${candidateIri}> rdfs:subClassOf <${parentIri}> .`);
+
+        await sparqlUpdate(`PREFIX rdfs: <${RDFS}>
+INSERT DATA { GRAPH <${g}> {
+${lines.join('\n')}
+} }`);
+
+        closeAddConceptForm();
+        await loadConceptList();
+        await refreshMemberCount();
+    } catch(err) {
+        alert('Failed to add concept: ' + err.message);
+        console.error('[addConcept] ERROR:', err);
+    }
+}
+
+function escLit(s) { return String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,'\\n'); }
+
+// ── Save (atomic payload) — exact proven pattern, header fields only ──
+async function saveAndClose() {
+    console.log('[save] ENTERED, assetUri=', assetUri, 'assetGraphs=', assetGraphs);
+    if (!assetUri) return;
+    const now = new Date().toISOString().replace(/\.\d{3}Z$/,'Z');
+    document.getElementById('f_modified').value = now;
+
+    // ── AUTOFILL LAYER (applied before save) ──────────────────────────
+    try { await applyAutofills(); }
+    catch(e) { console.warn('[save] autofill issue (non-fatal):', e); }
+
+    const g      = assetGraphs.length > 0 ? assetGraphs[0] : null;
+    const gOpen  = g ? `GRAPH <${g}> { ` : '';
+    const gClose = g ? ` }` : '';
+
+    let atomicUpdate = "";
+
+    for (const f of FIELDS) {
+        const vn = f.id.replace('f_', '');
+        atomicUpdate += `DELETE WHERE { ${gOpen}<${assetUri}> <${f.pred}> ?${vn} .${gClose} };\n`;
+    }
+
+    const insLines = [];
+    FIELDS.forEach(f => {
+        const el = document.getElementById(f.id);
+        if (!el) return;
+        const v = el.value.trim();
+        if (!v) return;
+        if (f.multi) {
+            v.split(',').map(s => s.trim()).filter(Boolean).forEach(item => {
+                insLines.push(`<${assetUri}> <${f.pred}> "${esc(item)}" .`);
+            });
+        } else if (f.datatype) {
+            insLines.push(`<${assetUri}> <${f.pred}> "${esc(v)}"^^<${f.datatype}> .`);
+        } else if (f.lang) {
+            insLines.push(`<${assetUri}> <${f.pred}> "${esc(v)}"@${f.lang} .`);
+        } else {
+            insLines.push(`<${assetUri}> <${f.pred}> "${esc(v)}" .`);
+        }
+    });
+
+    if (insLines.length > 0) {
+        atomicUpdate += `INSERT DATA { ${gOpen}\n${insLines.join('\n')}\n${gClose} };\n`;
+    }
+
+    console.log('[save] Atomic Payload:\n', atomicUpdate);
+
+    try {
+        const r = await fetch(`${getBaseUrl()}/statements`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/sparql-update' },
+            body: atomicUpdate
+        });
+        if (!r.ok) throw new Error(await r.text());
+        showStatus('\u2713 Saved.' + (isEmbedded ? '' : ' Closing\u2026'));
+        if (window.opener && !window.opener.closed) { try { window.opener.refreshSidebar(); } catch(e) {} }
+        if (isEmbedded) {
+            notifyParentSaved();
+        } else {
+            setTimeout(() => window.close(), 800);
+        }
+    } catch(err) {
+        console.error('[save] ERROR:', err);
+        showStatus('Save failed: ' + err.message, true);
+        if (isEmbedded) notifyParentSaveFailed(err.message);
+    }
+}
+
+function showStatus(msg, err=false) {
+    const el = document.getElementById('status');
+    el.textContent = msg;
+    el.className = `px-6 py-2 text-sm flex-shrink-0 ${err?'bg-rose-900 text-rose-200':'bg-indigo-900 text-indigo-200'}`;
+    el.classList.remove('hidden');
+}
+
+function esc(s) { return s.replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,'\\n'); }
+
+async function sparqlUpdate(u) {
+    const r = await fetch(`${getBaseUrl()}/statements`,{method:'POST',headers:{'Content-Type':'application/sparql-update'},body:u});
+    if (!r.ok) {
+        const errText = await r.text();
+        console.error('[sparqlUpdate] FAILED. Status:', r.status);
+        console.error('[sparqlUpdate] Query sent:\n', u);
+        console.error('[sparqlUpdate] GraphDB response:\n', errText);
+        throw new Error(errText || `HTTP ${r.status}`);
+    }
+}
+
+async function countTriples(q) {
+    const r = await fetch(getBaseUrl(),{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},body:new URLSearchParams({query:q})});
+    if (!r.ok) {
+        const errText = await r.text();
+        console.error('[countTriples] HTTP', r.status, 'Query:', q);
+        console.error('[countTriples] GraphDB response:', errText);
+        throw new Error(`GraphDB query failed (${r.status}): ${errText.slice(0,200)}`);
+    }
+    let d;
+    try {
+        d = await r.json();
+    } catch(parseErr) {
+        const raw = await r.clone().text().catch(()=> '(could not read body)');
+        console.error('[countTriples] Response was not valid JSON. Query:', q);
+        console.error('[countTriples] Raw response:', raw);
+        throw new Error('GraphDB returned a non-JSON response (likely a malformed query). See console for details.');
+    }
+    return parseInt(d.results.bindings[0]?.c?.value || d.results.bindings[0]?.n?.value || '0');
+}
+
+function setModalStatus(id,msg,c) {
+    const el=document.getElementById(id);
+    el.textContent=msg;
+    el.style.cssText=`display:block;padding:8px 12px;border-radius:4px;font-size:12px;background:${c==='red'?'#450a0a':c==='green'?'#052e16':c==='amber'?'#431407':'#1e1b4b'};color:${c==='red'?'#fca5a5':c==='green'?'#86efac':c==='amber'?'#fed7aa':'#a5b4fc'}`;
+}
+
+// ═══════════════════════════════════════════════════════════
+//  RENAME — purpose-built for owl:Class taxonomies
+//
+//  Members are owl:Class instances that declare membership via
+//  rdfs:isDefinedBy <assetUri> — NOT via a shared namespace prefix
+//  (they're frequently minted under a completely different domain,
+//  e.g. ontologies.verizon.com vs www.enablingvalue.com). So instead
+//  of a STRSTARTS namespace-prefix rewrite, we:
+//    1. Find every member via rdfs:isDefinedBy <oldAsset>
+//    2. Compute each member's new IRI: newAssetBase + localName
+//       (localName = the part after the last '/' or '#' in the old IRI)
+//    3. Rewrite each member's own triples (subject + rdfs:subClassOf
+//       references to sibling members + rdfs:isDefinedBy) into the
+//       new named graph
+//    4. Rewrite the asset header itself and move its named graph
+// ═══════════════════════════════════════════════════════════
+
+function openRenameModal() {
+    document.getElementById('rename_old').textContent=assetUri;
+    document.getElementById('rename_new').value=assetUri.replace(/\/+$/, '');
+    document.getElementById('rename_preview').textContent='';
+    document.getElementById('rename_status').style.display='none';
+    document.getElementById('rename_confirm_btn').style.display='none';
+    document.getElementById('renameModal').style.display='flex';
+    setTimeout(()=>document.getElementById('rename_new').focus(),50);
+}
+function closeRenameModal() { document.getElementById('renameModal').style.display='none'; }
+
+function localName(iri) {
+    const m = iri.match(/[\/#]([^\/#]+)\/?$/);
+    return m ? m[1] : iri;
+}
+
+async function previewRename() {
+    let nu=document.getElementById('rename_new').value.trim();
+    if (nu.endsWith('/')) {
+        nu = nu.replace(/\/+$/, '');
+        document.getElementById('rename_new').value = nu;
+    }
+    if (!nu||nu===assetUri) { document.getElementById('rename_preview').textContent='New URI must differ.'; return; }
+    document.getElementById('rename_preview').textContent='Counting…';
+    document.getElementById('rename_confirm_btn').style.display='none';
+    try {
+        const [headerS, headerO, headerG, members] = await Promise.all([
+            countTriples(`SELECT (COUNT(*) as ?c) WHERE{<${assetUri}> ?p ?o}`),
+            countTriples(`SELECT (COUNT(*) as ?c) WHERE{?s ?p <${assetUri}>}`),
+            countTriples(`SELECT (COUNT(*) as ?c) WHERE{GRAPH<${assetUri}>{?s ?p ?o}}`),
+            countTriples(`PREFIX owl: <${OWL}> PREFIX rdfs: <${RDFS}> SELECT (COUNT(DISTINCT ?cls) as ?c) WHERE{?cls a owl:Class . ?cls rdfs:isDefinedBy <${assetUri}>}`)
+        ]);
+        console.log('[previewRename] assetUri=', JSON.stringify(assetUri));
+        console.log('[previewRename] counts: headerS=', headerS, 'headerO=', headerO, 'headerG=', headerG, 'members=', members);
+        console.log('[previewRename] types: ', typeof headerS, typeof headerO, typeof headerG, typeof members);
+        const total = headerS + headerO + headerG + members;
+        console.log('[previewRename] total=', total, 'gate passes:', total > 0);
+        document.getElementById('rename_preview').innerHTML=
+            `<span style="color:#e2e8f0">Impact:</span><br>`+
+            `• <strong style="color:#818cf8">${headerS}</strong> header triples (subject)<br>`+
+            `• <strong style="color:#10b981">${headerO}</strong> header references (object)<br>`+
+            `• <strong style="color:#f59e0b">${headerG}</strong> in named graph<br>`+
+            `• <strong style="color:#facc15">${members}</strong> owl:Class member(s) to migrate<br>`+
+            `• <strong style="color:#f87171">${headerS+headerO+headerG} total header triples + ${members} member classes</strong>`;
+        if (total > 0) {
+            document.getElementById('rename_confirm_btn').style.display='inline-block';
+            console.log('[previewRename] Execute button shown.');
+        } else {
+            console.warn('[previewRename] All counts are zero — Execute button NOT shown. assetUri may not match what is actually stored in GraphDB.');
+            document.getElementById('rename_preview').innerHTML += `<br><br><span style="color:#f59e0b">⚠ All counts are zero. This usually means the asset URI shown above does not exactly match what's stored in GraphDB (e.g. a trailing-slash mismatch, or the asset was already renamed). Check the Current URI field above against GraphDB directly.</span>`;
+        }
+    } catch(err) {
+        console.error('[previewRename] ERROR:', err);
+        document.getElementById('rename_preview').textContent='Failed: '+err.message;
+    }
+}
+
+async function executeRename() {
+    let nu=document.getElementById('rename_new').value.trim();
+    // Going forward: no trailing slashes, regardless of what the old URI had.
+    if (nu.endsWith('/')) {
+        nu = nu.replace(/\/+$/, '');
+        console.log('[executeRename] Stripped trailing slash from new URI:', JSON.stringify(nu));
+    }
+    const btn=document.getElementById('rename_confirm_btn');
+
+    // Guard: validate both URIs are well-formed absolute IRIs before sending
+    // any SPARQL. This is the most common source of "did not match the
+    // expected pattern" — GraphDB's IRI parser rejecting a malformed value.
+    const IRI_RE = /^https?:\/\/[^\s<>"{}|\\^`]+$/;
+    if (!assetUri || !IRI_RE.test(assetUri)) {
+        setModalStatus('rename_status','Current asset URI is missing or malformed: '+JSON.stringify(assetUri),'red');
+        return;
+    }
+    if (!nu || !IRI_RE.test(nu)) {
+        setModalStatus('rename_status','New URI is empty or contains invalid characters (spaces, quotes, etc.): '+JSON.stringify(nu),'red');
+        return;
+    }
+
+    btn.disabled=true; btn.textContent='Renaming…';
+    console.log('[rename] STARTING. assetUri=', JSON.stringify(assetUri), 'newUri=', JSON.stringify(nu));
+    try {
+        const newBase = nu.replace(/\/+$/,'') + '/';
+        console.log('[rename] newBase=', JSON.stringify(newBase));
+
+        // STEP 1: Find all member classes via rdfs:isDefinedBy (before any rewrite)
+        setModalStatus('rename_status','Step 1/5 — Finding member classes…','blue');
+        const memberQuery = `PREFIX owl: <${OWL}> PREFIX rdfs: <${RDFS}>
+SELECT DISTINCT ?c WHERE { ?c a owl:Class . ?c rdfs:isDefinedBy <${assetUri}> }`;
+        const mr = await fetch(getBaseUrl(),{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},body:new URLSearchParams({query:memberQuery})});
+        const md = await mr.json();
+        const members = md.results.bindings.map(b => b.c.value);
+        console.log('[rename] found', members.length, 'member classes:', members);
+
+        // Build old->new IRI map using local name preserved under new base.
+        // IMPORTANT: different source domains can independently produce the
+        // SAME local name (e.g. metaphacts.com/.../OperationsManagement and
+        // verizon.com/.../OperationsManagement both existing for the same
+        // taxonomy). Naively mapping by local name alone would silently
+        // collapse two distinct concepts into one new IRI, overwriting
+        // triples and orphaning any rdfs:subClassOf reference that pointed
+        // specifically at the one that got overwritten. Detect and
+        // disambiguate any such collision before building the map.
+        const localNameCounts = new Map();
+        members.forEach(oldIri => {
+            const ln = localName(oldIri);
+            localNameCounts.set(ln, (localNameCounts.get(ln) || 0) + 1);
+        });
+        const collidingNames = [...localNameCounts.entries()].filter(([,n]) => n > 1).map(([n]) => n);
+        if (collidingNames.length) {
+            console.warn('[rename] LOCAL NAME COLLISIONS detected — these local names appear under multiple source domains:', collidingNames);
+        }
+
+        const iriMap = new Map();
+        iriMap.set(assetUri, nu);
+        const usedNewIris = new Set();
+        members.forEach(oldIri => {
+            let ln = localName(oldIri);
+            let newIri = newBase + ln;
+            if (usedNewIris.has(newIri)) {
+                // Collision: disambiguate using a hash of the source domain
+                // so both concepts survive as distinct resources instead of
+                // one silently overwriting the other.
+                const sourceDomain = (oldIri.match(/^https?:\/\/([^\/]+)\//) || [,'unknown'])[1]
+                    .replace(/[^a-zA-Z0-9]/g, '');
+                newIri = newBase + ln + '-' + sourceDomain;
+                console.warn('[rename] Disambiguated collision:', JSON.stringify(oldIri), '->', JSON.stringify(newIri));
+            }
+            usedNewIris.add(newIri);
+            iriMap.set(oldIri, newIri);
+        });
+        console.log('[rename] Final IRI map (old -> new):', [...iriMap.entries()]);
+
+        // STEP 2: For each member, copy its triples to the new graph with rewritten IRIs
+        setModalStatus('rename_status',`Step 2/5 — Migrating ${members.length} member classes…`,'blue');
+        for (const oldIri of members) {
+            const newIri = iriMap.get(oldIri);
+            // Fetch this member's own triples (as subject) from wherever they live
+            const tq = `SELECT ?p ?o WHERE { ?s ?p ?o . FILTER(?s = <${oldIri}>) }`;
+            // Use a graph-agnostic SELECT, then construct explicit triples (avoids relying on BIND/IF in INSERT)
+            const tr = await fetch(getBaseUrl(),{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},body:new URLSearchParams({query:`SELECT ?p ?o ?oIsIri WHERE { <${oldIri}> ?p ?o BIND(isIRI(?o) AS ?oIsIri) }`})});
+            const td = await tr.json();
+            if (!td.results.bindings.length) continue;
+
+            const insertLines = [];
+            const deleteOldGraphs = new Set();
+            for (const b of td.results.bindings) {
+                const p = b.p.value;
+                let oVal, oIsIri = b.oIsIri && b.oIsIri.value === 'true';
+                if (oIsIri) {
+                    // Rewrite object IRI if it's a known member or the old asset
+                    oVal = iriMap.has(b.o.value) ? iriMap.get(b.o.value) : b.o.value;
+                    insertLines.push(`<${newIri}> <${p}> <${oVal}> .`);
+                } else {
+                    const lit = b.o.value.replace(/\\/g,'\\\\').replace(/"/g,'\\"').replace(/\n/g,'\\n');
+                    const lang = b.o['xml:lang'] ? '@'+b.o['xml:lang'] : '';
+                    const dtype = b.o.datatype ? `^^<${b.o.datatype}>` : '';
+                    insertLines.push(`<${newIri}> <${p}> "${lit}"${lang}${dtype} .`);
+                }
+            }
+            // Find which graph(s) this member currently lives in, to delete from there
+            const gq = `SELECT DISTINCT ?g WHERE { GRAPH ?g { <${oldIri}> ?p ?o } }`;
+            const gr = await fetch(getBaseUrl(),{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/sparql-results+json'},body:new URLSearchParams({query:gq})});
+            const gd = await gr.json();
+            const memberGraphs = gd.results.bindings.map(b => b.g.value);
+
+            // Delete old triples (from named graphs and default graph)
+            for (const mg of memberGraphs) {
+                await sparqlUpdate(`DELETE { GRAPH <${mg}> { <${oldIri}> ?p ?o } } WHERE { GRAPH <${mg}> { <${oldIri}> ?p ?o } }`);
+            }
+            await sparqlUpdate(`DELETE { <${oldIri}> ?p ?o } WHERE { <${oldIri}> ?p ?o }`);
+
+            // Also delete any inbound references to oldIri (e.g. rdfs:subClassOf from siblings
+            // not yet processed — those will be re-pointed when WE process them, but references
+            // from already-processed members need fixing too). We handle this by rewriting
+            // sibling subClassOf pointers in step 3 below instead of here.
+
+            // Insert rewritten triples into the new named graph
+            if (insertLines.length) {
+                await sparqlUpdate(`INSERT DATA { GRAPH <${nu}> { ${insertLines.join('\n')} } }`);
+            }
+        }
+
+        // STEP 3: Fix up any rdfs:subClassOf / other references between members that were
+        // processed before their parent/child was renamed (order-independent repair pass).
+        setModalStatus('rename_status','Step 3/5 — Repairing cross-member references…','blue');
+        for (const [oldIri, newIri] of iriMap.entries()) {
+            if (oldIri === assetUri) continue;
+            // Any triple in the new graph still pointing at the OLD member IRI as object → fix it
+            await sparqlUpdate(
+`DELETE { GRAPH <${nu}> { ?s ?p <${oldIri}> } }
+INSERT { GRAPH <${nu}> { ?s ?p <${newIri}> } }
+WHERE  { GRAPH <${nu}> { ?s ?p <${oldIri}> } }`);
+        }
+
+        // STEP 4: Rewrite the asset header itself (subject position)
+        setModalStatus('rename_status','Step 4/6 — Rewriting asset header…','blue');
+        await sparqlUpdate(`DELETE{<${assetUri}> ?p ?o}INSERT{<${nu}> ?p ?o}WHERE{<${assetUri}> ?p ?o}`);
+
+        // STEP 5: Update ALL cross-model references to the old URI —
+        // this is what preserves owl:imports, skos:inScheme, dct:isPartOf,
+        // and any other relationship another model has TO this taxonomy.
+        // Covers both default-graph and named-graph occurrences, repo-wide.
+        setModalStatus('rename_status','Step 5/6 — Updating cross-model references (imports, relationships)…','blue');
+        const refCountBefore = await countTriples(`SELECT (COUNT(*) as ?c) WHERE{?s ?p <${assetUri}>}`);
+        console.log('[rename] cross-model references to update:', refCountBefore);
+        await sparqlUpdate(`DELETE{?s ?p <${assetUri}>}INSERT{?s ?p <${nu}>}WHERE{?s ?p <${assetUri}>}`);
+        await sparqlUpdate(`DELETE{GRAPH ?g{?s ?p <${assetUri}>}}INSERT{GRAPH ?g{?s ?p <${nu}>}}WHERE{GRAPH ?g{?s ?p <${assetUri}>}}`);
+        const refCountAfter = await countTriples(`SELECT (COUNT(*) as ?c) WHERE{?s ?p <${assetUri}>}`);
+        console.log('[rename] remaining references to OLD uri after update:', refCountAfter, '(should be 0)');
+
+        // STEP 6: Move the asset's own named graph
+        setModalStatus('rename_status','Step 6/6 — Moving named graph…','blue');
+        await sparqlUpdate(`DELETE{GRAPH<${assetUri}>{?s ?p ?o}}INSERT{GRAPH<${nu}>{?s ?p ?o}}WHERE{GRAPH<${assetUri}>{?s ?p ?o}}`);
+
+        setModalStatus('rename_status',`\u2713 Done — renamed asset + ${members.length} member classes to ${nu}`,'green');
+        assetUri=nu;
+        _renameOccurred = true;
+        document.getElementById('display_uri').textContent=nu;
+        document.getElementById('assetUri').textContent=nu;
+        if(window.opener&&!window.opener.closed) try{window.opener.refreshSidebar();}catch(e){}
+        if (isEmbedded && window.parent && window.parent !== window) {
+            try { window.parent.postMessage({ type: 'ev-metadata-uri-renamed', newUri: nu }, '*'); } catch(e) {}
+        }
+        btn.textContent='✓ Done';
+        setTimeout(()=>{closeRenameModal();loadMetadata();},1800);
+    } catch(err) {
+        console.error('[rename] ERROR:', err);
+        setModalStatus('rename_status','Failed: '+err.message,'red');
+        btn.disabled=false; btn.textContent='⚡ Execute Rename';
+    }
+}
+
+// ── Set Named Graph — same proven pattern, plus a members-by-isDefinedBy scope ──
+function openSetGraphModal() {
+    document.getElementById('sg_asset_uri').textContent=assetUri;
+    document.getElementById('sg_graph_uri').value=assetUri.replace(/\/+$/, '');
+    document.getElementById('sg_status').style.display='none';
+    document.getElementById('sg_confirm_btn').style.display='none';
+    document.getElementById('setGraphModal').style.display='flex';
+    setTimeout(()=>document.getElementById('sg_graph_uri').focus(),50);
+}
+function closeSetGraphModal() { document.getElementById('setGraphModal').style.display='none'; }
+
+async function previewSetGraph() {
+    let gu=document.getElementById('sg_graph_uri').value.trim();
+    if (gu.endsWith('/')) { gu = gu.replace(/\/+$/, ''); document.getElementById('sg_graph_uri').value = gu; }
+    const scope=document.getElementById('sg_scope').value;
+    document.getElementById('sg_confirm_btn').style.display='none';
+    if (!gu) { setModalStatus('sg_status','Enter a named graph URI.','red'); return; }
+    setModalStatus('sg_status','Counting…','blue');
+    try {
+        let q;
+        if (scope==='subject') {
+            q = `SELECT (COUNT(*) as ?c) WHERE{<${assetUri}> ?p ?o . FILTER NOT EXISTS{GRAPH ?g{<${assetUri}> ?p ?o}}}`;
+        } else if (scope==='members') {
+            q = `PREFIX owl: <${OWL}> PREFIX rdfs: <${RDFS}>
+SELECT (COUNT(*) as ?c) WHERE {
+  ?s ?p ?o . FILTER NOT EXISTS{GRAPH ?g{?s ?p ?o}}
+  FILTER(?s = <${assetUri}> || EXISTS { ?s a owl:Class . ?s rdfs:isDefinedBy <${assetUri}> })
+}`;
+        } else {
+            q = `SELECT (COUNT(*) as ?c) WHERE{?s ?p ?o . FILTER NOT EXISTS{GRAPH ?g{?s ?p ?o}}}`;
+        }
+        const n=await countTriples(q);
+        if (n===0) {
+            const alreadyInGraph = assetGraphs.length > 0;
+            if (alreadyInGraph) {
+                setModalStatus('sg_status','✓ Asset is already in named graph: ' + assetGraphs[0] + ' — no action needed.', 'green');
+            } else {
+                setModalStatus('sg_status','⚠ No matching default-graph triples found.','amber');
+            }
+        } else {
+            setModalStatus('sg_status',`✓ ${n} triples will move into <${gu}>`,'green');
+            document.getElementById('sg_confirm_btn').style.display='inline-block';
+        }
+    } catch(err) { setModalStatus('sg_status','Failed: '+err.message,'red'); }
+}
+
+async function executeSetGraph() {
+    let gu=document.getElementById('sg_graph_uri').value.trim();
+    if (gu.endsWith('/')) gu = gu.replace(/\/+$/, '');
+    const scope=document.getElementById('sg_scope').value;
+    const btn=document.getElementById('sg_confirm_btn');
+    btn.disabled=true; btn.textContent='Moving…';
+    setModalStatus('sg_status','Moving triples…','blue');
+    try {
+        let u;
+        if (scope==='subject') {
+            u = `DELETE{<${assetUri}> ?p ?o}INSERT{GRAPH<${gu}>{<${assetUri}> ?p ?o}}WHERE{<${assetUri}> ?p ?o . FILTER NOT EXISTS{GRAPH ?g{<${assetUri}> ?p ?o}}}`;
+        } else if (scope==='members') {
+            u = `PREFIX owl: <${OWL}> PREFIX rdfs: <${RDFS}>
+DELETE { ?s ?p ?o }
+INSERT { GRAPH <${gu}> { ?s ?p ?o } }
+WHERE {
+  ?s ?p ?o . FILTER NOT EXISTS{GRAPH ?g{?s ?p ?o}}
+  FILTER(?s = <${assetUri}> || EXISTS { ?s a owl:Class . ?s rdfs:isDefinedBy <${assetUri}> })
+}`;
+        } else {
+            u = `DELETE{?s ?p ?o}INSERT{GRAPH<${gu}>{?s ?p ?o}}WHERE{?s ?p ?o . FILTER NOT EXISTS{GRAPH ?g{?s ?p ?o}}}`;
+        }
+        await sparqlUpdate(u);
+        const v=await countTriples(`SELECT (COUNT(*) as ?c) WHERE{GRAPH<${gu}>{<${assetUri}> ?p ?o}}`);
+        setModalStatus('sg_status',`✓ Done — ${v} header triples now in <${gu}>`,'green');
+        assetGraphs = [gu];
+        const gel=document.getElementById('display_graph');
+        gel.textContent=gu; gel.style.color='#34d399';
+        if(window.opener&&!window.opener.closed) try{window.opener.refreshSidebar();}catch(e){}
+        btn.textContent='✓ Done';
+        setTimeout(()=>{closeSetGraphModal();loadMetadata();},1500);
+    } catch(err) {
+        setModalStatus('sg_status','Failed: '+err.message,'red');
+        btn.disabled=false; btn.textContent='⚡ Move to Named Graph';
+    }
+}
+
+loadMetadata();
+</script>
+<style id="ke-adapter">
+html body{font-family:var(--ke-sans)!important}
+html body,html .bg-gray-900{background-color:var(--ke-bg)!important}
+html .bg-gray-950,html input.bg-gray-900,html select.bg-gray-900,html textarea.bg-gray-900{background-color:var(--ke-sunk)!important}
+html .bg-gray-850,html .bg-gray-800{background-color:var(--ke-surface)!important}
+html .bg-gray-700{background-color:var(--ke-band)!important;color:var(--ke-ink)!important}
+html .hover\:bg-gray-700:hover{background-color:var(--ke-band)!important}
+html .hover\:bg-gray-600:hover{background-color:var(--ke-line)!important}
+html .border-gray-700,html .border-gray-600{border-color:var(--ke-line)!important}
+html .text-gray-100,html .text-gray-200,html .hover\:text-gray-200:hover{color:var(--ke-ink)!important}
+html .text-gray-300{color:var(--ke-ink2)!important}
+html .text-gray-400,html .text-gray-500{color:var(--ke-muted)!important}
+html .text-gray-600{color:var(--ke-faint)!important}
+html .text-indigo-400,html .text-indigo-300,html .text-indigo-200{color:var(--ke-accent)!important}
+html .border-indigo-500{border-color:var(--ke-accent)!important}
+html .bg-indigo-900{background-color:var(--ke-accent-soft)!important}
+html .bg-indigo-900.text-white{color:var(--ke-ink)!important}
+html .bg-emerald-900{background-color:var(--ke-ok-soft)!important}
+html .text-emerald-400,html .text-emerald-300,html .text-emerald-200{color:var(--ke-ok)!important}
+html .bg-rose-900{background-color:var(--ke-bad-soft)!important}
+html .text-rose-200{color:var(--ke-bad)!important}
+html .focus\:border-indigo-500:focus,html .focus\:border-emerald-500:focus{border-color:var(--ke-accent)!important}
+html .bg-indigo-600{background-color:var(--ke-accent)!important}
+html .bg-indigo-600.text-white{color:var(--ke-accent-ink)!important}
+html .hover\:bg-indigo-500:hover{filter:brightness(1.08)}
+html input,html select,html textarea{color:var(--ke-ink)}
+/* inline dark surfaces */
+html [style*="background:#1e2030"],html [style*="background:#1a1d2e"]{background:var(--ke-surface)!important}
+html [style*="background:#0f1117"],html [style*="background:#111827"],html [style*="background:#1f2937"]{background:var(--ke-sunk)!important}
+html [style*="background:#1e2035"]{background:var(--ke-band)!important}
+html [style*="color:#e2e8f0"]{color:var(--ke-ink)!important}
+html [style*="color:#a5b4fc"],html [style*="color:#818cf8"],html [style*="color:#6366f1"]{color:var(--ke-accent)!important}
+html [style*="color:#9ca3af"],html [style*="color:#6b7280"]{color:var(--ke-muted)!important}
+html [style*="border:1px solid #374151"],html [style*="border:1px solid #2d3148"]{border-color:var(--ke-line)!important}
+html [style*="background:#374151"]{background:var(--ke-band)!important;color:var(--ke-ink)!important}
+html #sidebar-resizer{background:var(--ke-line)!important}
+html #sidebar-resizer:hover{background:var(--ke-accent)!important}
+html #network{background:var(--ke-sunk)!important}
+html .vis-tooltip{background:var(--ke-surface)!important;color:var(--ke-ink)!important;border-color:var(--ke-line)!important}
+html div.vis-network div.vis-navigation div.vis-button{filter:var(--ke-nav-filter,none)}
+html[data-theme="dark"]{--ke-nav-filter:invert(.85)}
+</style>
+</body>
+</html>

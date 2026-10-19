@@ -1,0 +1,61 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+env:
+  cache-path: build/lib
+  artifacts-path: build/artifacts
+  release-build-content-type: application/owl
+  cache-key: build-cache-dependencies
+
+jobs:
+  ontology_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out the repository so the job can access it.
+      - uses: actions/checkout@v4
+
+      - name: Restore cached dependencies
+        id: restore-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ env.cache-path }}
+          # TODO: this should eventually use a dependency file hash
+          # so the cache is invalidated when dependencies change.
+          key: ${{ runner.os }}-${{ env.cache-key }}
+
+      - name: List directory contents
+        run: ls -la /home/runner/work/BFO-2020
+
+      - name: Build and test ontology release
+        run: make all
+
+      - name: Capture build information
+        id: build_release
+        run: |
+          echo "RELEASE_FILE_PATH=$(make output-release-filepath)" >> $GITHUB_OUTPUT
+          echo "RELEASE_NAME=$(make output-release-name)" >> $GITHUB_OUTPUT
+
+      # Save artifact files produced even if tests fail.
+      - name: Save artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ontology_release_results
+          path: ${{ env.artifacts-path }}
+          if-no-files-found: warn
+
+      # Save cache even if tests fail and only if a cache wasn't restored.
+      - name: Save dependencies to cache
+        id: save-cache
+        uses: actions/cache/save@v4
+        if: always() && steps.restore-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ env.cache-path }}
+          key: ${{ runner.os }}-${{ env.cache-key }}

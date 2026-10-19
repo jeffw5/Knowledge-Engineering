@@ -139,8 +139,6 @@
       <label class="f" for="relSrc">Relations list comes from</label>
       <select id="relSrc"><option value="">BFO and RO relations (obo:BFO_ / obo:RO_)</option></select>
       <label class="ck"><input type="checkbox" id="addImports" checked> When a term from another model is related, add <code>owl:imports</code> for that model</label>
-      <label class="f" for="bfoUrl">BFO source (used by “Load BFO”)</label>
-      <input id="bfoUrl" type="text">
       <label class="f">Writes go to named graph</label>
       <div><code id="graphOut">—</code></div>
       <div style="margin-top:10px;text-align:right"><button class="btn sm" id="btnReload">Reload</button></div>
@@ -209,7 +207,6 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const SUBCLASS = NS.rdfs + 'subClassOf';
-  const DEFAULT_BFO = 'https://raw.githubusercontent.com/BFO-ontology/BFO-2020/master/src/owl/profiles/temporal%20extensions/temporalized%20relations/owl/bfo-temporalized-relations.owl';
 
   // ---------------------------------------------------------------- state
   let assets = [];                 // {iri,type,kind,label}
@@ -311,18 +308,8 @@
 
   function renderBanner() {
     if (relations.length || $('relSrc').value) { $('bfoBanner').innerHTML = relations.length ? '' : '<div class="banner">The selected relation source has no object properties.</div>'; return; }
-    $('bfoBanner').innerHTML = `<div class="banner">No BFO or RO relations found in <b>${esc(S.repo())}</b>. Only “is a” is available until BFO is loaded.<br>
-      <button class="btn sm" id="btnLoadBfo">Load BFO 2020 into GraphDB</button></div>`;
-    $('btnLoadBfo').onclick = loadBfo;
-  }
-  async function loadBfo() {
-    const url = $('bfoUrl').value.trim() || DEFAULT_BFO;
-    if (!confirm('GraphDB will download BFO from:\n' + url + '\n\nand load it into the named graph <http://purl.obolibrary.org/obo/bfo.owl>. Continue?')) return;
-    toast('Loading BFO…');
-    try {
-      await S.update(`LOAD ${S.iri(url)} INTO GRAPH <http://purl.obolibrary.org/obo/bfo.owl>`);
-      toast('BFO loaded'); await loadAssets();
-    } catch (e) { toast('GraphDB could not load BFO (it needs internet access): ' + e.message, true); }
+    $('bfoBanner').innerHTML = `<div class="banner">No BFO or RO relations found in <b>${esc(S.repo())}</b>. Only “is a” is available until they are loaded.<br>
+      Load BFO and the RO Core relations on the <a href="ingestion.html" target="_blank">Ingestion</a> page, under <b>Reference ontologies</b>, then ⚙ › Reload here.</div>`;
   }
 
   async function openOntology(o, g) {
@@ -946,7 +933,6 @@
   $('btnSave').onclick = save;
   $('addImports').addEventListener('change', () => { S.lsSet('ke-onto-add-imports', $('addImports').checked ? '1' : '0'); renderChanges(); });
   $('relSrc').addEventListener('change', async () => { S.lsSet('ke-rel-src', $('relSrc').value); await loadRelations(); renderAll(); });
-  $('bfoUrl').addEventListener('change', () => S.lsSet('ke-bfo-url', $('bfoUrl').value.trim()));
   $('btnCfg').addEventListener('click', ev => { ev.stopPropagation(); $('pop').classList.toggle('open'); });
   document.addEventListener('click', ev => { if (!ev.target.closest('.cfg')) $('pop').classList.remove('open'); });
   $('repoId').addEventListener('change', () => { S.lsSet('ke-repo', $('repoId').value.trim()); location.reload(); });
@@ -966,7 +952,6 @@
 
   const rp = S.param('repo') || S.lsGet('ke-repo'); if (rp) $('repoId').value = rp;
   $('addImports').checked = S.lsGet('ke-onto-add-imports') !== '0';
-  $('bfoUrl').value = S.lsGet('ke-bfo-url') || DEFAULT_BFO;
   applyView();
   loadAssets();
 })();

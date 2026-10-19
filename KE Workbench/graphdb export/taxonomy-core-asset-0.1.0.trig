@@ -1,0 +1,787 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-asset/> {
+  <https://www.insperity.com/taxonomy/core-asset/> a skos:ConceptScheme;
+    rdfs:label "Core asset taxonomy"@en;
+    skos:prefLabel "Core asset taxonomy"@en;
+    skos:hasTopConcept assettax:financial-asset, assettax:information-asset, assettax:intangible-asset,
+      assettax:physical-asset, assettax:software-asset;
+    terms:description "Classification of the things of value that process steps consume, produce, use, or maintain, from buildings and equipment to documents, records, datasets, and software."@en;
+    terms:title "Core asset taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Asset taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-asset/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:financial-asset a skos:Concept;
+    skos:prefLabel "Financial asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An asset that is a monetary claim or contractual right to receive cash or another financial asset."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:example "Cash; accounts receivable."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:narrower assettax:cash-and-cash-equivalent, assettax:investment, assettax:prepaid-amount,
+      assettax:receivable .
+  
+  assettax:information-asset a skos:Concept;
+    skos:prefLabel "Information asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An asset that consists of information that can be copied across physical or digital carriers without losing its identity."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:altLabel "Information artifact"@en, "Information entity"@en;
+    skos:example "A pay statement; a timesheet; a policy document."@en;
+    skos:scopeNote "Aligned to the BFO generically dependent continuant category and the Information Artifact Ontology. Software is classified separately as a software asset."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:narrower assettax:document, assettax:record, assettax:dataset, assettax:identifier,
+      assettax:knowledge-artifact .
+  
+  assettax:intangible-asset a skos:Concept;
+    skos:prefLabel "Intangible asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An asset that has no physical substance but provides future value through rights, knowledge, or reputation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:altLabel "Non-physical asset"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:narrower assettax:brand, assettax:intellectual-property, assettax:license-right,
+      assettax:relationship-asset .
+  
+  assettax:physical-asset a skos:Concept;
+    skos:prefLabel "Physical asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An asset that has material existence and can be located, handled, or occupied."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:altLabel "Material asset"@en, "Tangible asset"@en;
+    skos:example "A worksite building; a laptop."@en;
+    skos:scopeNote "Aligned to the BFO material entity category."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:physical-asset;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:narrower assettax:equipment, assettax:facility, assettax:inventory, assettax:vehicle .
+  
+  assettax:software-asset a skos:Concept;
+    skos:prefLabel "Software asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An asset that is a set of executable instructions or a trained model that performs computation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:altLabel "Software"@en, "Digital system"@en;
+    skos:scopeNote "The deployed software is an asset; an artificial intelligence agent acting in a process is classified as an automated agent in the party taxonomy."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:narrower assettax:application, assettax:application-programming-interface, assettax:data-store,
+      assettax:machine-learning-model, assettax:software-component .
+  
+  assettax:agreement-document a skos:Concept;
+    skos:prefLabel "Agreement document"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A document that records the terms agreed between two or more parties."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:document;
+    skos:altLabel "Contract document"@en, "Contract"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:document a skos:Concept;
+    skos:prefLabel "Document"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information asset that is a bounded, human-readable unit of content with a title and author."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:information-asset;
+    skos:example "Plan document; enrollment guide."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:document;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower assettax:agreement-document, assettax:form, assettax:knowledge-article,
+      assettax:notice, assettax:policy-document, assettax:report .
+  
+  assettax:application a skos:Concept;
+    skos:prefLabel "Application"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A software asset that provides functions to users through an interface."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:software-asset;
+    skos:altLabel "Software application"@en, "System of record"@en;
+    skos:example "Payroll application; client portal."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:application;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:application-programming-interface a skos:Concept;
+    skos:prefLabel "Application programming interface"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A software asset that is a defined contract through which software components call one another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:software-asset;
+    skos:altLabel "Interface"@en, "API"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:audit-record a skos:Concept;
+    skos:prefLabel "Audit record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A record that documents who performed an action, when, and with what result, for later review."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:record;
+    skos:altLabel "Audit log entry"@en, "Audit trail entry"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:record a skos:Concept;
+    skos:prefLabel "Record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information asset that is evidence of an activity, transaction, or state, kept for reference or compliance."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:information-asset;
+    skos:altLabel "Business record"@en;
+    skos:scopeNote "Records are subject to retention policies."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower assettax:audit-record, assettax:change-record, assettax:party-record,
+      assettax:transaction-record .
+  
+  assettax:brand a skos:Concept;
+    skos:prefLabel "Brand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An intangible asset that is the name, identity, and reputation by which an organization or offering is recognized."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:intangible-asset;
+    skos:altLabel "Trademark identity"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:brand;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:cash-and-cash-equivalent a skos:Concept;
+    skos:prefLabel "Cash and cash equivalent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A financial asset that is currency or a highly liquid investment readily convertible to a known amount of cash."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:financial-asset;
+    skos:altLabel "Cash"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:change-record a skos:Concept;
+    skos:prefLabel "Change record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A record that documents an approved change to a knowledge artifact, its reason, and its approver."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:record;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:communication-equipment a skos:Concept;
+    skos:prefLabel "Communication equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An equipment that transmits or receives voice or data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:equipment;
+    skos:example "Telephone handset; network router."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:equipment a skos:Concept;
+    skos:prefLabel "Equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A physical asset that is a durable device or apparatus used to perform work."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:physical-asset;
+    skos:altLabel "Tool"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainsecurityvoc:equipment;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower assettax:communication-equipment, assettax:computing-equipment, assettax:operational-equipment .
+  
+  assettax:computing-equipment a skos:Concept;
+    skos:prefLabel "Computing equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An equipment that processes, stores, or displays digital information."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:equipment;
+    skos:altLabel "Hardware"@en, "Computing device"@en;
+    skos:example "Laptop; server; tablet."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:hardware;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:data-store a skos:Concept;
+    skos:prefLabel "Data store"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A software asset that persists and serves data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:software-asset;
+    skos:altLabel "Database"@en, "Repository"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower assettax:document-store, assettax:graph-store, assettax:relational-database,
+      assettax:vector-store .
+  
+  assettax:document-store a skos:Concept;
+    skos:prefLabel "Document store"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data store that stores semi-structured documents."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:data-store;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:graph-store a skos:Concept;
+    skos:prefLabel "Graph store"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data store that stores and queries data as a graph of nodes and edges."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:data-store;
+    skos:altLabel "Knowledge graph store"@en, "Triple store"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:relational-database a skos:Concept;
+    skos:prefLabel "Relational database"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data store that stores data in tables related by keys and queried with a structured query language."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:data-store;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:vector-store a skos:Concept;
+    skos:prefLabel "Vector store"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data store that stores embeddings and supports similarity search."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:data-store;
+    skos:altLabel "Vector database"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:dataset a skos:Concept;
+    skos:prefLabel "Dataset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information asset that is a collection of related data published or curated as a unit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:information-asset;
+    skos:altLabel "Data asset"@en, "Data set"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:form a skos:Concept;
+    skos:prefLabel "Form"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A document that has structured fields for collecting information from a person or system."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:document;
+    skos:example "Enrollment form; tax withholding form."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:knowledge-article a skos:Concept;
+    skos:prefLabel "Knowledge article"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A document that answers a specific question or explains a topic for reuse in support and self-service."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:document;
+    skos:altLabel "FAQ"@en, "Frequently asked question"@en, "Help article"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:notice a skos:Concept;
+    skos:prefLabel "Notice"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A document that formally informs a party of a fact, right, obligation, or change."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:document;
+    skos:altLabel "Notification letter"@en;
+    skos:example "Benefits continuation notice."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:policy-document a skos:Concept;
+    skos:prefLabel "Policy document"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A document that states a policy, standard, or procedure in human-readable form."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:document;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:report a skos:Concept;
+    skos:prefLabel "Report"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A document that presents organized facts, analysis, or measures for a stated purpose and period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:document;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:report;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:operational-equipment a skos:Concept;
+    skos:prefLabel "Operational equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An equipment that is used directly in producing goods or delivering physical services."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:equipment;
+    skos:altLabel "Machinery"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:facility a skos:Concept;
+    skos:prefLabel "Facility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A physical asset that is a building, room, or fixed installation used to house people, equipment, or operations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:physical-asset;
+    skos:altLabel "Building"@en, "Premises"@en;
+    skos:example "Headquarters building; regional service center."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:investment a skos:Concept;
+    skos:prefLabel "Investment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A financial asset that is held to generate income or appreciation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:financial-asset;
+    skos:altLabel "Investment holding"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:investment;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:prepaid-amount a skos:Concept;
+    skos:prefLabel "Prepaid amount"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A financial asset that is a payment made in advance for goods or services not yet received."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:financial-asset;
+    skos:altLabel "Prepaid expense"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:receivable a skos:Concept;
+    skos:prefLabel "Receivable"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A financial asset that is an amount owed to the organization by another party."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:financial-asset;
+    skos:altLabel "Accounts receivable"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainfinancevoc:accounts-receivable;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:identifier a skos:Concept;
+    skos:prefLabel "Identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information asset that is a symbol or code assigned to uniquely designate an entity within a context."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:information-asset;
+    skos:example "Employee number; client number."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:knowledge-artifact a skos:Concept;
+    skos:prefLabel "Knowledge artifact"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An information asset that encodes governed meaning, structure, or logic for use by people, applications, and artificial intelligence agents."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:information-asset;
+    skos:altLabel "Knowledge asset"@en, "Semantic asset"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower assettax:mapping-specification, assettax:ontology, assettax:prompt-template,
+      assettax:rule-specification, assettax:taxonomy, assettax:validation-shape, assettax:vocabulary .
+  
+  assettax:intellectual-property a skos:Concept;
+    skos:prefLabel "Intellectual property"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An intangible asset that is a legally protected creation of the mind."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:intangible-asset;
+    skos:example "Trademark; patent; copyright."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:intellectual-property;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:license-right a skos:Concept;
+    skos:prefLabel "License right"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An intangible asset that is a granted permission to use property owned by another party under stated terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:intangible-asset;
+    skos:altLabel "License"@en, "Software license"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:relationship-asset a skos:Concept;
+    skos:prefLabel "Relationship asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An intangible asset that is the established, valuable connection between the organization and a group of parties."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:intangible-asset;
+    skos:altLabel "Customer relationships"@en, "Client relationships"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:customer-relationships;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:inventory a skos:Concept;
+    skos:prefLabel "Inventory"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A physical asset that is a stock of materials or goods held for use, sale, or distribution."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:physical-asset;
+    skos:altLabel "Stock"@en, "Supplies"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:mapping-specification a skos:Concept;
+    skos:prefLabel "Mapping specification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that defines how elements of a source schema or vocabulary correspond to ontology terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    skos:altLabel "Crosswalk"@en, "Mapping"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:ontology a skos:Concept;
+    skos:prefLabel "Ontology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that formally defines classes, relations, and axioms for a domain using a logic-based language."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    skos:example "Core ontology; payroll ontology."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:prompt-template a skos:Concept;
+    skos:prefLabel "Prompt template"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that defines the versioned instructions, tone, and answer format given to a language model for a persona or task."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:rule-specification a skos:Concept;
+    skos:prefLabel "Rule specification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that declaratively defines a business rule, constraint, logic component, or calculation in the single source of truth."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:taxonomy a skos:Concept;
+    skos:prefLabel "Taxonomy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that arranges concepts into a classification hierarchy."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    skos:altLabel "Classification scheme"@en, "Concept scheme"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:validation-shape a skos:Concept;
+    skos:prefLabel "Validation shape"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that defines the constraints data must satisfy, expressed in a shapes language."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    skos:altLabel "SHACL shape"@en, "Shape"@en, "Shapes Constraint Language shape"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:vocabulary a skos:Concept;
+    skos:prefLabel "Vocabulary"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge artifact that defines the preferred, alternate, and hidden labels and definitions of a set of terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:knowledge-artifact;
+    skos:altLabel "Controlled vocabulary"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:machine-learning-model a skos:Concept;
+    skos:prefLabel "Machine learning model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A software asset that is a trained statistical model producing predictions or generated content from inputs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:software-asset;
+    skos:altLabel "Model"@en, "LLM"@en, "Language model"@en, "Large language model"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:model;
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:party-record a skos:Concept;
+    skos:prefLabel "Party record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A record that holds identifying and descriptive information about a party."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:record;
+    skos:altLabel "Client record"@en, "Master record"@en, "Personnel record"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:vehicle a skos:Concept;
+    skos:prefLabel "Vehicle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A physical asset that is a means of transporting people or goods."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:physical-asset;
+    skos:altLabel "Fleet asset"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:transaction-record a skos:Concept;
+    skos:prefLabel "Transaction record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A record that captures the details of a single business transaction."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:record;
+    skos:example "Payment record; payroll register entry."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  assettax:software-component a skos:Concept;
+    skos:prefLabel "Software component"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A software asset that is a deployable unit of code providing a defined function to other software."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-asset/>;
+    skos:broader assettax:software-asset;
+    skos:altLabel "Library"@en, "Microservice"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

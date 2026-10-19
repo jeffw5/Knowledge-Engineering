@@ -1,0 +1,923 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-product/> {
+  <https://www.insperity.com/vocabulary/core-product/> a skos:ConceptScheme;
+    rdfs:label "Core product vocabulary"@en;
+    skos:prefLabel "Core product vocabulary"@en;
+    skos:hasTopConcept productvoc:product;
+    terms:description "A good, service, or idea offered to the market to satisfy a customer need or want."@en;
+    terms:title "Core product vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T16:58:08.023Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Product"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-product/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:product a skos:Concept;
+    skos:prefLabel "Product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:21:56.471Z"^^xsd:dateTime;
+    skos:definition "A good, service, or idea offered to the market to satisfy a customer need or want."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-product/>;
+    skos:narrower productvoc:physical-product, productvoc:product-business-drivers, productvoc:product-concept,
+      productvoc:product-function, productvoc:product-lifecycle .
+  
+  productvoc:physical-product a skos:Concept;
+    skos:prefLabel "Physical product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A tangible, material object offered for sale."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:component-parts, productvoc:individual-product, productvoc:product-collection .
+  
+  productvoc:product-business-drivers a skos:Concept;
+    skos:prefLabel "Product business drivers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Factors that influence the success of a product, such as market demand, competition, and technology."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:cost, productvoc:marketing-strategy, productvoc:pricing-strategy,
+      productvoc:product-innovation, productvoc:revenue-stream, productvoc:sales-strategy .
+  
+  productvoc:product-concept a skos:Concept;
+    skos:prefLabel "Product concept"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A detailed idea for a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:user-journey, productvoc:user-persona, productvoc:user-story .
+  
+  productvoc:product-function a skos:Concept;
+    skos:prefLabel "Product function"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "What a product does and how it works."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:data-flow, productvoc:product-features, productvoc:roadmap,
+      productvoc:system-architecture .
+  
+  productvoc:product-lifecycle a skos:Concept;
+    skos:prefLabel "Product lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The stages a product goes through from conception to decline in the market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:decline, productvoc:development, productvoc:growth, productvoc:introduction,
+      productvoc:maturity .
+  
+  productvoc:component-parts a skos:Concept;
+    skos:prefLabel "Component parts"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The individual elements that make up a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:physical-product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:individual-product a skos:Concept;
+    skos:prefLabel "Individual product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A single, distinct product item."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:physical-product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:functional-product, productvoc:supplied-product, productvoc:technical-product .
+  
+  productvoc:product-collection a skos:Concept;
+    skos:prefLabel "Product collection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A group of related products offered by a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:physical-product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:product-catalog .
+  
+  productvoc:functional-product a skos:Concept;
+    skos:prefLabel "Functional product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A product that performs a specific task or function."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:individual-product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:supplied-product a skos:Concept;
+    skos:prefLabel "Supplied product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A product that is provided as part of a larger service or offering."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:individual-product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:technical-product a skos:Concept;
+    skos:prefLabel "Technical product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A product that is complex or technologically advanced."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:individual-product;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:product-catalog a skos:Concept;
+    skos:prefLabel "Product catalog"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A comprehensive listing of a company’s products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-collection;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:accessories, productvoc:business-equipment, productvoc:connected-devices,
+      productvoc:customer-premises-equipment, productvoc:smartphone .
+  
+  productvoc:accessories a skos:Concept;
+    skos:prefLabel "Accessories"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Products that complement or enhance the use of a primary product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-catalog;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:audio-products, productvoc:chargers-and-cables, productvoc:gaming-products,
+      productvoc:phone-attachments, productvoc:phone-cases, productvoc:screen-protectors,
+      productvoc:smart-home-products, productvoc:tablet-accessories .
+  
+  productvoc:business-equipment a skos:Concept;
+    skos:prefLabel "Business equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Equipment used in a business setting, such as computers, printers, and phones."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-catalog;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:network-infrastructure, productvoc:office-equipment, productvoc:platform-infrastructure .
+  
+  productvoc:connected-devices a skos:Concept;
+    skos:prefLabel "Connected devices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices that can connect to the internet or other devices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-catalog;
+    skos:altLabel "Internet of Things Devices"@en, "IOT Devices"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:connected-home-devices, productvoc:hum, productvoc:laptop,
+      productvoc:mobile-hotspot-devices, productvoc:security-cameras, productvoc:smartwatch,
+      productvoc:tablet .
+  
+  productvoc:customer-premises-equipment a skos:Concept;
+    skos:prefLabel "Customer premises equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Equipment installed at a customer’s location to connect to a telecommunications network."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-catalog;
+    skos:altLabel "CPE"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:routers, productvoc:set-top-boxes, productvoc:universal-serial-bus-modems .
+  
+  productvoc:smartphone a skos:Concept;
+    skos:prefLabel "Smartphone"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A mobile phone with advanced computing capabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-catalog;
+    skos:altLabel "Cell Phone"@en, "Mobile Phone"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:audio-products a skos:Concept;
+    skos:prefLabel "Audio products"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Products related to sound, such as headphones, speakers, and microphones."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:chargers-and-cables a skos:Concept;
+    skos:prefLabel "Chargers & cables"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices and accessories used to power and connect electronic devices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:gaming-products a skos:Concept;
+    skos:prefLabel "Gaming products"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Products related to video games, such as consoles, controllers, and games."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:phone-attachments a skos:Concept;
+    skos:prefLabel "Phone attachments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Accessories that attach to a phone, such as lenses, grips, and stands."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    skos:altLabel "Mobile Phone Attachments"@en, "Smartphone Attachments"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:phone-cases a skos:Concept;
+    skos:prefLabel "Phone cases"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Protective coverings for smartphones."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    skos:altLabel "Mobile Phone Cases"@en, "Smartphone Cases"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:screen-protectors a skos:Concept;
+    skos:prefLabel "Screen protectors"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Thin films that protect screens from scratches and damage."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:smart-home-products a skos:Concept;
+    skos:prefLabel "Smart home products"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices that connect to a home network and can be controlled remotely."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:tablet-accessories a skos:Concept;
+    skos:prefLabel "Tablet accessories"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Items designed to enhance or complement the functionality and usability of a tablet device, such as cases, screen protectors, styluses, keyboards, and chargers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:accessories;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:network-infrastructure a skos:Concept;
+    skos:prefLabel "Network infrastructure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The hardware and software components that support a computer network."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:business-equipment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:office-equipment a skos:Concept;
+    skos:prefLabel "Office equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Equipment typically found in an office, such as desks, chairs, and filing cabinets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:business-equipment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:platform-infrastructure a skos:Concept;
+    skos:prefLabel "Platform infrastructure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The underlying hardware and software that support a computing platform."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:business-equipment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:connected-home-devices a skos:Concept;
+    skos:prefLabel "Connected home devices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Smart home products that can be controlled remotely."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:hum a skos:Concept;
+    skos:prefLabel "Hum"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Verizon’s network-connected device for monitoring and diagnosing car problems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:laptop a skos:Concept;
+    skos:prefLabel "Laptop"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A portable personal computer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:mobile-hotspot-devices a skos:Concept;
+    skos:prefLabel "Mobile hotspot devices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices that create a portable Wi-Fi network."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:security-cameras a skos:Concept;
+    skos:prefLabel "Security cameras"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices that capture and record video footage for security purposes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:smartwatch a skos:Concept;
+    skos:prefLabel "Smartwatch"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A wearable computer in the form of a wristwatch."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:tablet a skos:Concept;
+    skos:prefLabel "Tablet"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-03T18:36:00.510Z"^^xsd:dateTime;
+    skos:definition "A portable, mobile computing device typically featuring a touchscreen display, a mobile operating system, and a rechargeable battery, all housed in a thin, flat package"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:connected-devices;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:routers a skos:Concept;
+    skos:prefLabel "Routers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Networking devices that forward data packets between computer networks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:customer-premises-equipment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:set-top-boxes a skos:Concept;
+    skos:prefLabel "Set-Top boxes"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices that decode and display digital television signals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:customer-premises-equipment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:universal-serial-bus-modems a skos:Concept;
+    skos:prefLabel "Universal serial bus modems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Devices that provide internet access via a USB port."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:customer-premises-equipment;
+    skos:altLabel "Modems"@en, "USB modems"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:cost a skos:Concept;
+    skos:prefLabel "Cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The expenses incurred in producing, marketing, and selling a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-business-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:marketing-strategy a skos:Concept;
+    skos:prefLabel "Marketing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A plan for promoting and selling a product to its target market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-business-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:pricing-strategy a skos:Concept;
+    skos:prefLabel "Pricing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A plan for setting prices for a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-business-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:competitive-pricing-analysis, productvoc:discounts-and-promotions,
+      productvoc:pricing-models-and-structures .
+  
+  productvoc:product-innovation a skos:Concept;
+    skos:prefLabel "Product innovation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The development of new and improved products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-business-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:revenue-stream a skos:Concept;
+    skos:prefLabel "Revenue stream"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A source of income generated by a business."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-business-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:sales-strategy a skos:Concept;
+    skos:prefLabel "Sales strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A plan for selling a product or service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-business-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:competitive-pricing-analysis a skos:Concept;
+    skos:prefLabel "Competitive pricing analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Researching and analyzing the pricing of competitors’ products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:pricing-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:discounts-and-promotions a skos:Concept;
+    skos:prefLabel "Discounts & promotions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Temporary reductions in price or other incentives to encourage sales."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:pricing-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:pricing-models-and-structures a skos:Concept;
+    skos:prefLabel "Pricing models & structures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Different approaches to setting prices, such as cost-plus pricing, value-based pricing, and subscription pricing."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:pricing-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:user-journey a skos:Concept;
+    skos:prefLabel "User journey"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The steps a user takes to achieve a goal when interacting with a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-concept;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:user-persona a skos:Concept;
+    skos:prefLabel "User persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A fictional representation of a typical user of a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-concept;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:user-story a skos:Concept;
+    skos:prefLabel "User story"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A short, simple description of a feature or functionality from a user’s perspective."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-concept;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:data-flow a skos:Concept;
+    skos:prefLabel "Data flow"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The movement of data through a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-function;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:product-features a skos:Concept;
+    skos:prefLabel "Product features"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The specific characteristics and capabilities of a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-function;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:product-compatibility, productvoc:product-reviews-and-ratings,
+      productvoc:product-warranty-and-support .
+  
+  productvoc:roadmap a skos:Concept;
+    skos:prefLabel "Roadmap"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A plan that outlines the future development of a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-function;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:system-architecture a skos:Concept;
+    skos:prefLabel "System architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The high-level structure and design of a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-function;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:product-compatibility a skos:Concept;
+    skos:prefLabel "Product compatibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The ability of a product to work with other products or systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-features;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:product-reviews-and-ratings a skos:Concept;
+    skos:prefLabel "Product reviews & ratings"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Feedback and evaluations from customers who have used a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-features;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:product-warranty-and-support a skos:Concept;
+    skos:prefLabel "Product warranty & support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Guarantees and assistance provided to customers after purchasing a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-features;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:decline a skos:Concept;
+    skos:prefLabel "Decline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The final stage of the product lifecycle, characterized by decreasing sales and eventual withdrawal from the market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:development a skos:Concept;
+    skos:prefLabel "Development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The process of creating and bringing a product to market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower productvoc:conceptualization, productvoc:design, productvoc:iterative-development,
+      productvoc:prototyping, productvoc:testing .
+  
+  productvoc:growth a skos:Concept;
+    skos:prefLabel "Growth"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The stage in the product lifecycle where sales increase rapidly and the product gains market acceptance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:introduction a skos:Concept;
+    skos:prefLabel "Introduction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The stage where a product is first launched into the market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:maturity a skos:Concept;
+    skos:prefLabel "Maturity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The stage where product sales growth stabilizes and competition intensifies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:product-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:conceptualization a skos:Concept;
+    skos:prefLabel "Conceptualization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The initial stage of product development, where the idea for a product is generated and refined."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:development;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:design a skos:Concept;
+    skos:prefLabel "Design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "The process of creating the form, function, and aesthetics of a product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:development;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:iterative-development a skos:Concept;
+    skos:prefLabel "Iterative development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "A cyclical development process where a product is built incrementally, with each cycle incorporating feedback and improvements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:development;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:prototyping a skos:Concept;
+    skos:prefLabel "Prototyping"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Creating a preliminary version of a product to test and refine its design and functionality."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:development;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  productvoc:testing a skos:Concept;
+    skos:prefLabel "Testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:48:06.981Z"^^xsd:dateTime;
+    skos:definition "Evaluating a product’s performance, functionality, and usability to identify and address any issues."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-product/>;
+    skos:broader productvoc:development;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

@@ -1,21 +1,29 @@
 /* KE Workbench — Standards Conformance rules.
-   Each rule encodes a Part III / Appendix E standard from Semantic Governance v1.8.
+   Each rule encodes a Part III / Appendix E standard from Semantic Governance v1.9 (§3.11 metadata included).
    runChecks(quads, { bases }) → { rules:[{...rule, checked, failed}], findings:[...], stats }
    quads: [{ s, p, o, g }] with terms { t:'iri'|'bnode'|'lit', v, lang?, dt? } */
 (function (root) {
   var RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', RDFS = 'http://www.w3.org/2000/01/rdf-schema#',
       OWL = 'http://www.w3.org/2002/07/owl#', SKOS = 'http://www.w3.org/2004/02/skos/core#',
-      SH = 'http://www.w3.org/ns/shacl#';
+      SH = 'http://www.w3.org/ns/shacl#', DCT = 'http://purl.org/dc/terms/', XSD = 'http://www.w3.org/2001/XMLSchema#',
+      CORE = 'https://www.insperity.com/ontology/core/';
   var P = {
     type: RDF + 'type', label: RDFS + 'label', pref: SKOS + 'prefLabel', alt: SKOS + 'altLabel',
     def: SKOS + 'definition', sub: RDFS + 'subClassOf', isDef: RDFS + 'isDefinedBy', dom: RDFS + 'domain',
     rng: RDFS + 'range', inScheme: SKOS + 'inScheme', topOf: SKOS + 'topConceptOf', hasTop: SKOS + 'hasTopConcept',
     ver: OWL + 'versionInfo', verIri: OWL + 'versionIRI', eq: OWL + 'equivalentClass', dju: OWL + 'disjointUnionOf',
-    broader: SKOS + 'broader', narrower: SKOS + 'narrower', related: SKOS + 'related', subject: 'http://purl.org/dc/elements/1.1/subject',
-    desc: 'http://purl.org/dc/terms/description', title: 'http://purl.org/dc/terms/title', comment: RDFS + 'comment'
+    broader: SKOS + 'broader', narrower: SKOS + 'narrower', related: SKOS + 'related',
+    // links to the vocabulary term (§3.11): core:hasPrimaryTerm + dcterms:subject; dc:subject (Dublin Core 1.1) is the legacy form
+    primary: CORE + 'hasPrimaryTerm', subject: DCT + 'subject', dcSubject: 'http://purl.org/dc/elements/1.1/subject', formalizedBy: CORE + 'formalizedBy',
+    desc: DCT + 'description', title: DCT + 'title', comment: RDFS + 'comment',
+    // §3.11 asset header fields
+    vaemNs: 'http://www.linkedmodel.org/schema/vaem#namespace', nsPrefix: 'http://purl.org/vocab/vann/preferredNamespacePrefix',
+    language: DCT + 'language', creator: DCT + 'creator', publisher: DCT + 'publisher', conformsTo: DCT + 'conformsTo',
+    source: DCT + 'source', created: DCT + 'created', modified: DCT + 'modified', issued: DCT + 'issued'
   };
+  var SUBJECT_PREDS = [P.primary, P.subject, P.dcSubject];
   // Predicates whose IRI objects must point at a term that exists (broken-reference rule)
-  var REF_PREDICATES = ['broader', 'narrower', 'related', 'subject', 'sub', 'dom', 'rng', 'inScheme', 'topOf', 'hasTop'].map(function (k) { return P[k]; });
+  var REF_PREDICATES = ['broader', 'narrower', 'related', 'primary', 'subject', 'dcSubject', 'sub', 'dom', 'rng', 'inScheme', 'topOf', 'hasTop'].map(function (k) { return P[k]; });
   // Predicates the GraphDB loader needs to fetch
   var PREDICATES = Object.keys(P).map(function (k) { return P[k]; });
 
@@ -207,7 +215,8 @@
         applies: function (e) { return !!e.kind && !!ctx.defined; },
         check: function (e) {
           for (var i = 0; i < REF_PREDICATES.length; i++) {
-            if (ctx.vocab && REF_PREDICATES[i] === P.subject) continue;     // reported by vocab-term instead
+            if (ctx.vocab && SUBJECT_PREDS.indexOf(REF_PREDICATES[i]) >= 0) continue;     // reported by vocab-term instead
+            if (REF_PREDICATES[i] === P.subject && !/\/taxonomy\//.test(e.iri)) continue;   // a header's dcterms:subject names a domain concept elsewhere
             var os = vals(e, REF_PREDICATES[i]);
             for (var j = 0; j < os.length; j++) {
               var o = os[j]; if (o.t !== 'iri' || ctx.defined.has(o.v)) continue;
@@ -218,13 +227,49 @@
           return null; } },
 
 
-      { id: 'vocab-term', sec: '3.8', sev: 'error', title: 'Taxonomy term in a vocabulary',
-        desc: 'Every taxonomy term names its vocabulary term with dc:subject, and that term exists in one of the vocabularies.',
+      { id: 'vocab-term', sec: '3.11', sev: 'error', title: 'Taxonomy term in a vocabulary',
+        desc: 'Every taxonomy concept names its vocabulary term with core:hasPrimaryTerm (and dcterms:subject), and that term exists in one of the vocabularies.',
         applies: function (e) { return !!ctx.vocab && (e.kind === 'class' || e.kind === 'concept') && /\/taxonomy\//.test(e.iri); },
         check: function (e) {
-          var s = vals(e, P.subject).filter(function (o) { return o.t === 'iri'; });
-          if (!s.length) return 'Not in any vocabulary: no dc:subject link to a vocabulary term';
-          if (!s.some(function (o) { return ctx.vocab.has(o.v); })) return 'dc:subject points at ' + localName(s[0].v) + ', which is in no vocabulary';
+          var s = []; SUBJECT_PREDS.forEach(function (p) { s = s.concat(vals(e, p).filter(function (o) { return o.t === 'iri'; })); });
+          if (!s.length) return 'Not in any vocabulary: no core:hasPrimaryTerm or dcterms:subject link to a vocabulary term';
+          if (!s.some(function (o) { return ctx.vocab.has(o.v); })) return 'Linked to ' + localName(s[0].v) + ', which is in no vocabulary';
+          return null; } },
+
+      { id: 'primary-term', sec: '3.11', sev: 'warn', title: 'Primary vocabulary term',
+        desc: 'A taxonomy concept names exactly one vocabulary term with core:hasPrimaryTerm; dc:subject (Dublin Core 1.1) is replaced by dcterms:subject.',
+        applies: function (e) { return e.kind === 'concept' && /\/taxonomy\//.test(e.iri) && SUBJECT_PREDS.some(function (p) { return vals(e, p).length; }); },
+        check: function (e) {
+          var pt = vals(e, P.primary);
+          if (!pt.length) return 'No core:hasPrimaryTerm' + (vals(e, P.dcSubject).length ? ' (linked with legacy dc:subject; re-ingest or relink)' : '');
+          if (pt.length > 1) return pt.length + ' primary terms — keep one, the rest as dcterms:subject';
+          return null; } },
+
+      { id: 'skos-taxonomy', sec: '3.11', sev: 'warn', title: 'Taxonomies stay in SKOS',
+        desc: 'A taxonomy is a skos:ConceptScheme of skos:Concept terms; inherited meaning comes from the ontology class each concept is formalized by.',
+        applies: function (e) { return (e.kind === 'class' || e.kind === 'ontology') && /\/taxonomy\//.test(e.iri) && underBase(e.iri); },
+        check: function (e) { return e.kind === 'class' ? 'OWL class in a taxonomy — re-ingest to convert it to a SKOS concept' : 'Taxonomy declared as owl:Ontology — it should be a skos:ConceptScheme'; } },
+
+      { id: 'header-fields', sec: '3.11', sev: 'warn', title: 'Asset header fields',
+        desc: 'Vocabulary, taxonomy and ontology headers carry vaem:namespace, vann:preferredNamespacePrefix, title, description, subject, language, creator, publisher, created, modified, version, version IRI and conformsTo; taxonomies add dcterms:source.',
+        applies: function (e) { return (e.kind === 'ontology' || e.kind === 'scheme') && underBase(e.iri); },
+        check: function (e) {
+          var want = [['vaemNs', 'vaem:namespace'], ['nsPrefix', 'vann:preferredNamespacePrefix'], ['title', 'dcterms:title'], ['desc', 'dcterms:description'],
+                      ['subject', 'dcterms:subject'], ['language', 'dcterms:language'], ['creator', 'dcterms:creator'], ['publisher', 'dcterms:publisher'],
+                      ['created', 'dcterms:created'], ['modified', 'dcterms:modified'], ['verIri', 'owl:versionIRI'], ['conformsTo', 'dcterms:conformsTo']];
+          if (/\/taxonomy\//.test(e.iri)) want.push(['source', 'dcterms:source']);
+          var miss = want.filter(function (w) { return !vals(e, P[w[0]]).length; }).map(function (w) { return w[1]; });
+          return miss.length ? 'Missing ' + miss.join(', ') : null; } },
+
+      { id: 'valid-date', sec: '3.11', sev: 'error', title: 'Valid dates (ISO 8601)',
+        desc: 'dcterms:created, modified and issued are valid xsd:date (2026-10-14) or xsd:dateTime (2026-10-14T09:30:00Z) values.',
+        applies: function (e) { return !!e.kind && [P.created, P.modified, P.issued].some(function (p) { return vals(e, p).length; }); },
+        check: function (e) {
+          var ps = [P.created, P.modified, P.issued];
+          for (var i = 0; i < ps.length; i++) { var ls = lits(e, ps[i]);
+            for (var j = 0; j < ls.length; j++) { var l = ls[j];
+              if (l.dt === XSD + 'dateTime' && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2})?$/.test(l.v)) return localName(ps[i]) + ' "' + l.v + '" is not a valid xsd:dateTime' + (/^\d{4}-\d{2}-\d{2}$/.test(l.v) ? ' (a date alone is xsd:date)' : '');
+              if (l.dt === XSD + 'date' && !/^\d{4}-\d{2}-\d{2}(Z|[+-]\d{2}:\d{2})?$/.test(l.v)) return localName(ps[i]) + ' "' + l.v + '" is not a valid xsd:date'; } }
           return null; } },
 
       { id: 'label', sec: '3.7', sev: 'error', title: 'Label present, tagged @en',
@@ -312,12 +357,12 @@
         check: function (e) { var m = e.iri.match(/\/v?\d+\.\d+(\.\d+)?\//); return m ? 'Term IRI contains a version segment "' + m[0] + '"' : null; } },
 
       { id: 'version-format', sec: '3.3', sev: 'warn', title: 'Semantic version on releases',
-        desc: 'Ontologies and schemes carry owl:versionInfo as MAJOR.MINOR.PATCH; ontology releases add owl:versionIRI.',
+        desc: 'Ontologies and schemes carry owl:versionInfo as MAJOR.MINOR.PATCH and an owl:versionIRI for the release (§3.3, §3.11).',
         applies: function (e) { return e.kind === 'ontology' || e.kind === 'scheme'; },
         check: function (e) { var v = lits(e, P.ver);
           if (!v.length) return 'No owl:versionInfo';
           if (!/^\d+\.\d+\.\d+$/.test(v[0].v.trim())) return 'owl:versionInfo "' + v[0].v + '" is not MAJOR.MINOR.PATCH';
-          if (e.kind === 'ontology' && !vals(e, P.verIri).length) return 'No owl:versionIRI for this release';
+          if (!vals(e, P.verIri).length) return 'No owl:versionIRI for this release';
           return null; } }
     ];
   }
@@ -388,6 +433,7 @@
 
   root.KE_RULES = { runChecks: runChecks, PREDICATES: PREDICATES, KIND_LABEL: KIND_LABEL, localName: localName,
                     policyFrom: policyFrom, acronymsIn: acronymsIn, orgHit: orgHit, expansionFor: expansionFor,
-                    expandLabel: expandLabel, genericText: genericText, sentenceCase: sentenceCase, REF_PREDICATES: REF_PREDICATES };
+                    expandLabel: expandLabel, genericText: genericText, sentenceCase: sentenceCase, REF_PREDICATES: REF_PREDICATES,
+                    SUBJECT_PREDS: SUBJECT_PREDS, P: P };
   if (typeof module !== 'undefined') module.exports = root.KE_RULES;
 })(typeof window !== 'undefined' ? window : globalThis);

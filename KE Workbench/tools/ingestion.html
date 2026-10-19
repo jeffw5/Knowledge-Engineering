@@ -186,6 +186,7 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
           <select id="lstatus"><option>Draft</option><option>Candidate</option><option>Released</option></select></div>
         <div class="fld"><label for="stamp">Modified date-time</label><input id="stamp" type="datetime-local" step="1" title="Leave empty to use the time of the run"></div>
       </div>
+      <label class="hint" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="genDefs"> <span><b>Write missing definitions with Claude</b> — for terms with no definition in the file, its vocabulary term or the configuration. Each gets an editorial note to review it. <span id="genDefsNote" class="status"></span></span></label>
       <div class="hint">Base URL <b class="mono" id="baseUrl">—</b>. These values apply to this run only; the defaults, legacy namespace rules, asset titles and descriptions, renames and definitions live in the configuration. Leave the date-time empty to stamp the time of the run.</div>
       <div class="drawer hidden" id="cfgDrawer" style="margin-top:14px">
         <div class="fld"><label for="cfgText">ke-ingest.config.json <span class="mono" id="cfgPath" style="text-transform:none;letter-spacing:0;font-weight:400"></span></label>
@@ -207,6 +208,31 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
         <button class="btn pri big" id="runBtn" disabled>Ingest</button>
         <span class="status" id="runStatus"></span>
       </div>
+    </div>
+  </section>
+
+  <!-- Reference ontologies -->
+  <section class="panel" id="pRef">
+    <div class="panel-h"><span class="t">Reference ontologies</span><span class="sub">BFO 2020 (ISO/IEC 21838-2), the RO Core relations and the RO extract the core domain ontology imports: loaded as they are, under their own IRIs, never ingested</span></div>
+    <div class="panel-b">
+      <div class="row" style="align-items:flex-end;gap:10px;flex-wrap:wrap">
+        <div class="fld" style="flex:1;min-width:260px"><label for="refBfo">BFO source — a URL, or the path of a downloaded file</label><input id="refBfo" class="mono" spellcheck="false"></div>
+        <button class="btn sm" data-ref="bfo">Load BFO</button>
+      </div>
+      <div class="row" style="align-items:flex-end;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <div class="fld" style="flex:1;min-width:260px"><label for="refRo">RO Core source — a URL, or the path of a downloaded file</label><input id="refRo" class="mono" spellcheck="false"></div>
+        <button class="btn sm" data-ref="ro">Load RO Core</button>
+      </div>
+      <div class="row" style="align-items:flex-end;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <div class="fld" style="flex:1;min-width:260px"><label for="refRx">RO extract — the BFO 2020, RO and IAO relations the core domain ontology uses that BFO and RO Core lack</label><input id="refRx" class="mono" spellcheck="false"></div>
+        <button class="btn sm" data-ref="rx">Load RO extract</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="fld" style="width:220px"><label for="refRepo">Repository</label><input id="refRepo" spellcheck="false"></div>
+        <span style="flex:1"></span>
+        <button class="btn pri" id="refBoth">Load all three</button>
+      </div>
+      <div class="status" id="refStatus" style="margin-top:8px">Each replaces its own named graph: BFO in <span class="mono">http://purl.obolibrary.org/obo/bfo.owl</span>, RO Core in <span class="mono">http://purl.obolibrary.org/obo/ro/core.owl</span>, the RO extract (<span class="mono">reference/ro-extract.ttl</span> in the workbench folder) in <span class="mono">https://www.insperity.com/reference/ro-extract/</span>. The workbench downloads the file itself and reads its format, so GraphDB needs no internet access.</div>
     </div>
   </section>
 
@@ -407,7 +433,7 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
       dest: $('dest').value.trim(), ttlDir: $('ttlDir').value.trim(), trigDir: $('trigDir').value.trim(),
       recursive: $('recursive').checked,
       timestamp: stampVal ? new Date(stampVal).toISOString() : null,
-      overrides: { author: $('author').value.trim(), initialVersion: $('version').value.trim(), lifecycleStatus: $('lstatus').value }
+      overrides: { author: $('author').value.trim(), initialVersion: $('version').value.trim(), lifecycleStatus: $('lstatus').value, generateDefinitions: $('genDefs').checked }
     };
     $('runBtn').disabled = true; setStatus('runStatus', `Ingesting ${plural(sel.length, 'file')}…`);
     try {
@@ -479,6 +505,12 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
     if (!d.ok) setStatus('runStatus', d.error, 'bad');
   });
 
+  fetch('/api/ingest/define-status').then(r => r.ok ? r.json() : null).then(d => {
+    if (!d) return;
+    $('genDefsNote').textContent = d.key ? `Uses ${d.model}.` : `Needs an Anthropic API key: add ANTHROPIC_API_KEY=… to ${d.keyFile}.`;
+    if (!d.key) $('genDefs').disabled = true;
+  }).catch(() => {});
+
   // ── load into GraphDB ─────────────────────────────────────────────────
   $('loadBtn').addEventListener('click', () => {
     if (!runRes) return;
@@ -487,18 +519,27 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
     $('loadPanel').classList.remove('hidden'); $('loadRes').innerHTML = ''; $('repo').focus();
   });
   $('loadCancel').addEventListener('click', () => $('loadPanel').classList.add('hidden'));
-  $('loadGo').addEventListener('click', async () => {
+  async function loadFolder(force) {
     const repo = $('repo').value.trim() || 'value-kb';
     $('loadGo').disabled = true; $('loadRes').innerHTML = '<div class="status">Loading…</div>';
     try {
       // the whole destination folder: this run, earlier runs' current files, and any Conformance Review corrections
-      const d = await api('load-folder', { repo, dir: runRes.dest });
+      const d = await api('load-folder', { repo, dir: runRes.dest, force: !!force });
+      if (d.blocked && d.blocked.length) {
+        // blocking conformance errors (terms outside the base URL, another organization's content, invalid dates): nothing was sent
+        $('loadRes').innerHTML = `<div class="callout bad">${esc(d.error)}</div>
+          <ul style="margin:6px 0 0 18px;font-size:12px">${d.blocked.slice(0, 8).map(x => `<li><span class="mono">${esc(x.file)}</span> · ${esc(x.rule)}: ${esc(x.msg)}</li>`).join('')}${d.blockedCount > 8 ? `<li>… and ${d.blockedCount - 8} more</li>` : ''}</ul>
+          <div class="row" style="margin-top:8px"><a class="btn sm" href="conformance-review.html" target="_blank">Open Conformance Review</a><button class="btn sm" id="loadForceBtn">Load anyway</button></div>`;
+        $('loadForceBtn').addEventListener('click', () => loadFolder(true));
+        $('loadGo').disabled = false; return;
+      }
       $('loadRes').innerHTML = (d.results || []).map(r => `<div><span class="pill ${r.ok ? 'ok' : 'bad'}">${r.ok ? esc(r.mode) : 'failed'}</span><span class="mono" style="font-size:11.5px">${esc(r.graph)}</span>${r.ok ? '' : `<span class="status bad">${esc(r.error)}</span>`}</div>`).join('')
         + (d.ok ? `<div class="callout ok">Loaded into <b>${esc(d.repo)}</b>. Click Refresh in <a href="model-manager.html" target="_blank">Model Manager</a>, and reload any editor tab that was already open.</div>` : (d.error ? `<div class="callout bad">${esc(d.error)}</div>` : ''));
       if (d.ok) try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
     } catch (e) { $('loadRes').innerHTML = `<div class="callout bad">${esc(e.message)}</div>`; }
     $('loadGo').disabled = false;
-  });
+  }
+  $('loadGo').addEventListener('click', () => loadFolder(false));
 
   // ── configuration ─────────────────────────────────────────────────────
   $('cfgBtn').addEventListener('click', async () => {
@@ -579,7 +620,33 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
     return out.join('');
   }
 
-  window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings' && e.data.repo) $('repo').value = e.data.repo; });
+
+  // ── reference ontologies (BFO, RO Core): /api/ingest/load-url fetches the file and loads it into its own named graph ──
+  const REF = { bfo: { field: 'refBfo', key: 'ke-bfo-url', def: 'http://purl.obolibrary.org/obo/bfo.owl', graph: 'http://purl.obolibrary.org/obo/bfo.owl', name: 'BFO' },
+                ro:  { field: 'refRo', key: 'ke-ro-url', def: 'http://purl.obolibrary.org/obo/ro/core.owl', graph: 'http://purl.obolibrary.org/obo/ro/core.owl', name: 'RO Core' },
+                rx:  { field: 'refRx', key: 'ke-rx-path', def: 'reference/ro-extract.ttl', graph: 'https://www.insperity.com/reference/ro-extract/', name: 'RO extract' } };
+  Object.values(REF).forEach(r => { $(r.field).value = ls.get(r.key, r.def) || r.def; $(r.field).addEventListener('change', () => ls.set(r.key, $(r.field).value.trim())); });
+  $('refRepo').value = ls.get('ke-repo', 'value-kb') || 'value-kb';
+  $('refRepo').addEventListener('change', () => ls.set('ke-repo', $('refRepo').value.trim()));
+  async function loadRef(k) {
+    const r = REF[k], src = $(r.field).value.trim() || r.def, web = /^https?:/i.test(src);
+    const d = await api('load-url', { url: web ? src : '', path: web ? '' : src, graph: r.graph, repo: $('refRepo').value.trim() || 'value-kb' });
+    if (!d.ok) throw new Error(r.name + ': ' + d.error);
+    return `${r.name} loaded (${(d.bytes / 1024).toFixed(0)} KB, ${d.format.replace('application/', '').replace('text/', '')})`;
+  }
+  async function runRef(keys) {
+    const btns = document.querySelectorAll('[data-ref], #refBoth'); btns.forEach(b => b.disabled = true);
+    setStatus('refStatus', 'Loading…'); const done = [];
+    try {
+      for (const k of keys) { done.push(await loadRef(k)); setStatus('refStatus', done.join(' · ') + ' …'); }
+      setStatus('refStatus', done.join(' · ') + ` into ${$('refRepo').value.trim() || 'value-kb'}. In Model Editor (Ontology), use ⚙ › Reload.`, 'ok');
+      try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+    } catch (e) { setStatus('refStatus', (done.length ? done.join(' · ') + ' · ' : '') + e.message, 'bad'); }
+    btns.forEach(b => b.disabled = false);
+  }
+  document.querySelectorAll('[data-ref]').forEach(b => b.addEventListener('click', () => runRef([b.dataset.ref])));
+  $('refBoth').addEventListener('click', () => runRef(['bfo', 'ro', 'rx']));
+  window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings' && e.data.repo) { $('repo').value = e.data.repo; $('refRepo').value = e.data.repo; } });
   init();
 })();
 </script>

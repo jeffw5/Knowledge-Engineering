@@ -1,0 +1,367 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-valuestream/> {
+  <https://www.insperity.com/vocabulary/core-valuestream/> a skos:ConceptScheme;
+    rdfs:label "Core valuestream vocabulary"@en;
+    skos:prefLabel "Core valuestream vocabulary"@en;
+    skos:hasTopConcept valuestreamvoc:value-stream;
+    terms:description "A series of steps an organization undertakes to deliver a product or service to a customer, from initial concept to final delivery and beyond."@en;
+    terms:title "Core valuestream vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T16:59:41.558Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Value Stream"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-valuestream/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:value-stream a skos:Concept;
+    skos:prefLabel "Value stream"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:24:12.976Z"^^xsd:dateTime;
+    skos:definition "A series of steps an organization undertakes to deliver a product or service to a customer, from initial concept to final delivery and beyond."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:narrower valuestreamvoc:customer-acquisition-and-onboarding, valuestreamvoc:customer-support-and-service-assurance,
+      valuestreamvoc:data-analytics-and-insights, valuestreamvoc:infrastructure-and-facility-management,
+      valuestreamvoc:marketing-and-brand-management, valuestreamvoc:network-provisioning-and-maintenance,
+      valuestreamvoc:order-to-cash, valuestreamvoc:product-development-and-innovation, valuestreamvoc:regulatory-compliance-and-governance,
+      valuestreamvoc:revenue-management-and-billing, valuestreamvoc:supply-chain-management .
+  
+  valuestreamvoc:customer-acquisition-and-onboarding a skos:Concept;
+    skos:prefLabel "Customer acquisition & onboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Activities involved in attracting and acquiring new customers, and integrating them into the company’s products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:customer-support-and-service-assurance a skos:Concept;
+    skos:prefLabel "Customer support & service assurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Providing assistance and support to customers throughout their engagement, ensuring satisfaction and service quality."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:data-analytics-and-insights a skos:Concept;
+    skos:prefLabel "Data analytics & insights"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Collecting, processing, and analyzing data to gain insights, improve decision-making, and optimize processes within the value stream."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:infrastructure-and-facility-management a skos:Concept;
+    skos:prefLabel "Infrastructure & facility management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Managing and maintaining the physical and technological infrastructure required to support the value stream activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:marketing-and-brand-management a skos:Concept;
+    skos:prefLabel "Marketing & brand management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Creating and promoting the company’s brand and offerings to attract and retain customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:network-provisioning-and-maintenance a skos:Concept;
+    skos:prefLabel "Network provisioning & maintenance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Designing, deploying, and maintaining the network infrastructure necessary for service delivery."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash a skos:Concept;
+    skos:prefLabel "Order to cash"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "The end-to-end process of receiving and fulfilling customer orders, including payment processing and revenue recognition."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    skos:altLabel "O2C"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower valuestreamvoc:order-to-cash-customer-service-and-support, valuestreamvoc:order-to-cash-inventory-management,
+      valuestreamvoc:order-to-cash-invoicing, valuestreamvoc:order-to-cash-order-fulfillment,
+      valuestreamvoc:order-to-cash-order-management, valuestreamvoc:order-to-cash-payment-processing,
+      valuestreamvoc:order-to-cash-revenue-recognition .
+  
+  valuestreamvoc:product-development-and-innovation a skos:Concept;
+    skos:prefLabel "Product development & innovation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Designing, developing, and launching new products or services that meet customer needs and market demands."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:regulatory-compliance-and-governance a skos:Concept;
+    skos:prefLabel "Regulatory compliance & governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Ensuring adherence to relevant laws, regulations, and industry standards across all value stream activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:revenue-management-and-billing a skos:Concept;
+    skos:prefLabel "Revenue management & billing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Optimizing pricing strategies, managing billing cycles, and maximizing revenue generation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:supply-chain-management a skos:Concept;
+    skos:prefLabel "Supply chain management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Managing the flow of goods, services, and information from raw materials to final customer delivery."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:value-stream;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-customer-service-and-support a skos:Concept;
+    skos:prefLabel "Order to cash customer service & support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Assisting customers throughout the order to cash cycle, addressing inquiries and resolving issues."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Customer Service & Support"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-inventory-management a skos:Concept;
+    skos:prefLabel "Order to cash inventory management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Managing and tracking inventory levels to ensure timely order fulfillment and minimize stockouts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Inventory Management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-invoicing a skos:Concept;
+    skos:prefLabel "Order to cash invoicing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Generating and issuing invoices to customers for goods or services provided."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Invoicing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-order-fulfillment a skos:Concept;
+    skos:prefLabel "Order to cash order fulfillment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Picking, packing, and shipping customer orders accurately and efficiently."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Order Fulfillment"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-order-management a skos:Concept;
+    skos:prefLabel "Order to cash order management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Receiving, processing, and tracking customer orders throughout the fulfillment process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Order Management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-payment-processing a skos:Concept;
+    skos:prefLabel "Order to cash payment processing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Receiving and processing customer payments through various methods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Payment Processing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  valuestreamvoc:order-to-cash-revenue-recognition a skos:Concept;
+    skos:prefLabel "Order to cash revenue recognition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:52:07.776Z"^^xsd:dateTime;
+    skos:definition "Recognizing revenue generated from customer orders according to accounting standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-valuestream/>;
+    skos:broader valuestreamvoc:order-to-cash;
+    skos:altLabel "O2C Revenue Recognition"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

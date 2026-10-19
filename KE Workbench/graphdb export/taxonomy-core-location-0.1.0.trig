@@ -1,0 +1,467 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-location/> {
+  <https://www.insperity.com/taxonomy/core-location/> a skos:ConceptScheme;
+    rdfs:label "Core location taxonomy"@en;
+    skos:prefLabel "Core location taxonomy"@en;
+    skos:hasTopConcept locationtax:geographic-area, locationtax:jurisdiction, locationtax:location-reference,
+      locationtax:site, locationtax:virtual-location;
+    terms:description "Classification of locations, the places, jurisdictions, sites, and references where parties, assets, and process steps are located or where norms apply."@en;
+    terms:title "Core location taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Location taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-location/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:geographic-area a skos:Concept;
+    skos:prefLabel "Geographic area"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location that is a region of the earth's surface identified by name or boundary."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:altLabel "Place"@en, "Geographic location"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject locationvoc:location;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-location/>;
+    skos:narrower locationtax:city, locationtax:country, locationtax:county, locationtax:postal-area,
+      locationtax:region, locationtax:state-or-province .
+  
+  locationtax:jurisdiction a skos:Concept;
+    skos:prefLabel "Jurisdiction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location that is the territory within which a governing authority's laws and regulations apply."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:altLabel "Legal jurisdiction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-location/>;
+    skos:narrower locationtax:local-jurisdiction, locationtax:national-jurisdiction, locationtax:state-jurisdiction,
+      locationtax:tax-jurisdiction .
+  
+  locationtax:location-reference a skos:Concept;
+    skos:prefLabel "Location reference"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location-related information artifact that identifies a place."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:altLabel "Location identifier"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-location/>;
+    skos:narrower locationtax:geographic-coordinate, locationtax:location-code, locationtax:postal-address .
+  
+  locationtax:site a skos:Concept;
+    skos:prefLabel "Site"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location where an organization carries out activities or keeps assets."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:altLabel "Business location"@en, "Physical site"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-location/>;
+    skos:narrower locationtax:data-center, locationtax:distribution-site, locationtax:office,
+      locationtax:remote-work-location, locationtax:worksite .
+  
+  locationtax:virtual-location a skos:Concept;
+    skos:prefLabel "Virtual location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location in a network or digital space rather than physical space."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:altLabel "Digital location"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-location/>;
+    skos:narrower locationtax:cloud-region, locationtax:collaboration-space, locationtax:web-address .
+  
+  locationtax:city a skos:Concept;
+    skos:prefLabel "City"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A geographic area that is a municipality or populated place."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:geographic-area;
+    skos:altLabel "Municipality"@en, "Town"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject locationvoc:city;
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:cloud-region a skos:Concept;
+    skos:prefLabel "Cloud region"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A virtual location that is a provider-defined geographic grouping of data centers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:virtual-location;
+    skos:altLabel "Availability zone"@en, "Hosting region"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:collaboration-space a skos:Concept;
+    skos:prefLabel "Collaboration space"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A virtual location where people share content and communicate."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:virtual-location;
+    skos:altLabel "Channel"@en, "Team site"@en, "Workspace"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:country a skos:Concept;
+    skos:prefLabel "Country"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A geographic area that is a sovereign nation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:geographic-area;
+    skos:altLabel "Nation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:county a skos:Concept;
+    skos:prefLabel "County"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A geographic area that is a subdivision of a state used for local government."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:geographic-area;
+    skos:altLabel "Borough"@en, "Parish"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:data-center a skos:Concept;
+    skos:prefLabel "Data center"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A site that houses computing and storage infrastructure."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:site;
+    skos:altLabel "Hosting facility"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:distribution-site a skos:Concept;
+    skos:prefLabel "Distribution site"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A site where goods are stored and shipped."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:site;
+    skos:altLabel "Warehouse"@en, "Fulfilment center"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:postal-area a skos:Concept;
+    skos:prefLabel "Postal area"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A geographic area identified by a postal code."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:geographic-area;
+    skos:altLabel "Postal code area"@en, "Zip code area"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:region a skos:Concept;
+    skos:prefLabel "Region"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A geographic area grouping countries, states, or cities for business purposes."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:geographic-area;
+    skos:altLabel "Sales region"@en, "Service region"@en, "Territory"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject locationvoc:region;
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:state-or-province a skos:Concept;
+    skos:prefLabel "State or province"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A geographic area that is a first-level subdivision of a country."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:geographic-area;
+    skos:altLabel "Province"@en, "State"@en, "Subnational division"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:geographic-coordinate a skos:Concept;
+    skos:prefLabel "Geographic coordinate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location reference given as latitude and longitude."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:location-reference;
+    skos:altLabel "Coordinates"@en, "Geolocation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:local-jurisdiction a skos:Concept;
+    skos:prefLabel "Local jurisdiction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A jurisdiction of a county, city, or other local government."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:jurisdiction;
+    skos:altLabel "Municipal jurisdiction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:national-jurisdiction a skos:Concept;
+    skos:prefLabel "National jurisdiction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A jurisdiction of a national government."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:jurisdiction;
+    skos:altLabel "Federal jurisdiction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:state-jurisdiction a skos:Concept;
+    skos:prefLabel "State jurisdiction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A jurisdiction of a state or provincial government."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:jurisdiction;
+    skos:altLabel "Provincial jurisdiction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:tax-jurisdiction a skos:Concept;
+    skos:prefLabel "Tax jurisdiction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A jurisdiction defined by a taxing authority, which may cross other boundaries."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:jurisdiction;
+    skos:altLabel "Taxing jurisdiction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:location-code a skos:Concept;
+    skos:prefLabel "Location code"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location reference given as a code from a standard or system."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:location-reference;
+    skos:altLabel "Jurisdiction code"@en, "Site code"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:postal-address a skos:Concept;
+    skos:prefLabel "Postal address"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A location reference that identifies a delivery point by street, city, state, and postal code."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:location-reference;
+    skos:altLabel "Address"@en, "Mailing address"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject locationvoc:street-address;
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:office a skos:Concept;
+    skos:prefLabel "Office"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A site used mainly for administrative and professional work."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:site;
+    skos:altLabel "Branch office"@en, "Headquarters"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:remote-work-location a skos:Concept;
+    skos:prefLabel "Remote work location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A site outside the employer's premises where a worker regularly works."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:site;
+    skos:altLabel "Home office"@en, "Telework location"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:worksite a skos:Concept;
+    skos:prefLabel "Worksite"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A site where workers perform work for a client employer."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:site;
+    skos:altLabel "Client worksite"@en, "Work location"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  locationtax:web-address a skos:Concept;
+    skos:prefLabel "Web address"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A virtual location identified by a uniform resource locator."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-location/>;
+    skos:broader locationtax:virtual-location;
+    skos:altLabel "URL"@en, "Web page"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject locationvoc:uniform-resource-locator;
+    core:hasLifecycleStatus core:Draft .
+}

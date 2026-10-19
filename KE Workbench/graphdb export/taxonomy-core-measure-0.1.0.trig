@@ -1,0 +1,801 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-measure/> {
+  <https://www.insperity.com/taxonomy/core-measure/> a skos:ConceptScheme;
+    rdfs:label "Core measure taxonomy"@en;
+    skos:prefLabel "Core measure taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-measure/base-measure>,
+      <https://www.insperity.com/taxonomy/core-measure/calculation>, <https://www.insperity.com/taxonomy/core-measure/derived-measure>,
+      <https://www.insperity.com/taxonomy/core-measure/forecast-value>, <https://www.insperity.com/taxonomy/core-measure/indicator>,
+      <https://www.insperity.com/taxonomy/core-measure/measurement-dimension>, <https://www.insperity.com/taxonomy/core-measure/observation>,
+      <https://www.insperity.com/taxonomy/core-measure/target>, <https://www.insperity.com/taxonomy/core-measure/threshold>;
+    terms:description "Classification of measures and calculations, the quantified evaluations of processes, assets, and qualities and the governed formulas that compute them."@en;
+    terms:title "Core measure taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Measure taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-measure/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/base-measure> a skos:Concept;
+    skos:prefLabel "Base measure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure that quantifies a single attribute by a direct method."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Count"@en, "Raw measure"@en;
+    skos:example "Number of answers served; hours worked."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/calculation> a skos:Concept;
+    skos:prefLabel "Calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governed formula specification that computes a value from inputs and is verified against test vectors."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Calc"@en, "Computation"@en, "Formula"@en;
+    skos:scopeNote "Authored once in the single source of truth and generated into services."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/aggregation-calculation>,
+      <https://www.insperity.com/taxonomy/core-measure/allocation-calculation>, <https://www.insperity.com/taxonomy/core-measure/arithmetic-calculation>,
+      <https://www.insperity.com/taxonomy/core-measure/conversion-calculation>, <https://www.insperity.com/taxonomy/core-measure/date-calculation>,
+      <https://www.insperity.com/taxonomy/core-measure/ratio-calculation>, <https://www.insperity.com/taxonomy/core-measure/scoring-calculation>,
+      <https://www.insperity.com/taxonomy/core-measure/statistical-calculation> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/derived-measure> a skos:Concept;
+    skos:prefLabel "Derived measure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure computed from two or more base or derived measures."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Calculated measure"@en, "Computed measure"@en;
+    skos:example "Average handling time."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/forecast-value> a skos:Concept;
+    skos:prefLabel "Forecast value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure value that estimates a future value of a measure from assumptions and history."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Forecast"@en, "Projection"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/indicator> a skos:Concept;
+    skos:prefLabel "Indicator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure that estimates or evaluates an attribute against an information need, often compared to a target."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Metric"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator>,
+      <https://www.insperity.com/taxonomy/core-measure/key-performance-indicator>, <https://www.insperity.com/taxonomy/core-measure/key-risk-indicator>,
+      <https://www.insperity.com/taxonomy/core-measure/reliability-indicator>, <https://www.insperity.com/taxonomy/core-measure/service-level-indicator> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/measurement-dimension> a skos:Concept;
+    skos:prefLabel "Measurement dimension"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A characteristic along which measures are evaluated or broken down."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Dimension"@en, "Quality dimension group"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>,
+      <https://www.insperity.com/taxonomy/core-measure/performance-dimension>, <https://www.insperity.com/taxonomy/core-measure/trust-dimension> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/observation> a skos:Concept;
+    skos:prefLabel "Observation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure value recorded for a specific subject, period, and set of dimensions."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Measurement"@en, "Data point"@en, "Fact"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/actual-value>, <https://www.insperity.com/taxonomy/core-measure/benchmark-value> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/target> a skos:Concept;
+    skos:prefLabel "Target"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure value that a party commits to achieve within a period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Goal"@en, "Objective value"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/budget-target>, <https://www.insperity.com/taxonomy/core-measure/service-level-objective> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/threshold> a skos:Concept;
+    skos:prefLabel "Threshold"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measure value that, when crossed, triggers an alert, decision, or action."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:altLabel "Limit"@en, "Tolerance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/alert-threshold>, <https://www.insperity.com/taxonomy/core-measure/tolerance-threshold>,
+      <https://www.insperity.com/taxonomy/core-measure/trip-threshold> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/accuracy> a skos:Concept;
+    skos:prefLabel "Accuracy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality dimension of how closely values agree with reality or an authoritative source."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension> a skos:Concept;
+    skos:prefLabel "Data quality dimension"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measurement dimension of how fit data is for its intended use."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/measurement-dimension>;
+    skos:altLabel "Data quality characteristic"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/accuracy>, <https://www.insperity.com/taxonomy/core-measure/completeness>,
+      <https://www.insperity.com/taxonomy/core-measure/consistency>, <https://www.insperity.com/taxonomy/core-measure/timeliness>,
+      <https://www.insperity.com/taxonomy/core-measure/uniqueness>, <https://www.insperity.com/taxonomy/core-measure/validity> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/actual-value> a skos:Concept;
+    skos:prefLabel "Actual value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An observation that records what occurred."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/observation>;
+    skos:altLabel "Actual"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/aggregation-calculation> a skos:Concept;
+    skos:prefLabel "Aggregation calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that summarizes many values into one, such as a sum, count, or average."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Aggregate"@en, "Rollup"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/alert-threshold> a skos:Concept;
+    skos:prefLabel "Alert threshold"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A threshold that triggers a notification for attention."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/threshold>;
+    skos:altLabel "Warning threshold"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/allocation-calculation> a skos:Concept;
+    skos:prefLabel "Allocation calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that distributes an amount across recipients by a defined basis."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Apportionment"@en, "Proration"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/answer-traceability-rate> a skos:Concept;
+    skos:prefLabel "Answer traceability rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge quality indicator equal to the share of artificial intelligence answers that cite governed terms and mappings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator> a skos:Concept;
+    skos:prefLabel "Knowledge quality indicator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An indicator of the coverage, accuracy, or traceability of governed knowledge and the answers that use it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/indicator>;
+    skos:altLabel "Semantic quality metric"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/answer-traceability-rate>,
+      <https://www.insperity.com/taxonomy/core-measure/competency-question-pass-rate>, <https://www.insperity.com/taxonomy/core-measure/mapping-accuracy>,
+      <https://www.insperity.com/taxonomy/core-measure/mapping-coverage>, <https://www.insperity.com/taxonomy/core-measure/search-success-rate> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/arithmetic-calculation> a skos:Concept;
+    skos:prefLabel "Arithmetic calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that combines inputs using addition, subtraction, multiplication, or division."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:example "Gross pay equals hours times rate plus overtime premium."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/benchmark-value> a skos:Concept;
+    skos:prefLabel "Benchmark value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An observation from a comparable population used as a reference."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/observation>;
+    skos:altLabel "Benchmark"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/budget-target> a skos:Concept;
+    skos:prefLabel "Budget target"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A target expressed as a planned amount of money."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/target>;
+    skos:altLabel "Budget"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/conversion-calculation> a skos:Concept;
+    skos:prefLabel "Conversion calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that converts a value between units, currencies, or periods."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Annualization"@en, "Unit conversion"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/date-calculation> a skos:Concept;
+    skos:prefLabel "Date calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that derives a date or duration from other dates and rules."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Date arithmetic"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/ratio-calculation> a skos:Concept;
+    skos:prefLabel "Ratio calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that divides one quantity by another to express a proportion or rate."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Percentage calculation"@en, "Rate calculation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/scoring-calculation> a skos:Concept;
+    skos:prefLabel "Scoring calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that combines weighted factors into a single score."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Score"@en, "Weighted score"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/statistical-calculation> a skos:Concept;
+    skos:prefLabel "Statistical calculation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A calculation that estimates a distribution, trend, or relationship from data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/calculation>;
+    skos:altLabel "Regression"@en, "Statistical model"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/competency-question-pass-rate> a
+      skos:Concept;
+    skos:prefLabel "Competency question pass rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge quality indicator equal to the share of competency questions passing in a release."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/completeness> a skos:Concept;
+    skos:prefLabel "Completeness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality dimension of whether all required values are present."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/consistency> a skos:Concept;
+    skos:prefLabel "Consistency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality dimension of whether values agree across records and systems."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/cost> a skos:Concept;
+    skos:prefLabel "Cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A performance dimension of the money spent to produce an output."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/performance-dimension>;
+    skos:altLabel "Expense"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/performance-dimension> a skos:Concept;
+    skos:prefLabel "Performance dimension"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measurement dimension of how well a process or service achieves results with resources."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/measurement-dimension>;
+    skos:altLabel "Operational dimension"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/cost>, <https://www.insperity.com/taxonomy/core-measure/effectiveness>,
+      <https://www.insperity.com/taxonomy/core-measure/efficiency>, <https://www.insperity.com/taxonomy/core-measure/speed> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/timeliness> a skos:Concept;
+    skos:prefLabel "Timeliness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality dimension of whether values are current enough for use."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>;
+    skos:altLabel "Currency"@en, "Freshness"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/uniqueness> a skos:Concept;
+    skos:prefLabel "Uniqueness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality dimension of whether each entity is recorded once."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/validity> a skos:Concept;
+    skos:prefLabel "Validity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality dimension of whether values conform to defined formats and domains."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/data-quality-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/effectiveness> a skos:Concept;
+    skos:prefLabel "Effectiveness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A performance dimension of the degree to which intended results are achieved."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/performance-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/efficiency> a skos:Concept;
+    skos:prefLabel "Efficiency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A performance dimension of output relative to resources used."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/performance-dimension>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/explainability> a skos:Concept;
+    skos:prefLabel "Explainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A trust dimension of whether outputs can be traced to inputs, rules, and sources."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/trust-dimension>;
+    skos:altLabel "Traceability"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/trust-dimension> a skos:Concept;
+    skos:prefLabel "Trust dimension"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A measurement dimension of how much confidence users can place in information or answers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/measurement-dimension>;
+    skos:altLabel "Trustworthiness dimension"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/explainability>, <https://www.insperity.com/taxonomy/core-measure/provenance>,
+      <https://www.insperity.com/taxonomy/core-measure/verification> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/key-performance-indicator> a skos:Concept;
+    skos:prefLabel "Key performance indicator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An indicator that tracks performance against a strategic or operational objective."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/indicator>;
+    skos:altLabel "KPI"@en, "Performance indicator"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/key-risk-indicator> a skos:Concept;
+    skos:prefLabel "Key risk indicator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An indicator that signals a change in risk exposure."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/indicator>;
+    skos:altLabel "KRI"@en, "Risk indicator"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/reliability-indicator> a skos:Concept;
+    skos:prefLabel "Reliability indicator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An indicator of how long or how often a system works without failure."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/indicator>;
+    skos:altLabel "Reliability metric"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-measure/mean-time-between-failures>,
+      <https://www.insperity.com/taxonomy/core-measure/mean-time-between-hallucinations>,
+      <https://www.insperity.com/taxonomy/core-measure/mean-time-to-recover> .
+  
+  <https://www.insperity.com/taxonomy/core-measure/service-level-indicator> a skos:Concept;
+    skos:prefLabel "Service level indicator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An indicator that measures an aspect of service performance experienced by users."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/indicator>;
+    skos:altLabel "SLI"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/mapping-accuracy> a skos:Concept;
+    skos:prefLabel "Mapping accuracy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge quality indicator equal to the share of agent-proposed mappings accepted on review."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/mapping-coverage> a skos:Concept;
+    skos:prefLabel "Mapping coverage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge quality indicator equal to the share of inbound schema elements mapped to ontology terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/search-success-rate> a skos:Concept;
+    skos:prefLabel "Search success rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge quality indicator equal to the share of searches returning a result the user accepts."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/knowledge-quality-indicator>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/mean-time-between-failures> a skos:Concept;
+    skos:prefLabel "Mean time between failures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reliability indicator equal to operating time divided by the number of failures."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/reliability-indicator>;
+    skos:altLabel "MTBF"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/mean-time-between-hallucinations>
+    a skos:Concept;
+    skos:prefLabel "Mean time between hallucinations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reliability indicator equal to answers served or hours in service divided by confirmed hallucinations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/reliability-indicator>;
+    skos:altLabel "MTBH"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/mean-time-to-recover> a skos:Concept;
+    skos:prefLabel "Mean time to recover"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reliability indicator equal to the average time to restore service after a failure."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/reliability-indicator>;
+    skos:altLabel "MTTR"@en, "Mean time to restore"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/speed> a skos:Concept;
+    skos:prefLabel "Speed"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A performance dimension of the time taken to produce an output."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/performance-dimension>;
+    skos:altLabel "Cycle time"@en, "Latency"@en, "Lead time"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/provenance> a skos:Concept;
+    skos:prefLabel "Provenance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A trust dimension of whether the origin and lineage of information are recorded."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/trust-dimension>;
+    skos:altLabel "Lineage"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/service-level-objective> a skos:Concept;
+    skos:prefLabel "Service level objective"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A target for a service level indicator agreed internally."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/target>;
+    skos:altLabel "SLO"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/tolerance-threshold> a skos:Concept;
+    skos:prefLabel "Tolerance threshold"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A threshold that defines the acceptable band around a target."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/threshold>;
+    skos:altLabel "Tolerance band"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/trip-threshold> a skos:Concept;
+    skos:prefLabel "Trip threshold"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A threshold that triggers automatic suspension or fallback."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/threshold>;
+    skos:altLabel "Circuit breaker threshold"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-measure/verification> a skos:Concept;
+    skos:prefLabel "Verification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A trust dimension of whether facts have been checked against published sources."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-measure/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-measure/trust-dimension>;
+    skos:altLabel "Verification status"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

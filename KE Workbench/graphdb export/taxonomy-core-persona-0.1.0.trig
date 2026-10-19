@@ -1,0 +1,739 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-persona/> {
+  <https://www.insperity.com/taxonomy/core-persona/> a owl:Ontology;
+    rdfs:label "Core persona taxonomy"@en;
+    terms:description "The persona taxonomy categorizes data types used to understand individual users and work together to create comprehensive user profiles for personalized experiences."@en;
+    terms:title "Core persona taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2024-09-05T00:04:05.311Z"^^xsd:dateTime;
+    skos:altLabel "Taxonomy | Core | Persona"@en;
+    owl:versionInfo "0.1.0";
+    owl:versionIRI <https://www.insperity.com/taxonomy/core-persona/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-persona/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:Persona a owl:Class;
+    rdfs:label "Persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "A semi-fictional representation of your ideal customer, based on research and data about existing and potential customers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaData a owl:Class;
+    rdfs:subClassOf personatax:Persona;
+    rdfs:label "Persona data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "Information collected and used to create and refine personas."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaDemographics a owl:Class;
+    rdfs:subClassOf personatax:PersonaData;
+    rdfs:label "Persona demographics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona demographics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Statistical data about a persona’s age, gender, location, education, income, etc."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-demographics;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaEthnographics a owl:Class;
+    rdfs:subClassOf personatax:PersonaData;
+    rdfs:label "Persona ethnographics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona ethnographics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Qualitative data about a persona’s values, beliefs, motivations, and behaviors."@en;
+    skos:altLabel "Persona ethnographics"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-ethnographics;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaIndustry a owl:Class;
+    rdfs:subClassOf personatax:PersonaData;
+    rdfs:label "Persona industry"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona industry"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "The industry or sector that a persona typically works in."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-industry;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaRole a owl:Class;
+    rdfs:subClassOf personatax:PersonaData;
+    rdfs:label "Persona role"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "A persona’s job title and responsibilities within their organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-role;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaType a owl:Class;
+    rdfs:subClassOf personatax:PersonaData;
+    rdfs:label "Persona type"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona type"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "A categorization of personas based on shared characteristics, needs, or goals."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-type;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:AnalyticEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "Analytic engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Analytic engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals focused on data analysis, building data pipelines, and generating insights."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:analytic-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:DataEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "Data engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Data engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals responsible for building and maintaining data infrastructure, ensuring data quality, and enabling data access."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:data-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:KnowledgeEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "Knowledge engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Knowledge engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals focused on capturing, organizing, and applying knowledge within systems or organizations."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:knowledge-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PlatformEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "Platform engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Platform engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals responsible for building and maintaining the underlying infrastructure and tools that support software development and deployment."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:platform-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:QualityEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "Quality engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Quality engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals focused on ensuring the quality of software and systems through testing, automation, and process improvement."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:quality-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:SystemsEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "Systems engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Systems engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals responsible for designing, building, and managing complex systems, considering all aspects from hardware to software and human interaction."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:systems-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:UxEngineeringPersona a owl:Class;
+    rdfs:subClassOf personatax:PersonaType;
+    rdfs:label "User experience engineering persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "User experience engineering persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Represents individuals focused on the design and development of user interfaces, ensuring usability, accessibility, and a positive user experience."@en;
+    skos:altLabel "UX engineering persona"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:user-experience-engineering-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonalizationData a owl:Class;
+    rdfs:subClassOf personatax:Persona;
+    rdfs:label "Personalization data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Personalization data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "Information used to tailor user experiences, often collected from individual user interactions and preferences."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:personalization-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonalizationAlgorithm a owl:Class;
+    rdfs:subClassOf personatax:PersonalizationData;
+    rdfs:label "Personalization algorithm"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Personalization algorithm"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "A set of rules and calculations used to process personalization data and deliver personalized experiences."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:personalization-algorithm;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:RecommendationHistory a owl:Class;
+    rdfs:subClassOf personatax:PersonalizationData;
+    rdfs:label "Recommendation history"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Recommendation history"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "A record of items or content previously suggested to a user."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:recommendation-history;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:UserSegmentData a owl:Class;
+    rdfs:subClassOf personatax:PersonalizationData;
+    rdfs:label "User segment data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "User segment data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Information used to group users with similar characteristics, behaviors, or needs."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:user-segment-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferenceData a owl:Class;
+    rdfs:subClassOf personatax:Persona;
+    rdfs:label "Preference data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preference data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "Data reflecting user’s choices, likes, dislikes, and configurations."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preference-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferenceAccessibility a owl:Class;
+    rdfs:subClassOf personatax:PreferenceData;
+    rdfs:label "Preference accessibility"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preference accessibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "How easily users can access and manage their preference settings."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preference-accessibility;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferenceNotification a owl:Class;
+    rdfs:subClassOf personatax:PreferenceData;
+    rdfs:label "Preference notification"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preference notification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Communication informing users about changes or updates related to their preferences."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preference-notification;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferencePrivacySettings a owl:Class;
+    rdfs:subClassOf personatax:PreferenceData;
+    rdfs:label "Preference privacy settings"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preference privacy settings"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Controls available to users to manage the collection, storage, and usage of their preference data."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preference-privacy-settings;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferredCommunication a owl:Class;
+    rdfs:subClassOf personatax:PreferenceData;
+    rdfs:label "Preferred communication"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preferred communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "User’s preferred channels and formats for receiving communications (e.g., email, SMS, push notifications)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preferred-communication;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferredContent a owl:Class;
+    rdfs:subClassOf personatax:PreferenceData;
+    rdfs:label "Preferred content"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preferred content"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T02:57:20.520Z"^^xsd:dateTime;
+    skos:definition "Types of content a user favors or engages with most."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preferred-content;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PreferredTopics a owl:Class;
+    rdfs:subClassOf personatax:PreferenceData;
+    rdfs:label "Preferred topics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Preferred topics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Subjects or themes a user shows interest in."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:preferred-topics;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PriorHistoryData a owl:Class;
+    rdfs:subClassOf personatax:Persona;
+    rdfs:label "Prior history data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Prior history data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "All past interactions and data associated with a user."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:prior-history-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:BrowsingHistory a owl:Class;
+    rdfs:subClassOf personatax:PriorHistoryData;
+    rdfs:label "Browsing history"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Browsing history"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Record of web pages visited by a user."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:browsing-history;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:FeedbackRating a owl:Class;
+    rdfs:subClassOf personatax:PriorHistoryData;
+    rdfs:label "Feedback & rating"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Feedback & rating"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "User-provided reviews, ratings, or opinions on products, services, or content."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:feedback-and-rating;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:InteractionTimestamp a owl:Class;
+    rdfs:subClassOf personatax:PriorHistoryData;
+    rdfs:label "Interaction timestamp"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Interaction timestamp"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Date and time of specific user actions or engagements."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:interaction-timestamp;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:SearchHistory a owl:Class;
+    rdfs:subClassOf personatax:PriorHistoryData;
+    rdfs:label "Search history"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Search history"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Record of search queries submitted by a user."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:search-history;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:SelectionHistory a owl:Class;
+    rdfs:subClassOf personatax:PriorHistoryData;
+    rdfs:label "Selection history"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Selection history"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Record of items chosen or interacted with by a user (e.g., products added to cart)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:selection-history;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:UserJourneyData a owl:Class;
+    rdfs:subClassOf personatax:PriorHistoryData;
+    rdfs:label "User journey data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "User journey data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Information about the steps a user takes while interacting with a website, app, or service."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:user-journey-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:ProfileData a owl:Class;
+    rdfs:subClassOf personatax:Persona;
+    rdfs:label "Profile data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Profile data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "Information directly provided by the user for their account or profile."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:profile-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaEmail a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona email"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona email"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "A fictional email address used for a persona, often used for prototyping."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-email;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaLanguage a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona language"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona language"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "The language a persona is assumed to speak, often based on location or demographics."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-language;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaLocation a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona location"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "The geographical location associated with a persona."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-location;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaName a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona name"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona name"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "A fictitious name given to a persona to make it more relatable and memorable."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-name;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaOrganization a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona organization"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona organization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "The fictional company or organization a persona is associated with."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-organization;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaPhone a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona phone"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona phone"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "A fictional phone number used for a persona, often used for prototyping."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-phone;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:PersonaUserIdentifier a owl:Class;
+    rdfs:subClassOf personatax:ProfileData;
+    rdfs:label "Persona user identifier"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Persona user identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "A unique identifier assigned to each persona within a system or dataset."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:persona-user-identifier;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:UserBehaviorData a owl:Class;
+    rdfs:subClassOf personatax:Persona;
+    rdfs:label "User behavior data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "User behavior data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T00:05:56.430Z"^^xsd:dateTime;
+    skos:definition "Information about how users interact with a system or product, including their actions, patterns, and choices."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:user-behavior-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:DevicePlatformData a owl:Class;
+    rdfs:subClassOf personatax:UserBehaviorData;
+    rdfs:label "Device & platform data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Device & platform data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Information about the device and operating system used by a user, such as browser type, screen size, and operating system version."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:device-and-platform-data;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:EngagementMetric a owl:Class;
+    rdfs:subClassOf personatax:UserBehaviorData;
+    rdfs:label "Engagement metric"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Engagement metric"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "A quantifiable measure of user engagement, such as click-through rates, conversion rates, or time spent on site."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:engagement-metric;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:EventTracking a owl:Class;
+    rdfs:subClassOf personatax:UserBehaviorData;
+    rdfs:label "Event tracking"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Event tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "The process of monitoring and recording specific user actions or events within a system, such as button clicks, form submissions, or video plays."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:event-tracking;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:NavigationPattern a owl:Class;
+    rdfs:subClassOf personatax:UserBehaviorData;
+    rdfs:label "Navigation pattern"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Navigation pattern"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "The typical paths users take while navigating through a website or app."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:navigation-pattern;
+    core:hasLifecycleStatus core:Draft .
+  
+  personatax:SessionData a owl:Class;
+    rdfs:subClassOf personatax:UserBehaviorData;
+    rdfs:label "Session data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-persona/>;
+    skos:prefLabel "Session data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-09-05T03:14:26.235Z"^^xsd:dateTime;
+    skos:definition "Information collected during a single user visit to a website or app, including the duration of the visit, pages viewed, and actions taken."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject personavoc:session-data;
+    core:hasLifecycleStatus core:Draft .
+}

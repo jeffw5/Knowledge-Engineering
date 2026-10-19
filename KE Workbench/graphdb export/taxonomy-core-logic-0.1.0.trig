@@ -1,0 +1,559 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-logic/> {
+  <https://www.insperity.com/taxonomy/core-logic/> a skos:ConceptScheme;
+    rdfs:label "Core logic taxonomy"@en;
+    skos:prefLabel "Core logic taxonomy"@en;
+    skos:hasTopConcept <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/data-flow-logic>, <https://www.insperity.com/taxonomy/core-logic/orchestration-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>, <https://www.insperity.com/taxonomy/core-logic/retrieval-logic>;
+    terms:description "Classification of logic components, the governed specifications of how a multi-step process, data flow, or reasoning task is carried out by services and agents."@en;
+    terms:title "Core logic taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Logic taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-logic/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/control-flow-logic> a skos:Concept;
+    skos:prefLabel "Control flow logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A logic component that determines the order and conditions under which process steps are carried out."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:altLabel "Flow logic"@en, "Orchestration flow"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-logic/error-handling-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/conditional-branching>, <https://www.insperity.com/taxonomy/core-logic/event-based-branching>,
+      <https://www.insperity.com/taxonomy/core-logic/iteration>, <https://www.insperity.com/taxonomy/core-logic/parallel-execution>,
+      <https://www.insperity.com/taxonomy/core-logic/sequence> .
+  
+  <https://www.insperity.com/taxonomy/core-logic/data-flow-logic> a skos:Concept;
+    skos:prefLabel "Data flow logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A logic component that moves, transforms, or combines data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:altLabel "Data pipeline logic"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-logic/enrichment-logic>, <https://www.insperity.com/taxonomy/core-logic/filtering-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/matching-logic>, <https://www.insperity.com/taxonomy/core-logic/routing-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/transformation-logic> .
+  
+  <https://www.insperity.com/taxonomy/core-logic/orchestration-logic> a skos:Concept;
+    skos:prefLabel "Orchestration logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A logic component that coordinates several services or agents to complete a request."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:altLabel "Coordination logic"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-logic/agent-orchestration>,
+      <https://www.insperity.com/taxonomy/core-logic/service-choreography>, <https://www.insperity.com/taxonomy/core-logic/service-orchestration> .
+  
+  <https://www.insperity.com/taxonomy/core-logic/reasoning-logic> a skos:Concept;
+    skos:prefLabel "Reasoning logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A logic component that draws conclusions from facts and knowledge."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:altLabel "Inference logic"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-logic/abductive-reasoning>,
+      <https://www.insperity.com/taxonomy/core-logic/causal-reasoning>, <https://www.insperity.com/taxonomy/core-logic/deductive-reasoning>,
+      <https://www.insperity.com/taxonomy/core-logic/inductive-reasoning>, <https://www.insperity.com/taxonomy/core-logic/probabilistic-reasoning>,
+      <https://www.insperity.com/taxonomy/core-logic/temporal-reasoning> .
+  
+  <https://www.insperity.com/taxonomy/core-logic/retrieval-logic> a skos:Concept;
+    skos:prefLabel "Retrieval logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A logic component that selects the governed facts and content used to answer a question."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:altLabel "RAG logic"@en, "Retrieval-augmented generation logic"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:narrower <https://www.insperity.com/taxonomy/core-logic/context-assembly>, <https://www.insperity.com/taxonomy/core-logic/graph-traversal>,
+      <https://www.insperity.com/taxonomy/core-logic/hybrid-retrieval>, <https://www.insperity.com/taxonomy/core-logic/semantic-search> .
+  
+  <https://www.insperity.com/taxonomy/core-logic/abductive-reasoning> a skos:Concept;
+    skos:prefLabel "Abductive reasoning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reasoning logic that infers the most likely explanation for observations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>;
+    skos:altLabel "Abduction"@en, "Diagnostic reasoning"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/agent-orchestration> a skos:Concept;
+    skos:prefLabel "Agent orchestration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An orchestration logic in which a coordinating agent delegates tasks to other agents and tools."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/orchestration-logic>;
+    skos:altLabel "Agent-to-agent delegation"@en, "Multi-agent orchestration"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/causal-reasoning> a skos:Concept;
+    skos:prefLabel "Causal reasoning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reasoning logic that determines how changes in one factor produce changes in another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>;
+    skos:altLabel "Causal inference"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/compensation-logic> a skos:Concept;
+    skos:prefLabel "Compensation logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An error handling logic that undoes the effects of completed steps when a later step fails."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/error-handling-logic>;
+    skos:altLabel "Rollback"@en, "Saga compensation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/error-handling-logic> a skos:Concept;
+    skos:prefLabel "Error handling logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A control flow logic that detects failures and decides how to recover."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>;
+    skos:altLabel "Exception handling"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/taxonomy/core-logic/compensation-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/dead-letter-routing>, <https://www.insperity.com/taxonomy/core-logic/fallback-logic>,
+      <https://www.insperity.com/taxonomy/core-logic/retry-logic> .
+  
+  <https://www.insperity.com/taxonomy/core-logic/conditional-branching> a skos:Concept;
+    skos:prefLabel "Conditional branching"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A control flow logic in which one path is chosen from several by evaluating conditions."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>;
+    skos:altLabel "Branch"@en, "Exclusive gateway"@en, "If then else"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/context-assembly> a skos:Concept;
+    skos:prefLabel "Context assembly"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A retrieval logic that composes retrieved facts, definitions, and sources into model context within a token budget."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/retrieval-logic>;
+    skos:altLabel "Context engineering"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/event-based-branching> a skos:Concept;
+    skos:prefLabel "Event-based branching"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A control flow logic in which the path taken depends on which event occurs first."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>;
+    skos:altLabel "Event gateway"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/iteration> a skos:Concept;
+    skos:prefLabel "Iteration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A control flow logic in which steps repeat until a condition is met or a collection is exhausted."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>;
+    skos:altLabel "Loop"@en, "Repeat"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/parallel-execution> a skos:Concept;
+    skos:prefLabel "Parallel execution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A control flow logic in which several paths run at the same time and later join."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>;
+    skos:altLabel "Fork and join"@en, "Parallel gateway"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/sequence> a skos:Concept;
+    skos:prefLabel "Sequence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A control flow logic in which steps run one after another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/control-flow-logic>;
+    skos:altLabel "Sequential flow"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/enrichment-logic> a skos:Concept;
+    skos:prefLabel "Enrichment logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data flow logic that adds attributes or links from other sources."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/data-flow-logic>;
+    skos:altLabel "Data enrichment"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domaingovernancevoc:data-enrichment;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/filtering-logic> a skos:Concept;
+    skos:prefLabel "Filtering logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data flow logic that keeps or removes records by conditions."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/data-flow-logic>;
+    skos:altLabel "Filter"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/matching-logic> a skos:Concept;
+    skos:prefLabel "Matching logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data flow logic that determines whether records refer to the same entity."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/data-flow-logic>;
+    skos:altLabel "Entity resolution"@en, "Record linkage"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/routing-logic> a skos:Concept;
+    skos:prefLabel "Routing logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data flow logic that directs messages or records to destinations by content or type."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/data-flow-logic>;
+    skos:altLabel "Content-based routing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/transformation-logic> a skos:Concept;
+    skos:prefLabel "Transformation logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data flow logic that changes the structure, format, or values of data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/data-flow-logic>;
+    skos:altLabel "Data transformation"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject technicalservicesvoc:data-transformation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/dead-letter-routing> a skos:Concept;
+    skos:prefLabel "Dead-letter routing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An error handling logic that sets aside messages that cannot be processed after allowed recovery actions."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/error-handling-logic>;
+    skos:altLabel "Dead letter queue handling"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/deductive-reasoning> a skos:Concept;
+    skos:prefLabel "Deductive reasoning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reasoning logic that derives conclusions that necessarily follow from premises and axioms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>;
+    skos:altLabel "Deduction"@en, "Entailment"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/fallback-logic> a skos:Concept;
+    skos:prefLabel "Fallback logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An error handling logic that switches to an alternate path or degraded answer when a step fails."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/error-handling-logic>;
+    skos:altLabel "Graceful degradation"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/retry-logic> a skos:Concept;
+    skos:prefLabel "Retry logic"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An error handling logic that repeats a failed step after a delay."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/error-handling-logic>;
+    skos:altLabel "Retry with backoff"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/graph-traversal> a skos:Concept;
+    skos:prefLabel "Graph traversal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A retrieval logic that follows relationships in the knowledge graph from a starting entity."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/retrieval-logic>;
+    skos:altLabel "Graph query"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/hybrid-retrieval> a skos:Concept;
+    skos:prefLabel "Hybrid retrieval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A retrieval logic that combines keyword, vector, and graph results and ranks them together."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/retrieval-logic>;
+    skos:altLabel "Federated retrieval"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/inductive-reasoning> a skos:Concept;
+    skos:prefLabel "Inductive reasoning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reasoning logic that generalizes from observed cases to probable rules."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>;
+    skos:altLabel "Induction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/service-choreography> a skos:Concept;
+    skos:prefLabel "Service choreography"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An orchestration logic in which services react to each other's events without a central controller."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/orchestration-logic>;
+    skos:altLabel "Event choreography"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/service-orchestration> a skos:Concept;
+    skos:prefLabel "Service orchestration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An orchestration logic in which a central controller calls services in a defined order."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/orchestration-logic>;
+    skos:altLabel "Workflow orchestration"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/probabilistic-reasoning> a skos:Concept;
+    skos:prefLabel "Probabilistic reasoning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reasoning logic that computes likelihoods of conclusions under uncertainty."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>;
+    skos:altLabel "Bayesian reasoning"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/temporal-reasoning> a skos:Concept;
+    skos:prefLabel "Temporal reasoning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A reasoning logic that draws conclusions about the order, overlap, and validity of facts over time."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/reasoning-logic>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-logic/semantic-search> a skos:Concept;
+    skos:prefLabel "Semantic search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A retrieval logic that finds content by meaning using labels, synonyms, and embeddings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-logic/>;
+    skos:broader <https://www.insperity.com/taxonomy/core-logic/retrieval-logic>;
+    skos:altLabel "Similarity search"@en, "Vector search"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject technicalservicesvoc:semantic-search;
+    core:hasLifecycleStatus core:Draft .
+}

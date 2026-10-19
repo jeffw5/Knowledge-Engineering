@@ -1,0 +1,1034 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-product/> {
+  <https://www.insperity.com/taxonomy/core-product/> a owl:Ontology;
+    rdfs:label "Core product taxonomy"@en;
+    terms:description "The product taxonomy organizes products based on shared characteristics. This structured categorization, ranging from broad concepts (business driver) to specific details (physical attributes), helps to understand how products are utilized across the organization."@en;
+    terms:title "Core product taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2024-09-24T15:52:38.882Z"^^xsd:dateTime;
+    skos:altLabel "Taxonomy | Core | Product"@en;
+    owl:versionInfo "0.1.0";
+    owl:imports <https://www.insperity.com/ontology/core/>, <https://www.insperity.com/taxonomy/core-party/>,
+      <https://www.insperity.com/taxonomy/core-lifecycle/>, <https://www.insperity.com/taxonomy/core-persona/>,
+      <https://www.insperity.com/taxonomy/core-valuestream/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/core-product/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-product/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:IndividualProduct a owl:Class;
+    rdfs:subClassOf producttax:PhysicalProduct;
+    rdfs:label "Individual product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Individual product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A single, distinct product item."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:individual-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:RevenueStream a owl:Class;
+    rdfs:subClassOf producttax:ProductBusinessDrivers;
+    rdfs:label "Revenue stream"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Revenue stream"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A source of income generated by a business."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:revenue-stream;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Cost a owl:Class;
+    rdfs:subClassOf producttax:ProductBusinessDrivers;
+    rdfs:label "Cost"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The expenses incurred in producing, marketing, and selling a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:cost;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Product a owl:Class;
+    rdfs:label "Product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-10-01T20:13:51.235Z"^^xsd:dateTime;
+    skos:definition "A good, service, or idea offered to the market to satisfy a customer need or want."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:PhysicalProduct a owl:Class;
+    rdfs:subClassOf producttax:Product;
+    rdfs:label "Physical product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Physical product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A tangible, material object offered for sale."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:physical-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:dimensions a owl:DatatypeProperty;
+    rdfs:label "Dimensions"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Dimensions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T19:57:44.981Z"^^xsd:dateTime;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductFunction a owl:Class;
+    rdfs:subClassOf producttax:Product;
+    rdfs:label "Product function"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product function"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "What a product does and how it works."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-function;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ergonomics a owl:DatatypeProperty;
+    rdfs:label "Ergonomics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Ergonomics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-25T19:57:44.981Z"^^xsd:dateTime;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductBusinessDrivers a owl:Class;
+    rdfs:subClassOf producttax:Product;
+    rdfs:label "Product business drivers"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product business drivers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "Factors that influence the success of a product, such as market demand, competition, and technology."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-business-drivers;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Growth a owl:Class;
+    rdfs:subClassOf lifecycletax:Lifecycle;
+    rdfs:label "Growth"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Growth"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The stage in the product lifecycle where sales increase rapidly and the product gains market acceptance."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:growth;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductConcept a owl:Class;
+    rdfs:subClassOf producttax:Product;
+    rdfs:label "Product concept"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product concept"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A detailed idea for a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-concept;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Conceptualization a owl:Class;
+    rdfs:subClassOf producttax:Development;
+    rdfs:label "Conceptualization"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Conceptualization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "The initial stage of product development, where the idea for a product is generated and refined."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:conceptualization;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductInnovation a owl:Class;
+    rdfs:subClassOf producttax:ProductBusinessDrivers;
+    rdfs:label "Product innovation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product innovation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "The development of new and improved products."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-innovation;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Development a owl:Class;
+    rdfs:subClassOf lifecycletax:Lifecycle;
+    rdfs:label "Development"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The process of creating and bringing a product to market."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:development;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Design a owl:Class;
+    rdfs:subClassOf producttax:Development;
+    rdfs:label "Design"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "The process of creating the form, function, and aesthetics of a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:design;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Decline a owl:Class;
+    rdfs:subClassOf lifecycletax:Lifecycle;
+    rdfs:label "Decline"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Decline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The final stage of the product lifecycle, characterized by decreasing sales and eventual withdrawal from the market."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:decline;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:IterativeDevelopment a owl:Class;
+    rdfs:subClassOf producttax:Development;
+    rdfs:label "Iterative development"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Iterative development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "A cyclical development process where a product is built incrementally, with each cycle incorporating feedback and improvements."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:iterative-development;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Prototyping a owl:Class;
+    rdfs:subClassOf producttax:Development;
+    rdfs:label "Prototyping"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Prototyping"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "Creating a preliminary version of a product to test and refine its design and functionality."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:prototyping;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Testing a owl:Class;
+    rdfs:subClassOf producttax:Development;
+    rdfs:label "Testing"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "Evaluating a product’s performance, functionality, and usability to identify and address any issues."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:testing;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Introduction a owl:Class;
+    rdfs:subClassOf lifecycletax:Lifecycle;
+    rdfs:label "Introduction"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Introduction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The stage where a product is first launched into the market."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:introduction;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Maturity a owl:Class;
+    rdfs:subClassOf lifecycletax:Lifecycle;
+    rdfs:label "Maturity"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Maturity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The stage where product sales growth stabilizes and competition intensifies."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:maturity;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ComponentParts a owl:Class;
+    rdfs:subClassOf producttax:PhysicalProduct;
+    rdfs:label "Component parts"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Component parts"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The individual elements that make up a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:component-parts;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:FunctionalProduct a owl:Class;
+    rdfs:subClassOf producttax:IndividualProduct;
+    rdfs:label "Functional product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Functional product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:01:07.420Z"^^xsd:dateTime;
+    skos:definition "A product that performs a specific task or function."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:functional-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:SuppliedProduct a owl:Class;
+    rdfs:subClassOf producttax:IndividualProduct;
+    rdfs:label "Supplied product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Supplied product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:01:07.420Z"^^xsd:dateTime;
+    skos:definition "A product that is provided as part of a larger service or offering."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:supplied-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:TechnicalProduct a owl:Class;
+    rdfs:subClassOf producttax:IndividualProduct;
+    rdfs:label "Technical product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Technical product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:01:07.420Z"^^xsd:dateTime;
+    skos:definition "A product that is complex or technologically advanced."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:technical-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductCollection a owl:Class;
+    rdfs:subClassOf producttax:PhysicalProduct;
+    rdfs:label "Product collection"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product collection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A group of related products offered by a company."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-collection;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductCatalog a owl:Class;
+    rdfs:subClassOf producttax:ProductCollection;
+    rdfs:label "Product catalog"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product catalog"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A comprehensive listing of a company’s products."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-catalog;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Accessories a owl:Class;
+    rdfs:subClassOf producttax:ProductCatalog;
+    rdfs:label "Accessories"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Accessories"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Products that complement or enhance the use of a primary product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:accessories;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:AudioProducts a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Audio products"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Audio products"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Products related to sound, such as headphones, speakers, and microphones."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:audio-products;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ChargersCables a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Chargers & cables"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Chargers & cables"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices and accessories used to power and connect electronic devices."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:chargers-and-cables;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:GamingProducts a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Gaming products"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Gaming products"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Products related to video games, such as consoles, controllers, and games."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:gaming-products;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:PhoneAttachments a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Phone attachments"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Phone attachments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Accessories that attach to a phone, such as lenses, grips, and stands."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:phone-attachments;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:PhoneCases a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Phone cases"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Phone cases"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Protective coverings for smartphones."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:phone-cases;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ScreenProtectors a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Screen protectors"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Screen protectors"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Thin films that protect screens from scratches and damage."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:screen-protectors;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:SmartHomeProducts a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Smart home products"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Smart home products"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices that connect to a home network and can be controlled remotely."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:smart-home-products;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:TabletAccessories a owl:Class;
+    rdfs:subClassOf producttax:Accessories;
+    rdfs:label "Tablet accessories"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Tablet accessories"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Items designed to enhance or complement the functionality and usability of a tablet device, such as cases, screen protectors, styluses, keyboards, and chargers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:tablet-accessories;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:BusinessEquipment a owl:Class;
+    rdfs:subClassOf producttax:ProductCatalog;
+    rdfs:label "Business equipment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Business equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:13:38.195Z"^^xsd:dateTime;
+    skos:definition "Equipment used in a business setting, such as computers, printers, and phones."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:business-equipment;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:NetworkInfrastructure a owl:Class;
+    rdfs:subClassOf producttax:BusinessEquipment;
+    rdfs:label "Network infrastructure"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Network infrastructure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:13:38.195Z"^^xsd:dateTime;
+    skos:definition "The hardware and software components that support a computer network."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:network-infrastructure;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:OfficeEquipment a owl:Class;
+    rdfs:subClassOf producttax:BusinessEquipment;
+    rdfs:label "Office equipment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Office equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:13:38.195Z"^^xsd:dateTime;
+    skos:definition "Equipment typically found in an office, such as desks, chairs, and filing cabinets."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:office-equipment;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:PlatformInfrastructure a owl:Class;
+    rdfs:subClassOf producttax:BusinessEquipment;
+    rdfs:label "Platform infrastructure"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Platform infrastructure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:13:38.195Z"^^xsd:dateTime;
+    skos:definition "The underlying hardware and software that support a computing platform."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:platform-infrastructure;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ConnectedDevices a owl:Class;
+    rdfs:subClassOf producttax:ProductCatalog;
+    rdfs:label "Connected devices"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Connected devices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices that can connect to the internet or other devices."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:connected-devices;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ConnectedHomeDevices a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Connected home devices"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Connected home devices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Smart home products that can be controlled remotely."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:connected-home-devices;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Hum a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Hum"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Hum"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Verizon’s network-connected device for monitoring and diagnosing car problems."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:hum;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Laptop a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Laptop"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Laptop"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A portable personal computer."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:laptop;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:MobileHotspotDevices a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Mobile hotspot devices"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Mobile hotspot devices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices that create a portable Wi-Fi network."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:mobile-hotspot-devices;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:SecurityCameras a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Security cameras"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Security cameras"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices that capture and record video footage for security purposes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:security-cameras;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Smartwatch a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Smartwatch"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Smartwatch"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A wearable computer in the form of a wristwatch."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:smartwatch;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Tablet a owl:Class;
+    rdfs:subClassOf producttax:ConnectedDevices;
+    rdfs:label "Tablet"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Tablet"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A portable, mobile computing device typically featuring a touchscreen display, a mobile operating system, and a rechargeable battery, all housed in a thin, flat package"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:tablet;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:CustomerPremisesEquipment a owl:Class;
+    rdfs:subClassOf producttax:ProductCatalog;
+    rdfs:label "Customer premises equipment"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Customer premises equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Equipment installed at a customer’s location to connect to a telecommunications network."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:customer-premises-equipment;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Routers a owl:Class;
+    rdfs:subClassOf producttax:CustomerPremisesEquipment;
+    rdfs:label "Routers"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Routers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Networking devices that forward data packets between computer networks."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:routers;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:SetTopBoxes a owl:Class;
+    rdfs:subClassOf producttax:CustomerPremisesEquipment;
+    rdfs:label "Set-Top boxes"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Set-Top boxes"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices that decode and display digital television signals."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:set-top-boxes;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:UsbModems a owl:Class;
+    rdfs:subClassOf producttax:CustomerPremisesEquipment;
+    rdfs:label "Universal serial bus modems"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Universal serial bus modems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "Devices that provide internet access via a USB port."@en;
+    skos:altLabel "USB modems"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:universal-serial-bus-modems;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Smartphone a owl:Class;
+    rdfs:subClassOf producttax:ProductCatalog;
+    rdfs:label "Smartphone"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Smartphone"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:25:32.326Z"^^xsd:dateTime;
+    skos:definition "A mobile phone with advanced computing capabilities."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:smartphone;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:MarketingStrategy a owl:Class;
+    rdfs:subClassOf producttax:ProductBusinessDrivers;
+    rdfs:label "Marketing strategy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Marketing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "A plan for promoting and selling a product to its target market."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:marketing-strategy;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:PricingStrategy a owl:Class;
+    rdfs:subClassOf producttax:ProductBusinessDrivers;
+    rdfs:label "Pricing strategy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Pricing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A plan for setting prices for a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:pricing-strategy;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:CompetitivePricingAnalysis a owl:Class;
+    rdfs:subClassOf producttax:PricingStrategy;
+    rdfs:label "Competitive pricing analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Competitive pricing analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "Researching and analyzing the pricing of competitors’ products."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:competitive-pricing-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:DiscountsPromotions a owl:Class;
+    rdfs:subClassOf producttax:PricingStrategy;
+    rdfs:label "Discounts & promotions"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Discounts & promotions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "Temporary reductions in price or other incentives to encourage sales."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:discounts-and-promotions;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:PricingModelsStructures a owl:Class;
+    rdfs:subClassOf producttax:PricingStrategy;
+    rdfs:label "Pricing models & structures"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Pricing models & structures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "Different approaches to setting prices, such as cost-plus pricing, value-based pricing, and subscription pricing."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:pricing-models-and-structures;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:SalesStrategy a owl:Class;
+    rdfs:subClassOf producttax:ProductBusinessDrivers;
+    rdfs:label "Sales strategy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Sales strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-10T16:20:49.090Z"^^xsd:dateTime;
+    skos:definition "A plan for selling a product or service."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:sales-strategy;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:UserJourney a owl:Class;
+    rdfs:subClassOf producttax:ProductConcept;
+    rdfs:label "User journey"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "User journey"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The steps a user takes to achieve a goal when interacting with a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:user-journey;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:UserPersona a owl:Class;
+    rdfs:subClassOf producttax:ProductConcept;
+    rdfs:label "User persona"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "User persona"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A fictional representation of a typical user of a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:user-persona;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:UserStory a owl:Class;
+    rdfs:subClassOf producttax:ProductConcept;
+    rdfs:label "User story"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "User story"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A short, simple description of a feature or functionality from a user’s perspective."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:user-story;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:DataFlow a owl:Class;
+    rdfs:subClassOf producttax:ProductFunction;
+    rdfs:label "Data flow"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Data flow"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The movement of data through a system."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:data-flow;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductFeatures a owl:Class;
+    rdfs:subClassOf producttax:ProductFunction;
+    rdfs:label "Product features"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product features"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The specific characteristics and capabilities of a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-features;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductCompatibility a owl:Class;
+    rdfs:subClassOf producttax:ProductFeatures;
+    rdfs:label "Product compatibility"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product compatibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:01:07.420Z"^^xsd:dateTime;
+    skos:definition "The ability of a product to work with other products or systems."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-compatibility;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductReviewsRatings a owl:Class;
+    rdfs:subClassOf producttax:ProductFeatures;
+    rdfs:label "Product reviews & ratings"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product reviews & ratings"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:01:07.420Z"^^xsd:dateTime;
+    skos:definition "Feedback and evaluations from customers who have used a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-reviews-and-ratings;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:ProductWarrantySupport a owl:Class;
+    rdfs:subClassOf producttax:ProductFeatures;
+    rdfs:label "Product warranty & support"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Product warranty & support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:01:07.420Z"^^xsd:dateTime;
+    skos:definition "Guarantees and assistance provided to customers after purchasing a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:product-warranty-and-support;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:Roadmap a owl:Class;
+    rdfs:subClassOf producttax:ProductFunction;
+    rdfs:label "Roadmap"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "Roadmap"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "A plan that outlines the future development of a product."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:roadmap;
+    core:hasLifecycleStatus core:Draft .
+  
+  producttax:SystemArchitecture a owl:Class;
+    rdfs:subClassOf producttax:ProductFunction;
+    rdfs:label "System architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-product/>;
+    skos:prefLabel "System architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2024-12-05T20:59:01.237Z"^^xsd:dateTime;
+    skos:definition "The high-level structure and design of a system."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject productvoc:system-architecture;
+    core:hasLifecycleStatus core:Draft .
+}

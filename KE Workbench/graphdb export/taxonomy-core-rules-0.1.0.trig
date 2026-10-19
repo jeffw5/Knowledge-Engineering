@@ -1,0 +1,498 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-rules/> {
+  <https://www.insperity.com/taxonomy/core-rules/> a skos:ConceptScheme;
+    rdfs:label "Core rules taxonomy"@en;
+    skos:prefLabel "Core rules taxonomy"@en;
+    skos:hasTopConcept rulestax:access-control-rule, rulestax:business-rule, rulestax:data-constraint,
+      rulestax:data-quality-rule, rulestax:guardrail-rule, rulestax:transformation-rule;
+    terms:description "Classification of rules, the declarative statements authored once in the single source of truth that constrain data, derive decisions, or guard the behavior of services and agents."@en;
+    terms:title "Core rules taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Rule taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-rules/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:access-control-rule a skos:Concept;
+    skos:prefLabel "Access control rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A rule that states which parties may read or change which information under which conditions."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:altLabel "Access rule"@en, "Entitlement rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-rules/> .
+  
+  rulestax:business-rule a skos:Concept;
+    skos:prefLabel "Business rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A rule that states a business policy or decision logic in terms the business understands."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:altLabel "Business logic rule"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationdatadomainvoc:business-rule;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:narrower rulestax:authorization-rule, rulestax:decision-rule, rulestax:derivation-rule .
+  
+  rulestax:data-constraint a skos:Concept;
+    skos:prefLabel "Data constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A rule that states what must always be true about data."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:altLabel "Constraint rule"@en, "Integrity constraint"@en;
+    skos:scopeNote "Authored as ontology terms and SHACL shapes or JSON Schema."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject rulesvoc:constraint-rule;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:narrower rulestax:cardinality-constraint, rulestax:conditional-constraint, rulestax:referential-constraint,
+      rulestax:temporal-constraint, rulestax:uniqueness-constraint, rulestax:value-constraint .
+  
+  rulestax:data-quality-rule a skos:Concept;
+    skos:prefLabel "Data quality rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A rule that measures or enforces a dimension of data quality."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:narrower rulestax:accuracy-rule, rulestax:completeness-rule, rulestax:consistency-rule,
+      rulestax:timeliness-rule, rulestax:validity-rule .
+  
+  rulestax:guardrail-rule a skos:Concept;
+    skos:prefLabel "Guardrail rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A rule that limits the inputs, actions, or outputs of an automated agent."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:altLabel "AI guardrail"@en, "Agent guardrail"@en, "Artificial intelligence guardrail"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:narrower rulestax:action-guardrail, rulestax:circuit-breaker-rule, rulestax:input-guardrail,
+      rulestax:output-guardrail .
+  
+  rulestax:transformation-rule a skos:Concept;
+    skos:prefLabel "Transformation rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A rule that states how data in one form is converted into another form."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:altLabel "Conversion rule"@en, "Mapping rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-rules/> .
+  
+  rulestax:accuracy-rule a skos:Concept;
+    skos:prefLabel "Accuracy rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality rule that checks values agree with an authoritative source."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-quality-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:action-guardrail a skos:Concept;
+    skos:prefLabel "Action guardrail"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A guardrail rule that restricts which tools or actions an agent may take."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:guardrail-rule;
+    skos:altLabel "Tool use limit"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:authorization-rule a skos:Concept;
+    skos:prefLabel "Authorization rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A business rule that states who may perform or approve an action."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:business-rule;
+    skos:altLabel "Approval authority rule"@en, "Delegation of authority rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:decision-rule a skos:Concept;
+    skos:prefLabel "Decision rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A business rule that determines an outcome from input conditions, typically one row of a decision table."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:business-rule;
+    skos:altLabel "DMN rule"@en, "Decision table rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower rulestax:eligibility-rule, rulestax:pricing-rule, rulestax:routing-rule,
+      rulestax:threshold-rule, rulestax:timing-rule .
+  
+  rulestax:derivation-rule a skos:Concept;
+    skos:prefLabel "Derivation rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A business rule that states how a fact is concluded from other facts."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:business-rule;
+    skos:altLabel "Inference rule"@en, "Derived fact rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:cardinality-constraint a skos:Concept;
+    skos:prefLabel "Cardinality constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data constraint on how many values a property may or must have."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-constraint;
+    skos:altLabel "Multiplicity constraint"@en;
+    skos:example "A payroll run has exactly one pay period."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:circuit-breaker-rule a skos:Concept;
+    skos:prefLabel "Circuit breaker rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A guardrail rule that suspends or degrades an agent when reliability falls below a threshold."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:guardrail-rule;
+    skos:altLabel "AI circuit breaker"@en, "Artificial intelligence circuit breaker"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:completeness-rule a skos:Concept;
+    skos:prefLabel "Completeness rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality rule that checks required values are present."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-quality-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:conditional-constraint a skos:Concept;
+    skos:prefLabel "Conditional constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data constraint that applies only when a stated condition holds."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-constraint;
+    skos:altLabel "Dependency constraint"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:consistency-rule a skos:Concept;
+    skos:prefLabel "Consistency rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality rule that checks values agree across records and systems."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-quality-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:referential-constraint a skos:Concept;
+    skos:prefLabel "Referential constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data constraint that a referenced entity must exist."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-constraint;
+    skos:altLabel "Referential integrity rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:temporal-constraint a skos:Concept;
+    skos:prefLabel "Temporal constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data constraint on the order or overlap of dates and periods."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-constraint;
+    skos:altLabel "Date order constraint"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:uniqueness-constraint a skos:Concept;
+    skos:prefLabel "Uniqueness constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data constraint that a value or combination of values identifies at most one entity."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-constraint;
+    skos:altLabel "Key constraint"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:value-constraint a skos:Concept;
+    skos:prefLabel "Value constraint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data constraint on the type, format, range, or allowed list of a value."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-constraint;
+    skos:altLabel "Allowed values"@en, "Domain constraint"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:timeliness-rule a skos:Concept;
+    skos:prefLabel "Timeliness rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality rule that checks values are current within an agreed period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-quality-rule;
+    skos:altLabel "Freshness rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:validity-rule a skos:Concept;
+    skos:prefLabel "Validity rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A data quality rule that checks values conform to defined formats and domains."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:data-quality-rule;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:eligibility-rule a skos:Concept;
+    skos:prefLabel "Eligibility rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision rule that determines whether a party qualifies for a benefit, service, or action."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:decision-rule;
+    skos:altLabel "Qualification rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:pricing-rule a skos:Concept;
+    skos:prefLabel "Pricing rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision rule that determines a price, fee, or rate."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:decision-rule;
+    skos:altLabel "Rating rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:routing-rule a skos:Concept;
+    skos:prefLabel "Routing rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision rule that determines where work or a request is sent."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:decision-rule;
+    skos:altLabel "Assignment rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:threshold-rule a skos:Concept;
+    skos:prefLabel "Threshold rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision rule that triggers an outcome when a measure crosses a defined limit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:decision-rule;
+    skos:altLabel "Limit rule"@en, "Tolerance rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:timing-rule a skos:Concept;
+    skos:prefLabel "Timing rule"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A decision rule that determines a due date, waiting period, or effective date."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:decision-rule;
+    skos:altLabel "Deadline rule"@en, "Effective date rule"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:input-guardrail a skos:Concept;
+    skos:prefLabel "Input guardrail"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A guardrail rule that screens requests before an agent acts on them."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:guardrail-rule;
+    skos:altLabel "Prompt guardrail"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  rulestax:output-guardrail a skos:Concept;
+    skos:prefLabel "Output guardrail"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A guardrail rule that checks an agent's output before it is released."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-rules/>;
+    skos:broader rulestax:guardrail-rule;
+    skos:altLabel "Answer guardrail"@en, "Grounding check"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

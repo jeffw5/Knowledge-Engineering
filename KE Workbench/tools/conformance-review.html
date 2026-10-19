@@ -252,6 +252,8 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
 
   let policyJ = null, POL = null, assets = [], quads = [], idx = null, findings = [], terms = new Map();
   let mode = 'graphdb', fileOf = {}, fileDir = '';
+  let DEFS = { key: false };
+  fetch('/api/ingest/define-status').then(r => r.ok ? r.json() : null).then(d => { if (d) DEFS = d; }).catch(() => {});
   let VOC = { vocabs: [], terms: new Map() }, support = new Set(), vocOpt = new Map();   // vocabulary index; vocabulary files loaded only as targets
   let cat = 'org', sel = null, checked = new Set(), staged = [], skipped = new Set(), scanned = new Set();
 
@@ -396,6 +398,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   }
   const vals = (iri, p, g) => (idx.s.get(iri) || []).filter(q => q.p.v === p && (!g || q.g === g)).map(q => q.o);
   const litv = (iri, p) => vals(iri, p).filter(o => o.t === 'lit' && (!o.lang || o.lang === 'en')).map(o => o.v);
+  // the vocabulary terms a taxonomy concept links to: core:hasPrimaryTerm first, then dcterms:subject, then legacy dc:subject (§3.11)
+  const SUBJ_P = K.SUBJECT_PREDS || [DC + 'subject'];
+  const subjOf = iri => [...new Set(SUBJ_P.flatMap(p => vals(iri, p).filter(o => o.t === 'iri').map(o => o.v)))];
   const label = iri => litv(iri, SKOS + 'prefLabel')[0] || litv(iri, RDFS + 'label')[0] || litv(iri, DCT + 'title')[0] || ln(iri);
   const graphOf = iri => { const q = (idx.s.get(iri) || [])[0]; return q ? q.g : null; };
   const assetLabel = g => { const a = assets.find(x => x.iri === g || x.iri === idx.header.get(g)); return a ? a.label : ln(g); };
@@ -457,7 +462,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       const st = staged.find(c => c.type === 'addVocab' && c.term === p);
       if (st && st.vocab === vocab) return st.newIri;
       const lk = staged.find(c => c.type === 'link' && c.term === p);
-      const subj = lk ? [lk.target] : vals(p, DC + 'subject').filter(o => o.t === 'iri').map(o => o.v);
+      const subj = lk ? [lk.target] : subjOf(p);
       const hit = subj.find(x => VOC.terms.has(x) && VOC.terms.get(x).scheme === vocab);
       if (hit) return hit;
     }
@@ -598,6 +603,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     $('bulk').innerHTML = `<b>${n} selected</b>
       <button class="btn sm" id="bSug" ${sugs.length ? '' : 'disabled'} title="Stage the suggested label, definition or description for each selected term">Stage ${sugs.length} suggestion${sugs.length === 1 ? '' : 's'}</button>
       ${cat === 'voc' && VOC.vocabs.length ? `<span style="display:inline-flex;gap:4px;align-items:center">Add ${n} to <select id="bVocab" style="height:26px;max-width:220px;font-size:11.5px">${VOC.vocabs.map(v => `<option value="${esc(v.iri)}" ${v.iri === ls.get('ke-review-vocab', '') ? 'selected' : ''}>${esc(v.title)}</option>`).join('')}</select><button class="btn sm pri" id="bAddVoc">Add</button></span>` : ''}
+      ${cat === 'def' && DEFS.key ? `<button class="btn sm pri" id="bDefs">✦ Write ${n} definition${n === 1 ? '' : 's'} with Claude</button>` : ''}
       <button class="btn sm bad" id="bRem">Stage removal of ${n}</button>
       <button class="btn sm" id="bSkip">Skip ${n}</button>
       <button class="btn sm" id="bNone">Clear</button>`;
@@ -611,6 +617,17 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       $('bAddVoc').disabled = true;
       for (const i of list) await stageAddVocab(i, vocab, defaultBroader(i, vocab));
       checked.clear(); renderVocOptions(); refreshAll(); toast(`${plural(list.length, 'term')} staged for ${vocabTitle(vocab)}`);
+    });
+    if ($('bDefs')) $('bDefs').addEventListener('click', async () => {
+      const list = [...checked].filter(i => byTerm.has(i) && !isHeader(i));
+      $('bDefs').disabled = true; $('bDefs').textContent = `Writing ${list.length}…`;
+      try {
+        const d = await writeDefinitions(list);
+        let n = 0;
+        list.forEach(i => { const t = d.definitions[i]; if (t) { stage({ type: 'definition', term: i, graph: graphOf(i), old: litv(i, SKOS + 'definition')[0] || '', new: t, generated: d.model }); n++; } });
+        checked.clear(); refreshAll();
+        toast(`${plural(n, 'definition')} written by ${d.model} and staged${d.error ? ' — some failed: ' + d.error : ''}`, !!d.error);
+      } catch (e) { toast(e.message, true); renderBulk(queueTerms()); }
     });
     $('bSkip').addEventListener('click', () => { [...checked].forEach(i => skipped.add(i)); checked.clear(); refreshAll(); });
     $('bNone').addEventListener('click', () => { checked.clear(); renderQueue(); });
@@ -664,6 +681,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         <div class="fld"><textarea id="fDef" placeholder="${header ? 'What this model covers' : 'A [parent] that [distinguishing feature].'}">${esc(header ? (stDesc ? stDesc.new : (sug && sug.kind === 'description' ? sug.text : desc)) : (stDef ? stDef.new : (sug && sug.kind === 'definition' ? sug.text : def)))}</textarea></div>
         ${!header && !def && pars.length ? `<div class="sugg">Start from the parent: “A ${esc(label(pars[0]).toLowerCase())} that …”</div>` : ''}
         <div class="row"><button class="btn sm pri" id="stDef">${(header ? stDesc : stDef) ? 'Update staged text' : 'Stage ' + (header ? 'description' : 'definition')}</button>
+          ${header ? '' : `<button class="btn sm" id="genDef" ${DEFS.key ? '' : `disabled title="Needs an Anthropic API key in ${esc(DEFS.keyFile || '~/.ke-workbench.env')}"`}>✦ Write with Claude</button>`}
           ${(header ? stDesc : stDef) ? `<button class="btn sm" data-unstage="${header ? 'description' : 'definition'}">Undo</button>` : ''}</div>
       </div></div>
 
@@ -702,7 +720,8 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     if (fd && fd.value.trim() && fd.value !== fd.dataset.init) {
       const v = fd.value.trim().replace(/\s+/g, ' ');
       const old = header ? (litv(iri, DCT + 'description')[0] || '') : (litv(iri, SKOS + 'definition')[0] || '');
-      if (v !== old) { stage({ type: header ? 'description' : 'definition', term: iri, graph: g, old, new: v }); n++; }
+      if (v !== old) { stage({ type: header ? 'description' : 'definition', term: iri, graph: g, old, new: v }); n++;
+        if (/^[a-z]/.test(v)) setTimeout(() => toast(`The staged definition of “${label(iri)}” starts in lower case (“${v.split(' ')[0]}”): check the first word wasn't cut off`, true), 1600); }
     }
     if (fi && fi.value !== fi.dataset.init && /^[A-Za-z][A-Za-z0-9-]*$/.test(fi.value.trim())) {
       const to = iri.replace(/[^\/#]+$/, fi.value.trim());
@@ -716,12 +735,29 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     $('sum').innerHTML = n ? `<b>${n}</b> staged change${n === 1 ? '' : 's'} across <b>${m}</b> ${mode === 'files' ? 'file' : 'model'}${m === 1 ? '' : 's'} — nothing is written until you ${mode === 'files' ? 'save' : 'apply'} them.` : 'No staged changes.';
     $('reviewBtn').disabled = !n; $('applyBtn').disabled = !n;
   }
+  // what Claude is told about a term: its broader term, neighbours and model
+  function termContext(iri) {
+    const par = parentsOf(iri)[0];
+    const it = { id: iri, label: label(iri), kind: /\/vocabulary\//.test(iri) ? 'vocabulary term' : /\/taxonomy\//.test(iri) ? 'taxonomy term' : 'ontology class', scheme: assetLabel(graphOf(iri)) };
+    if (par) { it.broader = label(par); const pd = litv(par, SKOS + 'definition')[0]; if (pd) it.broader_definition = pd; }
+    const alts = litv(iri, SKOS + 'altLabel'); if (alts.length) it.alternative_labels = alts;
+    const kids = childrenOf(iri); if (kids.length) it.narrower = kids.slice(0, 12).map(label);
+    if (par) { const sib = childrenOf(par).filter(x => x !== iri); if (sib.length) it.siblings = sib.slice(0, 12).map(label); }
+    const sc = litv(iri, SKOS + 'scopeNote')[0]; if (sc) it.scope_note = sc;
+    return it;
+  }
+  async function writeDefinitions(iris) {
+    const r = await fetch('/api/ingest/define', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: iris.map(termContext) }) });
+    const d = r.ok ? await r.json() : { ok: false, error: 'Server answered ' + r.status };
+    if (!d.ok && !Object.keys(d.definitions || {}).length) throw new Error(d.error || 'No definitions came back');
+    return d;
+  }
   function vocabCard(iri, st) {
     const stA = st.find(c => c.type === 'addVocab'), stL = st.find(c => c.type === 'link');
-    const cur = vals(iri, DC + 'subject').filter(o => o.t === 'iri').map(o => o.v);
+    const cur = subjOf(iri);
     const ms = vocabMatches(iri), dv = stA ? stA.vocab : defaultVocab(iri), db = stA ? stA.broader : defaultBroader(iri, dv);
     const optOf = t => { const v = VOC.terms.get(t); return v ? `${v.label} · ${vocabTitle(v.scheme)}` : ''; };
-    return `<div class="act"><div class="act-h">Assign to a vocabulary <span class="sub">${cur.length ? 'dc:subject → ' + esc(ln(cur[0])) + ' (not in any vocabulary)' : 'no vocabulary term yet'}</span></div><div class="act-b">
+    return `<div class="act"><div class="act-h">Assign to a vocabulary <span class="sub">${cur.length ? 'linked to ' + esc(ln(cur[0])) + ' (not in any vocabulary)' : 'no vocabulary term yet'}</span></div><div class="act-b">
       ${stA ? `<div class="cascade">Staged: add <b>${esc(stA.label)}</b> to <b>${esc(vocabTitle(stA.vocab))}</b> as <span class="mono">${esc(ln(stA.newIri))}</span>${stA.broader ? `, under <b>${esc((VOC.terms.get(stA.broader) || {}).label || ln(stA.broader))}</b>` : ', as a top concept'}, and link this term to it. <button class="btn sm" data-unstage="addVocab">Undo</button></div>` : ''}
       ${stL ? `<div class="cascade">Staged: link to <b>${esc(stL.targetLabel)}</b> in ${esc(vocabTitle(stL.vocab))}. <button class="btn sm" data-unstage="link">Undo</button></div>` : ''}
       ${ms.length ? `<div class="fld"><label>Vocabulary terms with a matching label</label>${ms.map(m => `<div class="row" style="justify-content:space-between;margin:2px 0"><span>${esc(m.label)} <span class="status">${esc(vocabTitle(m.scheme))}${m.score >= 90 ? ' · same label' : ''}</span></span><button class="btn sm" data-link="${esc(m.iri)}">Link</button></div>`).join('')}</div>` : '<div class="status">No vocabulary term has a matching label.</div>'}
@@ -729,16 +765,16 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       <div class="fld"><label>Or add “${esc(label(iri))}” to a vocabulary as a new term</label>
         <div class="row"><select id="fVocab" style="flex:1">${VOC.vocabs.map(v => `<option value="${esc(v.iri)}" ${v.iri === dv ? 'selected' : ''}>${esc(v.title)}</option>`).join('')}</select></div>
         <div class="row" style="margin-top:6px"><input id="fVocBroader" list="vocTermList" placeholder="Broader term in that vocabulary (empty = top concept)" value="${esc(db ? optOf(db) : '')}" style="flex:1"></div>
-        <div class="row" style="margin-top:6px"><button class="btn sm pri" id="stAddVoc">${stA ? 'Update staged addition' : 'Add to vocabulary'}</button><span class="status">The definition and alternative labels go with it; the term is linked with dc:subject.</span></div>
+        <div class="row" style="margin-top:6px"><button class="btn sm pri" id="stAddVoc">${stA ? 'Update staged addition' : 'Add to vocabulary'}</button><span class="status">The definition and alternative labels go with it; the term is linked with core:hasPrimaryTerm and dcterms:subject.</span></div>
       </div>
     </div></div>`;
   }
-  function ruleTitle(id) { return ({ 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range' })[id] || id; }
-  // Local name in the convention of the term's kind (§3.2): concepts kebab-case, classes UpperCamel, properties lowerCamel
+  function ruleTitle(id) { return ({ 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date' })[id] || id; }
+  // Local name in the convention of the term's kind (§3.2, §3.11): vocabulary terms kebab-case; taxonomy concepts and classes UpperCamel; properties lowerCamel
   function idFor(iri, lbl) {
     const words = String(lbl).replace(/[^A-Za-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
     const ty = vals(iri, RDF + 'type').map(o => o.v);
-    if (isConcept(iri) || /\/vocabulary\//.test(iri)) return words.map(w => w.toLowerCase()).join('-');
+    if (/\/vocabulary\//.test(iri) || (isConcept(iri) && !/\/taxonomy\//.test(iri))) return words.map(w => w.toLowerCase()).join('-');
     const camel = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
     return ty.some(t => /Property$/.test(t)) ? camel.charAt(0).toLowerCase() + camel.slice(1) : camel;
   }
@@ -782,6 +818,15 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       if (braw && !broader) { toast('No vocabulary term with that label', true); return; }
       if (broader && VOC.terms.get(broader).scheme !== vocab) { toast('The broader term must be in the vocabulary you add to', true); return; }
       if (await stageAddVocab(iri, vocab, broader)) { renderVocOptions(); refreshAll(); }
+    });
+    if ($('genDef')) $('genDef').addEventListener('click', async () => {
+      $('genDef').disabled = true; $('genDef').textContent = 'Writing…';
+      try {
+        const d = await writeDefinitions([iri]), t = d.definitions[iri];
+        if (!t) throw new Error(d.error || 'No definition came back');
+        stage({ type: 'definition', term: iri, graph: g, old: litv(iri, SKOS + 'definition')[0] || '', new: t, generated: d.model });
+        refreshAll(); toast('Definition written by ' + d.model + ' and staged — edit it if needed');
+      } catch (e) { toast(e.message, true); if ($('genDef')) { $('genDef').disabled = false; $('genDef').textContent = '✦ Write with Claude'; } }
     });
     $('skipBtn').addEventListener('click', () => { skipped.has(iri) ? skipped.delete(iri) : skipped.add(iri); refreshAll(); });
     if ($('stLabel')) $('stLabel').addEventListener('click', async () => {
@@ -828,6 +873,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       const hit = K.orgHit(v, POL); if (hit) { toast(`The new text still names ${hit.org.name} ("${hit.hit}")`, true); return; }
       stage({ type: header ? 'description' : 'definition', term: iri, graph: g, old, new: v });
       refreshAll();
+      if (/^[a-z]/.test(v)) toast(`Staged — but it starts with “${v.split(' ')[0]}”, in lower case: check the first word wasn't cut off when it was pasted`, true);
     });
     $('detail').querySelectorAll('[data-unlink]').forEach(b => b.addEventListener('click', () => {
       const [p, o] = b.dataset.unlink.split('|');
@@ -873,7 +919,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   function describe(c) {
     switch (c.type) {
       case 'label': return [`Relabel “${c.old}”`, `→ “${c.new}”${c.keepOld ? ' (old label kept as alternative)' : ''}`];
-      case 'definition': return [`New definition for “${label(c.term)}”`, `“${c.new}”`];
+      case 'definition': return [`New definition for “${label(c.term)}”${c.generated ? ' (written by Claude)' : ''}`, `“${c.new}”`];
       case 'description': return [`New description for ${label(c.term)}`, `“${c.new}”`];
       case 'removeAlt': return [`Remove alternative label of “${label(c.term)}”`, `“${c.value}”`];
       case 'unlink': return [`Remove broken link from “${label(c.term)}”`, `${ln(c.pred)} → ${ln(c.target)}`];
@@ -935,16 +981,17 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       const P = c.type === 'definition' ? 'skos:definition' : 'dct:description';
       ops.push(`DELETE { GRAPH ${G} { ${T} ${P} ?d } } WHERE { GRAPH ${G} { ${T} ${P} ?d FILTER(LANG(?d) = "en" || LANG(?d) = "") } }`);
       ops.push(`INSERT DATA { GRAPH ${G} { ${T} ${P} ${Lit(c.new, 'en')} } }`);
-      if (c.type === 'definition') ops.push(`DELETE { GRAPH ${G} { ${T} skos:editorialNote ?n } } WHERE { GRAPH ${G} { ${T} skos:editorialNote ?n FILTER(CONTAINS(STR(?n), "Definition written during ingestion")) } }`);
+      if (c.type === 'definition') ops.push(`DELETE { GRAPH ${G} { ${T} skos:editorialNote ?n } } WHERE { GRAPH ${G} { ${T} skos:editorialNote ?n FILTER(CONTAINS(STR(?n), "Definition written")) } }`);
+      if (c.generated) ops.push(`INSERT DATA { GRAPH ${G} { ${T} skos:editorialNote ${Lit(`Definition written by ${c.generated} in Conformance Review on ${new Date().toISOString().slice(0, 10)}; review before the term moves to Candidate.`, 'en')} } }`);
     } else if (c.type === 'removeAlt') {
       ops.push(`DELETE { GRAPH ${G} { ${T} skos:altLabel ?a } } WHERE { GRAPH ${G} { ${T} skos:altLabel ?a FILTER(STR(?a) = ${Lit(c.value)}) } }`);
     } else if (c.type === 'link' || c.type === 'addVocab') {
-      const target = c.type === 'link' ? c.target : c.newIri, SUBJ = '<' + DC + 'subject>';
+      const target = c.type === 'link' ? c.target : c.newIri;
       if (c.type === 'addVocab') {
         const V = I(c.vocab), Nn = I(c.newIri), now = `"${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}"^^xsd:dateTime`;
         const ver = (VOC.vocabs.find(v => v.iri === c.vocab) || {}).version;
         const core = (policyJ.baseUrl || 'https://www.insperity.com/') + 'ontology/core/';
-        const t = [`${Nn} a skos:Concept ; skos:prefLabel ${Lit(c.label, 'en')} ; skos:inScheme ${V}`];
+        const t = [`${Nn} a skos:Concept ; skos:prefLabel ${Lit(c.label, 'en')} ; rdfs:label ${Lit(c.label, 'en')} ; skos:inScheme ${V}`];
         if (c.def) t.push(`skos:definition ${Lit(c.def, 'en')}`);
         c.alts.forEach(a => t.push(`skos:altLabel ${Lit(a, 'en')}`));
         if (c.broader) t.push(`skos:broader ${I(c.broader)}`); else t.push(`skos:topConceptOf ${V}`);
@@ -956,8 +1003,8 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         ins += c.broader ? ` ${I(c.broader)} skos:narrower ${Nn} .` : ` ${V} skos:hasTopConcept ${Nn} .`;
         ops.push(`INSERT DATA { GRAPH ${V} { ${ins} } }`);
       }
-      ops.push(`DELETE { GRAPH ${G} { ${T} ${SUBJ} ?x } } WHERE { GRAPH ${G} { ${T} ${SUBJ} ?x } }`);
-      ops.push(`INSERT DATA { GRAPH ${G} { ${T} ${SUBJ} ${I(target)} } }`);
+      SUBJ_P.forEach(p => ops.push(`DELETE { GRAPH ${G} { ${T} <${p}> ?x } } WHERE { GRAPH ${G} { ${T} <${p}> ?x } }`));
+      ops.push(`INSERT DATA { GRAPH ${G} { ${T} <${SUBJ_P[0]}> ${I(target)} ; <${SUBJ_P[1]}> ${I(target)} } }`);
     } else if (c.type === 'unlink') {
       ops.push(`DELETE WHERE { GRAPH ?g { ${T} ${I(c.pred)} ${I(c.target)} } }`);
     } else if (c.type === 'rename') {
@@ -1070,7 +1117,8 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       } else if (c.type === 'definition' || c.type === 'description') {
         const P = c.type === 'definition' ? SKOS + 'definition' : DCT + 'description';
         drop(q => q.g === G && isT(q.s, T) && q.p.v === P && isEnLit(q.o));
-        if (c.type === 'definition') drop(q => q.g === G && isT(q.s, T) && q.p.v === SKOS + 'editorialNote' && /Definition written during ingestion/.test(q.o.v));
+        if (c.type === 'definition') drop(q => q.g === G && isT(q.s, T) && q.p.v === SKOS + 'editorialNote' && /Definition written (during ingestion|by )/.test(q.o.v));
+        if (c.generated) add(N(T), N(SKOS + 'editorialNote'), L(`Definition written by ${c.generated} in Conformance Review on ${day}; review before the term moves to Candidate.`, 'en'), G);
         add(N(T), N(P), L(c.new, 'en'), G);
       } else if (c.type === 'removeAlt') {
         drop(q => q.g === G && isT(q.s, T) && q.p.v === SKOS + 'altLabel' && q.o.v === c.value);
@@ -1080,6 +1128,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
           const core = (policyJ.baseUrl || 'https://www.insperity.com/') + 'ontology/core/';
           add(N(Nn), N(RDF + 'type'), N(SKOS + 'Concept'), V);
           add(N(Nn), N(SKOS + 'prefLabel'), L(c.label, 'en'), V);
+          add(N(Nn), N(RDFS + 'label'), L(c.label, 'en'), V);
           if (c.def) add(N(Nn), N(SKOS + 'definition'), L(c.def, 'en'), V);
           c.alts.forEach(a => add(N(Nn), N(SKOS + 'altLabel'), L(a, 'en'), V));
           add(N(Nn), N(SKOS + 'inScheme'), N(V), V);
@@ -1092,8 +1141,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
           add(N(Nn), N(DCT + 'modified'), dt, V);
           add(N(Nn), N(SKOS + 'editorialNote'), L(`Added from the taxonomy term ${T} in Conformance Review.`, 'en'), V);
         }
-        drop(q => q.g === G && isT(q.s, T) && q.p.v === DC + 'subject');
-        add(N(T), N(DC + 'subject'), N(c.type === 'link' ? c.target : c.newIri), G);
+        drop(q => q.g === G && isT(q.s, T) && SUBJ_P.includes(q.p.v));
+        add(N(T), N(SUBJ_P[0]), N(c.type === 'link' ? c.target : c.newIri), G);
+        add(N(T), N(SUBJ_P[1]), N(c.type === 'link' ? c.target : c.newIri), G);
       } else if (c.type === 'unlink') {
         drop(q => isT(q.s, T) && q.p.v === c.pred && isT(q.o, c.target));
       } else if (c.type === 'rename') {
@@ -1179,7 +1229,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       await scanFiles([...document.querySelectorAll('#alist input:checked')].map(c => c.value));
       if (ld.error || bad.length) {
         $('applyStatus').className = 'status bad';
-        $('applyStatus').textContent = `Saved ${plural(n, 'correction')} to the files, but loading into GraphDB failed: ${ld.error || bad[0].error}. Fix that, then use Load into GraphDB….`;
+        $('applyStatus').textContent = ld.blocked && ld.blocked.length
+          ? `Saved ${plural(n, 'correction')} to the files. Not loaded into GraphDB: ${plural(ld.blockedCount || ld.blocked.length, 'blocking error')} remain (${ld.blocked[0].rule}). Resolve them, or use Load into GraphDB… to load anyway.`
+          : `Saved ${plural(n, 'correction')} to the files, but loading into GraphDB failed: ${ld.error || bad[0].error}. Fix that, then use Load into GraphDB….`;
       } else {
         const m = ld.results.filter(x => x.mode === 'replaced').length;
         $('applyStatus').className = 'status ok';
@@ -1203,21 +1255,25 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     try { const r = await fetch('/api/ingest/load-plan?' + new URLSearchParams({ dir: fileDir || $('folder').value.trim() })); d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command).' : 'Server answered ' + r.status }; }
     catch (e) { d = { ok: false, error: e.message }; }
     if (!d.ok) { $('loadBody').innerHTML = `<div class="status bad">${esc(d.error)}</div>`; return; }
-    const corr = d.assets.filter(a => a.corrected).length;
+    const corr = d.assets.filter(a => a.corrected).length, nb = d.blockedCount || 0;
     $('loadBody').innerHTML = `<p style="font-size:12.5px">From <span class="mono">${esc(d.dir)}</span> into repository <b>${esc(S.repo())}</b>:</p>
       <ul style="margin:8px 0 0 18px;font-size:12.5px;display:grid;gap:4px">
         <li><b>${plural(d.assets.length, 'model')}</b> each <b>replace</b> their named graph${corr ? ` — ${corr} with your Conformance Review corrections` : ''}.</li>
         <li><b>${plural(d.changeRecords.length, 'change record')}</b> added to the change log (one already loaded is not duplicated).</li>
         ${d.superseded.length ? `<li><b>${plural(d.superseded.length, 'older copy', 'older copies')}</b> from earlier runs (${esc(d.superseded.join(', '))}) are set aside in <span class="mono">superseded/</span> and not loaded.</li>` : ''}
       </ul>
+      ${nb ? `<div class="find" style="margin-top:10px"><b>${plural(nb, 'blocking error')}</b>Loading stops while a file has terms outside the base URL, another organization's content or invalid dates (setting <span class="mono">loadBlockingRules</span>). ${esc([...new Set(d.blocked.map(x => x.file))].slice(0, 5).join(', '))}${new Set(d.blocked.map(x => x.file)).size > 5 ? ' …' : ''}
+        <ul style="margin:6px 0 0 16px">${d.blocked.slice(0, 6).map(x => `<li>${esc(x.rule)}: <span class="mono">${esc(ln(x.iri) || x.file)}</span> — ${esc(x.msg)}</li>`).join('')}${nb > 6 ? `<li>… and ${nb - 6} more</li>` : ''}</ul>
+        <label class="chk" style="margin-top:6px"><input type="checkbox" id="loadForce"> Load anyway (the errors stay in the files and in GraphDB)</label></div>` : ''}
       <details style="margin-top:10px;font-size:12px"><summary class="status" style="cursor:pointer">Models</summary><div style="margin-top:6px;display:grid;gap:2px">${d.assets.map(a => `<div><span class="k ${({ vocabulary: 'voc', taxonomy: 'tax', ontology: 'ont' })[a.kind] || ''}" style="font:700 8.5px/1 var(--ke-sans);text-transform:uppercase;padding:2px 4px;border:1px solid currentColor;border-radius:3px;margin-right:6px">${esc(a.kind.slice(0, 3))}</span>${esc(a.title)}${a.corrected ? ' <span class="tag staged">corrected</span>' : ''}</div>`).join('')}</div></details>`;
-    $('loadGo').disabled = !d.assets.length;
+    $('loadGo').disabled = !d.assets.length || nb > 0;
+    if ($('loadForce')) $('loadForce').addEventListener('change', () => { $('loadGo').disabled = !$('loadForce').checked; });
   });
   $('loadClose').addEventListener('click', () => $('loadDlg').classList.add('hidden'));
   $('loadGo').addEventListener('click', async () => {
     $('loadGo').disabled = true; $('loadStatus').className = 'status'; $('loadStatus').textContent = 'Loading…';
     try {
-      const r = await fetch('/api/ingest/load-folder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ dir: fileDir || $('folder').value.trim(), repo: S.repo() }) });
+      const r = await fetch('/api/ingest/load-folder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ dir: fileDir || $('folder').value.trim(), repo: S.repo(), force: !!($('loadForce') && $('loadForce').checked) }) });
       const d = await r.json();
       const bad = (d.results || []).filter(x => !x.ok);
       if (d.error || bad.length) {

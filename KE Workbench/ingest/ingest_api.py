@@ -13,15 +13,20 @@ listens on localhost only, unless HOST is set to share it.
   GET  /api/ingest/config             the config file's text
   POST /api/ingest/config             {text} — validated, previous version kept as .bak
   POST /api/ingest/reveal             {path} — open the folder in Finder
-  POST /api/ingest/load               {repo, outputs:[{iri, ttl}], changeRecord:{graph, ttl}}
+  POST /api/ingest/load               {repo, outputs:[{iri, ttl}], changeRecord:{graph, ttl}, force?} — refused while a
+                                      file has a blocking conformance error (config "loadBlockingRules"), unless force
   GET  /api/ingest/policy             approved acronyms, expansions, organizations (for the checks)
   POST /api/ingest/policy             {approve: "ACR"} or {expansion: {acronym, text}} — added to the config
   GET  /api/ingest/review-files?dir=… the ingested Turtle files in a folder (default: the last run's ttl folder)
   POST /api/ingest/review-read        {paths:[…]} — the statements of those files, for Conformance Review
   POST /api/ingest/review-save        {files:[{path, graph, triples}], record} — rewrite .ttl and .trig, extend the change record
   GET  /api/ingest/load-plan?dir=…    what Load into GraphDB would send from an output folder (current files only)
-  POST /api/ingest/load-folder        {dir, repo} — replace each current asset's named graph, add the change records
+  POST /api/ingest/load-folder        {dir, repo, force?} — replace each current asset's named graph, add the change records
   GET  /api/ingest/vocab-index?dir=…  the folder's vocabularies and all their terms (for taxonomy-term linking)
+  POST /api/ingest/load-url           {url | path, graph, repo} — fetch an RDF file (a URL, or a file on this machine) and
+                                      replace that named graph with it; the format is read from the file, not guessed by GraphDB
+  GET  /api/ingest/define-status      whether an Anthropic API key is set (~/.ke-workbench.env or ANTHROPIC_API_KEY)
+  POST /api/ingest/define             {items:[{id, label, broader, …}]} — definitions written by Claude
 """
 import json, os, pathlib, platform, re, subprocess, sys, traceback, urllib.error, urllib.parse, urllib.request
 
@@ -141,7 +146,8 @@ def scan(b, _):
     if not src.exists():
         return {'ok': False, 'error': f'Source folder {src} does not exist'}
     cfg, _ = ke_ingest.load_config(CONFIG)
-    rows = ke_ingest.scan([src], cfg, bool(b.get('recursive')))
+    known = ke_ingest.known_domains(_path(b['dest']), b.get('ttlDir') or 'ttl') if b.get('dest') else set()
+    rows = ke_ingest.scan([src], cfg, bool(b.get('recursive')), known)
     for r in rows:
         r['rel'] = os.path.relpath(r['path'], src) if src.is_dir() else r['name']
     planned, existing = _planned(rows, b.get('dest'), b.get('ttlDir') or 'ttl', b.get('trigDir') or 'trig',
@@ -225,11 +231,46 @@ def reveal(b, _):
     return {'ok': True}
 
 
+DEFAULT_BLOCKING = ['Base URL (§3.2)', "No other organization's content", 'Valid dates (ISO 8601)']
+
+
+def blocking_errors(ttl_paths):
+    """Conformance errors that stop a load into GraphDB (config "loadBlockingRules"; by default: terms outside the
+    base URL, another organization's content, invalid dates). Returns [{file, rule, iri, msg}]."""
+    cfg, _ = ke_ingest.load_config(CONFIG)
+    rules = set(cfg.get('loadBlockingRules', DEFAULT_BLOCKING))
+    if not rules:
+        return []
+    policy = ke_ingest.Policy(cfg)
+    base = cfg['baseUrl'].rstrip('/') + '/'
+    out = []
+    for t in ttl_paths:
+        p = pathlib.Path(t)
+        try:
+            triples, _ = ke_ingest.parse_turtle(p.read_text(encoding='utf-8'))
+        except Exception as e:
+            out.append({'file': p.name, 'rule': 'Valid Turtle', 'iri': '', 'msg': f'{type(e).__name__}: {e}'}); continue
+        _, res = ke_ingest.check(triples, base, policy)
+        for rule, items in res.items():
+            if rule in rules:
+                out += [{'file': p.name, 'rule': rule, 'iri': iri, 'msg': msg} for sev, iri, msg in items if sev == 'error']
+    return out
+
+
 def load(b, graphdb_url):
-    """Replace each asset's named graph with its new content; append the change record."""
+    """Replace each asset's named graph with its new content; append the change record.
+    Refused while any file has a blocking conformance error, unless b['force'] is set."""
     repo = (b.get('repo') or 'value-kb').strip()
     if not re.fullmatch(r'[\w.-]+', repo):
         return {'ok': False, 'error': f'"{repo}" is not a repository ID'}
+    if not b.get('force'):
+        blocked = blocking_errors([o['ttl'] for o in b.get('outputs') or []])
+        if blocked:
+            files = sorted({x['file'] for x in blocked})
+            return {'ok': False, 'blocked': blocked[:200], 'blockedCount': len(blocked), 'results': [], 'repo': repo,
+                    'error': f'Not loaded: {len(blocked)} blocking conformance error{"s" if len(blocked) != 1 else ""} in '
+                             f'{", ".join(files[:4])}{" …" if len(files) > 4 else ""} ({blocked[0]["rule"]}: {blocked[0]["msg"]}). '
+                             'Resolve them in Conformance Review, or load anyway.'}
     endpoint = f'{graphdb_url.rstrip("/")}/repositories/{repo}/statements'
     results = []
 
@@ -447,7 +488,8 @@ def load_plan(q, _):
         return {'ok': False, 'error': f'{tdir} is not a folder'}
     plan = ke_ingest.folder_plan(tdir)
     corrected = lambda p: 'Corrected in Conformance Review' in p.read_text(encoding='utf-8', errors='replace')[:2000]
-    return {'ok': True, 'dest': str(dest), 'dir': str(tdir),
+    blocked = blocking_errors([str(h['path']) for h in plan['current']])
+    return {'ok': True, 'dest': str(dest), 'dir': str(tdir), 'blocked': blocked[:200], 'blockedCount': len(blocked),
             'assets': [{'name': h['path'].name, 'title': h['title'], 'iri': h['iri'], 'kind': h['kind'], 'version': h['version'],
                         'corrected': corrected(h['path'])} for h in plan['current']],
             'superseded': [h['path'].name for h in plan['superseded']],
@@ -464,7 +506,78 @@ def vocab_index(q, _):
               for h in plan['current'] if h['kind'] == 'vocabulary']
     idx = ke_ingest.vocab_index(tdir)
     return {'ok': True, 'dir': str(tdir), 'vocabularies': sorted(vocabs, key=lambda v: v['title']),
-            'terms': [{'iri': t, 'label': v[0], 'alts': v[1], 'scheme': v[2]} for t, v in idx.items()]}
+            'terms': [{'iri': t, 'label': v[0], 'alts': v[1], 'scheme': v[2], 'definition': v[3]} for t, v in idx.items()]}
+
+
+def _rdf_type(data, name=''):
+    """Media type of an RDF file from its first bytes (then its name): RDF/XML, Turtle, N-Triples, JSON-LD."""
+    head = data[:4000].lstrip(b'\xef\xbb\xbf').lstrip()
+    low = head[:400].lower()
+    if head.startswith(b'<?xml') or b'<rdf:rdf' in low or head.startswith(b'<rdf') or b'<owl:ontology' in low:
+        return 'application/rdf+xml'
+    if head.startswith((b'{', b'[')):
+        return 'application/ld+json'
+    n = name.lower()
+    if n.endswith(('.nt',)):
+        return 'application/n-triples'
+    if n.endswith(('.owl', '.rdf', '.xml')):
+        return 'application/rdf+xml'
+    return 'text/turtle'
+
+
+def load_url(b, graphdb_url):
+    """Load a reference ontology (BFO, RO …) into its own named graph: the workbench fetches it, so GraphDB needs no
+    internet access and never has to guess the format."""
+    repo = (b.get('repo') or 'value-kb').strip()
+    graph = (b.get('graph') or '').strip()
+    if not re.fullmatch(r'[\w.-]+', repo):
+        return {'ok': False, 'error': f'"{repo}" is not a repository ID'}
+    if not re.match(r'^https?://\S+$', graph):
+        return {'ok': False, 'error': 'Give the named graph as an http(s) IRI'}
+    src = (b.get('url') or b.get('path') or '').strip()
+    if not src:
+        return {'ok': False, 'error': 'Give a URL or a file path'}
+    try:
+        if re.match(r'^https?://', src):
+            req = urllib.request.Request(src, headers={'Accept': 'application/rdf+xml, text/turtle;q=0.9, application/n-triples;q=0.8, */*;q=0.1',
+                                                       'User-Agent': 'KE-Workbench'})
+            with urllib.request.urlopen(req, timeout=120) as r:      # follows the PURL's redirects
+                data, name = r.read(), r.geturl()
+        else:
+            f = _path(src)
+            if not f.is_file():
+                return {'ok': False, 'error': f'{f} is not a file'}
+            data, name = f.read_bytes(), f.name
+    except urllib.error.HTTPError as e:
+        return {'ok': False, 'error': f'{src} answered {e.code}'}
+    except urllib.error.URLError as e:
+        return {'ok': False, 'error': f'Could not download {src}: {e.reason} (this computer needs internet access; or give the path of a downloaded copy)'}
+    ctype = _rdf_type(data, name)
+    url = f'{graphdb_url.rstrip("/")}/repositories/{repo}/statements?' + urllib.parse.urlencode({'context': f'<{graph}>'})
+    req = urllib.request.Request(url, data=data, method='PUT', headers={'Content-Type': ctype + '; charset=utf-8'})
+    try:
+        with urllib.request.urlopen(req, timeout=180) as r:
+            return {'ok': True, 'repo': repo, 'graph': graph, 'format': ctype, 'bytes': len(data), 'source': name}
+    except urllib.error.HTTPError as e:
+        return {'ok': False, 'error': f'GraphDB answered {e.code} for {ctype}: {e.read().decode("utf-8", "replace")[:300]}'}
+    except urllib.error.URLError as e:
+        return {'ok': False, 'error': f'GraphDB not reachable at {graphdb_url}: {e.reason}'}
+
+
+def define_status(_, __):
+    cfg, _ = ke_ingest.load_config(CONFIG)
+    return {'ok': True, 'key': bool(ke_ingest.anthropic_key()), 'model': cfg.get('definitionModel') or 'claude-sonnet-5-5',
+            'keyFile': str(ke_ingest.KEY_FILE)}
+
+
+def define(b, _):
+    """Definitions written by Claude for the given terms (label, broader term, siblings … as context)."""
+    items = [i for i in (b.get('items') or []) if i.get('id') and i.get('label')][:200]
+    if not items:
+        return {'ok': False, 'error': 'No terms to define'}
+    cfg, _ = ke_ingest.load_config(CONFIG)
+    defs, model, err = ke_ingest.generate_definitions(items, cfg, log=lambda m: print('  define: ' + m))
+    return {'ok': not err or bool(defs), 'definitions': defs, 'model': model, 'error': err}
 
 
 def load_folder(b, graphdb_url):
@@ -480,11 +593,11 @@ def load_folder(b, graphdb_url):
     moved = ke_ingest.archive_superseded(dest, tdir.name, trig_dir, stamp, log=lambda m: print('  ingest: ' + m))
     plan = ke_ingest.folder_plan(tdir)
     log_graph = cfg['baseUrl'].rstrip('/') + '/graph/change-log'
-    res = load({'repo': b.get('repo'), 'outputs': [{'iri': h['iri'], 'ttl': str(h['path'])} for h in plan['current']]}, graphdb_url)
+    res = load({'repo': b.get('repo'), 'force': b.get('force'), 'outputs': [{'iri': h['iri'], 'ttl': str(h['path'])} for h in plan['current']]}, graphdb_url)
     if res.get('error'):
         return res
     for cr in plan['change_records']:
-        r = load({'repo': b.get('repo'), 'changeRecord': {'graph': log_graph, 'ttl': str(cr)}}, graphdb_url)
+        r = load({'repo': b.get('repo'), 'force': True, 'changeRecord': {'graph': log_graph, 'ttl': str(cr)}}, graphdb_url)
         res['results'] += r.get('results', [])
         res['ok'] = res['ok'] and r.get('ok', False)
     res['setAside'] = moved
@@ -508,4 +621,7 @@ ROUTES = {
     ('GET', 'load-plan'): load_plan,
     ('POST', 'load-folder'): load_folder,
     ('GET', 'vocab-index'): vocab_index,
+    ('POST', 'load-url'): load_url,
+    ('GET', 'define-status'): define_status,
+    ('POST', 'define'): define,
 }

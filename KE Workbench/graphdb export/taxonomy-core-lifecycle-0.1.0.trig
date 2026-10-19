@@ -1,0 +1,436 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-lifecycle/> {
+  <https://www.insperity.com/taxonomy/core-lifecycle/> a skos:ConceptScheme;
+    rdfs:label "Core lifecycle taxonomy"@en;
+    skos:prefLabel "Core lifecycle taxonomy"@en;
+    skos:hasTopConcept lifecycletax:agreement-lifecycle, lifecycletax:artifact-lifecycle,
+      lifecycletax:asset-lifecycle, lifecycletax:governance-lifecycle, lifecycletax:offering-lifecycle,
+      lifecycletax:party-lifecycle, lifecycletax:work-item-lifecycle;
+    terms:description "Classification of the kinds of lifecycle, the ordered sets of stages through which a thing passes from creation to retirement."@en;
+    terms:title "Core lifecycle taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Lifecycle taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-lifecycle/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:agreement-lifecycle a skos:Concept;
+    skos:prefLabel "Agreement lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of an agreement from drafting and negotiation through execution, performance, renewal, and termination."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:altLabel "Contract lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/> .
+  
+  lifecycletax:artifact-lifecycle a skos:Concept;
+    skos:prefLabel "Artifact lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of an information or software asset from creation to retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:narrower lifecycletax:data-lifecycle, lifecycletax:document-lifecycle, lifecycletax:knowledge-artifact-lifecycle,
+      lifecycletax:model-lifecycle, lifecycletax:record-lifecycle, lifecycletax:software-release-lifecycle .
+  
+  lifecycletax:asset-lifecycle a skos:Concept;
+    skos:prefLabel "Asset lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of a physical or financial asset from planning and acquisition through operation and maintenance to disposal."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:altLabel "Asset life cycle"@en, "Plan to dispose"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/> .
+  
+  lifecycletax:governance-lifecycle a skos:Concept;
+    skos:prefLabel "Governance lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of governed oversight that a policy, control, or governed artifact passes through from definition to retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:altLabel "Oversight lifecycle"@en;
+    skos:scopeNote "The ten-stage knowledge governance lifecycle in Section 3.4 is in the lifecycle vocabulary."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:narrower lifecycletax:control-lifecycle, lifecycletax:policy-lifecycle .
+  
+  lifecycletax:offering-lifecycle a skos:Concept;
+    skos:prefLabel "Offering lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of something offered to clients from concept to withdrawal."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:narrower lifecycletax:product-lifecycle, lifecycletax:service-lifecycle .
+  
+  lifecycletax:party-lifecycle a skos:Concept;
+    skos:prefLabel "Party lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of a party's relationship with the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:altLabel "Relationship lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:narrower lifecycletax:client-lifecycle, lifecycletax:employment-lifecycle, lifecycletax:supplier-lifecycle .
+  
+  lifecycletax:work-item-lifecycle a skos:Concept;
+    skos:prefLabel "Work item lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A lifecycle of a unit of tracked work from creation to closure."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:altLabel "Ticket lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:narrower lifecycletax:change-lifecycle, lifecycletax:decision-lifecycle, lifecycletax:issue-lifecycle,
+      lifecycletax:requirement-lifecycle .
+  
+  lifecycletax:data-lifecycle a skos:Concept;
+    skos:prefLabel "Data lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artifact lifecycle of data from creation or acquisition through use, archiving, and deletion."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:artifact-lifecycle;
+    skos:altLabel "Information lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:document-lifecycle a skos:Concept;
+    skos:prefLabel "Document lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artifact lifecycle of a document from drafting through review, publication, revision, and disposal."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:artifact-lifecycle;
+    skos:altLabel "Content lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:knowledge-artifact-lifecycle a skos:Concept;
+    skos:prefLabel "Knowledge artifact lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artifact lifecycle of a vocabulary, taxonomy, ontology, mapping, shape, or rule from ideation to retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:artifact-lifecycle;
+    skos:altLabel "SKL"@en, "Semantic knowledge lifecycle"@en;
+    skos:scopeNote "Stages are in the lifecycle vocabulary; statuses run Draft, Candidate, Released, Deprecated, Retired."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject technicalservicesvoc:semantic-knowledge-layer;
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:model-lifecycle a skos:Concept;
+    skos:prefLabel "Model lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artifact lifecycle of a machine learning model from design and training through validation, deployment, monitoring, and retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:artifact-lifecycle;
+    skos:altLabel "AI lifecycle"@en, "Artificial intelligence system lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:record-lifecycle a skos:Concept;
+    skos:prefLabel "Record lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artifact lifecycle of a record from capture through retention to disposition."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:artifact-lifecycle;
+    skos:altLabel "Records retention lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:software-release-lifecycle a skos:Concept;
+    skos:prefLabel "Software release lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An artifact lifecycle of a software or knowledge release from build through test, stage, and production promotion to retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:artifact-lifecycle;
+    skos:altLabel "Release lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:change-lifecycle a skos:Concept;
+    skos:prefLabel "Change lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A work item lifecycle of a change from request through assessment, approval, implementation, and review."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:work-item-lifecycle;
+    skos:altLabel "Change request lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:client-lifecycle a skos:Concept;
+    skos:prefLabel "Client lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party lifecycle of a client from prospect through onboarding, service, renewal, and exit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:party-lifecycle;
+    skos:altLabel "Customer lifecycle"@en, "Prospect to client"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:control-lifecycle a skos:Concept;
+    skos:prefLabel "Control lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance lifecycle of a control from design through implementation, testing, operation, and remediation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:governance-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:decision-lifecycle a skos:Concept;
+    skos:prefLabel "Decision lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A work item lifecycle of a decision from framing through analysis and choice to communication and review."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:work-item-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:employment-lifecycle a skos:Concept;
+    skos:prefLabel "Employment lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party lifecycle of a worker from recruitment and hire through employment changes to separation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:party-lifecycle;
+    skos:altLabel "Employee lifecycle"@en, "Hire to retire"@en, "Worker lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:policy-lifecycle a skos:Concept;
+    skos:prefLabel "Policy lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance lifecycle of a policy from drafting and approval through publication, attestation, review, and retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:governance-lifecycle;
+    skos:altLabel "Policy management lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:issue-lifecycle a skos:Concept;
+    skos:prefLabel "Issue lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A work item lifecycle of an issue from detection through triage and resolution to closure."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:work-item-lifecycle;
+    skos:altLabel "Defect lifecycle"@en, "Incident lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:product-lifecycle a skos:Concept;
+    skos:prefLabel "Product lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An offering lifecycle of a product from concept, design, and launch through growth, maturity, and discontinuation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:offering-lifecycle;
+    skos:altLabel "Product life cycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:service-lifecycle a skos:Concept;
+    skos:prefLabel "Service lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An offering lifecycle of a service from strategy and design through transition, operation, and retirement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:offering-lifecycle;
+    skos:altLabel "Service life cycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:supplier-lifecycle a skos:Concept;
+    skos:prefLabel "Supplier lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A party lifecycle of a supplier from qualification and contracting through performance management to exit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:party-lifecycle;
+    skos:altLabel "Vendor lifecycle"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  lifecycletax:requirement-lifecycle a skos:Concept;
+    skos:prefLabel "Requirement lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A work item lifecycle of a requirement from elicitation through approval, implementation, and verification."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-lifecycle/>;
+    skos:broader lifecycletax:work-item-lifecycle;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

@@ -1,5 +1,5 @@
 /* Sample Turtle for the Standards Conformance tool: a few terms written to the
-   Semantic Governance v1.8 Part III standards, and a few that break them on purpose. */
+   Semantic Governance v1.9 Part III standards, and a few that break them on purpose. */
 window.KE_SAMPLE_TTL = `@prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .

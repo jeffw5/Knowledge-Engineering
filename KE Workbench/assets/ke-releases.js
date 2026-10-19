@@ -2,6 +2,86 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '2.2.0', date: '2026-10-19', title: 'Core domain ontology on BFO, anchored on the process step',
+    groups: [
+      { kind: 'breaking', items: [
+        'The core domain ontology moves to https://www.insperity.com/ontology/core/ (prefix core:, file ontology-core-<version>), the namespace its governance properties (core:hasLifecycleStatus, core:hasPrimaryTerm, core:formalizedBy) already used. It replaces …/ontology/core-domain/ and the five core-* shapes graphs (compliance, domain, party, process, product), which targeted legacy IRIs; their files are in KE Baseline/superseded/2026-10-19-core-rebuild. Drop the old graphs in GraphDB with KE Baseline/graphdb-drop-superseded-core.rq.'
+      ]},
+      { kind: 'new', items: [
+        'Core domain ontology 0.1.0: 35 classes, each a subclass of a BFO 2020 class (process, process boundary, material entity, object, object aggregate, site, temporal region, role, disposition, generically dependent continuant), and 28 relations, each a subproperty of a BFO, RO or IAO relation (or the inverse of one). Event is a process boundary; an asset is anything that bears an asset role.',
+        'The process step is the anchor (§3.1): it carries class restrictions to party, role, capability, directive, measure, issue, event, location and time, so Model Editor (Ontology) › Show relations draws the unifying design.',
+        'Core domain shapes (…/shapes/core/): a step must belong to a process (violation); events, directives, measures and issues not tied to a step, and steps with no performer, are warnings.',
+        'core:formalizedBy on the top concepts of all 22 core taxonomies (96 links): the path from each taxonomy to BFO. Eight concepts are left for a modeling decision (financial and intangible assets, six value concepts).',
+        'RO extract (reference/ro-extract.ttl): the BFO 2020 relations the OBO bfo.owl lacks, has input and has output from RO, and is about from IAO. Ingestion › Reference ontologies has a third row for it, and Load all three.',
+        'ingest/build_core.py builds the ontology and shapes from their authored sources in ingest/core/, adds labels and governance fields, runs the Part III checks and a lineage check (every class reaches BFO, every relation reaches BFO/RO), and writes core:formalizedBy into the taxonomies from ingest/core/formalized-by.csv.'
+      ]}
+    ]
+  },
+  {
+    version: '2.1.0', date: '2026-10-17', title: 'BFO as the top-level ontology',
+    groups: [
+      { kind: 'new', items: [
+        'Ingestion: Reference ontologies. Load BFO 2020 (ISO/IEC 21838-2) and the RO Core relations into GraphDB from a URL or from a downloaded file, each into its own named graph (…/obo/bfo.owl and …/obo/ro/core.owl, replaced on every load). The workbench downloads the file itself and reads its format, so GraphDB needs no internet access and never mistakes RDF/XML for Turtle.',
+        'Reference ontologies keep their own IRIs and are never ingested: a BFO, RO or other OBO file given to Ingestion is skipped with a message that points to Reference ontologies on the same page, instead of "matches no sourceNamespaces pattern".',
+        'New server endpoint POST /api/ingest/load-url {url | path, graph, repo} that the page uses.'
+      ]},
+      { kind: 'removed', items: [
+        'Model Editor (Ontology): the Load BFO button and the BFO source setting. When no BFO or RO relations are found, the editor points to Ingestion › Reference ontologies.'
+      ]},
+      { kind: 'fixed', items: [
+        'Load BFO failed: it pointed at an add-on file in the BFO repository (the temporalized relations profile), and GraphDB read the RDF/XML it received as Turtle ("Not a valid (absolute) IRI: ?xml"). The default source is now the OBO address of the current BFO release.'
+      ]}
+    ]
+  },
+  {
+    version: '2.0.0', date: '2026-10-17', title: 'Semantic Governance v1.9: SKOS taxonomies and §3.11 metadata',
+    groups: [
+      { kind: 'breaking', items: [
+        'Taxonomies are SKOS only (§3.11). Ingestion converts a taxonomy authored as OWL classes into a concept scheme: owl:Class becomes skos:Concept, rdfs:subClassOf becomes skos:broader, OWL restrictions on taxonomy terms are dropped (they belong in the ontology). Set "taxonomiesAsSkos": false in the configuration to keep the old behavior.',
+        'Taxonomy concept IRIs are UpperCamelCase (…/taxonomy/core-process/ApprovalStep, was …/approval-step). Vocabulary term IRIs stay lower-case hyphenated. crosswalk.csv maps every old IRI to the new one; links into the old IRIs from outside the ingested files break.',
+        'A taxonomy concept names its vocabulary term with core:hasPrimaryTerm and dcterms:subject instead of dc:subject (Dublin Core 1.1). dc:subject is still read everywhere, but no longer written.',
+        'Asset headers use vaem:namespace instead of vann:preferredNamespaceUri.',
+        'Loading into GraphDB stops while a file has a blocking conformance error: terms outside the base URL, another organization’s content, or an invalid date ("loadBlockingRules" in the configuration). Load into GraphDB… lists them and offers Load anyway.'
+      ]},
+      { kind: 'new', items: [
+        'Every vocabulary, taxonomy, ontology and shapes header gets the §3.11 fields: vaem:namespace, vann:preferredNamespacePrefix (processtax, domainfinancevoc …), owl:versionIRI on every asset, dcterms:publisher, dcterms:conformsTo (the guide edition; BFO 2020 for ontologies) and dcterms:subject, from the new configuration settings publisher, conformsTo, ontologyConformsTo and defaultSubject (or "subject" per asset).',
+        'Taxonomies get dcterms:source: the vocabularies their concepts draw on, worked out from the links.',
+        'core:hasPrimaryTerm is the one vocabulary term whose label matches the concept; when no term matches and there are several, the report asks you to choose.',
+        'Numbered labels ("01. Data governance") lose the number, which moves to skos:notation. If the label then repeats another term’s, the numbered one is kept apart (DataGovernance06) and flagged to merge or rename.',
+        'Model Editor (Taxonomy): a vocabulary term dropped on a SKOS taxonomy becomes a taxonomy concept of its own (UpperCamelCase, label and definition copied, linked with core:hasPrimaryTerm and dcterms:subject), as it already did for OWL taxonomies. The vocabulary term is no longer put into the taxonomy’s scheme.',
+        'New conformance rules, in Ingestion, Standards Conformance and Conformance Review: Primary vocabulary term, Taxonomies stay in SKOS, Asset header fields (§3.11), Valid dates (ISO 8601). Typed terms from another organization’s ontology (individuals, datatypes) now count under Company base URL.',
+        'Optional "authorIri" in the configuration writes dcterms:creator as a person IRI instead of the author’s name.'
+      ]},
+      { kind: 'improved', items: [
+        'Standards: Semantic Governance v1.9 (Draft); the guide in docs/ and every page reference it.',
+        'Every term gets rdfs:label as well as skos:prefLabel (§3.11), from ingestion and from Conformance Review and the Vocabulary editor when they add terms.',
+        '"&" in a preferred label is spelled out as "and"; the old label stays as an alternative label.',
+        'Conformance Review suggests UpperCamelCase identifiers for taxonomy concepts, and warns when a staged definition starts in lower case, so a first word cut off when pasting is caught before saving.'
+      ]},
+      { kind: 'fixed', items: [
+        'A date with no time ("2026-10-14") is written as xsd:date; it was written as an invalid xsd:dateTime.',
+        'The check that every concept scheme flags its top concepts never ran; it does now.',
+        'Ingestion wrote "A controlled vocabulary of …" as the generated description of a SKOS taxonomy.'
+      ]}
+    ]
+  },
+  {
+    version: '1.9.0', date: '2026-10-16', title: 'Duplicates and generated definitions',
+    groups: [
+      { kind: 'new', items: [
+        'Ingestion: when several files describe the same taxonomy, vocabulary or ontology, the largest is used — most terms (or most bytes, with "duplicates": "largest-file" in the configuration). The others are listed as skipped with the reason, in the scan and in the report.',
+        'Ingestion: files whose header is a named resource in a shared namespace (…/taxonomy/core/IssueTaxonomy) each become their own asset (…/taxonomy/core-issue/); a singular name joins the plural domain already in use (core-rule → core-rules).',
+        'Definitions written by Claude: tick Write missing definitions with Claude on the Ingestion page (or --define on the command line), use ✦ Write with Claude on a term in Conformance Review or the Model Editor (Vocabulary), or tick terms under Missing definitions and write them in one go. Each gets an editorial note to review it before Candidate.',
+        'Claude is told the term, its broader term and that term\u2019s definition, its alternative labels, narrower and sibling terms, and the §3.7 rules: genus + differentia, not circular, no acronyms, no organization names.',
+        'Needs an Anthropic API key: put ANTHROPIC_API_KEY=… in ~/.ke-workbench.env (read on every request, no restart). The model is set by "definitionModel" in the configuration (default claude-sonnet-5-5).'
+      ]},
+      { kind: 'fixed', items: [
+        'A SKOS taxonomy is no longer treated as a vocabulary when linking taxonomy terms to vocabulary terms.',
+        'Taxonomy terms take their definition from their vocabulary term even when that vocabulary was ingested in an earlier run.'
+      ]}
+    ]
+  },
+  {
     version: '1.8.0', date: '2026-10-16', title: 'Every taxonomy term in a vocabulary',
     groups: [
       { kind: 'new', items: [

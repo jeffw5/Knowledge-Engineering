@@ -1,0 +1,673 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-role/> {
+  <https://www.insperity.com/taxonomy/core-role/> a skos:ConceptScheme;
+    rdfs:label "Core role taxonomy"@en;
+    skos:prefLabel "Core role taxonomy"@en;
+    skos:hasTopConcept roletax:agreement-party-role, roletax:commercial-role, roletax:employment-role,
+      roletax:governance-role, roletax:knowledge-engineering-role, roletax:plan-role, roletax:responsibility-role;
+    terms:description "Classification of roles, the positions or functions a party bears because of its situation and that are realized when it takes part in process steps."@en;
+    terms:title "Core role taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2026-10-14"^^xsd:dateTime;
+    skos:altLabel "Role taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-role/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:agreement-party-role a skos:Concept;
+    skos:prefLabel "Agreement party role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role borne by a party because it is a signatory to or named in an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:altLabel "Contracting party"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:guarantor, roletax:principal, roletax:representative .
+  
+  roletax:commercial-role a skos:Concept;
+    skos:prefLabel "Commercial role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role that arises from a commercial relationship or agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:altLabel "Business relationship role"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:broker, roletax:supplier, roletax:client, roletax:partner, roletax:prospect .
+  
+  roletax:employment-role a skos:Concept;
+    skos:prefLabel "Employment role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role that arises from an employment relationship between a worker and an employer."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:employer, roletax:worker, roletax:executive, roletax:manager .
+  
+  roletax:governance-role a skos:Concept;
+    skos:prefLabel "Governance role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role that carries authority or duty for the oversight of policies, data, knowledge, or controls."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:auditor, roletax:change-reviewer, roletax:custodian, roletax:owner,
+      roletax:regulator, roletax:steward .
+  
+  roletax:knowledge-engineering-role a skos:Concept;
+    skos:prefLabel "Knowledge engineering role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role that builds, reviews, or maintains governed knowledge artifacts."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:altLabel "Design-time role"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:drafting-assistant, roletax:knowledge-engineer, roletax:subject-matter-expert .
+  
+  roletax:plan-role a skos:Concept;
+    skos:prefLabel "Plan role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role that arises from participation in a benefit, retirement, or insurance plan."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:altLabel "Benefit plan role"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:beneficiary, roletax:dependent, roletax:plan-administrator,
+      roletax:plan-participant, roletax:plan-sponsor .
+  
+  roletax:responsibility-role a skos:Concept;
+    skos:prefLabel "Responsibility role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A role that defines the kind of responsibility a party has for a process step or decision."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:altLabel "RACI role"@en, "Responsibility assignment"@en;
+    skos:scopeNote "Used to qualify performedBy and approvedBy."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/core-role/>;
+    skos:narrower roletax:accountable-role, roletax:consulted-role, roletax:informed-role,
+      roletax:responsible-role .
+  
+  roletax:accountable-role a skos:Concept;
+    skos:prefLabel "Accountable role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A responsibility role borne by the party that answers for the outcome and approves the work."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:responsibility-role;
+    skos:altLabel "Accountable"@en, "Approver"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:guarantor a skos:Concept;
+    skos:prefLabel "Guarantor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement party role borne by a party that promises to meet another party's obligation if it defaults."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:agreement-party-role;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:principal a skos:Concept;
+    skos:prefLabel "Principal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement party role borne by the party on whose behalf an agreement is made or an action taken."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:agreement-party-role;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:representative a skos:Concept;
+    skos:prefLabel "Representative"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An agreement party role borne by a party authorized to act for another."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:agreement-party-role;
+    skos:altLabel "Agent"@en, "Authorized representative"@en, "Legal representative"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject domainsecurityvoc:agent;
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:auditor a skos:Concept;
+    skos:prefLabel "Auditor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance role borne by a party who independently examines records and controls."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:governance-role;
+    skos:altLabel "External auditor"@en, "Internal auditor"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:beneficiary a skos:Concept;
+    skos:prefLabel "Beneficiary"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A plan role borne by a party designated to receive a benefit on a participant's death."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:plan-role;
+    skos:altLabel "Designated beneficiary"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:broker a skos:Concept;
+    skos:prefLabel "Broker"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A commercial role borne by a party that arranges agreements between other parties for a commission or fee."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:commercial-role;
+    skos:altLabel "Agent of record"@en, "Intermediary"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:carrier a skos:Concept;
+    skos:prefLabel "Carrier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A supplier that underwrites and pays insurance benefits."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:supplier;
+    skos:altLabel "Insurance carrier"@en, "Insurer"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:supplier a skos:Concept;
+    skos:prefLabel "Supplier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A commercial role borne by a party that provides goods or services to the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:commercial-role;
+    skos:altLabel "Vendor"@en, "Provider"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject rolevoc:provider;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower roletax:carrier .
+  
+  roletax:change-reviewer a skos:Concept;
+    skos:prefLabel "Change reviewer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance role borne by the party who approves changes before they enter source control and release."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:governance-role;
+    skos:altLabel "Approver of record"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:client a skos:Concept;
+    skos:prefLabel "Client"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A commercial role borne by a party that purchases services from the organization under an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:commercial-role;
+    skos:altLabel "Customer"@en, "Client company"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject rolevoc:customer;
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:client-employer a skos:Concept;
+    skos:prefLabel "Client employer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employer that is a client of a co-employer and directs the day-to-day work of worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employer;
+    skos:altLabel "Worksite client employer"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:employer a skos:Concept;
+    skos:prefLabel "Employer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employment role borne by an organization that hires and directs workers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employment-role;
+    skos:altLabel "Employer role"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower roletax:client-employer, roletax:co-employer .
+  
+  roletax:co-employer a skos:Concept;
+    skos:prefLabel "Co-employer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employer that shares employer responsibilities for the same workers with another employer under a co-employment agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employer;
+    skos:altLabel "PEO"@en, "Professional employer organization"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:partner a skos:Concept;
+    skos:prefLabel "Partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A commercial role borne by a party that collaborates with the organization to deliver or sell offerings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:commercial-role;
+    skos:altLabel "Alliance partner"@en, "Channel partner"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject rolevoc:partner;
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:prospect a skos:Concept;
+    skos:prefLabel "Prospect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A commercial role borne by a party being evaluated or pursued as a future client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:commercial-role;
+    skos:altLabel "Lead"@en, "Prospective client"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:consulted-role a skos:Concept;
+    skos:prefLabel "Consulted role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A responsibility role borne by a party whose input is sought before work or decisions."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:responsibility-role;
+    skos:altLabel "Advisor"@en, "Consulted"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:contingent-worker a skos:Concept;
+    skos:prefLabel "Contingent worker"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A worker engaged for a limited period or task without standard employment."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:worker;
+    skos:altLabel "Consultant"@en, "Contractor"@en, "Temporary worker"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:worker a skos:Concept;
+    skos:prefLabel "Worker"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employment role borne by a person who performs work for an organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employment-role;
+    skos:altLabel "Worker role"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower roletax:contingent-worker, roletax:employee .
+  
+  roletax:custodian a skos:Concept;
+    skos:prefLabel "Custodian"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance role borne by the party who operates the systems that store and protect an asset."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:governance-role;
+    skos:altLabel "Data custodian"@en, "System owner"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:dependent a skos:Concept;
+    skos:prefLabel "Dependent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A plan role borne by a person who receives coverage through a plan participant."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:plan-role;
+    skos:altLabel "Covered dependent"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:drafting-assistant a skos:Concept;
+    skos:prefLabel "Drafting assistant"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge engineering role borne by an artificial intelligence agent that drafts definitions, labels, mappings, and shapes for human review and never commits on its own."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:knowledge-engineering-role;
+    skos:altLabel "AI drafting assistant"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:employee a skos:Concept;
+    skos:prefLabel "Employee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A worker who is employed under an employment relationship and paid through payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:worker;
+    skos:altLabel "Employee role"@en, "Staff member"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower roletax:worksite-employee .
+  
+  roletax:worksite-employee a skos:Concept;
+    skos:prefLabel "Worksite employee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employee who performs work at a client worksite under a co-employment relationship."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employee;
+    skos:altLabel "Co-employed employee"@en, "WSE"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:executive a skos:Concept;
+    skos:prefLabel "Executive"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employment role borne by a person accountable for the direction of an organization or major unit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employment-role;
+    skos:altLabel "Officer"@en, "Senior leader"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:manager a skos:Concept;
+    skos:prefLabel "Manager"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "An employment role borne by a person who directs the work of other workers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:employment-role;
+    skos:altLabel "People manager"@en, "Supervisor"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:owner a skos:Concept;
+    skos:prefLabel "Owner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance role borne by the party accountable for an asset, domain, or artifact and for approving changes to it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:governance-role;
+    skos:altLabel "Business owner"@en, "Data owner"@en, "Domain owner"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject applicationbusinesstaxonomyvoc:owner;
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:regulator a skos:Concept;
+    skos:prefLabel "Regulator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance role borne by a government body that oversees compliance with law in a domain."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:governance-role;
+    skos:altLabel "Supervisory authority"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:steward a skos:Concept;
+    skos:prefLabel "Steward"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A governance role borne by the party who maintains the quality, labels, and definitions of data or vocabularies day to day."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:governance-role;
+    skos:altLabel "Data steward"@en, "Vocabulary steward"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:informed-role a skos:Concept;
+    skos:prefLabel "Informed role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A responsibility role borne by a party kept up to date on progress or outcome."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:responsibility-role;
+    skos:altLabel "Informed"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:knowledge-engineer a skos:Concept;
+    skos:prefLabel "Knowledge engineer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge engineering role borne by the person who builds and extends ontologies under the naming, URI, and definition standards."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:knowledge-engineering-role;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:subject-matter-expert a skos:Concept;
+    skos:prefLabel "Subject matter expert"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A knowledge engineering role borne by the person who confirms definitions, rules, and relationships for a domain."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:knowledge-engineering-role;
+    skos:altLabel "Domain expert"@en, "SME"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:plan-administrator a skos:Concept;
+    skos:prefLabel "Plan administrator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A plan role borne by a party responsible for operating a plan under its terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:plan-role;
+    skos:altLabel "Administrator"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:plan-participant a skos:Concept;
+    skos:prefLabel "Plan participant"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A plan role borne by a person who is enrolled in a plan."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:plan-role;
+    skos:altLabel "Enrollee"@en, "Member"@en, "Participant"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:plan-sponsor a skos:Concept;
+    skos:prefLabel "Plan sponsor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A plan role borne by an organization that establishes and maintains a plan."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:plan-role;
+    skos:altLabel "Sponsor"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:responsible-role a skos:Concept;
+    skos:prefLabel "Responsible role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    skos:definition "A responsibility role borne by the party that does the work."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/core-role/>;
+    skos:broader roletax:responsibility-role;
+    skos:altLabel "Doer"@en, "Responsible"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

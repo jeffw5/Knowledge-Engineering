@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conformance Review</title>
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<script src="../assets/ke-sparql.js"></script>
+<script src="../assets/ke-rules.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:13px;line-height:1.5;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:var(--ke-mono);font-size:.92em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ke-accent);outline-offset:2px;border-radius:4px}
+.hidden{display:none!important}
+
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100vh;height:100dvh}
+header.top{padding:16px 20px 12px;border-bottom:1px solid var(--ke-line);background:var(--ke-surface);display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap}
+.eyebrow{font:700 10.5px/1.4 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+.eyebrow .sep{color:var(--ke-faint);margin:0 5px}
+h1{font-size:21px;letter-spacing:-.01em;margin-top:2px}
+.lede{color:var(--ke-ink2);font-size:12.5px;max-width:680px}
+.top .grow{flex:1;min-width:260px}
+.btn{height:30px;padding:0 12px;border-radius:6px;border:1px solid var(--ke-line);background:var(--ke-surface);font-size:12.5px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.btn:hover:not(:disabled){border-color:var(--ke-accent)}
+.btn.pri{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink)}
+.btn.bad{color:var(--ke-bad);border-color:var(--ke-bad)}
+.btn.bad.solid{background:var(--ke-bad);color:#fff}
+.btn.sm{height:26px;padding:0 9px;font-size:11.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.status{font-size:12px;color:var(--ke-muted)}
+.status.bad{color:var(--ke-bad)} .status.ok{color:var(--ke-ok)}
+
+.main{display:grid;grid-template-columns:250px minmax(320px,1fr) minmax(380px,1.15fr);min-height:0}
+.col{min-height:0;overflow:auto;border-right:1px solid var(--ke-line)}
+.col:last-child{border-right:0}
+.sec{padding:12px 14px;border-bottom:1px solid var(--ke-line-soft)}
+.sec h3{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.sec h3 button{font:600 11px var(--ke-sans);letter-spacing:0;text-transform:none;background:none;border:0;color:var(--ke-accent)}
+.alist{display:grid;grid-template-columns:minmax(0,1fr);gap:1px;max-height:300px;overflow:auto}
+.alist label{display:flex;gap:7px;align-items:center;padding:3px 4px;border-radius:4px;font-size:12px;cursor:pointer}
+.alist label:hover{background:var(--ke-band)}
+.alist .k{font:700 8.5px/1 var(--ke-sans);letter-spacing:.05em;text-transform:uppercase;padding:2px 4px;border-radius:3px;border:1px solid currentColor;flex:none}
+.k.voc{color:var(--ke-kind-voc)} .k.tax{color:var(--ke-kind-tax)} .k.ont{color:var(--ke-kind-ont)}
+.alist .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.alist .c{font-size:10.5px;color:var(--ke-bad);font-variant-numeric:tabular-nums}
+.cats{display:grid;gap:2px}
+.cat{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 9px;border:0;background:none;border-radius:6px;font-size:12.5px;color:var(--ke-ink2)}
+.cat:hover{background:var(--ke-band)}
+.cat.on{background:var(--ke-accent-soft);color:var(--ke-ink);font-weight:700}
+.cat .n{font:700 11px var(--ke-sans);font-variant-numeric:tabular-nums;color:var(--ke-bad);background:var(--ke-bad-soft);border-radius:10px;padding:1px 7px}
+.cat .n.z{color:var(--ke-ok);background:var(--ke-ok-soft)}
+.chk{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--ke-ink2);margin-top:6px}
+.policy{font-size:11.5px;color:var(--ke-muted)}
+.seg{display:flex;border:1px solid var(--ke-line);border-radius:7px;overflow:hidden}
+.seg button{flex:1;border:0;background:var(--ke-surface);padding:6px 8px;font-size:12px;font-weight:600;color:var(--ke-ink2)}
+.seg button+button{border-left:1px solid var(--ke-line)}
+.seg button.on{background:var(--ke-accent);color:var(--ke-accent-ink)}
+.frow{display:flex;gap:6px;margin-top:8px}
+.frow input{flex:1;min-width:0;font-size:11px}
+.srcnote{font-size:11px;color:var(--ke-muted);margin-top:6px}
+.policy b{color:var(--ke-ink)}
+
+/* queue */
+.qhead{position:sticky;top:0;z-index:2;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);padding:10px 12px;display:grid;gap:8px}
+.qhead .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:140px;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:5px 9px;font-size:12px}
+.bulk{display:flex;gap:6px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--ke-ink2)}
+.grp{padding:8px 12px 4px;font:700 10px/1.3 var(--ke-sans);letter-spacing:.07em;text-transform:uppercase;color:var(--ke-muted);display:flex;gap:8px;align-items:center;background:var(--ke-bg);border-bottom:1px solid var(--ke-line-soft);position:sticky;top:0}
+.grp input{margin:0}
+.grp .gn{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--ke-ink2)}
+.item{display:grid;grid-template-columns:18px 1fr;gap:2px 8px;padding:8px 12px;border-bottom:1px solid var(--ke-line-soft);cursor:pointer}
+.item:hover{background:var(--ke-sunk)}
+.item.on{background:var(--ke-accent-soft)}
+.item .lb{font-weight:600;display:flex;gap:6px;align-items:center;min-width:0}
+.item .lb span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .msg{grid-column:2;font-size:11.5px;color:var(--ke-muted);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tag{font:700 9px/1 var(--ke-sans);letter-spacing:.05em;text-transform:uppercase;padding:3px 5px;border-radius:3px;flex:none}
+.tag.staged{background:var(--ke-ok-soft);color:var(--ke-ok)}
+.tag.skip{background:var(--ke-band);color:var(--ke-muted)}
+.tag.sug{background:var(--ke-accent-soft);color:var(--ke-accent)}
+.empty{padding:40px 20px;text-align:center;color:var(--ke-muted)}
+.empty b{display:block;color:var(--ke-ink);font-size:14px;margin-bottom:4px}
+
+/* detail */
+.dt{padding:16px 18px 28px}
+.dt h2{font-size:17px;letter-spacing:-.005em;word-break:break-word}
+.dt .iri{font-family:var(--ke-mono);font-size:11px;color:var(--ke-muted);word-break:break-all;margin-top:2px}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.chip{font-size:11px;padding:2px 8px;border-radius:10px;background:var(--ke-band);color:var(--ke-ink2)}
+.finds{margin-top:12px;display:grid;gap:6px}
+.find{border-left:3px solid var(--ke-bad);background:var(--ke-bad-soft);padding:7px 10px;border-radius:0 6px 6px 0;font-size:12px}
+.find.warn{border-color:var(--ke-warn);background:var(--ke-warn-soft)}
+.find b{display:block;font-size:11px;letter-spacing:.02em}
+.ctx{margin-top:14px;display:grid;grid-template-columns:110px 1fr;gap:5px 10px;font-size:12px}
+.ctx .k{color:var(--ke-muted);font-size:11px;padding-top:1px}
+.ctx .v{min-width:0;word-break:break-word}
+.ctx .v .t{display:inline-block;background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:4px;padding:0 6px;margin:0 4px 3px 0;font-size:11.5px}
+.ctx .v button.t{cursor:pointer;color:var(--ke-accent)}
+.act{margin-top:16px;border:1px solid var(--ke-line);border-radius:10px;background:var(--ke-surface)}
+.act-h{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid var(--ke-line-soft);font-weight:700;font-size:12.5px}
+.act-h .sub{font-weight:400;color:var(--ke-muted);font-size:11.5px}
+.act-b{padding:10px 12px 12px;display:grid;gap:8px}
+.fld label{display:block;font:700 9.5px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted);margin-bottom:4px}
+.fld input,.fld textarea{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:6px 8px;font-size:12.5px}
+.fld textarea{min-height:76px;resize:vertical;line-height:1.45}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--ke-accent)}
+.sugg{font-size:11.5px;color:var(--ke-accent)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.act-b select,.act-b input[list]{height:30px;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:0 8px;font-size:12.5px;min-width:0}
+.act-b select:focus,.act-b input[list]:focus{outline:none;border-color:var(--ke-accent)}
+.cascade{font-size:12px;color:var(--ke-ink2);background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:8px;padding:9px 11px}
+.cascade ul{margin:4px 0 0 18px}
+.cascade li{margin:2px 0}
+.alts{display:flex;flex-wrap:wrap;gap:4px}
+.alts span{display:inline-flex;gap:4px;align-items:center;background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:4px;padding:1px 2px 1px 7px;font-size:11.5px}
+.alts button{border:0;background:none;color:var(--ke-faint);width:18px;height:18px;border-radius:3px}
+.alts button:hover{color:var(--ke-bad);background:var(--ke-bad-soft)}
+.alts span.gone{text-decoration:line-through;color:var(--ke-faint)}
+
+/* staged changes bar */
+footer.bar{border-top:1px solid var(--ke-line);background:var(--ke-surface);padding:9px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+footer.bar .sum{font-size:12.5px}
+footer.bar .sum b{font-variant-numeric:tabular-nums}
+.drawer{position:fixed;right:16px;bottom:58px;width:min(560px,calc(100vw - 32px));max-height:62vh;display:flex;flex-direction:column;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.22);z-index:30}
+.drawer-h{padding:12px 14px;border-bottom:1px solid var(--ke-line-soft);display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.drawer-b{overflow:auto;padding:6px 0}
+.ch{display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:7px 14px;border-bottom:1px solid var(--ke-line-soft);font-size:12px}
+.ch .what{font-weight:600}
+.ch .det{grid-column:1;color:var(--ke-muted);font-size:11.5px;word-break:break-word}
+.ch button{grid-row:span 2;align-self:center;border:0;background:none;color:var(--ke-faint);font-size:16px;width:24px;height:24px;border-radius:4px}
+.ch button:hover{color:var(--ke-bad);background:var(--ke-bad-soft)}
+.drawer-f{padding:10px 14px;border-top:1px solid var(--ke-line-soft);display:grid;gap:8px}
+.vbump{font-size:11.5px;color:var(--ke-ink2)}
+.vbump .mono{font-size:11px}
+.toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);background:var(--ke-ink);color:var(--ke-surface);padding:8px 14px;border-radius:8px;font-size:12.5px;z-index:50;display:none;max-width:80vw}
+.toast.bad{background:var(--ke-bad);color:#fff}
+
+@media (max-width:1100px){ .main{grid-template-columns:220px 1fr} .col.detail{grid-column:1 / -1;border-top:1px solid var(--ke-line)} .main{overflow:auto} .col{overflow:visible} }
+@media (max-width:720px){ .main{grid-template-columns:1fr} header.top{padding:12px 16px} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="grow">
+      <div class="eyebrow">Knowledge engineering <span class="sep">•</span> Human in the loop <span class="sep">•</span> §3.2 · §3.3 · §3.7</div>
+      <h1>Conformance Review</h1>
+      <p class="lede">Resolve the conformance errors the ingester could not decide: other organizations' content, acronyms, broken or foreign references and missing definitions, across vocabularies, taxonomies and ontologies. Open the files an ingestion run wrote, before loading, or models already in GraphDB. Changes are staged, then saved as one change set with a change record.</p>
+    </div>
+    <div class="row">
+      <span class="status" id="scanStatus"></span>
+      <button class="btn pri" id="scanBtn">Find issues</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <!-- left: scope and categories -->
+    <aside class="col">
+      <div class="sec">
+        <h3>Categories</h3>
+        <div class="cats" id="cats"></div>
+        <label class="chk"><input type="checkbox" id="showWarn"> Include warnings</label>
+        <label class="chk"><input type="checkbox" id="showDone"> Show staged and skipped</label>
+      </div>
+      <div class="sec">
+        <h3>Source</h3>
+        <div class="seg" role="group" aria-label="Where to read the models from">
+          <button data-src="files" title="The .ttl files an ingestion run wrote, before they are loaded into GraphDB">Ingested files</button>
+          <button data-src="graphdb" title="Models already loaded into GraphDB">GraphDB</button>
+        </div>
+        <div class="frow" id="folderRow"><input id="folder" class="search mono" placeholder="Folder with ingested .ttl files" aria-label="Folder with ingested Turtle files"><button class="btn sm" id="folderGo">Open</button></div>
+        <div class="srcnote" id="srcNote"></div>
+      </div>
+      <div class="sec">
+        <h3><span id="listTitle">Models</span> <button id="allBtn">All</button></h3>
+        <div class="alist" id="alist"><div class="status">Loading…</div></div>
+      </div>
+      <div class="sec policy" id="policy"></div>
+    </aside>
+
+    <!-- middle: queue -->
+    <section class="col" id="qcol">
+      <div class="qhead">
+        <div class="row">
+          <input class="search" id="q" placeholder="Filter by label, IRI or finding…" aria-label="Filter findings">
+        </div>
+        <div class="bulk" id="bulk"></div>
+      </div>
+      <div id="queue"><div class="empty"><b>Choose files or models and find issues</b>Pick ingested files or GraphDB models on the left, then click Find issues. On the Ingestion page, Review › opens a file here directly.</div></div>
+    </section>
+
+    <!-- right: detail -->
+    <section class="col detail" id="detail"><div class="empty"><b>Nothing selected</b>Select a finding to see the term in context and resolve it.</div></section>
+  </div>
+
+  <footer class="bar">
+    <span class="sum" id="sum">No staged changes.</span>
+    <span style="flex:1"></span>
+    <button class="btn" id="reviewBtn" disabled>Review changes</button>
+    <button class="btn" id="loadBtn" title="Load the current files of this folder into GraphDB">Load into GraphDB…</button>
+    <button class="btn pri" id="applyBtn" disabled>Apply to GraphDB</button>
+  </footer>
+</div>
+
+<div class="drawer hidden" id="drawer" role="dialog" aria-label="Staged changes">
+  <div class="drawer-h"><span id="drawerTitle">Staged changes</span><button class="btn sm" id="drawerClose">Close</button></div>
+  <div class="drawer-b" id="drawerList"></div>
+  <div class="drawer-f">
+    <div class="vbump" id="vbump"></div>
+    <div class="row"><span class="status" id="applyStatus" style="flex:1"></span>
+      <button class="btn bad" id="clearBtn">Discard all</button>
+      <button class="btn pri" id="applyGo">Apply to GraphDB</button></div>
+  </div>
+</div>
+<div class="drawer hidden" id="loadDlg" role="dialog" aria-label="Load into GraphDB">
+  <div class="drawer-h"><span>Load into GraphDB</span><button class="btn sm" id="loadClose">Close</button></div>
+  <div class="drawer-b" id="loadBody" style="padding:10px 14px"></div>
+  <div class="drawer-f"><div class="row"><span class="status" id="loadStatus" style="flex:1"></span>
+    <button class="btn pri" id="loadGo">Load</button></div></div>
+</div>
+<datalist id="vocTermList"></datalist>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const S = window.KE_SPARQL, K = window.KE_RULES;
+  const RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', RDFS = 'http://www.w3.org/2000/01/rdf-schema#',
+        OWL = 'http://www.w3.org/2002/07/owl#', SKOS = 'http://www.w3.org/2004/02/skos/core#', DCT = 'http://purl.org/dc/terms/',
+        DC = 'http://purl.org/dc/elements/1.1/', PROV = 'http://www.w3.org/ns/prov#', XSD = 'http://www.w3.org/2001/XMLSchema#';
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const ln = u => K.localName(u || '');
+  const plural = (n, w, pw) => `${n.toLocaleString()} ${n === 1 ? w : (pw || w + 's')}`;
+  const ls = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } },
+               set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  function toast(msg, bad) { const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.style.display = 'block'; clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = 'none', bad ? 7000 : 2800); }
+
+  const CATS = [
+    { id: 'org', title: "Other organization's content", rules: ['org-content'] },
+    { id: 'voc', title: 'Not in a vocabulary', rules: ['vocab-term'] },
+    { id: 'acr', title: 'Acronyms', rules: ['acronym-label', 'acronym-id'] },
+    { id: 'ref', title: 'Broken and foreign references', rules: ['broken-ref', 'base-url'] },
+    { id: 'def', title: 'Missing definitions', rules: ['definition'] },
+    { id: 'other', title: 'Other', rules: null }
+  ];
+  const catOf = rule => (CATS.find(c => c.rules && c.rules.includes(rule)) || CATS[CATS.length - 1]).id;
+
+  let policyJ = null, POL = null, assets = [], quads = [], idx = null, findings = [], terms = new Map();
+  let mode = 'graphdb', fileOf = {}, fileDir = '';
+  let DEFS = { key: false };
+  fetch('/api/ingest/define-status').then(r => r.ok ? r.json() : null).then(d => { if (d) DEFS = d; }).catch(() => {});
+  let VOC = { vocabs: [], terms: new Map() }, support = new Set(), vocOpt = new Map();   // vocabulary index; vocabulary files loaded only as targets
+  let cat = 'org', sel = null, checked = new Set(), staged = [], skipped = new Set(), scanned = new Set();
+
+  // ── policy and assets ─────────────────────────────────────────────────
+  async function loadPolicy() {
+    try { const r = await fetch('/api/ingest/policy'); policyJ = r.ok ? await r.json() : null; } catch (e) { policyJ = null; }
+    if (!policyJ || !policyJ.ok) { policyJ = { approved: [], expansions: {}, organizations: [], baseUrl: 'https://www.insperity.com/', author: '' }; $('policy').innerHTML = 'Policy not available — restart the workbench server so proxy.py serves <span class="mono">/api/ingest/policy</span>.'; }
+    else $('policy').innerHTML = `<b>${policyJ.approved.length}</b> approved acronyms · <b>${Object.keys(policyJ.expansions).length}</b> known expansions · organizations: <b>${esc(policyJ.organizations.map(o => o.name).join(', ') || 'none')}</b>. Edited in Ingestion › Edit configuration.`;
+    POL = K.policyFrom(policyJ);
+  }
+  const kindCode = a => a.code || (a.type === 'scheme' ? 'voc' : (a.kind === 'tax' ? 'tax' : 'ont'));
+  const qp = new URLSearchParams(location.search);
+  const urlFiles = qp.getAll('file');
+  mode = (urlFiles.length || qp.get('folder')) ? 'files' : ls.get('ke-review-src', 'files');
+  function setMode(m) {
+    mode = m; ls.set('ke-review-src', m);
+    document.querySelectorAll('[data-src]').forEach(b => b.classList.toggle('on', b.dataset.src === m));
+    $('folderRow').classList.toggle('hidden', m !== 'files');
+    $('listTitle').textContent = m === 'files' ? 'Files' : 'Models';
+    $('srcNote').innerHTML = m === 'files' ? 'Save to files writes the corrections into the <span class="mono">.ttl</span> and its <span class="mono">.trig</span>; <b>Load into GraphDB</b> then sends the folder\u2019s current files.' : 'Fixes are applied to GraphDB with a version bump.';
+    $('applyBtn').textContent = $('applyGo').textContent = m === 'files' ? 'Save & load into GraphDB' : 'Apply to GraphDB';
+    $('loadBtn').classList.toggle('hidden', m !== 'files');
+  }
+  document.querySelectorAll('[data-src]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.src === mode) return;
+    if (staged.length && !confirmSwitch()) return;
+    staged = []; findings = []; terms = new Map(); quads = []; idx = null; sel = null; checked.clear();
+    setMode(b.dataset.src); refreshAll(); $('scanStatus').textContent = '';
+    $('queue').innerHTML = '<div class="empty"><b>Choose ' + (mode === 'files' ? 'files' : 'models') + ' and find issues</b>Tick them on the left, then click Find issues.</div>';
+    loadAssets();
+  }));
+  function serverOld() {
+    $('queue').innerHTML = `<div class="empty"><b>The workbench server is out of date</b>It does not have the file-review endpoints yet. Double-click <span class="mono">start-workbench.command</span> in the KE Workbench folder, then reload this page. (From 1.5.2 on, updates to the ingestion code are picked up without a restart.)</div>`;
+    $('detail').innerHTML = '';
+  }
+  function confirmSwitch() { toast('Save or discard the staged changes first', true); return false; }
+  $('folderGo').addEventListener('click', () => loadAssets($('folder').value.trim()));
+  $('folder').addEventListener('keydown', e => { if (e.key === 'Enter') loadAssets($('folder').value.trim()); });
+  const codeOfFile = k => ({ vocabulary: 'voc', taxonomy: 'tax', ontology: 'ont' })[k] || 'ont';
+  async function loadFiles(dir) {
+    $('alist').innerHTML = '<div class="status">Loading…</div>';
+    let d;
+    try { const r = await fetch('/api/ingest/review-files?' + new URLSearchParams({ dir: dir || qp.get('folder') || ls.get('ke-review-folder', '') })); d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command) to review ingested files.' : 'Server answered ' + r.status }; }
+    catch (e) { d = { ok: false, error: e.message }; }
+    if (!d.ok) { $('alist').innerHTML = `<div class="status bad">${esc(d.error)}</div>`; if (/Restart/.test(d.error)) serverOld(); return; }
+    fileDir = d.dir; $('folder').value = d.dir; if (d.dir) ls.set('ke-review-folder', d.dir);
+    assets = d.files.map(f => ({ iri: f.iri, path: f.path, label: f.title, code: codeOfFile(f.kind), name: f.name, version: f.version }));
+    const order = { voc: 0, tax: 1, ont: 2 };
+    assets.sort((a, b) => order[a.code] - order[b.code] || a.label.localeCompare(b.label));
+    let pick; try { pick = new Set(urlFiles.length ? urlFiles : JSON.parse(ls.get('ke-review-files', '[]'))); } catch (e) { pick = new Set(); }
+    $('alist').innerHTML = assets.length ? assets.map(a => `<label title="${esc(a.name)}"><input type="checkbox" value="${esc(a.path)}" ${pick.has(a.path) ? 'checked' : ''}><span class="k ${a.code}">${a.code}</span><span class="nm">${esc(a.label)}</span><span class="c" data-c="${esc(a.iri)}"></span></label>`).join('')
+      : `<div class="status">${d.dir ? 'No ingested .ttl files in this folder.' : 'Type the folder an ingestion run wrote to (its ttl folder or the destination), then Open.'}</div>`;
+    if (urlFiles.length && !loadFiles.done) { loadFiles.done = true; ls.set('ke-review-files', JSON.stringify(urlFiles)); scanFiles(urlFiles); }
+  }
+  async function loadAssets(dir) {
+    if (mode === 'files') return loadFiles(dir);
+    try { assets = await S.listAssets(); }
+    catch (e) { $('alist').innerHTML = `<div class="status bad">GraphDB not reachable: ${esc(e.message)}</div>`; return; }
+    const order = { voc: 0, tax: 1, ont: 2 };
+    assets.sort((a, b) => order[kindCode(a)] - order[kindCode(b)] || a.label.localeCompare(b.label));
+    let pick; try { pick = new Set(JSON.parse(ls.get('ke-review-assets', '[]'))); } catch (e) { pick = new Set(); }
+    $('alist').innerHTML = assets.length ? assets.map(a => `<label title="${esc(a.iri)}"><input type="checkbox" value="${esc(a.iri)}" ${pick.has(a.iri) ? 'checked' : ''}><span class="k ${kindCode(a)}">${kindCode(a)}</span><span class="nm">${esc(a.label)}</span><span class="c" data-c="${esc(a.iri)}"></span></label>`).join('')
+      : '<div class="status">No vocabularies, taxonomies or ontologies in this repository.</div>';
+  }
+  $('allBtn').addEventListener('click', () => { const cs = [...document.querySelectorAll('#alist input')]; const on = cs.some(c => !c.checked); cs.forEach(c => c.checked = on); });
+  const pickedAssets = () => [...document.querySelectorAll('#alist input:checked')].map(c => c.value);
+
+  // ── scan ──────────────────────────────────────────────────────────────
+  const term = b => !b ? null : b.type === 'uri' ? { t: 'iri', v: b.value } : b.type === 'bnode' ? { t: 'bnode', v: b.value } : { t: 'lit', v: b.value, lang: b['xml:lang'] ? b['xml:lang'].toLowerCase() : undefined, dt: b.datatype };
+  async function scan() {
+    const pick = pickedAssets();
+    if (!pick.length) { $('scanStatus').textContent = mode === 'files' ? 'Tick at least one file' : 'Tick at least one model'; $('scanStatus').className = 'status bad'; return; }
+    ls.set(mode === 'files' ? 'ke-review-files' : 'ke-review-assets', JSON.stringify(pick));
+    if (mode === 'files') return scanFiles(pick);
+    $('scanBtn').disabled = true; $('scanStatus').className = 'status'; $('scanStatus').textContent = 'Reading graphs…';
+    try {
+      await loadPolicy();
+      const gs = (await S.select(`SELECT DISTINCT ?g WHERE { VALUES ?a { ${pick.map(S.iri).join(' ')} } GRAPH ?g { ?a a ?t } }`)).map(r => r.g);
+      if (!gs.length) throw new Error('None of these models is in a named graph. Load them with the Ingestion page or as TriG.');
+      quads = [];
+      for (const g of gs) {
+        const res = await fetch(S.endpoint(), { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/sparql-results+json' },
+          body: new URLSearchParams({ query: `SELECT ?s ?p ?o WHERE { GRAPH <${g}> { ?s ?p ?o } }`, infer: 'false' }) });
+        if (!res.ok) throw new Error('GraphDB answered ' + res.status);
+        (await res.json()).results.bindings.forEach(b => quads.push({ s: term(b.s), p: term(b.p), o: term(b.o), g }));
+        $('scanStatus').textContent = `Reading graphs… ${quads.length.toLocaleString()} statements`;
+      }
+      scanned = new Set(gs); support = new Set();
+      buildIndex(); await loadVocab(); runChecks();
+      $('scanStatus').textContent = `${plural(gs.length, 'model')} · ${quads.length.toLocaleString()} statements · ${plural(findings.filter(f => f.sev === 'error').length, 'error')}`;
+      $('scanStatus').className = 'status ok';
+      const firstCat = CATS.find(c => countCat(c.id) > 0); if (firstCat && !countCat(cat)) cat = firstCat.id;
+      renderCats(); renderQueue(); if (sel && !terms.has(sel)) { sel = null; renderDetail(); } else renderDetail();
+    } catch (e) { $('scanStatus').textContent = e.message; $('scanStatus').className = 'status bad'; }
+    $('scanBtn').disabled = false;
+  }
+  $('scanBtn').addEventListener('click', () => { flushEdits(); scan(); });
+  const fromArr = a => a[0] === 'I' ? { t: 'iri', v: a[1] } : a[0] === 'B' ? { t: 'bnode', v: a[1] } : { t: 'lit', v: a[1], lang: a[2] ? a[2].toLowerCase() : undefined, dt: a[3] || undefined };
+  const toArr = t => t.t === 'iri' ? ['I', t.v] : t.t === 'bnode' ? ['B', t.v] : ['L', t.v, t.lang || '', t.dt || ''];
+  async function scanFiles(pick) {
+    // files with staged changes stay loaded, so re-checking other files never drops those changes
+    const keep = [...new Set(staged.map(c => fileOf[c.graph]).filter(Boolean))];
+    const vkeep = [...new Set(staged.filter(c => c.vocabPath).map(c => c.vocabPath))].filter(p => !pick.includes(p) && !keep.includes(p));
+    pick = [...new Set([...pick, ...keep])];
+    $('scanBtn').disabled = true; $('scanStatus').className = 'status'; $('scanStatus').textContent = 'Reading files…';
+    try {
+      await loadPolicy();
+      const r = await fetch('/api/ingest/review-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paths: [...pick, ...vkeep] }) });
+      if (r.status === 404) { serverOld(); throw new Error('The workbench server needs a restart'); }
+      const d = await r.json();
+      if (!d.ok) throw new Error(d.error || 'Could not read the files');
+      quads = []; fileOf = {}; support = new Set();
+      const bad = d.files.filter(f => !f.ok);
+      d.files.filter(f => f.ok).forEach(f => {
+        fileOf[f.graph] = f.path; if (vkeep.includes(f.path)) support.add(f.graph);
+        f.triples.forEach(t => quads.push({ s: fromArr(t[0]), p: fromArr(t[1]), o: fromArr(t[2]), g: f.graph }));
+      });
+      scanned = new Set(Object.keys(fileOf).filter(g => !support.has(g)));
+      buildIndex(); await loadVocab();
+      staged.filter(c => c.type === 'addVocab').forEach(c => VOC.terms.set(c.newIri, { iri: c.newIri, label: c.label, alts: [], scheme: c.vocab, pending: true }));
+      renderVocOptions(); runChecks();
+      $('scanStatus').textContent = `${plural(scanned.size, 'file')} · ${quads.length.toLocaleString()} statements · ${plural(findings.filter(f => f.sev === 'error').length, 'error')}` + (bad.length ? ` · could not read ${bad.map(f => f.path.split('/').pop()).join(', ')}` : '');
+      $('scanStatus').className = bad.length ? 'status bad' : 'status ok';
+      const firstCat = CATS.find(c => countCat(c.id) > 0); if (firstCat && !countCat(cat)) cat = firstCat.id;
+      if (sel && !terms.has(sel)) sel = null;
+      renderCats(); renderQueue();
+      if (!sel) { const first = document.querySelector('#queue .item'); if (first) { sel = first.dataset.iri; first.classList.add('on'); } }   // open the first finding's fields right away
+      renderDetail();
+    } catch (e) { $('scanStatus').textContent = e.message; $('scanStatus').className = 'status bad'; }
+    $('scanBtn').disabled = false;
+  }
+
+  function buildIndex() {
+    idx = { s: new Map(), o: new Map(), b: new Map(), header: new Map() };
+    for (const q of quads) {
+      const map = q.s.t === 'bnode' ? idx.b : idx.s;
+      const k = q.s.t === 'bnode' ? q.g + '|' + q.s.v : q.s.v;
+      if (!map.has(k)) map.set(k, []); map.get(k).push(q);
+      if (q.o.t === 'iri') { if (!idx.o.has(q.o.v)) idx.o.set(q.o.v, []); idx.o.get(q.o.v).push(q); }
+      if (q.p.v === RDF + 'type' && (q.o.v === OWL + 'Ontology' || q.o.v === SKOS + 'ConceptScheme')) idx.header.set(q.g, q.s.v);
+    }
+  }
+  const vals = (iri, p, g) => (idx.s.get(iri) || []).filter(q => q.p.v === p && (!g || q.g === g)).map(q => q.o);
+  const litv = (iri, p) => vals(iri, p).filter(o => o.t === 'lit' && (!o.lang || o.lang === 'en')).map(o => o.v);
+  const label = iri => litv(iri, SKOS + 'prefLabel')[0] || litv(iri, RDFS + 'label')[0] || litv(iri, DCT + 'title')[0] || ln(iri);
+  const graphOf = iri => { const q = (idx.s.get(iri) || [])[0]; return q ? q.g : null; };
+  const assetLabel = g => { const a = assets.find(x => x.iri === g || x.iri === idx.header.get(g)); return a ? a.label : ln(g); };
+  const isConcept = iri => vals(iri, RDF + 'type').some(o => o.v === SKOS + 'Concept');
+  const isHeader = iri => [...idx.header.values()].includes(iri);
+
+  // ── vocabularies: every term a taxonomy term can be linked to ─────────
+  async function loadVocab() {
+    VOC = { vocabs: [], terms: new Map() };
+    try {
+      if (mode === 'files') {
+        const r = await fetch('/api/ingest/vocab-index?' + new URLSearchParams({ dir: fileDir }));
+        const d = r.ok ? await r.json() : { ok: false };
+        if (d.ok) { VOC.vocabs = d.vocabularies; d.terms.forEach(t => VOC.terms.set(t.iri, t)); }
+      } else {
+        const vs = await S.select(`SELECT ?g (SAMPLE(?t) AS ?title) (SAMPLE(?v) AS ?ver) WHERE { GRAPH ?g { ?g a skos:ConceptScheme OPTIONAL { ?g rdfs:label ?t } OPTIONAL { ?g owl:versionInfo ?v } } FILTER(CONTAINS(STR(?g), "/vocabulary/")) } GROUP BY ?g`);
+        VOC.vocabs = vs.map(v => ({ iri: v.g, title: v.title || ln(v.g), version: v.ver || '' })).sort((a, b) => a.title.localeCompare(b.title));
+        const ts = await S.select(`SELECT ?c (SAMPLE(?l) AS ?label) ?g WHERE { GRAPH ?g { ?c a skos:Concept OPTIONAL { ?c skos:prefLabel ?l } } FILTER(CONTAINS(STR(?g), "/vocabulary/")) } GROUP BY ?c ?g`);
+        ts.forEach(t => VOC.terms.set(t.c, { iri: t.c, label: t.label || ln(t.c), alts: [], scheme: t.g }));
+      }
+    } catch (e) { /* no index: the vocabulary rule stays off */ }
+    renderVocOptions();
+  }
+  const vocabTitle = v => (VOC.vocabs.find(x => x.iri === v) || {}).title || ln(v);
+  function renderVocOptions() {
+    vocOpt = new Map();
+    const opts = [];
+    VOC.terms.forEach(t => { const k = `${t.label} · ${vocabTitle(t.scheme)}`; if (!vocOpt.has(k)) { vocOpt.set(k, t.iri); opts.push(k); } });
+    $('vocTermList').innerHTML = opts.sort().map(k => `<option value="${esc(k)}">`).join('');
+  }
+  const vocPick = v => vocOpt.get(String(v).trim()) || [...VOC.terms.values()].find(t => t.label.toLowerCase() === String(v).trim().toLowerCase())?.iri || null;
+  const norm = x => String(x || '').toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const sing = x => x.replace(/(ies)$/, 'y').replace(/([^s])s$/, '$1');
+  // vocabulary terms that a taxonomy term probably names, best first
+  function vocabMatches(iri) {
+    const names = [label(iri), ...litv(iri, SKOS + 'altLabel')].map(norm).filter(Boolean);
+    const toks = new Set(names[0] ? names[0].split(' ') : []);
+    const out = [];
+    VOC.terms.forEach(t => {
+      const tn = [t.label, ...(t.alts || [])].map(norm);
+      let sc = 0;
+      if (tn.some(x => names.includes(x))) sc = 100;
+      else if (tn.some(x => names.some(n => sing(n) === sing(x)))) sc = 90;
+      else if (tn.some(x => names.some(n => n.length > 3 && x.length > 3 && (n.includes(x) || x.includes(n))))) sc = 60;
+      else { const tt = new Set(norm(t.label).split(' ')); const inter = [...toks].filter(x => tt.has(x)).length; const j = inter / (new Set([...toks, ...tt]).size || 1); if (j >= .5) sc = Math.round(50 * j); }
+      if (sc) out.push({ iri: t.iri, label: t.label, scheme: t.scheme, score: sc });
+    });
+    return out.sort((a, b) => b.score - a.score || a.label.localeCompare(b.label)).slice(0, 6);
+  }
+  // vocabulary a taxonomy's terms belong in by default: same domain, then the last one used
+  function defaultVocab(iri) {
+    const m = /\/taxonomy\/([^/]+)\//.exec(iri), same = m && VOC.vocabs.find(v => v.iri.endsWith('/vocabulary/' + m[1] + '/'));
+    const last = VOC.vocabs.find(v => v.iri === ls.get('ke-review-vocab', ''));
+    return (same || last || VOC.vocabs[0] || {}).iri || '';
+  }
+  // the vocabulary term the term's parent names (or is staged to be added as), if it is in that vocabulary
+  function defaultBroader(iri, vocab) {
+    for (const p of parentsOf(iri)) {
+      const st = staged.find(c => c.type === 'addVocab' && c.term === p);
+      if (st && st.vocab === vocab) return st.newIri;
+      const lk = staged.find(c => c.type === 'link' && c.term === p);
+      const subj = lk ? [lk.target] : vals(p, DC + 'subject').filter(o => o.t === 'iri').map(o => o.v);
+      const hit = subj.find(x => VOC.terms.has(x) && VOC.terms.get(x).scheme === vocab);
+      if (hit) return hit;
+    }
+    return '';
+  }
+  const slugOf = l => String(l).toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  function newVocabIri(vocab, lbl) {
+    const base = vocab.replace(/[#/]?$/, '/'); let id = slugOf(lbl) || 'term', n = 1, iri = base + id;
+    while (VOC.terms.has(iri) || idx.s.has(iri)) iri = base + id + '-' + (++n);
+    return iri;
+  }
+  async function ensureVocabLoaded(vocab) {          // file mode: bring the vocabulary file in, so saving rewrites it
+    if (mode !== 'files' || fileOf[vocab]) return true;
+    const v = VOC.vocabs.find(x => x.iri === vocab); if (!v || !v.path) return false;
+    const r = await fetch('/api/ingest/review-read', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paths: [v.path] }) });
+    const d = await r.json(), f = d.ok && d.files[0];
+    if (!f || !f.ok) return false;
+    fileOf[f.graph] = f.path; support.add(f.graph);
+    f.triples.forEach(t => quads.push({ s: fromArr(t[0]), p: fromArr(t[1]), o: fromArr(t[2]), g: f.graph }));
+    buildIndex();
+    return true;
+  }
+  async function stageAddVocab(iri, vocab, broader) {
+    if (!vocab) { toast('Choose a vocabulary', true); return false; }
+    if (!(await ensureVocabLoaded(vocab))) { toast('Could not open that vocabulary', true); return false; }
+    const lbl = label(iri), newIri = newVocabIri(vocab, lbl);
+    staged.filter(x => x.term === iri && x.type === 'addVocab').forEach(dropPending);
+    staged = staged.filter(x => !(x.term === iri && (x.type === 'addVocab' || x.type === 'link')));
+    stage({ type: 'addVocab', term: iri, graph: graphOf(iri), vocab, vocabPath: (VOC.vocabs.find(v => v.iri === vocab) || {}).path, newIri, label: lbl,
+            def: litv(iri, SKOS + 'definition')[0] || '', alts: litv(iri, SKOS + 'altLabel'), broader: broader || '' });
+    VOC.terms.set(newIri, { iri: newIri, label: lbl, alts: [], scheme: vocab, pending: true });
+    ls.set('ke-review-vocab', vocab);
+    return true;
+  }
+  function dropPending(c) { if (c.type === 'addVocab' && VOC.terms.get(c.newIri) && VOC.terms.get(c.newIri).pending) VOC.terms.delete(c.newIri); }
+  function stageLink(iri, target) {
+    staged.filter(x => x.term === iri && x.type === 'addVocab').forEach(dropPending);
+    staged = staged.filter(x => !(x.term === iri && (x.type === 'addVocab' || x.type === 'link')));
+    stage({ type: 'link', term: iri, graph: graphOf(iri), target, targetLabel: (VOC.terms.get(target) || {}).label || ln(target), vocab: (VOC.terms.get(target) || {}).scheme });
+  }
+
+  function runChecks() {
+    const res = K.runChecks(quads, { bases: [policyJ.baseUrl || 'https://www.insperity.com/'], policy: POL, vocab: VOC.terms.size ? new Set(VOC.terms.keys()) : null });
+    findings = res.findings.filter(f => (f.sev === 'error' || f.sev === 'warn') && !support.has(graphOf(f.iri)));
+    terms = new Map();
+    findings.forEach(f => { f.cat = catOf(f.rule); f.g = graphOf(f.iri); if (!terms.has(f.iri)) terms.set(f.iri, []); terms.get(f.iri).push(f); });
+    document.querySelectorAll('#alist .c').forEach(el => {
+      const n = findings.filter(f => f.sev === 'error' && f.g === el.dataset.c).length;
+      el.textContent = scanned.has(el.dataset.c) ? (n || '✓') : '';
+      el.style.color = n ? '' : 'var(--ke-ok)';
+    });
+  }
+  const isDone = iri => staged.some(c => c.term === iri) || skipped.has(iri);
+  const visible = f => (f.sev === 'error' || $('showWarn').checked) && ($('showDone').checked || !isDone(f.iri));
+  function countCat(c) { return findings.filter(f => f.cat === c && visible(f)).length; }
+  function renderCats() {
+    $('cats').innerHTML = CATS.map(c => { const n = countCat(c.id); return `<button class="cat ${c.id === cat ? 'on' : ''}" data-cat="${c.id}"><span>${esc(c.title)}</span><span class="n ${n ? '' : 'z'}">${n}</span></button>`; }).join('');
+  }
+  $('cats').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (!b) return; flushEdits(); cat = b.dataset.cat; checked.clear(); renderCats(); renderQueue(); });
+  ['showWarn', 'showDone'].forEach(id => $(id).addEventListener('change', () => { renderCats(); renderQueue(); }));
+  $('q').addEventListener('input', renderQueue);
+
+  // ── queue ─────────────────────────────────────────────────────────────
+  function queueTerms() {
+    const q = $('q').value.trim().toLowerCase();
+    const byTerm = new Map();
+    findings.filter(f => f.cat === cat && visible(f)).forEach(f => {
+      if (q && !(f.iri + ' ' + label(f.iri) + ' ' + f.detail).toLowerCase().includes(q)) return;
+      if (!byTerm.has(f.iri)) byTerm.set(f.iri, []); byTerm.get(f.iri).push(f);
+    });
+    return byTerm;
+  }
+  function groupKey(iri) {
+    const base = policyJ.baseUrl || 'https://www.insperity.com/';
+    if (cat === 'ref' && !iri.startsWith(base)) return 'ns|' + iri.replace(/[#/][^#/]*$/, '');
+    return 'g|' + (graphOf(iri) || '');
+  }
+  function renderQueue() {
+    if (!idx) return;
+    const byTerm = queueTerms();
+    const groups = new Map();
+    [...byTerm.keys()].forEach(iri => { const k = groupKey(iri); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(iri); });
+    if (!byTerm.size) {
+      $('queue').innerHTML = `<div class="empty"><b>${findings.length ? 'Nothing left here' : 'No findings'}</b>${findings.length ? 'Every finding in this category is staged, skipped or filtered out.' : 'The selected models pass every check.'}</div>`;
+      renderBulk(byTerm); return;
+    }
+    let h = '';
+    groups.forEach((iris, k) => {
+      const name = k.startsWith('ns|') ? 'Namespace ' + k.slice(3) : assetLabel(k.slice(2));
+      const all = iris.every(i => checked.has(i));
+      h += `<div class="grp"><input type="checkbox" data-grp="${esc(k)}" ${all ? 'checked' : ''} aria-label="Select all in ${esc(name)}"><span class="gn" title="${esc(name)}">${esc(name)}</span><span>${iris.length}</span></div>`;
+      iris.sort((a, b) => label(a).localeCompare(label(b))).forEach(iri => {
+        const fs = byTerm.get(iri), st = staged.find(c => c.term === iri);
+        const sug = suggestion(iri);
+        h += `<div class="item ${iri === sel ? 'on' : ''}" data-iri="${esc(iri)}">
+          <input type="checkbox" data-chk="${esc(iri)}" ${checked.has(iri) ? 'checked' : ''} aria-label="Select ${esc(label(iri))}">
+          <div class="lb"><span>${esc(label(iri))}</span>${st ? '<span class="tag staged">staged</span>' : skipped.has(iri) ? '<span class="tag skip">skipped</span>' : sug && sug.kind !== 'remove' ? '<span class="tag sug">suggestion</span>' : ''}</div>
+          <div class="msg">${esc(fs.map(f => f.detail).join(' · '))}</div></div>`;
+      });
+    });
+    $('queue').innerHTML = h;
+    renderBulk(byTerm);
+  }
+  $('queue').addEventListener('click', e => {
+    const g = e.target.closest('[data-grp]');
+    if (g) { const byTerm = queueTerms(); [...byTerm.keys()].filter(i => groupKey(i) === g.dataset.grp).forEach(i => g.checked ? checked.add(i) : checked.delete(i)); renderQueue(); return; }
+    const c = e.target.closest('[data-chk]');
+    if (c) { c.checked ? checked.add(c.dataset.chk) : checked.delete(c.dataset.chk); renderBulk(queueTerms()); return; }
+    const it = e.target.closest('[data-iri]');
+    if (it) { if (flushEdits()) { renderCats(); renderQueue(); } sel = it.dataset.iri; document.querySelectorAll('.item').forEach(x => x.classList.toggle('on', x === it)); renderDetail(); }
+  });
+
+  // Suggested fix for a term, by category
+  function suggestion(iri) {
+    const fs = terms.get(iri) || [];
+    if (fs.some(f => f.rule === 'vocab-term')) {
+      const m = vocabMatches(iri)[0];
+      if (m && m.score >= 90) return { kind: 'link', target: m.iri, text: m.label };
+    }
+    if (fs.some(f => f.rule === 'org-content')) {
+      const d = litv(iri, SKOS + 'definition')[0], ds = litv(iri, DCT + 'description')[0];
+      if (d && K.orgHit(d, POL)) return { kind: 'definition', text: K.genericText(d, POL) };
+      if (ds && K.orgHit(ds, POL)) return { kind: 'description', text: K.genericText(ds, POL) };
+      if (K.orgHit(label(iri), POL)) return { kind: 'remove' };
+    }
+    if (fs.some(f => f.rule === 'acronym-label')) {
+      const e = K.expandLabel(label(iri), litv(iri, SKOS + 'altLabel'), litv(iri, SKOS + 'definition'), POL);
+      if (e.done.length) return { kind: 'label', text: e.label, done: e.done };
+    }
+    if (fs.some(f => f.rule === 'base-url')) return { kind: 'remove' };
+    return null;
+  }
+
+  function renderBulk(byTerm) {
+    const n = [...checked].filter(i => byTerm.has(i)).length;
+    if (!n) { $('bulk').innerHTML = `<span>${plural(byTerm.size, 'term')} · select terms to act on several at once</span>`; return; }
+    const sugs = [...checked].filter(i => byTerm.has(i)).map(i => [i, suggestion(i)]).filter(([, s]) => s && s.kind !== 'remove');
+    $('bulk').innerHTML = `<b>${n} selected</b>
+      <button class="btn sm" id="bSug" ${sugs.length ? '' : 'disabled'} title="Stage the suggested label, definition or description for each selected term">Stage ${sugs.length} suggestion${sugs.length === 1 ? '' : 's'}</button>
+      ${cat === 'voc' && VOC.vocabs.length ? `<span style="display:inline-flex;gap:4px;align-items:center">Add ${n} to <select id="bVocab" style="height:26px;max-width:220px;font-size:11.5px">${VOC.vocabs.map(v => `<option value="${esc(v.iri)}" ${v.iri === ls.get('ke-review-vocab', '') ? 'selected' : ''}>${esc(v.title)}</option>`).join('')}</select><button class="btn sm pri" id="bAddVoc">Add</button></span>` : ''}
+      ${cat === 'def' && DEFS.key ? `<button class="btn sm pri" id="bDefs">✦ Write ${n} definition${n === 1 ? '' : 's'} with Claude</button>` : ''}
+      <button class="btn sm bad" id="bRem">Stage removal of ${n}</button>
+      <button class="btn sm" id="bSkip">Skip ${n}</button>
+      <button class="btn sm" id="bNone">Clear</button>`;
+    $('bSug').addEventListener('click', () => { sugs.forEach(([i, s]) => stageSuggestion(i, s)); checked.clear(); refreshAll(); toast(`${plural(sugs.length, 'suggestion')} staged`); });
+    $('bRem').addEventListener('click', () => { const list = [...checked].filter(i => byTerm.has(i)); list.forEach(i => stageRemove(i)); checked.clear(); refreshAll(); toast(`${plural(list.length, 'removal')} staged`); });
+    if ($('bAddVoc')) $('bAddVoc').addEventListener('click', async () => {
+      const vocab = $('bVocab').value;
+      // parents first, so a child's broader term can be its parent's new vocabulary term
+      const depth = i => { let d = 0, x = i, seen = new Set(); while (true) { const p = parentsOf(x)[0]; if (!p || seen.has(p) || d > 20) break; seen.add(p); x = p; d++; } return d; };
+      const list = [...checked].filter(i => byTerm.has(i)).sort((a, b) => depth(a) - depth(b));
+      $('bAddVoc').disabled = true;
+      for (const i of list) await stageAddVocab(i, vocab, defaultBroader(i, vocab));
+      checked.clear(); renderVocOptions(); refreshAll(); toast(`${plural(list.length, 'term')} staged for ${vocabTitle(vocab)}`);
+    });
+    if ($('bDefs')) $('bDefs').addEventListener('click', async () => {
+      const list = [...checked].filter(i => byTerm.has(i) && !isHeader(i));
+      $('bDefs').disabled = true; $('bDefs').textContent = `Writing ${list.length}…`;
+      try {
+        const d = await writeDefinitions(list);
+        let n = 0;
+        list.forEach(i => { const t = d.definitions[i]; if (t) { stage({ type: 'definition', term: i, graph: graphOf(i), old: litv(i, SKOS + 'definition')[0] || '', new: t, generated: d.model }); n++; } });
+        checked.clear(); refreshAll();
+        toast(`${plural(n, 'definition')} written by ${d.model} and staged${d.error ? ' — some failed: ' + d.error : ''}`, !!d.error);
+      } catch (e) { toast(e.message, true); renderBulk(queueTerms()); }
+    });
+    $('bSkip').addEventListener('click', () => { [...checked].forEach(i => skipped.add(i)); checked.clear(); refreshAll(); });
+    $('bNone').addEventListener('click', () => { checked.clear(); renderQueue(); });
+  }
+
+  // ── detail ────────────────────────────────────────────────────────────
+  const parentsOf = iri => [...vals(iri, SKOS + 'broader'), ...vals(iri, RDFS + 'subClassOf')].filter(o => o.t === 'iri' && o.v !== OWL + 'Thing').map(o => o.v);
+  const childrenOf = iri => (idx.o.get(iri) || []).filter(q => (q.p.v === SKOS + 'broader' || q.p.v === RDFS + 'subClassOf') && q.s.t === 'iri').map(q => q.s.v);
+  const incoming = iri => (idx.o.get(iri) || []).filter(q => q.s.v !== iri);
+
+  function renderDetail() {
+    const el = $('detail');
+    if (!sel || !idx) { el.innerHTML = '<div class="empty"><b>Nothing selected</b>Select a finding to see the term in context and resolve it.</div>'; return; }
+    const iri = sel, g = graphOf(iri), fs = terms.get(iri) || [], st = staged.filter(c => c.term === iri);
+    const types = vals(iri, RDF + 'type').map(o => ln(o.v));
+    const pars = parentsOf(iri), kids = childrenOf(iri), inc = incoming(iri).filter(q => !(q.p.v === SKOS + 'broader' || q.p.v === RDFS + 'subClassOf'));
+    const alts = litv(iri, SKOS + 'altLabel'), def = litv(iri, SKOS + 'definition')[0] || '', desc = litv(iri, DCT + 'description')[0] || '';
+    const header = isHeader(iri), sug = suggestion(iri);
+    const tchip = list => list.length ? list.slice(0, 14).map(i => `<button class="t" data-go="${esc(i)}" title="${esc(i)}">${esc(label(i))}</button>`).join('') + (list.length > 14 ? ` <span class="status">+${list.length - 14} more</span>` : '') : '<span class="status">none</span>';
+    const stLabel = st.find(c => c.type === 'label'), stDef = st.find(c => c.type === 'definition'), stDesc = st.find(c => c.type === 'description'), stRem = st.find(c => c.type === 'remove'), stRen = st.find(c => c.type === 'rename');
+    const acrs = K.acronymsIn(label(iri), POL);
+    el.innerHTML = `<div class="dt">
+      <div class="eyebrow">${esc(assetLabel(g))}</div>
+      <h2>${esc(label(iri))}</h2><div class="iri">${esc(iri)}</div>
+      ${mode === 'files' && /\/vocabulary-[^/]*\.ttl$/.test(fileOf[g] || '') ? `<div class="row" style="margin-top:6px"><button class="btn sm" id="openEditor">Edit in Model Editor (Vocabulary) ›</button></div>` : ''}
+      <div class="meta">${types.map(t => `<span class="chip">${esc(t)}</span>`).join('')}${st.length ? `<span class="chip" style="background:var(--ke-ok-soft);color:var(--ke-ok)">${plural(st.length, 'staged change')}</span>` : ''}${skipped.has(iri) ? '<span class="chip">skipped</span>' : ''}</div>
+      <div class="finds">${fs.map(f => `<div class="find ${f.sev === 'warn' ? 'warn' : ''}"><b>${esc(ruleTitle(f.rule))}</b>${esc(f.detail)}</div>`).join('')}</div>
+      <div class="ctx">
+        <div class="k">Parents</div><div class="v">${tchip(pars)}</div>
+        <div class="k">Children</div><div class="v">${tchip(kids)}</div>
+        <div class="k">Referenced by</div><div class="v">${inc.length ? plural(inc.length, 'statement') + ' (' + [...new Set(inc.map(q => ln(q.p.v)))].join(', ') + ')' : '<span class="status">nothing else</span>'}</div>
+        ${def && !header ? `<div class="k">Definition</div><div class="v">${esc(def)}</div>` : ''}
+      </div>
+
+      ${fs.some(f => f.rule === 'vocab-term') && !stRem ? vocabCard(iri, st) : ''}
+      ${stRem ? `<div class="act"><div class="act-h">Staged for removal</div><div class="act-b"><div class="cascade">${cascadeHtml(stRem.plan)}</div><div class="row"><button class="btn sm" data-unstage="remove">Undo</button></div></div></div>` : `
+      <div class="act"><div class="act-h">Preferred label ${acrs.length ? `<span class="sub">acronym${acrs.length > 1 ? 's' : ''}: ${esc(acrs.join(', '))}</span>` : ''}</div><div class="act-b">
+        <div class="fld"><input id="fLabel" value="${esc(stLabel ? stLabel.new : (sug && sug.kind === 'label' ? sug.text : label(iri)))}" aria-label="Preferred label"></div>
+        ${sug && sug.kind === 'label' ? `<div class="sugg">Suggested from the ${esc(sug.done.map(d => d.from).join(', '))}: ${esc(sug.done.map(d => d.acronym + ' → ' + d.text).join('; '))}</div>` : ''}
+        <label class="chk" style="margin:0"><input type="checkbox" id="fKeep" checked> Keep the current label as an alternative label</label>
+        ${acrs.length ? `<label class="chk" style="margin:0"><input type="checkbox" id="fRemember"> Remember the expansion for future ingestions</label>` : ''}
+        <div class="row">
+          <button class="btn sm pri" id="stLabel">${stLabel ? 'Update staged label' : 'Stage label'}</button>
+          ${stLabel ? '<button class="btn sm" data-unstage="label">Undo</button>' : ''}
+          ${acrs.length ? acrs.map(a => `<button class="btn sm" data-approve="${esc(a)}" title="Add ${esc(a)} to the approved acronyms (Appendix F); it will stop being reported everywhere">Approve ${esc(a)}</button>`).join('') : ''}
+        </div>
+        ${alts.length ? `<div class="fld"><label>Alternative labels</label><div class="alts">${alts.map(a => { const gone = st.some(c => c.type === 'removeAlt' && c.value === a); return `<span class="${gone ? 'gone' : ''}">${esc(a)}<button data-alt="${esc(a)}" title="${gone ? 'Keep' : 'Remove'} this alternative label">${gone ? '↺' : '×'}</button></span>`; }).join('')}</div></div>` : ''}
+      </div></div>
+
+      <div class="act"><div class="act-h">${header ? 'Description' : 'Definition'} ${sug && (sug.kind === 'definition' || sug.kind === 'description') ? '<span class="sub">suggested wording without the organization</span>' : ''}</div><div class="act-b">
+        <div class="fld"><textarea id="fDef" placeholder="${header ? 'What this model covers' : 'A [parent] that [distinguishing feature].'}">${esc(header ? (stDesc ? stDesc.new : (sug && sug.kind === 'description' ? sug.text : desc)) : (stDef ? stDef.new : (sug && sug.kind === 'definition' ? sug.text : def)))}</textarea></div>
+        ${!header && !def && pars.length ? `<div class="sugg">Start from the parent: “A ${esc(label(pars[0]).toLowerCase())} that …”</div>` : ''}
+        <div class="row"><button class="btn sm pri" id="stDef">${(header ? stDesc : stDef) ? 'Update staged text' : 'Stage ' + (header ? 'description' : 'definition')}</button>
+          ${header ? '' : `<button class="btn sm" id="genDef" ${DEFS.key ? '' : `disabled title="Needs an Anthropic API key in ${esc(DEFS.keyFile || '~/.ke-workbench.env')}"`}>✦ Write with Claude</button>`}
+          ${(header ? stDesc : stDef) ? `<button class="btn sm" data-unstage="${header ? 'description' : 'definition'}">Undo</button>` : ''}</div>
+      </div></div>
+
+      ${!header && iri.startsWith(policyJ.baseUrl || 'https://www.insperity.com/') ? `<div class="act"><div class="act-h">Identifier ${fs.some(f => f.rule === 'acronym-id' || f.rule === 'name-case') ? '<span class="sub">suggested from the label</span>' : ''}</div><div class="act-b">
+        <div class="fld"><input id="fId" class="mono" value="${esc(stRen ? ln(stRen.to) : (fs.some(f => f.rule === 'acronym-id' || f.rule === 'name-case') ? idFor(iri, stLabel ? stLabel.new : label(iri)) : ln(iri)))}" aria-label="Identifier (local name)"></div>
+        <div class="sugg">Every statement that uses the old IRI, in every graph, moves to the new one. Consumers that cite the old IRI break, so this counts as a removal for versioning.</div>
+        <div class="row"><button class="btn sm pri" id="stRename">${stRen ? 'Update staged identifier' : 'Stage new identifier'}</button>${stRen ? '<button class="btn sm" data-unstage="rename">Undo</button>' : ''}</div>
+      </div></div>` : ''}
+
+      ${fs.some(f => f.rule === 'broken-ref') ? `<div class="act"><div class="act-h">Broken links</div><div class="act-b">${brokenLinks(iri).map(b => `<div class="row"><span class="mono" style="font-size:11.5px">${esc(ln(b.p))} → ${esc(ln(b.o))}</span><button class="btn sm" data-unlink="${esc(b.p)}|${esc(b.o)}">${st.some(c => c.type === 'unlink' && c.target === b.o && c.pred === b.p) ? 'Staged ✓' : 'Remove link'}</button></div>`).join('')}</div></div>` : ''}
+
+      ${header ? '' : `<div class="act"><div class="act-h">Remove this term <span class="sub">children move up to its parent</span></div><div class="act-b">
+        <div class="cascade">${cascadeHtml(planRemove(iri))}</div>
+        <div class="row"><button class="btn sm bad" id="stRemove">Stage removal</button></div></div></div>`}
+      `}
+      <div class="row" style="margin-top:14px"><button class="btn sm" id="skipBtn">${skipped.has(iri) ? 'Unskip' : 'Skip for now'}</button><span class="status">Skipped findings return on the next Find issues.</span></div>
+    </div>`;
+    ['fLabel', 'fDef', 'fId'].forEach(id => { const el = $(id); if (!el) return; el.dataset.init = el.value;
+      // typing counts: Save becomes available right away and stages the edit when clicked
+      el.addEventListener('input', () => { if (el.value !== el.dataset.init) { $('applyBtn').disabled = false; $('reviewBtn').disabled = false; } }); });
+    if ($('openEditor')) $('openEditor').addEventListener('click', () => {
+      if (staged.length) { toast('Save or discard the staged changes first', true); return; }
+      window.open('model-editor-vocabulary.html?' + new URLSearchParams({ folder: fileDir, file: fileOf[g], term: iri }), '_blank');
+    });
+    wireDetail(iri, g, header);
+  }
+  // Text typed into the fields counts even if Stage was not clicked: it is staged when you move on
+  // (another term, another category, Find issues, Review, Save, Load), so no edit is ever dropped.
+  function flushEdits() {
+    if (!sel || !idx || !idx.s.has(sel)) return 0;
+    const iri = sel, g = graphOf(iri), header = isHeader(iri); let n = 0;
+    const fl = $('fLabel'), fd = $('fDef'), fi = $('fId');
+    if (fl && fl.value.trim() && fl.value !== fl.dataset.init && fl.value.trim() !== label(iri)) {
+      stage({ type: 'label', term: iri, graph: g, old: label(iri), new: fl.value.trim(), keepOld: $('fKeep') ? $('fKeep').checked : true }); n++;
+    }
+    if (fd && fd.value.trim() && fd.value !== fd.dataset.init) {
+      const v = fd.value.trim().replace(/\s+/g, ' ');
+      const old = header ? (litv(iri, DCT + 'description')[0] || '') : (litv(iri, SKOS + 'definition')[0] || '');
+      if (v !== old) { stage({ type: header ? 'description' : 'definition', term: iri, graph: g, old, new: v }); n++; }
+    }
+    if (fi && fi.value !== fi.dataset.init && /^[A-Za-z][A-Za-z0-9-]*$/.test(fi.value.trim())) {
+      const to = iri.replace(/[^\/#]+$/, fi.value.trim());
+      if (to !== iri && !idx.s.has(to)) { stage({ type: 'rename', term: iri, graph: g, to }); n++; }
+    }
+    if (n) { toast(`Staged your edit${n > 1 ? 's' : ''} to “${label(iri)}”`); refreshSum(); }
+    return n;
+  }
+  function refreshSum() {
+    const n = staged.length, m = new Set(staged.map(c => c.graph)).size;
+    $('sum').innerHTML = n ? `<b>${n}</b> staged change${n === 1 ? '' : 's'} across <b>${m}</b> ${mode === 'files' ? 'file' : 'model'}${m === 1 ? '' : 's'} — nothing is written until you ${mode === 'files' ? 'save' : 'apply'} them.` : 'No staged changes.';
+    $('reviewBtn').disabled = !n; $('applyBtn').disabled = !n;
+  }
+  // what Claude is told about a term: its broader term, neighbours and model
+  function termContext(iri) {
+    const par = parentsOf(iri)[0];
+    const it = { id: iri, label: label(iri), kind: /\/vocabulary\//.test(iri) ? 'vocabulary term' : /\/taxonomy\//.test(iri) ? 'taxonomy term' : 'ontology class', scheme: assetLabel(graphOf(iri)) };
+    if (par) { it.broader = label(par); const pd = litv(par, SKOS + 'definition')[0]; if (pd) it.broader_definition = pd; }
+    const alts = litv(iri, SKOS + 'altLabel'); if (alts.length) it.alternative_labels = alts;
+    const kids = childrenOf(iri); if (kids.length) it.narrower = kids.slice(0, 12).map(label);
+    if (par) { const sib = childrenOf(par).filter(x => x !== iri); if (sib.length) it.siblings = sib.slice(0, 12).map(label); }
+    const sc = litv(iri, SKOS + 'scopeNote')[0]; if (sc) it.scope_note = sc;
+    return it;
+  }
+  async function writeDefinitions(iris) {
+    const r = await fetch('/api/ingest/define', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: iris.map(termContext) }) });
+    const d = r.ok ? await r.json() : { ok: false, error: 'Server answered ' + r.status };
+    if (!d.ok && !Object.keys(d.definitions || {}).length) throw new Error(d.error || 'No definitions came back');
+    return d;
+  }
+  function vocabCard(iri, st) {
+    const stA = st.find(c => c.type === 'addVocab'), stL = st.find(c => c.type === 'link');
+    const cur = vals(iri, DC + 'subject').filter(o => o.t === 'iri').map(o => o.v);
+    const ms = vocabMatches(iri), dv = stA ? stA.vocab : defaultVocab(iri), db = stA ? stA.broader : defaultBroader(iri, dv);
+    const optOf = t => { const v = VOC.terms.get(t); return v ? `${v.label} · ${vocabTitle(v.scheme)}` : ''; };
+    return `<div class="act"><div class="act-h">Assign to a vocabulary <span class="sub">${cur.length ? 'dc:subject → ' + esc(ln(cur[0])) + ' (not in any vocabulary)' : 'no vocabulary term yet'}</span></div><div class="act-b">
+      ${stA ? `<div class="cascade">Staged: add <b>${esc(stA.label)}</b> to <b>${esc(vocabTitle(stA.vocab))}</b> as <span class="mono">${esc(ln(stA.newIri))}</span>${stA.broader ? `, under <b>${esc((VOC.terms.get(stA.broader) || {}).label || ln(stA.broader))}</b>` : ', as a top concept'}, and link this term to it. <button class="btn sm" data-unstage="addVocab">Undo</button></div>` : ''}
+      ${stL ? `<div class="cascade">Staged: link to <b>${esc(stL.targetLabel)}</b> in ${esc(vocabTitle(stL.vocab))}. <button class="btn sm" data-unstage="link">Undo</button></div>` : ''}
+      ${ms.length ? `<div class="fld"><label>Vocabulary terms with a matching label</label>${ms.map(m => `<div class="row" style="justify-content:space-between;margin:2px 0"><span>${esc(m.label)} <span class="status">${esc(vocabTitle(m.scheme))}${m.score >= 90 ? ' · same label' : ''}</span></span><button class="btn sm" data-link="${esc(m.iri)}">Link</button></div>`).join('')}</div>` : '<div class="status">No vocabulary term has a matching label.</div>'}
+      <div class="fld"><label>Link to another vocabulary term</label><div class="row"><input id="fLinkTo" list="vocTermList" placeholder="Type a label…" style="flex:1"><button class="btn sm" id="stLink">Link</button></div></div>
+      <div class="fld"><label>Or add “${esc(label(iri))}” to a vocabulary as a new term</label>
+        <div class="row"><select id="fVocab" style="flex:1">${VOC.vocabs.map(v => `<option value="${esc(v.iri)}" ${v.iri === dv ? 'selected' : ''}>${esc(v.title)}</option>`).join('')}</select></div>
+        <div class="row" style="margin-top:6px"><input id="fVocBroader" list="vocTermList" placeholder="Broader term in that vocabulary (empty = top concept)" value="${esc(db ? optOf(db) : '')}" style="flex:1"></div>
+        <div class="row" style="margin-top:6px"><button class="btn sm pri" id="stAddVoc">${stA ? 'Update staged addition' : 'Add to vocabulary'}</button><span class="status">The definition and alternative labels go with it; the term is linked with dc:subject.</span></div>
+      </div>
+    </div></div>`;
+  }
+  function ruleTitle(id) { return ({ 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range' })[id] || id; }
+  // Local name in the convention of the term's kind (§3.2): concepts kebab-case, classes UpperCamel, properties lowerCamel
+  function idFor(iri, lbl) {
+    const words = String(lbl).replace(/[^A-Za-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
+    const ty = vals(iri, RDF + 'type').map(o => o.v);
+    if (isConcept(iri) || /\/vocabulary\//.test(iri)) return words.map(w => w.toLowerCase()).join('-');
+    const camel = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+    return ty.some(t => /Property$/.test(t)) ? camel.charAt(0).toLowerCase() + camel.slice(1) : camel;
+  }
+  function brokenLinks(iri) {
+    return (idx.s.get(iri) || []).filter(q => K.REF_PREDICATES.includes(q.p.v) && q.o.t === 'iri' && !idx.s.has(q.o.v) && [...idx.header.values()].some(h => q.o.v !== h && q.o.v.startsWith(h.replace(/[#/]?$/, '/'))))
+      .map(q => ({ p: q.p.v, o: q.o.v, g: q.g }));
+  }
+
+  // Removal plan: what happens to children, links, restrictions and list memberships
+  function planRemove(iri) {
+    const pars = parentsOf(iri), kids = (idx.o.get(iri) || []).filter(q => (q.p.v === SKOS + 'broader' || q.p.v === RDFS + 'subClassOf') && q.s.t === 'iri');
+    const inc = incoming(iri).filter(q => !(q.p.v === SKOS + 'broader' || q.p.v === RDFS + 'subClassOf'));
+    const blank = inc.filter(q => q.s.t === 'bnode');
+    const lists = blank.filter(q => q.p.v === RDF + 'first').length;
+    const restr = blank.length - lists;
+    const schemes = vals(iri, SKOS + 'inScheme').map(o => o.v);
+    return { term: iri, label: label(iri), graph: graphOf(iri), parents: pars, children: kids.map(q => ({ iri: q.s.v, p: q.p.v, g: q.g })),
+             refs: inc.filter(q => q.s.t === 'iri').map(q => ({ s: q.s.v, p: q.p.v, g: q.g })), restrictions: restr, lists, schemes, concept: isConcept(iri) };
+  }
+  function cascadeHtml(p) {
+    const items = [];
+    if (p.children.length) items.push(p.parents.length ? `${plural(p.children.length, 'child', 'children')} move up to <b>${esc(p.parents.map(label).join(', '))}</b>` : `${plural(p.children.length, 'child', 'children')} become top-level ${p.concept ? 'concepts' : 'classes'}`);
+    const byP = {}; p.refs.forEach(r => byP[ln(r.p)] = (byP[ln(r.p)] || 0) + 1);
+    if (p.refs.length) items.push(`${plural(p.refs.length, 'link')} to it are removed (${Object.entries(byP).map(([k, v]) => `${v} ${esc(k)}`).join(', ')})`);
+    if (p.restrictions) items.push(`${plural(p.restrictions, 'restriction')} or property shape${p.restrictions === 1 ? '' : 's'} that use it are removed`);
+    if (p.lists) items.push(`it is taken out of ${plural(p.lists, 'list')} (unions, disjointness axioms)`);
+    items.push('all of its own statements are deleted');
+    return `<b>${esc(p.label)}</b> will be removed:<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+  }
+
+  function wireDetail(iri, g, header) {
+    $('detail').querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => { if (idx.s.has(b.dataset.go)) { flushEdits(); sel = b.dataset.go; renderDetail(); renderQueue(); } }));
+    const un = $('detail').querySelectorAll('[data-unstage]');
+    un.forEach(b => b.addEventListener('click', () => { staged.filter(c => c.term === iri && c.type === b.dataset.unstage).forEach(dropPending); staged = staged.filter(c => !(c.term === iri && c.type === b.dataset.unstage)); renderVocOptions(); refreshAll(); }));
+    $('detail').querySelectorAll('[data-link]').forEach(b => b.addEventListener('click', () => { stageLink(iri, b.dataset.link); refreshAll(); }));
+    if ($('stLink')) $('stLink').addEventListener('click', () => { const t = vocPick($('fLinkTo').value); if (!t) { toast('No vocabulary term with that label', true); return; } stageLink(iri, t); refreshAll(); });
+    if ($('fVocab')) $('fVocab').addEventListener('change', () => { const b = defaultBroader(iri, $('fVocab').value); const v = VOC.terms.get(b); $('fVocBroader').value = v ? `${v.label} · ${vocabTitle(v.scheme)}` : ''; });
+    if ($('stAddVoc')) $('stAddVoc').addEventListener('click', async () => {
+      const vocab = $('fVocab').value, braw = $('fVocBroader').value.trim();
+      const broader = braw ? vocPick(braw) : '';
+      if (braw && !broader) { toast('No vocabulary term with that label', true); return; }
+      if (broader && VOC.terms.get(broader).scheme !== vocab) { toast('The broader term must be in the vocabulary you add to', true); return; }
+      if (await stageAddVocab(iri, vocab, broader)) { renderVocOptions(); refreshAll(); }
+    });
+    if ($('genDef')) $('genDef').addEventListener('click', async () => {
+      $('genDef').disabled = true; $('genDef').textContent = 'Writing…';
+      try {
+        const d = await writeDefinitions([iri]), t = d.definitions[iri];
+        if (!t) throw new Error(d.error || 'No definition came back');
+        stage({ type: 'definition', term: iri, graph: g, old: litv(iri, SKOS + 'definition')[0] || '', new: t, generated: d.model });
+        refreshAll(); toast('Definition written by ' + d.model + ' and staged — edit it if needed');
+      } catch (e) { toast(e.message, true); if ($('genDef')) { $('genDef').disabled = false; $('genDef').textContent = '✦ Write with Claude'; } }
+    });
+    $('skipBtn').addEventListener('click', () => { skipped.has(iri) ? skipped.delete(iri) : skipped.add(iri); refreshAll(); });
+    if ($('stLabel')) $('stLabel').addEventListener('click', async () => {
+      const v = $('fLabel').value.trim();
+      if (!v) { toast('A preferred label cannot be empty', true); return; }
+      if (v === label(iri)) { toast('The label is unchanged'); return; }
+      stage({ type: 'label', term: iri, graph: g, old: label(iri), new: v, keepOld: $('fKeep').checked });
+      if ($('fRemember') && $('fRemember').checked) {
+        const e = K.expandLabel(label(iri), litv(iri, SKOS + 'altLabel'), litv(iri, SKOS + 'definition'), POL);
+        const acr = K.acronymsIn(label(iri), POL);
+        const fresh = e.done.filter(d => d.from !== 'config');
+        for (const d of fresh) {
+          const pl = /[A-Z]s$/.test(d.acronym);
+          await savePolicy({ expansion: pl ? { acronym: d.acronym.slice(0, -1), text: d.text.replace(/s$/, '') } : { acronym: d.acronym, text: d.text } });
+        }
+        // A label written by hand for a single-acronym label: remember the acronym → new label
+        // A label written by hand around a single acronym: what replaced the acronym is its expansion
+        let learned = null;
+        if (!e.done.length && acr.length === 1) {
+          const old = label(iri).trim(), at = old.indexOf(acr[0]);
+          const pre = old.slice(0, at).toLowerCase(), post = old.slice(at + acr[0].length).toLowerCase(), nv = v.toLowerCase();
+          if (nv.startsWith(pre) && nv.endsWith(post) && nv.length > pre.length + post.length) learned = v.slice(pre.length, v.length - post.length).trim();
+          if (learned && /^[A-Za-z][A-Za-z ,&'-]+$/.test(learned) && learned.split(/\s+/).length > 1) await savePolicy({ expansion: { acronym: acr[0], text: learned } }); else learned = null;
+        }
+        if (fresh.length || learned) toast('Saved to the ingestion configuration: ' + [...fresh.map(d => d.acronym + ' → ' + d.text), ...(learned ? [acr[0] + ' → ' + learned] : [])].join('; '));
+        else toast('No expansion could be read from the new label — add it in Ingestion › Edit configuration', true);
+      }
+      refreshAll();
+    });
+    $('detail').querySelectorAll('[data-approve]').forEach(b => b.addEventListener('click', async () => {
+      const r = await savePolicy({ approve: b.dataset.approve });
+      if (r) { runChecks(); refreshAll(); toast(`${b.dataset.approve} approved — it is no longer reported, here or in Standards Conformance and Ingestion`); }
+    }));
+    $('detail').querySelectorAll('[data-alt]').forEach(b => b.addEventListener('click', () => {
+      const v = b.dataset.alt, i = staged.findIndex(c => c.term === iri && c.type === 'removeAlt' && c.value === v);
+      if (i >= 0) staged.splice(i, 1); else stage({ type: 'removeAlt', term: iri, graph: g, value: v });
+      refreshAll();
+    }));
+    if ($('stDef')) $('stDef').addEventListener('click', () => {
+      const v = $('fDef').value.trim().replace(/\s+/g, ' ');
+      const old = header ? (litv(iri, DCT + 'description')[0] || '') : (litv(iri, SKOS + 'definition')[0] || '');
+      if (!v) { toast('Write the text first', true); return; }
+      if (v === old) { toast('The text is unchanged'); return; }
+      const hit = K.orgHit(v, POL); if (hit) { toast(`The new text still names ${hit.org.name} ("${hit.hit}")`, true); return; }
+      stage({ type: header ? 'description' : 'definition', term: iri, graph: g, old, new: v });
+      refreshAll();
+    });
+    $('detail').querySelectorAll('[data-unlink]').forEach(b => b.addEventListener('click', () => {
+      const [p, o] = b.dataset.unlink.split('|');
+      if (!staged.some(c => c.type === 'unlink' && c.term === iri && c.pred === p && c.target === o)) stage({ type: 'unlink', term: iri, graph: g, pred: p, target: o });
+      refreshAll();
+    }));
+    if ($('stRename')) $('stRename').addEventListener('click', () => {
+      const v = $('fId').value.trim();
+      if (!/^[A-Za-z][A-Za-z0-9-]*$/.test(v)) { toast('Use letters, digits and hyphens only, starting with a letter', true); return; }
+      const to = iri.replace(/[^\/#]+$/, v);
+      if (to === iri) { toast('The identifier is unchanged'); return; }
+      if (idx.s.has(to) || staged.some(c => c.type === 'rename' && c.to === to)) { toast('That identifier is already in use', true); return; }
+      stage({ type: 'rename', term: iri, graph: g, to });
+      refreshAll();
+    });
+    if ($('stRemove')) $('stRemove').addEventListener('click', () => { stageRemove(iri); refreshAll(); });
+  }
+
+  async function savePolicy(body) {
+    try {
+      const r = await fetch('/api/ingest/policy', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const j = await r.json();
+      if (!j.ok) { toast(j.error || 'Could not update the configuration', true); return null; }
+      policyJ = j; POL = K.policyFrom(j); return j;
+    } catch (e) { toast('Could not update the configuration: ' + e.message, true); return null; }
+  }
+
+  // ── staging ───────────────────────────────────────────────────────────
+  function stage(c) {
+    staged = staged.filter(x => !(x.term === c.term && x.type === c.type && x.type !== 'removeAlt' && x.type !== 'unlink'));
+    if (c.type === 'remove') staged = staged.filter(x => x.term !== c.term);   // removal supersedes edits
+    c.id = Math.random().toString(36).slice(2);
+    staged.push(c); skipped.delete(c.term);
+  }
+  function stageRemove(iri) { if (!isHeader(iri)) stage({ type: 'remove', term: iri, graph: graphOf(iri), plan: planRemove(iri) }); }
+  function stageSuggestion(iri, s) {
+    const g = graphOf(iri);
+    if (s.kind === 'label') stage({ type: 'label', term: iri, graph: g, old: label(iri), new: s.text, keepOld: true });
+    if (s.kind === 'definition') stage({ type: 'definition', term: iri, graph: g, old: litv(iri, SKOS + 'definition')[0] || '', new: s.text });
+    if (s.kind === 'description') stage({ type: 'description', term: iri, graph: g, old: litv(iri, DCT + 'description')[0] || '', new: s.text });
+    if (s.kind === 'link') stageLink(iri, s.target);
+  }
+  function describe(c) {
+    switch (c.type) {
+      case 'label': return [`Relabel “${c.old}”`, `→ “${c.new}”${c.keepOld ? ' (old label kept as alternative)' : ''}`];
+      case 'definition': return [`New definition for “${label(c.term)}”${c.generated ? ' (written by Claude)' : ''}`, `“${c.new}”`];
+      case 'description': return [`New description for ${label(c.term)}`, `“${c.new}”`];
+      case 'removeAlt': return [`Remove alternative label of “${label(c.term)}”`, `“${c.value}”`];
+      case 'unlink': return [`Remove broken link from “${label(c.term)}”`, `${ln(c.pred)} → ${ln(c.target)}`];
+      case 'rename': return [`New identifier for “${label(c.term)}”`, `${ln(c.term)} → ${ln(c.to)}`];
+      case 'link': return [`Link “${label(c.term)}” to its vocabulary term`, `${c.targetLabel} (${vocabTitle(c.vocab)})`];
+      case 'addVocab': return [`Add “${c.label}” to ${vocabTitle(c.vocab)}`, `${c.broader ? 'under “' + ((VOC.terms.get(c.broader) || {}).label || ln(c.broader)) + '”' : 'as a top concept'}; the taxonomy term is linked to it`];
+      case 'remove': return [`Remove “${c.plan.label}”`, `${c.plan.children.length ? plural(c.plan.children.length, 'child', 'children') + ' re-parented · ' : ''}${plural(c.plan.refs.length, 'link')} removed`];
+    }
+  }
+  function bumps() {
+    const level = {};
+    const bump = (g, l) => { if (g) level[g] = Math.max(level[g] || 0, l); };
+    // 1 patch (edits), 2 additions (MINOR), 3 removals and new identifiers (MAJOR; MINOR before 1.0.0)
+    staged.forEach(c => { bump(c.graph, c.type === 'remove' || c.type === 'rename' ? 3 : 1); if (c.type === 'addVocab') bump(c.vocab, 2); });
+    return Object.entries(level).map(([g, l]) => {
+      const h = idx.header.get(g) || g, cur = litv(h, OWL + 'versionInfo')[0] || (VOC.vocabs.find(v => v.iri === g) || {}).version || '0.1.0';
+      const m = /^(\d+)\.(\d+)\.(\d+)/.exec(cur) || [0, 0, 1, 0];
+      let [M, mi, pa] = [+m[1], +m[2], +m[3]];
+      // §3.3: removing a term breaks consumers (MAJOR); before 1.0.0 that is a MINOR step
+      const kind = l === 3 ? (M >= 1 ? 'major' : 'minor') : l === 2 ? 'minor' : 'patch';
+      if (kind === 'major') { M++; mi = 0; pa = 0; } else if (kind === 'minor') { mi++; pa = 0; } else pa++;
+      return { graph: g, header: h, from: cur, to: `${M}.${mi}.${pa}`, kind };
+    });
+  }
+  function refreshAll() {
+    refreshSum();
+    renderCats(); renderQueue(); renderDetail();
+    if (!$('drawer').classList.contains('hidden')) renderDrawer();
+  }
+  function renderDrawer() {
+    $('drawerTitle').textContent = `${plural(staged.length, 'staged change')}`;
+    $('drawerList').innerHTML = staged.length ? staged.map(c => { const [w, d] = describe(c); return `<div class="ch"><span class="what">${esc(w)}</span><button data-drop="${c.id}" title="Discard this change">×</button><span class="det">${esc(d)}</span></div>`; }).join('') : '<div class="empty">Nothing staged.</div>';
+    const b = bumps();
+    if (mode === 'files') { const fs = [...new Set(staged.map(c => c.graph))].map(g => (fileOf[g] || '').split('/').pop()).filter(Boolean);
+      $('vbump').innerHTML = `Rewrites ${fs.map(f => `<span class="mono">${esc(f)}</span>`).join(', ')} and ${fs.length === 1 ? 'its' : 'their'} .trig twin${fs.length === 1 ? '' : 's'}; the originals are copied to a <span class="mono">review-backup-…</span> folder first. Versions stay as they are (these files are not released yet); the corrections are added to the run's change record. Then the folder's current files are loaded into GraphDB (repository <b>${esc(S.repo())}</b>): each model replaces its named graph and the change records go to the change log — the batch is closed out in one step.`; return; }
+    $('vbump').innerHTML = b.length ? 'Versions (§3.3): ' + b.map(x => `${esc(assetLabel(x.graph))} <span class="mono">${esc(x.from)} → ${esc(x.to)}</span> (${x.kind})`).join(' · ') + `. A change record goes to <span class="mono">${esc((policyJ.baseUrl || '') + 'graph/change-log')}</span>.` : '';
+  }
+  $('drawerList').addEventListener('click', e => { const b = e.target.closest('[data-drop]'); if (b) { staged.filter(c => c.id === b.dataset.drop).forEach(dropPending); staged = staged.filter(c => c.id !== b.dataset.drop); renderVocOptions(); refreshAll(); } });
+  $('reviewBtn').addEventListener('click', () => { flushEdits(); $('drawer').classList.remove('hidden'); renderDrawer(); });
+  $('applyBtn').addEventListener('click', () => { flushEdits(); $('drawer').classList.remove('hidden'); renderDrawer(); $('applyGo').focus(); });
+  $('drawerClose').addEventListener('click', () => $('drawer').classList.add('hidden'));
+  $('clearBtn').addEventListener('click', () => { staged.forEach(dropPending); staged = []; refreshAll(); renderDrawer(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { $('drawer').classList.add('hidden'); $('loadDlg').classList.add('hidden'); } });
+
+  // ── apply: SPARQL updates, version bumps, change record ───────────────
+  const I = S.iri, Lit = (v, lang) => S.lit(v, lang);
+  function opsFor(c) {
+    const T = I(c.term), G = c.graph ? I(c.graph) : null, ops = [];
+    if (c.type === 'label') {
+      const hasRdfs = litv(c.term, RDFS + 'label').length > 0, hasPref = litv(c.term, SKOS + 'prefLabel').length > 0 || isConcept(c.term);
+      ops.push(`DELETE { GRAPH ${G} { ${T} skos:prefLabel ?l } } WHERE { GRAPH ${G} { ${T} skos:prefLabel ?l FILTER(LANG(?l) = "en" || LANG(?l) = "") } }`);
+      ops.push(`DELETE { GRAPH ${G} { ${T} rdfs:label ?l } } WHERE { GRAPH ${G} { ${T} rdfs:label ?l FILTER(LANG(?l) = "en" || LANG(?l) = "") } }`);
+      const ins = [];
+      if (hasPref || !hasRdfs) ins.push(`${T} skos:prefLabel ${Lit(c.new, 'en')} .`);
+      if (hasRdfs) ins.push(`${T} rdfs:label ${Lit(c.new, 'en')} .`);
+      if (c.keepOld && c.old && c.old.toLowerCase() !== c.new.toLowerCase()) ins.push(`${T} skos:altLabel ${Lit(c.old, 'en')} .`);
+      ops.push(`INSERT DATA { GRAPH ${G} { ${ins.join(' ')} } }`);
+    } else if (c.type === 'definition' || c.type === 'description') {
+      const P = c.type === 'definition' ? 'skos:definition' : 'dct:description';
+      ops.push(`DELETE { GRAPH ${G} { ${T} ${P} ?d } } WHERE { GRAPH ${G} { ${T} ${P} ?d FILTER(LANG(?d) = "en" || LANG(?d) = "") } }`);
+      ops.push(`INSERT DATA { GRAPH ${G} { ${T} ${P} ${Lit(c.new, 'en')} } }`);
+      if (c.type === 'definition') ops.push(`DELETE { GRAPH ${G} { ${T} skos:editorialNote ?n } } WHERE { GRAPH ${G} { ${T} skos:editorialNote ?n FILTER(CONTAINS(STR(?n), "Definition written")) } }`);
+      if (c.generated) ops.push(`INSERT DATA { GRAPH ${G} { ${T} skos:editorialNote ${Lit(`Definition written by ${c.generated} in Conformance Review on ${new Date().toISOString().slice(0, 10)}; review before the term moves to Candidate.`, 'en')} } }`);
+    } else if (c.type === 'removeAlt') {
+      ops.push(`DELETE { GRAPH ${G} { ${T} skos:altLabel ?a } } WHERE { GRAPH ${G} { ${T} skos:altLabel ?a FILTER(STR(?a) = ${Lit(c.value)}) } }`);
+    } else if (c.type === 'link' || c.type === 'addVocab') {
+      const target = c.type === 'link' ? c.target : c.newIri, SUBJ = '<' + DC + 'subject>';
+      if (c.type === 'addVocab') {
+        const V = I(c.vocab), Nn = I(c.newIri), now = `"${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}"^^xsd:dateTime`;
+        const ver = (VOC.vocabs.find(v => v.iri === c.vocab) || {}).version;
+        const core = (policyJ.baseUrl || 'https://www.insperity.com/') + 'ontology/core/';
+        const t = [`${Nn} a skos:Concept ; skos:prefLabel ${Lit(c.label, 'en')} ; skos:inScheme ${V}`];
+        if (c.def) t.push(`skos:definition ${Lit(c.def, 'en')}`);
+        c.alts.forEach(a => t.push(`skos:altLabel ${Lit(a, 'en')}`));
+        if (c.broader) t.push(`skos:broader ${I(c.broader)}`); else t.push(`skos:topConceptOf ${V}`);
+        if (ver) t.push(`owl:versionInfo ${Lit(ver)}`);
+        t.push(`<${core}hasLifecycleStatus> <${core}Draft>`);
+        if (policyJ.author) t.push(`dct:creator ${Lit(policyJ.author)}`);
+        t.push(`dct:created ${now}`, `dct:modified ${now}`, `skos:editorialNote ${Lit(`Added from the taxonomy term ${c.term} in Conformance Review.`, 'en')}`);
+        let ins = t.join(' ; ') + ' .';
+        ins += c.broader ? ` ${I(c.broader)} skos:narrower ${Nn} .` : ` ${V} skos:hasTopConcept ${Nn} .`;
+        ops.push(`INSERT DATA { GRAPH ${V} { ${ins} } }`);
+      }
+      ops.push(`DELETE { GRAPH ${G} { ${T} ${SUBJ} ?x } } WHERE { GRAPH ${G} { ${T} ${SUBJ} ?x } }`);
+      ops.push(`INSERT DATA { GRAPH ${G} { ${T} ${SUBJ} ${I(target)} } }`);
+    } else if (c.type === 'unlink') {
+      ops.push(`DELETE WHERE { GRAPH ?g { ${T} ${I(c.pred)} ${I(c.target)} } }`);
+    } else if (c.type === 'rename') {
+      const N = I(c.to);
+      ops.push(`DELETE { GRAPH ?g { ${T} ?p ?o } } INSERT { GRAPH ?g { ${N} ?p ?o } } WHERE { GRAPH ?g { ${T} ?p ?o } }`);
+      ops.push(`DELETE { GRAPH ?g { ?s ?p ${T} } } INSERT { GRAPH ?g { ?s ?p ${N} } } WHERE { GRAPH ?g { ?s ?p ${T} } }`);
+      ops.push(`DELETE { GRAPH ?g { ?s ${T} ?o } } INSERT { GRAPH ?g { ?s ${N} ?o } } WHERE { GRAPH ?g { ?s ${T} ?o } }`);
+      ops.push(`INSERT DATA { GRAPH ${G} { ${N} skos:historyNote ${Lit('Identifier changed from ' + c.term + ' in Conformance Review.', 'en')} } }`);
+    } else if (c.type === 'remove') {
+      const p = c.plan;
+      // 1. children move up to the removed term's parents (or become top level)
+      p.children.forEach(ch => {
+        const CG = I(ch.g), C = I(ch.iri);
+        const pars = p.parents.filter(x => x !== ch.iri);
+        if (pars.length) ops.push(`INSERT DATA { GRAPH ${CG} { ${pars.map(x => `${C} ${I(ch.p)} ${I(x)} .`).join(' ')} } }`);
+        if (pars.length && ch.p === SKOS + 'broader') ops.push(`INSERT DATA { GRAPH ${CG} { ${pars.map(x => `${I(x)} skos:narrower ${C} .`).join(' ')} } }`);
+        if (!pars.length && ch.p === SKOS + 'broader') p.schemes.forEach(sc => ops.push(`INSERT DATA { GRAPH ${CG} { ${C} skos:topConceptOf ${I(sc)} . ${I(sc)} skos:hasTopConcept ${C} . } }`));
+      });
+      // 2. take it out of RDF lists (owl:unionOf, owl:members …) by splicing the list cell
+      ops.push(`DELETE { GRAPH ?g { ?pre ?pp ?c . ?c rdf:first ${T} . ?c rdf:rest ?n } } INSERT { GRAPH ?g { ?pre ?pp ?n } } WHERE { GRAPH ?g { ?c rdf:first ${T} ; rdf:rest ?n . ?pre ?pp ?c } }`);
+      // 3. restrictions and property shapes that use it, and the links pointing at them
+      ops.push(`DELETE { GRAPH ?g { ?x ?xp ?r . ?r ?rp ?ro } } WHERE { GRAPH ?g { ?r ?q ${T} . FILTER(isBlank(?r)) FILTER NOT EXISTS { ?r rdf:first ?any } ?r ?rp ?ro . OPTIONAL { ?x ?xp ?r } } }`);
+      // 4. its own blank-node structures (two levels), then its own statements and every link to it
+      ops.push(`DELETE { GRAPH ?g { ?b2 ?p2 ?o2 } } WHERE { GRAPH ?g { ${T} ?p ?b . FILTER(isBlank(?b)) ?b ?p1 ?b2 . FILTER(isBlank(?b2)) ?b2 ?p2 ?o2 } }`);
+      ops.push(`DELETE { GRAPH ?g { ?b ?p1 ?o1 } } WHERE { GRAPH ?g { ${T} ?p ?b . FILTER(isBlank(?b)) ?b ?p1 ?o1 } }`);
+      ops.push(`DELETE WHERE { GRAPH ?g { ${T} ?p ?o } }`);
+      ops.push(`DELETE WHERE { GRAPH ?g { ?s ?p ${T} } }`);
+    }
+    return ops;
+  }
+  $('applyGo').addEventListener('click', async () => {
+    if (!staged.length) return;
+    if (mode === 'files') return saveFiles();
+    const now = new Date(), stamp = now.toISOString().replace(/\.\d+Z$/, 'Z'), day = stamp.slice(0, 10);
+    const order = { label: 0, definition: 0, description: 0, removeAlt: 0, addVocab: 0, link: 0, unlink: 1, remove: 2, rename: 3 };
+    const list = staged.slice().sort((a, b) => order[a.type] - order[b.type]);
+    const b = bumps(), base = policyJ.baseUrl || 'https://www.insperity.com/', author = policyJ.author || '';
+    const ops = [];
+    list.forEach(c => ops.push(...opsFor(c)));
+    // edited terms: new modified date
+    const renamed = Object.fromEntries(list.filter(c => c.type === 'rename').map(c => [c.term, c.to]));
+    const touched = [...new Set(list.filter(c => c.type !== 'remove').map(c => (renamed[c.term] || c.term) + '|' + c.graph))].map(x => x.split('|'));
+    touched.forEach(([t, g]) => { ops.push(`DELETE { GRAPH ${I(g)} { ${I(t)} dct:modified ?m } } WHERE { GRAPH ${I(g)} { ${I(t)} dct:modified ?m } }`); ops.push(`INSERT DATA { GRAPH ${I(g)} { ${I(t)} dct:modified "${stamp}"^^xsd:dateTime } }`); });
+    // asset headers: version, version IRI, modified, change note
+    b.forEach(x => {
+      const H = I(x.header), G = I(x.graph);
+      const parts = changeParts(list, x.graph);
+      ops.push(`DELETE { GRAPH ${G} { ${H} owl:versionInfo ?v } } WHERE { GRAPH ${G} { ${H} owl:versionInfo ?v } }`);
+      ops.push(`DELETE { GRAPH ${G} { ${H} dct:modified ?m } } WHERE { GRAPH ${G} { ${H} dct:modified ?m } }`);
+      ops.push(`DELETE { GRAPH ${G} { ${H} owl:versionIRI ?vi } } INSERT { GRAPH ${G} { ${H} owl:versionIRI ${I(x.header.replace(/[#/]?$/, '/') + x.to + '/')} } } WHERE { GRAPH ${G} { ${H} owl:versionIRI ?vi } }`);
+      ops.push(`INSERT DATA { GRAPH ${G} { ${H} owl:versionInfo ${Lit(x.to)} ; dct:modified "${stamp}"^^xsd:dateTime ; skos:changeNote ${Lit(`${x.to} (${day}): Conformance Review — ${parts.join(', ')}.`, 'en')} } }`);
+    });
+    // change record (PROV-O, append-only change log, §3.3)
+    const rid = `${base}resource/change-log/ChangeRecord/${stamp.replace(/[:-]/g, '').replace('T', 'T')}-review`;
+    const RID = I(rid), LOG = I(base + 'graph/change-log');
+    const rec = [`${RID} a prov:Activity , dct:ProvenanceStatement ; rdfs:label ${Lit('Conformance review, ' + stamp, 'en')} ;`,
+      `dct:description ${Lit(`${plural(list.length, 'change')} to ${plural(b.length, 'model')} in Conformance Review: ${b.map(x => `${assetLabel(x.graph)} ${x.from} → ${x.to}`).join('; ')}.`, 'en')} ;`,
+      author ? `dct:creator ${Lit(author)} ;` : '', `prov:startedAtTime "${stamp}"^^xsd:dateTime ;`,
+      `prov:generated ${b.map(x => I(x.header)).join(' , ')} ;`,
+      `dct:hasPart ${list.map((c, i) => I(rid + '/' + (i + 1))).join(' , ')} .`];
+    list.forEach((c, i) => { const [w, d] = describe(c); rec.push(`${I(rid + '/' + (i + 1))} a prov:Entity ; rdfs:label ${Lit(w, 'en')} ; rdfs:comment ${Lit(d, 'en')} ; dct:subject ${I(c.term)} ; dct:type ${Lit(c.type)} ; prov:wasGeneratedBy ${RID} .`); });
+    ops.push(`INSERT DATA { GRAPH ${LOG} { ${rec.filter(Boolean).join(' ')} } }`);
+
+    $('applyGo').disabled = true; $('applyStatus').className = 'status'; $('applyStatus').textContent = `Applying ${plural(ops.length, 'update')}…`;
+    try {
+      const pre = 'PREFIX prov: <' + PROV + '>\nPREFIX xsd: <' + XSD + '>\n';
+      for (let i = 0; i < ops.length; i += 40) {
+        await S.update(pre + ops.slice(i, i + 40).join(' ;\n'));
+        $('applyStatus').textContent = `Applying… ${Math.min(i + 40, ops.length)} / ${ops.length}`;
+      }
+      const n = list.length; staged = []; checked.clear();
+      $('applyStatus').className = 'status ok'; $('applyStatus').textContent = `Applied ${plural(n, 'change')}. Re-checking…`;
+      try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+      await scan();
+      $('applyStatus').textContent = `Applied ${plural(n, 'change')} · change record ${ln(rid)}`;
+      toast(`Applied ${plural(n, 'change')} — versions ${b.map(x => x.to).join(', ')}`);
+      refreshAll();
+    } catch (e) {
+      $('applyStatus').className = 'status bad';
+      $('applyStatus').textContent = 'Stopped: ' + e.message + ' — the changes before this point were applied; Find issues shows the current state.';
+    }
+    $('applyGo').disabled = false;
+  });
+
+  // ── file mode: apply the staged changes to the statements in memory, then rewrite the files ──
+  const same = (a, b) => a.t === b.t && a.v === b.v && (a.t !== 'lit' || ((a.lang || '') === (b.lang || '') && (a.dt || '') === (b.dt || '')));
+  const isEnLit = o => o.t === 'lit' && (!o.lang || o.lang === 'en');
+  function applyLocal(list, stamp, day) {
+    const dirty = new Set(), N = v => ({ t: 'iri', v }), L = (v, lang) => ({ t: 'lit', v, lang });
+    const dt = { t: 'lit', v: stamp, dt: XSD + 'dateTime' };
+    const drop = pred => { const keep = []; for (const q of quads) { if (pred(q)) dirty.add(q.g); else keep.push(q); } quads = keep; };
+    const add = (s, p, o, g) => { if (!quads.some(q => q.g === g && same(q.s, s) && same(q.p, p) && same(q.o, o))) { quads.push({ s, p, o, g }); dirty.add(g); } };
+    const isT = (t, T) => t.t === 'iri' && t.v === T;
+    const bk = (g, t) => g + '|' + t.v;
+    function splice(g, cellId) {          // take one cell out of an RDF list
+      const rest = quads.find(q => q.g === g && q.s.t === 'bnode' && q.s.v === cellId && q.p.v === RDF + 'rest');
+      const n = rest ? rest.o : N(RDF + 'nil');
+      quads.forEach(q => { if (q.g === g && q.o.t === 'bnode' && q.o.v === cellId) { q.o = n; dirty.add(g); } });
+      drop(q => q.g === g && q.s.t === 'bnode' && q.s.v === cellId);
+    }
+    for (const c of list) {
+      const T = c.term, G = c.graph;
+      if (c.type === 'label') {
+        const hasR = quads.some(q => q.g === G && isT(q.s, T) && q.p.v === RDFS + 'label');
+        const hasP = quads.some(q => q.g === G && isT(q.s, T) && q.p.v === SKOS + 'prefLabel') || isConcept(T);
+        drop(q => q.g === G && isT(q.s, T) && (q.p.v === SKOS + 'prefLabel' || q.p.v === RDFS + 'label') && isEnLit(q.o));
+        if (hasP || !hasR) add(N(T), N(SKOS + 'prefLabel'), L(c.new, 'en'), G);
+        if (hasR) add(N(T), N(RDFS + 'label'), L(c.new, 'en'), G);
+        if (c.keepOld && c.old && c.old.toLowerCase() !== c.new.toLowerCase()) add(N(T), N(SKOS + 'altLabel'), L(c.old, 'en'), G);
+      } else if (c.type === 'definition' || c.type === 'description') {
+        const P = c.type === 'definition' ? SKOS + 'definition' : DCT + 'description';
+        drop(q => q.g === G && isT(q.s, T) && q.p.v === P && isEnLit(q.o));
+        if (c.type === 'definition') drop(q => q.g === G && isT(q.s, T) && q.p.v === SKOS + 'editorialNote' && /Definition written (during ingestion|by )/.test(q.o.v));
+        if (c.generated) add(N(T), N(SKOS + 'editorialNote'), L(`Definition written by ${c.generated} in Conformance Review on ${day}; review before the term moves to Candidate.`, 'en'), G);
+        add(N(T), N(P), L(c.new, 'en'), G);
+      } else if (c.type === 'removeAlt') {
+        drop(q => q.g === G && isT(q.s, T) && q.p.v === SKOS + 'altLabel' && q.o.v === c.value);
+      } else if (c.type === 'link' || c.type === 'addVocab') {
+        if (c.type === 'addVocab') {
+          const V = c.vocab, Nn = c.newIri, ver = (VOC.vocabs.find(v => v.iri === V) || {}).version;
+          const core = (policyJ.baseUrl || 'https://www.insperity.com/') + 'ontology/core/';
+          add(N(Nn), N(RDF + 'type'), N(SKOS + 'Concept'), V);
+          add(N(Nn), N(SKOS + 'prefLabel'), L(c.label, 'en'), V);
+          if (c.def) add(N(Nn), N(SKOS + 'definition'), L(c.def, 'en'), V);
+          c.alts.forEach(a => add(N(Nn), N(SKOS + 'altLabel'), L(a, 'en'), V));
+          add(N(Nn), N(SKOS + 'inScheme'), N(V), V);
+          if (c.broader) { add(N(Nn), N(SKOS + 'broader'), N(c.broader), V); add(N(c.broader), N(SKOS + 'narrower'), N(Nn), V); }
+          else { add(N(Nn), N(SKOS + 'topConceptOf'), N(V), V); add(N(V), N(SKOS + 'hasTopConcept'), N(Nn), V); }
+          if (ver) add(N(Nn), N(OWL + 'versionInfo'), { t: 'lit', v: ver }, V);
+          add(N(Nn), N(core + 'hasLifecycleStatus'), N(core + 'Draft'), V);
+          if (policyJ.author) add(N(Nn), N(DCT + 'creator'), { t: 'lit', v: policyJ.author }, V);
+          add(N(Nn), N(DCT + 'created'), dt, V);
+          add(N(Nn), N(DCT + 'modified'), dt, V);
+          add(N(Nn), N(SKOS + 'editorialNote'), L(`Added from the taxonomy term ${T} in Conformance Review.`, 'en'), V);
+        }
+        drop(q => q.g === G && isT(q.s, T) && q.p.v === DC + 'subject');
+        add(N(T), N(DC + 'subject'), N(c.type === 'link' ? c.target : c.newIri), G);
+      } else if (c.type === 'unlink') {
+        drop(q => isT(q.s, T) && q.p.v === c.pred && isT(q.o, c.target));
+      } else if (c.type === 'rename') {
+        quads.forEach(q => ['s', 'p', 'o'].forEach(k => { if (isT(q[k], T)) { q[k] = N(c.to); dirty.add(q.g); } }));
+        add(N(c.to), N(SKOS + 'historyNote'), L('Identifier changed from ' + T + ' in Conformance Review.', 'en'), G);
+      } else if (c.type === 'remove') {
+        const p = c.plan;
+        p.children.forEach(ch => {
+          const pars = p.parents.filter(x => x !== ch.iri);
+          pars.forEach(x => add(N(ch.iri), N(ch.p), N(x), ch.g));
+          if (ch.p === SKOS + 'broader') {
+            if (pars.length) pars.forEach(x => add(N(x), N(SKOS + 'narrower'), N(ch.iri), ch.g));
+            else p.schemes.forEach(sc => { add(N(ch.iri), N(SKOS + 'topConceptOf'), N(sc), ch.g); add(N(sc), N(SKOS + 'hasTopConcept'), N(ch.iri), ch.g); });
+          }
+        });
+        // list memberships (unions, disjointness) lose the term
+        quads.filter(q => q.s.t === 'bnode' && q.p.v === RDF + 'first' && isT(q.o, T)).map(q => [q.g, q.s.v]).forEach(([g, id]) => splice(g, id));
+        // restrictions and shapes that use it, and its own blank-node structures, with everything nested in them
+        const clo = new Set();
+        quads.forEach(q => { if (q.s.t === 'bnode' && isT(q.o, T)) clo.add(bk(q.g, q.s)); if (isT(q.s, T) && q.o.t === 'bnode') clo.add(bk(q.g, q.o)); });
+        for (let grew = true; grew;) { grew = false; quads.forEach(q => { if (q.s.t === 'bnode' && clo.has(bk(q.g, q.s)) && q.o.t === 'bnode' && !clo.has(bk(q.g, q.o))) { clo.add(bk(q.g, q.o)); grew = true; } }); }
+        quads.filter(q => q.s.t === 'bnode' && q.p.v === RDF + 'first' && q.o.t === 'bnode' && clo.has(bk(q.g, q.o)) && !clo.has(bk(q.g, q.s))).map(q => [q.g, q.s.v]).forEach(([g, id]) => splice(g, id));
+        drop(q => (q.s.t === 'bnode' && clo.has(bk(q.g, q.s))) || (q.o.t === 'bnode' && clo.has(bk(q.g, q.o))) || isT(q.s, T) || isT(q.o, T) || isT(q.p, T));
+      }
+    }
+    // modified date on edited terms; change note on each model
+    const renamed = Object.fromEntries(list.filter(c => c.type === 'rename').map(c => [c.term, c.to]));
+    [...new Set(list.filter(c => c.type !== 'remove').map(c => (renamed[c.term] || c.term) + '\u0001' + c.graph))].map(x => x.split('\u0001')).forEach(([t, g]) => {
+      if (!quads.some(q => q.g === g && isT(q.s, t))) return;
+      drop(q => q.g === g && isT(q.s, t) && q.p.v === DCT + 'modified'); add(N(t), N(DCT + 'modified'), dt, g);
+    });
+    [...new Set([...list.map(c => c.graph), ...list.filter(c => c.type === 'addVocab').map(c => c.vocab)])].forEach(g => {
+      const h = idx.header.get(g); if (!h) return;
+      drop(q => q.g === g && isT(q.s, h) && q.p.v === DCT + 'modified'); add(N(h), N(DCT + 'modified'), dt, g);
+      add(N(h), N(SKOS + 'changeNote'), L(`${day}: Conformance Review before release — ${changeParts(list, g).join(', ')}.`, 'en'), g);
+    });
+    return dirty;
+  }
+  // what changed in model g, for its change note
+  function changeParts(list, g) {
+    const cnt = list.filter(c => c.graph === g);
+    const out = [['label', 'label'], ['definition', 'definition'], ['description', 'description'], ['rename', 'identifier'], ['removeAlt', 'alternative label'], ['unlink', 'broken link'], ['remove', 'term']]
+      .map(([t, w]) => { const n = cnt.filter(c => c.type === t).length; return n ? `${n} ${w}${n === 1 ? '' : 's'} ${t === 'remove' || t === 'removeAlt' || t === 'unlink' ? 'removed' : 'changed'}` : null; });
+    const linked = cnt.filter(c => c.type === 'link' || c.type === 'addVocab').length;
+    if (linked) out.push(`${linked} term${linked === 1 ? '' : 's'} linked to ${linked === 1 ? 'a vocabulary term' : 'vocabulary terms'}`);
+    const added = list.filter(c => c.type === 'addVocab' && c.vocab === g).length;
+    if (added) out.push(`${added} term${added === 1 ? '' : 's'} added from taxonomies`);
+    return out.filter(Boolean);
+  }
+  async function saveFiles() {
+    const stamp = new Date().toISOString().replace(/\.\d+Z$/, 'Z'), day = stamp.slice(0, 10);
+    const order = { label: 0, definition: 0, description: 0, removeAlt: 0, addVocab: 0, link: 0, unlink: 1, remove: 2, rename: 3 };
+    const list = staged.slice().sort((a, b) => order[a.type] - order[b.type]);
+    const base = policyJ.baseUrl || 'https://www.insperity.com/', author = policyJ.author || '';
+    const descr = list.map(describe);                  // before the statements change, so labels are the old ones
+    const before = quads.map(q => ({ ...q }));
+    $('applyGo').disabled = true; $('applyStatus').className = 'status'; $('applyStatus').textContent = 'Saving…';
+    try {
+      const dirty = applyLocal(list, stamp, day);
+      const graphs = [...dirty].filter(g => fileOf[g]);
+      const heads = graphs.map(g => idx.header.get(g)).filter(Boolean);
+      const rid = `${base}resource/change-log/ChangeRecord/${stamp.replace(/[:-]/g, '')}-review`, RID = I(rid);
+      const rec = [`${RID} a prov:Activity , dct:ProvenanceStatement ; rdfs:label ${Lit('Conformance review, ' + stamp, 'en')} ;`,
+        `dct:description ${Lit(`${plural(list.length, 'correction')} to ${plural(graphs.length, 'model')} in Conformance Review, before loading: ${graphs.map(assetLabel).join('; ')}.`, 'en')} ;`,
+        author ? `dct:creator ${Lit(author)} ;` : '', `prov:startedAtTime "${stamp}"^^xsd:dateTime ;`,
+        heads.length ? `prov:generated ${heads.map(I).join(' , ')} ;` : '',
+        `dct:hasPart ${list.map((c, i) => I(rid + '/' + (i + 1))).join(' , ')} .`];
+      list.forEach((c, i) => { const [w, d] = descr[i]; rec.push(`${I(rid + '/' + (i + 1))} a prov:Entity ; rdfs:label ${Lit(w, 'en')} ; rdfs:comment ${Lit(d, 'en')} ; dct:subject ${I(c.term)} ; dct:type ${Lit(c.type)} ; prov:wasGeneratedBy ${RID} .`); });
+      const body = { changeLog: base + 'graph/change-log', record: rec.filter(Boolean).join('\n'),
+        files: graphs.map(g => ({ path: fileOf[g], graph: g, triples: quads.filter(q => q.g === g).map(q => [toArr(q.s), toArr(q.p), toArr(q.o)]) })) };
+      const r = await fetch('/api/ingest/review-save', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      const d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command), then try again.' : 'Server answered ' + r.status };
+      if (!d.ok) throw new Error(d.error);
+      const n = list.length; staged = []; checked.clear();
+      $('applyStatus').textContent = `Saved ${plural(n, 'correction')} to ${plural(d.written.length, 'file')} · loading into GraphDB…`;
+      // close out the batch: load the folder's current files into GraphDB
+      let ld;
+      try {
+        const r2 = await fetch('/api/ingest/load-folder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ dir: fileDir, repo: S.repo() }) });
+        ld = await r2.json();
+      } catch (e) { ld = { ok: false, error: e.message }; }
+      const bad = (ld.results || []).filter(x => !x.ok);
+      await scanFiles([...document.querySelectorAll('#alist input:checked')].map(c => c.value));
+      if (ld.error || bad.length) {
+        $('applyStatus').className = 'status bad';
+        $('applyStatus').textContent = `Saved ${plural(n, 'correction')} to the files, but loading into GraphDB failed: ${ld.error || bad[0].error}. Fix that, then use Load into GraphDB….`;
+      } else {
+        const m = ld.results.filter(x => x.mode === 'replaced').length;
+        $('applyStatus').className = 'status ok';
+        $('applyStatus').textContent = `Saved ${plural(n, 'correction')} to ${plural(d.written.length, 'file')} and loaded ${plural(m, 'model')} into ${ld.repo} · originals in ${d.backup.split('/').pop()}`;
+        toast(`Saved and loaded into GraphDB — ${plural(m, 'model')}`);
+        try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+      }
+      refreshAll();
+    } catch (e) {
+      quads = before; buildIndex();
+      $('applyStatus').className = 'status bad'; $('applyStatus').textContent = 'Not saved: ' + e.message;
+    }
+    $('applyGo').disabled = false;
+  }
+
+  // ── file mode: load the folder into GraphDB ──────────────────────────
+  $('loadBtn').addEventListener('click', async () => { flushEdits();
+    if (staged.length) { toast('Save or discard the staged changes first, so the files are what you reviewed', true); return; }
+    $('loadDlg').classList.remove('hidden'); $('loadBody').innerHTML = '<div class="status">Checking the folder…</div>'; $('loadStatus').textContent = ''; $('loadGo').disabled = true;
+    let d;
+    try { const r = await fetch('/api/ingest/load-plan?' + new URLSearchParams({ dir: fileDir || $('folder').value.trim() })); d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command).' : 'Server answered ' + r.status }; }
+    catch (e) { d = { ok: false, error: e.message }; }
+    if (!d.ok) { $('loadBody').innerHTML = `<div class="status bad">${esc(d.error)}</div>`; return; }
+    const corr = d.assets.filter(a => a.corrected).length;
+    $('loadBody').innerHTML = `<p style="font-size:12.5px">From <span class="mono">${esc(d.dir)}</span> into repository <b>${esc(S.repo())}</b>:</p>
+      <ul style="margin:8px 0 0 18px;font-size:12.5px;display:grid;gap:4px">
+        <li><b>${plural(d.assets.length, 'model')}</b> each <b>replace</b> their named graph${corr ? ` — ${corr} with your Conformance Review corrections` : ''}.</li>
+        <li><b>${plural(d.changeRecords.length, 'change record')}</b> added to the change log (one already loaded is not duplicated).</li>
+        ${d.superseded.length ? `<li><b>${plural(d.superseded.length, 'older copy', 'older copies')}</b> from earlier runs (${esc(d.superseded.join(', '))}) are set aside in <span class="mono">superseded/</span> and not loaded.</li>` : ''}
+      </ul>
+      <details style="margin-top:10px;font-size:12px"><summary class="status" style="cursor:pointer">Models</summary><div style="margin-top:6px;display:grid;gap:2px">${d.assets.map(a => `<div><span class="k ${({ vocabulary: 'voc', taxonomy: 'tax', ontology: 'ont' })[a.kind] || ''}" style="font:700 8.5px/1 var(--ke-sans);text-transform:uppercase;padding:2px 4px;border:1px solid currentColor;border-radius:3px;margin-right:6px">${esc(a.kind.slice(0, 3))}</span>${esc(a.title)}${a.corrected ? ' <span class="tag staged">corrected</span>' : ''}</div>`).join('')}</div></details>`;
+    $('loadGo').disabled = !d.assets.length;
+  });
+  $('loadClose').addEventListener('click', () => $('loadDlg').classList.add('hidden'));
+  $('loadGo').addEventListener('click', async () => {
+    $('loadGo').disabled = true; $('loadStatus').className = 'status'; $('loadStatus').textContent = 'Loading…';
+    try {
+      const r = await fetch('/api/ingest/load-folder', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ dir: fileDir || $('folder').value.trim(), repo: S.repo() }) });
+      const d = await r.json();
+      const bad = (d.results || []).filter(x => !x.ok);
+      if (d.error || bad.length) {
+        $('loadStatus').className = 'status bad';
+        $('loadStatus').textContent = d.error || `${bad.length} failed: ${bad[0].error}`;
+      } else {
+        const n = d.results.filter(x => x.mode === 'replaced').length;
+        $('loadStatus').className = 'status ok';
+        $('loadStatus').textContent = `Loaded ${plural(n, 'model')} into ${d.repo}` + (d.setAside && d.setAside.length ? ` · ${d.setAside.length} older files set aside` : '');
+        toast(`Loaded ${plural(n, 'model')} into GraphDB`);
+        try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+        if (d.setAside && d.setAside.length) loadFiles(fileDir);
+      }
+    } catch (e) { $('loadStatus').className = 'status bad'; $('loadStatus').textContent = e.message; }
+    $('loadGo').disabled = false;
+  });
+
+  // ── start ─────────────────────────────────────────────────────────────
+  window.addEventListener('beforeunload', e => { if (staged.length) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings' && mode === 'graphdb') loadAssets(); });
+  renderCats();
+  setMode(mode);
+  loadPolicy().then(() => loadAssets());
+})();
+</script>
+</body>
+</html>

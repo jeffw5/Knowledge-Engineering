@@ -1,0 +1,392 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-domain/> {
+  <https://www.insperity.com/vocabulary/core-domain/> a skos:ConceptScheme;
+    rdfs:label "Core domain vocabulary"@en;
+    skos:prefLabel "Core domain vocabulary"@en;
+    skos:hasTopConcept domainvoc:domain;
+    terms:description "A business domain defines the core area of expertise and operations for a company."@en;
+    terms:title "Core domain vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:00:29.476Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Domain"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-domain/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:domain a skos:Concept;
+    skos:prefLabel "Domain"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:25:10.376Z"^^xsd:dateTime;
+    skos:definition "A business domain defines the core area of expertise and operations for a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:narrower domainvoc:commercial, domainvoc:corporate, domainvoc:network, domainvoc:supply-chain .
+  
+  domainvoc:commercial a skos:Concept;
+    skos:prefLabel "Commercial"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "Relating to business or commerce, particularly the buying and selling of goods and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:domain;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:customer-support, domainvoc:marketing, domainvoc:sales .
+  
+  domainvoc:corporate a skos:Concept;
+    skos:prefLabel "Corporate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "Relating to a corporation or large company, often referring to its overall structure, management, and operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:domain;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:compliance, domainvoc:facilities, domainvoc:finance, domainvoc:human-resource,
+      domainvoc:information-technology, domainvoc:legal, domainvoc:procurement .
+  
+  domainvoc:network a skos:Concept;
+    skos:prefLabel "Network"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "A system that allows users to exchange information and data through a network of interconnected nodes and links."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:domain;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:supply-chain a skos:Concept;
+    skos:prefLabel "Supply chain"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The network of all individuals, organizations, resources, activities, and technology involved in creating and selling a product, from the delivery of source materials from the supplier to the manufacturer through to its eventual delivery to the end user."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:domain;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:logistics .
+  
+  domainvoc:customer-support a skos:Concept;
+    skos:prefLabel "Customer support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The process of providing assistance and guidance to customers before, during, and after their purchase of a product or service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:commercial;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:marketing a skos:Concept;
+    skos:prefLabel "Marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The activities a company undertakes to promote the buying or selling of a product or service. This includes advertising, public relations, and market research."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:commercial;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:sales a skos:Concept;
+    skos:prefLabel "Sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The process of selling goods or services to customers, often involving persuasion and negotiation to close deals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:commercial;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:retail-sales, domainvoc:sales-operations .
+  
+  domainvoc:retail-sales a skos:Concept;
+    skos:prefLabel "Retail sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The sale of goods directly to consumers for personal use, typically through physical stores or online platforms."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:sales;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:sales-operations a skos:Concept;
+    skos:prefLabel "Sales operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The processes, systems, and technology that support and enable sales teams to sell more effectively and efficiently."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:sales;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:compliance a skos:Concept;
+    skos:prefLabel "Compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "Adhering to laws, regulations, and internal policies that are relevant to a particular industry or organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:facilities a skos:Concept;
+    skos:prefLabel "Facilities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "Buildings, equipment, and other physical assets that are required for a company to operate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:real-estate .
+  
+  domainvoc:finance a skos:Concept;
+    skos:prefLabel "Finance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The management of money, including activities such as investing, borrowing, lending, budgeting, and forecasting."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:human-resource a skos:Concept;
+    skos:prefLabel "Human resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The department within a company responsible for managing the employee life cycle, including recruitment, hiring, training, compensation, and benefits."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:information-technology a skos:Concept;
+    skos:prefLabel "Information technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The use of computers and telecommunications equipment to store, retrieve, transmit, and manipulate data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:legal a skos:Concept;
+    skos:prefLabel "Legal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "Relating to the law and its application, often involving legal advice, representation, and documentation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:risk, domainvoc:security .
+  
+  domainvoc:procurement a skos:Concept;
+    skos:prefLabel "Procurement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The process of acquiring goods or services from external sources, typically involving sourcing, negotiation, and contract management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:corporate;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:real-estate a skos:Concept;
+    skos:prefLabel "Real estate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "Property consisting of land and the buildings on it, along with its natural resources such as crops, minerals, or water."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:risk a skos:Concept;
+    skos:prefLabel "Risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The possibility of something happening that will have an impact on an organization’s objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:security a skos:Concept;
+    skos:prefLabel "Security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The protection of an organization’s assets, including its physical property, information, and employees, from threats and vulnerabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainvoc:logistics a skos:Concept;
+    skos:prefLabel "Logistics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The planning, implementation, and control of the efficient, effective forward and reverse flow and storage of goods, services, and related information between the point of origin and the point of consumption to meet customers’ requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:supply-chain;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainvoc:fleet-management .
+  
+  domainvoc:fleet-management a skos:Concept;
+    skos:prefLabel "Fleet management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:53:30.207Z"^^xsd:dateTime;
+    skos:definition "The management of a company’s vehicles, including their acquisition, maintenance, tracking, and utilization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-domain/>;
+    skos:broader domainvoc:logistics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

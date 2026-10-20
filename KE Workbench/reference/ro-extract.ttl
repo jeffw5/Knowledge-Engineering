@@ -5,7 +5,7 @@
 #     with their labels, definitions, inverses and characteristics copied from BFO 2020 core (ISO/IEC 21838-2,
 #     BFO-2020/21838-2/owl/bfo-core.ttl, CC BY 4.0). Loading the full bfo-core.ttl instead makes them duplicates,
 #     which is harmless.
-#   * RO: has input, has output (not in RO Core).
+#   * RO: has input, has output, causally upstream of (not in RO Core).
 #   * IAO: is about.
 # Terms keep their OBO IRIs; nothing here is ingested or renamed. Load it with Ingestion › Reference ontologies.
 
@@ -20,11 +20,11 @@
   a owl:Ontology ;
   rdfs:label "RO extract for the core domain ontology"@en ;
   dct:title "RO extract for the core domain ontology"@en ;
-  dct:description "The BFO 2020, Relation Ontology and Information Artifact Ontology relations that the core domain ontology specializes and that the BFO and RO Core reference files do not supply."@en ;
+  dct:description "The BFO 2020, Relation Ontology and Information Artifact Ontology relations that the core domain ontology specializes and that the BFO and RO Core reference files do not supply (0.2.0 adds causally upstream of, the parent of addresses and supports)."@en ;
   dct:source <http://purl.obolibrary.org/obo/bfo/2020/bfo-core.ttl> , <http://purl.obolibrary.org/obo/ro.owl> , <http://purl.obolibrary.org/obo/iao.owl> ;
   dct:license <https://creativecommons.org/licenses/by/4.0/> ;
   owl:imports <http://purl.obolibrary.org/obo/bfo.owl> ;
-  owl:versionInfo "0.1.0" ;
+  owl:versionInfo "0.2.0" ;
   dct:created "2026-10-18"^^xsd:date .
 
 # ── BFO 2020 temporal relations between occurrents ──
@@ -125,6 +125,11 @@ obo:RO_0002234 a owl:ObjectProperty ;
   skos:definition "p has output c iff c is a participant in p, c is present at the end of p, and c is not present in the same state at the beginning of p."@en ;
   rdfs:subPropertyOf obo:RO_0000057 ;
   rdfs:domain obo:BFO_0000015 ;
+  rdfs:isDefinedBy <http://purl.obolibrary.org/obo/ro.owl> .
+
+obo:RO_0002411 a owl:ObjectProperty ;
+  rdfs:label "causally upstream of"@en ;
+  skos:definition "p is causally upstream of q iff p is causally related to q, the end of p precedes the end of q, and p is not an occurrent part of q."@en ;
   rdfs:isDefinedBy <http://purl.obolibrary.org/obo/ro.owl> .
 
 # ── IAO: aboutness ──

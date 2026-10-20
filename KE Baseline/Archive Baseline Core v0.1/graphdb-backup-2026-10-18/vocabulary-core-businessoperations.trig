@@ -1,0 +1,1025 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-businessoperations/> {
+  <https://www.insperity.com/vocabulary/core-businessoperations/> a skos:ConceptScheme;
+    rdfs:label "Core businessoperations vocabulary"@en;
+    skos:prefLabel "Core businessoperations vocabulary"@en;
+    skos:hasTopConcept businessoperationsvoc:business-operations;
+    terms:description "The ongoing, recurring activities involved in running a business for the purpose of generating revenue and profit."@en;
+    terms:title "Core businessoperations vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-28T17:02:16.352Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Core | Business Operations"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-businessoperations/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:business-operations a skos:Concept;
+    skos:prefLabel "Business operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-28T17:02:35.839Z"^^xsd:dateTime;
+    skos:definition "The ongoing, recurring activities involved in running a business for the purpose of generating revenue and profit."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:narrower businessoperationsvoc:analytics-and-reporting, businessoperationsvoc:communications,
+      businessoperationsvoc:quality-management, businessoperationsvoc:strategy, businessoperationsvoc:sustainability,
+      businessoperationsvoc:technology .
+  
+  businessoperationsvoc:analytics-and-reporting a skos:Concept;
+    skos:prefLabel "Analytics & reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of collecting, analyzing, and presenting data to track performance, identify trends, and support decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:data-analytics, businessoperationsvoc:data-visualization,
+      businessoperationsvoc:performance-measurement .
+  
+  businessoperationsvoc:communications a skos:Concept;
+    skos:prefLabel "Communications"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The exchange of information between two or more people."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:crisis-communication, businessoperationsvoc:external-communication,
+      businessoperationsvoc:internal-communication .
+  
+  businessoperationsvoc:quality-management a skos:Concept;
+    skos:prefLabel "Quality management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The act of overseeing all activities and tasks needed to maintain a desired level of excellence."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:continuous-improvement, businessoperationsvoc:quality-assurance,
+      businessoperationsvoc:quality-control, businessoperationsvoc:quality-planning, businessoperationsvoc:total-quality-management .
+  
+  businessoperationsvoc:strategy a skos:Concept;
+    skos:prefLabel "Strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A plan of action designed to achieve a long-term or overall aim."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:business-model-canvas, businessoperationsvoc:competitive-advantage,
+      businessoperationsvoc:cost-leadership, businessoperationsvoc:differentiation, businessoperationsvoc:focus,
+      businessoperationsvoc:growth-strategies, businessoperationsvoc:operational-efficiency,
+      businessoperationsvoc:strengths-weaknesses-opportunities-and-threats-analysis, businessoperationsvoc:value-chain-analysis .
+  
+  businessoperationsvoc:sustainability a skos:Concept;
+    skos:prefLabel "Sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Meeting the needs of the present without compromising the ability of future generations to meet their own needs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:circular-economy, businessoperationsvoc:corporate-social-responsibility,
+      businessoperationsvoc:economic-sustainability, businessoperationsvoc:environmental-sustainability,
+      businessoperationsvoc:social-sustainability .
+  
+  businessoperationsvoc:technology a skos:Concept;
+    skos:prefLabel "Technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The application of scientific knowledge for practical purposes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:artificial-intelligence, businessoperationsvoc:cloud-computing,
+      businessoperationsvoc:data-storage, businessoperationsvoc:hardware, businessoperationsvoc:networking,
+      businessoperationsvoc:software .
+  
+  businessoperationsvoc:data-analytics a skos:Concept;
+    skos:prefLabel "Data analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of examining raw data to extract meaningful insights and patterns."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:analytics-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:descriptive-analytics, businessoperationsvoc:diagnostic-analytics,
+      businessoperationsvoc:predictive-analytics, businessoperationsvoc:prescriptive-analytics .
+  
+  businessoperationsvoc:data-visualization a skos:Concept;
+    skos:prefLabel "Data visualization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Representing data graphically to make it easier to understand and interpret."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:analytics-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:performance-measurement a skos:Concept;
+    skos:prefLabel "Performance measurement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of quantifying the efficiency and effectiveness of an organization’s activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:analytics-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:benchmarking, businessoperationsvoc:data-analysis,
+      businessoperationsvoc:key-performance-indicators .
+  
+  businessoperationsvoc:descriptive-analytics a skos:Concept;
+    skos:prefLabel "Descriptive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The interpretation of historical data to understand past performance and trends."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analytics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:diagnostic-analytics a skos:Concept;
+    skos:prefLabel "Diagnostic analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Analyzing data to determine the root cause of a problem or trend."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analytics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:predictive-analytics a skos:Concept;
+    skos:prefLabel "Predictive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Using data, statistical algorithms, and machine learning techniques to predict future outcomes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analytics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:prescriptive-analytics a skos:Concept;
+    skos:prefLabel "Prescriptive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Providing recommendations on actions to take to achieve a desired outcome."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analytics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:benchmarking a skos:Concept;
+    skos:prefLabel "Benchmarking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Comparing an organization’s performance against industry best practices or competitors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:performance-measurement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:data-analysis a skos:Concept;
+    skos:prefLabel "Data analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of inspecting, cleaning, transforming, and modeling data to discover useful information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:performance-measurement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:data-cleaning, businessoperationsvoc:data-collection,
+      businessoperationsvoc:data-preparation .
+  
+  businessoperationsvoc:key-performance-indicators a skos:Concept;
+    skos:prefLabel "Key performance indicators"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Measurable values that demonstrate how effectively an organization is achieving key business objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:performance-measurement;
+    skos:altLabel "KPIs"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:data-cleaning a skos:Concept;
+    skos:prefLabel "Data cleaning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and correcting errors and inconsistencies in a dataset."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:data-collection a skos:Concept;
+    skos:prefLabel "Data collection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of gathering data from various sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:data-preparation a skos:Concept;
+    skos:prefLabel "Data preparation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of transforming raw data into a format suitable for analysis."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:data-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:crisis-communication a skos:Concept;
+    skos:prefLabel "Crisis communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of communicating with the public and stakeholders during a crisis."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:communications;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:external-communication a skos:Concept;
+    skos:prefLabel "External communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Communication between an organization and its external stakeholders (e.g., customers, investors)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:communications;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:internal-communication a skos:Concept;
+    skos:prefLabel "Internal communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Communication within an organization, between employees and management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:communications;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:continuous-improvement a skos:Concept;
+    skos:prefLabel "Continuous improvement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "An ongoing effort to improve products, services, or processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:quality-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:quality-assurance a skos:Concept;
+    skos:prefLabel "Quality assurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A system of preventing mistakes and defects in manufactured products and avoiding problems when delivering services to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:quality-management;
+    skos:altLabel "QA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:quality-control a skos:Concept;
+    skos:prefLabel "Quality control"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A process that ensures products or services meet predefined quality standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:quality-management;
+    skos:altLabel "QC"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:quality-planning a skos:Concept;
+    skos:prefLabel "Quality planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Defining quality standards and determining how to meet them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:quality-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:total-quality-management a skos:Concept;
+    skos:prefLabel "Total quality management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A management approach that aims to involve all employees in the continuous improvement of quality."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:quality-management;
+    skos:altLabel "TQM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:business-model-canvas a skos:Concept;
+    skos:prefLabel "Business model canvas"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategic management template for developing new business models or documenting existing ones."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:channels, businessoperationsvoc:cost-structure,
+      businessoperationsvoc:customer-relationships, businessoperationsvoc:customer-segmentation,
+      businessoperationsvoc:key-activities, businessoperationsvoc:key-partnerships, businessoperationsvoc:key-resources,
+      businessoperationsvoc:revenue-streams .
+  
+  businessoperationsvoc:competitive-advantage a skos:Concept;
+    skos:prefLabel "Competitive advantage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A condition that allows a company to operate in a more efficient or otherwise higher-quality manner than its competitors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:competitive-analysis, businessoperationsvoc:core-competencies,
+      businessoperationsvoc:sustainable-advantage, businessoperationsvoc:value-proposition .
+  
+  businessoperationsvoc:cost-leadership a skos:Concept;
+    skos:prefLabel "Cost leadership"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy focused on having the lowest cost of production and operation in the industry."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:differentiation a skos:Concept;
+    skos:prefLabel "Differentiation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy focused on offering unique products or services that customers value."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:focus a skos:Concept;
+    skos:prefLabel "Focus"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy focused on serving a specific niche market segment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:growth-strategies a skos:Concept;
+    skos:prefLabel "Growth strategies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Strategies that focus on increasing revenue, market share, or both."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:diversification, businessoperationsvoc:market-development,
+      businessoperationsvoc:market-penetration, businessoperationsvoc:product-development .
+  
+  businessoperationsvoc:operational-efficiency a skos:Concept;
+    skos:prefLabel "Operational efficiency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Performing business processes in the most cost-effective and productive manner."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:process-optimization, businessoperationsvoc:resource-allocation,
+      businessoperationsvoc:waste-reduction .
+  
+  businessoperationsvoc:strengths-weaknesses-opportunities-and-threats-analysis a skos:Concept;
+    skos:prefLabel "Strengths, weaknesses, opportunities and threats analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A planning tool used to analyze an organization’s strengths, weaknesses, opportunities, and threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    skos:altLabel "Strengths Weaknesses Opportunities Threats Analysis"@en, "SWOT analysis"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:external-analysis, businessoperationsvoc:internal-analysis,
+      businessoperationsvoc:strategic-fit .
+  
+  businessoperationsvoc:value-chain-analysis a skos:Concept;
+    skos:prefLabel "Value chain analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A tool used to analyze the activities an organization performs to create value for its customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strategy;
+    skos:altLabel "VCA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower businessoperationsvoc:inbound-logistics, businessoperationsvoc:marketing-and-sales,
+      businessoperationsvoc:operations, businessoperationsvoc:outbound-logistics, businessoperationsvoc:service,
+      businessoperationsvoc:support-activities .
+  
+  businessoperationsvoc:channels a skos:Concept;
+    skos:prefLabel "Channels"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "Channels describe how a company communicates with and reaches its customer segments to deliver its value proposition. This includes channels for raising awareness, evaluating your product, purchasing, delivering the product/service, and providing post-purchase support."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:cost-structure a skos:Concept;
+    skos:prefLabel "Cost structure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "The cost structure defines all the significant expenses a company incurs to operate its business model. This includes fixed costs (e.g., rent, salaries) and variable costs (e.g., raw materials, marketing expenses)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:customer-relationships a skos:Concept;
+    skos:prefLabel "Customer relationships"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "This describes the types of relationships a company establishes with its customer segments. This could range from personal and hands-on to automated and self-service. Examples include personal assistance, dedicated account managers, self-service portals, and automated email communication."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:customer-segmentation a skos:Concept;
+    skos:prefLabel "Customer segmentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "Customer segmentation involves dividing a company’s target market into distinct groups based on shared characteristics like demographics, behaviors, needs, and wants. This allows for more targeted marketing and product development."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:key-activities a skos:Concept;
+    skos:prefLabel "Key activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "Key activities are the most important actions a company must perform to operate successfully. These are the crucial tasks that directly contribute to delivering the value proposition, reaching customers, maintaining relationships, and generating revenue."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:key-partnerships a skos:Concept;
+    skos:prefLabel "Key partnerships"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "Key partnerships refer to the network of suppliers and partners that make the business model possible. This can include strategic alliances with other companies, joint ventures, or buyer-supplier relationships."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:key-resources a skos:Concept;
+    skos:prefLabel "Key resources"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "Key resources are the most important assets required to make the business model work. These can be physical (e.g., manufacturing facilities, inventory), intellectual (e.g., patents, brand), human (e.g., skilled employees), or financial (e.g., funding, lines of credit)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:revenue-streams a skos:Concept;
+    skos:prefLabel "Revenue streams"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:31:38.318Z"^^xsd:dateTime;
+    skos:definition "Revenue streams represent the cash a company generates from each customer segment. This outlines how the company makes money, whether through product sales, service fees, subscriptions, licensing, advertising, or other means."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:business-model-canvas;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:competitive-analysis a skos:Concept;
+    skos:prefLabel "Competitive analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:34:17.752Z"^^xsd:dateTime;
+    skos:definition "A strategic assessment that identifies and evaluates competitors to understand their strengths, weaknesses, strategies, and objectives. This information helps businesses make informed decisions to gain a competitive edge."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:competitive-advantage;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:core-competencies a skos:Concept;
+    skos:prefLabel "Core competencies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:34:17.752Z"^^xsd:dateTime;
+    skos:definition "Unique strengths and capabilities that differentiate a company from its rivals. These are deeply ingrained within a company’s structure, processes, and culture, making them difficult for competitors to replicate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:competitive-advantage;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:sustainable-advantage a skos:Concept;
+    skos:prefLabel "Sustainable advantage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:34:17.752Z"^^xsd:dateTime;
+    skos:definition "A long-term competitive advantage that is difficult for competitors to imitate or overcome. It arises from factors such as strong brand equity, proprietary technology, or exclusive access to resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:competitive-advantage;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:value-proposition a skos:Concept;
+    skos:prefLabel "Value proposition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T20:34:17.752Z"^^xsd:dateTime;
+    skos:definition "A clear statement that explains the benefits customers receive by choosing a particular product or service over alternatives. It outlines how the offering solves a customer problem or fulfills a need better than the competition."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:competitive-advantage;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:diversification a skos:Concept;
+    skos:prefLabel "Diversification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy of entering new markets or offering new products that are unrelated to a company’s core business."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:growth-strategies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:market-development a skos:Concept;
+    skos:prefLabel "Market development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy of selling existing products or services in new markets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:growth-strategies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:market-penetration a skos:Concept;
+    skos:prefLabel "Market penetration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy of increasing sales of existing products or services to existing market segments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:growth-strategies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:product-development a skos:Concept;
+    skos:prefLabel "Product development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A strategy of developing new products or services for existing markets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:growth-strategies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:process-optimization a skos:Concept;
+    skos:prefLabel "Process optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The practice of identifying and eliminating bottlenecks and inefficiencies in business processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:operational-efficiency;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:resource-allocation a skos:Concept;
+    skos:prefLabel "Resource allocation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The process of assigning resources (e.g., capital, labor) to different parts of an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:operational-efficiency;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:waste-reduction a skos:Concept;
+    skos:prefLabel "Waste reduction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Minimizing or eliminating the unnecessary use of resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:operational-efficiency;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:external-analysis a skos:Concept;
+    skos:prefLabel "External analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Analyzing the external environment to identify opportunities and threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strengths-weaknesses-opportunities-and-threats-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:internal-analysis a skos:Concept;
+    skos:prefLabel "Internal analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Analyzing an organization’s internal environment to identify strengths and weaknesses."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strengths-weaknesses-opportunities-and-threats-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:strategic-fit a skos:Concept;
+    skos:prefLabel "Strategic fit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The degree to which an organization’s resources and capabilities align with its external environment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:strengths-weaknesses-opportunities-and-threats-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:inbound-logistics a skos:Concept;
+    skos:prefLabel "Inbound logistics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The receiving, warehousing, and inventory control of input materials."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:value-chain-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:marketing-and-sales a skos:Concept;
+    skos:prefLabel "Marketing & sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Activities related to promoting and selling products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:value-chain-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:operations a skos:Concept;
+    skos:prefLabel "Operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The transformation of inputs into outputs (i.e., the production process)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:value-chain-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:outbound-logistics a skos:Concept;
+    skos:prefLabel "Outbound logistics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The collection, storage, and distribution of finished goods to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:value-chain-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:service a skos:Concept;
+    skos:prefLabel "Service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Activities related to providing after-sales support to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:value-chain-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:support-activities a skos:Concept;
+    skos:prefLabel "Support activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Activities that support the primary activities of the value chain (e.g., procurement, technology development)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:value-chain-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:circular-economy a skos:Concept;
+    skos:prefLabel "Circular economy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "An economic system aimed at eliminating waste and the continual use of resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:sustainability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:corporate-social-responsibility a skos:Concept;
+    skos:prefLabel "Corporate social responsibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "A business approach that contributes to sustainable development by delivering economic, social and environmental benefits for all stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:sustainability;
+    skos:altLabel "CSR"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:economic-sustainability a skos:Concept;
+    skos:prefLabel "Economic sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Ensuring that business activities are profitable and contribute to economic growth."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:sustainability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:environmental-sustainability a skos:Concept;
+    skos:prefLabel "Environmental sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Minimizing the negative impact of business activities on the environment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:sustainability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:social-sustainability a skos:Concept;
+    skos:prefLabel "Social sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "Ensuring that business activities benefit society and do not have negative social impacts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:sustainability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:artificial-intelligence a skos:Concept;
+    skos:prefLabel "Artificial intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The simulation of human intelligence processes by machines, especially computer systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:technology;
+    skos:altLabel "AI"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:cloud-computing a skos:Concept;
+    skos:prefLabel "Cloud computing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet (“the cloud”)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:data-storage a skos:Concept;
+    skos:prefLabel "Data storage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The recording and retention of digital data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:hardware a skos:Concept;
+    skos:prefLabel "Hardware"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The physical components of a computer system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:networking a skos:Concept;
+    skos:prefLabel "Networking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The practice of connecting two or more computing devices together for the purpose of sharing data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  businessoperationsvoc:software a skos:Concept;
+    skos:prefLabel "Software"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:56:03.213Z"^^xsd:dateTime;
+    skos:definition "The programs and other operating information used by a computer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-businessoperations/>;
+    skos:broader businessoperationsvoc:technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

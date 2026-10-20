@@ -1,0 +1,1953 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-finance/> {
+  <https://www.insperity.com/vocabulary/domain-finance/> a skos:ConceptScheme;
+    rdfs:label "Domain finance vocabulary"@en;
+    skos:prefLabel "Domain finance vocabulary"@en;
+    skos:hasTopConcept domainfinancevoc:finance;
+    terms:description "The management and allocation of financial resources, including investing, borrowing, lending, budgeting, saving, and forecasting."@en;
+    terms:title "Domain finance vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:01:30.859Z"^^xsd:dateTime .
+  
+  domainfinancevoc:finance a skos:Concept;
+    skos:prefLabel "Finance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:26:29.484Z"^^xsd:dateTime;
+    skos:definition "The management and allocation of financial resources, including investing, borrowing, lending, budgeting, saving, and forecasting."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-operations a skos:Concept;
+    skos:prefLabel "Financial operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The day-to-day management of a company’s financial resources, including cash flow, working capital, and investments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-planning-and-analysis a skos:Concept;
+    skos:prefLabel "Financial planning & analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing financial data to support strategic decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:tax-management-and-reporting a skos:Concept;
+    skos:prefLabel "Tax management & reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Managing tax obligations and ensuring compliance with tax laws."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:treasury a skos:Concept;
+    skos:prefLabel "Treasury"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The department responsible for managing a company’s cash, investments, and financial risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:accounting a skos:Concept;
+    skos:prefLabel "Accounting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of recording, classifying, summarizing, and interpreting financial transactions to provide information for decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:cost-accounting-management a skos:Concept;
+    skos:prefLabel "Cost accounting management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of tracking, analyzing, and controlling costs associated with producing goods or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-supply-change-management a skos:Concept;
+    skos:prefLabel "Financial supply change management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Optimizing the flow of cash and related financial information throughout the supply chain."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:working-capital-management a skos:Concept;
+    skos:prefLabel "Working capital management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Managing short-term assets and liabilities to ensure a company has sufficient liquidity to operate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:asset-management a skos:Concept;
+    skos:prefLabel "Asset management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of managing a company’s assets, including investments, cash, and inventory, to maximize returns and minimize risk."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:equity-management a skos:Concept;
+    skos:prefLabel "Equity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of managing a company’s equity, including issuing and repurchasing shares, to maximize shareholder value."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:general-ledger a skos:Concept;
+    skos:prefLabel "General ledger"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The primary accounting record of a company, containing all financial transactions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:liability-management a skos:Concept;
+    skos:prefLabel "Liability management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of managing a company’s liabilities, including debt and accounts payable, to minimize costs and risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:revenue-management a skos:Concept;
+    skos:prefLabel "Revenue management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The process of maximizing revenue from a company’s products or services, including pricing, promotion, and distribution."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:revenue-growth a skos:Concept;
+    skos:prefLabel "Revenue growth"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The percentage increase in revenue over a period of time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:revenue-recovery a skos:Concept;
+    skos:prefLabel "Revenue recovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The process of recovering lost or uncollected revenue."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:revenue-streams a skos:Concept;
+    skos:prefLabel "Revenue streams"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The different sources of revenue for a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:capital-expenditures a skos:Concept;
+    skos:prefLabel "Capital expenditures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Investments in long-term assets, such as property, plant, and equipment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:cost a skos:Concept;
+    skos:prefLabel "Cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The monetary value of resources used or sacrificed to achieve a specific objective."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:operating-expense a skos:Concept;
+    skos:prefLabel "Operating expense"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Expenses incurred in the normal course of business operations, excluding cost of goods sold and capital expenditures."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:bank-account-management a skos:Concept;
+    skos:prefLabel "Bank account management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing and monitoring bank accounts to ensure sufficient liquidity and optimize interest earnings."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:credit-management a skos:Concept;
+    skos:prefLabel "Credit management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of granting credit to customers, monitoring credit limits, and collecting outstanding debts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:management-information-systems a skos:Concept;
+    skos:prefLabel "Management information systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Systems that provide information to support decision-making within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:payment a skos:Concept;
+    skos:prefLabel "Payment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The transfer of funds from a payer to a payee."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:order-to-cash a skos:Concept;
+    skos:prefLabel "Order to cash"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The business process encompassing sales order creation to cash collection."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:procure-to-pay a skos:Concept;
+    skos:prefLabel "Procure to pay"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The business process encompassing purchase requisition to supplier payment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:record-to-report a skos:Concept;
+    skos:prefLabel "Record to report"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The accounting process from recording transactions to generating financial statements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:payment-gateways a skos:Concept;
+    skos:prefLabel "Payment gateways"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Online services that authorize and process credit card payments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:payment-methods a skos:Concept;
+    skos:prefLabel "Payment methods"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Various ways to make payments, such as credit cards, debit cards, and electronic funds transfers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:payment-processing a skos:Concept;
+    skos:prefLabel "Payment processing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The handling of electronic payment transactions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:payment-security a skos:Concept;
+    skos:prefLabel "Payment security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Measures taken to protect payment information from unauthorized access and fraud."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:accounts-payable a skos:Concept;
+    skos:prefLabel "Accounts payable"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Short-term obligations owed by a company to its suppliers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:accounts-receivable a skos:Concept;
+    skos:prefLabel "Accounts receivable"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Money owed to a company by its customers for goods or services provided on credit."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:inventory-management a skos:Concept;
+    skos:prefLabel "Inventory management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of ordering, storing, and tracking inventory to meet customer demand and minimize costs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:invoice-processing a skos:Concept;
+    skos:prefLabel "Invoice processing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of receiving, verifying, and recording invoices from suppliers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:payment-execution a skos:Concept;
+    skos:prefLabel "Payment execution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The process of initiating and completing payments to vendors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:reconciliation a skos:Concept;
+    skos:prefLabel "Reconciliation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Comparing two sets of financial records to ensure they are accurate and consistent."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:billing a skos:Concept;
+    skos:prefLabel "Billing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of creating and sending invoices to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:collections a skos:Concept;
+    skos:prefLabel "Collections"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of collecting outstanding payments from customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:business-partnering a skos:Concept;
+    skos:prefLabel "Business partnering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Working collaboratively with other departments to achieve shared business objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-analysis a skos:Concept;
+    skos:prefLabel "Financial analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Examining financial data to understand a company’s performance and make informed decisions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-planning a skos:Concept;
+    skos:prefLabel "Financial planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Setting financial goals and developing plans to achieve them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:management-accounting a skos:Concept;
+    skos:prefLabel "Management accounting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Providing financial information to internal users for decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:technology-and-data a skos:Concept;
+    skos:prefLabel "Technology & data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Utilizing technology and data to improve financial operations and decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:communication-and-collaboration a skos:Concept;
+    skos:prefLabel "Communication & collaboration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Effectively communicating financial information and collaborating with stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:stakeholder-management a skos:Concept;
+    skos:prefLabel "Stakeholder management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Managing relationships with individuals or groups who have an interest in the company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:value-creation a skos:Concept;
+    skos:prefLabel "Value creation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Generating economic value for the company and its stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:industry-analysis a skos:Concept;
+    skos:prefLabel "Industry analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Analyzing the competitive dynamics and trends within a specific industry."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:ratio-analysis a skos:Concept;
+    skos:prefLabel "Ratio analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Using financial ratios to assess a company’s financial health and performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:statement-analysis a skos:Concept;
+    skos:prefLabel "Statement analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Examining financial statements to understand a company’s financial position and performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:trend-analysis a skos:Concept;
+    skos:prefLabel "Trend analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Analyzing historical data to identify patterns and trends."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:balance-sheet a skos:Concept;
+    skos:prefLabel "Balance sheet"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A financial statement that shows a company’s assets, liabilities, and equity at a specific point in time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:cash-flow-statement a skos:Concept;
+    skos:prefLabel "Cash flow statement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A financial statement that shows how a company’s cash has changed over a period of time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:changes-in-equity-statement a skos:Concept;
+    skos:prefLabel "Changes in equity statement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A financial statement that shows the changes in a company’s equity over a period of time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:income-statement a skos:Concept;
+    skos:prefLabel "Income statement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A financial statement that shows a company’s revenues and expenses over a period of time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:settlement-report a skos:Concept;
+    skos:prefLabel "Settlement report"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "A document that summarizes the transactions and fees associated with a payment processing batch."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-forecasting a skos:Concept;
+    skos:prefLabel "Financial forecasting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Predicting future financial performance based on historical data and current trends."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-modeling a skos:Concept;
+    skos:prefLabel "Financial modeling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Building quantitative models to simulate different financial scenarios."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:performance-management a skos:Concept;
+    skos:prefLabel "Performance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Monitoring and evaluating financial and operational performance against established goals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:strategic-planning a skos:Concept;
+    skos:prefLabel "Strategic planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Defining long-term goals and developing strategies to achieve them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:budgeting a skos:Concept;
+    skos:prefLabel "Budgeting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Creating a plan for how a company will spend its money over a period of time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:product-costing-and-pricing-strategy a skos:Concept;
+    skos:prefLabel "Product costing & pricing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Determining the cost of producing a product or service and setting prices to ensure profitability."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:profitability a skos:Concept;
+    skos:prefLabel "Profitability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "A company’s ability to generate profits from its operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:earnings-before-interest-taxes-depreciation-and-amortization a skos:Concept;
+    skos:prefLabel "Earnings before interest taxes depreciation & amortization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A measure of a company's profitability of the operating business only, thus before any effects of indebtedness, state-mandated payments, and costs required to maintain its asset base. It is derived by subtracting from revenues all costs of the operating business (e.g. wages, costs of raw materials, services ...) but not decline in asset value, cost of borrowing and obligations to governments. Although lease have been capitalised in the balance sheet (and depreciated in the profit and loss statement) since IFRS 16, its expenses are often still adjusted back into EBITDA given they are deemed operational in nature. Though often shown on an income statement, it is not considered part of the Generally Accepted Accounting Principles (GAAP) by the SEC, hence the SEC requires that companies registering securities with it (and when filing its periodic reports) reconcile EBITDA to net income."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:margin a skos:Concept;
+    skos:prefLabel "Margin"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A measure of profitability, typically expressed as a percentage of revenue."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:operating-income a skos:Concept;
+    skos:prefLabel "Operating income"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Profit generated from a company’s core business operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:business-intelligence-tools a skos:Concept;
+    skos:prefLabel "Business intelligence tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Software applications that analyze data and present insights to support decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:data-analytics a skos:Concept;
+    skos:prefLabel "Data analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of examining data to extract meaningful insights."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:planning-and-forecasting-tools a skos:Concept;
+    skos:prefLabel "Planning & forecasting tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Software applications that assist with financial planning and forecasting."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:corporate-income-tax a skos:Concept;
+    skos:prefLabel "Corporate income tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Tax levied on a company’s profits."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:indirect-taxes a skos:Concept;
+    skos:prefLabel "Indirect taxes"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Taxes levied on goods and services, such as sales tax and value-added tax."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:international-taxation a skos:Concept;
+    skos:prefLabel "International taxation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The taxation of cross-border transactions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:tax-compliance a skos:Concept;
+    skos:prefLabel "Tax compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Meeting all tax obligations and filing accurate tax returns."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:consumption-tax a skos:Concept;
+    skos:prefLabel "Consumption tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Tax levied on the consumption of goods and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:excise-duties a skos:Concept;
+    skos:prefLabel "Excise duties"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Taxes levied on specific goods, such as alcohol and tobacco."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:sales-tax a skos:Concept;
+    skos:prefLabel "Sales tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "A consumption tax levied on the sale of goods and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:goods-and-services-tax a skos:Concept;
+    skos:prefLabel "Goods & services tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "A comprehensive consumption tax levied on most goods and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:value-added-tax a skos:Concept;
+    skos:prefLabel "Value added tax"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "A consumption tax levied on the value added at each stage of production and distribution."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:double-taxation-treaties a skos:Concept;
+    skos:prefLabel "Double taxation treaties"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Agreements between countries to avoid double taxation of income."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:transfer-pricing a skos:Concept;
+    skos:prefLabel "Transfer pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The pricing of goods and services transferred between related entities within a multinational corporation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:penalties a skos:Concept;
+    skos:prefLabel "Penalties"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Financial sanctions imposed for non-compliance with tax laws."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:reporting-obligation a skos:Concept;
+    skos:prefLabel "Reporting obligation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The legal requirement to submit tax returns and other financial reports to tax authorities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:tax-audit a skos:Concept;
+    skos:prefLabel "Tax audit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "An examination of a company’s financial records by tax authorities to ensure compliance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:cash-management a skos:Concept;
+    skos:prefLabel "Cash management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing cash balances to ensure liquidity and optimize returns."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:debt-management a skos:Concept;
+    skos:prefLabel "Debt management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing a company’s debt levels and ensuring timely repayment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:external-financing a skos:Concept;
+    skos:prefLabel "External financing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Raising capital from sources outside the company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-institution-relations-management a skos:Concept;
+    skos:prefLabel "Financial institution relations management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing relationships with banks, investors, and other financial institutions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-risk-management a skos:Concept;
+    skos:prefLabel "Financial risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Identifying, assessing, and mitigating financial risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:investment-management a skos:Concept;
+    skos:prefLabel "Investment management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing investments to achieve specific financial goals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:treasury-management a skos:Concept;
+    skos:prefLabel "Treasury management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Managing a company’s cash, investments, and financial risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:cash-flow-management a skos:Concept;
+    skos:prefLabel "Cash flow management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing the inflow and outflow of cash to ensure sufficient liquidity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:cash-management-operations a skos:Concept;
+    skos:prefLabel "Cash management operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Day-to-day activities related to managing cash, such as collections, disbursements, and bank reconciliations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:international-cash-management a skos:Concept;
+    skos:prefLabel "International cash management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Managing cash flows across multiple currencies and countries."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:working-capital-optimization a skos:Concept;
+    skos:prefLabel "Working capital optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Minimizing the amount of capital tied up in current assets while ensuring sufficient liquidity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:debt-instruments a skos:Concept;
+    skos:prefLabel "Debt instruments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Financial instruments that represent a loan, such as bonds and loans."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:debt-issuance a skos:Concept;
+    skos:prefLabel "Debt issuance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The process of borrowing money by issuing debt instruments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:debt-restructuring a skos:Concept;
+    skos:prefLabel "Debt restructuring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Modifying the terms of existing debt to improve cash flow or reduce debt burden."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:maturity-profiling a skos:Concept;
+    skos:prefLabel "Maturity profiling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Analyzing the maturity dates of debt obligations to assess refinancing risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:external-financing-sources a skos:Concept;
+    skos:prefLabel "External financing sources"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Sources of funding from outside the company, such as bank loans, bonds, and equity financing."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:foreign-exchange-risk-management a skos:Concept;
+    skos:prefLabel "Foreign exchange risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Mitigating the risk of losses due to fluctuations in exchange rates."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:geopolitical-impact a skos:Concept;
+    skos:prefLabel "Geopolitical impact"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The influence of political and economic events on financial markets and business operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:international-debt-markets a skos:Concept;
+    skos:prefLabel "International debt markets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Markets where borrowers and lenders from different countries can access debt financing."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:sovereign-wealth-funds a skos:Concept;
+    skos:prefLabel "Sovereign wealth funds"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Investment funds owned by governments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:banking a skos:Concept;
+    skos:prefLabel "Banking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The business of providing financial services, such as lending, deposit-taking, and payment processing."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-instruments a skos:Concept;
+    skos:prefLabel "Financial instruments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Contracts that create a financial asset for one party and a financial liability or equity instrument for another."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:financial-markets a skos:Concept;
+    skos:prefLabel "Financial markets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Markets where financial instruments are traded."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:valuation a skos:Concept;
+    skos:prefLabel "Valuation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "The process of determining the economic value of an asset or company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:commercial-banking a skos:Concept;
+    skos:prefLabel "Commercial banking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Providing banking services to businesses."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:investment-banking a skos:Concept;
+    skos:prefLabel "Investment banking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Providing financial advisory and capital-raising services to corporations and governments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:retail-banking a skos:Concept;
+    skos:prefLabel "Retail banking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Providing banking services to individuals and small businesses."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:bonds a skos:Concept;
+    skos:prefLabel "Bonds"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Debt instruments that represent a loan made by an investor to a borrower."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:derivatives a skos:Concept;
+    skos:prefLabel "Derivatives"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Financial instruments whose value is derived from an underlying asset."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:stocks a skos:Concept;
+    skos:prefLabel "Stocks"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Equity instruments that represent ownership in a corporation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:capital-markets a skos:Concept;
+    skos:prefLabel "Capital markets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Markets where long-term debt and equity instruments are traded."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:derivative-markets a skos:Concept;
+    skos:prefLabel "Derivative markets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Markets where derivatives are traded."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:money-markets a skos:Concept;
+    skos:prefLabel "Money markets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Markets where short-term debt instruments are traded."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:asset-valuation a skos:Concept;
+    skos:prefLabel "Asset valuation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Determining the fair market value of an asset."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:business-valuation a skos:Concept;
+    skos:prefLabel "Business valuation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Determining the economic value of a business."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:credit-risk a skos:Concept;
+    skos:prefLabel "Credit risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of loss due to a borrower’s failure to repay a loan."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:market-risk a skos:Concept;
+    skos:prefLabel "Market risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of losses due to changes in market prices, such as interest rates, exchange rates, and commodity prices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:operational-risk a skos:Concept;
+    skos:prefLabel "Operational risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of losses due to internal failures, such as fraud, errors, and system failures."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:counterparty-risk a skos:Concept;
+    skos:prefLabel "Counterparty risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk that a party to a financial contract will not fulfill its obligations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:loan-defaults a skos:Concept;
+    skos:prefLabel "Loan defaults"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The failure of a borrower to repay a loan according to the agreed-upon terms."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:commodity-price-risk a skos:Concept;
+    skos:prefLabel "Commodity price risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of losses due to changes in the prices of commodities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:equity-price-risk a skos:Concept;
+    skos:prefLabel "Equity price risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of losses due to changes in stock prices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/> .
+  
+  domainfinancevoc:interest-rate-risk a skos:Concept;
+    skos:prefLabel "Interest rate risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of losses due to changes in interest rates."@en .
+  
+  domainfinancevoc:investment-risk a skos:Concept;
+    skos:prefLabel "Investment risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "The risk of losses on investments."@en .
+  
+  domainfinancevoc:audit a skos:Concept;
+    skos:prefLabel "Audit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "An independent examination of a company’s financial records to ensure accuracy and compliance."@en .
+  
+  domainfinancevoc:business-continuity a skos:Concept;
+    skos:prefLabel "Business continuity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Planning for disruptions to business operations and ensuring continuity."@en .
+  
+  domainfinancevoc:compliance a skos:Concept;
+    skos:prefLabel "Compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Adhering to laws, regulations, and internal policies."@en .
+  
+  domainfinancevoc:cybersecurity a skos:Concept;
+    skos:prefLabel "Cybersecurity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Protecting computer systems and data from unauthorized access and cyberattacks."@en .
+  
+  domainfinancevoc:financial-regulations a skos:Concept;
+    skos:prefLabel "Financial regulations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Rules and regulations governing the financial industry."@en .
+  
+  domainfinancevoc:fraud a skos:Concept;
+    skos:prefLabel "Fraud"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Intentional deception for financial gain."@en .
+  
+  domainfinancevoc:revenue-assurance a skos:Concept;
+    skos:prefLabel "Revenue assurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Ensuring that all revenue earned is billed and collected."@en .
+  
+  domainfinancevoc:external-fraud a skos:Concept;
+    skos:prefLabel "External fraud"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Fraud committed by individuals or entities outside the company."@en .
+  
+  domainfinancevoc:fraud-detection a skos:Concept;
+    skos:prefLabel "Fraud detection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Identifying fraudulent activities."@en .
+  
+  domainfinancevoc:fraud-prevention a skos:Concept;
+    skos:prefLabel "Fraud prevention"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Implementing measures to prevent fraud."@en .
+  
+  domainfinancevoc:internal-fraud a skos:Concept;
+    skos:prefLabel "Internal fraud"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Fraud committed by employees or insiders."@en .
+  
+  domainfinancevoc:long-term-investments a skos:Concept;
+    skos:prefLabel "Long-Term investments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:36:58.523Z"^^xsd:dateTime;
+    skos:definition "Investments held for more than one year."@en .
+  
+  domainfinancevoc:portfolio-management a skos:Concept;
+    skos:prefLabel "Portfolio management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Managing a collection of investments to achieve specific investment objectives."@en .
+  
+  domainfinancevoc:short-term-investments a skos:Concept;
+    skos:prefLabel "Short-Term investments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Investments held for less than one year."@en .
+  
+  domainfinancevoc:treasury-policy-and-procedures a skos:Concept;
+    skos:prefLabel "Treasury policy & procedures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Guidelines and procedures for managing treasury operations."@en .
+  
+  domainfinancevoc:treasury-systems a skos:Concept;
+    skos:prefLabel "Treasury systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Software applications that support treasury operations."@en .
+  
+  domainfinancevoc:treasury-technology a skos:Concept;
+    skos:prefLabel "Treasury technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:12.735Z"^^xsd:dateTime;
+    skos:definition "Technology used to improve treasury operations and decision-making."@en .
+  
+  domainfinancevoc:interest-rate-risk skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:market-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:investment-risk skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:market-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:audit skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:business-continuity skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:compliance skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:cybersecurity skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:financial-regulations skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:fraud skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:external-fraud, domainfinancevoc:fraud-detection, domainfinancevoc:fraud-prevention,
+      domainfinancevoc:internal-fraud .
+  
+  domainfinancevoc:revenue-assurance skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:operational-risk;
+    skos:altLabel "RA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:external-fraud skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:fraud;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:fraud-detection skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:fraud;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:fraud-prevention skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:fraud;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:internal-fraud skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:fraud;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:long-term-investments skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:investment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:portfolio-management skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:investment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:short-term-investments skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:investment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:treasury-policy-and-procedures skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:treasury-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:treasury-systems skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:treasury-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:treasury-technology skos:inScheme <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:broader domainfinancevoc:treasury-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:financial-operations skos:broader domainfinancevoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:accounting, domainfinancevoc:cost-accounting-management,
+      domainfinancevoc:financial-supply-change-management, domainfinancevoc:working-capital-management .
+  
+  domainfinancevoc:financial-planning-and-analysis skos:broader domainfinancevoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:business-partnering, domainfinancevoc:financial-analysis,
+      domainfinancevoc:financial-planning, domainfinancevoc:management-accounting, domainfinancevoc:technology-and-data .
+  
+  domainfinancevoc:tax-management-and-reporting skos:broader domainfinancevoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:corporate-income-tax, domainfinancevoc:indirect-taxes,
+      domainfinancevoc:international-taxation, domainfinancevoc:tax-compliance .
+  
+  domainfinancevoc:treasury skos:broader domainfinancevoc:finance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:cash-management, domainfinancevoc:debt-management,
+      domainfinancevoc:external-financing, domainfinancevoc:financial-institution-relations-management,
+      domainfinancevoc:financial-risk-management, domainfinancevoc:investment-management,
+      domainfinancevoc:treasury-management .
+  
+  domainfinancevoc:accounting skos:broader domainfinancevoc:financial-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:asset-management, domainfinancevoc:equity-management,
+      domainfinancevoc:general-ledger, domainfinancevoc:liability-management, domainfinancevoc:revenue-management .
+  
+  domainfinancevoc:cost-accounting-management skos:broader domainfinancevoc:financial-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:capital-expenditures, domainfinancevoc:cost, domainfinancevoc:operating-expense .
+  
+  domainfinancevoc:financial-supply-change-management skos:broader domainfinancevoc:financial-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:bank-account-management, domainfinancevoc:credit-management,
+      domainfinancevoc:management-information-systems, domainfinancevoc:payment .
+  
+  domainfinancevoc:working-capital-management skos:broader domainfinancevoc:financial-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:accounts-payable, domainfinancevoc:accounts-receivable,
+      domainfinancevoc:inventory-management .
+  
+  domainfinancevoc:asset-management skos:broader domainfinancevoc:accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:equity-management skos:broader domainfinancevoc:accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:general-ledger skos:broader domainfinancevoc:accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:liability-management skos:broader domainfinancevoc:accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:revenue-management skos:broader domainfinancevoc:accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:revenue-growth, domainfinancevoc:revenue-recovery,
+      domainfinancevoc:revenue-streams .
+  
+  domainfinancevoc:revenue-growth skos:broader domainfinancevoc:revenue-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:revenue-recovery skos:broader domainfinancevoc:revenue-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:revenue-streams skos:broader domainfinancevoc:revenue-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:capital-expenditures skos:broader domainfinancevoc:cost-accounting-management;
+    skos:altLabel "Cap Ex"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:cost skos:broader domainfinancevoc:cost-accounting-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:operating-expense skos:broader domainfinancevoc:cost-accounting-management;
+    skos:altLabel "OpEx"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:bank-account-management skos:broader domainfinancevoc:financial-supply-change-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:credit-management skos:broader domainfinancevoc:financial-supply-change-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:management-information-systems skos:broader domainfinancevoc:financial-supply-change-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:order-to-cash, domainfinancevoc:procure-to-pay, domainfinancevoc:record-to-report .
+  
+  domainfinancevoc:payment skos:broader domainfinancevoc:financial-supply-change-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:payment-gateways, domainfinancevoc:payment-methods,
+      domainfinancevoc:payment-processing, domainfinancevoc:payment-security .
+  
+  domainfinancevoc:order-to-cash skos:broader domainfinancevoc:management-information-systems;
+    skos:altLabel "O2C"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:procure-to-pay skos:broader domainfinancevoc:management-information-systems;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:record-to-report skos:broader domainfinancevoc:management-information-systems;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:payment-gateways skos:broader domainfinancevoc:payment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:payment-methods skos:broader domainfinancevoc:payment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:payment-processing skos:broader domainfinancevoc:payment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:payment-security skos:broader domainfinancevoc:payment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:accounts-payable skos:broader domainfinancevoc:working-capital-management;
+    skos:altLabel "AP"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:invoice-processing, domainfinancevoc:payment-execution,
+      domainfinancevoc:reconciliation .
+  
+  domainfinancevoc:accounts-receivable skos:broader domainfinancevoc:working-capital-management;
+    skos:altLabel "AR"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:billing, domainfinancevoc:collections .
+  
+  domainfinancevoc:inventory-management skos:broader domainfinancevoc:working-capital-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:invoice-processing skos:broader domainfinancevoc:accounts-payable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:payment-execution skos:broader domainfinancevoc:accounts-payable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:reconciliation skos:broader domainfinancevoc:accounts-payable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:billing skos:broader domainfinancevoc:accounts-receivable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:collections skos:broader domainfinancevoc:accounts-receivable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:business-partnering skos:broader domainfinancevoc:financial-planning-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:communication-and-collaboration, domainfinancevoc:stakeholder-management,
+      domainfinancevoc:value-creation .
+  
+  domainfinancevoc:financial-analysis skos:broader domainfinancevoc:financial-planning-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:industry-analysis, domainfinancevoc:ratio-analysis,
+      domainfinancevoc:statement-analysis, domainfinancevoc:trend-analysis .
+  
+  domainfinancevoc:financial-planning skos:broader domainfinancevoc:financial-planning-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:financial-forecasting, domainfinancevoc:financial-modeling,
+      domainfinancevoc:performance-management, domainfinancevoc:strategic-planning .
+  
+  domainfinancevoc:management-accounting skos:broader domainfinancevoc:financial-planning-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:budgeting, domainfinancevoc:product-costing-and-pricing-strategy,
+      domainfinancevoc:profitability .
+  
+  domainfinancevoc:technology-and-data skos:broader domainfinancevoc:financial-planning-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:business-intelligence-tools, domainfinancevoc:data-analytics,
+      domainfinancevoc:planning-and-forecasting-tools .
+  
+  domainfinancevoc:communication-and-collaboration skos:broader domainfinancevoc:business-partnering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:stakeholder-management skos:broader domainfinancevoc:business-partnering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:value-creation skos:broader domainfinancevoc:business-partnering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:industry-analysis skos:broader domainfinancevoc:financial-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:ratio-analysis skos:broader domainfinancevoc:financial-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:statement-analysis skos:broader domainfinancevoc:financial-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:balance-sheet, domainfinancevoc:cash-flow-statement,
+      domainfinancevoc:changes-in-equity-statement, domainfinancevoc:income-statement, domainfinancevoc:settlement-report .
+  
+  domainfinancevoc:trend-analysis skos:broader domainfinancevoc:financial-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:balance-sheet skos:broader domainfinancevoc:statement-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:cash-flow-statement skos:broader domainfinancevoc:statement-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:changes-in-equity-statement skos:broader domainfinancevoc:statement-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:income-statement skos:broader domainfinancevoc:statement-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:settlement-report skos:broader domainfinancevoc:statement-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:financial-forecasting skos:broader domainfinancevoc:financial-planning;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:financial-modeling skos:broader domainfinancevoc:financial-planning;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:performance-management skos:broader domainfinancevoc:financial-planning;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:strategic-planning skos:broader domainfinancevoc:financial-planning;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:budgeting skos:broader domainfinancevoc:management-accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:product-costing-and-pricing-strategy skos:broader domainfinancevoc:management-accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:profitability skos:broader domainfinancevoc:management-accounting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:earnings-before-interest-taxes-depreciation-and-amortization,
+      domainfinancevoc:margin, domainfinancevoc:operating-income .
+  
+  domainfinancevoc:earnings-before-interest-taxes-depreciation-and-amortization skos:broader
+      domainfinancevoc:profitability;
+    skos:altLabel "EBITDA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:margin skos:broader domainfinancevoc:profitability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:operating-income skos:broader domainfinancevoc:profitability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:business-intelligence-tools skos:broader domainfinancevoc:technology-and-data;
+    skos:altLabel "BI Tools"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:data-analytics skos:broader domainfinancevoc:technology-and-data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:planning-and-forecasting-tools skos:broader domainfinancevoc:technology-and-data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:corporate-income-tax skos:broader domainfinancevoc:tax-management-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:indirect-taxes skos:broader domainfinancevoc:tax-management-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:consumption-tax, domainfinancevoc:excise-duties, domainfinancevoc:sales-tax .
+  
+  domainfinancevoc:international-taxation skos:broader domainfinancevoc:tax-management-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:double-taxation-treaties, domainfinancevoc:transfer-pricing .
+  
+  domainfinancevoc:tax-compliance skos:broader domainfinancevoc:tax-management-and-reporting;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:penalties, domainfinancevoc:reporting-obligation, domainfinancevoc:tax-audit .
+  
+  domainfinancevoc:consumption-tax skos:broader domainfinancevoc:indirect-taxes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:goods-and-services-tax, domainfinancevoc:value-added-tax .
+  
+  domainfinancevoc:excise-duties skos:broader domainfinancevoc:indirect-taxes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:sales-tax skos:broader domainfinancevoc:indirect-taxes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:goods-and-services-tax skos:broader domainfinancevoc:consumption-tax;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:value-added-tax skos:broader domainfinancevoc:consumption-tax;
+    skos:altLabel "VAT"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:double-taxation-treaties skos:broader domainfinancevoc:international-taxation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:transfer-pricing skos:broader domainfinancevoc:international-taxation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:penalties skos:broader domainfinancevoc:tax-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:reporting-obligation skos:broader domainfinancevoc:tax-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:tax-audit skos:broader domainfinancevoc:tax-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:cash-management skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:cash-flow-management, domainfinancevoc:cash-management-operations,
+      domainfinancevoc:international-cash-management, domainfinancevoc:working-capital-optimization .
+  
+  domainfinancevoc:debt-management skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:debt-instruments, domainfinancevoc:debt-issuance, domainfinancevoc:debt-restructuring,
+      domainfinancevoc:maturity-profiling .
+  
+  domainfinancevoc:external-financing skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:external-financing-sources, domainfinancevoc:foreign-exchange-risk-management,
+      domainfinancevoc:geopolitical-impact, domainfinancevoc:international-debt-markets,
+      domainfinancevoc:sovereign-wealth-funds .
+  
+  domainfinancevoc:financial-institution-relations-management skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:banking, domainfinancevoc:financial-instruments, domainfinancevoc:financial-markets,
+      domainfinancevoc:valuation .
+  
+  domainfinancevoc:financial-risk-management skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:credit-risk, domainfinancevoc:market-risk, domainfinancevoc:operational-risk .
+  
+  domainfinancevoc:investment-management skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:long-term-investments, domainfinancevoc:portfolio-management,
+      domainfinancevoc:short-term-investments .
+  
+  domainfinancevoc:treasury-management skos:broader domainfinancevoc:treasury;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:treasury-policy-and-procedures, domainfinancevoc:treasury-systems,
+      domainfinancevoc:treasury-technology .
+  
+  domainfinancevoc:cash-flow-management skos:broader domainfinancevoc:cash-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:cash-management-operations skos:broader domainfinancevoc:cash-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:international-cash-management skos:broader domainfinancevoc:cash-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:working-capital-optimization skos:broader domainfinancevoc:cash-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:debt-instruments skos:broader domainfinancevoc:debt-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:debt-issuance skos:broader domainfinancevoc:debt-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:debt-restructuring skos:broader domainfinancevoc:debt-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:maturity-profiling skos:broader domainfinancevoc:debt-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:external-financing-sources skos:broader domainfinancevoc:external-financing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:foreign-exchange-risk-management skos:broader domainfinancevoc:external-financing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:geopolitical-impact skos:broader domainfinancevoc:external-financing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:international-debt-markets skos:broader domainfinancevoc:external-financing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:sovereign-wealth-funds skos:broader domainfinancevoc:external-financing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:banking skos:broader domainfinancevoc:financial-institution-relations-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:commercial-banking, domainfinancevoc:investment-banking,
+      domainfinancevoc:retail-banking .
+  
+  domainfinancevoc:financial-instruments skos:broader domainfinancevoc:financial-institution-relations-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:bonds, domainfinancevoc:derivatives, domainfinancevoc:stocks .
+  
+  domainfinancevoc:financial-markets skos:broader domainfinancevoc:financial-institution-relations-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:capital-markets, domainfinancevoc:derivative-markets,
+      domainfinancevoc:money-markets .
+  
+  domainfinancevoc:valuation skos:broader domainfinancevoc:financial-institution-relations-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:asset-valuation, domainfinancevoc:business-valuation .
+  
+  domainfinancevoc:commercial-banking skos:broader domainfinancevoc:banking;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:investment-banking skos:broader domainfinancevoc:banking;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:retail-banking skos:broader domainfinancevoc:banking;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:bonds skos:broader domainfinancevoc:financial-instruments;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:derivatives skos:broader domainfinancevoc:financial-instruments;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:stocks skos:broader domainfinancevoc:financial-instruments;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:capital-markets skos:broader domainfinancevoc:financial-markets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:derivative-markets skos:broader domainfinancevoc:financial-markets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:money-markets skos:broader domainfinancevoc:financial-markets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:asset-valuation skos:broader domainfinancevoc:valuation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:business-valuation skos:broader domainfinancevoc:valuation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:credit-risk skos:broader domainfinancevoc:financial-risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:counterparty-risk, domainfinancevoc:loan-defaults .
+  
+  domainfinancevoc:market-risk skos:broader domainfinancevoc:financial-risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:commodity-price-risk, domainfinancevoc:equity-price-risk,
+      domainfinancevoc:interest-rate-risk, domainfinancevoc:investment-risk .
+  
+  domainfinancevoc:operational-risk skos:broader domainfinancevoc:financial-risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfinancevoc:audit, domainfinancevoc:business-continuity, domainfinancevoc:compliance,
+      domainfinancevoc:cybersecurity, domainfinancevoc:financial-regulations, domainfinancevoc:fraud,
+      domainfinancevoc:revenue-assurance .
+  
+  domainfinancevoc:counterparty-risk skos:broader domainfinancevoc:credit-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:loan-defaults skos:broader domainfinancevoc:credit-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:commodity-price-risk skos:broader domainfinancevoc:market-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:equity-price-risk skos:broader domainfinancevoc:market-risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-finance/> skos:altLabel "Vocabulary | Domain | Finance"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-finance/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfinancevoc:finance owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-finance/>;
+    skos:narrower domainfinancevoc:financial-operations, domainfinancevoc:financial-planning-and-analysis,
+      domainfinancevoc:tax-management-and-reporting, domainfinancevoc:treasury .
+}

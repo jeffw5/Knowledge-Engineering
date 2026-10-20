@@ -1,0 +1,1211 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-governance/> {
+  <https://www.insperity.com/vocabulary/domain-governance/> a skos:ConceptScheme;
+    rdfs:label "Domain governance vocabulary"@en;
+    skos:prefLabel "Domain governance vocabulary"@en;
+    skos:hasTopConcept domaingovernancevoc:governance;
+    terms:description "The system of rules, practices, and processes by which a company is directed and controlled, ensuring accountability, transparency, and ethical management."@en;
+    terms:title "Domain governance vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:01:46.816Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Governance"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-governance/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:governance a skos:Concept;
+    skos:prefLabel "Governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:26:48.997Z"^^xsd:dateTime;
+    skos:definition "The system of rules, practices, and processes by which a company is directed and controlled, ensuring accountability, transparency, and ethical management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:altLabel "Data Governance"@en, "Corporate Governance"@en, "Business Governance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:narrower domaingovernancevoc:data-governance-activities, domaingovernancevoc:data-governance-agent,
+      domaingovernancevoc:data-governance-lifecycle, domaingovernancevoc:data-governance-operations,
+      domaingovernancevoc:data-governance-policy, domaingovernancevoc:data-governance-services,
+      domaingovernancevoc:data-governance-standards, domaingovernancevoc:data-governance-tools .
+  
+  domaingovernancevoc:data-governance-activities a skos:Concept;
+    skos:prefLabel "Data governance activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Encompass all the tasks and processes performed to establish, maintain, and enforce data governance principles and policies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:governance-control-activity, domaingovernancevoc:governance-development-activity,
+      domaingovernancevoc:governance-operational-activity, domaingovernancevoc:governance-planning-activity .
+  
+  domaingovernancevoc:data-governance-agent a skos:Concept;
+    skos:prefLabel "Data governance agent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "An individual or a role within an organization responsible for implementing and enforcing data governance policies and procedures, ensuring data quality, consistency, and security throughout its lifecycle."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:data-governance-council, domaingovernancevoc:data-owners,
+      domaingovernancevoc:data-stewards .
+  
+  domaingovernancevoc:data-governance-lifecycle a skos:Concept;
+    skos:prefLabel "Data governance lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A cyclical framework that outlines the stages of data governance, from initial planning and design to implementation, monitoring, and continuous improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-operations a skos:Concept;
+    skos:prefLabel "Data governance operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The ongoing activities and tasks performed to ensure that data governance policies and procedures are followed and that data quality is maintained."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:artificial-intelligence-governance, domaingovernancevoc:data-catalog-operations,
+      domaingovernancevoc:data-governance-controls, domaingovernancevoc:data-governance-design,
+      domaingovernancevoc:data-literacy, domaingovernancevoc:data-protection, domaingovernancevoc:governance-reporting-and-metrics,
+      domaingovernancevoc:semantic-governance .
+  
+  domaingovernancevoc:data-governance-policy a skos:Concept;
+    skos:prefLabel "Data governance policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of creating, approving, implementing, communicating, enforcing, and maintaining data governance policies throughout their lifecycle."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:access-control-policies, domaingovernancevoc:business-policy,
+      domaingovernancevoc:data-privacy-regulations, domaingovernancevoc:data-quality-standards .
+  
+  domaingovernancevoc:data-governance-services a skos:Concept;
+    skos:prefLabel "Data governance services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Specialized expertise and support provided to organizations to help them establish, improve, or manage their data governance programs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-standards a skos:Concept;
+    skos:prefLabel "Data governance standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A set of documented rules, guidelines, and best practices that define how data should be managed, protected, and used within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-tools a skos:Concept;
+    skos:prefLabel "Data governance tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Software applications designed to support data governance activities, such as data cataloging, metadata management, and policy enforcement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:business-glossary, domaingovernancevoc:data-governance-scorecards,
+      domaingovernancevoc:document-management-tools, domaingovernancevoc:online-presence,
+      domaingovernancevoc:workflow-tools .
+  
+  domaingovernancevoc:governance-control-activity a skos:Concept;
+    skos:prefLabel "Governance control activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Activities designed to monitor and enforce data governance policies and standards, ensuring compliance and mitigating risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:data-governance-operating-framework, domaingovernancevoc:perform-discovery-and-business-alignment .
+  
+  domaingovernancevoc:governance-development-activity a skos:Concept;
+    skos:prefLabel "Governance development activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Activities focused on creating, defining, and refining data governance frameworks, policies, standards, and procedures."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:define-data-governance, domaingovernancevoc:develop-goals-principles-and-policies,
+      domaingovernancevoc:develop-organizational-touchpoints .
+  
+  domaingovernancevoc:governance-operational-activity a skos:Concept;
+    skos:prefLabel "Governance operational activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Day-to-day activities that support the implementation and execution of data governance, such as data quality monitoring, issue resolution, and access management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:change-management, domaingovernancevoc:data-management-project-support-and-prioritization,
+      domaingovernancevoc:develop-data-governance-strategy, domaingovernancevoc:implement-data-governance,
+      domaingovernancevoc:third-party-sharing .
+  
+  domaingovernancevoc:governance-planning-activity a skos:Concept;
+    skos:prefLabel "Governance planning activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Activities related to defining the overall data governance strategy, setting goals, allocating resources, and establishing timelines."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:assess-regulatory-compliance-requirements, domaingovernancevoc:perform-readiness-assessment .
+  
+  domaingovernancevoc:data-governance-operating-framework a skos:Concept;
+    skos:prefLabel "Data governance operating framework"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A comprehensive structure that outlines the processes, roles, responsibilities, and tools required to implement and maintain effective data governance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-control-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:perform-discovery-and-business-alignment a skos:Concept;
+    skos:prefLabel "Perform discovery & business alignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Understanding the current state of data management practices, identifying areas for improvement, and aligning data governance initiatives with business needs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-control-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:detective-controls, domaingovernancevoc:preventative-controls .
+  
+  domaingovernancevoc:detective-controls a skos:Concept;
+    skos:prefLabel "Detective controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Security measures designed to detect and alert on security incidents or policy violations after they occur."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:perform-discovery-and-business-alignment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:data-investigation, domaingovernancevoc:governance-data-quality,
+      domaingovernancevoc:governance-systems-performance-management, domaingovernancevoc:issue-management-service,
+      domaingovernancevoc:measurement-service, domaingovernancevoc:monitoring-service .
+  
+  domaingovernancevoc:preventative-controls a skos:Concept;
+    skos:prefLabel "Preventative controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Security measures designed to prevent security incidents or policy violations from occurring in the first place."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:perform-discovery-and-business-alignment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:access-management, domaingovernancevoc:search-and-discovery .
+  
+  domaingovernancevoc:data-investigation a skos:Concept;
+    skos:prefLabel "Data investigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of examining and analyzing data to uncover patterns, anomalies, or evidence related to security incidents or compliance violations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:detective-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:governance-data-quality a skos:Concept;
+    skos:prefLabel "Governance data quality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The aspect of data quality that focuses on ensuring data conforms to defined standards, policies, and regulations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:detective-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:governance-systems-performance-management a skos:Concept;
+    skos:prefLabel "Governance systems performance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Measuring and optimizing the performance of data governance tools and systems to ensure efficiency and effectiveness."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:detective-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:availability-management, domaingovernancevoc:capacity-management .
+  
+  domaingovernancevoc:issue-management-service a skos:Concept;
+    skos:prefLabel "Issue management service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A structured approach to identifying, tracking, analyzing, and resolving data governance issues or incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:detective-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:causal-factor-analysis-service, domaingovernancevoc:issue-mitigation-service,
+      domaingovernancevoc:issue-resolution-service .
+  
+  domaingovernancevoc:measurement-service a skos:Concept;
+    skos:prefLabel "Measurement service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Tools and processes for collecting and analyzing metrics related to data governance effectiveness and compliance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:detective-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:monitoring-service a skos:Concept;
+    skos:prefLabel "Monitoring service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Ongoing surveillance of data governance processes and controls to identify and address potential risks or issues."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:detective-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:access-exception-monitoring, domaingovernancevoc:approval-exception-monitoring,
+      domaingovernancevoc:onboarding-exception-monitoring .
+  
+  domaingovernancevoc:availability-management a skos:Concept;
+    skos:prefLabel "Availability management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Ensuring the continuous availability and accessibility of data governance tools and systems to support critical business operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-systems-performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:capacity-management a skos:Concept;
+    skos:prefLabel "Capacity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Planning and managing the capacity of data governance systems and processes to accommodate growing data volumes and user demands."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-systems-performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:causal-factor-analysis-service a skos:Concept;
+    skos:prefLabel "Causal factor analysis service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Methodologies and tools used to identify the root causes of data governance issues or incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:issue-management-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:issue-mitigation-service a skos:Concept;
+    skos:prefLabel "Issue mitigation service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Processes and actions taken to minimize the impact of data governance issues or incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:issue-management-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:issue-resolution-service a skos:Concept;
+    skos:prefLabel "Issue resolution service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Procedures for addressing and resolving data governance issues or incidents in a timely and effective manner."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:issue-management-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:access-exception-monitoring a skos:Concept;
+    skos:prefLabel "Access exception monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Tracking and reviewing instances where users request or are granted access to data outside of their normal permissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:monitoring-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:approval-exception-monitoring a skos:Concept;
+    skos:prefLabel "Approval exception monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Monitoring and reviewing deviations from established approval workflows for data access, changes, or deletions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:monitoring-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:onboarding-exception-monitoring a skos:Concept;
+    skos:prefLabel "Onboarding exception monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Tracking and reviewing exceptions or deviations during the onboarding process of new data sources or systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:monitoring-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:access-management a skos:Concept;
+    skos:prefLabel "Access management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of managing and controlling user access to data and systems, ensuring only authorized individuals have appropriate permissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:preventative-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaingovernancevoc:asset-inventory-onboarding .
+  
+  domaingovernancevoc:search-and-discovery a skos:Concept;
+    skos:prefLabel "Search & discovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Tools and capabilities that enable users to easily find, access, and understand relevant data assets within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:preventative-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:asset-inventory-onboarding a skos:Concept;
+    skos:prefLabel "Asset inventory onboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of adding new data assets to an organization’s data inventory and applying appropriate governance controls."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:access-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:onboarding-management a skos:Concept;
+    skos:prefLabel "Onboarding management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of integrating new data sources, systems, or users into an organization’s existing data governance framework."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:access-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-cataloging a skos:Concept;
+    skos:prefLabel "Data cataloging"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Creating and maintaining a centralized inventory of data assets, providing metadata, definitions, and lineage information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:onboarding-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-certification a skos:Concept;
+    skos:prefLabel "Data certification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Formal validation that data assets meet specific quality, security, and compliance criteria."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:onboarding-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-classification a skos:Concept;
+    skos:prefLabel "Data classification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of organizing data into categories based on its sensitivity, risk, and compliance requirements, to help manage and protect it effectively."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:onboarding-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-enrichment a skos:Concept;
+    skos:prefLabel "Data enrichment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of enhancing existing data by adding relevant information from external sources, thereby improving its quality, completeness, and usefulness for analysis and decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:onboarding-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-profiling a skos:Concept;
+    skos:prefLabel "Data profiling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing data to understand its structure, content, and quality, often used to identify data quality issues and inconsistencies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:onboarding-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:artificial-intelligence-products-certification a skos:Concept;
+    skos:prefLabel "Artificial intelligence products certification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Certification processes specifically designed for AI products and services, ensuring they meet ethical, legal, and technical requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-certification;
+    skos:altLabel "AI Products Certification"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:business-intelligence-dashboard-certification a skos:Concept;
+    skos:prefLabel "Business intelligence dashboard certification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Validation of business intelligence dashboards to ensure they display accurate, reliable, and compliant data visualizations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-certification;
+    skos:altLabel "BI Dashboard Certification"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-products-certification a skos:Concept;
+    skos:prefLabel "Data products certification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Certification processes for data products, ensuring they meet specific quality, security, and compliance standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-certification;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:metrics-certification a skos:Concept;
+    skos:prefLabel "Metrics certification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Verification and validation of data metrics to ensure their accuracy, reliability, and alignment with business objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-certification;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:define-data-governance a skos:Concept;
+    skos:prefLabel "Define data governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Establishing a common understanding of data governance within an organization, including its goals, principles, scope, and framework."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-development-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:develop-goals-principles-and-policies a skos:Concept;
+    skos:prefLabel "Develop goals, principles & policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Defining the desired outcomes, guiding values, and specific rules that will govern data management practices within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-development-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:develop-organizational-touchpoints a skos:Concept;
+    skos:prefLabel "Develop organizational touchpoints"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Ensuring that data governance initiatives are integrated into existing organizational structures, processes, and culture."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-development-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:charter a skos:Concept;
+    skos:prefLabel "Charter"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A legal document filed with the state that establishes a corporation, outlining its purpose, structure, and key operating principles, granting it legal recognition."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:define-data-governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:mission-and-vision a skos:Concept;
+    skos:prefLabel "Mission & vision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "An organization’s overall purpose and long-term aspirations, guiding its actions and decision-making, including compliance efforts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:define-data-governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:value-drivers a skos:Concept;
+    skos:prefLabel "Value drivers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:27:37.400Z"^^xsd:dateTime;
+    skos:definition "A specific, measurable benefit, outcome, or strategic advantage that an organization achieves by successfully implementing and maturing its Data Governance program."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:define-data-governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:business-value a skos:Concept;
+    skos:prefLabel "Business value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "represents the worth an organization creates through its operations, offerings, and interactions, encompassing financial performance, market position, and stakeholder satisfaction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:value-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-quality a skos:Concept;
+    skos:prefLabel "Data quality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The state of data being fit for its intended use, characterized by accuracy, completeness, consistency, timeliness, and validity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:value-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-risk-management a skos:Concept;
+    skos:prefLabel "Data risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, assessing, and mitigating risks associated with data, including unauthorized access, data breaches, and data loss."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:value-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:operational-efficiency a skos:Concept;
+    skos:prefLabel "Operational efficiency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The ability to perform data governance activities effectively and efficiently, minimizing manual effort and maximizing resource utilization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:value-drivers;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:change-management a skos:Concept;
+    skos:prefLabel "Change management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Systematic approach that organizations use to help people adapt to and embrace changes in their work environment, processes, or systems. It involves planning, implementing, and managing the transition to a new state, while also addressing the human impact of those changes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-operational-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-management-project-support-and-prioritization a skos:Concept;
+    skos:prefLabel "Data management project support & prioritization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Aligning data governance efforts with other data management initiatives, such as data warehousing, business intelligence, and data analytics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-operational-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:develop-data-governance-strategy a skos:Concept;
+    skos:prefLabel "Develop data governance strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Creating a roadmap for implementing and maturing data governance within an organization, aligning it with business objectives and priorities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-operational-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:implement-data-governance a skos:Concept;
+    skos:prefLabel "Implement data governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Putting data governance principles, policies, and procedures into practice through people, processes, and technology."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-operational-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:third-party-sharing a skos:Concept;
+    skos:prefLabel "Third party sharing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The exchange of data with external entities, such as partners, vendors, or customers, while ensuring compliance with data governance policies and regulations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-operational-activity;
+    skos:altLabel "3rd Party Sharing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:assess-regulatory-compliance-requirements a skos:Concept;
+    skos:prefLabel "Assess regulatory compliance requirements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Systematically evaluating an organization's adherence to laws, regulations, and industry standards to ensure operations align with legal and ethical frameworks, identifying potential risks and implementing controls to mitigate them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-planning-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:perform-readiness-assessment a skos:Concept;
+    skos:prefLabel "Perform readiness assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Evaluating an organization’s preparedness to implement or mature its data governance program, identifying strengths, weaknesses, and areas for improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:governance-planning-activity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-council a skos:Concept;
+    skos:prefLabel "Data governance council"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A cross-functional group within an organization responsible for overseeing and guiding the strategic direction of the organization's data governance program, ensuring data is managed effectively and ethically to meet business goals and regulatory requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-agent;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-owners a skos:Concept;
+    skos:prefLabel "Data owners"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Individuals or groups ultimately responsible for the quality, integrity, and security of specific data assets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-agent;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-stewards a skos:Concept;
+    skos:prefLabel "Data stewards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Individuals responsible for the day-to-day management and maintenance of data quality within a specific domain or business unit."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-agent;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:artificial-intelligence-governance a skos:Concept;
+    skos:prefLabel "Artificial intelligence governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:35:50.726Z"^^xsd:dateTime;
+    skos:definition "A specialized subset of data governance that focuses on establishing the rules, policies, ethics, and controls necessary to manage the data, models, and processes used for Artificial Intelligence (AI) and Machine Learning (ML) systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    skos:altLabel "Artificial Intelligence Governance"@en, "AI governance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-catalog-operations a skos:Concept;
+    skos:prefLabel "Data catalog operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:35:23.648Z"^^xsd:dateTime;
+    skos:definition "The continuous activity of managing, enriching, and maintaining the Data Catalog—a centralized inventory of all data assets across the organization. This operation makes governed data discoverable and provides crucial business context."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-controls a skos:Concept;
+    skos:prefLabel "Data governance controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:34:50.467Z"^^xsd:dateTime;
+    skos:definition "The policies, standards, processes, and tools systematically applied to data assets to enforce the rules established by the governance body. These controls are the practical mechanisms that ensure data is managed securely, reliably, and compliantly."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    skos:example "Data quality validation rules, mandatory data classification tags, data retention schedules, and policy approval workflows."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-design a skos:Concept;
+    skos:prefLabel "Data governance design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:34:29.716Z"^^xsd:dateTime;
+    skos:definition "The strategic, upfront process of establishing the Data Governance framework, including defining the organizational structure, roles, decision rights, and accountability models (e.g., Data Owners, Data Stewards). It is the architectural planning for how governance will function."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-literacy a skos:Concept;
+    skos:prefLabel "Data literacy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:33:43.192Z"^^xsd:dateTime;
+    skos:definition "The ability of employees across an organization to read, understand, analyze, and communicate with data in context. In governance, it is the programmatic effort to train and empower data consumers to correctly interpret reports, understand data quality rules, and responsibly apply policies (like data privacy rules) to their daily work."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-protection a skos:Concept;
+    skos:prefLabel "Data protection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:36:09.785Z"^^xsd:dateTime;
+    skos:definition "The overarching set of security and privacy measures designed to safeguard data from unauthorized access, corruption, or loss throughout its lifecycle. This is the implementation of security policies defined by governance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:governance-reporting-and-metrics a skos:Concept;
+    skos:prefLabel "Governance reporting & metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:33:59.665Z"^^xsd:dateTime;
+    skos:definition "The practice of defining, collecting, and communicating Key Performance Indicators (KPIs) and operational status reports that measure the success and compliance of the data governance program."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    skos:example "Tracking data quality scores, policy adherence rates, time spent resolving data issues, and reduction in regulatory fines."@en;
+    skos:scopeNote "To demonstrate the Return on Investment (ROI) of governance, identify areas of non-compliance, and track improvements in data quality, security, and process efficiency."@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:semantic-governance a skos:Concept;
+    skos:prefLabel "Semantic governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-10-31T15:36:53.630Z"^^xsd:dateTime;
+    skos:definition "A specialized discipline under Data Governance that helps Verizon find, understand & use data more effectively by capturing human expertise in structured knowledge systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:access-control-policies a skos:Concept;
+    skos:prefLabel "Access control policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Rules and procedures that determine who or what can access specific resources within a system, ensuring only authorized individuals or entities have the necessary permissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-policy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:business-policy a skos:Concept;
+    skos:prefLabel "Business policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "High-level guidelines that govern an organization’s business operations and activities, including compliance-related aspects."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-policy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-privacy-regulations a skos:Concept;
+    skos:prefLabel "Data privacy regulations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Laws and regulations designed to protect the personal information of individuals, such as GDPR, CCPA, and HIPAA."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-policy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-quality-standards a skos:Concept;
+    skos:prefLabel "Data quality standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Specific criteria and thresholds that define acceptable levels of data quality for different data elements or datasets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-policy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-access-policy a skos:Concept;
+    skos:prefLabel "Data access policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Rules and procedures that govern who can access specific data within an organization based on their roles and responsibilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:access-control-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-provenance-policy a skos:Concept;
+    skos:prefLabel "Data provenance policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Guidelines for documenting the origin, movement, and transformations of data throughout its lifecycle, ensuring data integrity and traceability."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:access-control-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-retention-and-archival-policy a skos:Concept;
+    skos:prefLabel "Data retention & archival policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Policies that define how long data should be retained, archived, and eventually deleted based on legal, regulatory, and business requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:access-control-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-usage-policy a skos:Concept;
+    skos:prefLabel "Data usage policy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Guidelines that define the permissible uses of data within an organization, ensuring compliance with privacy regulations and ethical considerations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:access-control-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:business-glossary a skos:Concept;
+    skos:prefLabel "Business glossary"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "A list of business terms and their definitions that organizations use to ensure the same definitions are used company-wide when analyzing data. A business glossary produces a common business vocabulary, used by everyone in an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-governance-scorecards a skos:Concept;
+    skos:prefLabel "Data governance scorecards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Visual representations of key data governance metrics, used to track progress, identify areas for improvement, and communicate performance to stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:document-management-tools a skos:Concept;
+    skos:prefLabel "Document management tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Software applications used to create, store, manage, and track documents related to data governance, such as policies, procedures, and standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:online-presence a skos:Concept;
+    skos:prefLabel "Online presence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "The availability and accessibility of information about an organization’s data governance program on internal and external platforms."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:workflow-tools a skos:Concept;
+    skos:prefLabel "Workflow tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-03T19:30:28.004Z"^^xsd:dateTime;
+    skos:definition "Software solutions that automate and streamline processes for managing, organizing, and ensuring the quality, security, and compliance of an organization's data assets, encompassing tasks like data cataloging, metadata management, and policy enforcement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:scorecard-metrics a skos:Concept;
+    skos:prefLabel "Scorecard metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Key performance indicators (KPIs) used to measure and track the overall success of a data governance program against its defined goals and objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:data-governance-scorecards;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:adoption-and-awareness-metrics a skos:Concept;
+    skos:prefLabel "Adoption & awareness metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Measure how well users embrace and integrate a product, feature, or process into their routine, while awareness metrics track the extent to which users are informed about a product or feature."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:scorecard-metrics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:compliance-metrics a skos:Concept;
+    skos:prefLabel "Compliance metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Quantitative and qualitative measures of your business's performance. These are evaluated in terms of policy violations, financial loss, mitigated risks, non-compliance with regulations, time to recover, impact of breaches on key operations, and effectiveness of compliance programs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:scorecard-metrics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:data-quality-metrics a skos:Concept;
+    skos:prefLabel "Data quality metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Measurements used to assess and monitor the quality of data, such as accuracy rate, completeness percentage, and duplication rate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:scorecard-metrics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:operational-metrics a skos:Concept;
+    skos:prefLabel "Operational metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Measurements used to track the efficiency and effectiveness of data governance operations, such as issue resolution time and policy compliance rate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:scorecard-metrics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:security-metrics a skos:Concept;
+    skos:prefLabel "Security metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T18:58:13.719Z"^^xsd:dateTime;
+    skos:definition "Measurements used to assess and monitor the security posture of data, such as the number of data breaches, unauthorized access attempts, and data leakage incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-governance/>;
+    skos:broader domaingovernancevoc:scorecard-metrics;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaingovernancevoc:access-management skos:narrower domaingovernancevoc:onboarding-management .
+  
+  domaingovernancevoc:onboarding-management skos:narrower domaingovernancevoc:data-cataloging,
+      domaingovernancevoc:data-certification, domaingovernancevoc:data-classification, domaingovernancevoc:data-enrichment,
+      domaingovernancevoc:data-profiling .
+  
+  domaingovernancevoc:data-certification skos:narrower domaingovernancevoc:artificial-intelligence-products-certification,
+      domaingovernancevoc:business-intelligence-dashboard-certification, domaingovernancevoc:data-products-certification,
+      domaingovernancevoc:metrics-certification .
+  
+  domaingovernancevoc:define-data-governance skos:narrower domaingovernancevoc:charter,
+      domaingovernancevoc:mission-and-vision, domaingovernancevoc:value-drivers .
+  
+  domaingovernancevoc:value-drivers skos:narrower domaingovernancevoc:business-value,
+      domaingovernancevoc:data-quality, domaingovernancevoc:data-risk-management, domaingovernancevoc:operational-efficiency .
+  
+  domaingovernancevoc:access-control-policies skos:narrower domaingovernancevoc:data-access-policy,
+      domaingovernancevoc:data-provenance-policy, domaingovernancevoc:data-retention-and-archival-policy,
+      domaingovernancevoc:data-usage-policy .
+  
+  domaingovernancevoc:data-governance-scorecards skos:narrower domaingovernancevoc:scorecard-metrics .
+  
+  domaingovernancevoc:scorecard-metrics skos:narrower domaingovernancevoc:adoption-and-awareness-metrics,
+      domaingovernancevoc:compliance-metrics, domaingovernancevoc:data-quality-metrics,
+      domaingovernancevoc:operational-metrics, domaingovernancevoc:security-metrics .
+}

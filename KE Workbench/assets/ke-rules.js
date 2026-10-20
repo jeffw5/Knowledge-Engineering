@@ -169,25 +169,25 @@
         } },
 
       { id: 'name-case', sec: '3.2', sev: 'warn', title: 'Identifier case',
-        desc: 'Classes and taxonomy concepts UpperCamelCase; object properties lowerCamelCase; data properties has-/is- prefix; vocabulary terms lower-case hyphenated; shapes end in Shape.',
+        desc: 'Classes, taxonomy concepts and vocabulary terms: lower-case words joined by hyphens, so a polymorphic term stays a phrase and never becomes a new word (§3.2 as amended for Baseline Core v1.0); object properties lowerCamelCase; data properties has-/is- prefix; shapes end in -shape.',
         applies: function (e) { return (TERM[e.kind] || e.kind === 'shape') && !!localName(e.iri); },
         check: function (e) {
           var n = localName(e.iri);
           if (/[_:\s]/.test(n)) return '"' + n + '" contains underscores, colons or spaces';
-          if (e.kind === 'class' && !/^[A-Z][A-Za-z0-9]*$/.test(n)) return 'Class "' + n + '" should be UpperCamelCase';
+          if (e.kind === 'class' && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(n)) return 'Class "' + n + '" should be lower-case words joined by hyphens';
           if (e.kind === 'objprop' && !/^[a-z][A-Za-z0-9]*$/.test(n)) return 'Object property "' + n + '" should be a lowerCamelCase verb phrase';
           if (e.kind === 'dataprop' && !/^(has|is)[A-Z][A-Za-z0-9]*$/.test(n)) return 'Data property "' + n + '" should be lowerCamelCase with a has- or is- prefix';
-          if (e.kind === 'shape' && !/^[A-Z][A-Za-z0-9]*Shape$/.test(n)) return 'Shape "' + n + '" should be the target class name plus Shape';
+          if (e.kind === 'shape' && !/^[a-z0-9]+(-[a-z0-9]+)*-shape$/.test(n)) return 'Shape "' + n + '" should be the target class name plus -shape';
           if (e.kind === 'concept') {
             var ck = concepKind(e);
-            if (ck === 'taxonomy' && !/^[A-Z][A-Za-z0-9]*$/.test(n)) return 'Taxonomy concept "' + n + '" should be UpperCamelCase';
+            if (ck === 'taxonomy' && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(n)) return 'Taxonomy concept "' + n + '" should be lower-case words joined by hyphens';
             if (ck === 'vocabulary' && !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(n)) return 'Vocabulary term "' + n + '" should be lower-case words joined by hyphens';
           }
           return null;
         } },
 
       { id: 'acronym-id', sec: '3.2', sev: 'error', title: 'No acronyms in identifiers',
-        desc: 'Identifiers use full words: ProfessionalEmployerOrganization, not PEO.',
+        desc: 'Identifiers use full words: professional-employer-organization, not PEO.',
         applies: function (e) { return (TERM[e.kind] || e.kind === 'shape' || e.kind === 'individual') && !!localName(e.iri); },
         check: function (e) { var n = localName(e.iri), m = n.match(CAMEL_ACRONYM) || n.match(/(^|[_-])([A-Z]{2,})(?=[_-]|$)/);
           return m ? 'Identifier "' + n + '" contains the acronym "' + (m[2] || m[0]).replace(/[^A-Z]/g, '') + '"' : null; } },

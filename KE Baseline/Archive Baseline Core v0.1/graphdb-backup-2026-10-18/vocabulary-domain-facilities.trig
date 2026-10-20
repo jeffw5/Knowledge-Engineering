@@ -1,0 +1,2060 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-facilities/> {
+  <https://www.insperity.com/vocabulary/domain-facilities/> a skos:ConceptScheme;
+    rdfs:label "Domain facilities vocabulary"@en;
+    skos:prefLabel "Domain facilities vocabulary"@en;
+    skos:hasTopConcept domainfacilitiesvoc:facilities;
+    terms:description "Physical assets and infrastructure that support an organization’s operations."@en;
+    terms:title "Domain facilities vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:01:15.871Z"^^xsd:dateTime .
+  
+  domainfacilitiesvoc:facilities a skos:Concept;
+    skos:prefLabel "Facilities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:26:05.069Z"^^xsd:dateTime;
+    skos:definition "Physical assets and infrastructure that support an organization’s operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:access-control-system a skos:Concept;
+    skos:prefLabel "Access control system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:48:13.188Z"^^xsd:dateTime;
+    skos:definition "A system that manages and controls access to a facility or area."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:electrical-system-resource a skos:Concept;
+    skos:prefLabel "Electrical system resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "A component or element of an electrical system, such as wiring, circuits, or devices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy a skos:Concept;
+    skos:prefLabel "Energy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "The ability to do work."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:heating-ventilation-and-air-conditioning a skos:Concept;
+    skos:prefLabel "Heating, ventilation and air conditioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "A building comfort system that can heat and cool a building, as well as provide improved indoor air quality and humidity control."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:heating-ventilation-and-air-conditioning-system-resource a skos:Concept;
+    skos:prefLabel "Heating, ventilation and air conditioning system resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "A component or element of an HVAC system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:real-estate a skos:Concept;
+    skos:prefLabel "Real estate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "Property consisting of land and buildings."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:security-system-resource a skos:Concept;
+    skos:prefLabel "Security system resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "A component or element of a security system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:site-management a skos:Concept;
+    skos:prefLabel "Site management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "The management and operation of a physical site or facility."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:utilities a skos:Concept;
+    skos:prefLabel "Utilities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:49:54.209Z"^^xsd:dateTime;
+    skos:definition "Services that are essential for the operation of a building or facility."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:door-sensor a skos:Concept;
+    skos:prefLabel "Door sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:48:13.188Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the opening and closing of a door."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:presence-and-movement-sensor a skos:Concept;
+    skos:prefLabel "Presence & movement sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:48:13.188Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the presence or movement of people or objects."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:building-automation-system-resource a skos:Concept;
+    skos:prefLabel "Building automation system resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:23.165Z"^^xsd:dateTime;
+    skos:definition "A component or element of a building automation system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:electric-energy-supply a skos:Concept;
+    skos:prefLabel "Electric energy supply"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:50:42.287Z"^^xsd:dateTime;
+    skos:definition "The provision of electricity to consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-property a skos:Concept;
+    skos:prefLabel "Energy property"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:50:42.287Z"^^xsd:dateTime;
+    skos:definition "A characteristic or attribute of energy, such as its type, source, or cost."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-provider a skos:Concept;
+    skos:prefLabel "Energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:50:42.287Z"^^xsd:dateTime;
+    skos:definition "A company or organization that supplies energy to consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-type a skos:Concept;
+    skos:prefLabel "Energy type"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:50:42.287Z"^^xsd:dateTime;
+    skos:definition "The form of energy, such as electrical, thermal, or mechanical."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:power-generation a skos:Concept;
+    skos:prefLabel "Power generation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:50:42.287Z"^^xsd:dateTime;
+    skos:definition "The process of producing electricity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:power-time-frame a skos:Concept;
+    skos:prefLabel "Power time frame"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:00:09.115Z"^^xsd:dateTime;
+    skos:definition "The duration for which power is available or required."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-capacity a skos:Concept;
+    skos:prefLabel "Energy capacity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:25.281Z"^^xsd:dateTime;
+    skos:definition "The maximum amount of energy that a system can store or produce."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-cost a skos:Concept;
+    skos:prefLabel "Energy cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:25.281Z"^^xsd:dateTime;
+    skos:definition "The financial or environmental expense associated with energy consumption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-demand a skos:Concept;
+    skos:prefLabel "Energy demand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:25.281Z"^^xsd:dateTime;
+    skos:definition "The amount of energy required by consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-gain a skos:Concept;
+    skos:prefLabel "Energy gain"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:25.281Z"^^xsd:dateTime;
+    skos:definition "An increase in energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-supply a skos:Concept;
+    skos:prefLabel "Energy supply"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:25.281Z"^^xsd:dateTime;
+    skos:definition "The availability of energy resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:caloric-energy-capacity a skos:Concept;
+    skos:prefLabel "Caloric energy capacity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:39.873Z"^^xsd:dateTime;
+    skos:definition "The amount of heat energy that a substance can store or release."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:electric-energy-capacity a skos:Concept;
+    skos:prefLabel "Electric energy capacity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:51:39.873Z"^^xsd:dateTime;
+    skos:definition "The maximum amount of electrical energy that a system can store or produce."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:ecological-energy-cost a skos:Concept;
+    skos:prefLabel "Ecological energy cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:52:00.450Z"^^xsd:dateTime;
+    skos:definition "The environmental impact of energy production and consumption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:monetary-energy-cost a skos:Concept;
+    skos:prefLabel "Monetary energy cost"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:52:00.450Z"^^xsd:dateTime;
+    skos:definition "The financial expense of energy consumption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:emission a skos:Concept;
+    skos:prefLabel "Emission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:52:12.891Z"^^xsd:dateTime;
+    skos:definition "The release of pollutants or greenhouse gases into the environment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:waste-disposal a skos:Concept;
+    skos:prefLabel "Waste disposal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:52:12.891Z"^^xsd:dateTime;
+    skos:definition "The collection, treatment, and disposal of waste materials."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:monetary-gain a skos:Concept;
+    skos:prefLabel "Monetary gain"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:52:26.095Z"^^xsd:dateTime;
+    skos:definition "An increase in financial profit."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:coal-energy-demand a skos:Concept;
+    skos:prefLabel "Coal energy demand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "The demand for energy derived from coal."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:cold-energy-supply a skos:Concept;
+    skos:prefLabel "Cold energy supply"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "The provision of cooling services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:district-cooling-provider a skos:Concept;
+    skos:prefLabel "District cooling provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that provides cooling services to a specific geographic area."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:district-energy-provider a skos:Concept;
+    skos:prefLabel "District energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that provides heating and/or cooling services to a specific geographic area."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:district-heating-provider a skos:Concept;
+    skos:prefLabel "District heating provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that provides heating services to a specific geographic area."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:electric-energy-provider a skos:Concept;
+    skos:prefLabel "Electric energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies electricity to consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:gas-energy-demand a skos:Concept;
+    skos:prefLabel "Gas energy demand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "The demand for energy derived from natural gas."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:gas-energy-provider a skos:Concept;
+    skos:prefLabel "Gas energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies natural gas to consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:green-energy-provider a skos:Concept;
+    skos:prefLabel "Green energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies energy from renewable sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:heat-energy-supply a skos:Concept;
+    skos:prefLabel "Heat energy supply"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "The provision of heat energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:non-green-energy-provider a skos:Concept;
+    skos:prefLabel "Non green energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies energy from non-renewable sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:oil-energy-provider a skos:Concept;
+    skos:prefLabel "Oil energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies energy derived from oil."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:water-energy-provider a skos:Concept;
+    skos:prefLabel "Water energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies energy derived from water, such as hydroelectric power."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:wood-energy-provider a skos:Concept;
+    skos:prefLabel "Wood energy provider"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:53:39.059Z"^^xsd:dateTime;
+    skos:definition "A company that supplies energy derived from wood."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:energy-source a skos:Concept;
+    skos:prefLabel "Energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:54:32.786Z"^^xsd:dateTime;
+    skos:definition "The origin or source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:final-energy a skos:Concept;
+    skos:prefLabel "Final energy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:58:53.537Z"^^xsd:dateTime;
+    skos:definition "Energy that is delivered to end users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:useful-energy a skos:Concept;
+    skos:prefLabel "Useful energy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:58:53.537Z"^^xsd:dateTime;
+    skos:definition "Energy that is used to perform a desired task."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:primary-energy-source a skos:Concept;
+    skos:prefLabel "Primary energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:54:51.942Z"^^xsd:dateTime;
+    skos:definition "An energy source that is found in nature and has not been converted."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:secondary-energy-source a skos:Concept;
+    skos:prefLabel "Secondary energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:57:53.002Z"^^xsd:dateTime;
+    skos:definition "An energy source that is derived from a primary energy source."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:non-renewable a skos:Concept;
+    skos:prefLabel "Non renewable"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:55:07.139Z"^^xsd:dateTime;
+    skos:definition "An energy source that is finite and cannot be replenished at a sustainable rate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:renewable a skos:Concept;
+    skos:prefLabel "Renewable"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:55:07.139Z"^^xsd:dateTime;
+    skos:definition "An energy source that is naturally replenished and sustainable."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:coal-energy-source a skos:Concept;
+    skos:prefLabel "Coal energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:55:40.467Z"^^xsd:dateTime;
+    skos:definition "Coal as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:natural-gas-energy-source a skos:Concept;
+    skos:prefLabel "Natural gas energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:55:40.467Z"^^xsd:dateTime;
+    skos:definition "Natural gas as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:nuclear-energy-source a skos:Concept;
+    skos:prefLabel "Nuclear energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:55:40.467Z"^^xsd:dateTime;
+    skos:definition "Nuclear fission as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:oil-energy-source a skos:Concept;
+    skos:prefLabel "Oil energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:55:40.467Z"^^xsd:dateTime;
+    skos:definition "Oil as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:bio-gas-energy-source a skos:Concept;
+    skos:prefLabel "Bio gas energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Biogas as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:biomass-energy-source a skos:Concept;
+    skos:prefLabel "Biomass energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Biomass as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:geothermal-energy-source a skos:Concept;
+    skos:prefLabel "Geothermal energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Geothermal heat as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:solar-energy-source a skos:Concept;
+    skos:prefLabel "Solar energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Solar radiation as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:water-energy-source a skos:Concept;
+    skos:prefLabel "Water energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Water as a source of energy, such as hydroelectric power."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:wind-energy-source a skos:Concept;
+    skos:prefLabel "Wind energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Wind as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:wood-energy-source a skos:Concept;
+    skos:prefLabel "Wood energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:36.127Z"^^xsd:dateTime;
+    skos:definition "Wood as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:hydroelectric-energy-source a skos:Concept;
+    skos:prefLabel "Hydroelectric energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:58.454Z"^^xsd:dateTime;
+    skos:definition "The energy derived from the movement of water."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:tidal-energy-source a skos:Concept;
+    skos:prefLabel "Tidal energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:58.454Z"^^xsd:dateTime;
+    skos:definition "The energy derived from the rise and fall of tides."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:wave-energy-source a skos:Concept;
+    skos:prefLabel "Wave energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:56:58.454Z"^^xsd:dateTime;
+    skos:definition "The energy derived from ocean waves."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:chip-wood-energy-source a skos:Concept;
+    skos:prefLabel "Chip wood energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:57:32.569Z"^^xsd:dateTime;
+    skos:definition "Wood chips as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:hard-wood-energy-source a skos:Concept;
+    skos:prefLabel "Hard wood energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:57:32.569Z"^^xsd:dateTime;
+    skos:definition "Hardwood as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:pellet-wood-energy-source a skos:Concept;
+    skos:prefLabel "Pellet wood energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:57:32.569Z"^^xsd:dateTime;
+    skos:definition "Wood pellets as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:soft-wood-energy-source a skos:Concept;
+    skos:prefLabel "Soft wood energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:57:32.569Z"^^xsd:dateTime;
+    skos:definition "Softwood as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:electric-energy-source a skos:Concept;
+    skos:prefLabel "Electric energy source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:58:14.928Z"^^xsd:dateTime;
+    skos:definition "Electricity as a source of energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:geothermal a skos:Concept;
+    skos:prefLabel "Geothermal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:59:31.465Z"^^xsd:dateTime;
+    skos:definition "Relating to the heat energy of the Earth’s interior."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:hydropower a skos:Concept;
+    skos:prefLabel "Hydropower"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:59:31.465Z"^^xsd:dateTime;
+    skos:definition "Power generated from the movement of water."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:solar a skos:Concept;
+    skos:prefLabel "Solar"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:59:31.465Z"^^xsd:dateTime;
+    skos:definition "Relating to the sun or its energy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:wind a skos:Concept;
+    skos:prefLabel "Wind"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T13:59:31.465Z"^^xsd:dateTime;
+    skos:definition "The movement of air to create power."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:air-conditioning-system a skos:Concept;
+    skos:prefLabel "Air conditioning system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:00:34.961Z"^^xsd:dateTime;
+    skos:definition "A system that cools and dehumidifies air."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:boiler-controller a skos:Concept;
+    skos:prefLabel "Boiler controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:00:34.961Z"^^xsd:dateTime;
+    skos:definition "A device that controls the operation of a boiler."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/> .
+  
+  domainfacilitiesvoc:burner-controller a skos:Concept;
+    skos:prefLabel "Burner controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:00:34.961Z"^^xsd:dateTime;
+    skos:definition "A device that controls the operation of a burner."@en .
+  
+  domainfacilitiesvoc:co2-emission a skos:Concept;
+    skos:prefLabel "CO2 emission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:05.759Z"^^xsd:dateTime;
+    skos:definition "The release of carbon dioxide into the atmosphere."@en .
+  
+  domainfacilitiesvoc:fire-security-system a skos:Concept;
+    skos:prefLabel "Fire security system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:05.759Z"^^xsd:dateTime;
+    skos:definition "A system that detects and alerts occupants to a fire."@en .
+  
+  domainfacilitiesvoc:flood-security-system a skos:Concept;
+    skos:prefLabel "Flood security system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:05.759Z"^^xsd:dateTime;
+    skos:definition "A system that detects and alerts occupants to a flood."@en .
+  
+  domainfacilitiesvoc:occupancy-sensor a skos:Concept;
+    skos:prefLabel "Occupancy sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:05.759Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the presence of people in a space."@en .
+  
+  domainfacilitiesvoc:building-automation-network a skos:Concept;
+    skos:prefLabel "Building automation network"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:33.292Z"^^xsd:dateTime;
+    skos:definition "A network that connects and controls building systems."@en .
+  
+  domainfacilitiesvoc:building-site a skos:Concept;
+    skos:prefLabel "Building site"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:33.292Z"^^xsd:dateTime;
+    skos:definition "A location where a building is being constructed or renovated."@en .
+  
+  domainfacilitiesvoc:wired a skos:Concept;
+    skos:prefLabel "Wired"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:50.163Z"^^xsd:dateTime;
+    skos:definition "Using wires for communication or power transmission."@en .
+  
+  domainfacilitiesvoc:wireless a skos:Concept;
+    skos:prefLabel "Wireless"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:01:50.163Z"^^xsd:dateTime;
+    skos:definition "Using radio waves for communication or power transmission."@en .
+  
+  domainfacilitiesvoc:architectural a skos:Concept;
+    skos:prefLabel "Architectural"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:23.165Z"^^xsd:dateTime;
+    skos:definition "Relating to architecture or building design."@en .
+  
+  domainfacilitiesvoc:energy-consumer-facility a skos:Concept;
+    skos:prefLabel "Energy consumer facility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:23.165Z"^^xsd:dateTime;
+    skos:definition "A facility that consumes energy."@en .
+  
+  domainfacilitiesvoc:energy-facility a skos:Concept;
+    skos:prefLabel "Energy facility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:23.165Z"^^xsd:dateTime;
+    skos:definition "A facility that produces, stores, or distributes energy."@en .
+  
+  domainfacilitiesvoc:energy-producer-facility a skos:Concept;
+    skos:prefLabel "Energy producer facility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:23.165Z"^^xsd:dateTime;
+    skos:definition "A facility that produces energy."@en .
+  
+  domainfacilitiesvoc:furniture a skos:Concept;
+    skos:prefLabel "Furniture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:23.165Z"^^xsd:dateTime;
+    skos:definition "Movable objects that support human activities."@en .
+  
+  domainfacilitiesvoc:horizontal a skos:Concept;
+    skos:prefLabel "Horizontal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:36.730Z"^^xsd:dateTime;
+    skos:definition "Parallel to the ground."@en .
+  
+  domainfacilitiesvoc:vertical a skos:Concept;
+    skos:prefLabel "Vertical"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:36.730Z"^^xsd:dateTime;
+    skos:definition "Perpendicular to the ground."@en .
+  
+  domainfacilitiesvoc:ceiling a skos:Concept;
+    skos:prefLabel "Ceiling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:49.889Z"^^xsd:dateTime;
+    skos:definition "The upper interior surface of a room."@en .
+  
+  domainfacilitiesvoc:floor a skos:Concept;
+    skos:prefLabel "Floor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:02:49.889Z"^^xsd:dateTime;
+    skos:definition "The lower surface of a room."@en .
+  
+  domainfacilitiesvoc:fence-opening a skos:Concept;
+    skos:prefLabel "Fence opening"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:03:13.035Z"^^xsd:dateTime;
+    skos:definition "An opening in a fence."@en .
+  
+  domainfacilitiesvoc:wall a skos:Concept;
+    skos:prefLabel "Wall"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:03:13.035Z"^^xsd:dateTime;
+    skos:definition "A vertical structure that divides or encloses a space."@en .
+  
+  domainfacilitiesvoc:wall-opening a skos:Concept;
+    skos:prefLabel "Wall opening"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:03:13.035Z"^^xsd:dateTime;
+    skos:definition "An opening in a wall."@en .
+  
+  domainfacilitiesvoc:gate a skos:Concept;
+    skos:prefLabel "Gate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:03:25.372Z"^^xsd:dateTime;
+    skos:definition "A movable barrier that controls access to an area."@en .
+  
+  domainfacilitiesvoc:door a skos:Concept;
+    skos:prefLabel "Door"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:03:45.753Z"^^xsd:dateTime;
+    skos:definition "A hinged or sliding barrier that allows access to a room or building."@en .
+  
+  domainfacilitiesvoc:window a skos:Concept;
+    skos:prefLabel "Window"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:03:45.753Z"^^xsd:dateTime;
+    skos:definition "An opening in a wall or roof that allows light and air to enter."@en .
+  
+  domainfacilitiesvoc:flood-sensor a skos:Concept;
+    skos:prefLabel "Flood sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:08.276Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the presence of water."@en .
+  
+  domainfacilitiesvoc:gas-security-system a skos:Concept;
+    skos:prefLabel "Gas security system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:08.276Z"^^xsd:dateTime;
+    skos:definition "A system that detects and alerts occupants to a gas leak."@en .
+  
+  domainfacilitiesvoc:gas-sensor a skos:Concept;
+    skos:prefLabel "Gas sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:08.276Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the presence of gas."@en .
+  
+  domainfacilitiesvoc:heating-and-cooling-unit a skos:Concept;
+    skos:prefLabel "Heating & cooling unit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:08.276Z"^^xsd:dateTime;
+    skos:definition "A device that provides both heating and cooling."@en .
+  
+  domainfacilitiesvoc:heating-system a skos:Concept;
+    skos:prefLabel "Heating system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:08.276Z"^^xsd:dateTime;
+    skos:definition "A system that provides heat to a building or space."@en .
+  
+  domainfacilitiesvoc:infrared-sensor a skos:Concept;
+    skos:prefLabel "Infrared sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:57.206Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects infrared radiation."@en .
+  
+  domainfacilitiesvoc:knob a skos:Concept;
+    skos:prefLabel "Knob"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:57.206Z"^^xsd:dateTime;
+    skos:definition "A round handle that is used to control a device."@en .
+  
+  domainfacilitiesvoc:lighting-system-resource a skos:Concept;
+    skos:prefLabel "Lighting system resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:57.206Z"^^xsd:dateTime;
+    skos:definition "A component or element of a lighting system."@en .
+  
+  domainfacilitiesvoc:power-delivery a skos:Concept;
+    skos:prefLabel "Power delivery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:57.206Z"^^xsd:dateTime;
+    skos:definition "The transmission and distribution of electricity."@en .
+  
+  domainfacilitiesvoc:pump a skos:Concept;
+    skos:prefLabel "Pump"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that moves fluids."@en .
+  
+  domainfacilitiesvoc:pump-controller a skos:Concept;
+    skos:prefLabel "Pump controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that controls the operation of a pump."@en .
+  
+  domainfacilitiesvoc:radiator-actuator a skos:Concept;
+    skos:prefLabel "Radiator actuator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that controls the flow of hot water through a radiator."@en .
+  
+  domainfacilitiesvoc:remote-control a skos:Concept;
+    skos:prefLabel "Remote control"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that allows users to control a device from a distance."@en .
+  
+  domainfacilitiesvoc:scene-selector a skos:Concept;
+    skos:prefLabel "Scene selector"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that allows users to select from pre-programmed lighting or automation scenes."@en .
+  
+  domainfacilitiesvoc:self-closing-door-actuator a skos:Concept;
+    skos:prefLabel "Self closing door actuator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that automatically closes a door."@en .
+  
+  domainfacilitiesvoc:shade-controller a skos:Concept;
+    skos:prefLabel "Shade controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that controls the position of window shades."@en .
+  
+  domainfacilitiesvoc:single-scenario-controller a skos:Concept;
+    skos:prefLabel "Single scenario controller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that controls a single automation scenario."@en .
+  
+  domainfacilitiesvoc:smoke-sensor a skos:Concept;
+    skos:prefLabel "Smoke sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the presence of smoke."@en .
+  
+  domainfacilitiesvoc:step-shutter-actuator a skos:Concept;
+    skos:prefLabel "Step shutter actuator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that controls the position of window shutters."@en .
+  
+  domainfacilitiesvoc:surveillance-camera a skos:Concept;
+    skos:prefLabel "Surveillance camera"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A camera that is used for monitoring an area."@en .
+  
+  domainfacilitiesvoc:switch a skos:Concept;
+    skos:prefLabel "Switch"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that opens or closes an electrical circuit."@en .
+  
+  domainfacilitiesvoc:thermostat a skos:Concept;
+    skos:prefLabel "Thermostat"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A device that controls temperature."@en .
+  
+  domainfacilitiesvoc:toggle-relay a skos:Concept;
+    skos:prefLabel "Toggle relay"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A type of relay that can be switched between two states."@en .
+  
+  domainfacilitiesvoc:ventilating-system a skos:Concept;
+    skos:prefLabel "Ventilating system"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:58.086Z"^^xsd:dateTime;
+    skos:definition "A system that provides fresh air to a building or space."@en .
+  
+  domainfacilitiesvoc:visualization-system-resource a skos:Concept;
+    skos:prefLabel "Visualization system resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:12:10.620Z"^^xsd:dateTime;
+    skos:definition "A component or element of a visualization system."@en .
+  
+  domainfacilitiesvoc:window-actuator a skos:Concept;
+    skos:prefLabel "Window actuator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:12:10.620Z"^^xsd:dateTime;
+    skos:definition "A device that opens and closes windows."@en .
+  
+  domainfacilitiesvoc:window-sensor a skos:Concept;
+    skos:prefLabel "Window sensor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:12:10.620Z"^^xsd:dateTime;
+    skos:definition "A sensor that detects the opening and closing of windows."@en .
+  
+  domainfacilitiesvoc:electrical-heater a skos:Concept;
+    skos:prefLabel "Electrical heater"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:31.225Z"^^xsd:dateTime;
+    skos:definition "A heater that uses electricity to generate heat."@en .
+  
+  domainfacilitiesvoc:gas-heater a skos:Concept;
+    skos:prefLabel "Gas heater"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:31.225Z"^^xsd:dateTime;
+    skos:definition "A heater that uses gas as fuel."@en .
+  
+  domainfacilitiesvoc:gas-oil-heater a skos:Concept;
+    skos:prefLabel "Gas oil heater"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:31.225Z"^^xsd:dateTime;
+    skos:definition "A heater that can use either gas or oil as fuel."@en .
+  
+  domainfacilitiesvoc:heater a skos:Concept;
+    skos:prefLabel "Heater"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:31.225Z"^^xsd:dateTime;
+    skos:definition "A device that generates heat."@en .
+  
+  domainfacilitiesvoc:pellet-heater a skos:Concept;
+    skos:prefLabel "Pellet heater"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:31.225Z"^^xsd:dateTime;
+    skos:definition "A heater that burns compressed wood pellets."@en .
+  
+  domainfacilitiesvoc:wood-heater a skos:Concept;
+    skos:prefLabel "Wood heater"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:06:31.225Z"^^xsd:dateTime;
+    skos:definition "A heater that burns wood."@en .
+  
+  domainfacilitiesvoc:level-controllable-output a skos:Concept;
+    skos:prefLabel "Level controllable output"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:08:05.276Z"^^xsd:dateTime;
+    skos:definition "An output that can be adjusted to different levels."@en .
+  
+  domainfacilitiesvoc:mains-power-outlet a skos:Concept;
+    skos:prefLabel "Mains power outlet"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:08:28.454Z"^^xsd:dateTime;
+    skos:definition "An outlet that provides access to the main electrical supply."@en .
+  
+  domainfacilitiesvoc:on-off-output a skos:Concept;
+    skos:prefLabel "On off output"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:09:26.270Z"^^xsd:dateTime;
+    skos:definition "An output that can be either on or off."@en .
+  
+  domainfacilitiesvoc:ventilator a skos:Concept;
+    skos:prefLabel "Ventilator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:11:41.370Z"^^xsd:dateTime;
+    skos:definition "A device that provides ventilation."@en .
+  
+  domainfacilitiesvoc:console a skos:Concept;
+    skos:prefLabel "Console"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:12:37.198Z"^^xsd:dateTime;
+    skos:definition "A control panel for a system."@en .
+  
+  domainfacilitiesvoc:infoscreen a skos:Concept;
+    skos:prefLabel "Infoscreen"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:12:37.198Z"^^xsd:dateTime;
+    skos:definition "A display screen that provides information."@en .
+  
+  domainfacilitiesvoc:touchpanel a skos:Concept;
+    skos:prefLabel "Touchpanel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:12:37.198Z"^^xsd:dateTime;
+    skos:definition "A touch-sensitive screen that allows users to interact with a system."@en .
+  
+  domainfacilitiesvoc:awning a skos:Concept;
+    skos:prefLabel "Awning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:10.546Z"^^xsd:dateTime;
+    skos:definition "A roof-like cover, often made of fabric, metal, or plastic, that extends over a window, door, or patio to provide shade from the sun. Awnings can be retractable or stationary."@en .
+  
+  domainfacilitiesvoc:radiator a skos:Concept;
+    skos:prefLabel "Radiator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:10.546Z"^^xsd:dateTime;
+    skos:definition "A heating device typically made of metal and designed with a large surface area to efficiently transfer heat from a hot fluid (like steam or hot water) to the surrounding air, thus warming a room."@en .
+  
+  domainfacilitiesvoc:shade a skos:Concept;
+    skos:prefLabel "Shade"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:10.546Z"^^xsd:dateTime;
+    skos:definition "A place sheltered from the sun, or a device such as a screen or blind used to provide such shelter. In the context of energy demand, shades are often used to reduce solar heat gain in buildings, thereby decreasing the need for air conditioning."@en .
+  
+  domainfacilitiesvoc:shutter a skos:Concept;
+    skos:prefLabel "Shutter"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:10.546Z"^^xsd:dateTime;
+    skos:definition "A solid or louvered cover for a window, typically made of wood or metal, that can be closed for security, privacy, or to protect the window from damage. Shutters can also help to insulate windows, reducing heat loss in the winter and heat gain in the summer."@en .
+  
+  domainfacilitiesvoc:electric-energy-demand a skos:Concept;
+    skos:prefLabel "Electric energy demand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T20:07:03.652Z"^^xsd:dateTime;
+    skos:definition "The demand for electricity."@en .
+  
+  domainfacilitiesvoc:water-energy-demand a skos:Concept;
+    skos:prefLabel "Water energy demand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T20:07:03.652Z"^^xsd:dateTime;
+    skos:definition "The demand for energy derived from water."@en .
+  
+  domainfacilitiesvoc:wood-energy-demand a skos:Concept;
+    skos:prefLabel "Wood energy demand"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T20:07:03.652Z"^^xsd:dateTime;
+    skos:definition "The demand for energy derived from wood."@en .
+  
+  domainfacilitiesvoc:boiler a skos:Concept;
+    skos:prefLabel "Boiler"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:59.726Z"^^xsd:dateTime;
+    skos:definition "A device that heats water or other fluids."@en .
+  
+  domainfacilitiesvoc:hifi a skos:Concept;
+    skos:prefLabel "HiFi"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:59.726Z"^^xsd:dateTime;
+    skos:definition "High-fidelity audio equipment."@en .
+  
+  domainfacilitiesvoc:phone a skos:Concept;
+    skos:prefLabel "Phone"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:13:59.726Z"^^xsd:dateTime;
+    skos:definition "A device that allows for voice communication."@en .
+  
+  domainfacilitiesvoc:wireless-phone a skos:Concept;
+    skos:prefLabel "Wireless phone"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-02T14:14:47.038Z"^^xsd:dateTime;
+    skos:definition "A phone that uses radio waves for communication."@en .
+  
+  domainfacilitiesvoc:burner-controller skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-ventilation-and-air-conditioning, domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:co2-emission skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:security-system-resource;
+    skos:altLabel "Carbon Dioxide Emission"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:fire-security-system skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:security-system-resource, domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:flood-security-system skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:security-system-resource, domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:occupancy-sensor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:security-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:building-automation-network skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:site-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:wired, domainfacilitiesvoc:wireless .
+  
+  domainfacilitiesvoc:building-site skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:site-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:building-automation-system-resource, domainfacilitiesvoc:architectural,
+      domainfacilitiesvoc:energy-consumer-facility, domainfacilitiesvoc:energy-facility,
+      domainfacilitiesvoc:energy-producer-facility, domainfacilitiesvoc:furniture .
+  
+  domainfacilitiesvoc:wired skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-network;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wireless skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-network;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:architectural skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-site;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:horizontal, domainfacilitiesvoc:vertical .
+  
+  domainfacilitiesvoc:energy-consumer-facility skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-site;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:energy-facility skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-site;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:energy-producer-facility skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-site;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:furniture skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-site;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:awning, domainfacilitiesvoc:radiator, domainfacilitiesvoc:shade,
+      domainfacilitiesvoc:shutter .
+  
+  domainfacilitiesvoc:horizontal skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:architectural;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:ceiling, domainfacilitiesvoc:floor .
+  
+  domainfacilitiesvoc:vertical skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:architectural;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:fence-opening, domainfacilitiesvoc:wall, domainfacilitiesvoc:wall-opening .
+  
+  domainfacilitiesvoc:ceiling skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:horizontal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:floor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:horizontal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:fence-opening skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:vertical;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:gate .
+  
+  domainfacilitiesvoc:wall skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:vertical;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wall-opening skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:vertical;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:door, domainfacilitiesvoc:window .
+  
+  domainfacilitiesvoc:gate skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:fence-opening;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:door skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:wall-opening;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:window skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:wall-opening;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:flood-sensor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:gas-security-system skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:gas-sensor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:heating-and-cooling-unit skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:heating-system skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:electrical-heater, domainfacilitiesvoc:gas-heater,
+      domainfacilitiesvoc:gas-oil-heater, domainfacilitiesvoc:heater, domainfacilitiesvoc:pellet-heater,
+      domainfacilitiesvoc:wood-heater .
+  
+  domainfacilitiesvoc:infrared-sensor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:knob skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:lighting-system-resource skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:power-delivery skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:level-controllable-output, domainfacilitiesvoc:mains-power-outlet .
+  
+  domainfacilitiesvoc:pump skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:pump-controller skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:radiator-actuator skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:remote-control skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:scene-selector skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:self-closing-door-actuator skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:shade-controller skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:single-scenario-controller skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:smoke-sensor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:step-shutter-actuator skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:surveillance-camera skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:switch skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:thermostat skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:toggle-relay skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:ventilating-system skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:ventilator .
+  
+  domainfacilitiesvoc:visualization-system-resource skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:console, domainfacilitiesvoc:infoscreen, domainfacilitiesvoc:touchpanel .
+  
+  domainfacilitiesvoc:window-actuator skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:window-sensor skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:electrical-heater skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:gas-heater skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:gas-oil-heater skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:heater skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:pellet-heater skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wood-heater skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:heating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:level-controllable-output skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:power-delivery;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:mains-power-outlet skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:power-delivery;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:on-off-output .
+  
+  domainfacilitiesvoc:on-off-output skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:mains-power-outlet;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:ventilator skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:ventilating-system;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:console skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:visualization-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:infoscreen skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:visualization-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:touchpanel skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:visualization-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:awning skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:furniture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:radiator skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:furniture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:shade skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:furniture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:shutter skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:furniture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:electric-energy-demand skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:energy-demand;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:water-energy-demand skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:energy-demand;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wood-energy-demand skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:energy-demand;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:boiler skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:utilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:hifi skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:utilities;
+    skos:altLabel "High Fidelity"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:phone skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:utilities;
+    skos:altLabel "Telephone"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:wireless-phone .
+  
+  domainfacilitiesvoc:wireless-phone skos:inScheme <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:broader domainfacilitiesvoc:phone;
+    skos:altLabel "Cell Phone"@en, "Wireless Telephone"@en, "Cellular Telephone"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:access-control-system skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:door-sensor, domainfacilitiesvoc:presence-and-movement-sensor .
+  
+  domainfacilitiesvoc:electrical-system-resource skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:energy skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:electric-energy-supply, domainfacilitiesvoc:energy-property,
+      domainfacilitiesvoc:energy-provider, domainfacilitiesvoc:energy-type, domainfacilitiesvoc:power-generation,
+      domainfacilitiesvoc:power-time-frame .
+  
+  domainfacilitiesvoc:heating-ventilation-and-air-conditioning skos:broader domainfacilitiesvoc:facilities;
+    skos:altLabel "HVAC"@en, "Heating Ventilation & Air Conditioning"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:air-conditioning-system, domainfacilitiesvoc:boiler-controller,
+      domainfacilitiesvoc:burner-controller .
+  
+  domainfacilitiesvoc:heating-ventilation-and-air-conditioning-system-resource skos:broader
+      domainfacilitiesvoc:facilities;
+    skos:altLabel "HVAC system resource"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:real-estate skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:security-system-resource skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:presence-and-movement-sensor, domainfacilitiesvoc:co2-emission,
+      domainfacilitiesvoc:fire-security-system, domainfacilitiesvoc:flood-security-system,
+      domainfacilitiesvoc:occupancy-sensor .
+  
+  domainfacilitiesvoc:site-management skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:energy-demand, domainfacilitiesvoc:building-automation-network,
+      domainfacilitiesvoc:building-site .
+  
+  domainfacilitiesvoc:utilities skos:broader domainfacilitiesvoc:facilities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:boiler, domainfacilitiesvoc:hifi, domainfacilitiesvoc:phone .
+  
+  domainfacilitiesvoc:door-sensor skos:broader domainfacilitiesvoc:access-control-system,
+      domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:presence-and-movement-sensor skos:broader domainfacilitiesvoc:access-control-system,
+      domainfacilitiesvoc:security-system-resource, domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:building-automation-system-resource skos:broader domainfacilitiesvoc:building-site;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:door-sensor, domainfacilitiesvoc:presence-and-movement-sensor,
+      domainfacilitiesvoc:air-conditioning-system, domainfacilitiesvoc:boiler-controller,
+      domainfacilitiesvoc:burner-controller, domainfacilitiesvoc:fire-security-system, domainfacilitiesvoc:flood-security-system,
+      domainfacilitiesvoc:flood-sensor, domainfacilitiesvoc:gas-security-system, domainfacilitiesvoc:gas-sensor,
+      domainfacilitiesvoc:heating-and-cooling-unit, domainfacilitiesvoc:heating-system,
+      domainfacilitiesvoc:infrared-sensor, domainfacilitiesvoc:knob, domainfacilitiesvoc:lighting-system-resource,
+      domainfacilitiesvoc:power-delivery, domainfacilitiesvoc:pump, domainfacilitiesvoc:pump-controller,
+      domainfacilitiesvoc:radiator-actuator, domainfacilitiesvoc:remote-control, domainfacilitiesvoc:scene-selector,
+      domainfacilitiesvoc:self-closing-door-actuator, domainfacilitiesvoc:shade-controller,
+      domainfacilitiesvoc:single-scenario-controller, domainfacilitiesvoc:smoke-sensor,
+      domainfacilitiesvoc:step-shutter-actuator, domainfacilitiesvoc:surveillance-camera,
+      domainfacilitiesvoc:switch, domainfacilitiesvoc:thermostat, domainfacilitiesvoc:toggle-relay,
+      domainfacilitiesvoc:ventilating-system, domainfacilitiesvoc:visualization-system-resource,
+      domainfacilitiesvoc:window-actuator, domainfacilitiesvoc:window-sensor .
+  
+  domainfacilitiesvoc:electric-energy-supply skos:broader domainfacilitiesvoc:energy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:energy-property skos:broader domainfacilitiesvoc:energy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:energy-capacity, domainfacilitiesvoc:energy-cost,
+      domainfacilitiesvoc:energy-demand, domainfacilitiesvoc:energy-gain, domainfacilitiesvoc:energy-supply .
+  
+  domainfacilitiesvoc:energy-provider skos:broader domainfacilitiesvoc:energy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:coal-energy-demand, domainfacilitiesvoc:cold-energy-supply,
+      domainfacilitiesvoc:district-cooling-provider, domainfacilitiesvoc:district-energy-provider,
+      domainfacilitiesvoc:district-heating-provider, domainfacilitiesvoc:electric-energy-provider,
+      domainfacilitiesvoc:gas-energy-demand, domainfacilitiesvoc:gas-energy-provider, domainfacilitiesvoc:green-energy-provider,
+      domainfacilitiesvoc:heat-energy-supply, domainfacilitiesvoc:non-green-energy-provider,
+      domainfacilitiesvoc:oil-energy-provider, domainfacilitiesvoc:water-energy-provider,
+      domainfacilitiesvoc:wood-energy-provider .
+  
+  domainfacilitiesvoc:energy-type skos:broader domainfacilitiesvoc:energy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:energy-source, domainfacilitiesvoc:final-energy,
+      domainfacilitiesvoc:useful-energy .
+  
+  domainfacilitiesvoc:power-generation skos:broader domainfacilitiesvoc:energy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:geothermal, domainfacilitiesvoc:hydropower, domainfacilitiesvoc:solar,
+      domainfacilitiesvoc:wind .
+  
+  domainfacilitiesvoc:power-time-frame skos:broader domainfacilitiesvoc:energy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:energy-capacity skos:broader domainfacilitiesvoc:energy-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:caloric-energy-capacity, domainfacilitiesvoc:electric-energy-capacity .
+  
+  domainfacilitiesvoc:energy-cost skos:broader domainfacilitiesvoc:energy-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:ecological-energy-cost, domainfacilitiesvoc:monetary-energy-cost .
+  
+  domainfacilitiesvoc:energy-demand skos:broader domainfacilitiesvoc:site-management,
+      domainfacilitiesvoc:energy-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:electric-energy-demand, domainfacilitiesvoc:water-energy-demand,
+      domainfacilitiesvoc:wood-energy-demand .
+  
+  domainfacilitiesvoc:energy-gain skos:broader domainfacilitiesvoc:energy-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:monetary-gain .
+  
+  domainfacilitiesvoc:energy-supply skos:broader domainfacilitiesvoc:energy-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:caloric-energy-capacity skos:broader domainfacilitiesvoc:energy-capacity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:electric-energy-capacity skos:broader domainfacilitiesvoc:energy-capacity;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:ecological-energy-cost skos:broader domainfacilitiesvoc:energy-cost;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:emission, domainfacilitiesvoc:waste-disposal .
+  
+  domainfacilitiesvoc:monetary-energy-cost skos:broader domainfacilitiesvoc:energy-cost;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:emission skos:broader domainfacilitiesvoc:ecological-energy-cost;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:waste-disposal skos:broader domainfacilitiesvoc:ecological-energy-cost;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:monetary-gain skos:broader domainfacilitiesvoc:energy-gain;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:coal-energy-demand skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:cold-energy-supply skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:district-cooling-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:district-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:district-heating-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:electric-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:gas-energy-demand skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:gas-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:green-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:heat-energy-supply skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:non-green-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:oil-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:water-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wood-energy-provider skos:broader domainfacilitiesvoc:energy-provider;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:energy-source skos:broader domainfacilitiesvoc:energy-type;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:primary-energy-source, domainfacilitiesvoc:secondary-energy-source .
+  
+  domainfacilitiesvoc:final-energy skos:broader domainfacilitiesvoc:energy-type;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:useful-energy skos:broader domainfacilitiesvoc:energy-type;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:primary-energy-source skos:broader domainfacilitiesvoc:energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:non-renewable, domainfacilitiesvoc:renewable .
+  
+  domainfacilitiesvoc:secondary-energy-source skos:broader domainfacilitiesvoc:energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:electric-energy-source .
+  
+  domainfacilitiesvoc:non-renewable skos:broader domainfacilitiesvoc:primary-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:coal-energy-source, domainfacilitiesvoc:natural-gas-energy-source,
+      domainfacilitiesvoc:nuclear-energy-source, domainfacilitiesvoc:oil-energy-source .
+  
+  domainfacilitiesvoc:renewable skos:broader domainfacilitiesvoc:primary-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:bio-gas-energy-source, domainfacilitiesvoc:biomass-energy-source,
+      domainfacilitiesvoc:geothermal-energy-source, domainfacilitiesvoc:solar-energy-source,
+      domainfacilitiesvoc:water-energy-source, domainfacilitiesvoc:wind-energy-source, domainfacilitiesvoc:wood-energy-source .
+  
+  domainfacilitiesvoc:coal-energy-source skos:broader domainfacilitiesvoc:non-renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:natural-gas-energy-source skos:broader domainfacilitiesvoc:non-renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:nuclear-energy-source skos:broader domainfacilitiesvoc:non-renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:oil-energy-source skos:broader domainfacilitiesvoc:non-renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:bio-gas-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:biomass-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:geothermal-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:solar-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:water-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:hydroelectric-energy-source, domainfacilitiesvoc:tidal-energy-source,
+      domainfacilitiesvoc:wave-energy-source .
+  
+  domainfacilitiesvoc:wind-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wood-energy-source skos:broader domainfacilitiesvoc:renewable;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainfacilitiesvoc:chip-wood-energy-source, domainfacilitiesvoc:hard-wood-energy-source,
+      domainfacilitiesvoc:pellet-wood-energy-source, domainfacilitiesvoc:soft-wood-energy-source .
+  
+  domainfacilitiesvoc:hydroelectric-energy-source skos:broader domainfacilitiesvoc:water-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:tidal-energy-source skos:broader domainfacilitiesvoc:water-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wave-energy-source skos:broader domainfacilitiesvoc:water-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:chip-wood-energy-source skos:broader domainfacilitiesvoc:wood-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:hard-wood-energy-source skos:broader domainfacilitiesvoc:wood-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:pellet-wood-energy-source skos:broader domainfacilitiesvoc:wood-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:soft-wood-energy-source skos:broader domainfacilitiesvoc:wood-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:electric-energy-source skos:broader domainfacilitiesvoc:secondary-energy-source;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:geothermal skos:broader domainfacilitiesvoc:power-generation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:hydropower skos:broader domainfacilitiesvoc:power-generation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:solar skos:broader domainfacilitiesvoc:power-generation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:wind skos:broader domainfacilitiesvoc:power-generation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:air-conditioning-system skos:broader domainfacilitiesvoc:heating-ventilation-and-air-conditioning,
+      domainfacilitiesvoc:building-automation-system-resource;
+    skos:altLabel "AC System"@en, "Air Con System"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:boiler-controller skos:broader domainfacilitiesvoc:heating-ventilation-and-air-conditioning,
+      domainfacilitiesvoc:building-automation-system-resource;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-facilities/> skos:altLabel "Vocabulary | Domain | Facilities"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-facilities/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainfacilitiesvoc:facilities owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-facilities/>;
+    skos:narrower domainfacilitiesvoc:access-control-system, domainfacilitiesvoc:electrical-system-resource,
+      domainfacilitiesvoc:energy, domainfacilitiesvoc:heating-ventilation-and-air-conditioning,
+      domainfacilitiesvoc:heating-ventilation-and-air-conditioning-system-resource, domainfacilitiesvoc:real-estate,
+      domainfacilitiesvoc:security-system-resource, domainfacilitiesvoc:site-management,
+      domainfacilitiesvoc:utilities .
+}

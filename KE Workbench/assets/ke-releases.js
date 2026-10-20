@@ -2,6 +2,110 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '3.5.0', date: '2026-10-20', title: 'Service Assembly: Service › Process › Process step, with SIPOCM',
+    groups: [
+      { kind: 'new', items: [
+        'Service Assembly shows each service as the processes that enable it (core:supports), each process as its steps in order (core:hasStep, core:precedes), and the step that hands the service over (core:deliveryOf). Click a process or a step to drill down; the breadcrumb goes Assembly › Service › Process › Step.',
+        'SIPOCM table for every service, one row per step, grouped by process: supplier, input, process step (and who performs it), output, customer and measure. Suppliers and customers inside the assembly are derived from the data flow (the step that produces an input, or consumes an output); parties outside it are read from has supplier and has customer (Commercial Operations container 0.3.0). The step detail lists the same, with each measure\u2019s definition, unit and direction.',
+        'Used by and copy number for processes as well as steps; a Process filter in the service list; Coverage shows processes by service and steps by service.'
+      ]},
+      { kind: 'improved', items: [
+        'Buyer personas, job steps and desired outcomes are no longer shown on Service Assembly: they are a separate assembly, the value map (design decision D24), which gets its own Value Mapping page. The page lists only manifests that contain service graphs, and flags any reference from the service assembly to the persona graph or value map as an error.'
+      ]}
+    ]
+  },
+  {
+    version: '3.4.0', date: '2026-10-20', title: 'Service Assembly: the services of a domain and the steps that deliver them',
+    groups: [
+      { kind: 'new', items: [
+        'Service Assembly (Model & standards): pick a domain assembly by its release manifest (core concept “Release manifest”) and see its services, each with its delivery step (core:deliveryOf), the steps that support it (core:supports) and their order (core:precedes). The page reads only the graphs the manifest lists and the taxonomies, ontologies and shapes it requires, from GraphDB, and writes nothing.',
+        'Drill down from a service to a step: what it uses and produces, its stage, kind and mode (manual, automated or hybrid, from core:performedBy), the role it fulfills, the job steps it addresses, and Used by: every service that contains the step (its copy number), so the reach of a change is visible before it is made.',
+        'Job steps addressed: each desired outcome of the persona graph with its metric card and target, beside the baseline the service delivers today, marked value gap, met or not measured.',
+        'Validation for each service and step: the core, container and domain SHACL shapes (targetClass, path and inverse path, class, or, min and max count) and the assembly checks (typed by a loaded class, classified by a loaded concept, no reference to a sibling domain), after the owl:inverseOf pairs are applied. Filter the catalog by stage, mode, or errors, warnings and value gaps.',
+        'Coverage: steps by service (shared steps first, the platform candidates) and job steps by service, with the job steps no service addresses marked, filterable by buyer stage.'
+      ]}
+    ]
+  },
+  {
+    version: '3.3.0', date: '2026-10-20', title: 'Conformance Review: dispositions that train the ingestion agents',
+    groups: [
+      { kind: 'new', items: [
+        'Disposition for every finding in Conformance Review: Fixed by the staged changes, Accept as is (an exception), Not an issue (the rule fired wrongly), Defer, or Needs a modeling decision — with a rationale. Several selected findings can be dispositioned at once. The last decision on a term is shown with it.',
+        'Each decision is recorded in ingest/feedback/dispositions.jsonl (append-only, schema in ingest/feedback/README.md): the term and the context the agent saw, the findings, what the tool suggested, what the reviewer decided and changed, the Claude draft a reviewer corrected, and why. Fixes are recorded when the change set is saved; the other dispositions when you click Record. Download the training set from the left panel.',
+        'Ingestion learns from the decisions: fixes are replayed when the same term is ingested again with the value the reviewer replaced (label, definition, description, vocabulary link, formalized by); findings accepted or marked not an issue are reported as information with the rationale; and Claude is shown the definitions reviewers approved, corrected drafts first, when it writes new ones. The ingestion report lists what was applied under “Applied from review decisions”. Set "learnFromReview": false in the configuration to switch it off.',
+        'New category “Not formalized by a class”: taxonomy concepts that neither carry core:formalizedBy nor sit under a concept that does, reported on the broadest such concept with the number of concepts that depend on it. Formalize by a likely class (same label, same primary term, head word, an earlier decision, or what the other top concepts use) or any class, one at a time or in bulk.'
+      ]},
+      { kind: 'improved', items: [
+        'Findings accepted or marked not an issue leave the queue (Show staged, skipped and dispositioned brings them back); deferred and escalated ones stay, tagged.'
+      ]}
+    ]
+  },
+  {
+    version: '3.2.0', date: '2026-10-20', title: 'Core domain ontology includes the core taxonomies; expandable tree with levels',
+    groups: [
+      { kind: 'new', items: [
+        'The core domain ontology imports the 23 core taxonomies (owl:imports), so it includes every core taxonomy and its concepts. Concepts stay linked to their classes by core:formalizedBy, stated in the taxonomies; no class, relation or concept changed and the version stays 0.1.0 (Draft). Updated in ingest/core/ontology-core.source.ttl, in Baseline Core v1.0 (ttl and trig) and in GraphDB, with a change record (change-record-2026-10-20T121500Z) in the audit log.',
+        'Model Editor (Ontology) Tree view is an expandable hierarchy: the edited ontology\u2019s classes, the subclasses other loaded ontologies add, the taxonomy concepts each class formalizes and their narrower concepts. Double-click a term, or click the chip at its lower right (+N = N hidden below it, − = open), to expand or collapse it.',
+        'Levels control (− Levels n + All) on the canvas: how many levels of the hierarchy are open. Show ontology goes back to the default: every class open with the first level of concepts under it.',
+        'Taxonomy concepts that no class formalizes yet hang under their taxonomy (shown as a root marked “concepts not yet formalized by a class”), so every concept of every shown taxonomy is in the tree.'
+      ]},
+      { kind: 'improved', items: [
+        'A term goes under its most specific parent within the tree, so a class that also specializes a BFO class sits under its core parent (information asset under asset), and the BFO parents sit in a column on the right.',
+        'The tree is rebuilt from the data each time; the editor remembers per ontology how far it was opened and the terms you placed by hand. Layouts saved before 3.2.0 are ignored.',
+        'Turning a tier off removes what it contributes to the tree (for example the taxonomy concepts, which are secondary).',
+        'Imports that name a version IRI (…/ontology/core/0.1.0/, as the Commercial Operations domain ontologies do) resolve to the ontology, so its relations show as secondary.'
+      ]}
+    ]
+  },
+  {
+    version: '3.1.0', date: '2026-10-19', title: 'Model Editor (Ontology): imported relations, domain ontologies, Force and List views',
+    groups: [
+      { kind: 'new', items: [
+        'Relations of every loaded model, in three tiers: primary (the ontology being edited — editable), secondary (its imports and any model you tick or drag in) and tertiary (the imports of those). Secondary and tertiary relations are read-only and drawn lighter (solid grey, then dotted); the toolbar toggles each tier. Hover a line, or select it, to see which model states it; the Inspector lists a term\u2019s own relations and those stated elsewhere, and offers to open the model that states one.',
+        'New ontology…: creates a domain ontology (version 0.1.0, Draft, with the core domain ontology\u2019s header fields) that imports the core domain ontology and any taxonomies and vocabularies you pick, writes a change record to the audit log and opens it.',
+        'New class…: adds a class to the ontology being edited, with a hyphen-joined IRI in its namespace, a definition, its parent class (is a), its primary term (core:hasPrimaryTerm and dcterms:subject) and other primitives. On a vocabulary term or taxonomy concept, New class from this term… builds the class from that primitive, or records that the concept is formalized by the new class.',
+        '+ import / − import on each model in the Models list: owl:imports changes are pending until Save, and the imported model\u2019s relations appear as secondary straight away.',
+        'Force view: a force-directed layout of the terms on the diagram, with springs along the shown relations. Dragged terms stay pinned; Re-run unpins them. Tree restores the tree layout.',
+        'List view: every shown relation as a sortable table (subject, relation, object, stated in, tier), grouped by model, or every loaded class and term with its parents and number of relations. Click a row to inspect it; double-click to put it on the diagram.',
+        'The relation picker offers each loaded ontology\u2019s own relations (core domain ontology first), the links to primitives and concepts (formalized by, has primary term, subject, related, exact and close match) and the BFO and RO relations, grouped.',
+        'Every save writes a PROV-O change record to the audit log (…/graph/change-log) listing the classes, relations and imports added or removed, and updates dct:modified on the ontology.'
+      ]},
+      { kind: 'improved', items: [
+        'Show ontology also places the classes outside the ontology that its classes specialize (for the core domain ontology, the BFO classes), so the lineage to the imported models is visible.',
+        'Deleting a relation removes it only from the edited ontology\u2019s own graph; the same triple stated in a taxonomy or another ontology is left alone.'
+      ]},
+      { kind: 'fixed', items: [
+        'Dragging an ontology onto the canvas of another (for example the core domain ontology onto core.owl) placed its classes but none of its relations.'
+      ]}
+    ]
+  },
+  {
+    version: '3.0.0', date: '2026-10-19', title: 'Baseline Core v1.0: primitives, hyphen-joined identifiers and the Jobs model',
+    groups: [
+      { kind: 'breaking', items: [
+        'Identifiers join words with hyphens: classes, taxonomy concepts and vocabulary terms are lower-case words joined by hyphens (…/taxonomy/core-process/approval-step, …/ontology/core/process-step), so a polymorphic term stays a phrase and never becomes a new word (§3.2 as amended). Ingestion mints identifiers this way, the Part III checks and the browser rules expect it, Conformance Review proposes it and Model Editor (Taxonomy) creates it. KE Baseline/Baseline Core v1.0/review/crosswalk-v1.csv maps every old IRI to its new one.',
+        'KE Baseline is now Baseline Core v1.0 (the ingestable set) and Archive Baseline Core v0.1 (everything earlier). Ingestion, Reference ontologies and build_core.py point at Baseline Core v1.0.'
+      ]},
+      { kind: 'new', items: [
+        'Primitives: 367 primitives added to the core vocabularies after a term-by-term review, and seven new core vocabularies (decision, governance, job, logic, measure, policy, value). Every one of the 922 taxonomy concepts is linked to the primitives it is built from (dcterms:subject) and to its head primitive (core:hasPrimaryTerm).',
+        'Core job taxonomy and the Jobs model in the core domain ontology: job, job step, desired outcome and delivered outcome; personas perform jobs; process steps address job steps (intentionally not one-to-one), so value gaps can be measured.',
+        'Core domain ontology rebuilt to the asset model: asset is the genus; product, service, offering and platform are assets assembled from other assets (has component); every asset has a lifecycle; delivery of, delivers, supports and addresses added. 36 classes, all under BFO 2020; every relation under BFO, RO or IAO, an inverse, or a property chain.',
+        'Shapes for jobs, job steps, desired and delivered outcomes and assets (lifecycle); performed by accepts a party (manual) or a digital agent (automated).',
+        'RO extract 0.2.0 adds causally upstream of, the parent of addresses and supports.',
+        'graphdb-rebuild.command in Baseline Core v1.0: backs up, clears and reloads a repository in dependency order, then checks lineage. The audit log (…/graph/change-log) is append-only: it is saved before the clear, put back after it, and the change records in trig/ are added to it.',
+        'Audit log: five PROV-O change records for the changes made outside the workbench on 2026-10-19, in Baseline Core v1.0/ttl and trig (change-record-*): core domain ontology rebuilt on BFO (2.2.0); other organization\'s content removed; KE Baseline split into Baseline Core v1.0 and Archive Baseline Core v0.1; primitives backfill, hyphen-joined identifiers and relinking; core domain ontology rebuilt to the asset and Jobs model. Each names the assets it used, generated or superseded and says it was recorded retrospectively. ingest/migrate_v1/change_records.py writes them.'
+      ]},
+      { kind: 'improved', items: [
+        'Personas are no longer typed by role (the engineering persona types and persona role are removed); product terms no longer carry the marketing lifecycle stages; Verizon content removed from the core set.'
+      ]},
+      { kind: 'fixed', items: [
+        'Model Editor (Vocabulary), Conformance Review and Ingestion failed with "…/KE Baseline/ttl is not a folder": the browser still remembered the folder from before the move to Baseline Core v1.0. A remembered folder that no longer exists now falls back to the current destination (Baseline Core v1.0).',
+        'Model Editor (Ontology) showed no relations for the rebuilt core domain ontology: it restored the layout saved for the same ontology IRI before the identifiers changed, so it placed boxes for terms that no longer exist (ProcessStep) and none of the current ones (process-step). A saved layout is now dropped when most of its terms are gone, and the class hierarchy is laid out afresh.',
+        'Model Editor (Ontology) labels relations from any ontology by their rdfs:label (has role, is step of), not only BFO and RO relations; core relations showed as camelCase local names.'
+      ]}
+    ]
+  },
+  {
     version: '2.2.0', date: '2026-10-19', title: 'Core domain ontology on BFO, anchored on the process step',
     groups: [
       { kind: 'breaking', items: [
@@ -13,6 +117,8 @@ window.KE_RELEASES = [
         'Core domain shapes (…/shapes/core/): a step must belong to a process (violation); events, directives, measures and issues not tied to a step, and steps with no performer, are warnings.',
         'core:formalizedBy on the top concepts of all 22 core taxonomies (96 links): the path from each taxonomy to BFO. Eight concepts are left for a modeling decision (financial and intangible assets, six value concepts).',
         'RO extract (reference/ro-extract.ttl): the BFO 2020 relations the OBO bfo.owl lacks, has input and has output from RO, and is about from IAO. Ingestion › Reference ontologies has a third row for it, and Load all three.',
+        'KE Baseline is split in two: Baseline Core v1.0 holds only the ingestable set (vocabularies, taxonomies, core domain ontology, shapes, and BFO 2020, RO Core and the RO extract under reference/), with graphdb-rebuild.command to back up, clear and reload a repository in dependency order and check lineage; everything else is in Archive Baseline Core v0.1. Ingestion, its Reference ontologies defaults and build_core.py point at the new folder.',
+        'Verizon content removed from the core set (foreign individuals in the compliance taxonomy, Verizon organization units, Hum); 0 blocking conformance errors.',
         'ingest/build_core.py builds the ontology and shapes from their authored sources in ingest/core/, adds labels and governance fields, runs the Part III checks and a lineage check (every class reaches BFO, every relation reaches BFO/RO), and writes core:formalizedBy into the taxonomies from ingest/core/formalized-by.csv.'
       ]}
     ]

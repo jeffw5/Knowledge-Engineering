@@ -1,0 +1,1160 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/core-businessoperations/> {
+  <https://www.insperity.com/taxonomy/core-businessoperations/> a owl:Ontology;
+    rdfs:label "Core business operations taxonomy"@en;
+    terms:description "The business operations taxonomy categorizes and organizes information, providing a comprehensive view of the organization's operational landscape"@en;
+    terms:title "Core businessoperations taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T02:20:31Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en,
+      "2026-10-17: Conformance Review before release — 1 label changed."@en, "2026-10-17: Conformance Review before release — 1 description changed."@en;
+    terms:created "2025-03-26T14:43:19.667Z"^^xsd:dateTime;
+    skos:altLabel "Taxonomy | Core | Business Operations"@en, "Core businessoperations taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    owl:imports <https://www.insperity.com/taxonomy/core-process/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/core-businessoperations/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/taxonomy/core-businessoperations/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations> a
+      owl:Class;
+    rdfs:label "Business operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Business operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The ongoing, recurring activities involved in running a business for the purpose of generating revenue and profit."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:business-operations;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/AnalyticsReporting> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations>;
+    rdfs:label "Analytics & reporting"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Analytics & reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of collecting, analyzing, and presenting data to track performance, identify trends, and support decision-making."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:analytics-and-reporting;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalytics> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/AnalyticsReporting>;
+    rdfs:label "Data analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of examining raw data to extract meaningful insights and patterns."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DescriptiveAnalytics>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalytics>;
+    rdfs:label "Descriptive analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Descriptive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The interpretation of historical data to understand past performance and trends."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:descriptive-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DiagnosticAnalytics> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalytics>;
+    rdfs:label "Diagnostic analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Diagnostic analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Analyzing data to determine the root cause of a problem or trend."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:diagnostic-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/PredictiveAnalytics> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalytics>;
+    rdfs:label "Predictive analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Predictive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Using data, statistical algorithms, and machine learning techniques to predict future outcomes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:predictive-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/PrescriptiveAnalytics>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalytics>;
+    rdfs:label "Prescriptive analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Prescriptive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Providing recommendations on actions to take to achieve a desired outcome."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:prescriptive-analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataVisualization> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/AnalyticsReporting>;
+    rdfs:label "Data visualization"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data visualization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Representing data graphically to make it easier to understand and interpret."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-visualization;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/PerformanceMeasurement>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/AnalyticsReporting>;
+    rdfs:label "Performance measurement"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Performance measurement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of quantifying the efficiency and effectiveness of an organization’s activities."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:performance-measurement;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Benchmarking> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/PerformanceMeasurement>;
+    rdfs:label "Benchmarking"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Benchmarking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Comparing an organization’s performance against industry best practices or competitors."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:benchmarking;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalysis> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/PerformanceMeasurement>;
+    rdfs:label "Data analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of inspecting, cleaning, transforming, and modeling data to discover useful information."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataCleaning> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalysis>;
+    rdfs:label "Data cleaning"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data cleaning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and correcting errors and inconsistencies in a dataset."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-cleaning;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataCollection> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalysis>;
+    rdfs:label "Data collection"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data collection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of gathering data from various sources."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-collection;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataPreparation> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/DataAnalysis>;
+    rdfs:label "Data preparation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data preparation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of transforming raw data into a format suitable for analysis."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-preparation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/KeyPerformanceIndicators>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/PerformanceMeasurement>;
+    rdfs:label "Key performance indicators"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Key performance indicators"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Measurable values that demonstrate how effectively an organization is achieving key business objectives."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:key-performance-indicators;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Communications> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations>;
+    rdfs:label "Communications"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Communications"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The exchange of information between two or more people."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:communications;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CrisisCommunication> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Communications>;
+    rdfs:label "Crisis communication"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Crisis communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of communicating with the public and stakeholders during a crisis."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:crisis-communication;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ExternalCommunication>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Communications>;
+    rdfs:label "External communication"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "External communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Communication between an organization and its external stakeholders (e.g., customers, investors)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:external-communication;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/InternalCommunication>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Communications>;
+    rdfs:label "Internal communication"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Internal communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Communication within an organization, between employees and management."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:internal-communication;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/QualityManagement> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations>;
+    rdfs:label "Quality management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Quality management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The act of overseeing all activities and tasks needed to maintain a desired level of excellence."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:quality-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ContinuousImprovement>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/QualityManagement>;
+    rdfs:label "Continuous improvement"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Continuous improvement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "An ongoing effort to improve products, services, or processes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:continuous-improvement;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/QualityAssurance> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/QualityManagement>;
+    rdfs:label "Quality assurance"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Quality assurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A system of preventing mistakes and defects in manufactured products and avoiding problems when delivering services to customers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:quality-assurance;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/QualityControl> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/QualityManagement>;
+    rdfs:label "Quality control"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Quality control"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A process that ensures products or services meet predefined quality standards."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:quality-control;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/QualityPlanning> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/QualityManagement>;
+    rdfs:label "Quality planning"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Quality planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Defining quality standards and determining how to meet them."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:quality-planning;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/TotalQualityManagement>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/QualityManagement>;
+    rdfs:label "Total quality management"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Total quality management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A management approach that aims to involve all employees in the continuous improvement of quality."@en;
+    skos:altLabel "Total quality management"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:total-quality-management;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Strategy> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations>;
+    rdfs:label "Strategy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A plan of action designed to achieve a long-term or overall aim."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:strategy;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Business model canvas"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Business model canvas"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategic management template for developing new business models or documenting existing ones."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:business-model-canvas;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Channels> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Channels"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Channels"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Channels describe how a company communicates with and reaches its customer segments to deliver its value proposition. This includes channels for raising awareness, evaluating your product, purchasing, delivering the product/service, and providing post-purchase support."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:channels;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CostStructure> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Cost structure"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Cost structure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The cost structure defines all the significant expenses a company incurs to operate its business model. This includes fixed costs (e.g., rent, salaries) and variable costs (e.g., raw materials, marketing expenses)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:cost-structure;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CustomerRelationships>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Customer relationships"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Customer relationships"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "This describes the types of relationships a company establishes with its customer segments. This could range from personal and hands-on to automated and self-service. Examples include personal assistance, dedicated account managers, self-service portals, and automated email communication."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:customer-relationships;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CustomerSegmentation>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Customer segmentation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Customer segmentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Customer segmentation involves dividing a company’s target market into distinct groups based on shared characteristics like demographics, behaviors, needs, and wants. This allows for more targeted marketing and product development."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:customer-segmentation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/KeyActivities> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Key activities"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Key activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Key activities are the most important actions a company must perform to operate successfully. These are the crucial tasks that directly contribute to delivering the value proposition, reaching customers, maintaining relationships, and generating revenue."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:key-activities;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/KeyPartnerships> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Key partnerships"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Key partnerships"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Key partnerships refer to the network of suppliers and partners that make the business model possible. This can include strategic alliances with other companies, joint ventures, or buyer-supplier relationships."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:key-partnerships;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/KeyResources> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Key resources"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Key resources"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Key resources are the most important assets required to make the business model work. These can be physical (e.g., manufacturing facilities, inventory), intellectual (e.g., patents, brand), human (e.g., skilled employees), or financial (e.g., funding, lines of credit)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:key-resources;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/RevenueStreams> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessModelCanvas>;
+    rdfs:label "Revenue streams"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Revenue streams"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Revenue streams represent the cash a company generates from each customer segment. This outlines how the company makes money, whether through product sales, service fees, subscriptions, licensing, advertising, or other means."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:revenue-streams;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CompetitiveAdvantage>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Competitive advantage"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Competitive advantage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A condition that allows a company to operate in a more efficient or otherwise higher-quality manner than its competitors."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:competitive-advantage;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CompetitiveAnalysis> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/CompetitiveAdvantage>;
+    rdfs:label "Competitive analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Competitive analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategic assessment that identifies and evaluates competitors to understand their strengths, weaknesses, strategies, and objectives. This information helps businesses make informed decisions to gain a competitive edge."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:competitive-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CoreCompetencies> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/CompetitiveAdvantage>;
+    rdfs:label "Core competencies"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Core competencies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Unique strengths and capabilities that differentiate a company from its rivals. These are deeply ingrained within a company’s structure, processes, and culture, making them difficult for competitors to replicate."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:core-competencies;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/SustainableAdvantage>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/CompetitiveAdvantage>;
+    rdfs:label "Sustainable advantage"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Sustainable advantage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A long-term competitive advantage that is difficult for competitors to imitate or overcome. It arises from factors such as strong brand equity, proprietary technology, or exclusive access to resources."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:sustainable-advantage;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ValueProposition> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/CompetitiveAdvantage>;
+    rdfs:label "Value proposition"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Value proposition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A clear statement that explains the benefits customers receive by choosing a particular product or service over alternatives. It outlines how the offering solves a customer problem or fulfills a need better than the competition."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:value-proposition;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CostLeadership> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Cost leadership"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Cost leadership"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy focused on having the lowest cost of production and operation in the industry."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:cost-leadership;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Differentiation> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Differentiation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Differentiation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy focused on offering unique products or services that customers value."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:differentiation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Focus> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Focus"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Focus"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy focused on serving a specific niche market segment."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:focus;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/GrowthStrategies> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Growth strategies"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Growth strategies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Strategies that focus on increasing revenue, market share, or both."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:growth-strategies;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Diversification> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/GrowthStrategies>;
+    rdfs:label "Diversification"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Diversification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy of entering new markets or offering new products that are unrelated to a company’s core business."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:diversification;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/MarketDevelopment> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/GrowthStrategies>;
+    rdfs:label "Market development"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Market development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy of selling existing products or services in new markets."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:market-development;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/MarketPenetration> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/GrowthStrategies>;
+    rdfs:label "Market penetration"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Market penetration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy of increasing sales of existing products or services to existing market segments."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:market-penetration;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ProductDevelopment> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/GrowthStrategies>;
+    rdfs:label "Product development"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Product development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A strategy of developing new products or services for existing markets."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:product-development;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/OperationalEfficiency>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Operational efficiency"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Operational efficiency"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Performing business processes in the most cost-effective and productive manner."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:operational-efficiency;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ProcessOptimization> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/OperationalEfficiency>;
+    rdfs:label "Process optimization"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Process optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The practice of identifying and eliminating bottlenecks and inefficiencies in business processes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:process-optimization;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ResourceAllocation> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/OperationalEfficiency>;
+    rdfs:label "Resource allocation"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Resource allocation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The process of assigning resources (e.g., capital, labor) to different parts of an organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:resource-allocation;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/WasteReduction> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/OperationalEfficiency>;
+    rdfs:label "Waste reduction"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Waste reduction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Minimizing or eliminating the unnecessary use of resources."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:waste-reduction;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/SwotAnalysis> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Strengths, weaknesses, opportunities and threats analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Strengths, weaknesses, opportunities and threats analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A planning tool used to analyze an organization’s strengths, weaknesses, opportunities, and threats."@en;
+    skos:altLabel "SWOT analysis"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:strengths-weaknesses-opportunities-and-threats-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ExternalAnalysis> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/SwotAnalysis>;
+    rdfs:label "External analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "External analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Analyzing the external environment to identify opportunities and threats."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:external-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/InternalAnalysis> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/SwotAnalysis>;
+    rdfs:label "Internal analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Internal analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Analyzing an organization’s internal environment to identify strengths and weaknesses."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:internal-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/StrategicFit> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/SwotAnalysis>;
+    rdfs:label "Strategic fit"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Strategic fit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The degree to which an organization’s resources and capabilities align with its external environment."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:strategic-fit;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis> a
+      owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Strategy>;
+    rdfs:label "Value chain analysis"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Value chain analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A tool used to analyze the activities an organization performs to create value for its customers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:value-chain-analysis;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/InboundLogistics> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis>;
+    rdfs:label "Inbound logistics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Inbound logistics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The receiving, warehousing, and inventory control of input materials."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:inbound-logistics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/MarketingSales> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis>;
+    rdfs:label "Marketing & sales"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Marketing & sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Activities related to promoting and selling products or services."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:marketing-and-sales;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Operations> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis>;
+    rdfs:label "Operations"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The transformation of inputs into outputs (i.e., the production process)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:operations;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/OutboundLogistics> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis>;
+    rdfs:label "Outbound logistics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Outbound logistics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The collection, storage, and distribution of finished goods to customers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:outbound-logistics;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Service> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis>;
+    rdfs:label "Service"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Activities related to providing after-sales support to customers."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:service;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/SupportActivities> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/ValueChainAnalysis>;
+    rdfs:label "Support activities"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Support activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Activities that support the primary activities of the value chain (e.g., procurement, technology development)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:support-activities;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Sustainability> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations>;
+    rdfs:label "Sustainability"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Meeting the needs of the present without compromising the ability of future generations to meet their own needs."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:sustainability;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CircularEconomy> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Sustainability>;
+    rdfs:label "Circular economy"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Circular economy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "An economic system aimed at eliminating waste and the continual use of resources."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:circular-economy;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CorporateSocialResponsibility>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Sustainability>;
+    rdfs:label "Corporate social responsibility"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Corporate social responsibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "A business approach that contributes to sustainable development by delivering economic, social and environmental benefits for all stakeholders."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:corporate-social-responsibility;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/EconomicSustainability>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Sustainability>;
+    rdfs:label "Economic sustainability"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Economic sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Ensuring that business activities are profitable and contribute to economic growth."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:economic-sustainability;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/EnvironmentalSustainability>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Sustainability>;
+    rdfs:label "Environmental sustainability"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Environmental sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Minimizing the negative impact of business activities on the environment."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:environmental-sustainability;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/SocialSustainability>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Sustainability>;
+    rdfs:label "Social sustainability"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Social sustainability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "Ensuring that business activities benefit society and do not have negative social impacts."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:social-sustainability;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Technology> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/BusinessOperations>;
+    rdfs:label "Technology"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The application of scientific knowledge for practical purposes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:technology;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/ArtificialIntelligence>
+    a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Technology>;
+    rdfs:label "Artificial intelligence"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Artificial intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The simulation of human intelligence processes by machines, especially computer systems."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:artificial-intelligence;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/CloudComputing> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Technology>;
+    rdfs:label "Cloud computing"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Cloud computing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet (“the cloud”)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:cloud-computing;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/DataStorage> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Technology>;
+    rdfs:label "Data storage"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Data storage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The recording and retention of digital data."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:data-storage;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Hardware> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Technology>;
+    rdfs:label "Hardware"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Hardware"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The physical components of a computer system."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:hardware;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Networking> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Technology>;
+    rdfs:label "Networking"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Networking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The practice of connecting two or more computing devices together for the purpose of sharing data."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:networking;
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/core-businessoperations/Software> a owl:Class;
+    rdfs:subClassOf <https://www.insperity.com/taxonomy/core-businessoperations/Technology>;
+    rdfs:label "Software"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/taxonomy/core-businessoperations/>;
+    skos:prefLabel "Software"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-17T01:38:18Z"^^xsd:dateTime;
+    terms:created "2025-03-26T14:59:08.236Z"^^xsd:dateTime;
+    skos:definition "The programs and other operating information used by a computer."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject businessoperationsvoc:software;
+    core:hasLifecycleStatus core:Draft .
+}

@@ -1,0 +1,296 @@
+# Change record 2026-10-19T184337Z for the https://www.insperity.com/graph/change-log graph (append-only, §3.3)
+# Recorded retrospectively on 2026-10-19T19:06:10Z for a change made outside the KE Workbench
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.insperity.com/graph/change-log> {
+
+  <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> a prov:Activity , dct:ProvenanceStatement ;
+    rdfs:label "Primitives backfill, hyphen-joined identifiers and relinking (Baseline Core v1.0), 2026-10-19T18:43:37Z"@en ;
+    dct:description "After a term-by-term review with Jeffrey Wallk (design decisions 1-30, review/design-decisions.md): 367 primitives were added to the core vocabularies (review/primitives-added.txt, registry review/primitives-v1.tsv), with seven new vocabularies (decision, governance, job, logic, measure, policy, value); job, journey and outcome moved from the requirements vocabulary to the job vocabulary, and the polymorphic job terms became concepts of the new core job taxonomy. Personas are no longer typed by role (seven engineering persona types and persona role removed); the product marketing lifecycle stages were removed. 912 taxonomy concept IRIs were changed to hyphen-joined words (§3.2 as amended); every one of the 922 concepts now carries dcterms:subject to each primitive it is built from and core:hasPrimaryTerm to its head primitive (review/concept-links.csv). review/crosswalk-v1.csv maps every old IRI to its new one or records its removal. Versions stay 0.1.0 (Draft). Changed outside the KE Workbench; recorded retrospectively on 2026-10-19T19:06:10Z."@en ;
+    dct:creator "Jeffrey Wallk" ;
+    dct:contributor "Claude (AI assistant), at the direction of Jeffrey Wallk" ;
+    prov:startedAtTime "2026-10-19T18:43:37Z"^^xsd:dateTime ;
+    prov:endedAtTime "2026-10-19T18:43:37Z"^^xsd:dateTime ;
+    dct:date "2026-10-19T19:06:10Z"^^xsd:dateTime ;
+    dct:source "primitives-v1.tsv" ,
+    "m1_vocab.py" ,
+    "m2_taxonomy.py" ,
+    "design-decisions.md" ;
+    prov:used <https://www.insperity.com/taxonomy/core-asset/> ,
+    <https://www.insperity.com/taxonomy/core-capability/> ,
+    <https://www.insperity.com/taxonomy/core-compliance/> ,
+    <https://www.insperity.com/taxonomy/core-decision/> ,
+    <https://www.insperity.com/taxonomy/core-event/> ,
+    <https://www.insperity.com/taxonomy/core-governance/> ,
+    <https://www.insperity.com/taxonomy/core-issue/> ,
+    <https://www.insperity.com/taxonomy/core-lifecycle/> ,
+    <https://www.insperity.com/taxonomy/core-location/> ,
+    <https://www.insperity.com/taxonomy/core-logic/> ,
+    <https://www.insperity.com/taxonomy/core-measure/> ,
+    <https://www.insperity.com/taxonomy/core-party/> ,
+    <https://www.insperity.com/taxonomy/core-persona/> ,
+    <https://www.insperity.com/taxonomy/core-policy/> ,
+    <https://www.insperity.com/taxonomy/core-process/> ,
+    <https://www.insperity.com/taxonomy/core-product/> ,
+    <https://www.insperity.com/taxonomy/core-requirements/> ,
+    <https://www.insperity.com/taxonomy/core-role/> ,
+    <https://www.insperity.com/taxonomy/core-rules/> ,
+    <https://www.insperity.com/taxonomy/core-services/> ,
+    <https://www.insperity.com/taxonomy/core-time/> ,
+    <https://www.insperity.com/taxonomy/core-value/> ,
+    <https://www.insperity.com/vocabulary/core-asset/> ,
+    <https://www.insperity.com/vocabulary/core-capability/> ,
+    <https://www.insperity.com/vocabulary/core-compliance/> ,
+    <https://www.insperity.com/vocabulary/core-domain/> ,
+    <https://www.insperity.com/vocabulary/core-event/> ,
+    <https://www.insperity.com/vocabulary/core-issue/> ,
+    <https://www.insperity.com/vocabulary/core-lifecycle/> ,
+    <https://www.insperity.com/vocabulary/core-location/> ,
+    <https://www.insperity.com/vocabulary/core-party/> ,
+    <https://www.insperity.com/vocabulary/core-persona/> ,
+    <https://www.insperity.com/vocabulary/core-process/> ,
+    <https://www.insperity.com/vocabulary/core-product/> ,
+    <https://www.insperity.com/vocabulary/core-requirements/> ,
+    <https://www.insperity.com/vocabulary/core-role/> ,
+    <https://www.insperity.com/vocabulary/core-rules/> ,
+    <https://www.insperity.com/vocabulary/core-services/> ,
+    <https://www.insperity.com/vocabulary/core-time/> ,
+    <https://www.insperity.com/vocabulary/core-valuestream/> ;
+    prov:generated <https://www.insperity.com/taxonomy/core-asset/> ,
+    <https://www.insperity.com/taxonomy/core-capability/> ,
+    <https://www.insperity.com/taxonomy/core-compliance/> ,
+    <https://www.insperity.com/taxonomy/core-decision/> ,
+    <https://www.insperity.com/taxonomy/core-event/> ,
+    <https://www.insperity.com/taxonomy/core-governance/> ,
+    <https://www.insperity.com/taxonomy/core-issue/> ,
+    <https://www.insperity.com/taxonomy/core-job/> ,
+    <https://www.insperity.com/taxonomy/core-lifecycle/> ,
+    <https://www.insperity.com/taxonomy/core-location/> ,
+    <https://www.insperity.com/taxonomy/core-logic/> ,
+    <https://www.insperity.com/taxonomy/core-measure/> ,
+    <https://www.insperity.com/taxonomy/core-party/> ,
+    <https://www.insperity.com/taxonomy/core-persona/> ,
+    <https://www.insperity.com/taxonomy/core-policy/> ,
+    <https://www.insperity.com/taxonomy/core-process/> ,
+    <https://www.insperity.com/taxonomy/core-product/> ,
+    <https://www.insperity.com/taxonomy/core-requirements/> ,
+    <https://www.insperity.com/taxonomy/core-role/> ,
+    <https://www.insperity.com/taxonomy/core-rules/> ,
+    <https://www.insperity.com/taxonomy/core-services/> ,
+    <https://www.insperity.com/taxonomy/core-time/> ,
+    <https://www.insperity.com/taxonomy/core-value/> ,
+    <https://www.insperity.com/vocabulary/core-asset/> ,
+    <https://www.insperity.com/vocabulary/core-capability/> ,
+    <https://www.insperity.com/vocabulary/core-compliance/> ,
+    <https://www.insperity.com/vocabulary/core-decision/> ,
+    <https://www.insperity.com/vocabulary/core-domain/> ,
+    <https://www.insperity.com/vocabulary/core-event/> ,
+    <https://www.insperity.com/vocabulary/core-governance/> ,
+    <https://www.insperity.com/vocabulary/core-issue/> ,
+    <https://www.insperity.com/vocabulary/core-job/> ,
+    <https://www.insperity.com/vocabulary/core-lifecycle/> ,
+    <https://www.insperity.com/vocabulary/core-location/> ,
+    <https://www.insperity.com/vocabulary/core-logic/> ,
+    <https://www.insperity.com/vocabulary/core-measure/> ,
+    <https://www.insperity.com/vocabulary/core-party/> ,
+    <https://www.insperity.com/vocabulary/core-persona/> ,
+    <https://www.insperity.com/vocabulary/core-policy/> ,
+    <https://www.insperity.com/vocabulary/core-process/> ,
+    <https://www.insperity.com/vocabulary/core-product/> ,
+    <https://www.insperity.com/vocabulary/core-requirements/> ,
+    <https://www.insperity.com/vocabulary/core-role/> ,
+    <https://www.insperity.com/vocabulary/core-rules/> ,
+    <https://www.insperity.com/vocabulary/core-services/> ,
+    <https://www.insperity.com/vocabulary/core-time/> ,
+    <https://www.insperity.com/vocabulary/core-value/> ,
+    <https://www.insperity.com/vocabulary/core-valuestream/> .
+
+  <https://www.insperity.com/taxonomy/core-asset/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-asset/> .
+
+  <https://www.insperity.com/taxonomy/core-capability/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-capability/> .
+
+  <https://www.insperity.com/taxonomy/core-compliance/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-compliance/> .
+
+  <https://www.insperity.com/taxonomy/core-decision/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-decision/> .
+
+  <https://www.insperity.com/taxonomy/core-event/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-event/> .
+
+  <https://www.insperity.com/taxonomy/core-governance/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-governance/> .
+
+  <https://www.insperity.com/taxonomy/core-issue/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-issue/> .
+
+  <https://www.insperity.com/taxonomy/core-job/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-requirements/> .
+
+  <https://www.insperity.com/taxonomy/core-lifecycle/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-lifecycle/> .
+
+  <https://www.insperity.com/taxonomy/core-location/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-location/> .
+
+  <https://www.insperity.com/taxonomy/core-logic/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-logic/> .
+
+  <https://www.insperity.com/taxonomy/core-measure/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-measure/> .
+
+  <https://www.insperity.com/taxonomy/core-party/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-party/> .
+
+  <https://www.insperity.com/taxonomy/core-persona/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-persona/> .
+
+  <https://www.insperity.com/taxonomy/core-policy/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-policy/> .
+
+  <https://www.insperity.com/taxonomy/core-process/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-process/> .
+
+  <https://www.insperity.com/taxonomy/core-product/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-product/> .
+
+  <https://www.insperity.com/taxonomy/core-requirements/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-requirements/> .
+
+  <https://www.insperity.com/taxonomy/core-role/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-role/> .
+
+  <https://www.insperity.com/taxonomy/core-rules/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-rules/> .
+
+  <https://www.insperity.com/taxonomy/core-services/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-services/> .
+
+  <https://www.insperity.com/taxonomy/core-time/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-time/> .
+
+  <https://www.insperity.com/taxonomy/core-value/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/taxonomy/core-value/> .
+
+  <https://www.insperity.com/vocabulary/core-asset/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-asset/> .
+
+  <https://www.insperity.com/vocabulary/core-capability/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-capability/> .
+
+  <https://www.insperity.com/vocabulary/core-compliance/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-compliance/> .
+
+  <https://www.insperity.com/vocabulary/core-decision/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> .
+
+  <https://www.insperity.com/vocabulary/core-domain/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-domain/> .
+
+  <https://www.insperity.com/vocabulary/core-event/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-event/> .
+
+  <https://www.insperity.com/vocabulary/core-governance/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> .
+
+  <https://www.insperity.com/vocabulary/core-issue/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-issue/> .
+
+  <https://www.insperity.com/vocabulary/core-job/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-requirements/> .
+
+  <https://www.insperity.com/vocabulary/core-lifecycle/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-lifecycle/> .
+
+  <https://www.insperity.com/vocabulary/core-location/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-location/> .
+
+  <https://www.insperity.com/vocabulary/core-logic/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> .
+
+  <https://www.insperity.com/vocabulary/core-measure/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> .
+
+  <https://www.insperity.com/vocabulary/core-party/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-party/> .
+
+  <https://www.insperity.com/vocabulary/core-persona/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-persona/> .
+
+  <https://www.insperity.com/vocabulary/core-policy/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> .
+
+  <https://www.insperity.com/vocabulary/core-process/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-process/> .
+
+  <https://www.insperity.com/vocabulary/core-product/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-product/> .
+
+  <https://www.insperity.com/vocabulary/core-requirements/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-requirements/> .
+
+  <https://www.insperity.com/vocabulary/core-role/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-role/> .
+
+  <https://www.insperity.com/vocabulary/core-rules/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-rules/> .
+
+  <https://www.insperity.com/vocabulary/core-services/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-services/> .
+
+  <https://www.insperity.com/vocabulary/core-time/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-time/> .
+
+  <https://www.insperity.com/vocabulary/core-value/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> .
+
+  <https://www.insperity.com/vocabulary/core-valuestream/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-19T184337Z-primitives> ;
+    prov:wasDerivedFrom <https://www.insperity.com/vocabulary/core-valuestream/> .
+}

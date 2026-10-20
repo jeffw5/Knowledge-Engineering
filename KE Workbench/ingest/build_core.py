@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the core domain ontology and its shapes from their authored sources.
 
-    python3 ingest/build_core.py [--out "../KE Baseline"] [--version 0.1.0]
+    python3 ingest/build_core.py [--out "../KE Baseline/Baseline Core v1.0"] [--version 0.1.0]
 
 Reads   ingest/core/ontology-core.source.ttl   and   ingest/core/shapes-core.source.ttl
 Writes  <out>/ttl/ontology-core-<version>.ttl, <out>/trig/ontology-core-<version>.trig,
@@ -107,7 +107,8 @@ def write(g, subjects, asset, title, src, dest, kind, version, cfg, now):
     prefixes = {'core': CORE, 'obo': OBO, 'owl': OWL, 'rdf': RDF, 'rdfs': RDFS, 'skos': SKOS, 'dct': DCT, 'xsd': XSD,
                 'sh': SH, 'vaem': VAEM, 'vann': VANN, 'coreshp': cfg['baseUrl'] + 'shapes/core/'}
     for d in ('process', 'party', 'role', 'asset', 'location', 'time', 'event', 'issue', 'product', 'services', 'capability',
-              'persona', 'domain', 'rules', 'requirements', 'lifecycle', 'valuestream', 'compliance'):
+              'persona', 'domain', 'rules', 'requirements', 'lifecycle', 'valuestream', 'compliance', 'job', 'decision',
+              'governance', 'logic', 'measure', 'policy', 'value'):
         prefixes[d + 'voc'] = f'{cfg["baseUrl"]}vocabulary/core-{d}/'
     prefixes['domaintax'] = cfg['baseUrl'] + 'taxonomy/core-domain/'
     w = k.Writer(prefixes, [CORE + 'hasLifecycleStatus'] + k.GOV_TAIL[1:])
@@ -142,6 +143,8 @@ def lineage(ont):
                     else: todo.append(o)
             if not ok and kind == 'relation' and s in inv:
                 ok = 'inverse'
+            if not ok and kind == 'relation' and ont[s].get(OWL + 'propertyChainAxiom'):
+                ok = 'chain'      # defined by a property chain over BFO/RO relations
             if not ok: probs.append(f'{kind} {s[1][len(CORE):]} does not reach BFO/RO')
             elif ok == 'inverse': pass
     return probs, len([s for s, ps in ont.items() if s[0] == 'I' and s[1].startswith(CORE) and I(OWL + 'Class') in ps.get(TYPE, [])])
@@ -204,7 +207,7 @@ def apply_formalized(dest, csv_path, classes, cfg, now, version):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('--src', default=str(HERE / 'core'))
-    ap.add_argument('--out', default=str(HERE.parent.parent / 'KE Baseline'))
+    ap.add_argument('--out', default=str(HERE.parent.parent / 'KE Baseline' / 'Baseline Core v1.0'))
     ap.add_argument('--version', default=None)
     ap.add_argument('-c', '--config', default=None)
     ap.add_argument('--no-taxonomies', action='store_true', help='do not write core:formalizedBy into the taxonomy files')

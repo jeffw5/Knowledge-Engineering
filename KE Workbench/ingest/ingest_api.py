@@ -27,6 +27,8 @@ listens on localhost only, unless HOST is set to share it.
                                       replace that named graph with it; the format is read from the file, not guessed by GraphDB
   GET  /api/ingest/define-status      whether an Anthropic API key is set (~/.ke-workbench.env or ANTHROPIC_API_KEY)
   POST /api/ingest/define             {items:[{id, label, broader, …}]} — definitions written by Claude
+  GET  /api/ingest/dispositions       the review decisions recorded so far (feedback/dispositions.jsonl) and a summary
+  POST /api/ingest/disposition        {records:[…]} — append review decisions (Conformance Review) for the ingestion agents
 """
 import json, os, pathlib, platform, re, subprocess, sys, traceback, urllib.error, urllib.parse, urllib.request
 
@@ -352,6 +354,8 @@ def review_files(q, _):
     if not d:
         return {'ok': True, 'dir': '', 'files': []}
     d = _path(d)
+    if not d.exists() and st.get('dest'):
+        d = _path(st['dest'])      # a folder remembered by the browser that has since moved
     if d.is_dir() and not any(d.glob('*.ttl')) and (d / (st.get('ttlDir') or 'ttl')).is_dir():
         d = d / (st.get('ttlDir') or 'ttl')           # a destination folder was given: use its ttl/ folder
     if not d.is_dir():
@@ -476,6 +480,8 @@ def _out_dirs(d):
     """(dest, ttl folder, trig folder name) for a destination folder or its ttl folder."""
     st = _state()
     d = _path(d or st.get('dest') or '')
+    if not d.exists() and st.get('dest'):
+        d = _path(st['dest'])      # a folder remembered by the browser that has since moved (e.g. KE Baseline → Baseline Core v1.0)
     tname = st.get('ttlDir') or 'ttl'
     if (d / tname).is_dir():
         return d, d / tname, st.get('trigDir') or 'trig'
@@ -604,7 +610,47 @@ def load_folder(b, graphdb_url):
     return res
 
 
+def dispositions_get(_, __):
+    recs = ke_ingest.load_feedback()
+    summ = {}
+    for r in recs:
+        for f in r.get('findings') or [{'rule': '(none)'}]:
+            d = summ.setdefault(f.get('rule') or '(none)', {})
+            d[r.get('disposition', '?')] = d.get(r.get('disposition', '?'), 0) + 1
+    return {'ok': True, 'path': str(ke_ingest.FEEDBACK_FILE), 'count': len(recs), 'records': recs, 'summary': summ}
+
+
+DISPOSITIONS = ('fix', 'accept', 'not-an-issue', 'defer', 'escalate')
+
+
+def disposition_add(b, _):
+    """Append review decisions. Each record: {disposition, term:{iri, label, …}, findings:[{rule, severity, detail}],
+    actions:[…], rationale, suggested, source, by}. The file is append-only: a later record for the same term wins."""
+    import datetime, uuid
+    recs = b.get('records') or []
+    bad = [i for i, r in enumerate(recs) if r.get('disposition') not in DISPOSITIONS or not (r.get('term') or {}).get('iri')]
+    if bad:
+        return {'ok': False, 'error': f'record {bad[0] + 1}: needs a disposition ({", ".join(DISPOSITIONS)}) and term.iri'}
+    if not recs:
+        return {'ok': True, 'count': 0}
+    now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    cfg, _ = ke_ingest.load_config(CONFIG)
+    f = ke_ingest.FEEDBACK_FILE
+    f.parent.mkdir(parents=True, exist_ok=True)
+    with open(f, 'a', encoding='utf-8') as fh:
+        for r in recs:
+            r = dict(r)
+            r.setdefault('id', 'disp-' + uuid.uuid4().hex[:12])
+            r.setdefault('at', now)
+            r.setdefault('by', cfg.get('author') or '')
+            r['schema'] = 'ke-disposition/1'
+            fh.write(json.dumps(r, ensure_ascii=False) + '\n')
+    return {'ok': True, 'count': len(recs), 'path': str(f)}
+
+
 ROUTES = {
+    ('GET', 'dispositions'): dispositions_get,
+    ('POST', 'disposition'): disposition_add,
     ('GET', 'defaults'): defaults,
     ('GET', 'browse'): browse,
     ('POST', 'scan'): scan,

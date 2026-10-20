@@ -1,0 +1,576 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/ontology/core-asset/> {
+  <https://www.insperity.com/ontology/core-asset/> a owl:Ontology;
+    rdfs:label "Core asset ontology"@en;
+    terms:description "The core ontology of assets: resources an organization controls from which it expects future economic benefit. It arranges physical, biological, human and digital assets, and the digital assets that data and knowledge work produces (data, data products, analytics, artifacts, agents, intellectual property), into one class hierarchy, with each class linked to its term in the core asset vocabulary. Domain ontologies specialize these classes."@en;
+    terms:title "Core asset ontology"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-15): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2024-09-24T15:52:20.458Z"^^xsd:dateTime;
+    skos:altLabel "Ontology | Core | Asset"@en;
+    owl:versionInfo "0.1.0";
+    owl:imports <https://www.insperity.com/ontology/core/>, <https://www.insperity.com/taxonomy/core-party/>,
+      <https://www.insperity.com/taxonomy/core-product/>;
+    owl:versionIRI <https://www.insperity.com/ontology/core-asset/0.1.0/>;
+    vann:preferredNamespaceUri "https://www.insperity.com/ontology/core-asset/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Asset a owl:Class;
+    rdfs:label "Asset"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:06:34.595Z"^^xsd:dateTime;
+    skos:definition "A resource controlled by an entity from which future economic benefits are expected to be generated."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:asset;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:BiologicalAsset a owl:Class;
+    rdfs:subClassOf ont:Asset;
+    rdfs:label "Biological asset"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Biological asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:06:34.595Z"^^xsd:dateTime;
+    skos:definition "A living animal or plant under the control of an entity, from which future economic benefits are expected (e.g., livestock, crops)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:biological-asset;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:HumanAsset a owl:Class;
+    rdfs:subClassOf ont:BiologicalAsset, partytax:Person;
+    rdfs:label "Human asset"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Human asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:06:34.595Z"^^xsd:dateTime;
+    skos:definition "The skills, knowledge, and experience of an organization’s workforce, considered as a valuable resource."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:human-asset;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DigitalAsset a owl:Class;
+    rdfs:subClassOf ont:Asset;
+    rdfs:label "Digital asset"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Digital asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:06:34.595Z"^^xsd:dateTime;
+    skos:definition "Any content or data in digital form that has value and is owned or controlled by an entity (e.g., websites, documents, multimedia)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:digital-asset;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Analytics a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Analytics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "Tools, algorithms, models, and data that enable an organization to extract insights and value from data."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:analytics;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:AnalyticProduct a owl:Class;
+    rdfs:subClassOf ont:Analytics;
+    rdfs:label "Analytic product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Analytic product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "A packaged output or result derived from applying analytics to data, designed to address a specific business need."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:analytic-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Artifact a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Artifact"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Artifact"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "A tangible by-product produced during the software development process (e.g., documents, code, models)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:artifact;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:BusinessSpecification a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Business specification"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Business specification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A document outlining the business requirements and objectives for a product, service, or system."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:business-specification;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DataEngineering a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Data engineering"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Data engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "The practice of designing, building, and maintaining systems for collecting, storing, and processing data at scale."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:data-engineering;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DesignSpecification a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Design specification"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Design specification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A detailed document outlining the technical requirements and specifications for a product, service, or system."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:design-specification;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DesignThinking a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Design thinking"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Design thinking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A human-centered approach to problem-solving that emphasizes empathy, experimentation, and iterative prototyping."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:design-thinking;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DetectiveControls a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Detective controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Detective controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A security mechanism designed to detect and alert on security incidents after they have occurred."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:detective-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:FeatureDecomposition a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Feature decomposition"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Feature decomposition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "The process of breaking down a complex feature or product into smaller, more manageable components."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:feature-decomposition;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:KnowledgeEngineering a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Knowledge engineering"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Knowledge engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "The process of capturing, structuring, and representing knowledge from various sources to create a knowledge base."@en;
+    skos:altLabel "KE"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:knowledge-engineering;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:OperationalReadiness a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Operational readiness"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Operational readiness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "The state of preparedness of an organization or system to perform its intended functions effectively and efficiently."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:operational-readiness;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:OperationalStandardOperatingProcedure a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Operational standard operating procedure"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Operational standard operating procedure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A set of detailed instructions outlining the steps required to perform a specific operational task consistently."@en;
+    skos:altLabel "Operational SOP"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:operational-standard-operating-procedure;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:PreventativeControls a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Preventative controls"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Preventative controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A security mechanism designed to prevent security incidents from occurring in the first place."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:preventative-controls;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:QualityEngineering a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Quality engineering"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Quality engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "The systematic application of engineering principles and methods to ensure the quality of products, services, and processes."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:quality-engineering;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:ServiceLevelAgreement a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Service level agreement"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Service level agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A contract outlining the agreed-upon level of service performance between a service provider and a customer."@en;
+    skos:altLabel "SLA"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:service-level-agreement;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:SolutionArchitecture a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Solution architecture"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Solution architecture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "The high-level design of a system, encompassing its components, their relationships, and the principles guiding its design."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:solution-architecture;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:SystemEngineering a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "System engineering"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "System engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "An interdisciplinary approach to designing, building, and managing complex systems over their entire lifecycle."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:system-engineering;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:ValueMap a owl:Class;
+    rdfs:subClassOf ont:Artifact;
+    rdfs:label "Value map"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Value map"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T20:47:11.594Z"^^xsd:dateTime;
+    skos:definition "A visual representation that maps the steps in a customer journey to the value they derive at each stage."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:value-map;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Data a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Data"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "A collection of data that is organized and managed in a way that makes it usable and valuable to an organization."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:data;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DataProduct a owl:Class;
+    rdfs:subClassOf ont:Data;
+    rdfs:label "Data product"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Data product"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "A packaged data set or data-driven application designed to deliver specific insights or functionality to users."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:data-product;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:DigitalAgent a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Digital agent"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Digital agent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:22:58.937Z"^^xsd:dateTime;
+    skos:definition "A software program that can perform tasks or actions on behalf of a user or another program in a digital environment."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:digital-agent;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:AutonomousAgent a owl:Class;
+    rdfs:subClassOf ont:DigitalAgent;
+    rdfs:label "Autonomous agent"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Autonomous agent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:22:58.937Z"^^xsd:dateTime;
+    skos:definition "A type of intelligent agent that can operate independently and make decisions without human intervention."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:autonomous-agent;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:ArtificialIntelligenceAgent a owl:Class;
+    rdfs:subClassOf ont:AutonomousAgent;
+    rdfs:label "Artificial intelligence agent"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Artificial intelligence agent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:22:58.937Z"^^xsd:dateTime;
+    skos:definition "A type of intelligent agent that leverages artificial intelligence techniques to perform tasks, learn from data, and make decisions."@en;
+    skos:altLabel "AI Agent"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:artificial-intelligence-agent;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:BusinessIntelligenceAgent a owl:Class;
+    rdfs:subClassOf ont:AutonomousAgent;
+    rdfs:label "Business intelligence agent"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Business intelligence agent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:22:58.937Z"^^xsd:dateTime;
+    skos:definition "A type of intelligent agent that gathers and analyzes business data to provide insights and support decision-making."@en;
+    skos:altLabel "BI Agent"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:business-intelligence-agent;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Document a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Document"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Document"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "A written, printed, or electronic material that provides information or evidence."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:document;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:IntellectualProperty a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Intellectual property"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Intellectual property"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "Creations of the mind, such as inventions, literary and artistic works, designs, and symbols, that are protected by law."@en;
+    skos:altLabel "IP"@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:intellectual-property;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Media a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Media"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Media"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "The means of communication that reach a large audience (e.g., television, radio, internet)."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:media;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:Semantics a owl:Class;
+    rdfs:subClassOf ont:DigitalAsset;
+    rdfs:label "Semantics"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Semantics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:33:22.282Z"^^xsd:dateTime;
+    skos:definition "The study of meaning in language and how words and phrases convey meaning."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:semantics;
+    core:hasLifecycleStatus core:Draft .
+  
+  ont:PhysicalAsset a owl:Class;
+    rdfs:subClassOf ont:Asset, producttax:IndividualProduct;
+    rdfs:label "Physical asset"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/core-asset/>;
+    skos:prefLabel "Physical asset"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T01:55:00Z"^^xsd:dateTime;
+    terms:created "2024-09-24T17:06:34.595Z"^^xsd:dateTime;
+    skos:definition "A tangible resource that has a physical form and is owned by an entity."@en;
+    owl:versionInfo "0.1.0";
+    dc:subject assetvoc:physical-asset;
+    core:hasLifecycleStatus core:Draft .
+}

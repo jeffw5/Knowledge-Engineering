@@ -1,0 +1,668 @@
+# Core domain ontology: authored source (Baseline Core v1.0)
+# Edit this file, then run   python3 ingest/build_core.py   to publish ontology-core-<version>.ttl/.trig and
+# shapes-core-<version>.ttl/.trig into KE Baseline/Baseline Core v1.0. The build adds rdfs:label, rdfs:isDefinedBy,
+# dcterms:subject (from core:hasPrimaryTerm) and the governance fields to every term.
+#
+# Design (Semantic Governance v1.9 Part III; design decisions in Baseline Core v1.0/review/design-decisions.md):
+#   BFO 2020 (ISO/IEC 21838-2)  <-  RO Core + RO extract  <-  this ontology  <-  domain ontologies
+#   * every class reaches a BFO class; every relation specializes a BFO, RO or IAO relation, is the inverse of one,
+#     or is defined by a property chain over them;
+#   * the process step is the anchor of the organization's side; the job step is the anchor of the persona's side;
+#     the two meet through "addresses" (intentionally not one-to-one), and value gaps are measured between the
+#     desired outcome of a job step and the delivered outcome;
+#   * class and concept IRIs join their primitives with hyphens (decision 5); a polymorphic class is kept only where it
+#     differs in BFO or carries its own axioms (decision 8); the other polymorphic terms live in the taxonomies;
+#   * asset is the genus; product, service, offering and platform are assets assembled from other assets (decisions 9-14);
+#   * no rdfs:domain / rdfs:range on core relations (§3.9); class restrictions document the design and SHACL validates it.
+
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+
+# ───────────────────────────── header ─────────────────────────────
+<https://www.insperity.com/ontology/core/>
+  a owl:Ontology ;
+  dct:title "Core domain ontology"@en ;
+  skos:altLabel "Core ontology"@en ;
+  dct:identifier "ontology-core" ;
+  dct:description "The ontology of the classes and relations shared by every domain of the company. It is aligned to Basic Formal Ontology 2020 (ISO/IEC 21838-2): each class specializes a BFO class and each relation specializes a BFO, Relation Ontology or Information Artifact Ontology relation. It is anchored on the process step (how the organization works) and the job step (what a persona is trying to get done), so every domain ontology extends it and every fact can be traced to the step in which it is created, used, governed or valued."@en ;
+  skos:scopeNote "Only this ontology ties into BFO. Core taxonomies reach BFO through core:formalizedBy on their concepts; core vocabularies hold the primitives that classes and concepts are built from, reached through core:hasPrimaryTerm and dcterms:subject."@en ;
+  owl:imports <http://purl.obolibrary.org/obo/bfo.owl> ,
+      <http://purl.obolibrary.org/obo/ro/core.owl> ,
+      <https://www.insperity.com/reference/ro-extract/> ;
+  dct:created "2024-10-02"^^xsd:date .
+
+# ───────────────────────────── governance (annotation properties) ─────────────────────────────
+core:hasLifecycleStatus
+  a owl:AnnotationProperty ;
+  skos:prefLabel "has lifecycle status"@en ;
+  skos:definition "A relation between a term or asset and the lifecycle status it is in."@en .
+
+core:hasPrimaryTerm
+  a owl:AnnotationProperty ;
+  rdfs:subPropertyOf dct:subject ;
+  skos:prefLabel "has primary term"@en ;
+  skos:definition "A relation between a class or taxonomy concept and the head primitive it is built from."@en ;
+  skos:scopeNote "Every class and concept carries dcterms:subject to each primitive it is built from; this points to the head (decision 4)."@en .
+
+core:formalizedBy
+  a owl:AnnotationProperty ;
+  skos:prefLabel "formalized by"@en ;
+  skos:definition "A relation between a taxonomy concept and the core or domain ontology class that gives it a formal, BFO-aligned meaning."@en ;
+  skos:scopeNote "Taxonomies stay in SKOS (§3.11). A concept is not a subclass of anything; formalized by is the path from a taxonomy to BFO."@en .
+
+core:hasTermType
+  a owl:AnnotationProperty ;
+  skos:prefLabel "has term type"@en ;
+  skos:definition "A relation between a vocabulary term and the kind of term it is."@en .
+
+core:intendedForPersona
+  a owl:AnnotationProperty ;
+  skos:prefLabel "intended for persona"@en ;
+  skos:definition "A relation between a label or definition and the persona it is written for."@en .
+
+core:lifecycle-status
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  skos:prefLabel "Lifecycle status"@en ;
+  skos:definition "A generically dependent continuant that states which governance stage a term or asset is in: draft, candidate, released, deprecated or retired."@en ;
+  core:hasPrimaryTerm lifecyclevoc:status ;
+  dct:subject lifecyclevoc:lifecycle .
+
+core:Draft a core:lifecycle-status ; skos:prefLabel "Draft"@en ;
+  skos:definition "A lifecycle status of a term or asset that is being written and is not yet ready for review."@en .
+core:Candidate a core:lifecycle-status ; skos:prefLabel "Candidate"@en ;
+  skos:definition "A lifecycle status of a term or asset that is complete and under review for release."@en .
+core:Released a core:lifecycle-status ; skos:prefLabel "Released"@en ;
+  skos:definition "A lifecycle status of a term or asset that is approved and may be used."@en .
+core:Deprecated a core:lifecycle-status ; skos:prefLabel "Deprecated"@en ;
+  skos:definition "A lifecycle status of a term or asset that is still published but should no longer be used for new work."@en .
+core:Retired a core:lifecycle-status ; skos:prefLabel "Retired"@en ;
+  skos:definition "A lifecycle status of a term or asset that is withdrawn and kept only for traceability."@en .
+
+# ───────────────────────────── occurrents: the organization's side ─────────────────────────────
+core:process
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000015 ;
+  skos:prefLabel "Process"@en ;
+  skos:definition "A process that the organization carries out, or has carried out on its behalf, to achieve a defined outcome, and that is made up of process steps."@en ;
+  core:hasPrimaryTerm processvoc:process .
+
+core:process-step
+  a owl:Class ;
+  rdfs:subClassOf core:process ,
+      [ a owl:Restriction ; owl:onProperty core:isStepOf ; owl:someValuesFrom core:process ] ,
+      [ a owl:Restriction ; owl:onProperty core:fulfillsRole ; owl:allValuesFrom core:role ] ,
+      [ a owl:Restriction ; owl:onProperty core:exercisesCapability ; owl:allValuesFrom core:capability ] ,
+      [ a owl:Restriction ; owl:onProperty core:governedBy ; owl:allValuesFrom core:directive ] ,
+      [ a owl:Restriction ; owl:onProperty core:measuredBy ; owl:allValuesFrom core:measure ] ,
+      [ a owl:Restriction ; owl:onProperty core:hasIssue ; owl:allValuesFrom core:issue ] ,
+      [ a owl:Restriction ; owl:onProperty core:triggeredBy ; owl:allValuesFrom core:event ] ,
+      [ a owl:Restriction ; owl:onProperty core:precedes ; owl:allValuesFrom core:process-step ] ,
+      [ a owl:Restriction ; owl:onProperty core:occursIn ; owl:allValuesFrom core:location ] ,
+      [ a owl:Restriction ; owl:onProperty core:occupiesTime ; owl:allValuesFrom core:time ] ,
+      [ a owl:Restriction ; owl:onProperty core:deliveryOf ; owl:allValuesFrom core:asset ] ,
+      [ a owl:Restriction ; owl:onProperty core:addresses ; owl:allValuesFrom core:job-step ] ;
+  skos:prefLabel "Process step"@en ;
+  skos:altLabel "Activity"@en , "Task"@en ;
+  skos:definition "A process that is a bounded part of a larger process, performed by a party or an agent, consuming and producing continuants, and to which the organization's facts are anchored."@en ;
+  skos:scopeNote "The anchor of the organization's side of the unifying ontology (§3.1): parties, roles, assets, directives, measures, issues, events, locations and times are tied to the step in which they are created, used or governed. A delivery is a process step that is the delivery of an asset; a step performed by a person is manual, one performed by a digital agent is automated."@en ;
+  core:hasPrimaryTerm processvoc:process-step ;
+  dct:subject processvoc:process , processvoc:step .
+
+core:decision
+  a owl:Class ;
+  rdfs:subClassOf core:process ;
+  skos:prefLabel "Decision"@en ;
+  skos:definition "A process in which a party chooses one course of action from among alternatives, following a decision model or rule."@en ;
+  core:hasPrimaryTerm decisionvoc:decision .
+
+core:lifecycle
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000015 ,
+      [ a owl:Restriction ; owl:onProperty core:lifecycleOf ; owl:allValuesFrom core:asset ] ;
+  skos:prefLabel "Lifecycle"@en ;
+  skos:definition "A process that takes an asset from its creation through a series of phases to its retirement."@en ;
+  skos:scopeNote "All assets have lifecycles and go through the same stages: discover, define, design, develop and deliver at design time, then acquire, run and retire (decision 11)."@en ;
+  core:hasPrimaryTerm lifecyclevoc:lifecycle .
+
+core:lifecycle-phase
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000015 ,
+      [ a owl:Restriction ; owl:onProperty core:isPhaseOf ; owl:someValuesFrom core:lifecycle ] ;
+  skos:prefLabel "Lifecycle phase"@en ;
+  skos:definition "A process that is a bounded part of a lifecycle, such as discover, define, design, develop or deliver."@en ;
+  core:hasPrimaryTerm lifecyclevoc:phase ;
+  dct:subject lifecyclevoc:lifecycle .
+
+core:event
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000035 ,
+      [ a owl:Restriction ; owl:onProperty core:triggers ; owl:allValuesFrom core:process-step ] ;
+  skos:prefLabel "Event"@en ;
+  skos:altLabel "Events"@en ;
+  skos:definition "A process boundary at which something significant to the organization happens, such as a request arriving or a deadline passing, and which can trigger a process step."@en ;
+  skos:scopeNote "Modeled as a BFO process boundary (an instantaneous occurrent): what happens over time is a step; the moment that starts or ends it is an event."@en ;
+  core:hasPrimaryTerm eventvoc:events .
+
+# ───────────────────────────── occurrents: the persona's side (Jobs model) ─────────────────────────────
+core:job
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000015 ,
+      [ a owl:Restriction ; owl:onProperty core:hasStep ; owl:allValuesFrom core:job-step ] ;
+  skos:prefLabel "Job"@en ;
+  skos:definition "A process that a job executor is trying to get done, described independently of any product, service or process that might help."@en ;
+  skos:scopeNote "Jobs are a type of activity kept apart from process models (decision 19). A job is unique to its executor; it generalizes on its own and gains contextual relevance when combined with the persona executing it. Kinds: functional and emotional; a job that involves money is associated with finance."@en ;
+  core:hasPrimaryTerm jobvoc:job .
+
+core:job-step
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000015 ,
+      [ a owl:Restriction ; owl:onProperty core:isStepOf ; owl:someValuesFrom core:job ] ;
+  skos:prefLabel "Job step"@en ;
+  skos:definition "A process that is a step a job executor takes within a job."@en ;
+  skos:scopeNote "Akin to a process step but intentionally not one-to-one (decision 17). Job steps are unique to the job; they must not be confused with the selling steps of a provider, and the mismatch between them is where value gaps arise (decision 21)."@en ;
+  core:hasPrimaryTerm processvoc:step ;
+  dct:subject jobvoc:job .
+
+# ───────────────────────────── assets ─────────────────────────────
+core:asset
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000002 ,
+      [ a owl:Restriction ; owl:onProperty core:hasComponent ; owl:allValuesFrom core:asset ] ,
+      [ a owl:Restriction ; owl:onProperty core:hasLifecycle ; owl:allValuesFrom core:lifecycle ] ;
+  skos:prefLabel "Asset"@en ;
+  skos:definition "A continuant that the organization controls and from which it expects future economic benefit."@en ;
+  skos:scopeNote "The genus (decision 9). Physical assets and information assets are its BFO-grounded kinds; products, services, offerings and platforms are assets assembled from other assets, not a genus over physical or digital (decision 10)."@en ;
+  core:hasPrimaryTerm assetvoc:asset .
+
+core:physical-asset
+  a owl:Class ;
+  rdfs:subClassOf core:asset , obo:BFO_0000040 ,
+      [ a owl:Restriction ; owl:onProperty core:hasRole ; owl:someValuesFrom core:asset-role ] ;
+  skos:prefLabel "Physical asset"@en ;
+  skos:definition "An asset that is a material entity, such as equipment, a building or a vehicle."@en ;
+  core:hasPrimaryTerm assetvoc:physical-asset ;
+  dct:subject assetvoc:asset .
+
+core:information-asset
+  a owl:Class ;
+  rdfs:subClassOf core:asset , obo:BFO_0000031 ;
+  skos:prefLabel "Information asset"@en ;
+  skos:altLabel "Digital asset"@en ;
+  skos:definition "An asset that is information content, such as a data set, a document, a model or a piece of software, which can be copied across carriers without being lost."@en ;
+  skos:scopeNote "In BFO an information asset cannot bear a role itself; its asset role is borne by the carriers (files, databases, devices) it is concretized in."@en ;
+  core:hasPrimaryTerm assetvoc:digital-asset ;
+  dct:subject assetvoc:asset , assetvoc:information .
+
+core:product
+  a owl:Class ;
+  rdfs:subClassOf core:asset ;
+  skos:prefLabel "Product"@en ;
+  skos:definition "An asset, assembled from other physical or digital assets, that the organization offers to the market and that delivers one or more services."@en ;
+  skos:scopeNote "A product can be physical or digital; that describes the assets it is assembled from, not a kind of product (decision 10)."@en ;
+  core:hasPrimaryTerm productvoc:product .
+
+core:service
+  a owl:Class ;
+  rdfs:subClassOf core:asset ;
+  skos:prefLabel "Service"@en ;
+  skos:altLabel "Services"@en ;
+  skos:definition "An asset, assembled from other assets such as people's roles, procedures and systems, through which work is performed for the benefit of a client."@en ;
+  skos:scopeNote "A service is an asset; its delivery is a process step that is the delivery of the service, performed manually by a person or through automation by a digital agent (decision 12)."@en ;
+  core:hasPrimaryTerm servicesvoc:services .
+
+core:offering
+  a owl:Class ;
+  rdfs:subClassOf core:asset ;
+  skos:prefLabel "Offering"@en ;
+  skos:definition "An asset that is a bundle or package of products and services that marketing prepares and sells to customers."@en ;
+  skos:scopeNote "Sold through sales channels: business-to-consumer, business-to-business, business-to-business-to-consumer and business-to-government (decision 13)."@en ;
+  core:hasPrimaryTerm productvoc:offering .
+
+core:platform
+  a owl:Class ;
+  rdfs:subClassOf core:asset ;
+  skos:prefLabel "Platform"@en ;
+  skos:definition "An asset created to create and deliver products and services for a wide range of customers, giving scale across markets by industrializing smaller components for reuse."@en ;
+  core:hasPrimaryTerm assetvoc:platform .
+
+# ───────────────────────────── parties and places ─────────────────────────────
+core:party
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000040 ,
+      [ a owl:Restriction ; owl:onProperty core:locatedIn ; owl:allValuesFrom core:location ] ;
+  skos:prefLabel "Party"@en ;
+  skos:definition "A material entity, either a person or an organization, that can take part in process steps and jobs and bear roles such as employee, client or supplier."@en ;
+  core:hasPrimaryTerm partyvoc:party .
+
+core:person
+  a owl:Class ;
+  rdfs:subClassOf core:party , obo:BFO_0000030 ;
+  skos:prefLabel "Person"@en ;
+  skos:altLabel "Human"@en ;
+  skos:definition "A party that is a single human being."@en ;
+  core:hasPrimaryTerm partyvoc:person .
+
+core:organization
+  a owl:Class ;
+  rdfs:subClassOf core:party , obo:BFO_0000027 ,
+      [ a owl:Restriction ; owl:onProperty core:hasMember ; owl:allValuesFrom core:party ] ;
+  skos:prefLabel "Organization"@en ;
+  skos:definition "A party that is an aggregate of persons organized for a common purpose, such as a company, a government agency or a charity."@en ;
+  core:hasPrimaryTerm partyvoc:organization .
+
+core:location
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000029 ;
+  skos:prefLabel "Location"@en ;
+  skos:definition "A site at which a party or asset is located or a step occurs, such as an office, a worksite or a geographic area."@en ;
+  skos:scopeNote "Place is an abstraction for location; national and international are relative to a reference jurisdiction (decision 28). An address, a web address or a channel that identifies a place is a location reference."@en ;
+  core:hasPrimaryTerm locationvoc:location .
+
+core:location-reference
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  skos:prefLabel "Location reference"@en ;
+  skos:definition "A generically dependent continuant that identifies a location or a virtual place where a step occurs, such as a postal address, a web address or a communication channel."@en ;
+  core:hasPrimaryTerm assetvoc:reference ;
+  dct:subject locationvoc:location .
+
+core:time
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000008 ;
+  skos:prefLabel "Time"@en ;
+  skos:definition "A temporal region that a step or event occupies, such as an instant or an interval."@en ;
+  skos:scopeNote "A duration is a measure of a time, and a schedule is a directive; neither is a time."@en ;
+  core:hasPrimaryTerm timevoc:time .
+
+# ───────────────────────────── realizable entities ─────────────────────────────
+core:role
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000023 ;
+  skos:prefLabel "Role"@en ;
+  skos:definition "A role that an independent continuant bears because of the organizational, legal or social situation it is in, and that is realized in the steps it takes part in."@en ;
+  skos:scopeNote "Personas are not typed by role; a mapping between a persona and a title, role or position is a curated instance mapping (decisions 22, 23)."@en ;
+  core:hasPrimaryTerm rolevoc:role .
+
+core:asset-role
+  a owl:Class ;
+  rdfs:subClassOf core:role ;
+  skos:prefLabel "Asset role"@en ;
+  skos:definition "A role that an independent continuant bears when the organization controls it and expects future economic benefit from it."@en ;
+  core:hasPrimaryTerm rolevoc:role ;
+  dct:subject assetvoc:asset .
+
+core:capability
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000016 ;
+  skos:prefLabel "Capability"@en ;
+  skos:definition "A disposition of an organization, borne through its people, processes and technology, to carry out a kind of process step to a measurable level."@en ;
+  core:hasPrimaryTerm capabilityvoc:capability .
+
+# ───────────────────────────── information content ─────────────────────────────
+core:persona
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ,
+      [ a owl:Restriction ; owl:onProperty core:performsJob ; owl:allValuesFrom core:job ] ;
+  skos:prefLabel "Persona"@en ;
+  skos:definition "A generically dependent continuant that describes a typical executor of a set of jobs, with the goals, needs and desired outcomes that give those jobs context."@en ;
+  skos:scopeNote "One persona model; many persona instances, assembled from the persona model and the Jobs model (decisions 16, 18, 22)."@en ;
+  core:hasPrimaryTerm personavoc:persona .
+
+core:desired-outcome
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ,
+      [ a owl:Restriction ; owl:onProperty core:outcomeOf ; owl:someValuesFrom core:job-step ] ,
+      [ a owl:Restriction ; owl:onProperty core:measuredBy ; owl:allValuesFrom core:measure ] ;
+  skos:prefLabel "Desired outcome"@en ;
+  skos:definition "A generically dependent continuant that states an outcome a job executor wants at a job step, with a direction (minimize or maximize), a metric and a target."@en ;
+  core:hasPrimaryTerm jobvoc:desired-outcome .
+
+core:delivered-outcome
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ,
+      [ a owl:Restriction ; owl:onProperty core:outcomeOf ; owl:someValuesFrom core:job-step ] ;
+  skos:prefLabel "Delivered outcome"@en ;
+  skos:definition "A generically dependent continuant that records the outcome a product, service or process step actually achieves at a job step."@en ;
+  skos:scopeNote "The value gap at a job step is measured between its desired and delivered outcomes (decision 19)."@en ;
+  core:hasPrimaryTerm jobvoc:outcome ;
+  dct:subject processvoc:delivery .
+
+core:domain
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  skos:prefLabel "Domain"@en ;
+  skos:definition "A subject area of the business, such as Payroll or Benefits, whose terms, rules, and relationships specialize the core ontology and are owned by a domain owner and released together as one knowledge component."@en ;
+  skos:scopeNote "A domain is information content (a generically dependent continuant in BFO): the body of knowledge about a subject area, not the people or systems that work in it."@en ;
+  core:hasPrimaryTerm domainvoc:domain ;
+  dct:created "2024-10-02T01:08:09.624Z"^^xsd:dateTime .
+
+core:issue
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  skos:prefLabel "Issue"@en ;
+  skos:definition "A generically dependent continuant that records a problem, risk, concern or question arising in a step that needs to be addressed."@en ;
+  skos:scopeNote "The issue as recorded. The occurrence behind it (an outage, a complaint being made) is an event or a step."@en ;
+  core:hasPrimaryTerm issuevoc:issue .
+
+core:measure
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  skos:prefLabel "Measure"@en ;
+  skos:definition "A generically dependent continuant that states a quantity observed, calculated, targeted or forecast for a step, a party, an asset or an outcome, such as a cycle time, a count or a threshold."@en ;
+  core:hasPrimaryTerm measurevoc:measure .
+
+core:directive
+  a owl:Class ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  skos:prefLabel "Directive"@en ;
+  skos:definition "A generically dependent continuant that prescribes how steps are to be carried out, such as a policy, a rule, a requirement, a control, a decision model or business logic."@en ;
+  core:hasPrimaryTerm policyvoc:directive .
+
+core:policy
+  a owl:Class ;
+  rdfs:subClassOf core:directive ;
+  skos:prefLabel "Policy"@en ;
+  skos:definition "A directive that states the intent of the organization or of an authority, and the principles its steps must follow."@en ;
+  core:hasPrimaryTerm policyvoc:policy .
+
+core:rule
+  a owl:Class ;
+  rdfs:subClassOf core:directive ;
+  skos:prefLabel "Rule"@en ;
+  skos:altLabel "Rules"@en ;
+  skos:definition "A directive that states a condition and the action or constraint that follows from it, precisely enough to be evaluated or automated."@en ;
+  core:hasPrimaryTerm rulesvoc:rules .
+
+core:requirement
+  a owl:Class ;
+  rdfs:subClassOf core:directive ;
+  skos:prefLabel "Requirement"@en ;
+  skos:definition "A directive that states a need that a product, service or step must fulfill."@en ;
+  core:hasPrimaryTerm requirementsvoc:requirement .
+
+core:control
+  a owl:Class ;
+  rdfs:subClassOf core:directive ;
+  skos:prefLabel "Control"@en ;
+  skos:definition "A directive that specifies a check or safeguard applied in a step to keep a risk or an obligation within accepted limits."@en ;
+  core:hasPrimaryTerm compliancevoc:controls .
+
+# ───────────────────────────── relations ─────────────────────────────
+# Each specializes a BFO 2020, RO or IAO relation, is the inverse of one, or is defined by a property chain over them.
+
+core:hasStep
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000117 ;
+  owl:inverseOf core:isStepOf ;
+  skos:prefLabel "has step"@en ;
+  skos:definition "A relation between a process or job and a step that is one of its bounded parts."@en .
+
+core:isStepOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000132 ;
+  skos:prefLabel "is step of"@en ;
+  skos:definition "A relation between a process step or job step and the process or job it is a bounded part of."@en .
+
+core:hasPhase
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000117 ;
+  owl:inverseOf core:isPhaseOf ;
+  skos:prefLabel "has phase"@en ;
+  skos:definition "A relation between a lifecycle and a lifecycle phase that is one of its parts."@en .
+
+core:isPhaseOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000132 ;
+  skos:prefLabel "is phase of"@en ;
+  skos:definition "A relation between a lifecycle phase and the lifecycle it is part of."@en .
+
+core:precedes
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000063 ;
+  owl:inverseOf core:follows ;
+  skos:prefLabel "precedes"@en ;
+  skos:definition "A relation between a step and a step that starts after it ends, in the same process or job."@en .
+
+core:follows
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000062 ;
+  skos:prefLabel "follows"@en ;
+  skos:definition "A relation between a step and a step that ends before it starts, in the same process or job."@en .
+
+core:triggers
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000063 ;
+  owl:inverseOf core:triggeredBy ;
+  skos:prefLabel "triggers"@en ;
+  skos:definition "A relation between an event and a step that starts because the event happened."@en .
+
+core:triggeredBy
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000062 ;
+  skos:prefLabel "triggered by"@en ;
+  skos:definition "A relation between a step and the event that started it."@en .
+
+core:performedBy
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000057 ;
+  owl:inverseOf core:performs ;
+  skos:prefLabel "performed by"@en ;
+  skos:definition "A relation between a step and the party or agent that carries it out."@en ;
+  skos:scopeNote "Performed by a person: manual. Performed by a digital agent: automated."@en .
+
+core:performs
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000056 ;
+  skos:prefLabel "performs"@en ;
+  skos:definition "A relation between a party or agent and a step it carries out."@en .
+
+core:fulfillsRole
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000055 ;
+  skos:prefLabel "fulfills role"@en ;
+  skos:definition "A relation between a step and a role that is realized in it, such as the approver role in an approval step."@en .
+
+core:exercisesCapability
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000055 ;
+  skos:prefLabel "exercises capability"@en ;
+  skos:definition "A relation between a step and a capability of the organization that is realized in it."@en .
+
+core:consumes
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0002233 ;
+  skos:prefLabel "consumes"@en ;
+  skos:definition "A relation between a step and a continuant, such as a physical asset or a record, that is present at its start and is used or changed by it."@en ;
+  skos:scopeNote "RO defines has input for material entities. When a step uses information, the input is the carrier (a file, a record, a database) that the information is concretized in."@en .
+
+core:produces
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0002234 ;
+  skos:prefLabel "produces"@en ;
+  skos:definition "A relation between a step and a continuant, such as a record or a product, that it creates or changes."@en .
+
+core:deliveryOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000057 ;
+  skos:prefLabel "delivery of"@en ;
+  skos:definition "A relation between a process step and the specific product or service it hands over to its recipient."@en ;
+  skos:scopeNote "Delivery is a type of activity under process (decision 12): a step with a delivery of relation is a delivery. \"Service delivery\" resolves to a specific service plus the steps that are its delivery."@en .
+
+core:delivers
+  a owl:ObjectProperty ;
+  owl:propertyChainAxiom ( obo:RO_0000056 core:deliveryOf ) ;
+  skos:prefLabel "delivers"@en ;
+  skos:definition "A relation between a product and a service it delivers: the product takes part in a step that is the delivery of that service."@en .
+
+core:addresses
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0002411 ;
+  skos:prefLabel "addresses"@en ;
+  skos:definition "A relation between a process step of the organization and a job step of a persona that it helps the job executor accomplish."@en ;
+  skos:scopeNote "The many-to-many bridge between how the organization works and what the persona is trying to get done (intentionally not one-to-one). A job step that nothing addresses, or whose delivered outcome falls short of its desired outcome, is a value gap."@en .
+
+core:supports
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0002411 ;
+  skos:prefLabel "supports"@en ;
+  skos:definition "A relation between an activity and a process, service or capability that depends on it: an explicit dependency and causal factor that affects the behaviors and delivered outcomes of what it supports."@en ;
+  skos:scopeNote "Support is an activity associated with Run (operations) (decision 26). Supporting a service or capability means being causally upstream of the steps that realize or deliver it."@en .
+
+core:governs
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:IAO_0000136 ;
+  owl:inverseOf core:governedBy ;
+  skos:prefLabel "governs"@en ;
+  skos:definition "A relation between a directive and a step whose conduct it prescribes."@en .
+
+core:governedBy
+  a owl:ObjectProperty ;
+  skos:prefLabel "governed by"@en ;
+  skos:definition "A relation between a step and a directive that prescribes how it is carried out."@en .
+
+core:measures
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:IAO_0000136 ;
+  owl:inverseOf core:measuredBy ;
+  skos:prefLabel "measures"@en ;
+  skos:definition "A relation between a measure and the step, party, asset or outcome whose quantity it states."@en .
+
+core:measuredBy
+  a owl:ObjectProperty ;
+  skos:prefLabel "measured by"@en ;
+  skos:definition "A relation between a step, party, asset or outcome and a measure that states one of its quantities."@en .
+
+core:concerns
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:IAO_0000136 ;
+  owl:inverseOf core:hasIssue ;
+  skos:prefLabel "concerns"@en ;
+  skos:definition "A relation between an issue and the step in which it arose or which it affects."@en .
+
+core:hasIssue
+  a owl:ObjectProperty ;
+  skos:prefLabel "has issue"@en ;
+  skos:definition "A relation between a step and an issue that arose in it or affects it."@en .
+
+core:performsJob
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:IAO_0000136 ;
+  skos:prefLabel "performs job"@en ;
+  skos:definition "A relation between a persona and a job that its typical executor is trying to get done."@en .
+
+core:outcomeOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:IAO_0000136 ;
+  owl:inverseOf core:hasOutcome ;
+  skos:prefLabel "outcome of"@en ;
+  skos:definition "A relation between a desired or delivered outcome and the job step it is mapped to."@en .
+
+core:hasOutcome
+  a owl:ObjectProperty ;
+  skos:prefLabel "has outcome"@en ;
+  skos:definition "A relation between a job step and a desired or delivered outcome mapped to it."@en .
+
+core:achievedBy
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:IAO_0000136 ;
+  skos:prefLabel "achieved by"@en ;
+  skos:definition "A relation between a delivered outcome and the product, service or process step that achieved it."@en .
+
+core:hasComponent
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000051 ;
+  owl:inverseOf core:componentOf ;
+  skos:prefLabel "has component"@en ;
+  skos:definition "A relation between an asset and another asset it is assembled from."@en ;
+  skos:scopeNote "Uses the general has part relation, because a product or service is assembled from both physical and information assets (decision 10)."@en .
+
+core:componentOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000050 ;
+  skos:prefLabel "component of"@en ;
+  skos:definition "A relation between an asset and an asset assembled from it."@en .
+
+core:lifecycleOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000057 ;
+  owl:inverseOf core:hasLifecycle ;
+  skos:prefLabel "lifecycle of"@en ;
+  skos:definition "A relation between a lifecycle and the asset that goes through it."@en .
+
+core:hasLifecycle
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000056 ;
+  skos:prefLabel "has lifecycle"@en ;
+  skos:definition "A relation between an asset and the lifecycle it goes through."@en .
+
+core:occursIn
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000066 ;
+  skos:prefLabel "occurs in"@en ;
+  skos:definition "A relation between a step and the location where it takes place."@en .
+
+core:occupiesTime
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000199 ;
+  skos:prefLabel "occupies time"@en ;
+  skos:definition "A relation between a step or event and the time it takes up."@en .
+
+core:locatedIn
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000171 ;
+  skos:prefLabel "located in"@en ;
+  skos:definition "A relation between a party or physical asset and the location it is in."@en .
+
+core:hasRole
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000087 ;
+  owl:inverseOf core:roleOf ;
+  skos:prefLabel "has role"@en ;
+  skos:definition "A relation between a party or physical asset and a role it bears."@en .
+
+core:roleOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:RO_0000081 ;
+  skos:prefLabel "role of"@en ;
+  skos:definition "A relation between a role and the party or physical asset that bears it."@en .
+
+core:hasMember
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000115 ;
+  owl:inverseOf core:memberOf ;
+  skos:prefLabel "has member"@en ;
+  skos:definition "A relation between an organization and a party that is one of its members."@en .
+
+core:memberOf
+  a owl:ObjectProperty ;
+  rdfs:subPropertyOf obo:BFO_0000129 ;
+  skos:prefLabel "member of"@en ;
+  skos:definition "A relation between a party and an organization it is a member of."@en .

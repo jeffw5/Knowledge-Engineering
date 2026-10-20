@@ -1,0 +1,730 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domainsalesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/taxonomy/domain-sales/> {
+  <https://www.insperity.com/taxonomy/domain-sales/> a skos:ConceptScheme;
+    rdfs:label "Domain sales taxonomy"@en;
+    skos:prefLabel "Domain sales taxonomy"@en;
+    skos:hasTopConcept domainsalestax:buying-committee, domainsalestax:buying-role, domainsalestax:sales-measure,
+      domainsalestax:sales-plan, domainsalestax:sales-record, domainsalestax:sales-role,
+      domainsalestax:selling-activity, domainsalestax:selling-stage;
+    terms:description "A classification of the selling process stages (the provider's view of the buyer's journey), selling activities, buying and sales roles, sales plans, records and measures."@en;
+    terms:title "Domain sales taxonomy"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-19): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.9 (Draft), Part III."@en;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:altLabel "Sales domain taxonomy"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject domaintax:EnterpriseArchitecture;
+    owl:versionIRI <https://www.insperity.com/taxonomy/domain-sales/0.1.0/>;
+    terms:source <https://www.insperity.com/vocabulary/core-asset/>, <https://www.insperity.com/vocabulary/core-domain/>,
+      <https://www.insperity.com/vocabulary/core-event/>, <https://www.insperity.com/vocabulary/core-lifecycle/>,
+      <https://www.insperity.com/vocabulary/core-location/>, <https://www.insperity.com/vocabulary/core-process/>,
+      <https://www.insperity.com/vocabulary/core-role/>, <https://www.insperity.com/vocabulary/core-time/>,
+      <https://www.insperity.com/vocabulary/domain-sales/>, <https://www.insperity.com/vocabulary/core-decision/>,
+      <https://www.insperity.com/vocabulary/core-governance/>, <https://www.insperity.com/vocabulary/core-measure/>,
+      <https://www.insperity.com/vocabulary/core-value/>, <https://www.insperity.com/vocabulary/domain-commercial-operations/>;
+    vaem:namespace "https://www.insperity.com/taxonomy/domain-sales/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "domainsalestax";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> .
+  
+  domainsalestax:buying-committee a skos:Concept;
+    rdfs:label "Buying committee"@en;
+    skos:prefLabel "Buying committee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A group of persons at a buyer who together bear the buying roles in a purchase decision."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    terms:subject governancevoc:buying-committee, domaincommercialoperationsvoc:buying-committee;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    core:formalizedBy core:organization .
+  
+  domainsalestax:buying-role a skos:Concept;
+    rdfs:label "Buying role"@en;
+    skos:prefLabel "Buying role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a person at a buyer that shapes how the buyer reaches its decision."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:scopeNote "Buying roles are roles in a purchase decision, not personas (Baseline decisions 22 and 23): a persona instance may bear one in a given opportunity."@en;
+    owl:versionInfo "0.1.0";
+    terms:subject rolevoc:buying-role, domaincommercialoperationsvoc:buying-role;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:champion, domainsalestax:decision-maker, domainsalestax:economic-buyer,
+      domainsalestax:gatekeeper, domainsalestax:influencer;
+    core:formalizedBy core:role;
+    skos:broadMatch roletax:commercial-role .
+  
+  domainsalestax:sales-measure a skos:Concept;
+    rdfs:label "Sales measure"@en;
+    skos:prefLabel "Sales measure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A measure of the performance of selling."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-measure, measurevoc:sales-measure;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:average-opportunity-size, domainsalestax:quota, domainsalestax:quota-attainment,
+      domainsalestax:sales-cycle-length, domainsalestax:sales-forecast, domainsalestax:worksite-employees-sold;
+    core:formalizedBy core:measure;
+    skos:broadMatch measuretax:key-performance-indicator .
+  
+  domainsalestax:sales-plan a skos:Concept;
+    rdfs:label "Sales plan"@en;
+    skos:prefLabel "Sales plan"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A directive that sets how sellers will pursue accounts, territories or leads."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-plan, processvoc:sales-plan;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:account-plan, domainsalestax:cadence, domainsalestax:sales-incentive,
+      domainsalestax:territory-plan;
+    core:formalizedBy core:directive .
+  
+  domainsalestax:sales-record a skos:Concept;
+    rdfs:label "Sales record"@en;
+    skos:prefLabel "Sales record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset that records the outcome of selling."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    terms:subject assetvoc:sales-record, domainvoc:sales-record;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:booking;
+    core:formalizedBy core:information-asset .
+  
+  domainsalestax:sales-role a skos:Concept;
+    rdfs:label "Sales role"@en;
+    skos:prefLabel "Sales role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a person in the organization who sells its offerings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-role, rolevoc:sales-role;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:sales-executive, domainsalestax:sales-manager, domainsalestax:sales-representative;
+    core:formalizedBy core:role;
+    skos:broadMatch roletax:employment-role .
+  
+  domainsalestax:selling-activity a skos:Concept;
+    rdfs:label "Selling activity"@en;
+    skos:prefLabel "Selling activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A process step a seller performs to find, advance or close opportunities."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:selling-activity, processvoc:selling-activity;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:client-handoff, domainsalestax:demonstration, domainsalestax:objection-handling,
+      domainsalestax:outreach, domainsalestax:prospecting;
+    core:formalizedBy core:process-step .
+  
+  domainsalestax:selling-stage a skos:Concept;
+    rdfs:label "Selling stage"@en;
+    skos:prefLabel "Selling stage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A process step of the selling process: the provider's view of where an opportunity stands in the buyer's journey."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:scopeNote "Buying stages are the provider's point of view (Baseline decision 21). A stage may address one or more of the buyer persona's jobs or job steps; it must not be confused with those job steps, and the mismatch between them is where value gaps are created."@en;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:selling-stage, domaincommercialoperationsvoc:selling-stage;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:narrower domainsalestax:decide, domainsalestax:discover, domainsalestax:evaluate,
+      domainsalestax:onboard, domainsalestax:propose, domainsalestax:qualify;
+    core:formalizedBy domainsales:selling-step;
+    skos:broadMatch processtax:process-step .
+  
+  domainsalestax:champion a skos:Concept;
+    rdfs:label "Champion"@en;
+    skos:prefLabel "Champion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A buying role borne by a person who advocates internally for the organization's offering."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:buying-role;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:champion;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:champion .
+  
+  domainsalestax:decision-maker a skos:Concept;
+    rdfs:label "Decision maker"@en;
+    skos:prefLabel "Decision maker"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A buying role borne by a person with authority to commit the buyer to an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:buying-role;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:decision-maker;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:decision-maker .
+  
+  domainsalestax:economic-buyer a skos:Concept;
+    rdfs:label "Economic buyer"@en;
+    skos:prefLabel "Economic buyer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A buying role borne by the person who controls the budget the purchase is paid from."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:buying-role;
+    owl:versionInfo "0.1.0";
+    terms:subject valuevoc:economic-buyer, domaincommercialoperationsvoc:economic-buyer;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:gatekeeper a skos:Concept;
+    rdfs:label "Gatekeeper"@en;
+    skos:prefLabel "Gatekeeper"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A buying role borne by a person who controls access to those who decide."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:buying-role;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:gatekeeper;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:gatekeeper .
+  
+  domainsalestax:influencer a skos:Concept;
+    rdfs:label "Influencer"@en;
+    skos:prefLabel "Influencer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A buying role borne by a person whose opinion shapes the decision without having authority to make it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:buying-role;
+    owl:versionInfo "0.1.0";
+    terms:subject domaincommercialoperationsvoc:influencer;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:influencer .
+  
+  domainsalestax:average-opportunity-size a skos:Concept;
+    rdfs:label "Average opportunity size"@en;
+    skos:prefLabel "Average opportunity size"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales measure of the mean number of worksite employees, or value, of won opportunities."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-measure;
+    skos:altLabel "Average deal size"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject measurevoc:average-opportunity-size, domaincommercialoperationsvoc:average-opportunity-size;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:quota a skos:Concept;
+    rdfs:label "Quota"@en;
+    skos:prefLabel "Quota"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales measure that is the target of sales assigned to a party or territory for a period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-measure;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:quota;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:quota;
+    skos:broadMatch measuretax:target .
+  
+  domainsalestax:quota-attainment a skos:Concept;
+    rdfs:label "Quota attainment"@en;
+    skos:prefLabel "Quota attainment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales measure of the sales achieved in a period relative to quota."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-measure;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:quota, measurevoc:quota-attainment;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:sales-cycle-length a skos:Concept;
+    rdfs:label "Sales cycle length"@en;
+    skos:prefLabel "Sales cycle length"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales measure of the time from the creation of an opportunity to its win or loss."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-measure;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-cycle-length, timevoc:sales-cycle-length, domainsalesvoc:cycle;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:sales-forecast a skos:Concept;
+    rdfs:label "Sales forecast"@en;
+    skos:prefLabel "Sales forecast"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales measure that estimates the sales expected to close in a future period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-measure;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-forecast, measurevoc:sales-forecast;
+    core:hasLifecycleStatus core:Draft;
+    skos:broadMatch measuretax:forecast-value .
+  
+  domainsalestax:worksite-employees-sold a skos:Concept;
+    rdfs:label "Worksite employees sold"@en;
+    skos:prefLabel "Worksite employees sold"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales measure of the number of worksite employees covered by the agreements signed in a period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-measure;
+    owl:versionInfo "0.1.0";
+    terms:subject locationvoc:worksite-employees-sold, rolevoc:worksite-employees-sold,
+      domaincommercialoperationsvoc:worksite-employees-sold;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:account-plan a skos:Concept;
+    rdfs:label "Account plan"@en;
+    skos:prefLabel "Account plan"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales plan for winning or growing a specific account."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-plan;
+    owl:versionInfo "0.1.0";
+    terms:subject processvoc:account-plan, domaincommercialoperationsvoc:account-plan;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:cadence a skos:Concept;
+    rdfs:label "Cadence"@en;
+    skos:prefLabel "Cadence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales plan of outreach contacts sequenced across channels and days for a lead or account."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-plan;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:cadence;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:cadence .
+  
+  domainsalestax:sales-incentive a skos:Concept;
+    rdfs:label "Sales incentive"@en;
+    skos:prefLabel "Sales incentive"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales plan that rewards sellers for achieving or exceeding quota."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-plan;
+    skos:altLabel "Sales compensation plan"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-incentive, domaincommercialoperationsvoc:sales-incentive;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:territory-plan a skos:Concept;
+    rdfs:label "Territory plan"@en;
+    skos:prefLabel "Territory plan"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales plan for covering the accounts in a territory."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-plan;
+    owl:versionInfo "0.1.0";
+    terms:subject processvoc:territory-plan, domaincommercialoperationsvoc:territory-plan;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:booking a skos:Concept;
+    rdfs:label "Booking"@en;
+    skos:prefLabel "Booking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales record of a sale entered when the client signs an agreement, before its service starts."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-record;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:booking;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:booking .
+  
+  domainsalestax:sales-executive a skos:Concept;
+    rdfs:label "Sales executive"@en;
+    skos:prefLabel "Sales executive"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales role borne by a person accountable for the direction of the sales organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-role;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-executive, rolevoc:sales-executive;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:sales-manager a skos:Concept;
+    rdfs:label "Sales manager"@en;
+    skos:prefLabel "Sales manager"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales role borne by a person who directs the work of sales representatives."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-role;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-manager, rolevoc:sales-manager;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:sales-representative a skos:Concept;
+    rdfs:label "Sales representative"@en;
+    skos:prefLabel "Sales representative"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales role borne by a person who pursues opportunities and carries a quota."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:sales-role;
+    skos:altLabel "Seller"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject domainvoc:sales-representative, rolevoc:sales-representative;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:client-handoff a skos:Concept;
+    rdfs:label "Client handoff"@en;
+    skos:prefLabel "Client handoff"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling activity that passes responsibility for a won client from sales to the team that brings it into service."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-activity;
+    owl:versionInfo "0.1.0";
+    terms:subject eventvoc:client-handoff, rolevoc:client-handoff;
+    core:hasLifecycleStatus core:Draft;
+    skos:broadMatch eventtax:handoff .
+  
+  domainsalestax:demonstration a skos:Concept;
+    rdfs:label "Demonstration"@en;
+    skos:prefLabel "Demonstration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling activity that shows a buyer how an offering works in use."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-activity;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:demonstration;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:demonstration .
+  
+  domainsalestax:objection-handling a skos:Concept;
+    rdfs:label "Objection handling"@en;
+    skos:prefLabel "Objection handling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling activity that answers a buyer's objection so that the decision can proceed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-activity;
+    owl:versionInfo "0.1.0";
+    terms:subject processvoc:objection-handling, domainsalesvoc:objection;
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsalestax:outreach a skos:Concept;
+    rdfs:label "Outreach"@en;
+    skos:prefLabel "Outreach"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling activity in which the seller contacts a party that has not asked to be contacted."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-activity;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:outreach;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:outreach .
+  
+  domainsalestax:prospecting a skos:Concept;
+    rdfs:label "Prospecting"@en;
+    skos:prefLabel "Prospecting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling activity that searches for parties that fit the ideal customer profile."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-activity;
+    owl:versionInfo "0.1.0";
+    terms:subject domainsalesvoc:prospecting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domainsalesvoc:prospecting .
+  
+  domainsalestax:decide a skos:Concept;
+    rdfs:label "Decide"@en;
+    skos:prefLabel "Decide"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling stage in which the buyer negotiates and makes its decision, ending in a win or a loss."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-stage;
+    skos:altLabel "Close"@en, "Decision stage"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject decisionvoc:decide;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:decide .
+  
+  domainsalestax:discover a skos:Concept;
+    rdfs:label "Discover"@en;
+    skos:prefLabel "Discover"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling stage in which the seller learns the prospect's situation, needs and the jobs it is trying to get done."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-stage;
+    skos:altLabel "Discovery"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject lifecyclevoc:discover;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm lifecyclevoc:discover .
+  
+  domainsalestax:evaluate a skos:Concept;
+    rdfs:label "Evaluate"@en;
+    skos:prefLabel "Evaluate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling stage in which the buyer assesses the organization's offerings against its needs and its alternatives."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-stage;
+    skos:altLabel "Evaluation"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject governancevoc:evaluate;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm governancevoc:evaluate .
+  
+  domainsalestax:onboard a skos:Concept;
+    rdfs:label "Onboard"@en;
+    skos:prefLabel "Onboard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling stage in which a won client is handed off to be brought into active service."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-stage;
+    skos:altLabel "Onboarding stage"@en;
+    skos:scopeNote "The last selling stage ends at the handoff; bringing the client into service is customer success onboarding."@en;
+    owl:versionInfo "0.1.0";
+    terms:subject eventvoc:onboard;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:onboard .
+  
+  domainsalestax:propose a skos:Concept;
+    rdfs:label "Propose"@en;
+    skos:prefLabel "Propose"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling stage in which the organization presents a proposal of offerings, terms and prices."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-stage;
+    skos:altLabel "Proposal stage"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject domaincommercialoperationsvoc:propose;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:propose .
+  
+  domainsalestax:qualify a skos:Concept;
+    rdfs:label "Qualify"@en;
+    skos:prefLabel "Qualify"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T02:31:43Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A selling stage in which the seller determines whether the opportunity fits the ideal customer profile and is worth pursuing."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-sales/>;
+    skos:broader domainsalestax:selling-stage;
+    skos:altLabel "Qualification stage"@en;
+    owl:versionInfo "0.1.0";
+    terms:subject domaincommercialoperationsvoc:qualify;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:qualify .
+}

@@ -1,0 +1,686 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-supplychain/> {
+  <https://www.insperity.com/vocabulary/domain-supplychain/> a skos:ConceptScheme;
+    rdfs:label "Domain supplychain vocabulary"@en;
+    skos:prefLabel "Domain supplychain vocabulary"@en;
+    skos:hasTopConcept <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    terms:description "The entire network of entities involved in the process of getting a product or service from its origin to the end customer."@en;
+    terms:title "Domain supplychain vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:05:09.416Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Supply Chain"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-supplychain/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain> a skos:Concept;
+    skos:prefLabel "Supply chain"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:31:10.189Z"^^xsd:dateTime;
+    skos:definition "The entire network of entities involved in the process of getting a product or service from its origin to the end customer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle>, <https://www.insperity.com/vocabulary/domain-supplychain/logistics-management>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/manufacturing>, <https://www.insperity.com/vocabulary/domain-supplychain/planning>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain-visibility> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management> a skos:Concept;
+    skos:prefLabel "Inventory management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of ordering, storing, and using a company’s inventory."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/equipment-management>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/inventory-location>, <https://www.insperity.com/vocabulary/domain-supplychain/inventory-optimization>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/inventory-status>, <https://www.insperity.com/vocabulary/domain-supplychain/inventory-tracking>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/inventory-valuation> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle> a skos:Concept;
+    skos:prefLabel "Lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T21:06:18.411Z"^^xsd:dateTime;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    skos:altLabel "(Lifecycle)"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/deliver>, <https://www.insperity.com/vocabulary/domain-supplychain/make>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/plan>, <https://www.insperity.com/vocabulary/domain-supplychain/return>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/source> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/logistics-management> a skos:Concept;
+    skos:prefLabel "Logistics management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The management of the flow of goods, information, and services between the point of origin and the point of consumption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/distribution-management>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/transportation-management>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-management> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/manufacturing> a skos:Concept;
+    skos:prefLabel "Manufacturing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of converting raw materials into finished goods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/packaging>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/production-scheduling>, <https://www.insperity.com/vocabulary/domain-supplychain/quality-control> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/planning> a skos:Concept;
+    skos:prefLabel "Planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of setting goals and objectives and developing strategies to achieve them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/demand-forecasting>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/inventory-planning>, <https://www.insperity.com/vocabulary/domain-supplychain/production-planning>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/supply-planning> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain-visibility>
+    a skos:Concept;
+    skos:prefLabel "Supply chain visibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The ability to track and monitor the movement of goods and information throughout the supply chain."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/supply-chain>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/equipment-management> a skos:Concept;
+    skos:prefLabel "Equipment management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of maintaining and managing equipment throughout its lifecycle."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-location> a skos:Concept;
+    skos:prefLabel "Inventory location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The physical or virtual location where inventory is stored."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-optimization> a
+      skos:Concept;
+    skos:prefLabel "Inventory optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of determining the optimal level of inventory to minimize costs and maximize efficiency."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-status> a skos:Concept;
+    skos:prefLabel "Inventory status"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The current state of inventory, including quantity, location, and condition."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-tracking> a skos:Concept;
+    skos:prefLabel "Inventory tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of monitoring the movement and status of inventory."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-valuation> a skos:Concept;
+    skos:prefLabel "Inventory valuation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of determining the monetary value of inventory."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/inventory-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/deliver> a skos:Concept;
+    skos:prefLabel "Deliver"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The act of transporting goods to their final destination."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/extract>, <https://www.insperity.com/vocabulary/domain-supplychain/protect>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/search> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/make> a skos:Concept;
+    skos:prefLabel "Make"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To produce or manufacture goods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/enrich>, <https://www.insperity.com/vocabulary/domain-supplychain/inventory>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/warehouse> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/plan> a skos:Concept;
+    skos:prefLabel "Plan"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "A detailed proposal for achieving a specific objective."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/return> a skos:Concept;
+    skos:prefLabel "Return"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of sending goods back to their origin."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/source> a skos:Concept;
+    skos:prefLabel "Source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The origin or supplier of a product or material."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/lifecycle>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/acquire>, <https://www.insperity.com/vocabulary/domain-supplychain/profile>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/qualify> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/extract> a skos:Concept;
+    skos:prefLabel "Extract"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To obtain data from a source, often for analysis."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/deliver>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/protect> a skos:Concept;
+    skos:prefLabel "Protect"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To safeguard goods, data, or processes from damage, theft, or disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/deliver>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/search> a skos:Concept;
+    skos:prefLabel "Search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To locate specific information or items within a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/deliver>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/enrich> a skos:Concept;
+    skos:prefLabel "Enrich"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To enhance the value or quality of data or products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/make>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory> a skos:Concept;
+    skos:prefLabel "Inventory"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The stock of goods or materials held by a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/make>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/warehouse> a skos:Concept;
+    skos:prefLabel "Warehouse"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "A large building for storing goods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/make>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/acquire> a skos:Concept;
+    skos:prefLabel "Acquire"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To obtain goods or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/source>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/profile> a skos:Concept;
+    skos:prefLabel "Profile"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "A description of the characteristics of a product, customer, or process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/source>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/qualify> a skos:Concept;
+    skos:prefLabel "Qualify"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "To assess and confirm the suitability of a supplier, product, or process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/source>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/distribution-management>
+    a skos:Concept;
+    skos:prefLabel "Distribution management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of managing the distribution of goods from the manufacturer to the end customer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/logistics-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/inventory-allocation>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/network-design> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/transportation-management>
+    a skos:Concept;
+    skos:prefLabel "Transportation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of planning, implementing, and managing the movement of goods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/logistics-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/carrier-selection>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/fleet-management>, <https://www.insperity.com/vocabulary/domain-supplychain/freight-tracking>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/route-optimization> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-management> a skos:Concept;
+    skos:prefLabel "Warehouse management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The management of warehouse operations, including receiving, storage, and shipping."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/logistics-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-automation>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-optimization>,
+      <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-safety> .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-allocation> a skos:Concept;
+    skos:prefLabel "Inventory allocation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of distributing inventory to different locations or customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/distribution-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/network-design> a skos:Concept;
+    skos:prefLabel "Network design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of designing and optimizing the supply chain network."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/distribution-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/carrier-selection> a skos:Concept;
+    skos:prefLabel "Carrier selection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of choosing the best carrier for a particular shipment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/transportation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/fleet-management> a skos:Concept;
+    skos:prefLabel "Fleet management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The management of a company’s fleet of vehicles."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/transportation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/freight-tracking> a skos:Concept;
+    skos:prefLabel "Freight tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of tracking the movement of freight shipments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/transportation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/route-optimization> a skos:Concept;
+    skos:prefLabel "Route optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of determining the most efficient route for a shipment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/transportation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-automation> a skos:Concept;
+    skos:prefLabel "Warehouse automation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The use of technology to automate warehouse processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-optimization> a
+      skos:Concept;
+    skos:prefLabel "Warehouse optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of improving warehouse efficiency and productivity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-safety> a skos:Concept;
+    skos:prefLabel "Warehouse safety"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The implementation of measures to ensure the safety of workers and goods in a warehouse."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/warehouse-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/packaging> a skos:Concept;
+    skos:prefLabel "Packaging"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The materials used to protect and enclose products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/manufacturing>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/production-scheduling> a
+      skos:Concept;
+    skos:prefLabel "Production scheduling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of creating a schedule for production activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/manufacturing>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/quality-control> a skos:Concept;
+    skos:prefLabel "Quality control"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that products meet quality standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/manufacturing>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/demand-forecasting> a skos:Concept;
+    skos:prefLabel "Demand forecasting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of predicting future demand for products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/planning>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/inventory-planning> a skos:Concept;
+    skos:prefLabel "Inventory planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of determining the optimal level of inventory to meet demand."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/planning>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/production-planning> a skos:Concept;
+    skos:prefLabel "Production planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of planning production activities to meet demand."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/planning>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-supplychain/supply-planning> a skos:Concept;
+    skos:prefLabel "Supply planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:58.047Z"^^xsd:dateTime;
+    skos:definition "The process of planning the procurement of materials and services to meet demand."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-supplychain/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-supplychain/planning>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

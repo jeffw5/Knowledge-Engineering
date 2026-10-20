@@ -1,0 +1,1081 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-marketing/> {
+  <https://www.insperity.com/vocabulary/domain-marketing/> a skos:ConceptScheme;
+    rdfs:label "Domain marketing vocabulary"@en;
+    skos:prefLabel "Domain marketing vocabulary"@en;
+    skos:hasTopConcept domainmarketingvoc:marketing;
+    terms:description "The process of creating, communicating, and delivering value to customers and for managing customer relationships in ways that benefit the organization and its stakeholders."@en;
+    terms:title "Domain marketing vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:02:58.984Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Marketing"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-marketing/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing a skos:Concept;
+    skos:prefLabel "Marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:28:17.221Z"^^xsd:dateTime;
+    skos:definition "The process of creating, communicating, and delivering value to customers and for managing customer relationships in ways that benefit the organization and its stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:narrower domainmarketingvoc:account-based-marketing, domainmarketingvoc:brand-management,
+      domainmarketingvoc:campaign-management, domainmarketingvoc:content-marketing, domainmarketingvoc:customer-engagement,
+      domainmarketingvoc:influencer-marketing, domainmarketingvoc:marketing-communications,
+      domainmarketingvoc:marketing-insights-and-analysis, domainmarketingvoc:marketing-management,
+      domainmarketingvoc:marketing-mix, domainmarketingvoc:performance-marketing .
+  
+  domainmarketingvoc:account-based-marketing a skos:Concept;
+    skos:prefLabel "Account-Based marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A strategic approach that focuses marketing and sales resources on a defined set of target accounts, treating each account as a market of one."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    skos:altLabel "ABM"@en, "Account Based Marketing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:account-selection-and-prioritization, domainmarketingvoc:ideal-customer-profile-development,
+      domainmarketingvoc:personalized-content .
+  
+  domainmarketingvoc:brand-management a skos:Concept;
+    skos:prefLabel "Brand management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of creating, maintaining, and enhancing the value of a brand over time."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:brand-awareness, domainmarketingvoc:brand-equity,
+      domainmarketingvoc:brand-identity, domainmarketingvoc:brand-leadership, domainmarketingvoc:brand-positioning,
+      domainmarketingvoc:reputation-management .
+  
+  domainmarketingvoc:campaign-management a skos:Concept;
+    skos:prefLabel "Campaign management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of planning, executing, tracking, and analyzing marketing campaigns."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:campaign-budgeting, domainmarketingvoc:campaign-execution,
+      domainmarketingvoc:campaign-partnerships, domainmarketingvoc:campaign-planning .
+  
+  domainmarketingvoc:content-marketing a skos:Concept;
+    skos:prefLabel "Content marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Creating and distributing valuable, relevant, and consistent content to attract and engage a clearly defined audience."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:content-creation, domainmarketingvoc:content-distribution,
+      domainmarketingvoc:content-planning .
+  
+  domainmarketingvoc:customer-engagement a skos:Concept;
+    skos:prefLabel "Customer engagement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The level of interaction and involvement that customers have with a brand."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:customer-feedback, domainmarketingvoc:customer-journey,
+      domainmarketingvoc:customer-profile, domainmarketingvoc:customer-referral, domainmarketingvoc:customer-retention-and-growth,
+      domainmarketingvoc:customer-value .
+  
+  domainmarketingvoc:influencer-marketing a skos:Concept;
+    skos:prefLabel "Influencer marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Partnering with individuals who have a strong following and influence over a target audience to promote a brand or product."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:influencer-discovery-and-vetting, domainmarketingvoc:influencer-relationship-management .
+  
+  domainmarketingvoc:marketing-communications a skos:Concept;
+    skos:prefLabel "Marketing communications"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The various tools and channels that companies use to communicate with their target markets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:integrated-marketing-communication-management, domainmarketingvoc:internal-communication,
+      domainmarketingvoc:mass-communication-management, domainmarketingvoc:personal-communication-management .
+  
+  domainmarketingvoc:marketing-insights-and-analysis a skos:Concept;
+    skos:prefLabel "Marketing insights & analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Gathering and interpreting data to understand customer behavior, market trends, and campaign performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:demand-forecasting, domainmarketingvoc:industry-trends,
+      domainmarketingvoc:market-demographics, domainmarketingvoc:market-research, domainmarketingvoc:market-segments,
+      domainmarketingvoc:market-targets, domainmarketingvoc:marketing-analysis .
+  
+  domainmarketingvoc:marketing-management a skos:Concept;
+    skos:prefLabel "Marketing management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of planning, organizing, implementing, and controlling marketing activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:marketing-analytics-and-metrics, domainmarketingvoc:marketing-plans,
+      domainmarketingvoc:marketing-strategy, domainmarketingvoc:marketing-technology, domainmarketingvoc:risk-identification-and-mitigation .
+  
+  domainmarketingvoc:marketing-mix a skos:Concept;
+    skos:prefLabel "Marketing mix"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The set of controllable, tactical marketing tools that the firm blends to produce the response it wants in the target market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:channel-management, domainmarketingvoc:pricing-management,
+      domainmarketingvoc:product-management .
+  
+  domainmarketingvoc:performance-marketing a skos:Concept;
+    skos:prefLabel "Performance marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A type of marketing where advertisers pay only when a specific action is taken, such as a sale or lead."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:affiliate-marketing, domainmarketingvoc:conversion-rate-optimization,
+      domainmarketingvoc:native-advertising, domainmarketingvoc:search-engine-marketing,
+      domainmarketingvoc:social-media-marketing .
+  
+  domainmarketingvoc:account-selection-and-prioritization a skos:Concept;
+    skos:prefLabel "Account selection & prioritization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and ranking potential accounts based on their attractiveness and fit with the company’s ideal customer profile."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:account-based-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:ideal-customer-profile-development a skos:Concept;
+    skos:prefLabel "Ideal customer profile development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Creating a detailed description of the type of customer that would gain the most value from the company’s products or services and represent the highest profit potential."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:account-based-marketing;
+    skos:altLabel "ICP Development"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:personalized-content a skos:Concept;
+    skos:prefLabel "Personalized content"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Tailoring content to the specific interests, needs, and preferences of individual customers or accounts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:account-based-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:brand-awareness a skos:Concept;
+    skos:prefLabel "Brand awareness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The extent to which consumers are familiar with a brand and its products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:brand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:brand-equity a skos:Concept;
+    skos:prefLabel "Brand equity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The value that a brand adds to a product or service, based on consumer perceptions and experiences."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:brand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:brand-identity a skos:Concept;
+    skos:prefLabel "Brand identity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The visual and verbal elements that distinguish a brand from its competitors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:brand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:brand-leadership a skos:Concept;
+    skos:prefLabel "Brand leadership"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The position of a brand that dominates its market category in terms of market share, customer loyalty, and brand equity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:brand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:brand-positioning a skos:Concept;
+    skos:prefLabel "Brand positioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of establishing a unique and desirable image for a brand in the minds of target customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:brand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:reputation-management a skos:Concept;
+    skos:prefLabel "Reputation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The practice of influencing and controlling an individual’s or business’s reputation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:brand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:campaign-budgeting a skos:Concept;
+    skos:prefLabel "Campaign budgeting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Allocating resources to different marketing activities and channels within a campaign."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:campaign-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:campaign-execution a skos:Concept;
+    skos:prefLabel "Campaign execution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Putting the campaign plan into action and managing all aspects of its implementation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:campaign-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:campaign-partnerships a skos:Concept;
+    skos:prefLabel "Campaign partnerships"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Collaborating with other organizations to leverage their resources and reach a wider audience."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:campaign-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:campaign-planning a skos:Concept;
+    skos:prefLabel "Campaign planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Defining the campaign goals, target audience, messaging, channels, and timeline."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:campaign-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:content-creation a skos:Concept;
+    skos:prefLabel "Content creation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of developing and producing various types of content, such as blog posts, articles, videos, and infographics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:content-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:content-distribution a skos:Concept;
+    skos:prefLabel "Content distribution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Sharing and promoting content through different channels, such as websites, social media, and email marketing."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:content-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:content-planning a skos:Concept;
+    skos:prefLabel "Content planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Defining the content strategy, target audience, content calendar, and key performance indicators (KPIs)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:content-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-feedback a skos:Concept;
+    skos:prefLabel "Customer feedback"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T16:06:48.412Z"^^xsd:dateTime;
+    skos:definition "Information, insights, and opinions provided by customers about their experiences with a product, service, or brand. This feedback can be collected through surveys, reviews, social media, customer service interactions, and other channels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-engagement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-journey a skos:Concept;
+    skos:prefLabel "Customer journey"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T16:06:48.412Z"^^xsd:dateTime;
+    skos:definition "The complete sum of experiences customers go through when interacting with your company and brand – from the very first moment they become aware of your brand to the point they become a loyal customer (and even beyond)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-engagement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-profile a skos:Concept;
+    skos:prefLabel "Customer profile"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T16:06:48.412Z"^^xsd:dateTime;
+    skos:definition "A detailed description of your ideal customer. It includes demographic, geographic, psychographic (interests, values, attitudes), and behavioral data. Customer profiles help businesses target their marketing efforts effectively."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-engagement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-referral a skos:Concept;
+    skos:prefLabel "Customer referral"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T16:06:48.412Z"^^xsd:dateTime;
+    skos:definition "A recommendation for your business from a satisfied customer, often given to a potential customer who could also benefit from your products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-engagement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-retention-and-growth a skos:Concept;
+    skos:prefLabel "Customer retention & growth"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T16:06:48.412Z"^^xsd:dateTime;
+    skos:definition "Strategies and actions taken to keep existing customers and encourage them to continue doing business with a company over time, while also finding ways to increase the value of those customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-engagement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:customer-loyalty, domainmarketingvoc:customer-satisfaction .
+  
+  domainmarketingvoc:customer-value a skos:Concept;
+    skos:prefLabel "Customer value"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The perceived benefits that customers receive from a product or service, relative to its cost."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-engagement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-loyalty a skos:Concept;
+    skos:prefLabel "Customer loyalty"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T16:07:07.203Z"^^xsd:dateTime;
+    skos:definition "When a customer has a strong, positive emotional connection with a brand, leading them to consistently choose that brand over competitors and recommend it to others."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-retention-and-growth;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:customer-satisfaction a skos:Concept;
+    skos:prefLabel "Customer satisfaction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The extent to which customers are happy with a product, service, or experience."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:customer-retention-and-growth;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:influencer-discovery-and-vetting a skos:Concept;
+    skos:prefLabel "Influencer discovery & vetting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Identifying and evaluating potential influencers based on their reach, relevance, and credibility."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:influencer-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:influencer-relationship-management a skos:Concept;
+    skos:prefLabel "Influencer relationship management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Building and maintaining relationships with influencers to ensure successful collaborations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:influencer-marketing;
+    skos:altLabel "IRM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:integrated-marketing-communication-management a skos:Concept;
+    skos:prefLabel "Integrated marketing communication management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Coordinating all marketing communication activities to deliver a consistent and compelling message across all touchpoints."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-communications;
+    skos:altLabel "IMC Management"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:internal-communication a skos:Concept;
+    skos:prefLabel "Internal communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The sharing of information within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-communications;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:cross-functional-team-communication .
+  
+  domainmarketingvoc:mass-communication-management a skos:Concept;
+    skos:prefLabel "Mass communication management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Communicating with a large audience through mass media channels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-communications;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:advertising, domainmarketingvoc:sales-promotions .
+  
+  domainmarketingvoc:personal-communication-management a skos:Concept;
+    skos:prefLabel "Personal communication management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Two-way communication between a salesperson and a customer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-communications;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:direct-marketing, domainmarketingvoc:interactive-marketing .
+  
+  domainmarketingvoc:cross-functional-team-communication a skos:Concept;
+    skos:prefLabel "Cross-Functional team communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Communication between different departments within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:internal-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:advertising a skos:Concept;
+    skos:prefLabel "Advertising"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Paid form of non-personal presentation and promotion of ideas, goods, or services by an identified sponsor."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:mass-communication-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:sales-promotions a skos:Concept;
+    skos:prefLabel "Sales promotions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Short-term incentives to encourage the purchase or sale of a product or service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:mass-communication-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:direct-marketing a skos:Concept;
+    skos:prefLabel "Direct marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Communicating directly with target customers to generate a response or transaction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:personal-communication-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:interactive-marketing a skos:Concept;
+    skos:prefLabel "Interactive marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Marketing that allows for two-way communication between a company and its customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:personal-communication-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:demand-forecasting a skos:Concept;
+    skos:prefLabel "Demand forecasting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Predicting future customer demand for a product or service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:industry-trends a skos:Concept;
+    skos:prefLabel "Industry trends"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Patterns of change and development within a particular industry."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:market-demographics a skos:Concept;
+    skos:prefLabel "Market demographics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Statistical data about a population, such as age, gender, income, and location."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:market-research a skos:Concept;
+    skos:prefLabel "Market research"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The systematic gathering, recording, and analysis of data about a particular market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:market-segments a skos:Concept;
+    skos:prefLabel "Market segments"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Dividing a market into distinct groups of buyers who have different needs, characteristics, or behaviors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:market-targets a skos:Concept;
+    skos:prefLabel "Market targets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The specific groups of customers that a company aims to reach with its marketing efforts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-analysis a skos:Concept;
+    skos:prefLabel "Marketing analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Evaluating the effectiveness of marketing activities and identifying areas for improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-insights-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:business-market-analysis, domainmarketingvoc:competitive-analysis,
+      domainmarketingvoc:consumer-behavior-analysis, domainmarketingvoc:consumer-market-analysis .
+  
+  domainmarketingvoc:business-market-analysis a skos:Concept;
+    skos:prefLabel "Business market analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Analyzing the business market to identify opportunities and threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:competitive-analysis a skos:Concept;
+    skos:prefLabel "Competitive analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Identifying and analyzing the strengths and weaknesses of competitors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:consumer-behavior-analysis a skos:Concept;
+    skos:prefLabel "Consumer behavior analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Studying how consumers make purchasing decisions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:consumer-market-analysis a skos:Concept;
+    skos:prefLabel "Consumer market analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Analyzing the consumer market to identify opportunities and threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-analytics-and-metrics a skos:Concept;
+    skos:prefLabel "Marketing analytics & metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Measuring and analyzing marketing data to track performance and make informed decisions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-plans a skos:Concept;
+    skos:prefLabel "Marketing plans"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Written documents that outline the marketing objectives, strategies, and tactics for a specific period."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-strategy a skos:Concept;
+    skos:prefLabel "Marketing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A long-term plan for achieving marketing objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-technology a skos:Concept;
+    skos:prefLabel "Marketing technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Software and tools that are used to automate and improve marketing activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:marketing-automation, domainmarketingvoc:marketing-systems .
+  
+  domainmarketingvoc:risk-identification-and-mitigation a skos:Concept;
+    skos:prefLabel "Risk identification & mitigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Identifying potential risks to the marketing plan and developing strategies to mitigate them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-automation a skos:Concept;
+    skos:prefLabel "Marketing automation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Using software to automate repetitive marketing tasks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:marketing-systems a skos:Concept;
+    skos:prefLabel "Marketing systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The processes and technologies that a company uses to manage its marketing activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-technology;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:channel-management a skos:Concept;
+    skos:prefLabel "Channel management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of directing goods to consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-mix;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:pricing-management a skos:Concept;
+    skos:prefLabel "Pricing management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of setting, adjusting, and managing prices to maximize profits."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-mix;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:price-market-research, domainmarketingvoc:price-perception,
+      domainmarketingvoc:pricing-strategy, domainmarketingvoc:pricing-tactics .
+  
+  domainmarketingvoc:product-management a skos:Concept;
+    skos:prefLabel "Product management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of planning, developing, launching, and managing products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:marketing-mix;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:product-strategy, domainmarketingvoc:service-management .
+  
+  domainmarketingvoc:price-market-research a skos:Concept;
+    skos:prefLabel "Price market research"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Researching customer perceptions of value and price sensitivity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:pricing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:price-perception a skos:Concept;
+    skos:prefLabel "Price perception"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "How customers perceive the value of a product or service in relation to its price."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:pricing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:pricing-strategy a skos:Concept;
+    skos:prefLabel "Pricing strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A long-term plan for setting prices to achieve marketing objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:pricing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:pricing-tactics a skos:Concept;
+    skos:prefLabel "Pricing tactics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Short-term methods for adjusting prices to achieve specific goals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:pricing-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:product-strategy a skos:Concept;
+    skos:prefLabel "Product strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A long-term plan for developing and managing products to achieve marketing objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:product-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:service-management a skos:Concept;
+    skos:prefLabel "Service management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "The process of designing, delivering, and managing services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:product-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:affiliate-marketing a skos:Concept;
+    skos:prefLabel "Affiliate marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A type of performance-based marketing in which a business rewards one or more affiliates for each visitor or customer brought by the affiliate’s own marketing efforts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:performance-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:conversion-rate-optimization a skos:Concept;
+    skos:prefLabel "Conversion rate optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Improving the percentage of website visitors who take a desired action, such as making a purchase or filling out a form."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:performance-marketing;
+    skos:altLabel "CRO"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:native-advertising a skos:Concept;
+    skos:prefLabel "Native advertising"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Paid advertising that matches the form and function of the platform upon which it appears."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:performance-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:search-engine-marketing a skos:Concept;
+    skos:prefLabel "Search engine marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Promoting a website by increasing its visibility in search engine results pages (SERPs)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:performance-marketing;
+    skos:altLabel "SEM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainmarketingvoc:paid-search-advertising, domainmarketingvoc:search-engine-optimization .
+  
+  domainmarketingvoc:social-media-marketing a skos:Concept;
+    skos:prefLabel "Social media marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Using social media platforms to connect with target audiences, build relationships, and drive traffic and conversions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:performance-marketing;
+    skos:altLabel "SMM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:paid-search-advertising a skos:Concept;
+    skos:prefLabel "Paid search advertising"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "A type of SEM that involves bidding on keywords to display ads in the sponsored results section of SERPs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:search-engine-marketing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainmarketingvoc:search-engine-optimization a skos:Concept;
+    skos:prefLabel "Search engine optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:29:05.848Z"^^xsd:dateTime;
+    skos:definition "Improving the ranking of a website in organic search results."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:broader domainmarketingvoc:search-engine-marketing;
+    skos:altLabel "SEO"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

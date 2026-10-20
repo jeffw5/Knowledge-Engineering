@@ -137,6 +137,15 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
 .drawer-f{padding:10px 14px;border-top:1px solid var(--ke-line-soft);display:grid;gap:8px}
 .vbump{font-size:11.5px;color:var(--ke-ink2)}
 .vbump .mono{font-size:11px}
+.disp{margin-top:16px;border:1px solid var(--ke-line);border-radius:10px;background:var(--ke-surface)}
+.disp .opts{display:flex;flex-wrap:wrap;gap:4px}
+.disp .opts label{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--ke-line);border-radius:14px;padding:3px 10px;font-size:12px;cursor:pointer}
+.disp .opts label.on{border-color:var(--ke-accent);background:var(--ke-accent-soft);color:var(--ke-accent);font-weight:600}
+.disp .opts input{display:none}
+.disp .hist{font-size:11.5px;color:var(--ke-muted);border-left:3px solid var(--ke-line);padding:4px 8px}
+.tag.acc{background:var(--ke-ok-soft);color:var(--ke-ok)} .tag.def{background:var(--ke-warn-soft);color:var(--ke-warn)} .tag.esc{background:var(--ke-bad-soft);color:var(--ke-bad)}
+.cand{display:flex;justify-content:space-between;gap:8px;align-items:center;margin:2px 0}
+.cand .why{font-size:11px;color:var(--ke-muted)}
 .toast{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);background:var(--ke-ink);color:var(--ke-surface);padding:8px 14px;border-radius:8px;font-size:12.5px;z-index:50;display:none;max-width:80vw}
 .toast.bad{background:var(--ke-bad);color:#fff}
 
@@ -150,7 +159,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     <div class="grow">
       <div class="eyebrow">Knowledge engineering <span class="sep">•</span> Human in the loop <span class="sep">•</span> §3.2 · §3.3 · §3.7</div>
       <h1>Conformance Review</h1>
-      <p class="lede">Resolve the conformance errors the ingester could not decide: other organizations' content, acronyms, broken or foreign references and missing definitions, across vocabularies, taxonomies and ontologies. Open the files an ingestion run wrote, before loading, or models already in GraphDB. Changes are staged, then saved as one change set with a change record.</p>
+      <p class="lede">Resolve the conformance errors the ingester could not decide: other organizations' content, acronyms, broken or foreign references and missing definitions, across vocabularies, taxonomies and ontologies. Open the files an ingestion run wrote, before loading, or models already in GraphDB. Changes are staged, then saved as one change set with a change record. Every finding gets a disposition — fixed, accepted, not an issue, deferred or needing a modeling decision — and those decisions teach the ingestion agents.</p>
     </div>
     <div class="row">
       <span class="status" id="scanStatus"></span>
@@ -165,7 +174,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         <h3>Categories</h3>
         <div class="cats" id="cats"></div>
         <label class="chk"><input type="checkbox" id="showWarn"> Include warnings</label>
-        <label class="chk"><input type="checkbox" id="showDone"> Show staged and skipped</label>
+        <label class="chk"><input type="checkbox" id="showDone"> Show staged, skipped and dispositioned</label>
       </div>
       <div class="sec">
         <h3>Source</h3>
@@ -181,6 +190,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         <div class="alist" id="alist"><div class="status">Loading…</div></div>
       </div>
       <div class="sec policy" id="policy"></div>
+      <div class="sec policy" id="learn"></div>
     </aside>
 
     <!-- middle: queue -->
@@ -223,7 +233,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   <div class="drawer-f"><div class="row"><span class="status" id="loadStatus" style="flex:1"></span>
     <button class="btn pri" id="loadGo">Load</button></div></div>
 </div>
-<datalist id="vocTermList"></datalist>
+<datalist id="vocTermList"></datalist><datalist id="clsList"></datalist>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -243,6 +253,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   const CATS = [
     { id: 'org', title: "Other organization's content", rules: ['org-content'] },
     { id: 'voc', title: 'Not in a vocabulary', rules: ['vocab-term'] },
+    { id: 'fml', title: 'Not formalized by a class', rules: ['formalized-by'] },
     { id: 'acr', title: 'Acronyms', rules: ['acronym-label', 'acronym-id'] },
     { id: 'ref', title: 'Broken and foreign references', rules: ['broken-ref', 'base-url'] },
     { id: 'def', title: 'Missing definitions', rules: ['definition'] },
@@ -256,6 +267,11 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   fetch('/api/ingest/define-status').then(r => r.ok ? r.json() : null).then(d => { if (d) DEFS = d; }).catch(() => {});
   let VOC = { vocabs: [], terms: new Map() }, support = new Set(), vocOpt = new Map();   // vocabulary index; vocabulary files loaded only as targets
   let cat = 'org', sel = null, checked = new Set(), staged = [], skipped = new Set(), scanned = new Set();
+  // classes a taxonomy concept can be formalized by, and every core:formalizedBy already stated (any graph)
+  let CLS = { list: [], byIri: new Map(), fb: new Map(), opt: new Map() };
+  // review decisions (ingest/feedback/dispositions.jsonl): the latest per finding and per term
+  let DISP = { recs: [], byKey: new Map(), byTerm: new Map(), path: '' };
+  const why = new Map(), drafts = new Map(), choice = new Map();   // rationale typed per term; Claude drafts per term; disposition picked per term
 
   // ── policy and assets ─────────────────────────────────────────────────
   async function loadPolicy() {
@@ -342,7 +358,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         $('scanStatus').textContent = `Reading graphs… ${quads.length.toLocaleString()} statements`;
       }
       scanned = new Set(gs); support = new Set();
-      buildIndex(); await loadVocab(); runChecks();
+      buildIndex(); await loadVocab(); await loadClasses(); await loadDispositions(); runChecks();
       $('scanStatus').textContent = `${plural(gs.length, 'model')} · ${quads.length.toLocaleString()} statements · ${plural(findings.filter(f => f.sev === 'error').length, 'error')}`;
       $('scanStatus').className = 'status ok';
       const firstCat = CATS.find(c => countCat(c.id) > 0); if (firstCat && !countCat(cat)) cat = firstCat.id;
@@ -374,7 +390,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       scanned = new Set(Object.keys(fileOf).filter(g => !support.has(g)));
       buildIndex(); await loadVocab();
       staged.filter(c => c.type === 'addVocab').forEach(c => VOC.terms.set(c.newIri, { iri: c.newIri, label: c.label, alts: [], scheme: c.vocab, pending: true }));
-      renderVocOptions(); runChecks();
+      renderVocOptions(); await loadClasses(); await loadDispositions(); runChecks();
       $('scanStatus').textContent = `${plural(scanned.size, 'file')} · ${quads.length.toLocaleString()} statements · ${plural(findings.filter(f => f.sev === 'error').length, 'error')}` + (bad.length ? ` · could not read ${bad.map(f => f.path.split('/').pop()).join(', ')}` : '');
       $('scanStatus').className = bad.length ? 'status bad' : 'status ok';
       const firstCat = CATS.find(c => countCat(c.id) > 0); if (firstCat && !countCat(cat)) cat = firstCat.id;
@@ -504,9 +520,97 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     stage({ type: 'link', term: iri, graph: graphOf(iri), target, targetLabel: (VOC.terms.get(target) || {}).label || ln(target), vocab: (VOC.terms.get(target) || {}).scheme });
   }
 
+  // ── classes (for core:formalizedBy) and review decisions ─────────────
+  const CORE = () => (policyJ.baseUrl || 'https://www.insperity.com/') + 'ontology/core/';
+  const FB = () => CORE() + 'formalizedBy';
+  async function loadClasses() {
+    CLS = { list: [], byIri: new Map(), fb: new Map(), opt: new Map() };
+    const base = policyJ.baseUrl || 'https://www.insperity.com/';
+    const addC = (c, l, g, prim) => { if (!c.startsWith(base + 'ontology/')) return; const x = CLS.byIri.get(c) || { iri: c, label: l || ln(c), model: g, prim: new Set() }; if (l) x.label = l; if (prim) x.prim.add(prim); CLS.byIri.set(c, x); };
+    try {
+      const rows = await S.select(`SELECT ?c (SAMPLE(?l0) AS ?l) (SAMPLE(?g0) AS ?g) (GROUP_CONCAT(DISTINCT STR(?p0); separator=" ") AS ?p) WHERE {
+          GRAPH ?g0 { ?c a owl:Class } FILTER(isIRI(?c) && STRSTARTS(STR(?c), ${S.lit(base + 'ontology/')}))
+          OPTIONAL { ?c skos:prefLabel|rdfs:label ?l0 } OPTIONAL { ?c <${CORE()}hasPrimaryTerm> ?p0 } } GROUP BY ?c`);
+      rows.forEach(r => addC(r.c, r.l, r.g, null) || (r.p || '').split(' ').filter(Boolean).forEach(p => CLS.byIri.get(r.c) && CLS.byIri.get(r.c).prim.add(p)));
+      (await S.select(`SELECT DISTINCT ?c ?k WHERE { ?c <${FB()}> ?k }`)).forEach(r => { if (!CLS.fb.has(r.c)) CLS.fb.set(r.c, new Set()); CLS.fb.get(r.c).add(r.k); });
+    } catch (e) { /* GraphDB not reachable: classes come from the files only */ }
+    quads.forEach(q => {
+      if (q.p.v === RDF + 'type' && q.o.v === OWL + 'Class' && q.s.t === 'iri') addC(q.s.v, label(q.s.v), q.g, null);
+      if (q.p.v === FB() && q.s.t === 'iri' && q.o.t === 'iri') { if (!CLS.fb.has(q.s.v)) CLS.fb.set(q.s.v, new Set()); CLS.fb.get(q.s.v).add(q.o.v); }
+    });
+    // what is in the scanned graphs is current: drop GraphDB's links for terms whose graph was scanned, keep the file's
+    const fromFiles = new Map(); quads.filter(q => q.p.v === FB()).forEach(q => { if (!fromFiles.has(q.s.v)) fromFiles.set(q.s.v, new Set()); fromFiles.get(q.s.v).add(q.o.v); });
+    [...CLS.fb.keys()].forEach(c => { if (scanned.has(graphOf(c))) { if (fromFiles.has(c)) CLS.fb.set(c, fromFiles.get(c)); else CLS.fb.delete(c); } });
+    CLS.list = [...CLS.byIri.values()].sort((a, b) => a.label.localeCompare(b.label));
+    const ml = g => { const a = assets.find(x => x.iri === g || x.path === g); return a ? a.label : ln(g); };
+    CLS.list.forEach(c => CLS.opt.set(`${c.label} · ${ml(c.model)}`, c.iri));
+    $('clsList').innerHTML = [...CLS.opt.keys()].map(k => `<option value="${esc(k)}">`).join('');
+  }
+  const clsPick = v => CLS.opt.get(String(v).trim()) || (CLS.list.find(c => c.label.toLowerCase() === String(v).trim().toLowerCase()) || {}).iri || null;
+  const clsLabel = c => (CLS.byIri.get(c) || {}).label || ln(c);
+  async function loadDispositions() {
+    DISP = { recs: [], byKey: new Map(), byTerm: new Map(), path: '' };
+    try {
+      const r = await fetch('/api/ingest/dispositions'); const d = r.ok ? await r.json() : null;
+      if (d && d.ok) { DISP.recs = d.records; DISP.path = d.path; DISP.summary = d.summary; }
+    } catch (e) {}
+    DISP.recs.forEach(r => { const t = (r.term || {}).iri; if (!t) return; DISP.byTerm.set(t, r); (r.findings || []).forEach(f => DISP.byKey.set(f.rule + '|' + t, r)); });
+    renderLearn();
+  }
+  function renderLearn() {
+    const n = DISP.recs.length, by = {};
+    DISP.recs.forEach(r => by[r.disposition] = (by[r.disposition] || 0) + 1);
+    const words = { fix: 'fixed', accept: 'accepted', 'not-an-issue': 'not an issue', defer: 'deferred', escalate: 'need a decision' };
+    $('learn').innerHTML = n ? `<b>${n}</b> review decision${n === 1 ? '' : 's'} recorded (${Object.entries(by).map(([k, v]) => `${v} ${words[k] || k}`).join(', ')}). Ingestion replays the fixes, reports accepted findings as information and shows Claude the definitions you approved. <a href="../ingest/feedback/dispositions.jsonl" download="dispositions.jsonl">Download the training set</a>`
+      : 'No review decisions recorded yet. Each disposition you give is kept in <span class="mono">ingest/feedback/dispositions.jsonl</span> to train the ingestion agents.';
+  }
+  // A taxonomy concept reaches BFO when it, or a broader concept, is formalized by a class (core:formalizedBy).
+  function formalizationFindings() {
+    const out = [];
+    const taxGraphs = [...scanned].filter(g => /\/taxonomy\//.test(idx.header.get(g) || g));
+    taxGraphs.forEach(g => {
+      const cs = [...idx.s.keys()].filter(c => (idx.s.get(c) || []).some(q => q.g === g && q.p.v === RDF + 'type' && q.o.v === SKOS + 'Concept'));
+      const inG = new Set(cs), memo = new Map();
+      const up = c => vals(c, SKOS + 'broader', g).filter(o => o.t === 'iri' && inG.has(o.v)).map(o => o.v);
+      const ok = (c, seen) => { if (memo.has(c)) return memo.get(c); seen = seen || new Set(); if (seen.has(c)) return false; seen.add(c);
+        const staged1 = staged.some(x => x.type === 'formalize' && x.term === c);
+        const r = staged1 || (CLS.fb.get(c) || new Set()).size > 0 || up(c).some(p => ok(p, seen)); memo.set(c, r); return r; };
+      const below = c => { let n = 0; const st = [c], seen = new Set([c]); while (st.length) { const x = st.pop(); childrenOf(x).filter(k => inG.has(k) && !seen.has(k)).forEach(k => { seen.add(k); n++; st.push(k); }); } return n; };
+      cs.forEach(c => {
+        if (ok(c)) return;
+        if (up(c).length) return;          // reported on its broadest unformalized concept
+        const n = below(c);
+        out.push({ rule: 'formalized-by', sev: 'error', iri: c, detail: `neither it nor a broader concept is formalized by a class (core:formalizedBy), so it does not reach BFO${n ? ` — ${plural(n, 'narrower concept')} depend on it` : ''}` });
+      });
+    });
+    return out;
+  }
+  // classes a concept is probably formalized by, best first
+  function classMatches(iri) {
+    const lab = norm(label(iri)), toks = lab.split(' '), head = toks[toks.length - 1];
+    const prims = new Set(subjOf(iri)), out = new Map();
+    const put = (c, sc, why_) => { if (!CLS.byIri.has(c)) return; const x = out.get(c); if (!x || x.score < sc) out.set(c, { iri: c, label: clsLabel(c), score: sc, why: why_ }); };
+    // decided before, for a concept with the same label
+    DISP.recs.filter(r => r.disposition === 'fix' && norm((r.term || {}).label) === lab).forEach(r => (r.actions || []).filter(a => a.type === 'formalize').forEach(a => put(a.target, 97, 'decided in an earlier review')));
+    CLS.list.forEach(c => {
+      const cl = norm(c.label);
+      if (cl === lab || sing(cl) === sing(lab)) put(c.iri, 100, 'same label');
+      else if ([...c.prim].some(p => prims.has(p))) put(c.iri, 90, 'same primary term');
+      else if (cl === head || sing(cl) === sing(head)) put(c.iri, 75, `head word “${head}”`);
+      else if (cl.split(' ').length > 1 && lab.endsWith(' ' + cl)) put(c.iri, 72, 'ends with the class label');
+    });
+    // what its sibling top concepts in the same taxonomy are formalized by
+    const g = graphOf(iri), sib = {};
+    (idx.s.get(idx.header.get(g)) || []).filter(q => q.p.v === SKOS + 'hasTopConcept').forEach(q => (CLS.fb.get(q.o.v) || []).forEach(k => sib[k] = (sib[k] || 0) + 1));
+    Object.entries(sib).sort((a, b) => b[1] - a[1]).slice(0, 2).forEach(([k, n]) => put(k, 40, `${plural(n, 'other top concept')} in this taxonomy`));
+    return [...out.values()].sort((a, b) => b.score - a.score || a.label.localeCompare(b.label)).slice(0, 6);
+  }
+
   function runChecks() {
     const res = K.runChecks(quads, { bases: [policyJ.baseUrl || 'https://www.insperity.com/'], policy: POL, vocab: VOC.terms.size ? new Set(VOC.terms.keys()) : null });
     findings = res.findings.filter(f => (f.sev === 'error' || f.sev === 'warn') && !support.has(graphOf(f.iri)));
+    findings.push(...formalizationFindings());
+    findings.forEach(f => { const r = DISP.byKey.get(f.rule + '|' + f.iri); f.disp = r && r.disposition !== 'fix' ? r : null; });
     terms = new Map();
     findings.forEach(f => { f.cat = catOf(f.rule); f.g = graphOf(f.iri); if (!terms.has(f.iri)) terms.set(f.iri, []); terms.get(f.iri).push(f); });
     document.querySelectorAll('#alist .c').forEach(el => {
@@ -515,8 +619,11 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       el.style.color = n ? '' : 'var(--ke-ok)';
     });
   }
+  const closedDisp = f => f.disp && (f.disp.disposition === 'accept' || f.disp.disposition === 'not-an-issue');
   const isDone = iri => staged.some(c => c.term === iri) || skipped.has(iri);
-  const visible = f => (f.sev === 'error' || $('showWarn').checked) && ($('showDone').checked || !isDone(f.iri));
+  const visible = f => (f.sev === 'error' || $('showWarn').checked) && ($('showDone').checked || (!isDone(f.iri) && !closedDisp(f)));
+  const DTAG = { accept: ['acc', 'accepted'], 'not-an-issue': ['acc', 'not an issue'], defer: ['def', 'deferred'], escalate: ['esc', 'needs decision'] };
+  const dispTag = fs => { const f = fs.find(x => x.disp); if (!f) return ''; const [c, w] = DTAG[f.disp.disposition] || ['skip', f.disp.disposition]; return `<span class="tag ${c}" title="${esc((f.disp.rationale || '') + ' — ' + (f.disp.by || '') + ' ' + String(f.disp.at || '').slice(0, 10))}">${w}</span>`; };
   function countCat(c) { return findings.filter(f => f.cat === c && visible(f)).length; }
   function renderCats() {
     $('cats').innerHTML = CATS.map(c => { const n = countCat(c.id); return `<button class="cat ${c.id === cat ? 'on' : ''}" data-cat="${c.id}"><span>${esc(c.title)}</span><span class="n ${n ? '' : 'z'}">${n}</span></button>`; }).join('');
@@ -559,7 +666,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         const sug = suggestion(iri);
         h += `<div class="item ${iri === sel ? 'on' : ''}" data-iri="${esc(iri)}">
           <input type="checkbox" data-chk="${esc(iri)}" ${checked.has(iri) ? 'checked' : ''} aria-label="Select ${esc(label(iri))}">
-          <div class="lb"><span>${esc(label(iri))}</span>${st ? '<span class="tag staged">staged</span>' : skipped.has(iri) ? '<span class="tag skip">skipped</span>' : sug && sug.kind !== 'remove' ? '<span class="tag sug">suggestion</span>' : ''}</div>
+          <div class="lb"><span>${esc(label(iri))}</span>${st ? '<span class="tag staged">staged</span>' : skipped.has(iri) ? '<span class="tag skip">skipped</span>' : dispTag(fs) || (sug && sug.kind !== 'remove' ? '<span class="tag sug">suggestion</span>' : '')}</div>
           <div class="msg">${esc(fs.map(f => f.detail).join(' · '))}</div></div>`;
       });
     });
@@ -578,6 +685,10 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   // Suggested fix for a term, by category
   function suggestion(iri) {
     const fs = terms.get(iri) || [];
+    if (fs.some(f => f.rule === 'formalized-by')) {
+      const m = classMatches(iri)[0];
+      if (m && m.score >= 90) return { kind: 'formalize', target: m.iri, text: m.label };
+    }
     if (fs.some(f => f.rule === 'vocab-term')) {
       const m = vocabMatches(iri)[0];
       if (m && m.score >= 90) return { kind: 'link', target: m.iri, text: m.label };
@@ -604,6 +715,8 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       <button class="btn sm" id="bSug" ${sugs.length ? '' : 'disabled'} title="Stage the suggested label, definition or description for each selected term">Stage ${sugs.length} suggestion${sugs.length === 1 ? '' : 's'}</button>
       ${cat === 'voc' && VOC.vocabs.length ? `<span style="display:inline-flex;gap:4px;align-items:center">Add ${n} to <select id="bVocab" style="height:26px;max-width:220px;font-size:11.5px">${VOC.vocabs.map(v => `<option value="${esc(v.iri)}" ${v.iri === ls.get('ke-review-vocab', '') ? 'selected' : ''}>${esc(v.title)}</option>`).join('')}</select><button class="btn sm pri" id="bAddVoc">Add</button></span>` : ''}
       ${cat === 'def' && DEFS.key ? `<button class="btn sm pri" id="bDefs">✦ Write ${n} definition${n === 1 ? '' : 's'} with Claude</button>` : ''}
+      ${cat === 'fml' && CLS.list.length ? `<span style="display:inline-flex;gap:4px;align-items:center">Formalize ${n} by <input id="bFml" list="clsList" placeholder="class" style="height:26px;width:150px;font-size:11.5px"><button class="btn sm pri" id="bFmlGo">Stage</button></span>` : ''}
+      <span style="display:inline-flex;gap:4px;align-items:center"><select id="bDisp" style="height:26px;font-size:11.5px"><option value="">Disposition…</option>${DOPTS.filter(x => x[0] !== 'fix').map(([k, w]) => `<option value="${k}">${w}</option>`).join('')}</select><input id="bWhy" placeholder="rationale" style="height:26px;width:160px;font-size:11.5px"><button class="btn sm" id="bDispGo">Record ${n}</button></span>
       <button class="btn sm bad" id="bRem">Stage removal of ${n}</button>
       <button class="btn sm" id="bSkip">Skip ${n}</button>
       <button class="btn sm" id="bNone">Clear</button>`;
@@ -624,10 +737,22 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       try {
         const d = await writeDefinitions(list);
         let n = 0;
-        list.forEach(i => { const t = d.definitions[i]; if (t) { stage({ type: 'definition', term: i, graph: graphOf(i), old: litv(i, SKOS + 'definition')[0] || '', new: t, generated: d.model }); n++; } });
+        list.forEach(i => { const t = d.definitions[i]; if (t) { drafts.set(i, { model: d.model, text: t }); stage({ type: 'definition', term: i, graph: graphOf(i), old: litv(i, SKOS + 'definition')[0] || '', new: t, generated: d.model }); n++; } });
         checked.clear(); refreshAll();
         toast(`${plural(n, 'definition')} written by ${d.model} and staged${d.error ? ' — some failed: ' + d.error : ''}`, !!d.error);
       } catch (e) { toast(e.message, true); renderBulk(queueTerms()); }
+    });
+    if ($('bFmlGo')) $('bFmlGo').addEventListener('click', () => {
+      const t = clsPick($('bFml').value); if (!t) { toast('No class with that label', true); return; }
+      const list = [...checked].filter(i => byTerm.has(i)); list.forEach(i => stageFormalize(i, t)); checked.clear(); refreshAll(); toast(`${plural(list.length, 'concept')} staged to be formalized by ${clsLabel(t)}`);
+    });
+    $('bDispGo').addEventListener('click', async () => {
+      const d = $('bDisp').value, w = $('bWhy').value.trim();
+      if (!d) { toast('Choose a disposition', true); return; }
+      if (d !== 'defer' && !w) { toast('Give a short rationale — it is what the agents learn from', true); $('bWhy').focus(); return; }
+      const list = [...checked].filter(i => byTerm.has(i));
+      list.forEach(i => why.set(i, w));
+      if (await postDispositions(list.map(i => dispRecord(i, d)))) { list.forEach(i => why.delete(i)); checked.clear(); runChecks(); refreshAll(); toast(`Recorded ${plural(list.length, 'disposition')}`); }
     });
     $('bSkip').addEventListener('click', () => { [...checked].forEach(i => skipped.add(i)); checked.clear(); refreshAll(); });
     $('bNone').addEventListener('click', () => { checked.clear(); renderQueue(); });
@@ -663,6 +788,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       </div>
 
       ${fs.some(f => f.rule === 'vocab-term') && !stRem ? vocabCard(iri, st) : ''}
+      ${fs.some(f => f.rule === 'formalized-by') && !stRem ? formalizeCard(iri, st) : ''}
       ${stRem ? `<div class="act"><div class="act-h">Staged for removal</div><div class="act-b"><div class="cascade">${cascadeHtml(stRem.plan)}</div><div class="row"><button class="btn sm" data-unstage="remove">Undo</button></div></div></div>` : `
       <div class="act"><div class="act-h">Preferred label ${acrs.length ? `<span class="sub">acronym${acrs.length > 1 ? 's' : ''}: ${esc(acrs.join(', '))}</span>` : ''}</div><div class="act-b">
         <div class="fld"><input id="fLabel" value="${esc(stLabel ? stLabel.new : (sug && sug.kind === 'label' ? sug.text : label(iri)))}" aria-label="Preferred label"></div>
@@ -697,6 +823,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         <div class="cascade">${cascadeHtml(planRemove(iri))}</div>
         <div class="row"><button class="btn sm bad" id="stRemove">Stage removal</button></div></div></div>`}
       `}
+      ${fs.length ? dispCard(iri, fs, st) : ''}
       <div class="row" style="margin-top:14px"><button class="btn sm" id="skipBtn">${skipped.has(iri) ? 'Unskip' : 'Skip for now'}</button><span class="status">Skipped findings return on the next Find issues.</span></div>
     </div>`;
     ['fLabel', 'fDef', 'fId'].forEach(id => { const el = $(id); if (!el) return; el.dataset.init = el.value;
@@ -769,12 +896,73 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       </div>
     </div></div>`;
   }
-  function ruleTitle(id) { return ({ 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date' })[id] || id; }
-  // Local name in the convention of the term's kind (§3.2, §3.11): vocabulary terms kebab-case; taxonomy concepts and classes UpperCamel; properties lowerCamel
+  function formalizeCard(iri, st) {
+    const stF = st.find(c => c.type === 'formalize'), ms = classMatches(iri);
+    return `<div class="act"><div class="act-h">Formalize by a class <span class="sub">core:formalizedBy, written in this taxonomy</span></div><div class="act-b">
+      ${stF ? `<div class="cascade">Staged: formalized by <b>${esc(stF.targetLabel)}</b> — its ${plural(childrenOf(iri).length, 'narrower concept')} reach BFO through it. <button class="btn sm" data-unstage="formalize">Undo</button></div>` : ''}
+      ${ms.length ? `<div class="fld"><label>Likely classes</label>${ms.map(m => `<div class="cand"><span>${esc(m.label)} <span class="why">${esc(m.why)}</span></span><button class="btn sm" data-fml="${esc(m.iri)}">Formalize by</button></div>`).join('')}</div>` : '<div class="status">No class has a matching label or primary term.</div>'}
+      <div class="fld"><label>Another class</label><div class="row"><input id="fFml" list="clsList" placeholder="Type a class label…" style="flex:1"><button class="btn sm" id="stFml">Formalize by</button></div></div>
+      <div class="sugg">No fitting class? Record <b>Needs a modeling decision</b> below with the class you would want, or add it with Model Editor (Ontology) › New class, then Find issues again.</div>
+    </div></div>`;
+  }
+  const DOPTS = [['fix', 'Fixed by the staged changes'], ['accept', 'Accept as is'], ['not-an-issue', 'Not an issue'], ['defer', 'Defer'], ['escalate', 'Needs a modeling decision']];
+  const DHINT = { fix: 'Say why this fix is right — it is kept with the change and shown to the ingestion agents as an example.',
+    accept: 'An exception: the finding stays true, but this term is meant to be this way. It is no longer reported here, and ingestion reports it as information.',
+    'not-an-issue': 'The rule fired wrongly here (a false positive). Say why, so the rule and the agents can be corrected.',
+    defer: 'Leave it for later; it stays in the queue, marked deferred.',
+    escalate: 'Needs a decision a reviewer cannot make here (a new class, a change to the core, a policy question). Say what is needed.' };
+  function dispCard(iri, fs, st) {
+    const last = DISP.byTerm.get(iri);
+    const cur = choice.get(iri) || (st.length ? 'fix' : (last && last.disposition !== 'fix' ? last.disposition : ''));
+    const words = Object.fromEntries(DOPTS);
+    return `<div class="disp"><div class="act-h">Disposition <span class="sub">${plural(fs.length, 'finding')} · recorded to train the ingestion agents</span></div><div class="act-b">
+      ${last ? `<div class="hist">Last decision: <b>${esc(words[last.disposition] || last.disposition)}</b>${last.by ? ' by ' + esc(last.by) : ''} on ${esc(String(last.at || '').slice(0, 10))}${last.rationale ? ` — “${esc(last.rationale)}”` : ''}</div>` : ''}
+      <div class="opts" id="dOpts">${DOPTS.map(([k, w]) => `<label class="${cur === k ? 'on' : ''}" ${k === 'fix' && !st.length ? 'title="Stage a change above first"' : ''}><input type="radio" name="disp" value="${k}" ${cur === k ? 'checked' : ''} ${k === 'fix' && !st.length ? 'disabled' : ''}>${w}</label>`).join('')}</div>
+      <div class="sugg" id="dHint">${cur ? esc(DHINT[cur]) : 'Stage a fix above, or choose how to dispose of the finding.'}</div>
+      <div class="fld"><textarea id="dWhy" placeholder="Rationale (why this decision; what the agent should learn)" style="min-height:56px">${esc(why.get(iri) || '')}</textarea></div>
+      <div class="row">${cur && cur !== 'fix' ? `<button class="btn sm pri" id="dRec">Record ${esc((words[cur] || '').toLowerCase())}</button>` : ''}
+        ${cur === 'fix' ? '<span class="status">Recorded when the staged changes are saved.</span>' : ''}</div>
+    </div></div>`;
+  }
+  // One record per term: its findings, what the tool suggested, what the reviewer decided and did, and why.
+  function dispRecord(iri, disposition, actions) {
+    const fs = terms.get(iri) || [], g = graphOf(iri), sug = suggestion(iri);
+    const ctx = termContext(iri);
+    return { disposition, rationale: (why.get(iri) || '').trim(), tool: 'conformance-review',
+      source: { mode, model: idx.header.get(g) || g, modelTitle: assetLabel(g), file: fileOf[g] || null, repository: mode === 'graphdb' ? S.repo() : null },
+      term: { iri, label: label(iri), kind: ctx.kind, definition: litv(iri, SKOS + 'definition')[0] || '', primaryTerm: subjOf(iri)[0] || null, context: ctx },
+      findings: fs.map(f => ({ rule: f.rule, severity: f.sev, title: ruleTitle(f.rule), detail: f.detail })),
+      suggested: sug ? { kind: sug.kind, target: sug.target || null, text: sug.text || null } : null,
+      actions: actions || [] };
+  }
+  const actionOf = c => {
+    const a = { type: c.type };
+    ['old', 'new', 'keepOld', 'value', 'pred', 'target', 'targetLabel', 'to', 'vocab', 'newIri', 'label', 'broader', 'generated'].forEach(k => { if (c[k] !== undefined && c[k] !== '') a[k] = c[k]; });
+    if (c.type === 'definition' && drafts.has(c.term)) { const d = drafts.get(c.term); a.generatedDraft = d.text; a.generatedBy = d.model; }
+    if (c.type === 'remove') a.plan = { children: c.plan.children.length, links: c.plan.refs.length, parents: c.plan.parents };
+    return a;
+  };
+  async function postDispositions(records) {
+    if (!records.length) return true;
+    try {
+      const r = await fetch('/api/ingest/disposition', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ records }) });
+      const d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command) to record dispositions.' : 'Server answered ' + r.status };
+      if (!d.ok) throw new Error(d.error);
+      await loadDispositions(); return true;
+    } catch (e) { toast('Disposition not recorded: ' + e.message, true); return false; }
+  }
+  // the fixes in a saved change set, as dispositions (built before the statements change, so the context is the reviewed one)
+  function fixRecords(list) {
+    const byTerm = new Map(); list.forEach(c => { if (!byTerm.has(c.term)) byTerm.set(c.term, []); byTerm.get(c.term).push(c); });
+    return [...byTerm].filter(([iri]) => idx.s.has(iri)).map(([iri, cs]) => dispRecord(iri, 'fix', cs.map(actionOf)));
+  }
+  function ruleTitle(id) { return ({ 'formalized-by': 'Not formalized by a class', 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date' })[id] || id; }
+  // Local name in the convention of the term's kind (§3.2 as amended): classes, taxonomy concepts and vocabulary terms are lower-case words joined by hyphens; properties lowerCamel
   function idFor(iri, lbl) {
     const words = String(lbl).replace(/[^A-Za-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
     const ty = vals(iri, RDF + 'type').map(o => o.v);
-    if (/\/vocabulary\//.test(iri) || (isConcept(iri) && !/\/taxonomy\//.test(iri))) return words.map(w => w.toLowerCase()).join('-');
+    const kebab = words.map(w => w.toLowerCase()).join('-');
+    if (!ty.some(t => /Property$/.test(t))) return kebab;
     const camel = words.map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
     return ty.some(t => /Property$/.test(t)) ? camel.charAt(0).toLowerCase() + camel.slice(1) : camel;
   }
@@ -824,11 +1012,27 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       try {
         const d = await writeDefinitions([iri]), t = d.definitions[iri];
         if (!t) throw new Error(d.error || 'No definition came back');
+        drafts.set(iri, { model: d.model, text: t });
         stage({ type: 'definition', term: iri, graph: g, old: litv(iri, SKOS + 'definition')[0] || '', new: t, generated: d.model });
         refreshAll(); toast('Definition written by ' + d.model + ' and staged — edit it if needed');
       } catch (e) { toast(e.message, true); if ($('genDef')) { $('genDef').disabled = false; $('genDef').textContent = '✦ Write with Claude'; } }
     });
     $('skipBtn').addEventListener('click', () => { skipped.has(iri) ? skipped.delete(iri) : skipped.add(iri); refreshAll(); });
+    $('detail').querySelectorAll('[data-fml]').forEach(b => b.addEventListener('click', () => { stageFormalize(iri, b.dataset.fml); refreshAll(); }));
+    if ($('stFml')) $('stFml').addEventListener('click', () => { const t = clsPick($('fFml').value); if (!t) { toast('No class with that label', true); return; } stageFormalize(iri, t); refreshAll(); });
+    if ($('dWhy')) $('dWhy').addEventListener('input', () => why.set(iri, $('dWhy').value));
+    if ($('dOpts')) $('dOpts').addEventListener('change', e => { if (e.target.name === 'disp') { flushEdits(); choice.set(iri, e.target.value); renderDetail(); } });
+    if ($('dRec')) $('dRec').addEventListener('click', async () => {
+      const d = choice.get(iri) || (DISP.byTerm.get(iri) || {}).disposition;
+      if (!d || d === 'fix') return;
+      if (d !== 'defer' && !(why.get(iri) || '').trim()) { toast('Give a short rationale — it is what the agents learn from', true); $('dWhy').focus(); return; }
+      $('dRec').disabled = true;
+      if (await postDispositions([dispRecord(iri, d)])) {
+        choice.delete(iri); why.delete(iri);
+        runChecks(); refreshAll();
+        toast(`Recorded: ${label(iri)} — ${(DOPTS.find(x => x[0] === d) || [])[1] || d}`);
+      } else if ($('dRec')) $('dRec').disabled = false;
+    });
     if ($('stLabel')) $('stLabel').addEventListener('click', async () => {
       const v = $('fLabel').value.trim();
       if (!v) { toast('A preferred label cannot be empty', true); return; }
@@ -915,7 +1119,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     if (s.kind === 'definition') stage({ type: 'definition', term: iri, graph: g, old: litv(iri, SKOS + 'definition')[0] || '', new: s.text });
     if (s.kind === 'description') stage({ type: 'description', term: iri, graph: g, old: litv(iri, DCT + 'description')[0] || '', new: s.text });
     if (s.kind === 'link') stageLink(iri, s.target);
+    if (s.kind === 'formalize') stageFormalize(iri, s.target);
   }
+  function stageFormalize(iri, target) { stage({ type: 'formalize', term: iri, graph: graphOf(iri), target, targetLabel: clsLabel(target), old: [...(CLS.fb.get(iri) || [])] }); }
   function describe(c) {
     switch (c.type) {
       case 'label': return [`Relabel “${c.old}”`, `→ “${c.new}”${c.keepOld ? ' (old label kept as alternative)' : ''}`];
@@ -925,6 +1131,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       case 'unlink': return [`Remove broken link from “${label(c.term)}”`, `${ln(c.pred)} → ${ln(c.target)}`];
       case 'rename': return [`New identifier for “${label(c.term)}”`, `${ln(c.term)} → ${ln(c.to)}`];
       case 'link': return [`Link “${label(c.term)}” to its vocabulary term`, `${c.targetLabel} (${vocabTitle(c.vocab)})`];
+      case 'formalize': return [`Formalize “${label(c.term)}”`, `by the class ${c.targetLabel}`];
       case 'addVocab': return [`Add “${c.label}” to ${vocabTitle(c.vocab)}`, `${c.broader ? 'under “' + ((VOC.terms.get(c.broader) || {}).label || ln(c.broader)) + '”' : 'as a top concept'}; the taxonomy term is linked to it`];
       case 'remove': return [`Remove “${c.plan.label}”`, `${c.plan.children.length ? plural(c.plan.children.length, 'child', 'children') + ' re-parented · ' : ''}${plural(c.plan.refs.length, 'link')} removed`];
     }
@@ -1005,6 +1212,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       }
       SUBJ_P.forEach(p => ops.push(`DELETE { GRAPH ${G} { ${T} <${p}> ?x } } WHERE { GRAPH ${G} { ${T} <${p}> ?x } }`));
       ops.push(`INSERT DATA { GRAPH ${G} { ${T} <${SUBJ_P[0]}> ${I(target)} ; <${SUBJ_P[1]}> ${I(target)} } }`);
+    } else if (c.type === 'formalize') {
+      ops.push(`DELETE { GRAPH ${G} { ${T} <${FB()}> ?k } } WHERE { GRAPH ${G} { ${T} <${FB()}> ?k } }`);
+      ops.push(`INSERT DATA { GRAPH ${G} { ${T} <${FB()}> ${I(c.target)} } }`);
     } else if (c.type === 'unlink') {
       ops.push(`DELETE WHERE { GRAPH ?g { ${T} ${I(c.pred)} ${I(c.target)} } }`);
     } else if (c.type === 'rename') {
@@ -1039,8 +1249,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     if (!staged.length) return;
     if (mode === 'files') return saveFiles();
     const now = new Date(), stamp = now.toISOString().replace(/\.\d+Z$/, 'Z'), day = stamp.slice(0, 10);
-    const order = { label: 0, definition: 0, description: 0, removeAlt: 0, addVocab: 0, link: 0, unlink: 1, remove: 2, rename: 3 };
+    const order = { label: 0, definition: 0, description: 0, removeAlt: 0, addVocab: 0, link: 0, formalize: 0, unlink: 1, remove: 2, rename: 3 };
     const list = staged.slice().sort((a, b) => order[a.type] - order[b.type]);
+    const recs = fixRecords(list);                     // before anything changes
     const b = bumps(), base = policyJ.baseUrl || 'https://www.insperity.com/', author = policyJ.author || '';
     const ops = [];
     list.forEach(c => ops.push(...opsFor(c)));
@@ -1076,6 +1287,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         $('applyStatus').textContent = `Applying… ${Math.min(i + 40, ops.length)} / ${ops.length}`;
       }
       const n = list.length; staged = []; checked.clear();
+      await postDispositions(recs); recs.forEach(r => { why.delete(r.term.iri); choice.delete(r.term.iri); drafts.delete(r.term.iri); });
       $('applyStatus').className = 'status ok'; $('applyStatus').textContent = `Applied ${plural(n, 'change')}. Re-checking…`;
       try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
       await scan();
@@ -1144,6 +1356,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
         drop(q => q.g === G && isT(q.s, T) && SUBJ_P.includes(q.p.v));
         add(N(T), N(SUBJ_P[0]), N(c.type === 'link' ? c.target : c.newIri), G);
         add(N(T), N(SUBJ_P[1]), N(c.type === 'link' ? c.target : c.newIri), G);
+      } else if (c.type === 'formalize') {
+        drop(q => q.g === G && isT(q.s, T) && q.p.v === FB());
+        add(N(T), N(FB()), N(c.target), G);
       } else if (c.type === 'unlink') {
         drop(q => isT(q.s, T) && q.p.v === c.pred && isT(q.o, c.target));
       } else if (c.type === 'rename') {
@@ -1187,6 +1402,8 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     const cnt = list.filter(c => c.graph === g);
     const out = [['label', 'label'], ['definition', 'definition'], ['description', 'description'], ['rename', 'identifier'], ['removeAlt', 'alternative label'], ['unlink', 'broken link'], ['remove', 'term']]
       .map(([t, w]) => { const n = cnt.filter(c => c.type === t).length; return n ? `${n} ${w}${n === 1 ? '' : 's'} ${t === 'remove' || t === 'removeAlt' || t === 'unlink' ? 'removed' : 'changed'}` : null; });
+    const fml = cnt.filter(c => c.type === 'formalize').length;
+    if (fml) out.push(`${fml} concept${fml === 1 ? '' : 's'} formalized by a class`);
     const linked = cnt.filter(c => c.type === 'link' || c.type === 'addVocab').length;
     if (linked) out.push(`${linked} term${linked === 1 ? '' : 's'} linked to ${linked === 1 ? 'a vocabulary term' : 'vocabulary terms'}`);
     const added = list.filter(c => c.type === 'addVocab' && c.vocab === g).length;
@@ -1195,9 +1412,10 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   }
   async function saveFiles() {
     const stamp = new Date().toISOString().replace(/\.\d+Z$/, 'Z'), day = stamp.slice(0, 10);
-    const order = { label: 0, definition: 0, description: 0, removeAlt: 0, addVocab: 0, link: 0, unlink: 1, remove: 2, rename: 3 };
+    const order = { label: 0, definition: 0, description: 0, removeAlt: 0, addVocab: 0, link: 0, formalize: 0, unlink: 1, remove: 2, rename: 3 };
     const list = staged.slice().sort((a, b) => order[a.type] - order[b.type]);
     const base = policyJ.baseUrl || 'https://www.insperity.com/', author = policyJ.author || '';
+    const recs = fixRecords(list);                     // before the statements change, so the context is the reviewed one
     const descr = list.map(describe);                  // before the statements change, so labels are the old ones
     const before = quads.map(q => ({ ...q }));
     $('applyGo').disabled = true; $('applyStatus').className = 'status'; $('applyStatus').textContent = 'Saving…';
@@ -1218,6 +1436,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       const d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command), then try again.' : 'Server answered ' + r.status };
       if (!d.ok) throw new Error(d.error);
       const n = list.length; staged = []; checked.clear();
+      await postDispositions(recs); recs.forEach(r => { why.delete(r.term.iri); choice.delete(r.term.iri); drafts.delete(r.term.iri); });
       $('applyStatus').textContent = `Saved ${plural(n, 'correction')} to ${plural(d.written.length, 'file')} · loading into GraphDB…`;
       // close out the batch: load the folder's current files into GraphDB
       let ld;
@@ -1296,7 +1515,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
   window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings' && mode === 'graphdb') loadAssets(); });
   renderCats();
   setMode(mode);
-  loadPolicy().then(() => loadAssets());
+  loadPolicy().then(() => { loadAssets(); loadDispositions(); });
 })();
 </script>
 </body>

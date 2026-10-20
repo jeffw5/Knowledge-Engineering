@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '2.2.0',
+  version: '3.5.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -24,6 +24,9 @@ window.KE_REGISTRY = {
         { id: 'model-editor-ontology', code: 'EO', file: 'tools/model-editor-ontology.html', title: 'Model Editor (Ontology)', live: true, isNew: true,
           desc: 'Load imported ontologies and taxonomies on the left, drag terms onto a canvas and connect them with relations from BFO.',
           functions: ['Unified modeling'], std: ['3.1', '3.7', '3.9'] },
+        { id: 'service-assembly', code: 'SA', file: 'tools/service-assembly.html', title: 'Service Assembly', live: true, isNew: true,
+          desc: 'Service › Process › Process step: the services of a domain assembly, the processes that enable each one and their steps in order, with the SIPOCM (supplier, input, process step, output, customer, measure) of every step, where each process and step is reused, the SHACL shapes and assembly checks for each service, and coverage of processes and steps by service. Read only.',
+          functions: ['Impact visualization', 'Governance workflow'], std: ['3.1', '3.7', '3.9'] },
         { id: 'model-editor', code: 'ME', file: 'tools/model-editor.html', title: 'Model Editor (classic)', live: true, hidden: true,
           desc: 'The original node-level ontology editor, kept for reference.',
           functions: ['Unified modeling'], std: ['3.1', '3.7', '3.9'] },

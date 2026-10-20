@@ -249,7 +249,7 @@
   function nsOf(t) { return /[\/#]$/.test(t) ? t : t + '/'; }
   function pascal(lbl) {
     const w = String(lbl).normalize('NFKD').replace(/[^\w\s-]/g, ' ').split(/[\s_-]+/).filter(Boolean);
-    return w.map(x => x[0].toUpperCase() + x.slice(1)).join('') || 'Term';
+    return w.map(x => x.toLowerCase()).join('-') || 'term';      // §3.2 as amended: words joined by hyphens, never one new word
   }
 
   async function openTaxonomy(s, g) {

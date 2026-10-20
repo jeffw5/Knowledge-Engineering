@@ -1,0 +1,1970 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-informationtechnology/> {
+  <https://www.insperity.com/vocabulary/domain-informationtechnology/> a skos:ConceptScheme;
+    rdfs:label "Domain informationtechnology vocabulary"@en;
+    skos:prefLabel "Domain informationtechnology vocabulary"@en;
+    skos:hasTopConcept domaininformationtechnologyvoc:information-technology;
+    terms:description "The use of computers and telecommunications equipment to store, retrieve, transmit, and manipulate data."@en;
+    terms:title "Domain informationtechnology vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:02:21.006Z"^^xsd:dateTime .
+  
+  domaininformationtechnologyvoc:information-technology a skos:Concept;
+    skos:prefLabel "Information technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:27:38.486Z"^^xsd:dateTime;
+    skos:definition "The use of computers and telecommunications equipment to store, retrieve, transmit, and manipulate data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:continual-service-improvement a skos:Concept;
+    skos:prefLabel "Continual service improvement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and implementing improvements to IT services to increase efficiency, effectiveness, and customer satisfaction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:information-technology .
+  
+  domaininformationtechnologyvoc:service-design a skos:Concept;
+    skos:prefLabel "Service design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of designing new or changed IT services to meet the needs of customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:information-technology .
+  
+  domaininformationtechnologyvoc:service-operation a skos:Concept;
+    skos:prefLabel "Service operation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The stage of the ITIL lifecycle that deals with the day-to-day operation of IT services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:information-technology .
+  
+  domaininformationtechnologyvoc:service-strategy a skos:Concept;
+    skos:prefLabel "Service strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The stage of the ITIL lifecycle that deals with the overall strategy for IT services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:information-technology .
+  
+  domaininformationtechnologyvoc:service-transition a skos:Concept;
+    skos:prefLabel "Service transition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The stage of the ITIL lifecycle that deals with the transition of new or changed IT services into operation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:information-technology .
+  
+  domaininformationtechnologyvoc:360-learning a skos:Concept;
+    skos:prefLabel "360 learning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "A holistic approach to learning and development that involves gathering feedback from multiple sources (peers, managers, self, etc.) to gain a comprehensive view of an individual’s skills and development needs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-monitoring a skos:Concept;
+    skos:prefLabel "Continual service improvement monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The ongoing process of collecting and analyzing data to track the performance of IT services and identify areas for improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-service-evaluation a
+      skos:Concept;
+    skos:prefLabel "Continual service improvement service evaluation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The systematic assessment of IT services to determine their effectiveness, efficiency, and overall value."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-service-management a
+      skos:Concept;
+    skos:prefLabel "Continual service improvement service management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The integration of CSI principles and practices into all aspects of IT service management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-service-measurement a
+      skos:Concept;
+    skos:prefLabel "Continual service improvement service measurement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of defining, collecting, and analyzing data to measure the performance of IT services and identify areas for improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:improvement-initiatives-definition a skos:Concept;
+    skos:prefLabel "Improvement initiatives definition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of clearly defining improvement initiatives, including their goals, objectives, scope, and stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:process-evaluation a skos:Concept;
+    skos:prefLabel "Process evaluation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The systematic assessment of a process to determine its effectiveness, efficiency, and overall value."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:service-reporting a skos:Concept;
+    skos:prefLabel "Service reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of providing information about the performance of IT services to stakeholders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement .
+  
+  domaininformationtechnologyvoc:business-continuity-management a skos:Concept;
+    skos:prefLabel "Business continuity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of creating systems of prevention and recovery to deal with potential threats to an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement-service-management .
+  
+  domaininformationtechnologyvoc:process-automation a skos:Concept;
+    skos:prefLabel "Process automation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The use of technology to automate business processes, typically to improve efficiency, reduce costs, and minimize errors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement-service-management .
+  
+  domaininformationtechnologyvoc:service-catalog-development a skos:Concept;
+    skos:prefLabel "Service catalog development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of creating and maintaining a comprehensive and accurate catalog of all IT services offered to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:broader domaininformationtechnologyvoc:continual-service-improvement-service-management .
+  
+  domaininformationtechnologyvoc:service-management-business-continuity-management a
+      skos:Concept;
+    skos:prefLabel "Service management business continuity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The integration of BCM principles and practices into IT service management to ensure the continuity of critical IT services in the event of a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-management-event-management a skos:Concept;
+    skos:prefLabel "Service management event management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing events that could impact IT services, including identifying, analyzing, and responding to events."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-management-integration a skos:Concept;
+    skos:prefLabel "Service management integration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The coordination and alignment of different IT service management processes to ensure they work together effectively."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-management-service-catalog-development a skos:Concept;
+    skos:prefLabel "Service management service catalog development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of creating and maintaining a comprehensive and accurate catalog of all IT services offered to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-management-service-catalog-planning a skos:Concept;
+    skos:prefLabel "Service management service catalog planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of planning for the development, implementation, and maintenance of the service catalog."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-measurement-service-catalog-planning a skos:Concept;
+    skos:prefLabel "Service measurement service catalog planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of planning for the measurement of IT services, including defining metrics, collecting data, and analyzing results."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:availability-management a skos:Concept;
+    skos:prefLabel "Availability management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that IT services are available to users when they need them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:capacity-planning a skos:Concept;
+    skos:prefLabel "Capacity planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of determining the production capacity required by an organization to meet changing demands for its products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:compliance-management a skos:Concept;
+    skos:prefLabel "Compliance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that IT systems and processes comply with relevant laws, regulations, and standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:information-security-management a skos:Concept;
+    skos:prefLabel "Information security management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of protecting information from unauthorized access, use, disclosure, disruption, modification, or destruction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:information-technology-architecture-management a skos:Concept;
+    skos:prefLabel "Information technology architecture management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of designing, planning, implementing, and managing the overall structure and behavior of an organization’s IT systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:information-technology-service-continuity-management
+    a skos:Concept;
+    skos:prefLabel "Information technology service continuity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The integration of BCM principles and practices into IT service management to ensure the continuity of critical IT services in the event of a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:risk-management a skos:Concept;
+    skos:prefLabel "Risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, assessing, and controlling threats to an organization’s capital and earnings."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-catalog-management a skos:Concept;
+    skos:prefLabel "Service catalog management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of creating and maintaining a comprehensive and accurate catalogue of all IT services offered to customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-level-management a skos:Concept;
+    skos:prefLabel "Service level management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of defining, agreeing upon, monitoring, and reporting on the level of service to be provided for IT services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:supplier-management a skos:Concept;
+    skos:prefLabel "Supplier management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing suppliers to ensure they provide goods and services that meet the needs of the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:cloud-computing a skos:Concept;
+    skos:prefLabel "Cloud computing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet (“the cloud”)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:data-center-operation a skos:Concept;
+    skos:prefLabel "Data center operation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management and operation of a facility that houses computer systems and associated components, such as telecommunications and storage systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:database-administration-and-design a skos:Concept;
+    skos:prefLabel "Database administration & design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management and design of databases, including ensuring data integrity, availability, and security."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:information-technology-network-architecture-and-design
+    a skos:Concept;
+    skos:prefLabel "Information technology network architecture & design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The design and implementation of computer networks, including LANs, WANs, and wireless networks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:network-and-server-management a skos:Concept;
+    skos:prefLabel "Network & server management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management and maintenance of computer networks and servers, including ensuring availability, performance, and security."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:business-and-functional-business-service-restoration
+    a skos:Concept;
+    skos:prefLabel "Business & functional business service restoration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of restoring business services to a functional state following a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:normal-business-service-operations-resumption a skos:Concept;
+    skos:prefLabel "Normal business service operations resumption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of resuming normal business operations following a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:normal-operations-technical-service-resumption a skos:Concept;
+    skos:prefLabel "Normal operations technical service resumption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of resuming normal technical service operations following a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:process-technical-service-restoration a skos:Concept;
+    skos:prefLabel "Process technical service restoration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of restoring technical services to a functional state following a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:technology-disaster-recovery a skos:Concept;
+    skos:prefLabel "Technology disaster recovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of recovering technology systems and data following a disaster."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:risk-assessment a skos:Concept;
+    skos:prefLabel "Risk assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and analyzing potential risks to an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:security-protocol-implementation a skos:Concept;
+    skos:prefLabel "Security protocol implementation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of implementing security protocols to protect IT systems and data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:business-services a skos:Concept;
+    skos:prefLabel "Business services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "IT services that support core business functions, such as sales, marketing, and finance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:operational-services a skos:Concept;
+    skos:prefLabel "Operational services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "IT services that support the day-to-day operations of an organization, such as email, printing, and network access."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:technical-services a skos:Concept;
+    skos:prefLabel "Technical services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "IT services that provide technical support for IT systems and infrastructure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:capacity-management a skos:Concept;
+    skos:prefLabel "Capacity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that IT infrastructure has enough capacity to meet current and future demands."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:performance-threshold a skos:Concept;
+    skos:prefLabel "Performance threshold"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "A predefined level of performance that must be met for an IT service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-level-management-compliance-management a skos:Concept;
+    skos:prefLabel "Service level management compliance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that IT services comply with agreed-upon service levels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-level-management-exception-management a skos:Concept;
+    skos:prefLabel "Service level management exception management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing exceptions to agreed-upon service levels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-level-management-measures-and-analytics a skos:Concept;
+    skos:prefLabel "Service level management measures & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of measuring and analyzing the performance of IT services against agreed-upon service levels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-level-management-orchestration a skos:Concept;
+    skos:prefLabel "Service level management orchestration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The coordination and automation of different IT service management processes to meet agreed-upon service levels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-level-management-vendor-management a skos:Concept;
+    skos:prefLabel "Service level management vendor management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing vendors who provide IT services to ensure they meet agreed-upon service levels."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-lifecycle-management a skos:Concept;
+    skos:prefLabel "Service lifecycle management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The management of an IT service throughout its entire lifecycle, from conception to retirement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:severity-levels a skos:Concept;
+    skos:prefLabel "Severity levels"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "A classification system used to define the impact and urgency of incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:supplier-management-measures-and-analytics a skos:Concept;
+    skos:prefLabel "Supplier management measures & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of measuring and analyzing the performance of suppliers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:supplier-management-scheduling a skos:Concept;
+    skos:prefLabel "Supplier management scheduling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of scheduling deliveries and services from suppliers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:access-management a skos:Concept;
+    skos:prefLabel "Access management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of controlling who has access to IT systems and data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:customer-relationship-management a skos:Concept;
+    skos:prefLabel "Customer relationship management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing an organization’s interactions with its customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:event-management a skos:Concept;
+    skos:prefLabel "Event management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing events that could impact IT services, including identifying, analyzing, and responding to events."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:facilities-management a skos:Concept;
+    skos:prefLabel "Facilities management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management of an organization’s physical infrastructure, such as buildings, equipment, and furniture."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:help-desk-management a skos:Concept;
+    skos:prefLabel "Help desk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management of an organization’s help desk, which provides technical support to users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:human-resources-management a skos:Concept;
+    skos:prefLabel "Human resources management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing an organization’s workforce."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:incident-management a skos:Concept;
+    skos:prefLabel "Incident management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing and resolving IT incidents, which are events that disrupt or could disrupt IT services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:information-technology-operations a skos:Concept;
+    skos:prefLabel "Information technology operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The day-to-day operation of IT systems and infrastructure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management a skos:Concept;
+    skos:prefLabel "Problem management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing and resolving the root causes of incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:request-fulfillment a skos:Concept;
+    skos:prefLabel "Request fulfillment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of fulfilling service requests from users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:customer-relationship-management-surveys-and-assessment
+    a skos:Concept;
+    skos:prefLabel "Customer relationship management surveys & assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The use of surveys and assessments to gather feedback from customers about their experiences with an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:customer-relationship-management-virtual-assistance
+    a skos:Concept;
+    skos:prefLabel "Customer relationship management virtual assistance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The use of virtual assistants, such as chatbots, to provide customer support."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:help-desk-management-escalation a skos:Concept;
+    skos:prefLabel "Help desk management escalation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of escalating unresolved help desk tickets to higher levels of support."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:human-resources-management-orchestration a skos:Concept;
+    skos:prefLabel "Human resources management orchestration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The coordination and automation of different HRM processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:customer-impact a skos:Concept;
+    skos:prefLabel "Customer impact"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The impact that an incident has on customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:escalation a skos:Concept;
+    skos:prefLabel "Escalation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of escalating an incident to a higher level of support."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:operations-impact a skos:Concept;
+    skos:prefLabel "Operations impact"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The impact that an incident has on IT operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:prevention a skos:Concept;
+    skos:prefLabel "Prevention"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of taking steps to prevent incidents from occurring."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:license-management a skos:Concept;
+    skos:prefLabel "License management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing software licenses to ensure compliance with licensing agreements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-capture-and-rationalization a skos:Concept;
+    skos:prefLabel "Problem capture & rationalization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of capturing and documenting problems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-identification a skos:Concept;
+    skos:prefLabel "Problem identification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of identifying the root cause of a problem."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-affinity-analysis a skos:Concept;
+    skos:prefLabel "Problem management affinity analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The use of data mining techniques to identify relationships between problems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-causal-factor-analysis a skos:Concept;
+    skos:prefLabel "Problem management causal factor analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of identifying the root cause of a problem by analyzing causal factors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-contextualization a skos:Concept;
+    skos:prefLabel "Problem management contextualization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of understanding the context in which a problem occurs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-cost-management a skos:Concept;
+    skos:prefLabel "Problem management cost management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing the costs associated with problems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-detection a skos:Concept;
+    skos:prefLabel "Problem management detection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of detecting problems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-execution-impact-analysis a skos:Concept;
+    skos:prefLabel "Problem management execution impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of problem management activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-firecall-management a skos:Concept;
+    skos:prefLabel "Problem management firecall management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing firecalls, which are urgent problems that require immediate attention."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-initiative-capture-and-rationalization
+    a skos:Concept;
+    skos:prefLabel "Problem management initiative capture & rationalization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of capturing and documenting problem management initiatives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-measures-and-analytics a skos:Concept;
+    skos:prefLabel "Problem management measures & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of measuring and analyzing the effectiveness of problem management activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-operations-impact-analysis a skos:Concept;
+    skos:prefLabel "Problem management operations impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of problems on IT operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-pattern-discovery a skos:Concept;
+    skos:prefLabel "Problem management pattern discovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The use of data mining techniques to identify patterns in problem data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-pattern-response-matching a skos:Concept;
+    skos:prefLabel "Problem management pattern response matching"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of matching problems to known patterns and responses."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-response a skos:Concept;
+    skos:prefLabel "Problem management response"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The actions taken to address a problem."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-scenario-mapping-relationships a
+      skos:Concept;
+    skos:prefLabel "Problem management scenario mapping relationships"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of mapping relationships between problems and scenarios."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-management-strategy-impact-analysis a skos:Concept;
+    skos:prefLabel "Problem management strategy impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of problem management strategies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:problem-mapping-initiatives a skos:Concept;
+    skos:prefLabel "Problem mapping initiatives"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of mapping problems to improvement initiatives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:capture-and-classification a skos:Concept;
+    skos:prefLabel "Capture & classification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of capturing and classifying service requests."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:innovation-management a skos:Concept;
+    skos:prefLabel "Innovation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing innovation within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:request-fulfillment-measures-and-analytics a skos:Concept;
+    skos:prefLabel "Request fulfillment measures & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of measuring and analyzing the effectiveness of request fulfillment activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:demand-management a skos:Concept;
+    skos:prefLabel "Demand management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of understanding and influencing customer demand for IT services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:financial-management a skos:Concept;
+    skos:prefLabel "Financial management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing an organization’s finances."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-portfolio-management a skos:Concept;
+    skos:prefLabel "Service portfolio management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing the portfolio of IT services offered by an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:strategy-generation a skos:Concept;
+    skos:prefLabel "Strategy generation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of developing strategies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:demand-management-execution-impact-analysis a skos:Concept;
+    skos:prefLabel "Demand management execution impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of demand management activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:demand-management-operations-impact-analysis a skos:Concept;
+    skos:prefLabel "Demand management operations impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of demand on IT operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:demand-management-strategy-impact-analysis a skos:Concept;
+    skos:prefLabel "Demand management strategy impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of demand management strategies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:prioritization-management a skos:Concept;
+    skos:prefLabel "Prioritization management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of prioritizing work activities based on their importance and urgency."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:cost-management a skos:Concept;
+    skos:prefLabel "Cost management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing costs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-portfolio-management-measures-and-analytics
+    a skos:Concept;
+    skos:prefLabel "Service portfolio management measures & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of measuring and analyzing the performance of the IT service portfolio."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:initiative-capture-and-rationalization a skos:Concept;
+    skos:prefLabel "Initiative capture & rationalization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of capturing and documenting initiatives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:application-and-development-management a skos:Concept;
+    skos:prefLabel "Application & development management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing the development and maintenance of applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:change-management a skos:Concept;
+    skos:prefLabel "Change management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing changes to IT systems and infrastructure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:knowledge-management a skos:Concept;
+    skos:prefLabel "Knowledge management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of creating, sharing, and managing knowledge within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-management a skos:Concept;
+    skos:prefLabel "Release & deployment management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing the release and deployment of new or changed software and hardware."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-asset-and-configuration-management a skos:Concept;
+    skos:prefLabel "Service asset & configuration management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing and controlling service assets and configuration items."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-evaluation a skos:Concept;
+    skos:prefLabel "Service evaluation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of evaluating the effectiveness and efficiency of IT services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-validation-and-testing a skos:Concept;
+    skos:prefLabel "Service validation & testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of validating and testing IT services to ensure they meet requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support a skos:Concept;
+    skos:prefLabel "Transition planning & support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of planning and supporting the transition of new or changed IT services into operation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:application-lifecycle-management a skos:Concept;
+    skos:prefLabel "Application lifecycle management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management of an application throughout its entire lifecycle, from conception to retirement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:software-design-and-development a skos:Concept;
+    skos:prefLabel "Software design & development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of designing and developing software."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:change-management-prioritization-management a skos:Concept;
+    skos:prefLabel "Change management prioritization management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of prioritizing changes based on their importance and urgency."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:operations-impact-analysis a skos:Concept;
+    skos:prefLabel "Operations impact analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of analyzing the impact of changes on IT operations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:knowledge-management-contextualization a skos:Concept;
+    skos:prefLabel "Knowledge management contextualization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of putting knowledge into context so that it can be easily understood and used."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:knowledge-management-performance-analytics a skos:Concept;
+    skos:prefLabel "Knowledge management performance analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The use of analytics to measure the effectiveness of knowledge management activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:knowledge-management-reporting-and-dashboards a skos:Concept;
+    skos:prefLabel "Knowledge management reporting & dashboards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The creation of reports and dashboards to track knowledge management metrics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-communication-planning a skos:Concept;
+    skos:prefLabel "Release & deployment communication planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of planning communications about releases and deployments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-compliance-management a skos:Concept;
+    skos:prefLabel "Release & deployment compliance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that releases and deployments comply with relevant policies and standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-cost-management a skos:Concept;
+    skos:prefLabel "Release & deployment cost management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing the costs associated with releases and deployments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-document-management a skos:Concept;
+    skos:prefLabel "Release & deployment document management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing documentation related to releases and deployments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-implementation-planning a skos:Concept;
+    skos:prefLabel "Release & deployment implementation planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of planning the implementation of releases and deployments."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-validation-management a skos:Concept;
+    skos:prefLabel "Release & deployment validation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of validating releases and deployments to ensure they meet requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:release-and-deployment-version-management a skos:Concept;
+    skos:prefLabel "Release & deployment version management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing different versions of software and hardware."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:asset-management-lifecycle a skos:Concept;
+    skos:prefLabel "Asset management lifecycle"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The management of an asset throughout its entire lifecycle, from acquisition to disposal."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:code-management a skos:Concept;
+    skos:prefLabel "Code management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:44.351Z"^^xsd:dateTime;
+    skos:definition "The process of managing source code."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:version-management a skos:Concept;
+    skos:prefLabel "Version management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of managing and controlling service assets and configuration items."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-reporting a skos:Concept;
+    skos:prefLabel "Transition planning & support reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of reporting on the progress of transitions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-resource-allocation
+    a skos:Concept;
+    skos:prefLabel "Transition planning & support resource allocation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of allocating resources to support transitions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-scheduling a skos:Concept;
+    skos:prefLabel "Transition planning & support scheduling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of scheduling transition activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-status-tracking a skos:Concept;
+    skos:prefLabel "Transition planning & support status tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T19:37:57.530Z"^^xsd:dateTime;
+    skos:definition "The process of tracking the status of transitions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+  
+  domaininformationtechnologyvoc:service-management-business-continuity-management skos:broader
+      domaininformationtechnologyvoc:continual-service-improvement-service-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-management-event-management skos:broader domaininformationtechnologyvoc:continual-service-improvement-service-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-management-integration skos:broader domaininformationtechnologyvoc:continual-service-improvement-service-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-management-service-catalog-development skos:broader
+      domaininformationtechnologyvoc:continual-service-improvement-service-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-management-service-catalog-planning skos:broader
+      domaininformationtechnologyvoc:continual-service-improvement-service-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-measurement-service-catalog-planning skos:broader
+      domaininformationtechnologyvoc:continual-service-improvement-service-measurement;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:availability-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:capacity-planning skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:compliance-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:information-security-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:information-technology-architecture-management skos:broader
+      domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:cloud-computing, domaininformationtechnologyvoc:data-center-operation,
+      domaininformationtechnologyvoc:database-administration-and-design, domaininformationtechnologyvoc:information-technology-network-architecture-and-design,
+      domaininformationtechnologyvoc:network-and-server-management .
+  
+  domaininformationtechnologyvoc:information-technology-service-continuity-management
+    skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:business-and-functional-business-service-restoration,
+      domaininformationtechnologyvoc:normal-business-service-operations-resumption, domaininformationtechnologyvoc:normal-operations-technical-service-resumption,
+      domaininformationtechnologyvoc:process-technical-service-restoration, domaininformationtechnologyvoc:technology-disaster-recovery .
+  
+  domaininformationtechnologyvoc:risk-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:risk-assessment, domaininformationtechnologyvoc:security-protocol-implementation .
+  
+  domaininformationtechnologyvoc:service-catalog-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:business-services, domaininformationtechnologyvoc:operational-services,
+      domaininformationtechnologyvoc:technical-services .
+  
+  domaininformationtechnologyvoc:service-level-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:capacity-management, domaininformationtechnologyvoc:performance-threshold,
+      domaininformationtechnologyvoc:service-level-management-compliance-management, domaininformationtechnologyvoc:service-level-management-exception-management,
+      domaininformationtechnologyvoc:service-level-management-measures-and-analytics, domaininformationtechnologyvoc:service-level-management-orchestration,
+      domaininformationtechnologyvoc:service-level-management-vendor-management, domaininformationtechnologyvoc:service-lifecycle-management,
+      domaininformationtechnologyvoc:severity-levels .
+  
+  domaininformationtechnologyvoc:supplier-management skos:broader domaininformationtechnologyvoc:service-design;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:supplier-management-measures-and-analytics,
+      domaininformationtechnologyvoc:supplier-management-scheduling .
+  
+  domaininformationtechnologyvoc:cloud-computing skos:broader domaininformationtechnologyvoc:information-technology-architecture-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:data-center-operation skos:broader domaininformationtechnologyvoc:information-technology-architecture-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:database-administration-and-design skos:broader domaininformationtechnologyvoc:information-technology-architecture-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:information-technology-network-architecture-and-design
+    skos:broader domaininformationtechnologyvoc:information-technology-architecture-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:network-and-server-management skos:broader domaininformationtechnologyvoc:information-technology-architecture-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:business-and-functional-business-service-restoration
+    skos:broader domaininformationtechnologyvoc:information-technology-service-continuity-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:normal-business-service-operations-resumption skos:broader
+      domaininformationtechnologyvoc:information-technology-service-continuity-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:normal-operations-technical-service-resumption skos:broader
+      domaininformationtechnologyvoc:information-technology-service-continuity-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:process-technical-service-restoration skos:broader
+      domaininformationtechnologyvoc:information-technology-service-continuity-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:technology-disaster-recovery skos:broader domaininformationtechnologyvoc:information-technology-service-continuity-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:risk-assessment skos:broader domaininformationtechnologyvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:security-protocol-implementation skos:broader domaininformationtechnologyvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:business-services skos:broader domaininformationtechnologyvoc:service-catalog-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:operational-services skos:broader domaininformationtechnologyvoc:service-catalog-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:technical-services skos:broader domaininformationtechnologyvoc:service-catalog-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:capacity-management skos:broader domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:performance-threshold skos:broader domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-level-management-compliance-management skos:broader
+      domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-level-management-exception-management skos:broader
+      domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-level-management-measures-and-analytics skos:broader
+      domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-level-management-orchestration skos:broader
+      domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-level-management-vendor-management skos:broader
+      domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-lifecycle-management skos:broader domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:severity-levels skos:broader domaininformationtechnologyvoc:service-level-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:supplier-management-measures-and-analytics skos:broader
+      domaininformationtechnologyvoc:supplier-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:supplier-management-scheduling skos:broader domaininformationtechnologyvoc:supplier-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:access-management skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:customer-relationship-management skos:broader domaininformationtechnologyvoc:service-operation;
+    skos:altLabel "CRM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:customer-relationship-management-surveys-and-assessment,
+      domaininformationtechnologyvoc:customer-relationship-management-virtual-assistance .
+  
+  domaininformationtechnologyvoc:event-management skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:facilities-management skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:help-desk-management skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:help-desk-management-escalation .
+  
+  domaininformationtechnologyvoc:human-resources-management skos:broader domaininformationtechnologyvoc:service-operation;
+    skos:altLabel "HRM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:human-resources-management-orchestration .
+  
+  domaininformationtechnologyvoc:incident-management skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:customer-impact, domaininformationtechnologyvoc:escalation,
+      domaininformationtechnologyvoc:operations-impact, domaininformationtechnologyvoc:prevention .
+  
+  domaininformationtechnologyvoc:information-technology-operations skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:license-management .
+  
+  domaininformationtechnologyvoc:problem-management skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:problem-capture-and-rationalization,
+      domaininformationtechnologyvoc:problem-identification, domaininformationtechnologyvoc:problem-management-affinity-analysis,
+      domaininformationtechnologyvoc:problem-management-causal-factor-analysis, domaininformationtechnologyvoc:problem-management-contextualization,
+      domaininformationtechnologyvoc:problem-management-cost-management, domaininformationtechnologyvoc:problem-management-detection,
+      domaininformationtechnologyvoc:problem-management-execution-impact-analysis, domaininformationtechnologyvoc:problem-management-firecall-management,
+      domaininformationtechnologyvoc:problem-management-initiative-capture-and-rationalization,
+      domaininformationtechnologyvoc:problem-management-measures-and-analytics, domaininformationtechnologyvoc:problem-management-operations-impact-analysis,
+      domaininformationtechnologyvoc:problem-management-pattern-discovery, domaininformationtechnologyvoc:problem-management-pattern-response-matching,
+      domaininformationtechnologyvoc:problem-management-response, domaininformationtechnologyvoc:problem-management-scenario-mapping-relationships,
+      domaininformationtechnologyvoc:problem-management-strategy-impact-analysis, domaininformationtechnologyvoc:problem-mapping-initiatives .
+  
+  domaininformationtechnologyvoc:request-fulfillment skos:broader domaininformationtechnologyvoc:service-operation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:capture-and-classification, domaininformationtechnologyvoc:innovation-management,
+      domaininformationtechnologyvoc:request-fulfillment-measures-and-analytics .
+  
+  domaininformationtechnologyvoc:customer-relationship-management-surveys-and-assessment
+    skos:broader domaininformationtechnologyvoc:customer-relationship-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:customer-relationship-management-virtual-assistance
+    skos:broader domaininformationtechnologyvoc:customer-relationship-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:help-desk-management-escalation skos:broader domaininformationtechnologyvoc:help-desk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:human-resources-management-orchestration skos:broader
+      domaininformationtechnologyvoc:human-resources-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:customer-impact skos:broader domaininformationtechnologyvoc:incident-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:escalation skos:broader domaininformationtechnologyvoc:incident-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:operations-impact skos:broader domaininformationtechnologyvoc:incident-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:prevention skos:broader domaininformationtechnologyvoc:incident-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:license-management skos:broader domaininformationtechnologyvoc:information-technology-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-capture-and-rationalization skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-identification skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-affinity-analysis skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-causal-factor-analysis skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-contextualization skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-cost-management skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-detection skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-execution-impact-analysis skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-firecall-management skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-initiative-capture-and-rationalization
+    skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-measures-and-analytics skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-operations-impact-analysis skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-pattern-discovery skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-pattern-response-matching skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-response skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-scenario-mapping-relationships skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-management-strategy-impact-analysis skos:broader
+      domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:problem-mapping-initiatives skos:broader domaininformationtechnologyvoc:problem-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:capture-and-classification skos:broader domaininformationtechnologyvoc:request-fulfillment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:innovation-management skos:broader domaininformationtechnologyvoc:request-fulfillment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:request-fulfillment-measures-and-analytics skos:broader
+      domaininformationtechnologyvoc:request-fulfillment;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:demand-management skos:broader domaininformationtechnologyvoc:service-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:demand-management-execution-impact-analysis,
+      domaininformationtechnologyvoc:demand-management-operations-impact-analysis, domaininformationtechnologyvoc:demand-management-strategy-impact-analysis,
+      domaininformationtechnologyvoc:prioritization-management .
+  
+  domaininformationtechnologyvoc:financial-management skos:broader domaininformationtechnologyvoc:service-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:cost-management .
+  
+  domaininformationtechnologyvoc:service-portfolio-management skos:broader domaininformationtechnologyvoc:service-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:service-portfolio-management-measures-and-analytics .
+  
+  domaininformationtechnologyvoc:strategy-generation skos:broader domaininformationtechnologyvoc:service-strategy;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:initiative-capture-and-rationalization .
+  
+  domaininformationtechnologyvoc:demand-management-execution-impact-analysis skos:broader
+      domaininformationtechnologyvoc:demand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:demand-management-operations-impact-analysis skos:broader
+      domaininformationtechnologyvoc:demand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:demand-management-strategy-impact-analysis skos:broader
+      domaininformationtechnologyvoc:demand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:prioritization-management skos:broader domaininformationtechnologyvoc:demand-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:cost-management skos:broader domaininformationtechnologyvoc:financial-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-portfolio-management-measures-and-analytics
+    skos:broader domaininformationtechnologyvoc:service-portfolio-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:initiative-capture-and-rationalization skos:broader
+      domaininformationtechnologyvoc:strategy-generation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:application-and-development-management skos:broader
+      domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:application-lifecycle-management, domaininformationtechnologyvoc:software-design-and-development .
+  
+  domaininformationtechnologyvoc:change-management skos:broader domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:change-management-prioritization-management,
+      domaininformationtechnologyvoc:operations-impact-analysis .
+  
+  domaininformationtechnologyvoc:knowledge-management skos:broader domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:knowledge-management-contextualization,
+      domaininformationtechnologyvoc:knowledge-management-performance-analytics, domaininformationtechnologyvoc:knowledge-management-reporting-and-dashboards .
+  
+  domaininformationtechnologyvoc:release-and-deployment-management skos:broader domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:release-and-deployment-communication-planning,
+      domaininformationtechnologyvoc:release-and-deployment-compliance-management, domaininformationtechnologyvoc:release-and-deployment-cost-management,
+      domaininformationtechnologyvoc:release-and-deployment-document-management, domaininformationtechnologyvoc:release-and-deployment-implementation-planning,
+      domaininformationtechnologyvoc:release-and-deployment-validation-management, domaininformationtechnologyvoc:release-and-deployment-version-management .
+  
+  domaininformationtechnologyvoc:service-asset-and-configuration-management skos:broader
+      domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:asset-management-lifecycle, domaininformationtechnologyvoc:code-management,
+      domaininformationtechnologyvoc:version-management .
+  
+  domaininformationtechnologyvoc:service-evaluation skos:broader domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-validation-and-testing skos:broader domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support skos:broader domaininformationtechnologyvoc:service-transition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:transition-planning-and-support-reporting,
+      domaininformationtechnologyvoc:transition-planning-and-support-resource-allocation,
+      domaininformationtechnologyvoc:transition-planning-and-support-scheduling, domaininformationtechnologyvoc:transition-planning-and-support-status-tracking .
+  
+  domaininformationtechnologyvoc:application-lifecycle-management skos:broader domaininformationtechnologyvoc:application-and-development-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:software-design-and-development skos:broader domaininformationtechnologyvoc:application-and-development-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:change-management-prioritization-management skos:broader
+      domaininformationtechnologyvoc:change-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:operations-impact-analysis skos:broader domaininformationtechnologyvoc:change-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:knowledge-management-contextualization skos:broader
+      domaininformationtechnologyvoc:knowledge-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:knowledge-management-performance-analytics skos:broader
+      domaininformationtechnologyvoc:knowledge-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:knowledge-management-reporting-and-dashboards skos:broader
+      domaininformationtechnologyvoc:knowledge-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-communication-planning skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-compliance-management skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-cost-management skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-document-management skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-implementation-planning skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-validation-management skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:release-and-deployment-version-management skos:broader
+      domaininformationtechnologyvoc:release-and-deployment-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:asset-management-lifecycle skos:broader domaininformationtechnologyvoc:service-asset-and-configuration-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:code-management skos:broader domaininformationtechnologyvoc:service-asset-and-configuration-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:version-management skos:broader domaininformationtechnologyvoc:service-asset-and-configuration-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-reporting skos:broader
+      domaininformationtechnologyvoc:transition-planning-and-support;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-resource-allocation
+    skos:broader domaininformationtechnologyvoc:transition-planning-and-support;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-scheduling skos:broader
+      domaininformationtechnologyvoc:transition-planning-and-support;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:transition-planning-and-support-status-tracking skos:broader
+      domaininformationtechnologyvoc:transition-planning-and-support;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-informationtechnology/> skos:altLabel
+      "Vocabulary | Domain | Information Technology"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-informationtechnology/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:information-technology skos:altLabel "IT"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-informationtechnology/>;
+    skos:narrower domaininformationtechnologyvoc:continual-service-improvement, domaininformationtechnologyvoc:service-design,
+      domaininformationtechnologyvoc:service-operation, domaininformationtechnologyvoc:service-strategy,
+      domaininformationtechnologyvoc:service-transition .
+  
+  domaininformationtechnologyvoc:continual-service-improvement skos:altLabel "CSI"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:360-learning, domaininformationtechnologyvoc:continual-service-improvement-monitoring,
+      domaininformationtechnologyvoc:continual-service-improvement-service-evaluation, domaininformationtechnologyvoc:continual-service-improvement-service-management,
+      domaininformationtechnologyvoc:continual-service-improvement-service-measurement,
+      domaininformationtechnologyvoc:improvement-initiatives-definition, domaininformationtechnologyvoc:process-evaluation,
+      domaininformationtechnologyvoc:service-reporting .
+  
+  domaininformationtechnologyvoc:service-design owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:availability-management, domaininformationtechnologyvoc:capacity-planning,
+      domaininformationtechnologyvoc:compliance-management, domaininformationtechnologyvoc:information-security-management,
+      domaininformationtechnologyvoc:information-technology-architecture-management, domaininformationtechnologyvoc:information-technology-service-continuity-management,
+      domaininformationtechnologyvoc:risk-management, domaininformationtechnologyvoc:service-catalog-management,
+      domaininformationtechnologyvoc:service-level-management, domaininformationtechnologyvoc:supplier-management .
+  
+  domaininformationtechnologyvoc:service-operation owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:access-management, domaininformationtechnologyvoc:customer-relationship-management,
+      domaininformationtechnologyvoc:event-management, domaininformationtechnologyvoc:facilities-management,
+      domaininformationtechnologyvoc:help-desk-management, domaininformationtechnologyvoc:human-resources-management,
+      domaininformationtechnologyvoc:incident-management, domaininformationtechnologyvoc:information-technology-operations,
+      domaininformationtechnologyvoc:problem-management, domaininformationtechnologyvoc:request-fulfillment .
+  
+  domaininformationtechnologyvoc:service-strategy owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:demand-management, domaininformationtechnologyvoc:financial-management,
+      domaininformationtechnologyvoc:service-portfolio-management, domaininformationtechnologyvoc:strategy-generation .
+  
+  domaininformationtechnologyvoc:service-transition owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:application-and-development-management,
+      domaininformationtechnologyvoc:change-management, domaininformationtechnologyvoc:knowledge-management,
+      domaininformationtechnologyvoc:release-and-deployment-management, domaininformationtechnologyvoc:service-asset-and-configuration-management,
+      domaininformationtechnologyvoc:service-evaluation, domaininformationtechnologyvoc:service-validation-and-testing,
+      domaininformationtechnologyvoc:transition-planning-and-support .
+  
+  domaininformationtechnologyvoc:360-learning owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-monitoring owl:versionInfo
+      "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-service-evaluation owl:versionInfo
+      "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-service-management owl:versionInfo
+      "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:business-continuity-management, domaininformationtechnologyvoc:process-automation,
+      domaininformationtechnologyvoc:service-catalog-development, domaininformationtechnologyvoc:service-management-business-continuity-management,
+      domaininformationtechnologyvoc:service-management-event-management, domaininformationtechnologyvoc:service-management-integration,
+      domaininformationtechnologyvoc:service-management-service-catalog-development, domaininformationtechnologyvoc:service-management-service-catalog-planning .
+  
+  domaininformationtechnologyvoc:continual-service-improvement-service-measurement owl:versionInfo
+      "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domaininformationtechnologyvoc:service-measurement-service-catalog-planning .
+  
+  domaininformationtechnologyvoc:improvement-initiatives-definition owl:versionInfo
+      "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:process-evaluation owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-reporting owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:business-continuity-management owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:process-automation owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domaininformationtechnologyvoc:service-catalog-development owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

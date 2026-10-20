@@ -1,8 +1,8 @@
-# Core domain shapes: authored source
-# SHACL constraints for the core domain ontology (§3.1: constraints are SHACL, not OWL).
-# They enforce the process-step anchoring of the unifying ontology: a step must belong to a process,
-# and directives, measures, issues and events should each be tied to a step.
-# Violation = the data is wrong. Warning = the fact is not yet anchored to a step.
+# Core domain shapes: authored source (Baseline Core v1.0)
+# SHACL constraints for the core domain ontology (§3.1: constraints are SHACL, not OWL). They keep data anchored:
+# a step belongs to a process or job; directives, measures, issues and events are tied to the steps they govern,
+# measure, concern or trigger; assets have lifecycles; desired outcomes are mapped to job steps and measured.
+# Violation = the data is wrong. Warning = the fact is not yet anchored.
 
 @prefix core: <https://www.insperity.com/ontology/core/> .
 @prefix shp: <https://www.insperity.com/shapes/core/> .
@@ -16,100 +16,144 @@
   a owl:Ontology ;
   dct:title "Core domain shapes"@en ;
   dct:identifier "shapes-core" ;
-  dct:description "SHACL shapes that keep data built on the core domain ontology anchored on the process step: every step belongs to a process, and every directive, measure, issue and event is tied to the steps it governs, measures, concerns or triggers."@en ;
+  dct:description "SHACL shapes that keep data built on the core domain ontology anchored: every process step belongs to a process and every job step to a job; directives, measures, issues and events are tied to the steps they govern, measure, concern or trigger; assets have lifecycles; and desired outcomes are mapped to job steps and measured, so value gaps can be found."@en ;
   owl:imports <https://www.insperity.com/ontology/core/> ;
   dct:created "2026-10-18"^^xsd:date .
 
-shp:ProcessShape
+shp:process-shape
   a sh:NodeShape ;
-  sh:targetClass core:Process ;
+  sh:targetClass core:process ;
   skos:prefLabel "Process shape"@en ;
   skos:definition "A shape that checks a process is broken down into steps."@en ;
   sh:property [
-      sh:path core:hasStep ; sh:class core:ProcessStep ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:path core:hasStep ; sh:class core:process-step ; sh:minCount 1 ; sh:severity sh:Warning ;
       sh:message "A process should have at least one process step."@en ] .
 
-shp:ProcessStepShape
+shp:process-step-shape
   a sh:NodeShape ;
-  sh:targetClass core:ProcessStep ;
+  sh:targetClass core:process-step ;
   skos:prefLabel "Process step shape"@en ;
   skos:definition "A shape that checks a process step is part of a process and that what it is related to has the right type."@en ;
   sh:property [
-      sh:path core:isStepOf ; sh:class core:Process ; sh:minCount 1 ;
+      sh:path core:isStepOf ; sh:class core:process ; sh:minCount 1 ;
       sh:message "A process step must be a step of a process."@en ] ,
-    [ sh:path core:performedBy ; sh:class core:Party ; sh:minCount 1 ; sh:severity sh:Warning ;
-      sh:message "A process step should name the party that performs it."@en ] ,
-    [ sh:path core:fulfillsRole ; sh:class core:Role ;
-      sh:message "fulfills role must point to a role."@en ] ,
-    [ sh:path core:exercisesCapability ; sh:class core:Capability ;
-      sh:message "exercises capability must point to a capability."@en ] ,
-    [ sh:path core:governedBy ; sh:class core:Directive ;
-      sh:message "governed by must point to a directive."@en ] ,
-    [ sh:path core:measuredBy ; sh:class core:Measure ;
-      sh:message "measured by must point to a measure."@en ] ,
-    [ sh:path core:hasIssue ; sh:class core:Issue ;
-      sh:message "has issue must point to an issue."@en ] ,
-    [ sh:path core:triggeredBy ; sh:class core:Event ;
-      sh:message "triggered by must point to an event."@en ] ,
-    [ sh:path core:precedes ; sh:class core:ProcessStep ;
-      sh:message "precedes must point to another process step."@en ] ,
-    [ sh:path core:occursIn ; sh:class core:Location ;
-      sh:message "occurs in must point to a location."@en ] ,
-    [ sh:path core:occupiesTime ; sh:class core:Time ; sh:maxCount 1 ;
-      sh:message "A process step occupies at most one time."@en ] .
+    [ sh:path core:performedBy ; sh:or ( [ sh:class core:party ] [ sh:class core:asset ] ) ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:message "A process step should name the party (manual) or digital agent (automated) that performs it."@en ] ,
+    [ sh:path core:fulfillsRole ; sh:class core:role ; sh:message "fulfills role must point to a role."@en ] ,
+    [ sh:path core:exercisesCapability ; sh:class core:capability ; sh:message "exercises capability must point to a capability."@en ] ,
+    [ sh:path core:governedBy ; sh:class core:directive ; sh:message "governed by must point to a directive."@en ] ,
+    [ sh:path core:measuredBy ; sh:class core:measure ; sh:message "measured by must point to a measure."@en ] ,
+    [ sh:path core:hasIssue ; sh:class core:issue ; sh:message "has issue must point to an issue."@en ] ,
+    [ sh:path core:triggeredBy ; sh:class core:event ; sh:message "triggered by must point to an event."@en ] ,
+    [ sh:path core:precedes ; sh:class core:process-step ; sh:message "precedes must point to another process step."@en ] ,
+    [ sh:path core:occursIn ; sh:class core:location ; sh:message "occurs in must point to a location."@en ] ,
+    [ sh:path core:occupiesTime ; sh:class core:time ; sh:maxCount 1 ; sh:message "A process step occupies at most one time."@en ] ,
+    [ sh:path core:deliveryOf ; sh:class core:asset ; sh:message "delivery of must point to the product or service delivered."@en ] ,
+    [ sh:path core:addresses ; sh:class core:job-step ; sh:message "addresses must point to a job step."@en ] .
 
-shp:EventShape
+shp:job-shape
   a sh:NodeShape ;
-  sh:targetClass core:Event ;
+  sh:targetClass core:job ;
+  skos:prefLabel "Job shape"@en ;
+  skos:definition "A shape that checks a job is broken down into job steps."@en ;
+  sh:property [
+      sh:path core:hasStep ; sh:class core:job-step ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:message "A job should have at least one job step."@en ] .
+
+shp:job-step-shape
+  a sh:NodeShape ;
+  sh:targetClass core:job-step ;
+  skos:prefLabel "Job step shape"@en ;
+  skos:definition "A shape that checks a job step is part of a job and has a desired outcome."@en ;
+  sh:property [
+      sh:path core:isStepOf ; sh:class core:job ; sh:minCount 1 ;
+      sh:message "A job step must be a step of a job."@en ] ,
+    [ sh:path core:hasOutcome ; sh:qualifiedValueShape [ sh:class core:desired-outcome ] ; sh:qualifiedMinCount 1 ; sh:severity sh:Warning ;
+      sh:message "A job step should have at least one desired outcome."@en ] .
+
+shp:desired-outcome-shape
+  a sh:NodeShape ;
+  sh:targetClass core:desired-outcome ;
+  skos:prefLabel "Desired outcome shape"@en ;
+  skos:definition "A shape that checks a desired outcome is mapped to a job step and measured."@en ;
+  sh:property [
+      sh:path core:outcomeOf ; sh:class core:job-step ; sh:minCount 1 ;
+      sh:message "A desired outcome must be mapped to a job step."@en ] ,
+    [ sh:path core:measuredBy ; sh:class core:measure ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:message "A desired outcome should name the measure (metric card) that measures it."@en ] .
+
+shp:delivered-outcome-shape
+  a sh:NodeShape ;
+  sh:targetClass core:delivered-outcome ;
+  skos:prefLabel "Delivered outcome shape"@en ;
+  skos:definition "A shape that checks a delivered outcome is mapped to a job step and says what achieved it."@en ;
+  sh:property [
+      sh:path core:outcomeOf ; sh:class core:job-step ; sh:minCount 1 ;
+      sh:message "A delivered outcome must be mapped to a job step."@en ] ,
+    [ sh:path core:achievedBy ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:message "A delivered outcome should name the product, service or process step that achieved it."@en ] .
+
+shp:asset-shape
+  a sh:NodeShape ;
+  sh:targetClass core:asset ;
+  skos:prefLabel "Asset shape"@en ;
+  skos:definition "A shape that checks an asset has a lifecycle and that its components are assets."@en ;
+  sh:property [
+      sh:path core:hasLifecycle ; sh:class core:lifecycle ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:message "An asset should have a lifecycle."@en ] ,
+    [ sh:path core:hasComponent ; sh:class core:asset ;
+      sh:message "has component must point to an asset."@en ] .
+
+shp:event-shape
+  a sh:NodeShape ;
+  sh:targetClass core:event ;
   skos:prefLabel "Event shape"@en ;
   skos:definition "A shape that checks an event is tied to a process step it triggers."@en ;
   sh:property [
-      sh:path core:triggers ; sh:class core:ProcessStep ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:path core:triggers ; sh:class core:process-step ; sh:minCount 1 ; sh:severity sh:Warning ;
       sh:message "An event should trigger at least one process step."@en ] .
 
-shp:DirectiveShape
+shp:directive-shape
   a sh:NodeShape ;
-  sh:targetClass core:Directive ;
+  sh:targetClass core:directive ;
   skos:prefLabel "Directive shape"@en ;
   skos:definition "A shape that checks a directive is tied to a process step it governs."@en ;
   sh:property [
-      sh:path core:governs ; sh:class core:ProcessStep ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:path core:governs ; sh:class core:process-step ; sh:minCount 1 ; sh:severity sh:Warning ;
       sh:message "A directive should govern at least one process step."@en ] .
 
-shp:MeasureShape
+shp:measure-shape
   a sh:NodeShape ;
-  sh:targetClass core:Measure ;
+  sh:targetClass core:measure ;
   skos:prefLabel "Measure shape"@en ;
   skos:definition "A shape that checks a measure states a quantity of something."@en ;
   sh:property [
       sh:path core:measures ; sh:minCount 1 ; sh:severity sh:Warning ;
       sh:message "A measure should say what it measures."@en ] .
 
-shp:IssueShape
+shp:issue-shape
   a sh:NodeShape ;
-  sh:targetClass core:Issue ;
+  sh:targetClass core:issue ;
   skos:prefLabel "Issue shape"@en ;
   skos:definition "A shape that checks an issue is tied to a process step it concerns."@en ;
   sh:property [
-      sh:path core:concerns ; sh:class core:ProcessStep ; sh:minCount 1 ; sh:severity sh:Warning ;
+      sh:path core:concerns ; sh:class core:process-step ; sh:minCount 1 ; sh:severity sh:Warning ;
       sh:message "An issue should concern at least one process step."@en ] .
 
-shp:PartyShape
+shp:party-shape
   a sh:NodeShape ;
-  sh:targetClass core:Party ;
+  sh:targetClass core:party ;
   skos:prefLabel "Party shape"@en ;
   skos:definition "A shape that checks the roles and locations of a party have the right type."@en ;
   sh:property [
-      sh:path core:hasRole ; sh:class core:Role ;
-      sh:message "has role must point to a role."@en ] ,
-    [ sh:path core:locatedIn ; sh:class core:Location ;
-      sh:message "located in must point to a location."@en ] .
+      sh:path core:hasRole ; sh:class core:role ; sh:message "has role must point to a role."@en ] ,
+    [ sh:path core:locatedIn ; sh:class core:location ; sh:message "located in must point to a location."@en ] .
 
-shp:PhysicalAssetShape
+shp:physical-asset-shape
   a sh:NodeShape ;
-  sh:targetClass core:PhysicalAsset ;
+  sh:targetClass core:physical-asset ;
   skos:prefLabel "Physical asset shape"@en ;
   skos:definition "A shape that checks a physical asset bears an asset role."@en ;
   sh:property [
-      sh:path core:hasRole ; sh:qualifiedValueShape [ sh:class core:AssetRole ] ; sh:qualifiedMinCount 1 ;
+      sh:path core:hasRole ; sh:qualifiedValueShape [ sh:class core:asset-role ] ; sh:qualifiedMinCount 1 ;
       sh:message "A physical asset must bear an asset role."@en ] .

@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **2.2.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **3.5.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -152,13 +152,56 @@ BFO 2020 (ISO/IEC 21838-2) is the top-level ontology the core domain ontology is
 
 ## Core domain ontology (2.2.0)
 
-The core domain ontology is authored in `ingest/core/ontology-core.source.ttl` and its shapes in `ingest/core/shapes-core.source.ttl`. Build them into KE Baseline with
+The core domain ontology is authored in `ingest/core/ontology-core.source.ttl` and its shapes in `ingest/core/shapes-core.source.ttl`. Build them into `KE Baseline/Baseline Core v1.0` with
 
-    python3 ingest/build_core.py            # --out "../KE Baseline" by default; --no-taxonomies to leave the taxonomies alone
+    python3 ingest/build_core.py            # --out "../KE Baseline/Baseline Core v1.0" by default; --no-taxonomies to leave the taxonomies alone
 
 The build adds labels, rdfs:isDefinedBy, governance and §3.11 header fields, runs the Part III checks and a lineage check, and writes `core:formalizedBy` into the core taxonomies from `ingest/core/formalized-by.csv` (rows without a core class are listed for review).
 
 Stack: BFO 2020 ← RO Core + RO extract ← core domain ontology (`/ontology/core/`) ← domain ontologies. Taxonomy concepts point up with `core:formalizedBy`; ontology classes name their vocabulary term with `core:hasPrimaryTerm`.
 
-Load order in GraphDB: Ingestion › Reference ontologies › Load all three (BFO, RO Core, `reference/ro-extract.ttl`), then the KE Baseline files. Run `KE Baseline/graphdb-drop-superseded-core.rq` once to remove the old core-domain ontology and core-* shapes graphs.
+Load order in GraphDB: Ingestion › Reference ontologies › Load all three (BFO, RO Core, `reference/ro-extract.ttl`), then the Baseline Core v1.0 files; or run `KE Baseline/Baseline Core v1.0/graphdb-rebuild.command`, which backs up, clears and reloads the repository in that order and checks lineage. Older runs and files are in `KE Baseline/Archive Baseline Core v0.1/`.
 
+## Baseline Core v1.0 (3.0.0)
+
+`KE Baseline/Baseline Core v1.0` is the clean, ingestable set; `KE Baseline/Archive Baseline Core v0.1` holds everything earlier. Its README lists the contents, the load order and the open items; `review/design-decisions.md` records the design decisions behind it.
+
+- Identifiers join words with hyphens for classes, taxonomy concepts and vocabulary terms (§3.2 as amended); `review/crosswalk-v1.csv` maps old IRIs to new ones.
+- Vocabularies hold primitives; taxonomy concepts link to every primitive they are built from (dcterms:subject) and to the head primitive (core:hasPrimaryTerm).
+- `ingest/migrate_v1/` holds the one-time migration (primitives registry `primitives-v1.tsv`, `m1_vocab.py`, `m2_taxonomy.py`) for traceability.
+- To reload GraphDB: double-click `Baseline Core v1.0/graphdb-rebuild.command`.
+
+
+## Model Editor (Ontology): tiers, domain ontologies and views (3.1.0)
+
+- **Tiers.** Relations are drawn for every loaded model: *primary* = the ontology being edited (editable); *secondary* = its imports and any model ticked or dragged in (read-only, solid grey); *tertiary* = the imports of those (read-only, dotted). The toolbar toggles each tier; the Inspector says which model states a relation. The number chip on each model (1, 2, 3) is its tier.
+- **Building a domain ontology.** *New ontology…* creates one (0.1.0, Draft, core header fields) that imports the core domain ontology plus the taxonomies and vocabularies you pick, and logs a change record. Then: drag core classes in, *New class…* for each domain class (parent, primary term, other primitives), relate classes with the + handle (the picker lists core relations first), and *+ import* further taxonomies or vocabularies from the Models list. On a vocabulary term or taxonomy concept, *New class from this term…* builds a class from it (has primary term / formalized by).
+- **Views.** *Tree* (class hierarchy), *Force* (force-directed; dragged terms stay pinned, *Re-run* unpins) and *List* (sortable table of relations, or of classes and terms, grouped by model and tier).
+- **Audit.** Each save writes a PROV-O change record to `…/graph/change-log` and updates `dct:modified`. Deletes touch only the edited ontology's own graph.
+- New domain ontologies live in GraphDB only (named graph = ontology IRI); they are not written to Baseline Core v1.0 files.
+
+## Core taxonomies in the core domain ontology; expandable tree (3.2.0)
+
+- The core domain ontology imports the 23 core taxonomies, so opening it loads every core taxonomy and its concepts (as secondary). Concepts link to classes with `core:formalizedBy`, stated in the taxonomies.
+- **Tree view** is an expandable hierarchy: classes, subclasses from other loaded ontologies, the concepts each class formalizes and their narrower concepts. Double-click a term (or click its +N / − chip) to expand or collapse it. **Levels − n + All** sets how many levels are open; **Show ontology** returns to the default (all classes open, first level of concepts).
+- Concepts no class formalizes yet sit under their taxonomy as a root.
+
+## Dispositions and learning ingestion (3.3.0)
+
+- **Conformance Review › Disposition** (on every finding): *Fixed by the staged changes*, *Accept as is*, *Not an issue*, *Defer* or *Needs a modeling decision*, with a rationale. Select several findings to record one disposition for all of them.
+- Decisions go to `ingest/feedback/dispositions.jsonl` (append-only; the schema is in `ingest/feedback/README.md`). Each record holds the term with its context, the findings, the tool's suggestion, the decision, the changes and the rationale. A Claude draft that was corrected is kept next to the approved text. *Download the training set* is in the left panel.
+- **Ingestion learns from them.** Fixes are replayed on re-ingestion, and accepted findings are reported as information. Claude's definition writer gets reviewers' approved and corrected definitions as examples. The ingestion report lists what was applied. `"learnFromReview": false` in the configuration switches this off.
+- New category **Not formalized by a class**: taxonomy concepts that don't reach BFO through `core:formalizedBy`. Each comes with likely classes, and you can formalize one or several at once.
+
+## Service Assembly (3.5.0)
+
+`tools/service-assembly.html` shows a domain's service assembly (design decisions D17–D24 in `KE Domains/Commercial Operations/review/design-decisions.md`), read only, from GraphDB. It is Service › Process › Process step:
+
+1. Load the assembly with `KE Domains/Commercial Operations/graphdb-load.command`. The page finds every release manifest that lists service graphs and offers it at the top.
+2. **Services**: the catalog on the left (filter by process, stage, mode, or errors and warnings). In the middle, the selected service's enabling processes (`core:supports`), each with its steps in order (`core:hasStep`, `core:precedes`); the step outlined in purple hands the service over (`core:deliveryOf`). Below that is the **SIPOCM** table: supplier, input, process step, output, customer and measure for every step. Click a process or a step for its detail; **Used by** lists every service that contains it.
+3. **Validation**: the shapes the manifest requires and the assembly checks, for the service, a process or a step.
+4. **Coverage**: processes by service and steps by service.
+
+Suppliers and customers inside the assembly are derived from the data flow; parties outside it come from `commercialops:hasSupplier` and `commercialops:hasCustomer`. Buyer personas, job steps and desired outcomes are not on this page: they are the value map, a separate assembly with its own manifest, for the Value Mapping page.
+
+Open a service directly with `tools/service-assembly.html?manifest=<manifest IRI>&service=<service id>`. GraphDB is the source of truth for assembly edits (D23); editing controls will be added to this page, and `_build/build_assembly.py` stays the release check and computes the assembly measures.

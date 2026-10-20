@@ -1,0 +1,123 @@
+# Change record 2026-10-20T171319Z for the https://www.insperity.com/graph/change-log graph (append-only, §3.3)
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://www.insperity.com/graph/change-log> {
+
+  <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> a prov:Activity , dct:ProvenanceStatement ;
+    rdfs:label "Sales service assembly 0.3.0: Service, process, process step, 2026-10-20T17:13:19Z"@en ;
+    dct:description "Commercial Operations container 0.3.0 and Sales 0.3.0, and the Sales assembly 0.3.0 restructured as Service › Process › Process step with the SIPOCM of every step (design decision D24), at the direction of Jeffrey Wallk. The container gains has supplier and has customer (specializing RO has participant; candidates for promotion to the core) and a shape that checks they point to a party or a role. Sales gains the Sales process branch (census collection, employment cost analysis, benefits plan analysis), the census request, census validation and current benefits collection steps, and the census template, census validation report and current benefits report records; a selling step is a step of any process, and a sales service must be enabled by a process. The assembly now has a party graph, seven step graphs (each with suppliers, inputs, outputs, customers and measures), three process graphs, and two service graphs that join the enabling processes (core:supports) and the delivery step (core:deliveryOf). The buyer persona job steps and desired outcomes are no longer part of the service assembly: the bridge (core:addresses) and the delivered outcomes moved to a separate assembly, the Sales value map 0.1.0 (value-map graph and manifest, with the PEO buyer persona graph). Removed: the standard selling process graph, the census collection step graph (now a process of two steps) and the Sales assembly 0.2.0 manifest. The other domains are unchanged and stay pinned to container 0.2.0. Built by build_domains.py and build_assembly.py against Baseline Core v1.0 (core 0.1.0), which was read and not changed; 0 errors."@en ;
+    dct:creator "Jeffrey Wallk" ;
+    dct:contributor "Claude (AI assistant), at the direction of Jeffrey Wallk" ;
+    prov:startedAtTime "2026-10-20T17:13:19Z"^^xsd:dateTime ;
+    prov:endedAtTime "2026-10-20T17:13:19Z"^^xsd:dateTime ;
+    dct:date "2026-10-20T17:13:19Z"^^xsd:dateTime ;
+    dct:source "build_domains.py" , "build_assembly.py" , "assembly_sales.py" , "spec_commercial_operations.py" , "spec_sales.py" , "dsl.py" ;
+    prov:used <https://www.insperity.com/ontology/core/> ,
+      <https://www.insperity.com/shapes/core/> ;
+    prov:invalidated <https://www.insperity.com/resource/domain-sales/process-graph/standard-selling-process/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/census-collection/> ,
+      <https://www.insperity.com/resource/domain-sales/manifest/0.2.0/> ;
+    prov:generated <https://www.insperity.com/ontology/domain-commercial-operations/> ,
+      <https://www.insperity.com/ontology/domain-sales/> ,
+      <https://www.insperity.com/resource/domain-commercial-operations/persona-graph/peo-buyer-personas/> ,
+      <https://www.insperity.com/resource/domain-sales/manifest/0.3.0/> ,
+      <https://www.insperity.com/resource/domain-sales/manifest/value-map-0.1.0/> ,
+      <https://www.insperity.com/resource/domain-sales/party-graph/sales-parties/> ,
+      <https://www.insperity.com/resource/domain-sales/process-graph/benefits-plan-analysis/> ,
+      <https://www.insperity.com/resource/domain-sales/process-graph/census-collection/> ,
+      <https://www.insperity.com/resource/domain-sales/process-graph/employment-cost-analysis/> ,
+      <https://www.insperity.com/resource/domain-sales/service-graph/benefits-comparison/> ,
+      <https://www.insperity.com/resource/domain-sales/service-graph/total-cost-of-employment-analysis/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/benefits-plan-comparison/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/census-request/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/census-validation/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/current-benefits-collection/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/current-cost-collection/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/employment-cost-comparison/> ,
+      <https://www.insperity.com/resource/domain-sales/step-graph/workforce-cost-forecasting/> ,
+      <https://www.insperity.com/resource/domain-sales/value-map/sales-buyer-value/> ,
+      <https://www.insperity.com/shapes/domain-commercial-operations/> ,
+      <https://www.insperity.com/shapes/domain-sales/> ,
+      <https://www.insperity.com/taxonomy/domain-commercial-operations/> ,
+      <https://www.insperity.com/taxonomy/domain-sales/> ,
+      <https://www.insperity.com/vocabulary/domain-commercial-operations/> ,
+      <https://www.insperity.com/vocabulary/domain-sales/> .
+
+  <https://www.insperity.com/ontology/domain-commercial-operations/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/ontology/domain-sales/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-commercial-operations/persona-graph/peo-buyer-personas/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/manifest/0.3.0/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/manifest/value-map-0.1.0/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/party-graph/sales-parties/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/process-graph/benefits-plan-analysis/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/process-graph/census-collection/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/process-graph/employment-cost-analysis/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/service-graph/benefits-comparison/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/service-graph/total-cost-of-employment-analysis/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/benefits-plan-comparison/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/census-request/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/census-validation/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/current-benefits-collection/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/current-cost-collection/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/employment-cost-comparison/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/step-graph/workforce-cost-forecasting/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/resource/domain-sales/value-map/sales-buyer-value/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/shapes/domain-commercial-operations/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/shapes/domain-sales/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/taxonomy/domain-commercial-operations/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/taxonomy/domain-sales/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/vocabulary/domain-commercial-operations/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+
+  <https://www.insperity.com/vocabulary/domain-sales/>
+    prov:wasGeneratedBy <https://www.insperity.com/resource/change-log/ChangeRecord/2026-10-20T171319Z-sales-service-assembly> .
+}

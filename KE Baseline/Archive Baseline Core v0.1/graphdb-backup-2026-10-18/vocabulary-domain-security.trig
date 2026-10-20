@@ -1,0 +1,1858 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-security/> {
+  <https://www.insperity.com/vocabulary/domain-security/> a skos:ConceptScheme;
+    rdfs:label "Domain security vocabulary"@en;
+    skos:prefLabel "Domain security vocabulary"@en;
+    skos:hasTopConcept domainsecurityvoc:security;
+    terms:description "The practice of protecting information and systems from unauthorized access, use, disclosure, disruption, modification, or destruction."@en;
+    terms:title "Domain security vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:04:55.281Z"^^xsd:dateTime .
+  
+  domainsecurityvoc:security a skos:Concept;
+    skos:prefLabel "Security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:30:51.117Z"^^xsd:dateTime;
+    skos:definition "The practice of protecting information and systems from unauthorized access, use, disclosure, disruption, modification, or destruction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:agent a skos:Concept;
+    skos:prefLabel "Agent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Person or program that performs specific tasks on behalf of a user or another program."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:countermeasures a skos:Concept;
+    skos:prefLabel "Countermeasures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Actions, devices, or systems implemented to mitigate security risks and vulnerabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:protected-assets a skos:Concept;
+    skos:prefLabel "Protected assets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Valuable resources, data, or systems that need to be protected from unauthorized access or harm."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:risk a skos:Concept;
+    skos:prefLabel "Risk"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:45:11.803Z"^^xsd:dateTime;
+    skos:definition "The potential for loss or damage that could happen if a thread successfully exploits a vulnerability."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:security-activities a skos:Concept;
+    skos:prefLabel "Security activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:51:22.586Z"^^xsd:dateTime;
+    skos:definition "Refers to measures taken to protect individuals, organizations, or information from harm, risks, or threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:security-processes a skos:Concept;
+    skos:prefLabel "Security processes"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:59:20.713Z"^^xsd:dateTime;
+    skos:definition "The procedures and protocols designed to safeguard an organization's assets, data, and systems from unauthorized access, threats, or breaches. They encompass a range of actions, from physical security measures to cybersecurity practices, all aimed at ensuring the safety and integrity of the organization's resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:security-tools a skos:Concept;
+    skos:prefLabel "Security tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Software or hardware used to enhance security posture and mitigate risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:threats a skos:Concept;
+    skos:prefLabel "Threats"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Potential dangers or risks that could exploit vulnerabilities and cause harm."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:vulnerability a skos:Concept;
+    skos:prefLabel "Vulnerability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "A weakness in a system or application that could be exploited by a threat."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:security .
+  
+  domainsecurityvoc:malware a skos:Concept;
+    skos:prefLabel "Malware"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Malicious software designed to harm computer systems or steal data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:agent .
+  
+  domainsecurityvoc:threat-actors a skos:Concept;
+    skos:prefLabel "Threat actors"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Individuals or groups who attempt to exploit vulnerabilities for malicious purposes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:agent .
+  
+  domainsecurityvoc:access-controls a skos:Concept;
+    skos:prefLabel "Access controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Mechanisms that limit access to resources based on predefined rules and permissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:attack-management a skos:Concept;
+    skos:prefLabel "Attack management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, analyzing, and responding to security incidents and attacks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:data-protection a skos:Concept;
+    skos:prefLabel "Data protection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Safeguarding data from unauthorized access, use, or disclosure throughout its lifecycle."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:electronic-communication-security a skos:Concept;
+    skos:prefLabel "Electronic communication security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:39:10.237Z"^^xsd:dateTime;
+    skos:definition "The measures taken to protect the privacy and integrity of electronic communications, ensuring they are secure from unauthorized access, interception, or disclosure. This includes protecting both the content of communications (like emails, text messages, and phone calls) and the infrastructure used to transmit them."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:facility-security a skos:Concept;
+    skos:prefLabel "Facility security"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:40:02.502Z"^^xsd:dateTime;
+    skos:definition "The measures taken to protect a building, its occupants, and assets from unauthorized access, physical harm, and other threats. This encompasses various aspects, including access control, surveillance, physical barriers, and incident response plans."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:firewall-management a skos:Concept;
+    skos:prefLabel "Firewall management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of configuring, maintaining, and monitoring firewalls to control network traffic."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:mobile-device-management a skos:Concept;
+    skos:prefLabel "Mobile device management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Security software and practices for managing and securing mobile devices in an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:secure-coding-practices a skos:Concept;
+    skos:prefLabel "Secure coding practices"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Guidelines and techniques used to develop software that is resistant to vulnerabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:security-controls a skos:Concept;
+    skos:prefLabel "Security controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Safeguards or countermeasures used to avoid, mitigate, or minimize security risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:security-requirements a skos:Concept;
+    skos:prefLabel "Security requirements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Specific criteria or objectives that must be met to ensure the security of a system or organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:user-account-management a skos:Concept;
+    skos:prefLabel "User account management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "The process of creating, managing, and disabling user accounts to control access to systems and resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:user-education-and-awareness a skos:Concept;
+    skos:prefLabel "User education & awareness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Training and communication programs to educate users about security threats and best practices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:vulnerability-testing a skos:Concept;
+    skos:prefLabel "Vulnerability testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Assessing systems and applications for weaknesses that could be exploited by attackers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:countermeasures .
+  
+  domainsecurityvoc:intrusion-detection-and-prevention a skos:Concept;
+    skos:prefLabel "Intrusion detection & prevention"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Security tools and techniques used to detect and prevent unauthorized access to networks and systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:attack-management .
+  
+  domainsecurityvoc:data-encryption a skos:Concept;
+    skos:prefLabel "Data encryption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Transforming data into an unreadable format to prevent unauthorized access."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:data-protection .
+  
+  domainsecurityvoc:data-obfuscation a skos:Concept;
+    skos:prefLabel "Data obfuscation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:36:29.672Z"^^xsd:dateTime;
+    skos:definition "The process of concealing sensitive data by replacing it with modified or fake information, making it unusable to unauthorized individuals while preserving its utility for authorized users. This technique is often used to protect confidential information in test or development environments where realistic data is needed for software development but the actual data should not be exposed."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:data-protection .
+  
+  domainsecurityvoc:asymmetric-encryption a skos:Concept;
+    skos:prefLabel "Asymmetric encryption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:34:38.914Z"^^xsd:dateTime;
+    skos:definition "A cryptographic method that uses two mathematically linked keys: a public key for encryption and a private key for decryption. This differs from symmetric encryption, which uses the same secret key for both encryption and decryption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:data-encryption .
+  
+  domainsecurityvoc:symmetric-encryption a skos:Concept;
+    skos:prefLabel "Symmetric encryption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:35:13.855Z"^^xsd:dateTime;
+    skos:definition "A method of encrypting and decrypting data using the same secret key. This means that both the sender and the recipient need to have access to the same key to securely encrypt and decrypt the information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:data-encryption .
+  
+  domainsecurityvoc:data-masking a skos:Concept;
+    skos:prefLabel "Data masking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "A method of protecting sensitive data by replacing it with fictitious, yet realistic, data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:broader domainsecurityvoc:data-obfuscation .
+  
+  domainsecurityvoc:data-randomization a skos:Concept;
+    skos:prefLabel "Data randomization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:37:18.351Z"^^xsd:dateTime;
+    skos:definition "A method of modifying data values based on a randomized pattern or algorithm, often used for anonymization or data privacy purposes. It involves introducing systematic noise or changes to the original data to obscure identifying characteristics while attempting to maintain the data's utility for analysis or other intended uses."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:spam-management a skos:Concept;
+    skos:prefLabel "Spam management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Techniques and tools used to filter and block unsolicited or unwanted email messages."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:firewall-configuration a skos:Concept;
+    skos:prefLabel "Firewall configuration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of setting up and defining rules for a firewall to filter network traffic."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:firewall-maintenance a skos:Concept;
+    skos:prefLabel "Firewall maintenance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Regular updates, patches, and checks to ensure the firewall is functioning correctly."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:firewall-monitoring a skos:Concept;
+    skos:prefLabel "Firewall monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Real-time analysis of firewall logs and activity to detect and respond to security threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:asymmetric-encryption-controls a skos:Concept;
+    skos:prefLabel "Asymmetric encryption controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Encryption methods that use a pair of keys (public and private) for encryption and decryption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:authentication-controls a skos:Concept;
+    skos:prefLabel "Authentication controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Mechanisms used to verify the identity of users or devices attempting to access a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:authorization-controls a skos:Concept;
+    skos:prefLabel "Authorization controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Mechanisms that determine the actions or permissions granted to authenticated users or devices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:certificates a skos:Concept;
+    skos:prefLabel "Certificates"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Digital documents used to establish trust and verify the authenticity of websites, individuals, or devices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:clients a skos:Concept;
+    skos:prefLabel "Clients"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Software or hardware that requests services or resources from a server."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:credentials a skos:Concept;
+    skos:prefLabel "Credentials"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Information used to verify the identity of a user, such as usernames and passwords."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:cryptographic-controls a skos:Concept;
+    skos:prefLabel "Cryptographic controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Security measures that use cryptography to protect data confidentiality and integrity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:network-controls a skos:Concept;
+    skos:prefLabel "Network controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Security measures implemented on networks to control traffic flow and prevent unauthorized access."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:permissions a skos:Concept;
+    skos:prefLabel "Permissions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Specific rights granted to users or devices to access and interact with resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:radio-encryption-controls a skos:Concept;
+    skos:prefLabel "Radio encryption controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Security measures that encrypt wireless communications to protect data confidentiality."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:radio-integrity-controls a skos:Concept;
+    skos:prefLabel "Radio integrity controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Mechanisms that ensure the integrity and authenticity of wireless communications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:resources a skos:Concept;
+    skos:prefLabel "Resources"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Assets, data, or services that need to be protected from unauthorized access or use."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:roles a skos:Concept;
+    skos:prefLabel "Roles"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Sets of permissions and responsibilities assigned to users based on their job functions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:symmetric-encryption-controls a skos:Concept;
+    skos:prefLabel "Symmetric encryption controls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Encryption methods that use a single key for both encryption and decryption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:authentication-requirements a skos:Concept;
+    skos:prefLabel "Authentication requirements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of verifying the identity of a user or device."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:confidentiality a skos:Concept;
+    skos:prefLabel "Confidentiality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Ensuring that information is accessible only to authorized individuals or systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:integrity a skos:Concept;
+    skos:prefLabel "Integrity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Maintaining the accuracy and trustworthiness of data by preventing unauthorized modifications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:isolation a skos:Concept;
+    skos:prefLabel "Isolation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Separating systems or data to prevent unauthorized access or interference."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:privacy a skos:Concept;
+    skos:prefLabel "Privacy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Protecting personal information and respecting individual’s right to control their data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:identity-management a skos:Concept;
+    skos:prefLabel "Identity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Managing user identities and access privileges within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:user-authentication a skos:Concept;
+    skos:prefLabel "User authentication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Verifying the identity of a user or device attempting to access a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:user-authorization a skos:Concept;
+    skos:prefLabel "User authorization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Granting or denying access to resources based on the authenticated identity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:endpoint-detection-and-response-solutions a skos:Concept;
+    skos:prefLabel "Endpoint detection & response solutions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Security tools that monitor endpoints for malicious activity and provide incident response capabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:security-testing a skos:Concept;
+    skos:prefLabel "Security testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Evaluating the effectiveness of security controls and identifying vulnerabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:data a skos:Concept;
+    skos:prefLabel "Data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Information processed, stored, or transmitted by a computer system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:network a skos:Concept;
+    skos:prefLabel "Network"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "A group of interconnected devices that can communicate with each other."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:physical-assets a skos:Concept;
+    skos:prefLabel "Physical assets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Tangible assets, such as buildings, equipment, and inventory."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:systems a skos:Concept;
+    skos:prefLabel "Systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Collections of hardware, software, and data that work together to perform specific functions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:identification a skos:Concept;
+    skos:prefLabel "Identification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of determining the identity of a user or device."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:machine-identifier a skos:Concept;
+    skos:prefLabel "Machine identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "A unique identifier assigned to a specific device, such as a MAC address."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:protected-data a skos:Concept;
+    skos:prefLabel "Protected data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Sensitive information that requires special protection from unauthorized access or disclosure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:protected-identifier a skos:Concept;
+    skos:prefLabel "Protected identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "An identifier that can be used to distinguish an individual and requires protection."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:protected-network-interfaces a skos:Concept;
+    skos:prefLabel "Protected network interfaces"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Network connections that require special security measures to protect data in transit."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:secrets a skos:Concept;
+    skos:prefLabel "Secrets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Confidential information, such as passwords or encryption keys, that must be kept secret."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:subscriber-identifier a skos:Concept;
+    skos:prefLabel "Subscriber identifier"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "A unique identifier assigned to a subscriber of a service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:buildings a skos:Concept;
+    skos:prefLabel "Buildings"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Structures that house people, equipment, or data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:data-centers a skos:Concept;
+    skos:prefLabel "Data centers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Facilities that house computer systems and related equipment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:equipment a skos:Concept;
+    skos:prefLabel "Equipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Physical devices used in computer systems, such as servers, routers, and switches."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:applications a skos:Concept;
+    skos:prefLabel "Applications"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Software programs designed to perform specific tasks for users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:cloud a skos:Concept;
+    skos:prefLabel "Cloud"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "A network of remote servers used to store, manage, and process data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:endpoint a skos:Concept;
+    skos:prefLabel "Endpoint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "A device that connects to a network, such as a computer, laptop, or smartphone."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:software a skos:Concept;
+    skos:prefLabel "Software"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Programs and other operating information used by a computer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:laptops a skos:Concept;
+    skos:prefLabel "Laptops"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Portable computers that can be used in various locations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:smartphones a skos:Concept;
+    skos:prefLabel "Smartphones"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Mobile phones with advanced computing capabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:tablets a skos:Concept;
+    skos:prefLabel "Tablets"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Mobile devices with touchscreens and capabilities similar to laptops."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-classification a skos:Concept;
+    skos:prefLabel "Risk classification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:46:22.363Z"^^xsd:dateTime;
+    skos:definition "The process of grouping similar risks together, often for the purpose of setting insurance rates or making informed decisions about risk management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-management a skos:Concept;
+    skos:prefLabel "Risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, assessing, and mitigating risks to an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:critical-risk-data a skos:Concept;
+    skos:prefLabel "Critical risk data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:48:28.441Z"^^xsd:dateTime;
+    skos:definition "Data that must be protected or an organization will face legal consequences, fines and reputation damage if leaked. Includes Personal Health Information (PHI), financial information, Personally identifiable information (PII) and trade secrets"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:high-risk-data a skos:Concept;
+    skos:prefLabel "High risk data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:49:33.778Z"^^xsd:dateTime;
+    skos:definition "If compromised, this data could cause significant harm, but not as much as critical risk. Includes National ID numbers, Biometric data, Legal information, Sensitive corporate information"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:moderate-risk-data a skos:Concept;
+    skos:prefLabel "Moderate risk data"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:50:14.736Z"^^xsd:dateTime;
+    skos:definition "Not as highly sensitive, but requires control because there would be impact if compromised. Includes internal communications, employee information, operational data, and marketing data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:fraud-management a skos:Concept;
+    skos:prefLabel "Fraud management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Detecting, investigating, and preventing fraudulent activities within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-acceptance a skos:Concept;
+    skos:prefLabel "Risk acceptance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Acknowledging a risk but choosing not to take action (usually for low-impact risks)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-assessment a skos:Concept;
+    skos:prefLabel "Risk assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Analyzing and evaluating identified risks based on likelihood and impact. This often involves qualitative (e.g., High, Medium, Low) and quantitative (e.g., financial impact) analysis."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-avoidance a skos:Concept;
+    skos:prefLabel "Risk avoidance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Altering business processes or plans to completely avoid a particular risk."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-communication a skos:Concept;
+    skos:prefLabel "Risk communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Effectively communicating risk information to relevant stakeholders, including management, employees, and potentially customers or partners."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-identification a skos:Concept;
+    skos:prefLabel "Risk identification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Recognizing potential threats, vulnerabilities, and their possible impact on assets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-mitigation a skos:Concept;
+    skos:prefLabel "Risk mitigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Implementing controls to reduce the likelihood or impact of a risk."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-monitoring a skos:Concept;
+    skos:prefLabel "Risk monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Continuously tracking and reviewing risks, the effectiveness of controls, and making adjustments as needed. This is crucial as the threat landscape constantly evolves."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-response a skos:Concept;
+    skos:prefLabel "Risk response"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Developing and implementing strategies to address assessed risks. Common responses include:"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:risk-transference a skos:Concept;
+    skos:prefLabel "Risk transference"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Shifting the responsibility for handling a risk to a third party (e.g., insurance)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:fraud-detection a skos:Concept;
+    skos:prefLabel "Fraud detection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Identifying suspicious activities or patterns that may indicate fraud."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:fraud-investigation a skos:Concept;
+    skos:prefLabel "Fraud investigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Gathering evidence and determining the facts surrounding a suspected fraud incident."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:fraud-prevention a skos:Concept;
+    skos:prefLabel "Fraud prevention"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Implementing controls and measures to deter and prevent fraudulent activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:disaster-recovery a skos:Concept;
+    skos:prefLabel "Disaster recovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "The process of restoring critical systems and data after a disaster or major disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:business-continuity-planning a skos:Concept;
+    skos:prefLabel "Business continuity planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Developing plans and procedures to ensure business operations continue in the event of a disruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:data-backup-and-recovery a skos:Concept;
+    skos:prefLabel "Data backup & recovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Regularly backing up data and having procedures in place to restore it if lost or corrupted."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:disaster-recovery-testing a skos:Concept;
+    skos:prefLabel "Disaster recovery testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Simulating disaster scenarios to test the effectiveness of disaster recovery plans."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:define-security-policies a skos:Concept;
+    skos:prefLabel "Define security policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:51:54.165Z"^^xsd:dateTime;
+    skos:definition "Involves creating a documented set of rules and guidelines that outline how an organization will protect its assets, including data, systems, personnel, and physical resources. These policies establish a framework for maintaining confidentiality, integrity, and availability of information, while also providing a foundation for establishing secure practices and handling security incidents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:define-security-standards a skos:Concept;
+    skos:prefLabel "Define security standards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:55:24.982Z"^^xsd:dateTime;
+    skos:definition "Establishing specific, measurable guidelines and expectations for how an organization should protect its assets and information. These standards ensure consistency in security practices, compliance with regulations, and a baseline level of protection against threats. They act as a framework for implementing security measures and can be customized to fit specific needs and risk profiles."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:identify-security-requirements a skos:Concept;
+    skos:prefLabel "Identify security requirements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:55:55.279Z"^^xsd:dateTime;
+    skos:definition "Involves determining the specific measures a system or application must take to protect its assets and users from potential threats and vulnerabilities. It's a crucial step in planning and design, ensuring the security objectives, expectations, and responsibilities of stakeholders are aligned and compliance with relevant standards is met."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:enforcement-and-penalties a skos:Concept;
+    skos:prefLabel "Enforcement & penalties"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:52:26.452Z"^^xsd:dateTime;
+    skos:definition "Ensures that security rules and guidelines are consistently followed, and penalties are the consequences for violating those policies. It involves monitoring, detecting, and taking action against security policy violations, which can range from logging the event to blocking connections or taking other corrective actions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:policy-requirements a skos:Concept;
+    skos:prefLabel "Policy requirements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:53:05.278Z"^^xsd:dateTime;
+    skos:definition "a documented statement outlining specific security functionalities needed to ensure a software or system meets defined security properties. These requirements are often derived from industry standards, legal mandates, and past vulnerabilities. They serve as the foundation for designing and implementing secure systems and applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:protocols a skos:Concept;
+    skos:prefLabel "Protocols"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:53:37.433Z"^^xsd:dateTime;
+    skos:definition "The specific procedures and rules used to implement those policies, often involving cryptography and network security measures."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:purpose-and-scope a skos:Concept;
+    skos:prefLabel "Purpose & scope"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:54:27.353Z"^^xsd:dateTime;
+    skos:definition "The purpose of a policy outlines the reason for its existence and the objectives it aims to achieve. The scope of a policy specifies what it applies to, including individuals, departments, situations, and actions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:responsibilities a skos:Concept;
+    skos:prefLabel "Responsibilities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:54:54.621Z"^^xsd:dateTime;
+    skos:definition "Define the roles and accountability assigned to individuals or groups for implementing, monitoring, and ensuring compliance with a policy. These responsibilities can cover areas like policy ownership, oversight, implementation, and adherence. Effective policies clearly define these responsibilities, ensuring that actions are taken consistently and effectively."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:discovery-and-selection a skos:Concept;
+    skos:prefLabel "Discovery & selection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:57:46.735Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and understanding the needs and expectations of stakeholders for a project, while requirements selection is the process of choosing which of those identified requirements will be included in the final project scope."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:implementation-and-testing a skos:Concept;
+    skos:prefLabel "Implementation & testing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:58:15.999Z"^^xsd:dateTime;
+    skos:definition "Involves translating documented requirements into a functioning product and verifying that it meets those specifications. Implementation involves building the software or system based on the defined requirements, while testing ensures that the implemented solution behaves as expected and meets the established criteria."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:investigation-and-documentation a skos:Concept;
+    skos:prefLabel "Investigation & documentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:58:47.565Z"^^xsd:dateTime;
+    skos:definition "The process of systematically identifying, analyzing, and formally recording the needs, expectations, and constraints of a project. This includes understanding what a system or product should do, how it should function, and the conditions it needs to operate under. The goal is to create a clear and comprehensive understanding of the project's goals and scope, ensuring that stakeholders and development teams are on the same page."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:access a skos:Concept;
+    skos:prefLabel "Access"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T15:59:51.865Z"^^xsd:dateTime;
+    skos:definition "The mechanisms and procedures that control who and what can access a specific resource or system within an organization. It involves both authentication, verifying a user's identity, and authorization, determining what specific access privileges they have. This process helps ensure that only authorized individuals can interact with sensitive data or systems, protecting against unauthorized access and potential breaches."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:audit a skos:Concept;
+    skos:prefLabel "Audit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:00:31.183Z"^^xsd:dateTime;
+    skos:definition "A systematic review and evaluation of an organization's information security procedures and controls to assess their effectiveness and identify any weaknesses or areas for improvement. It helps ensure compliance with industry standards and regulations, detect vulnerabilities, and strengthen overall security posture."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:authentication a skos:Concept;
+    skos:prefLabel "Authentication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:02:31.030Z"^^xsd:dateTime;
+    skos:definition "The process of verifying the identity of a user, device, or system to ensure that they are who they claim to be before granting them access to a system or resource. It's a fundamental security measure to prevent unauthorized access and protect sensitive information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:authorization a skos:Concept;
+    skos:prefLabel "Authorization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:03:10.173Z"^^xsd:dateTime;
+    skos:definition "The process of verifying and granting or denying access to specific resources or actions within a system after a user has been successfully authenticated. It's about controlling what a user is allowed to do with an authenticated identity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:entitlement a skos:Concept;
+    skos:prefLabel "Entitlement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:03:38.129Z"^^xsd:dateTime;
+    skos:definition "The right or privilege granted to a user, process, or system to access or interact with a specific resource or system within a security context. It defines what actions are allowed and what resources are accessible."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:antivirus-software a skos:Concept;
+    skos:prefLabel "Antivirus software"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Software designed to detect and remove malicious software from computer systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:application-security-tools a skos:Concept;
+    skos:prefLabel "Application security tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:04:15.137Z"^^xsd:dateTime;
+    skos:definition "Software and methodologies used to identify and mitigate vulnerabilities within applications, protecting them from various threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:authentication-and-access-control-systems a skos:Concept;
+    skos:prefLabel "Authentication & access control systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:04:45.333Z"^^xsd:dateTime;
+    skos:definition "Security mechanisms that verify user identities (authentication) and determine their permitted actions (authorization) within a system or network. Authentication ensures a user is who they claim to be, while access control, or authorization, dictates what they can do after successful authentication. This combined approach is crucial for securing data and resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:backup-software a skos:Concept;
+    skos:prefLabel "Backup software"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:05:14.881Z"^^xsd:dateTime;
+    skos:definition "A type of computer program designed to create copies of your data and files for safekeeping and later recovery."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:data-loss-prevention-solutions a skos:Concept;
+    skos:prefLabel "Data loss prevention solutions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Tools and techniques used to detect and prevent the unauthorized transmission or loss of sensitive data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:data-masking-tools a skos:Concept;
+    skos:prefLabel "Data masking tools"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:05:44.569Z"^^xsd:dateTime;
+    skos:definition "Software solutions that replace sensitive data with fake, yet realistic, information to protect it while enabling data sharing for testing, training, or analytics"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:email-security-solutions a skos:Concept;
+    skos:prefLabel "Email security solutions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:06:09.588Z"^^xsd:dateTime;
+    skos:definition "Tools and practices that safeguard email communication from various cyber threats, including unauthorized access, data leaks, and malicious content like malware, phishing attempts, and spam. They aim to protect individuals, businesses, and organizations by ensuring the confidentiality, integrity, and availability of email messages."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:encryption-software a skos:Concept;
+    skos:prefLabel "Encryption software"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:06:33.672Z"^^xsd:dateTime;
+    skos:definition "Software that uses cryptographic algorithms to convert digital data into an unreadable format (ciphertext), protecting it from unauthorized access. This process, called encryption, ensures that only authorized individuals with the correct decryption key can access the original data (plaintext). Encryption software is crucial for safeguarding sensitive information both at rest (stored on devices) and in transit (being transmitted over networks)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:firewalls a skos:Concept;
+    skos:prefLabel "Firewalls"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:06:59.341Z"^^xsd:dateTime;
+    skos:definition "A part of a computer system or network which is designed to block unauthorized access while permitting outward communication."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:security-information-and-event-management a skos:Concept;
+    skos:prefLabel "Security information & event management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "A type of security software that provides a centralized platform for collecting, analyzing, and managing security data from multiple sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:security-models a skos:Concept;
+    skos:prefLabel "Security models"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Frameworks that define security policies and controls for systems or organizations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:surveillance-and-security-personnel a skos:Concept;
+    skos:prefLabel "Surveillance & security personnel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Individuals responsible for monitoring security systems, responding to incidents, and enforcing security policies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:vulnerability-scanners a skos:Concept;
+    skos:prefLabel "Vulnerability scanners"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-25T16:07:53.656Z"^^xsd:dateTime;
+    skos:definition "A computer program that identifies and assesses security weaknesses in networks, systems, and applications. It helps organizations identify potential vulnerabilities like misconfigurations, outdated software, or weak passwords before they can be exploited."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:dangers a skos:Concept;
+    skos:prefLabel "Dangers"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Situations or events that pose a threat to security."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:emerging-threats a skos:Concept;
+    skos:prefLabel "Emerging threats"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "New and evolving threats that may not be well understood or have known countermeasures."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:phishing a skos:Concept;
+    skos:prefLabel "Phishing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "A type of social engineering attack that tricks users into revealing sensitive information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:ransomware a skos:Concept;
+    skos:prefLabel "Ransomware"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:27.297Z"^^xsd:dateTime;
+    skos:definition "Malicious software that encrypts data and demands a ransom for its release."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:social-engineering a skos:Concept;
+    skos:prefLabel "Social engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:30:48.776Z"^^xsd:dateTime;
+    skos:definition "Manipulating individuals into divulging confidential information or performing actions that compromise security."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-security/> .
+  
+  domainsecurityvoc:data-randomization skos:broader domainsecurityvoc:data-obfuscation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:spam-management skos:broader domainsecurityvoc:electronic-communication-security;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:firewall-configuration skos:broader domainsecurityvoc:firewall-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:firewall-maintenance skos:broader domainsecurityvoc:firewall-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:firewall-monitoring skos:broader domainsecurityvoc:firewall-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:asymmetric-encryption-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:authentication-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:authorization-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:certificates skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:clients skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:credentials skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:cryptographic-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:network-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:permissions skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:radio-encryption-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:radio-integrity-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:resources skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:roles skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:symmetric-encryption-controls skos:broader domainsecurityvoc:security-controls;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:authentication-requirements skos:broader domainsecurityvoc:security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:confidentiality skos:broader domainsecurityvoc:security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:integrity skos:broader domainsecurityvoc:security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:isolation skos:broader domainsecurityvoc:security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:privacy skos:broader domainsecurityvoc:security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:identity-management skos:broader domainsecurityvoc:user-account-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:user-authentication skos:broader domainsecurityvoc:user-account-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:user-authorization skos:broader domainsecurityvoc:user-account-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:endpoint-detection-and-response-solutions skos:broader domainsecurityvoc:vulnerability-testing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:security-testing skos:broader domainsecurityvoc:vulnerability-testing;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:data skos:broader domainsecurityvoc:protected-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:identification, domainsecurityvoc:machine-identifier,
+      domainsecurityvoc:protected-data, domainsecurityvoc:protected-identifier, domainsecurityvoc:protected-network-interfaces,
+      domainsecurityvoc:secrets, domainsecurityvoc:subscriber-identifier .
+  
+  domainsecurityvoc:network skos:broader domainsecurityvoc:protected-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:physical-assets skos:broader domainsecurityvoc:protected-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:buildings, domainsecurityvoc:data-centers, domainsecurityvoc:equipment .
+  
+  domainsecurityvoc:systems skos:broader domainsecurityvoc:protected-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:applications, domainsecurityvoc:cloud, domainsecurityvoc:endpoint,
+      domainsecurityvoc:software .
+  
+  domainsecurityvoc:identification skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:machine-identifier skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:protected-data skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:protected-identifier skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:protected-network-interfaces skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:secrets skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:subscriber-identifier skos:broader domainsecurityvoc:data;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:buildings skos:broader domainsecurityvoc:physical-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:data-centers skos:broader domainsecurityvoc:physical-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:equipment skos:broader domainsecurityvoc:physical-assets;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:applications skos:broader domainsecurityvoc:systems;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:cloud skos:broader domainsecurityvoc:systems;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:endpoint skos:broader domainsecurityvoc:systems;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:laptops, domainsecurityvoc:smartphones, domainsecurityvoc:tablets .
+  
+  domainsecurityvoc:software skos:broader domainsecurityvoc:systems;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:laptops skos:broader domainsecurityvoc:endpoint;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:smartphones skos:broader domainsecurityvoc:endpoint;
+    skos:altLabel "Cell Phones"@en, "Mobile Phones"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:tablets skos:broader domainsecurityvoc:endpoint;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-classification skos:broader domainsecurityvoc:risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:critical-risk-data, domainsecurityvoc:high-risk-data,
+      domainsecurityvoc:moderate-risk-data .
+  
+  domainsecurityvoc:risk-management skos:broader domainsecurityvoc:risk;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:fraud-management, domainsecurityvoc:risk-acceptance,
+      domainsecurityvoc:risk-assessment, domainsecurityvoc:risk-avoidance, domainsecurityvoc:risk-communication,
+      domainsecurityvoc:risk-identification, domainsecurityvoc:risk-mitigation, domainsecurityvoc:risk-monitoring,
+      domainsecurityvoc:risk-response, domainsecurityvoc:risk-transference .
+  
+  domainsecurityvoc:critical-risk-data skos:broader domainsecurityvoc:risk-classification;
+    skos:altLabel "Highly Sensitive Data"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:high-risk-data skos:broader domainsecurityvoc:risk-classification;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:moderate-risk-data skos:broader domainsecurityvoc:risk-classification;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:fraud-management skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:fraud-detection, domainsecurityvoc:fraud-investigation,
+      domainsecurityvoc:fraud-prevention .
+  
+  domainsecurityvoc:risk-acceptance skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-assessment skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-avoidance skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-communication skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-identification skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-mitigation skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-monitoring skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:risk-response skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:disaster-recovery .
+  
+  domainsecurityvoc:risk-transference skos:broader domainsecurityvoc:risk-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:fraud-detection skos:broader domainsecurityvoc:fraud-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:fraud-investigation skos:broader domainsecurityvoc:fraud-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:fraud-prevention skos:broader domainsecurityvoc:fraud-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:disaster-recovery skos:broader domainsecurityvoc:risk-response;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:business-continuity-planning, domainsecurityvoc:data-backup-and-recovery,
+      domainsecurityvoc:disaster-recovery-testing .
+  
+  domainsecurityvoc:business-continuity-planning skos:broader domainsecurityvoc:disaster-recovery;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:data-backup-and-recovery skos:broader domainsecurityvoc:disaster-recovery;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:disaster-recovery-testing skos:broader domainsecurityvoc:disaster-recovery;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:define-security-policies skos:broader domainsecurityvoc:security-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:enforcement-and-penalties, domainsecurityvoc:policy-requirements,
+      domainsecurityvoc:protocols, domainsecurityvoc:purpose-and-scope, domainsecurityvoc:responsibilities .
+  
+  domainsecurityvoc:define-security-standards skos:broader domainsecurityvoc:security-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:identify-security-requirements skos:broader domainsecurityvoc:security-activities;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:discovery-and-selection, domainsecurityvoc:implementation-and-testing,
+      domainsecurityvoc:investigation-and-documentation .
+  
+  domainsecurityvoc:enforcement-and-penalties skos:broader domainsecurityvoc:define-security-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:policy-requirements skos:broader domainsecurityvoc:define-security-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:protocols skos:broader domainsecurityvoc:define-security-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:purpose-and-scope skos:broader domainsecurityvoc:define-security-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:responsibilities skos:broader domainsecurityvoc:define-security-policies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:discovery-and-selection skos:broader domainsecurityvoc:identify-security-requirements;
+    skos:altLabel "Requirements Elicitation"@en, "Requirements Gathering"@en, "Requirements Analysis"@en,
+      "Requirements Definition"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:implementation-and-testing skos:broader domainsecurityvoc:identify-security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:investigation-and-documentation skos:broader domainsecurityvoc:identify-security-requirements;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:access skos:broader domainsecurityvoc:security-processes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:audit skos:broader domainsecurityvoc:security-processes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:authentication skos:broader domainsecurityvoc:security-processes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:authorization skos:broader domainsecurityvoc:security-processes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:entitlement skos:broader domainsecurityvoc:security-processes;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:antivirus-software skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:application-security-tools skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:authentication-and-access-control-systems skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:backup-software skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:data-loss-prevention-solutions skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:data-masking-tools skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:email-security-solutions skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:encryption-software skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:firewalls skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:security-information-and-event-management skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:security-models skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:surveillance-and-security-personnel skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:vulnerability-scanners skos:broader domainsecurityvoc:security-tools;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:dangers skos:broader domainsecurityvoc:threats;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:emerging-threats skos:broader domainsecurityvoc:threats;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:phishing skos:broader domainsecurityvoc:threats;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:ransomware skos:broader domainsecurityvoc:threats;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:social-engineering skos:broader domainsecurityvoc:threats;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-security/> skos:altLabel "Vocabulary | Domain | Security"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-security/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:security skos:altLabel "Cybersecurity"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-security/>;
+    skos:narrower domainsecurityvoc:agent, domainsecurityvoc:countermeasures, domainsecurityvoc:protected-assets,
+      domainsecurityvoc:risk, domainsecurityvoc:security-activities, domainsecurityvoc:security-processes,
+      domainsecurityvoc:security-tools, domainsecurityvoc:threats, domainsecurityvoc:vulnerability .
+  
+  domainsecurityvoc:asymmetric-encryption skos:altLabel "Public-Key Encryption"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:symmetric-encryption skos:altLabel "Secret-key Encryption"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:agent owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:malware, domainsecurityvoc:threat-actors .
+  
+  domainsecurityvoc:countermeasures owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:access-controls, domainsecurityvoc:attack-management,
+      domainsecurityvoc:data-protection, domainsecurityvoc:electronic-communication-security,
+      domainsecurityvoc:facility-security, domainsecurityvoc:firewall-management, domainsecurityvoc:mobile-device-management,
+      domainsecurityvoc:secure-coding-practices, domainsecurityvoc:security-controls, domainsecurityvoc:security-requirements,
+      domainsecurityvoc:user-account-management, domainsecurityvoc:user-education-and-awareness,
+      domainsecurityvoc:vulnerability-testing .
+  
+  domainsecurityvoc:protected-assets owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:data, domainsecurityvoc:network, domainsecurityvoc:physical-assets,
+      domainsecurityvoc:systems .
+  
+  domainsecurityvoc:risk owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:risk-classification, domainsecurityvoc:risk-management .
+  
+  domainsecurityvoc:security-activities owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:define-security-policies, domainsecurityvoc:define-security-standards,
+      domainsecurityvoc:identify-security-requirements .
+  
+  domainsecurityvoc:security-processes owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:access, domainsecurityvoc:audit, domainsecurityvoc:authentication,
+      domainsecurityvoc:authorization, domainsecurityvoc:entitlement .
+  
+  domainsecurityvoc:security-tools owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:antivirus-software, domainsecurityvoc:application-security-tools,
+      domainsecurityvoc:authentication-and-access-control-systems, domainsecurityvoc:backup-software,
+      domainsecurityvoc:data-loss-prevention-solutions, domainsecurityvoc:data-masking-tools,
+      domainsecurityvoc:email-security-solutions, domainsecurityvoc:encryption-software,
+      domainsecurityvoc:firewalls, domainsecurityvoc:security-information-and-event-management,
+      domainsecurityvoc:security-models, domainsecurityvoc:surveillance-and-security-personnel,
+      domainsecurityvoc:vulnerability-scanners .
+  
+  domainsecurityvoc:threats owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:dangers, domainsecurityvoc:emerging-threats, domainsecurityvoc:phishing,
+      domainsecurityvoc:ransomware, domainsecurityvoc:social-engineering .
+  
+  domainsecurityvoc:vulnerability owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:malware owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:threat-actors owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:access-controls owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:attack-management owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:intrusion-detection-and-prevention .
+  
+  domainsecurityvoc:data-protection owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:data-encryption, domainsecurityvoc:data-obfuscation .
+  
+  domainsecurityvoc:electronic-communication-security owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:spam-management .
+  
+  domainsecurityvoc:facility-security owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:firewall-management owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:firewall-configuration, domainsecurityvoc:firewall-maintenance,
+      domainsecurityvoc:firewall-monitoring .
+  
+  domainsecurityvoc:mobile-device-management owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:secure-coding-practices owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:security-controls owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:asymmetric-encryption-controls, domainsecurityvoc:authentication-controls,
+      domainsecurityvoc:authorization-controls, domainsecurityvoc:certificates, domainsecurityvoc:clients,
+      domainsecurityvoc:credentials, domainsecurityvoc:cryptographic-controls, domainsecurityvoc:network-controls,
+      domainsecurityvoc:permissions, domainsecurityvoc:radio-encryption-controls, domainsecurityvoc:radio-integrity-controls,
+      domainsecurityvoc:resources, domainsecurityvoc:roles, domainsecurityvoc:symmetric-encryption-controls .
+  
+  domainsecurityvoc:security-requirements owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:authentication-requirements, domainsecurityvoc:confidentiality,
+      domainsecurityvoc:integrity, domainsecurityvoc:isolation, domainsecurityvoc:privacy .
+  
+  domainsecurityvoc:user-account-management owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:identity-management, domainsecurityvoc:user-authentication,
+      domainsecurityvoc:user-authorization .
+  
+  domainsecurityvoc:user-education-and-awareness owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:vulnerability-testing owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:endpoint-detection-and-response-solutions, domainsecurityvoc:security-testing .
+  
+  domainsecurityvoc:intrusion-detection-and-prevention owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainsecurityvoc:data-encryption owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:asymmetric-encryption, domainsecurityvoc:symmetric-encryption .
+  
+  domainsecurityvoc:data-obfuscation owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainsecurityvoc:data-masking, domainsecurityvoc:data-randomization .
+  
+  domainsecurityvoc:data-masking owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

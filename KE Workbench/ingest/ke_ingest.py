@@ -26,7 +26,8 @@ v1.9 changes:
   - Taxonomies are always SKOS (§3.11): a taxonomy authored as OWL classes is converted
     (owl:Class → skos:Concept, rdfs:subClassOf → skos:broader). Config "taxonomiesAsSkos": false
     turns this off.
-  - Taxonomy concept IRIs are UpperCamelCase; vocabulary term IRIs stay lower-case hyphenated.
+  - Class, taxonomy concept and vocabulary term IRIs join their words with hyphens, lower case (§3.2 as amended
+    for Baseline Core v1.0: polymorphic terms are phrases, never new words).
   - Links from a taxonomy concept to its vocabulary term are written as core:hasPrimaryTerm and
     dcterms:subject (dc:subject is still read on input).
   - Asset headers carry the §3.11 fields: vaem:namespace, vann:preferredNamespacePrefix,
@@ -783,8 +784,8 @@ class Ingest:
                     if o:
                         self.dropped[s[1]] = f'names {o["name"]} ("{hit}")'; continue
                     newlab = None
-                    if kind == 'taxonomy':        # taxonomy concepts: UpperCamelCase (§3.11); vocabulary terms: hyphenated
-                        local, newlab = self.renamed(kind, domain, upper_camel(lab))
+                    if kind == 'taxonomy':        # taxonomy concepts and vocabulary terms: hyphen-joined (§3.2 as amended)
+                        local, newlab = self.renamed(kind, domain, slug(lab))
                         new = new_asset + local
                         kindname = 'taxonomy concept'
                     else:
@@ -801,9 +802,7 @@ class Ingest:
                     o, hit = self.org_term(newlab or lab, s[1])
                     if o:
                         self.dropped[s[1]] = f'names {o["name"]} ("{hit}")'; continue
-                    if not newlab and fixes and CAMEL_ACR.search(local):
-                        local = upper_camel(lab)          # identifier follows the spelled-out label
-                    local = upper_camel(local) if not re.fullmatch(r'[A-Z][A-Za-z0-9]*', local) else local
+                    local = slug(newlab or lab)           # identifier: the label's words joined with hyphens (§3.2 as amended)
                     owner = c[:2] if c else (kind, domain)
                     if src.get('ns_domain') and c and c[:2] == (kind, src['ns_domain']):
                         owner = (kind, domain)            # shared namespace: the term belongs to this file's asset
@@ -853,7 +852,7 @@ class Ingest:
                     new_tgt = self.map_iri(tgt[1]) if tgt else None
                     if new_tgt and new_tgt.startswith(self.base):
                         # shapes live in the shapes graph of the model that authored them
-                        new = f'{self.base}shapes/{src["domain"]}/{new_tgt.rstrip("/").split("/")[-1]}Shape'
+                        new = f'{self.base}shapes/{src["domain"]}/{new_tgt.rstrip("/").split("/")[-1]}-shape'
                     else:
                         c = self.classify(s[1])
                         new = f'{self.base}shapes/{c[1] if c else src["domain"]}/{s[1].rstrip("/").split("/")[-1]}'
@@ -1485,15 +1484,15 @@ def check(triples, base, policy=None, vocab=None):
             if segs[0] not in want: r('URI pattern (§3.2)', 'warn', iri, f'{kind} under /{segs[0]}/')
             if len(segs) > 1 and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', segs[1]): r('URI pattern (§3.2)', 'warn', iri, 'domain segment not lower-case hyphenated')
             if kind in ('class', 'concept', 'shape') and len(segs) != 3: r('URI pattern (§3.2)', 'warn', iri, 'expected {kind}/{domain}/{Term}')
-        if kind == 'class' and not re.fullmatch(r'[A-Z][A-Za-z0-9]*', local): r('Identifier case (§3.2)', 'warn', iri, 'class not UpperCamelCase')
+        if kind == 'class' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', local): r('Identifier case (§3.2)', 'warn', iri, 'class not lower-case hyphenated')
         if kind == 'concept' and segs and segs[0] == 'vocabulary' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', local): r('Identifier case (§3.2)', 'warn', iri, 'vocabulary term not lower-case hyphenated')
-        if kind == 'concept' and segs and segs[0] == 'taxonomy' and not re.fullmatch(r'[A-Z][A-Za-z0-9]*', local): r('Identifier case (§3.11)', 'warn', iri, 'taxonomy concept not UpperCamelCase')
+        if kind == 'concept' and segs and segs[0] == 'taxonomy' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', local): r('Identifier case (§3.2)', 'warn', iri, 'taxonomy concept not lower-case hyphenated')
         if kind == 'class' and segs and segs[0] == 'taxonomy': r('Taxonomies stay in SKOS (§3.11)', 'warn', iri, 'OWL class in a taxonomy')
         for p_ in (DCT + 'created', DCT + 'modified', DCT + 'issued'):
             for d_ in e.get(p_, []):
                 if d_[0] == 'L' and d_[3] in (XSD + 'date', XSD + 'dateTime') and (date_lit(d_[1]) or ('', '', '', ''))[3] != d_[3]:
                     r('Valid dates (ISO 8601)', 'error', iri, f'{short(p_)} "{d_[1]}" is not a valid {d_[3].split("#")[1]}')
-        if kind == 'shape' and not re.fullmatch(r'[A-Z][A-Za-z0-9]*Shape', local): r('Identifier case (§3.2)', 'warn', iri, 'shape not {Class}Shape')
+        if kind == 'shape' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*-shape', local): r('Identifier case (§3.2)', 'warn', iri, 'shape not {class}-shape')
         if kind in ('class', 'shape') and CAMEL_ACR.search(local): r('No acronyms in identifiers (§3.2)', 'error', iri, local)
         for l in prefs:
             bad = policy.acronyms(l[1]) if policy else [m.group(0) for m in ACRONYM.finditer(l[1])]
@@ -1619,8 +1618,8 @@ def report_md(ing, outputs, skipped, files, checks, cr_names):
              f'`dct:contributor` are {ing.author} only; `dct:created` keeps the source date (or the run time when the source had none); '
              f'`dct:modified` is {ing.now_lit[1]}; `owl:versionInfo` is {ing.version}; lifecycle status is {ing.cfg["lifecycleStatus"]}. '
              'Labels and definitions were re-tagged `@en`. The source values of those fields are not counted below.\n')
-    order = ['dropped', 'fixed', 'renamed', 'generated', 'filled', 'unresolved', 'moved', 'removed', 'label', 'warn', 'error']
-    titles = {'dropped': 'Removed as organization-specific', 'fixed': 'Corrected', 'renamed': 'Renamed to meet naming rules', 'generated': 'Written during ingestion',
+    order = ['dropped', 'fixed', 'learned', 'renamed', 'generated', 'filled', 'unresolved', 'moved', 'removed', 'label', 'warn', 'error']
+    titles = {'dropped': 'Removed as organization-specific', 'fixed': 'Corrected', 'learned': 'Applied from review decisions', 'renamed': 'Renamed to meet naming rules', 'generated': 'Written during ingestion',
               'filled': 'Filled from existing metadata', 'unresolved': 'Unresolved links', 'moved': 'Moved',
               'removed': 'Removed subjects', 'label': 'Labels put in sentence case', 'warn': 'Review', 'error': 'Errors'}
     for key in list(ing.outputs):
@@ -1738,7 +1737,7 @@ def scan(paths, cfg, recursive=False, known=()):
 # ─────────────────────────────────────────────────────────────────────────────
 # Which files in an output folder are current
 # ─────────────────────────────────────────────────────────────────────────────
-RX_GEN = re.compile(r'^#\s*(\S+)\s+·\s+version\s+(\S+).*\n#\s*Generated by ke_ingest\.py on (\S+) from (.+)$', re.M)
+RX_GEN = re.compile(r'^#\s*(\S+)\s+·\s+version\s+(\S+).*\n#\s*Generated by (?:ke_ingest|build_core|migrate_v1)\.py on (\S+) from (.+)$', re.M)
 ASSET_PREFIXES = ('vocabulary-', 'taxonomy-', 'ontology-', 'shapes-')
 
 
@@ -1897,9 +1896,14 @@ def generate_definitions(items, cfg, log=print):
                           ' (or the environment) and try again; the workbench reads it on each request.')
     model = cfg.get('definitionModel') or 'claude-sonnet-5-5'
     out, err = {}, None
+    examples = definition_examples(int(cfg.get('definitionExamples', 12) or 0)) if cfg.get('learnFromReview', True) else []
     for i in range(0, len(items), 25):
         batch = items[i:i + 25]
-        body = {'model': model, 'max_tokens': 4000, 'system': 'You write definitions for controlled vocabularies and taxonomies. ' + DEF_RULES,
+        system = 'You write definitions for controlled vocabularies and taxonomies. ' + DEF_RULES
+        if examples:
+            system += ('\n\nReviewers approved or corrected these earlier definitions; follow their style and choices. Where a draft was '
+                       'rejected, the approved text shows what the reviewer wanted instead:\n' + json.dumps(examples, ensure_ascii=False, indent=1))
+        body = {'model': model, 'max_tokens': 4000, 'system': system,
                 'messages': [{'role': 'user', 'content': 'Terms:\n' + json.dumps(batch, ensure_ascii=False, indent=1)}]}
         import os
         req = urllib.request.Request(os.environ.get('KE_ANTHROPIC_URL', 'https://api.anthropic.com/v1/messages'), data=json.dumps(body).encode('utf-8'), method='POST',
@@ -1956,6 +1960,150 @@ def define_missing(ing, log=print):
     return len(defs)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Review decisions (feedback). Conformance Review records how a person disposed of each finding in
+# feedback/dispositions.jsonl (one JSON object per line, append-only). Ingestion learns from them:
+#   * fixes are replayed: a correction made in review (label, definition, description, vocabulary link,
+#     formalized by) is applied again when the same term is ingested again with the value the reviewer replaced,
+#     so re-ingesting a source never brings an error back;
+#   * findings accepted as exceptions, or marked not an issue, are reported as information, not errors;
+#   * the definitions reviewers wrote or corrected are given to Claude as examples when it writes new ones.
+FEEDBACK_FILE = pathlib.Path(__file__).with_name('feedback') / 'dispositions.jsonl'
+# Conformance Review rule ids → the start of the rule names check() reports
+RULE_NAMES = {'base-url': 'Base URL', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'acronym-id': 'No acronyms in identifiers',
+              'acronym-label': 'No acronyms in preferred labels', 'org-content': 'No other organization', 'vocab-term': 'Taxonomy term in a vocabulary',
+              'primary-term': 'Taxonomy term in a vocabulary', 'skos-taxonomy': 'Taxonomies stay in SKOS', 'header-fields': 'Asset header fields',
+              'valid-date': 'Valid dates', 'label': 'Label present', 'sentence-case': 'Sentence-case labels', 'definition': 'Definition present',
+              'genus': 'Genus plus differentia', 'parent': 'Named parent class', 'defined-by': 'rdfs:isDefinedBy', 'in-scheme': 'Concept in scheme',
+              'versioned-term': 'No version in term IRIs', 'version-format': 'Semantic version', 'one-scheme': 'One scheme'}
+
+
+def load_feedback(path=None):
+    p = pathlib.Path(path) if path else FEEDBACK_FILE
+    out = []
+    try:
+        for line in p.read_text(encoding='utf-8').splitlines():
+            line = line.strip()
+            if line:
+                try: out.append(json.loads(line))
+                except ValueError: pass
+    except OSError:
+        pass
+    return out
+
+
+def _norm_label(s):
+    return re.sub(r'\s+', ' ', re.sub(r'[^a-z0-9 ]+', ' ', str(s or '').lower())).strip()
+
+
+def exemptions(records=None):
+    """(rule id, term IRI) → the latest record that accepted the finding or marked it not an issue."""
+    latest = {}
+    for r in records if records is not None else load_feedback():
+        for f in (r.get('findings') or []):
+            k = (f.get('rule'), (r.get('term') or {}).get('iri'))
+            if k[0] and k[1]: latest[k] = r
+    return {k: r for k, r in latest.items() if r.get('disposition') in ('accept', 'not-an-issue')}
+
+
+def apply_exemptions(res, ex):
+    """Downgrade findings a reviewer accepted to information, saying why. res: {rule name: [(sev, iri, msg)]}."""
+    n = 0
+    if not ex: return 0
+    by = collections.defaultdict(dict)
+    for (rid, iri), r in ex.items():
+        name = RULE_NAMES.get(rid)
+        if name: by[iri][name] = r
+    for rule, items in res.items():
+        for i, (sev, iri, msg) in enumerate(items):
+            hit = next((r for name, r in by.get(iri, {}).items() if rule.startswith(name)), None)
+            if hit and sev in ('error', 'warn'):
+                why = (hit.get('rationale') or '').strip()
+                items[i] = ('info', iri, f'{msg} — {"accepted" if hit["disposition"] == "accept" else "not an issue"} in Conformance Review'
+                                       f'{" by " + hit["by"] if hit.get("by") else ""} on {str(hit.get("at", ""))[:10]}{": " + why if why else ""}')
+                n += 1
+    return n
+
+
+def apply_feedback(ing, log=print):
+    """Replay the fixes reviewers made, on this run's outputs (before the headers are finished and files written)."""
+    recs = [r for r in load_feedback() if r.get('disposition') == 'fix' and r.get('actions')]
+    if not recs:
+        return 0
+    FB = ing.CORE + 'formalizedBy'
+    subj_ps = [ing.HAS_PRIMARY, DCT + 'subject']
+    where = {}                                   # term IRI → output key
+    by_label = collections.defaultdict(list)     # (kind, normalized label) → (key, term)
+    for key, o in ing.outputs.items():
+        for s, ps in o['graph'].items():
+            if s[0] != 'I': continue
+            where[s[1]] = key
+            lab = next((l[1] for l in ps.get(I(SKOS + 'prefLabel'), []) + ps.get(I(RDFS + 'label'), []) if l[0] == 'L'), None)
+            if lab: by_label[(key.split('/')[0], _norm_label(lab))].append((key, s))
+    lits = lambda ps, p: [x for x in ps.get(I(p), []) if x[0] == 'L']
+    n = 0
+    for r in recs:                               # oldest first: later decisions win
+        t = (r.get('term') or {})
+        targets = [(where[t['iri']], I(t['iri']))] if t.get('iri') in where else []
+        for a in r['actions']:
+            ty = a.get('type')
+            if not targets and ty in ('formalize', 'link') and t.get('label'):
+                # the same concept under another identifier (e.g. a source re-ingested into another domain)
+                targets = by_label.get(('taxonomy', _norm_label(t['label'])), [])[:1]
+            for key, s in targets:
+                g = ing.outputs[key]['graph']; ps = g.get(s)
+                if ps is None: continue
+                did = None
+                if ty == 'label':
+                    cur = [x[1] for x in lits(ps, SKOS + 'prefLabel') + lits(ps, RDFS + 'label')]
+                    if a.get('old') and a.get('new') and a['old'] in cur:
+                        for p in (SKOS + 'prefLabel', RDFS + 'label'):
+                            if ps.get(I(p)): ps[I(p)] = [x for x in ps[I(p)] if not (x[0] == 'L' and x[1] == a['old'])] + [L(a['new'], 'en')]
+                        if a.get('keepOld'): ing.add(g, s, I(SKOS + 'altLabel'), L(a['old'], 'en'))
+                        did = f'label "{a["old"]}" → "{a["new"]}"'
+                elif ty in ('definition', 'description'):
+                    p = SKOS + 'definition' if ty == 'definition' else DCT + 'description'
+                    cur = [x[1] for x in lits(ps, p)]
+                    if a.get('new') and a['new'] not in cur and (not cur or (a.get('old') or '') in cur):
+                        ps[I(p)] = [x for x in ps.get(I(p), []) if x[0] != 'L'] + [L(a['new'], 'en')]
+                        if ps.get(I(SKOS + 'editorialNote')):
+                            ps[I(SKOS + 'editorialNote')] = [x for x in ps[I(SKOS + 'editorialNote')] if not (x[0] == 'L' and 'Definition written' in x[1])]
+                        did = f'{ty} as approved in review'
+                elif ty == 'formalize' and a.get('target'):
+                    if I(a['target']) not in ps.get(I(FB), []):
+                        ps[I(FB)] = [I(a['target'])]; did = f'formalized by {short_iri(a["target"])}'
+                elif ty == 'link' and a.get('target'):
+                    if not ps.get(I(ing.HAS_PRIMARY)):
+                        for p in subj_ps: ps[I(p)] = [I(a['target'])]
+                        did = f'linked to vocabulary term {short_iri(a["target"])}'
+                if did:
+                    n += 1
+                    ing.note(key, 'learned', f'{short_iri(s[1])}: {did} (review decision {str(r.get("at", ""))[:10]}{", " + r["by"] if r.get("by") else ""})')
+    if n: log(f'feedback: {n} review decisions applied again')
+    return n
+
+
+def definition_examples(limit=12):
+    """Definitions reviewers wrote, approved or corrected — newest first — as examples for the definition writer."""
+    out, seen = [], set()
+    for r in reversed(load_feedback()):
+        if r.get('disposition') != 'fix': continue
+        for a in r.get('actions') or []:
+            if a.get('type') != 'definition' or not a.get('new'): continue
+            t = r.get('term') or {}
+            if t.get('iri') in seen: continue
+            seen.add(t.get('iri'))
+            ex = {'term': t.get('label'), 'approved_definition': a['new']}
+            ctx = t.get('context') or {}
+            if ctx.get('broader'): ex['broader'] = ctx['broader']
+            if a.get('generatedDraft') and a['generatedDraft'] != a['new']: ex['rejected_draft'] = a['generatedDraft']
+            if r.get('rationale'): ex['reviewer_note'] = r['rationale']
+            out.append(ex)
+        if len(out) >= limit: break
+    # corrections first: they teach the most
+    return sorted(out, key=lambda e: 'rejected_draft' not in e)
+
+
 def run(paths, dest, cfg, ttl_dir='ttl', trig_dir='trig', recursive=False, timestamp=None, overrides=None, log=print):
     """Ingest the given files/folders into dest/ttl_dir and dest/trig_dir. Returns a summary dict."""
     cfg = json.loads(json.dumps(cfg))
@@ -1993,6 +2141,8 @@ def run(paths, dest, cfg, ttl_dir='ttl', trig_dir='trig', recursive=False, times
             for n in notes: ing.note(key, 'warn', n)
     ing.extra_vocab = vocab_index(dest / ttl_dir)        # vocabularies already in the destination
     ing.build_crosswalk(); ing.transform()
+    learn = cfg.get('learnFromReview', True) not in (False, 'false', '0', 0)
+    if learn: apply_feedback(ing, log)                   # replay the fixes made in Conformance Review
     if cfg.get('generateDefinitions') in (True, 'true', '1', 1):
         define_missing(ing, log)
     ing.finish_headers()
@@ -2001,10 +2151,12 @@ def run(paths, dest, cfg, ttl_dir='ttl', trig_dir='trig', recursive=False, times
 
     checks, outputs = {}, []
     vocab_all = set(vocab_index(dest / ttl_dir))          # this run's vocabularies (just written) and earlier ones
+    exempt = exemptions() if learn else {}                # findings reviewers accepted, or marked not an issue
     for key, f in files.items():
         triples, _ = parse_turtle(f.read_text(encoding='utf-8'))   # re-read: proves the output is valid Turtle
         checks[key] = check(triples, ing.base, ing.policy, vocab_all)
         res = checks[key][1]
+        if apply_exemptions(res, exempt): ing.note(key, 'learned', 'findings accepted in Conformance Review are reported as information')
         cnt = lambda sev: sum(1 for v in res.values() for x in v if x[0] == sev)
         o = ing.outputs[key]
         outputs.append(dict(key=key, kind=key.split('/')[0], iri=o['header'][1], title=ing.pref_out(o['graph'][o['header']]) or key,

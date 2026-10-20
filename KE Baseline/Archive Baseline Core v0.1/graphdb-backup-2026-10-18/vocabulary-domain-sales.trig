@@ -1,0 +1,783 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-sales/> {
+  <https://www.insperity.com/vocabulary/domain-sales/> a skos:ConceptScheme;
+    rdfs:label "Domain sales vocabulary"@en;
+    skos:prefLabel "Domain sales vocabulary"@en;
+    skos:hasTopConcept <https://www.insperity.com/vocabulary/domain-sales/sales>;
+    terms:description "The process of selling goods or services in exchange for monetary value."@en;
+    terms:title "Domain sales vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:04:37.164Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Sales"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-sales/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales> a skos:Concept;
+    skos:prefLabel "Sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:30:31.002Z"^^xsd:dateTime;
+    skos:definition "The process of selling goods or services in exchange for monetary value."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-channels>, <https://www.insperity.com/vocabulary/domain-sales/sales-operations>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-process>, <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>
+    a skos:Concept;
+    skos:prefLabel "Customer relationship management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Strategies and technologies used to manage interactions with current and potential customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales>;
+    skos:altLabel "CRM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/customer-account-management>,
+      <https://www.insperity.com/vocabulary/domain-sales/customer-acquisition-and-conversion>,
+      <https://www.insperity.com/vocabulary/domain-sales/customer-care-and-call-center>,
+      <https://www.insperity.com/vocabulary/domain-sales/customer-churn>, <https://www.insperity.com/vocabulary/domain-sales/customer-interactions>,
+      <https://www.insperity.com/vocabulary/domain-sales/customer-lifecycle-management>,
+      <https://www.insperity.com/vocabulary/domain-sales/customer-support> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-channels> a skos:Concept;
+    skos:prefLabel "Sales channels"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Avenues through which a company sells its products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/direct-sales>, <https://www.insperity.com/vocabulary/domain-sales/distribution-sales>,
+      <https://www.insperity.com/vocabulary/domain-sales/online-sales>, <https://www.insperity.com/vocabulary/domain-sales/partner-sales>,
+      <https://www.insperity.com/vocabulary/domain-sales/retail-sales> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-operations> a skos:Concept;
+    skos:prefLabel "Sales operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Supporting sales activities with processes, technology, and resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/sales-activities>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-analytics>, <https://www.insperity.com/vocabulary/domain-sales/sales-communication>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-development>, <https://www.insperity.com/vocabulary/domain-sales/sales-strategy>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-technology> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-process> a skos:Concept;
+    skos:prefLabel "Sales process"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "A structured framework for guiding sales interactions from lead to close."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/closing-sales>, <https://www.insperity.com/vocabulary/domain-sales/lead-generation>,
+      <https://www.insperity.com/vocabulary/domain-sales/lead-qualification>, <https://www.insperity.com/vocabulary/domain-sales/outbound-prospecting>,
+      <https://www.insperity.com/vocabulary/domain-sales/proposal-development>, <https://www.insperity.com/vocabulary/domain-sales/sales-opportunities> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership> a skos:Concept;
+    skos:prefLabel "Transfer ownership"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The legal process of transferring ownership of an asset from seller to buyer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/closing-process>,
+      <https://www.insperity.com/vocabulary/domain-sales/legal-documentation>, <https://www.insperity.com/vocabulary/domain-sales/post-sale-obligations>,
+      <https://www.insperity.com/vocabulary/domain-sales/title-search-and-insurance>, <https://www.insperity.com/vocabulary/domain-sales/transfer-method>,
+      <https://www.insperity.com/vocabulary/domain-sales/warranties-and-indemnities> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-account-management> a
+      skos:Concept;
+    skos:prefLabel "Customer account management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Managing sales and relationships with individual customer accounts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    skos:altLabel "CAM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-acquisition-and-conversion>
+    a skos:Concept;
+    skos:prefLabel "Customer acquisition & conversion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Attracting new customers and converting them into paying customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-care-and-call-center>
+    a skos:Concept;
+    skos:prefLabel "Customer care & call center"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Providing support and resolving issues for existing customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-churn> a skos:Concept;
+    skos:prefLabel "Customer churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The rate at which customers stop doing business with a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-interactions> a skos:Concept;
+    skos:prefLabel "Customer interactions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Any engagement a customer has with a company, online or offline."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-lifecycle-management>
+    a skos:Concept;
+    skos:prefLabel "Customer lifecycle management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Managing the customer journey from acquisition to retention and beyond."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    skos:altLabel "CLM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-support> a skos:Concept;
+    skos:prefLabel "Customer support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Providing assistance and resolving issues for customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/customer-relationship-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/direct-sales> a skos:Concept;
+    skos:prefLabel "Direct sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Selling directly to customers, often through a sales force."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-channels>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/distribution-sales> a skos:Concept;
+    skos:prefLabel "Distribution sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Selling through intermediaries like distributors or wholesalers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-channels>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/online-sales> a skos:Concept;
+    skos:prefLabel "Online sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Selling products or services through online channels like websites or marketplaces."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-channels>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/partner-sales> a skos:Concept;
+    skos:prefLabel "Partner sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Collaborating with other businesses to sell products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-channels>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/retail-sales> a skos:Concept;
+    skos:prefLabel "Retail sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Selling goods directly to consumers through physical stores."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-channels>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-activities> a skos:Concept;
+    skos:prefLabel "Sales activities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Tasks performed by salespeople to drive sales, like prospecting and closing deals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-operations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/order-management>,
+      <https://www.insperity.com/vocabulary/domain-sales/pricing-and-quote-management>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-transactions> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-analytics> a skos:Concept;
+    skos:prefLabel "Sales analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Analyzing sales data to identify trends, opportunities, and areas for improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-operations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/performance-metrics> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-communication> a skos:Concept;
+    skos:prefLabel "Sales communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Effective communication skills used throughout the sales process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-operations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-development> a skos:Concept;
+    skos:prefLabel "Sales development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Activities focused on identifying and qualifying potential customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-operations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/product-knowledge>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-ethics-and-compliance>, <https://www.insperity.com/vocabulary/domain-sales/sales-training>,
+      <https://www.insperity.com/vocabulary/domain-sales/soft-skills> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-strategy> a skos:Concept;
+    skos:prefLabel "Sales strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "A plan outlining goals, target market, and tactics for achieving sales objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-operations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/competitive-intelligence>,
+      <https://www.insperity.com/vocabulary/domain-sales/customer-segmentation>, <https://www.insperity.com/vocabulary/domain-sales/sales-forecasting>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-market-analysis> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-technology> a skos:Concept;
+    skos:prefLabel "Sales technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Tools and software used to streamline and automate sales processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-operations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/order-management> a skos:Concept;
+    skos:prefLabel "Order management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Processing and tracking customer orders from placement to delivery."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-activities>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/pricing-and-quote-management> a
+      skos:Concept;
+    skos:prefLabel "Pricing & quote management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Determining product pricing and generating quotes for customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-activities>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-transactions> a skos:Concept;
+    skos:prefLabel "Sales transactions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The exchange of goods or services for payment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-activities>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/performance-metrics> a skos:Concept;
+    skos:prefLabel "Performance metrics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Measurable values used to track and evaluate sales performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-analytics>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/product-knowledge> a skos:Concept;
+    skos:prefLabel "Product knowledge"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "In-depth understanding of the features, benefits, and applications of products or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-ethics-and-compliance> a
+      skos:Concept;
+    skos:prefLabel "Sales ethics & compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Adhering to ethical principles and legal regulations in sales practices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-training> a skos:Concept;
+    skos:prefLabel "Sales training"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Programs designed to enhance sales skills and knowledge."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/soft-skills> a skos:Concept;
+    skos:prefLabel "Soft skills"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Interpersonal skills crucial for building relationships and closing deals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/competitive-intelligence> a skos:Concept;
+    skos:prefLabel "Competitive intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Gathering and analyzing information about competitors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/customer-segmentation> a skos:Concept;
+    skos:prefLabel "Customer segmentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Dividing customers into groups based on shared characteristics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-forecasting> a skos:Concept;
+    skos:prefLabel "Sales forecasting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Predicting future sales revenue based on historical data and market trends."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-market-analysis> a skos:Concept;
+    skos:prefLabel "Sales market analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Researching and understanding the target market and competitive landscape."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/closing-sales> a skos:Concept;
+    skos:prefLabel "Closing sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Finalizing a sale and securing a commitment from the customer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-process>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/lead-generation> a skos:Concept;
+    skos:prefLabel "Lead generation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Identifying and attracting potential customers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-process>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/lead-qualification> a skos:Concept;
+    skos:prefLabel "Lead qualification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Determining if a lead is a good fit and likely to convert."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-process>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/outbound-prospecting> a skos:Concept;
+    skos:prefLabel "Outbound prospecting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Reaching out to potential customers proactively."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-process>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/proposal-development> a skos:Concept;
+    skos:prefLabel "Proposal development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Creating formal documents outlining solutions and pricing for prospects."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-process>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-opportunities> a skos:Concept;
+    skos:prefLabel "Sales opportunities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Potential sales deals that have been identified and are being pursued."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/sales-process>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/closing-process> a skos:Concept;
+    skos:prefLabel "Closing process"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The final stage of a sale involving negotiation, agreement, and documentation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/legal-documentation> a skos:Concept;
+    skos:prefLabel "Legal documentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Contracts and agreements that legally bind parties involved in a transaction."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/bill-of-sale>, <https://www.insperity.com/vocabulary/domain-sales/deed-of-transfer>,
+      <https://www.insperity.com/vocabulary/domain-sales/sales-agreement> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/post-sale-obligations> a skos:Concept;
+    skos:prefLabel "Post-Sale obligations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Responsibilities of the seller after the sale is complete, such as warranties."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/title-search-and-insurance> a skos:Concept;
+    skos:prefLabel "Title search & insurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Verifying ownership of an asset and insuring against title defects."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/transfer-method> a skos:Concept;
+    skos:prefLabel "Transfer method"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The chosen method for transferring ownership, such as asset sale or stock purchase."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-sales/assets-sale>, <https://www.insperity.com/vocabulary/domain-sales/mergers-and-acquisitions>,
+      <https://www.insperity.com/vocabulary/domain-sales/stock-purchase> .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/warranties-and-indemnities> a skos:Concept;
+    skos:prefLabel "Warranties & indemnities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Guarantees provided by the seller regarding the quality or performance of goods or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-ownership>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/bill-of-sale> a skos:Concept;
+    skos:prefLabel "Bill of sale"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "A legal document that serves as proof of the transfer of ownership of goods."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/legal-documentation>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/deed-of-transfer> a skos:Concept;
+    skos:prefLabel "Deed of transfer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "A legal document that transfers ownership of real estate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/legal-documentation>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/sales-agreement> a skos:Concept;
+    skos:prefLabel "Sales agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "A contract outlining the terms and conditions of a sale."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/legal-documentation>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/assets-sale> a skos:Concept;
+    skos:prefLabel "Assets sale"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The sale of individual assets of a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-method>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/mergers-and-acquisitions> a skos:Concept;
+    skos:prefLabel "Mergers & acquisitions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "The consolidation of companies or assets through various financial transactions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-method>;
+    skos:altLabel "M&A"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-sales/stock-purchase> a skos:Concept;
+    skos:prefLabel "Stock purchase"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:31.529Z"^^xsd:dateTime;
+    skos:definition "Acquiring ownership of a company by purchasing its shares."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-sales/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-sales/transfer-method>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

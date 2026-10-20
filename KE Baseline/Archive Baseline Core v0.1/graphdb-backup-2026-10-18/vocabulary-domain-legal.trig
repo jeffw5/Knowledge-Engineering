@@ -1,0 +1,969 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-legal/> {
+  <https://www.insperity.com/vocabulary/domain-legal/> a skos:ConceptScheme;
+    rdfs:label "Domain legal vocabulary"@en;
+    skos:prefLabel "Domain legal vocabulary"@en;
+    skos:hasTopConcept domainlegalvoc:legal;
+    terms:description "Relating to the law or lawyers."@en;
+    terms:title "Domain legal vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:02:41.723Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Legal"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-legal/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:legal a skos:Concept;
+    skos:prefLabel "Legal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:27:55.054Z"^^xsd:dateTime;
+    skos:definition "Relating to the law or lawyers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:narrower domainlegalvoc:collaboration-and-communication, domainlegalvoc:contract-management,
+      domainlegalvoc:corporate-law, domainlegalvoc:dispute-resolution, domainlegalvoc:employment-law,
+      domainlegalvoc:intellectual-property, domainlegalvoc:legal-research-and-analysis,
+      domainlegalvoc:litigation-management, domainlegalvoc:regulatory-compliance .
+  
+  domainlegalvoc:collaboration-and-communication a skos:Concept;
+    skos:prefLabel "Collaboration & communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The process of working together and sharing information effectively."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:external-legal-collaboration, domainlegalvoc:internal-legal-collaboration,
+      domainlegalvoc:legal-updates, domainlegalvoc:staff-training-programs .
+  
+  domainlegalvoc:contract-management a skos:Concept;
+    skos:prefLabel "Contract management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The process of managing contracts throughout their lifecycle."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:contract-compliance, domainlegalvoc:contract-drafting,
+      domainlegalvoc:contract-execution, domainlegalvoc:contract-negotiation, domainlegalvoc:contract-renewals,
+      domainlegalvoc:contract-review, domainlegalvoc:contracts .
+  
+  domainlegalvoc:corporate-law a skos:Concept;
+    skos:prefLabel "Corporate law"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Law governing the formation and operation of corporations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:corporate-governance, domainlegalvoc:incorporation, domainlegalvoc:liability,
+      domainlegalvoc:mergers-and-acquisitions, domainlegalvoc:shareholder-rights .
+  
+  domainlegalvoc:dispute-resolution a skos:Concept;
+    skos:prefLabel "Dispute resolution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The process of resolving disagreements between parties."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:arbitration-process, domainlegalvoc:dispute-resolution-strategies,
+      domainlegalvoc:mediation-process, domainlegalvoc:settlement-agreements .
+  
+  domainlegalvoc:employment-law a skos:Concept;
+    skos:prefLabel "Employment law"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Law governing the employer-employee relationship."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:discrimination, domainlegalvoc:firing, domainlegalvoc:harassment,
+      domainlegalvoc:hiring, domainlegalvoc:wages, domainlegalvoc:workplace-safety .
+  
+  domainlegalvoc:intellectual-property a skos:Concept;
+    skos:prefLabel "Intellectual property"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Creations of the mind, such as inventions, literary works, and designs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:copyright-management, domainlegalvoc:intellectual-property-enforcement,
+      domainlegalvoc:intellectual-property-registration, domainlegalvoc:licensing-agreements,
+      domainlegalvoc:patent-management, domainlegalvoc:trade-secret-management, domainlegalvoc:trademark-management .
+  
+  domainlegalvoc:legal-research-and-analysis a skos:Concept;
+    skos:prefLabel "Legal research & analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Investigating legal issues and analyzing relevant laws and regulations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:case-law-and-statute-research, domainlegalvoc:legal-change-impact-assessment,
+      domainlegalvoc:legal-precedent-analysis .
+  
+  domainlegalvoc:litigation-management a skos:Concept;
+    skos:prefLabel "Litigation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Managing legal disputes and lawsuits."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:case-assessment, domainlegalvoc:document-management,
+      domainlegalvoc:evidence-collection, domainlegalvoc:risk-assessment, domainlegalvoc:settlement-negotiations,
+      domainlegalvoc:trial-preparations .
+  
+  domainlegalvoc:regulatory-compliance a skos:Concept;
+    skos:prefLabel "Regulatory compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Adhering to relevant laws, regulations, and industry standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:compliance-audit, domainlegalvoc:compliance-incident-response,
+      domainlegalvoc:compliance-monitoring, domainlegalvoc:compliance-reporting, domainlegalvoc:compliance-training,
+      domainlegalvoc:laws-and-regulations, domainlegalvoc:policies-and-procedures-development,
+      domainlegalvoc:regulatory-compliance-reporting-and-documentation .
+  
+  domainlegalvoc:external-legal-collaboration a skos:Concept;
+    skos:prefLabel "External legal collaboration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Working with outside legal professionals, such as law firms or consultants."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:collaboration-and-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:internal-legal-collaboration a skos:Concept;
+    skos:prefLabel "Internal legal collaboration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Cooperation and information sharing within a legal department or team."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:collaboration-and-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:legal-updates a skos:Concept;
+    skos:prefLabel "Legal updates"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Information about changes or developments in the law."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:collaboration-and-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:staff-training-programs a skos:Concept;
+    skos:prefLabel "Staff training programs"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Educational programs designed to improve employees’ skills and knowledge."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:collaboration-and-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contract-compliance a skos:Concept;
+    skos:prefLabel "Contract compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Ensuring that all parties fulfill their contractual obligations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contract-drafting a skos:Concept;
+    skos:prefLabel "Contract drafting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Creating and writing legal contracts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contract-execution a skos:Concept;
+    skos:prefLabel "Contract execution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The process of signing and making a contract legally binding."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contract-negotiation a skos:Concept;
+    skos:prefLabel "Contract negotiation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Discussing and agreeing on the terms of a contract."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contract-renewals a skos:Concept;
+    skos:prefLabel "Contract renewals"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Extending the term of a contract."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contract-review a skos:Concept;
+    skos:prefLabel "Contract review"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Examining a contract to understand its terms and identify potential issues."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:contracts a skos:Concept;
+    skos:prefLabel "Contracts"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Legally binding agreements between two or more parties."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contract-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:employment-agreement, domainlegalvoc:leases, domainlegalvoc:non-disclosure-agreements,
+      domainlegalvoc:sales-contract .
+  
+  domainlegalvoc:employment-agreement a skos:Concept;
+    skos:prefLabel "Employment agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A contract outlining the terms of an employment relationship."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contracts;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:leases a skos:Concept;
+    skos:prefLabel "Leases"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Contracts granting the right to use property for a specific period."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contracts;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:non-disclosure-agreements a skos:Concept;
+    skos:prefLabel "Non-Disclosure agreements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Contracts protecting confidential information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contracts;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:sales-contract a skos:Concept;
+    skos:prefLabel "Sales contract"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A contract for the sale of goods or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:contracts;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:corporate-governance a skos:Concept;
+    skos:prefLabel "Corporate governance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The system of rules and practices that direct and control a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:board-governance-and-compliance, domainlegalvoc:risk-management-frameworks .
+  
+  domainlegalvoc:incorporation a skos:Concept;
+    skos:prefLabel "Incorporation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The legal process of forming a corporation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:liability a skos:Concept;
+    skos:prefLabel "Liability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Legal responsibility for one’s actions or omissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:employer-liability, domainlegalvoc:environmental-liability,
+      domainlegalvoc:product-liability .
+  
+  domainlegalvoc:mergers-and-acquisitions a skos:Concept;
+    skos:prefLabel "Mergers & acquisitions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The consolidation of two or more companies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-law;
+    skos:altLabel "M&A"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:shareholder-rights a skos:Concept;
+    skos:prefLabel "Shareholder rights"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The legal rights of individuals or entities who own shares in a company."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:board-governance-and-compliance a skos:Concept;
+    skos:prefLabel "Board governance & compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Ensuring the board of directors operates effectively and ethically."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:risk-management-frameworks a skos:Concept;
+    skos:prefLabel "Risk management frameworks"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Structured approaches to identifying, assessing, and mitigating risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:corporate-governance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:employer-liability a skos:Concept;
+    skos:prefLabel "Employer liability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "An employer’s legal responsibility for the actions of their employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:liability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:environmental-liability a skos:Concept;
+    skos:prefLabel "Environmental liability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Legal responsibility for environmental damage."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:liability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:product-liability a skos:Concept;
+    skos:prefLabel "Product liability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Legal responsibility for defective or dangerous products."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:liability;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:arbitration-process a skos:Concept;
+    skos:prefLabel "Arbitration process"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A form of dispute resolution where a neutral third party makes a binding decision."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:dispute-resolution;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:dispute-resolution-strategies a skos:Concept;
+    skos:prefLabel "Dispute resolution strategies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Different approaches to resolving disputes, such as negotiation or mediation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:dispute-resolution;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:mediation-process a skos:Concept;
+    skos:prefLabel "Mediation process"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A form of dispute resolution where a neutral third party facilitates communication and negotiation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:dispute-resolution;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:settlement-agreements a skos:Concept;
+    skos:prefLabel "Settlement agreements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Contracts that resolve legal disputes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:dispute-resolution;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:discrimination a skos:Concept;
+    skos:prefLabel "Discrimination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Unfair treatment based on protected characteristics, such as race or gender."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:employment-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:firing a skos:Concept;
+    skos:prefLabel "Firing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Terminating an employee’s employment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:employment-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:harassment a skos:Concept;
+    skos:prefLabel "Harassment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Unwelcome conduct based on protected characteristics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:employment-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:hiring a skos:Concept;
+    skos:prefLabel "Hiring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "The process of recruiting and employing new staff."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:employment-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:wages a skos:Concept;
+    skos:prefLabel "Wages"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Compensation paid to employees for their work."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:employment-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:workplace-safety a skos:Concept;
+    skos:prefLabel "Workplace safety"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Ensuring a safe and healthy work environment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:employment-law;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:copyright-management a skos:Concept;
+    skos:prefLabel "Copyright management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Protecting and managing copyrights."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:intellectual-property-enforcement a skos:Concept;
+    skos:prefLabel "Intellectual property enforcement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Taking legal action to protect intellectual property rights."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:intellectual-property-registration a skos:Concept;
+    skos:prefLabel "Intellectual property registration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Registering intellectual property rights with relevant authorities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:licensing-agreements a skos:Concept;
+    skos:prefLabel "Licensing agreements"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Contracts granting permission to use intellectual property."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:patent-management a skos:Concept;
+    skos:prefLabel "Patent management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Protecting and managing patents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:trade-secret-management a skos:Concept;
+    skos:prefLabel "Trade secret management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Protecting confidential business information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:trademark-management a skos:Concept;
+    skos:prefLabel "Trademark management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Protecting and managing trademarks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:intellectual-property;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:case-law-and-statute-research a skos:Concept;
+    skos:prefLabel "Case law & statute research"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Finding and analyzing relevant court decisions and legislation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal-research-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:legal-change-impact-assessment a skos:Concept;
+    skos:prefLabel "Legal change impact assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Evaluating the potential impact of legal changes on an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal-research-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:legal-precedent-analysis a skos:Concept;
+    skos:prefLabel "Legal precedent analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Examining past court decisions to understand how similar cases have been decided."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:legal-research-and-analysis;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:case-assessment a skos:Concept;
+    skos:prefLabel "Case assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:litigation-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:document-management a skos:Concept;
+    skos:prefLabel "Document management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Organizing and managing legal documents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:litigation-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:evidence-collection a skos:Concept;
+    skos:prefLabel "Evidence collection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Gathering evidence to support a legal case."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:litigation-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:risk-assessment a skos:Concept;
+    skos:prefLabel "Risk assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Identifying and assessing potential legal risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:litigation-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:settlement-negotiations a skos:Concept;
+    skos:prefLabel "Settlement negotiations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Discussing and negotiating a resolution to a legal dispute."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:litigation-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:trial-preparations a skos:Concept;
+    skos:prefLabel "Trial preparations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Preparing for a court trial."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:litigation-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:compliance-audit a skos:Concept;
+    skos:prefLabel "Compliance audit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A systematic review of an organization’s compliance with legal and regulatory requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:compliance-incident-response a skos:Concept;
+    skos:prefLabel "Compliance incident response"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Addressing and managing compliance violations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:compliance-monitoring a skos:Concept;
+    skos:prefLabel "Compliance monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Tracking and assessing compliance efforts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:compliance-reporting a skos:Concept;
+    skos:prefLabel "Compliance reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Providing information about compliance status and activities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:compliance-training a skos:Concept;
+    skos:prefLabel "Compliance training"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Educating employees about compliance obligations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:laws-and-regulations a skos:Concept;
+    skos:prefLabel "Laws & regulations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Rules and guidelines established by governing authorities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:privacy-and-data-protections .
+  
+  domainlegalvoc:policies-and-procedures-development a skos:Concept;
+    skos:prefLabel "Policies & procedures development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Creating internal guidelines and procedures to ensure compliance and best practices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:regulatory-compliance-reporting-and-documentation a skos:Concept;
+    skos:prefLabel "Regulatory compliance reporting & documentation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Maintaining records and reporting on compliance activities to demonstrate adherence to regulations"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:regulatory-compliance;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:privacy-and-data-protections a skos:Concept;
+    skos:prefLabel "Privacy & data protections"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "Safeguarding personal information and data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:laws-and-regulations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower domainlegalvoc:california-consumer-privacy-act, domainlegalvoc:general-data-protection-regulation .
+  
+  domainlegalvoc:california-consumer-privacy-act a skos:Concept;
+    skos:prefLabel "California consumer privacy act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A data privacy law in California."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:privacy-and-data-protections;
+    skos:altLabel "CCPA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  domainlegalvoc:general-data-protection-regulation a skos:Concept;
+    skos:prefLabel "General data protection regulation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:28:33.636Z"^^xsd:dateTime;
+    skos:definition "A data privacy law in the European Union."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:broader domainlegalvoc:privacy-and-data-protections;
+    skos:altLabel "GDPR"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

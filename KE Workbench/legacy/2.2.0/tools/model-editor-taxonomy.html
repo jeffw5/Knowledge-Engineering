@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Editor · Taxonomy</title>
+<script src="../assets/ke-sparql.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--ke-bg);color:var(--ke-ink);font:13px/1.4 var(--ke-sans);display:flex;flex-direction:column;overflow:hidden}
+  button,input,select{font:inherit;color:inherit}
+  .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);flex-wrap:wrap}
+  .bar h1{font-size:15px;margin:0 6px 0 0;font-weight:700;white-space:nowrap}
+  .bar h1 .k{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ke-kind-tax);margin-right:7px;vertical-align:0}
+  .sel{background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;max-width:420px;min-width:220px}
+  .chk{display:flex;align-items:center;gap:5px;color:var(--ke-muted);font-size:12px;white-space:nowrap}
+  .sp{flex:1}
+  .btn{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 11px;cursor:pointer;white-space:nowrap}
+  .btn:hover:not(:disabled){border-color:var(--ke-accent);color:var(--ke-accent)}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.primary{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink);font-weight:700}
+  .btn.primary:hover:not(:disabled){filter:brightness(1.08);color:var(--ke-accent-ink)}
+  .btn.sm{padding:2px 8px;font-size:12px}
+  .badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--ke-warn-soft);color:var(--ke-warn);font-size:11px;font-weight:700;text-align:center}
+  .main{flex:1;display:grid;grid-template-columns:minmax(240px,320px) 1fr minmax(240px,300px);min-height:0}
+  .pane{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--ke-surface)}
+  .pane.mid{background:var(--ke-bg);border-left:1px solid var(--ke-line);border-right:1px solid var(--ke-line)}
+  .ph{padding:10px 12px 8px;border-bottom:1px solid var(--ke-line-soft);display:flex;flex-direction:column;gap:7px}
+  .ph .t{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);font-weight:700;display:flex;align-items:center;gap:6px}
+  .ph .row2{display:flex;gap:6px;align-items:center}
+  .search{flex:1;min-width:0;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px}
+  .list{flex:1;overflow:auto;padding:4px 0 24px}
+  .hint{color:var(--ke-faint);font-size:12px;padding:10px 12px}
+  .term{display:flex;align-items:center;gap:7px;padding:4px 12px;cursor:grab;user-select:none;border-left:3px solid transparent}
+  .term:hover{background:var(--ke-band)}
+  .term.on{background:var(--ke-accent-soft);border-left-color:var(--ke-accent)}
+  .term .lb{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .term .in{font-size:10px;color:var(--ke-kind-tax);border:1px solid currentColor;border-radius:3px;padding:0 4px;opacity:.8}
+  .tree{flex:1;overflow:auto;padding:8px 10px 40px}
+  .topzone{border:1.5px dashed var(--ke-line);border-radius:var(--ke-radius);padding:7px 10px;margin:0 0 8px;color:var(--ke-faint);font-size:12px;text-align:center}
+  .topzone.over{border-color:var(--ke-accent);color:var(--ke-accent);background:var(--ke-accent-soft)}
+  .node{position:relative;display:flex;align-items:center;gap:6px;height:28px;padding-right:8px;border-radius:5px;cursor:grab;user-select:none;white-space:nowrap}
+  .node:hover{background:var(--ke-band)}
+  .node.on{background:var(--ke-accent-soft);box-shadow:inset 3px 0 0 var(--ke-accent)}
+  .node.match .lb{background:var(--ke-warn-soft)}
+  .node .car{width:16px;text-align:center;color:var(--ke-faint);cursor:pointer;flex:none}
+  .node .dot{width:7px;height:7px;border-radius:50%;background:var(--ke-kind-tax);flex:none;opacity:.7}
+  .node .lb{overflow:hidden;text-overflow:ellipsis}
+  .node .ln{color:var(--ke-faint);font-family:var(--ke-mono);font-size:11px;overflow:hidden;text-overflow:ellipsis}
+  .node .ct{color:var(--ke-faint);font-size:11px}
+  .node .poly{color:var(--ke-warn);font-size:11px}
+  .node.dirty .lb{font-style:italic}
+  .node.dirty .dot{background:var(--ke-warn);opacity:1}
+  body.dragging, body.dragging *{cursor:grabbing!important;user-select:none!important}
+  .node.drop-under{outline:2px solid var(--ke-accent);background:var(--ke-accent-soft)}
+  .node.drop-above::before{content:"";position:absolute;left:0;right:0;top:-2px;height:3px;border-radius:2px;background:var(--ke-ok)}
+  .dropnote{position:fixed;pointer-events:none;z-index:50;background:var(--ke-ink);color:var(--ke-bg);font-size:11px;padding:3px 7px;border-radius:4px;display:none;white-space:nowrap}
+  .side{padding:12px;overflow:auto;flex:1}
+  .side h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);margin:4px 0 8px}
+  .kv{font-size:12px;margin-bottom:12px}
+  .kv .k{color:var(--ke-muted);font-size:11px}
+  .kv code{font-family:var(--ke-mono);font-size:11px;word-break:break-all;color:var(--ke-ink2)}
+  .chg{font-size:12px;padding:5px 0;border-bottom:1px solid var(--ke-line-soft)}
+  .chg b{font-weight:600}
+  .chg .op{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:0 5px;border-radius:3px;margin-right:5px}
+  .op.move{background:var(--ke-accent-soft);color:var(--ke-accent)}
+  .op.add{background:var(--ke-ok-soft);color:var(--ke-ok)}
+  .op.del{background:var(--ke-bad-soft);color:var(--ke-bad)}
+  .legend{font-size:12px;color:var(--ke-muted);line-height:1.6}
+  .legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+  .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ke-ink);color:var(--ke-bg);padding:8px 14px;border-radius:6px;font-size:12px;box-shadow:var(--ke-shadow);display:none;z-index:60;max-width:80vw}
+  .toast.bad{background:var(--ke-bad);color:#fff}
+  .cfg{position:relative}
+  .pop{position:absolute;right:0;top:calc(100% + 6px);background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);box-shadow:var(--ke-shadow);padding:12px;width:280px;display:none;z-index:40}
+  .pop.open{display:block}
+  .pop label{display:block;font-size:11px;color:var(--ke-muted);margin:0 0 4px}
+  .pop input{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;margin-bottom:10px}
+  .pop code{font-family:var(--ke-mono);font-size:11px;word-break:break-all}
+  @media (max-width:900px){.main{grid-template-columns:1fr}.pane.left,.pane.right{display:none}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h1><span class="k"></span>Model Editor · Taxonomy</h1>
+  <select id="taxSel" class="sel" title="Taxonomy to edit"><option value="">Loading taxonomies…</option></select>
+  <label class="chk" title="List every skos:ConceptScheme, not only IRIs that contain “taxonomy”"><input type="checkbox" id="allSchemes"> all schemes</label>
+  <span class="sp"></span>
+  <button class="btn" id="btnUndo" title="Undo (Ctrl+Z)" disabled>Undo</button>
+  <button class="btn" id="btnDiscard" disabled>Discard</button>
+  <button class="btn primary" id="btnSave" title="Save to GraphDB (Ctrl+S)" disabled>Save <span id="saveCount"></span></button>
+  <div class="cfg">
+    <button class="btn" id="btnCfg" title="Settings">⚙</button>
+    <div class="pop" id="pop">
+      <label for="repoId">Repository</label>
+      <input id="repoId" type="text" value="value-kb">
+      <label>Writes go to named graph</label>
+      <div><code id="graphOut">—</code></div>
+      <div style="margin-top:10px;text-align:right"><button class="btn sm" id="btnReload">Reload</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <section class="pane left">
+    <div class="ph">
+      <div class="t"><span style="width:9px;height:9px;border-radius:2px;background:var(--ke-kind-voc);display:inline-block"></span>Vocabulary terms</div>
+      <select id="vocSel" class="sel" style="min-width:0;max-width:none"><option value="">Choose a vocabulary…</option></select>
+      <div class="row2"><input id="vocSearch" class="search" placeholder="Filter terms"><button class="btn sm" id="vocAll" title="Select all shown">All</button></div>
+    </div>
+    <div class="list" id="vocList"><div class="hint">Pick a vocabulary, select one or more terms (Ctrl/⌘-click, Shift-click), then drag them onto the taxonomy.</div></div>
+  </section>
+
+  <section class="pane mid">
+    <div class="ph" style="background:var(--ke-surface)">
+      <div class="t"><span style="width:9px;height:9px;border-radius:2px;background:var(--ke-kind-tax);display:inline-block"></span><span id="taxTitle">Taxonomy</span> <span id="taxCount" style="color:var(--ke-faint);font-weight:400;text-transform:none;letter-spacing:0"></span><span id="modeNote" style="margin-left:auto;color:var(--ke-faint);font-weight:400;text-transform:none;letter-spacing:0;font-family:var(--ke-mono);font-size:10.5px"></span></div>
+      <div class="row2">
+        <input id="treeSearch" class="search" placeholder="Find in taxonomy">
+        <button class="btn sm" id="expAll">Expand</button>
+        <button class="btn sm" id="colAll">Collapse</button>
+        <button class="btn sm" id="btnRemove" title="Remove selected terms from this taxonomy (Delete)" disabled>Remove</button>
+      </div>
+    </div>
+    <div class="tree" id="tree">
+      <div class="topzone" id="topZone">Drop here to make terms top level</div>
+      <div id="treeBody"><div class="hint">Choose a taxonomy to edit.</div></div>
+    </div>
+  </section>
+
+  <section class="pane right">
+    <div class="side">
+      <h3>How to edit</h3>
+      <div class="legend">
+        <div><i style="background:var(--ke-accent)"></i>Drop <b>on</b> a term → becomes its narrower term</div>
+        <div><i style="background:var(--ke-ok)"></i>Drop on the <b>top edge</b> of a term → becomes its broader term</div>
+        <div style="margin-top:4px">Hold <b>Alt/⌥</b> while dropping to add a second broader term instead of moving.</div>
+        <div style="margin-top:4px">A vocabulary term dropped here becomes a taxonomy concept named after its label (UpperCamelCase), with its label and definition, linked back with <code>core:hasPrimaryTerm</code> and <code>dcterms:subject</code> (§3.11). A concept already linked to that term, or with the same label, is reused.</div>
+      </div>
+      <h3 style="margin-top:18px">Selected</h3>
+      <div id="selInfo" class="kv"><span class="k">Nothing selected.</span></div>
+      <h3 style="margin-top:18px">Pending changes <span id="chgBadge" class="badge" style="display:none"></span></h3>
+      <div id="changes"><div class="k" style="color:var(--ke-faint);font-size:12px">No unsaved changes.</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="dropnote" id="dropNote"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const S = window.KE_SPARQL, NS = S.NS;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------------------------------------------------------------- state
+  let assets = [];
+  let scheme = null, graph = null;        // taxonomy being edited; writes go to `graph` (null = default graph)
+  let mode = 'owl';                        // 'owl': owl:Class + rdfs:subClassOf · 'skos': skos:Concept + skos:broader
+  let subjOf = new Map();                  // vocabulary term -> taxonomy concept or class that names it (§3.11 link)
+  let newClasses = new Map();              // concept/class IRI minted this session -> {label, subject}
+  // links from a taxonomy term to its vocabulary term: core:hasPrimaryTerm + dcterms:subject; dc:subject is read for older data
+  const DCSUBJ = 'http://purl.org/dc/elements/1.1/subject', DCTSUBJ = NS.dct + 'subject';
+  const coreOf = iri => ((String(iri).match(/^(https?:\/\/[^\/]+\/)/) || [])[1] || 'https://www.insperity.com/') + 'ontology/core/';
+  const subjPattern = (c, v, s) => `{ ${c} <${coreOf(s)}hasPrimaryTerm> ${v} } UNION { ${c} <${DCTSUBJ}> ${v} } UNION { ${c} <${DCSUBJ}> ${v} }`;
+  const labels = new Map();               // iri -> label
+  let parents = new Map();                // iri -> Set(parent iri) — in-scheme only
+  let inScheme = new Set();
+  let orig = null;                        // snapshot as loaded
+  let history = [];
+  let collapsed = new Set();
+  let selected = new Set();
+  let lastClick = { list: null, iri: null };
+  let vocTerms = [];                      // [{iri,label}]
+  let visibleTree = [], visibleVoc = [];
+
+  function label(i) { return labels.get(i) || S.localName(i); }
+  function snapshot() {
+    const p = new Map(); parents.forEach((v, k) => p.set(k, new Set(v)));
+    return { parents: p, inScheme: new Set(inScheme) };
+  }
+  function restore(s) { parents = new Map(); s.parents.forEach((v, k) => parents.set(k, new Set(v))); inScheme = new Set(s.inScheme); }
+
+  function toast(msg, bad) {
+    const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.style.display = 'block';
+    clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = 'none', bad ? 6000 : 2600);
+  }
+
+  // ---------------------------------------------------------------- loading
+  async function loadAssets() {
+    try { assets = await S.listAssets(); }
+    catch (e) { $('taxSel').innerHTML = '<option value="">GraphDB not reachable</option>'; toast(e.message, true); return; }
+    fillSelects();
+    const p = S.param('scheme') || S.param('taxonomy') || S.lsGet('ke-tax-last');
+    if (p && assets.some(a => a.iri === p)) { $('taxSel').value = p; await openTaxonomy(p, S.param('graph') || p); }
+    const v = S.lsGet('ke-voc-last');
+    if (v && assets.some(a => a.iri === v)) { $('vocSel').value = v; await openVocabulary(v); }
+  }
+  function fillSelects() {
+    const all = $('allSchemes').checked;
+    const schemes = assets.filter(a => a.type === 'scheme');
+    const tax = assets.filter(a => a.kind === 'tax' || (all && a.kind !== 'voc')).sort((a, b) => a.label.localeCompare(b.label));
+    const cur = scheme;
+    $('taxSel').innerHTML = '<option value="">' + (tax.length ? 'Choose a taxonomy…' : 'No taxonomies found') + '</option>' +
+      tax.map(a => `<option value="${esc(a.iri)}">${esc(a.label)}</option>`).join('');
+    if (cur && !tax.some(a => a.iri === cur)) $('taxSel').insertAdjacentHTML('beforeend', `<option value="${esc(cur)}">${esc(S.localName(cur))}</option>`);
+    if (cur) $('taxSel').value = cur;
+    const voc = schemes.filter(a => a.kind === 'voc').sort((a, b) => a.label.localeCompare(b.label)).concat(schemes.filter(a => a.kind !== 'voc'));
+    const vcur = $('vocSel').value;
+    $('vocSel').innerHTML = '<option value="">Choose a vocabulary…</option>' +
+      voc.map(a => `<option value="${esc(a.iri)}">${a.kind === 'voc' ? '' : '(' + a.kind + ') '}${esc(a.label)}</option>`).join('');
+    $('vocSel').value = vcur;
+  }
+
+  function anyG(tp, n) { return `{ ${tp} } UNION { GRAPH ?g${n} { ${tp} } }`; }
+
+  async function fetchLabels(memberPattern) {
+    const rows = await S.select(
+      `SELECT ?c ?l (LANG(?l) AS ?lang) ?src WHERE {
+         ${memberPattern}
+         { ?c skos:prefLabel ?l BIND("pref" AS ?src) } UNION { ?c rdfs:label ?l BIND("rdfs" AS ?src) }
+       }`);
+    const cand = new Map();
+    rows.forEach(r => { if (!cand.has(r.c)) cand.set(r.c, []); cand.get(r.c).push({ v: r.l, lang: r.lang || '', src: r.src }); });
+    cand.forEach((c, i) => labels.set(i, S.pickLabel(c)));
+  }
+
+
+  // Terms of an OWL model: rdfs:isDefinedBy the model, in its named graph, or in its
+  // namespace (IRI#… or IRI/…) unless rdfs:isDefinedBy points to a different model.
+  function owlMemberPattern(m, gs, v) {
+    v = v || '?c';
+    const I = S.iri(m), base = m.replace(/[\/#]$/, '');
+    const gv = (gs || []).map(S.iri).join(' ');
+    const ns = `(STRSTARTS(STR(${v}), ${S.lit(base + '#')}) || STRSTARTS(STR(${v}), ${S.lit(base + '/')}))`;
+    return `{ ${v} rdfs:isDefinedBy ${I} . ${v} a owl:Class }`
+      + (gv ? ` UNION { VALUES ?gm { ${gv} } GRAPH ?gm { ${v} a owl:Class } }` : '')
+      + ` UNION { ${v} a owl:Class . FILTER(isIRI(${v}) && ${ns}) FILTER NOT EXISTS { ${v} rdfs:isDefinedBy ?otherDef FILTER(?otherDef != ${I}) } }`;
+  }
+
+  async function graphsOf(m) {
+    try { return (await S.select(`SELECT DISTINCT ?g WHERE { GRAPH ?g { ${S.iri(m)} a ?t } }`)).map(r => r.g); } catch (e) { return []; }
+  }
+  // Namespace for classes minted in an OWL taxonomy: the taxonomy IRI as a slash namespace.
+  function nsOf(t) { return /[\/#]$/.test(t) ? t : t + '/'; }
+  function pascal(lbl) {
+    const w = String(lbl).normalize('NFKD').replace(/[^\w\s-]/g, ' ').split(/[\s_-]+/).filter(Boolean);
+    return w.map(x => x[0].toUpperCase() + x.slice(1)).join('') || 'Term';
+  }
+
+  async function openTaxonomy(s, g) {
+    if (dirtyCount() && !confirm('Discard unsaved changes to ' + label(scheme) + '?')) { $('taxSel').value = scheme || ''; return; }
+    const asset = assets.find(a => a.iri === s) || { type: 'ontology' };
+    scheme = s; mode = asset.type === 'scheme' ? 'skos' : 'owl';
+    S.lsSet('ke-tax-last', s);
+    const gs = await graphsOf(s);
+    graph = g && gs.includes(g) ? g : (gs[0] || null);
+    $('graphOut').textContent = graph || 'default graph (this taxonomy has no named graph)';
+    $('taxTitle').textContent = asset.label || S.localName(s);
+    $('modeNote').textContent = mode === 'owl' ? 'OWL classes · rdfs:subClassOf' : 'SKOS concepts · skos:broader';
+    $('treeBody').innerHTML = '<div class="hint">Loading…</div>';
+    const I = S.iri(s);
+    let member, rows;
+    try {
+      if (mode === 'owl') {
+        member = owlMemberPattern(s, gs);
+        rows = await S.select(`SELECT DISTINCT ?c ?b WHERE { ${member} OPTIONAL { ?c rdfs:subClassOf ?b FILTER(isIRI(?b)) } FILTER(isIRI(?c)) }`);
+        const sub = await S.select(`SELECT DISTINCT ?c ?v WHERE { ${member} ${subjPattern('?c', '?v', s)} FILTER(isIRI(?v)) }`);
+        subjOf = new Map(); sub.forEach(r => { if (!subjOf.has(r.v)) subjOf.set(r.v, r.c); });
+      } else {
+        member = `{ ${anyG(`?c skos:inScheme ${I}`, 1)} } UNION { ${anyG(`${I} skos:hasTopConcept ?c`, 2)} } UNION { ${anyG(`?c skos:topConceptOf ${I}`, 3)} }`;
+        rows = await S.select(
+          `SELECT DISTINCT ?c ?b WHERE {
+             ${member}
+             OPTIONAL { { ${anyG('?c skos:broader ?b', 4)} } UNION { ${anyG('?b skos:narrower ?c', 5)} } }
+           }`);
+        const sub = await S.select(`SELECT DISTINCT ?c ?v WHERE { ${member} ${subjPattern('?c', '?v', s)} FILTER(isIRI(?v)) }`);
+        subjOf = new Map(); sub.forEach(r => { if (!subjOf.has(r.v)) subjOf.set(r.v, r.c); });
+      }
+      await fetchLabels(member);
+      parents = new Map(); inScheme = new Set(); newClasses = new Map();
+      rows.forEach(r => { inScheme.add(r.c); if (!parents.has(r.c)) parents.set(r.c, new Set()); });
+      rows.forEach(r => { if (r.b && inScheme.has(r.b) && r.b !== r.c) parents.get(r.c).add(r.b); });
+      orig = snapshot(); history = []; selected.clear();
+      render();
+    } catch (e) { $('treeBody').innerHTML = '<div class="hint">Could not load this taxonomy.</div>'; toast(e.message, true); }
+  }
+
+  // A vocabulary term dropped on a taxonomy becomes (or reuses) a concept there — a class in an OWL taxonomy.
+  // The taxonomy never takes the vocabulary term itself as a member (§3.11: the concept names it with core:hasPrimaryTerm).
+  function classFor(v) {
+    if (inScheme.has(v) || !vocTerms.some(t => t.iri === v)) return v;
+    if (subjOf.has(v)) return subjOf.get(v);
+    const l = label(v), key = l.trim().toLowerCase();
+    for (const c of inScheme) if (label(c).trim().toLowerCase() === key) { subjOf.set(v, c); return c; }
+    let iri = nsOf(scheme) + pascal(l), n = 2;
+    while ((inScheme.has(iri) || labels.has(iri)) && !newClasses.has(iri)) iri = nsOf(scheme) + pascal(l) + (n++);
+    newClasses.set(iri, { label: l, subject: v }); labels.set(iri, l); subjOf.set(v, iri);
+    return iri;
+  }
+  function inTaxonomy(v) { return inScheme.has(v) || (subjOf.has(v) && inScheme.has(subjOf.get(v))) || [...inScheme].some(c => label(c).trim().toLowerCase() === label(v).trim().toLowerCase()); }
+
+  async function openVocabulary(v) {
+    S.lsSet('ke-voc-last', v || '');
+    if (!v) { vocTerms = []; renderVoc(); return; }
+    $('vocList').innerHTML = '<div class="hint">Loading…</div>';
+    const I = S.iri(v);
+    const member = `{ ${anyG(`?c skos:inScheme ${I}`, 1)} } UNION { ${anyG(`${I} skos:hasTopConcept ?c`, 2)} } UNION { ${anyG(`?c skos:topConceptOf ${I}`, 3)} }`;
+    try {
+      const rows = await S.select(`SELECT DISTINCT ?c WHERE { ${member} }`);
+      await fetchLabels(member);
+      vocTerms = rows.map(r => ({ iri: r.c })).sort((a, b) => label(a.iri).localeCompare(label(b.iri)));
+      renderVoc();
+    } catch (e) { $('vocList').innerHTML = '<div class="hint">Could not load this vocabulary.</div>'; toast(e.message, true); }
+  }
+
+  // ---------------------------------------------------------------- structure
+  function childrenMap() {
+    const ch = new Map();
+    inScheme.forEach(i => ch.set(i, []));
+    parents.forEach((ps, c) => { if (!inScheme.has(c)) return; ps.forEach(p => { if (ch.has(p)) ch.get(p).push(c); }); });
+    ch.forEach(list => list.sort((a, b) => label(a).localeCompare(label(b))));
+    return ch;
+  }
+  function roots() { return [...inScheme].filter(i => !(parents.get(i) || new Set()).size).sort((a, b) => label(a).localeCompare(label(b))); }
+  function hasCycle() {
+    const ch = childrenMap(), state = new Map();
+    const visit = (n) => { state.set(n, 1); for (const c of ch.get(n) || []) { const s = state.get(c); if (s === 1) return true; if (!s && visit(c)) return true; } state.set(n, 2); return false; };
+    for (const n of inScheme) if (!state.get(n) && visit(n)) return true;
+    // a set with no roots at all is also a cycle
+    return false;
+  }
+
+  // Apply a change atomically: mutate, reject if it creates a cycle.
+  function apply(fn, okMsg) {
+    const before = snapshot();
+    const res = fn();
+    if (res === false) { restore(before); return false; }
+    if (hasCycle()) { restore(before); toast('That would make a term its own ancestor — not applied.', true); return false; }
+    history.push(before);
+    render(); if (okMsg) toast(okMsg);
+    return true;
+  }
+
+  function ensure(i) { inScheme.add(i); if (!parents.has(i)) parents.set(i, new Set()); }
+
+  function moveUnder(terms, target, addParent) {
+    terms = terms.filter(t => t !== target);
+    if (!terms.length) return;
+    apply(() => {
+      terms.forEach(t => { ensure(t); if (!addParent) parents.get(t).clear(); parents.get(t).add(target); });
+    }, terms.length === 1 ? `${label(terms[0])} is now narrower than ${label(target)}` : `${terms.length} terms moved under ${label(target)}`);
+  }
+  function putAbove(terms, target) {
+    if (terms.length !== 1) { toast('Drop a single term above another to make it the broader term.', true); return; }
+    const t = terms[0]; if (t === target) return;
+    apply(() => {
+      ensure(t);
+      const tp = new Set(parents.get(target) || []); tp.delete(t);
+      parents.set(t, tp);                 // takes target's place in the hierarchy
+      parents.set(target, new Set([t]));  // target becomes narrower than t
+    }, `${label(t)} is now broader than ${label(target)}`);
+  }
+  function makeTop(terms) {
+    if (!terms.length) return;
+    apply(() => { terms.forEach(t => { ensure(t); parents.get(t).clear(); }); },
+      terms.length === 1 ? `${label(terms[0])} is now top level` : `${terms.length} terms are now top level`);
+  }
+  function removeTerms(terms) {
+    terms = terms.filter(t => inScheme.has(t));
+    if (!terms.length) return;
+    apply(() => {
+      const ch = childrenMap();
+      terms.forEach(t => {
+        const up = new Set(parents.get(t) || []);
+        (ch.get(t) || []).forEach(c => { if (terms.includes(c)) return; const ps = parents.get(c); ps.delete(t); up.forEach(u => { if (!terms.includes(u)) ps.add(u); }); });
+      });
+      terms.forEach(t => { inScheme.delete(t); parents.delete(t); });
+      parents.forEach(ps => terms.forEach(t => ps.delete(t)));
+      terms.forEach(t => selected.delete(t));
+    }, terms.length === 1 ? `${label(terms[0])} removed from taxonomy` : `${terms.length} terms removed from taxonomy`);
+  }
+
+  // ---------------------------------------------------------------- diff + save
+  function diff() {
+    if (!orig) return { ins: [], dels: [], drops: [], copies: [], touched: [], lines: [] };
+    const touched = new Set();
+    const all = new Set([...orig.inScheme, ...inScheme]);
+    const ps = (snap, i) => snap.parents.get(i) || new Set();
+    all.forEach(i => {
+      const a = orig.inScheme.has(i), b = inScheme.has(i);
+      if (a !== b) { touched.add(i); return; }
+      const pa = ps(orig, i), pb = parents.get(i) || new Set();
+      if (pa.size !== pb.size || [...pa].some(x => !pb.has(x))) touched.add(i);
+    });
+    const I = S.iri, Sc = S.iri(scheme);
+    const ins = [], dels = [], drops = [], lines = [], copies = [];   // dels: single triples; drops: classes removed entirely; copies: new terms that take the vocabulary definition
+    const BROADER = mode === 'owl' ? 'rdfs:subClassOf' : 'skos:broader';
+    touched.forEach(i => {
+      const T = I(i);
+      const wasIn = orig.inScheme.has(i), isIn = inScheme.has(i);
+      const pa = wasIn ? ps(orig, i) : new Set(), pb = isIn ? (parents.get(i) || new Set()) : new Set();
+      if (mode === 'owl') {
+        if (!wasIn && isIn) {
+          const nc = newClasses.get(i);
+          if (nc) { ins.push(`${T} a owl:Class ; rdfs:label ${S.lit(nc.label)} ; rdfs:isDefinedBy ${Sc} ; <${coreOf(scheme)}hasPrimaryTerm> ${I(nc.subject)} ; <${DCTSUBJ}> ${I(nc.subject)} .`); copies.push(i); }
+          else ins.push(`${T} rdfs:isDefinedBy ${Sc} .`);
+        }
+        if (wasIn && !isIn) drops.push(i);
+        else {
+          pa.forEach(p => { if (!pb.has(p)) dels.push(`${T} rdfs:subClassOf ${I(p)}`); });
+        }
+        pb.forEach(p => { if (!pa.has(p)) ins.push(`${T} rdfs:subClassOf ${I(p)} .`); });
+      } else {
+        const wasTop = wasIn && pa.size === 0, isTop = isIn && pb.size === 0;
+        if (!wasIn && isIn) {
+          ins.push(`${T} a skos:Concept .`, `${T} skos:inScheme ${Sc} .`);
+          const nc = newClasses.get(i), C = coreOf(scheme), now = `"${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}"^^<http://www.w3.org/2001/XMLSchema#dateTime>`;
+          if (nc) { ins.push(`${T} skos:prefLabel ${S.lit(nc.label, 'en')} ; rdfs:label ${S.lit(nc.label, 'en')} ; <${C}hasPrimaryTerm> ${I(nc.subject)} ; <${DCTSUBJ}> ${I(nc.subject)} ;`
+            + ` <${C}hasLifecycleStatus> <${C}Draft> ; dct:created ${now} ; dct:modified ${now} .`); copies.push(i); }
+        }
+        if (wasIn && !isIn) dels.push(`${T} skos:inScheme ${Sc}`);
+        pa.forEach(p => { if (!pb.has(p)) dels.push(`${T} skos:broader ${I(p)}`, `${I(p)} skos:narrower ${T}`); });
+        pb.forEach(p => { if (!pa.has(p)) ins.push(`${T} skos:broader ${I(p)} .`, `${I(p)} skos:narrower ${T} .`); });
+        if (wasTop && !isTop) dels.push(`${T} skos:topConceptOf ${Sc}`, `${Sc} skos:hasTopConcept ${T}`);
+        if (!wasTop && isTop) ins.push(`${T} skos:topConceptOf ${Sc} .`, `${Sc} skos:hasTopConcept ${T} .`);
+      }
+      const names = (set) => [...set].map(label).join(', ');
+      if (!isIn) lines.push(['del', `<b>${esc(label(i))}</b> removed`]);
+      else if (!wasIn) lines.push(['add', `<b>${esc(label(i))}</b> ${newClasses.has(i) ? 'created' : 'added'} ${pb.size ? 'under ' + esc(names(pb)) : 'at top level'}`]);
+      else lines.push(['move', `<b>${esc(label(i))}</b> → ${pb.size ? 'under ' + esc(names(pb)) : 'top level'}`]);
+    });
+    return { ins, dels, drops, copies, touched: [...touched], lines };
+  }
+  function dirtyCount() { return orig ? diff().touched.length : 0; }
+
+  async function save() {
+    const d = diff();
+    if (!d.touched.length) return;
+    if (d.drops.length && !confirm(`Remove ${d.drops.length} class${d.drops.length === 1 ? '' : 'es'} from this taxonomy?\nTheir statements in the taxonomy are deleted.`)) return;
+    const ops = [];
+    // A triple may sit in a named graph or in the default graph — delete it from both.
+    d.dels.forEach(t => { ops.push(`DELETE WHERE { GRAPH ?g { ${t} } }`, `DELETE DATA { ${t} . }`); });
+    d.drops.forEach(c => {
+      const C = S.iri(c);
+      if (graph) ops.push(`DELETE WHERE { GRAPH ${S.iri(graph)} { ${C} ?p ?o } }`);
+      ops.push(`DELETE { ${C} ?p ?o } WHERE { ${C} rdfs:isDefinedBy ${S.iri(scheme)} . ${C} ?p ?o }`);
+      ops.push(`DELETE WHERE { GRAPH ?g { ${C} rdfs:isDefinedBy ${S.iri(scheme)} } }`);
+    });
+    if (d.ins.length) {
+      const body = d.ins.join('\n  ');
+      ops.push(graph ? `INSERT DATA { GRAPH ${S.iri(graph)} {\n  ${body}\n} }` : `INSERT DATA {\n  ${body}\n}`);
+    }
+    // new concepts take the definition of the vocabulary term they name (edit it later if the taxonomy needs its own)
+    (d.copies || []).forEach(c => {
+      const nc = newClasses.get(c); if (!nc) return;
+      const tpl = `${S.iri(c)} skos:definition ?d`;
+      ops.push(`INSERT { ${graph ? `GRAPH ${S.iri(graph)} { ${tpl} }` : tpl} } WHERE { { ${S.iri(nc.subject)} skos:definition ?d } UNION { GRAPH ?gd { ${S.iri(nc.subject)} skos:definition ?d } } FILTER(LANG(?d) = "en" || LANG(?d) = "") }`);
+    });
+    $('btnSave').disabled = true; $('btnSave').textContent = 'Saving…';
+    try {
+      await S.update(ops.join(' ;\n'));
+      toast(`Saved ${d.touched.length} change${d.touched.length === 1 ? '' : 's'} to GraphDB`);
+      orig = null;
+      const s = scheme; scheme = null; await openTaxonomy(s, graph);
+      if ($('vocSel').value) renderVoc();
+    } catch (e) { toast(e.message, true); }
+    $('btnSave').innerHTML = 'Save <span id="saveCount"></span>'; updateBar();
+  }
+
+  // ---------------------------------------------------------------- rendering
+  function updateBar() {
+    const d = diff(), n = d.touched.length;
+    $('btnSave').disabled = !n; $('btnDiscard').disabled = !n; $('btnUndo').disabled = !history.length;
+    const sc = $('saveCount'); if (sc) sc.innerHTML = n ? `<span class="badge" style="background:var(--ke-accent-ink);color:var(--ke-accent)">${n}</span>` : '';
+    $('chgBadge').style.display = n ? '' : 'none'; $('chgBadge').textContent = n;
+    $('changes').innerHTML = n ? d.lines.map(([op, t]) => `<div class="chg"><span class="op ${op}">${op === 'del' ? 'remove' : op}</span>${t}</div>`).join('')
+      : '<div style="color:var(--ke-faint);font-size:12px">No unsaved changes.</div>';
+    $('btnRemove').disabled = ![...selected].some(i => inScheme.has(i));
+    return d;
+  }
+
+  function render() { renderTree(); renderVoc(); renderSel(); updateBar(); }
+
+  function renderTree() {
+    if (!scheme) return;
+    const ch = childrenMap(), q = $('treeSearch').value.trim().toLowerCase();
+    const dirty = new Set(diff().touched);
+    $('taxCount').textContent = `· ${inScheme.size} terms`;
+    // When searching, expand ancestors of matches.
+    let forceOpen = null;
+    if (q) {
+      forceOpen = new Set();
+      inScheme.forEach(i => { if (label(i).toLowerCase().includes(q)) { const st = [i]; const seen = new Set(); while (st.length) { const n = st.pop(); for (const p of parents.get(n) || []) if (!seen.has(p)) { seen.add(p); forceOpen.add(p); st.push(p); } } } });
+    }
+    const out = []; visibleTree = [];
+    const walk = (i, depth, parent, path) => {
+      const kids = ch.get(i) || [];
+      const isOpen = kids.length && (forceOpen ? forceOpen.has(i) : !collapsed.has(i));
+      const np = (parents.get(i) || new Set()).size;
+      const m = q && label(i).toLowerCase().includes(q);
+      visibleTree.push(i);
+      out.push(`<div class="node${selected.has(i) ? ' on' : ''}${dirty.has(i) ? ' dirty' : ''}${m ? ' match' : ''}" data-iri="${esc(i)}" data-parent="${esc(parent || '')}" style="padding-left:${6 + depth * 18}px" title="${esc(i)}">
+        <span class="car" data-car="1">${kids.length ? (isOpen ? '▾' : '▸') : ''}</span><span class="dot"></span>
+        <span class="lb">${esc(label(i))}</span>${kids.length ? `<span class="ct">${kids.length}</span>` : ''}${np > 1 ? `<span class="poly" title="Has ${np} broader terms">⧉${np}</span>` : ''}
+        <span class="ln">${esc(S.localName(i))}</span></div>`);
+      if (isOpen && !path.has(i)) { const p2 = new Set(path); p2.add(i); kids.forEach(k => walk(k, depth + 1, i, p2)); }
+    };
+    roots().forEach(r => walk(r, 0, null, new Set()));
+    $('treeBody').innerHTML = out.length ? out.join('') : '<div class="hint">This taxonomy is empty. Drag vocabulary terms onto the zone above to start it.</div>';
+  }
+
+  function renderVoc() {
+    const q = $('vocSearch').value.trim().toLowerCase();
+    if (!$('vocSel').value) { $('vocList').innerHTML = '<div class="hint">Pick a vocabulary, select one or more terms (Ctrl/⌘-click, Shift-click), then drag them onto the taxonomy.</div>'; visibleVoc = []; return; }
+    const list = vocTerms.filter(t => !q || label(t.iri).toLowerCase().includes(q) || t.iri.toLowerCase().includes(q));
+    visibleVoc = list.map(t => t.iri);
+    const shown = list.slice(0, 1500);
+    $('vocList').innerHTML = shown.length ? shown.map(t => `<div class="term${selected.has(t.iri) ? ' on' : ''}" data-iri="${esc(t.iri)}" title="${esc(t.iri)}"><span class="lb">${esc(label(t.iri))}</span>${scheme && inTaxonomy(t.iri) ? '<span class="in">in taxonomy</span>' : ''}</div>`).join('')
+      + (list.length > shown.length ? `<div class="hint">${list.length - shown.length} more — refine the filter.</div>` : '')
+      : '<div class="hint">No terms match.</div>';
+  }
+
+  function renderSel() {
+    const s = [...selected];
+    if (!s.length) { $('selInfo').innerHTML = '<span class="k">Nothing selected.</span>'; return; }
+    if (s.length > 1) { $('selInfo').innerHTML = `<div><b>${s.length} terms</b></div><div class="k" style="margin-top:4px">${s.slice(0, 12).map(i => esc(label(i))).join(', ')}${s.length > 12 ? '…' : ''}</div>`; return; }
+    const i = s[0], ps = [...(parents.get(i) || [])];
+    $('selInfo').innerHTML = `<div style="font-weight:700;margin-bottom:4px">${esc(label(i))}</div><div class="k">IRI</div><code>${esc(i)}</code>
+      <div class="k" style="margin-top:6px">In this taxonomy</div><div>${inScheme.has(i) ? (ps.length ? 'Narrower than ' + ps.map(p => esc(label(p))).join(', ') : 'Top level') : 'Not yet'}</div>`;
+  }
+
+  // ---------------------------------------------------------------- selection
+  function clickSelect(ev, iri, listName) {
+    const order = listName === 'voc' ? visibleVoc : visibleTree;
+    if (ev.shiftKey && lastClick.list === listName && lastClick.iri) {
+      const a = order.indexOf(lastClick.iri), b = order.indexOf(iri);
+      if (a >= 0 && b >= 0) { if (!(ev.metaKey || ev.ctrlKey)) selected.clear(); order.slice(Math.min(a, b), Math.max(a, b) + 1).forEach(x => selected.add(x)); }
+    } else if (ev.metaKey || ev.ctrlKey) {
+      selected.has(iri) ? selected.delete(iri) : selected.add(iri);
+      lastClick = { list: listName, iri };
+    } else {
+      selected.clear(); selected.add(iri); lastClick = { list: listName, iri };
+    }
+    renderTree(); renderVoc(); renderSel(); updateBar();
+  }
+
+  // ---------------------------------------------------------------- drag & drop
+  // Pointer-based dragging (not HTML5 drag-and-drop, which is unreliable inside
+  // iframes, embedded browser panes and with some trackpads).
+  let dragTerms = null, press = null, suppressClick = false, scrollTimer = null;
+  function zoneFor(ev, el) {
+    const r = el.getBoundingClientRect();
+    return (ev.clientY - r.top) < r.height * 0.33 ? 'above' : 'under';
+  }
+  function clearDropMarks() { document.querySelectorAll('.drop-under,.drop-above').forEach(e => e.classList.remove('drop-under', 'drop-above')); $('topZone').classList.remove('over'); }
+  function note(ev, text) { const n = $('dropNote'); n.textContent = text; n.style.left = (ev.clientX + 14) + 'px'; n.style.top = (ev.clientY + 12) + 'px'; n.style.display = 'block'; }
+  function dropTargetAt(ev) {
+    const el = document.elementFromPoint(ev.clientX, ev.clientY);
+    if (!el) return null;
+    if (el.closest('#topZone')) return { kind: 'top' };
+    const nd = el.closest('#treeBody .node');
+    if (nd) return { kind: 'node', el: nd, iri: nd.dataset.iri, zone: zoneFor(ev, nd) };
+    return null;
+  }
+  function beginDrag(iri) {
+    if (!selected.has(iri)) { selected.clear(); selected.add(iri); lastClick = { list: null, iri }; }
+    document.querySelectorAll('#vocList [data-iri], #treeBody [data-iri]').forEach(el => el.classList.toggle('on', selected.has(el.dataset.iri)));
+    renderSel();
+    dragTerms = [...selected];
+    document.body.classList.add('dragging');
+  }
+  function autoScroll(ev) {
+    const tree = $('tree'), r = tree.getBoundingClientRect();
+    clearInterval(scrollTimer); scrollTimer = null;
+    const dy = ev.clientY < r.top + 30 ? -12 : ev.clientY > r.bottom - 30 ? 12 : 0;
+    if (dy && ev.clientX > r.left && ev.clientX < r.right) scrollTimer = setInterval(() => { tree.scrollTop += dy; }, 30);
+  }
+  function endDrag() {
+    dragTerms = null; press = null; clearDropMarks(); $('dropNote').style.display = 'none';
+    document.body.classList.remove('dragging'); clearInterval(scrollTimer); scrollTimer = null;
+  }
+
+  ['vocList', 'treeBody'].forEach(id => {
+    const host = $(id);
+    host.addEventListener('pointerdown', ev => {
+      if (ev.button !== 0 || ev.target.dataset.car) return;
+      const el = ev.target.closest('[data-iri]'); if (!el) return;
+      press = { x: ev.clientX, y: ev.clientY, iri: el.dataset.iri, id: ev.pointerId };
+    });
+    host.addEventListener('click', ev => {
+      if (suppressClick) { suppressClick = false; return; }
+      const el = ev.target.closest('[data-iri]'); if (!el) return;
+      if (ev.target.dataset.car) { const i = el.dataset.iri; collapsed.has(i) ? collapsed.delete(i) : collapsed.add(i); renderTree(); return; }
+      clickSelect(ev, el.dataset.iri, id === 'vocList' ? 'voc' : 'tree');
+    });
+  });
+  document.addEventListener('pointermove', ev => {
+    if (!press) return;
+    if (!dragTerms) {
+      if (Math.abs(ev.clientX - press.x) + Math.abs(ev.clientY - press.y) < 6) return;
+      if (!scheme) { press = null; toast('Choose a taxonomy first.', true); return; }
+      beginDrag(press.iri);
+    }
+    ev.preventDefault();
+    clearDropMarks();
+    const t = dropTargetAt(ev);
+    const what = dragTerms.length > 1 ? dragTerms.length + ' terms' : '“' + label(dragTerms[0]) + '”';
+    if (!t) note(ev, what);
+    else if (t.kind === 'top') { $('topZone').classList.add('over'); note(ev, `${what} → top level`); }
+    else {
+      t.el.classList.add(t.zone === 'above' ? 'drop-above' : 'drop-under');
+      const tl = label(t.iri);
+      note(ev, t.zone === 'above'
+        ? (dragTerms.length === 1 ? `Make ${what} broader than “${tl}”` : 'Drop a single term to insert above')
+        : `${what} ${ev.altKey ? 'also ' : ''}narrower than “${tl}”`);
+    }
+    autoScroll(ev);
+  });
+  document.addEventListener('pointerup', ev => {
+    if (!press) return;
+    if (!dragTerms) { press = null; return; }      // a plain click — handled by the click listener
+    const t = dropTargetAt(ev), terms = dragTerms;
+    suppressClick = true; setTimeout(() => { suppressClick = false; }, 0);
+    endDrag();
+    if (!t) return;
+    const mapped = terms.map(classFor);
+    if (t.kind === 'top') makeTop(mapped);
+    else if (t.zone === 'above') putAbove(mapped, t.iri);
+    else moveUnder(mapped, t.iri, ev.altKey);
+  });
+  document.addEventListener('pointercancel', endDrag);
+  window.addEventListener('blur', () => { if (dragTerms) endDrag(); });
+
+  // ---------------------------------------------------------------- controls
+  $('taxSel').addEventListener('change', e => { if (e.target.value) openTaxonomy(e.target.value, e.target.value); });
+  $('vocSel').addEventListener('change', e => openVocabulary(e.target.value));
+  $('allSchemes').addEventListener('change', fillSelects);
+  $('vocSearch').addEventListener('input', renderVoc);
+  $('treeSearch').addEventListener('input', renderTree);
+  $('vocAll').addEventListener('click', () => { visibleVoc.slice(0, 1500).forEach(i => selected.add(i)); lastClick = { list: 'voc', iri: null }; renderVoc(); renderTree(); renderSel(); updateBar(); });
+  $('expAll').addEventListener('click', () => { collapsed.clear(); renderTree(); });
+  $('colAll').addEventListener('click', () => { const ch = childrenMap(); inScheme.forEach(i => { if ((ch.get(i) || []).length) collapsed.add(i); }); renderTree(); });
+  $('btnRemove').addEventListener('click', () => removeTerms([...selected]));
+  $('btnUndo').addEventListener('click', undo);
+  $('btnDiscard').addEventListener('click', () => { if (!orig) return; history.push(snapshot()); restore(orig); render(); toast('Changes discarded'); });
+  $('btnSave').addEventListener('click', save);
+  $('btnCfg').addEventListener('click', ev => { ev.stopPropagation(); $('pop').classList.toggle('open'); });
+  document.addEventListener('click', ev => { if (!ev.target.closest('.cfg')) $('pop').classList.remove('open'); });
+  $('repoId').addEventListener('change', () => { S.lsSet('ke-repo', $('repoId').value.trim()); scheme = null; orig = null; loadAssets(); });
+  $('btnReload').addEventListener('click', () => { $('pop').classList.remove('open'); orig = null; const s = scheme; scheme = null; loadAssets().then(() => s && openTaxonomy(s, graph)); });
+  function undo() { if (!history.length) return; restore(history.pop()); render(); }
+  document.addEventListener('keydown', ev => {
+    if (ev.target.matches('input,select,textarea')) return;
+    const mod = ev.metaKey || ev.ctrlKey;
+    if (mod && ev.key.toLowerCase() === 'z') { ev.preventDefault(); undo(); }
+    else if (mod && ev.key.toLowerCase() === 's') { ev.preventDefault(); save(); }
+    else if (ev.key === 'Delete' || ev.key === 'Backspace') { if ([...selected].some(i => inScheme.has(i))) { ev.preventDefault(); removeTerms([...selected]); } }
+    else if (ev.key === 'Escape') { if (dragTerms) { endDrag(); return; } selected.clear(); render(); }
+  });
+  window.addEventListener('beforeunload', ev => { if (dirtyCount()) { ev.preventDefault(); ev.returnValue = ''; } });
+
+  const rp = S.param('repo') || S.lsGet('ke-repo'); if (rp) $('repoId').value = rp;
+  loadAssets();
+})();
+</script>
+</body>
+</html>

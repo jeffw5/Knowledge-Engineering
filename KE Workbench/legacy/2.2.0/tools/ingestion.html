@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ingestion</title>
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:13.5px;line-height:1.5;-webkit-font-smoothing:antialiased}
+code,.mono{font-family:var(--ke-mono);font-size:.9em}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--ke-accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 28px 72px}
+.eyebrow{font:700 11px/1.5 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+.eyebrow .sep{color:var(--ke-faint);margin:0 6px}
+h1{font-size:28px;letter-spacing:-.012em;margin:8px 0 4px}
+.lede{color:var(--ke-ink2);max-width:800px}
+.hidden{display:none!important}
+
+/* steps */
+.panel{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);margin-top:18px}
+.panel-h{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--ke-line-soft);flex-wrap:wrap}
+.panel-h .t{font-weight:700;font-size:14px;display:flex;align-items:center;gap:10px}
+.stepn{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:700 11px/1 var(--ke-sans);background:var(--ke-band);color:var(--ke-muted);border:1px solid var(--ke-line);flex:none}
+.done .stepn{background:var(--ke-ok);border-color:var(--ke-ok);color:#fff}
+.panel-b{padding:14px 16px 16px}
+.panel-h .sub{font-size:12px;color:var(--ke-muted);font-weight:400}
+
+.fld label{display:block;font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted);margin-bottom:5px}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:6px;padding:7px 9px;font-size:12.5px;min-width:0}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--ke-accent)}
+.fld input[readonly]{color:var(--ke-muted)}
+.path{display:flex;gap:8px;align-items:stretch}
+.path input{font-family:var(--ke-mono);font-size:12px}
+.hint{font-size:11.5px;color:var(--ke-muted);margin-top:6px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;align-items:end}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:end}
+.btn{height:32px;padding:0 14px;border-radius:6px;border:1px solid var(--ke-line);background:var(--ke-surface);font-size:12.5px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--ke-accent)}
+.btn.pri{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink)}
+.btn.big{height:38px;padding:0 20px;font-size:13.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.sm{height:26px;padding:0 9px;font-size:11.5px}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--ke-ink2);user-select:none}
+.status{font-size:12px;color:var(--ke-muted)}
+.status.bad{color:var(--ke-bad)} .status.ok{color:var(--ke-ok)} .status.warn{color:var(--ke-warn)}
+.callout{margin-top:12px;padding:10px 12px;border-left:3px solid var(--ke-warn);background:var(--ke-warn-soft);font-size:12.5px;color:var(--ke-ink2);border-radius:0 6px 6px 0}
+.callout.bad{border-color:var(--ke-bad);background:var(--ke-bad-soft)}
+.callout.ok{border-color:var(--ke-ok);background:var(--ke-ok-soft)}
+.callout.info{border-color:var(--ke-accent);background:var(--ke-accent-soft)}
+.callout ul{margin:4px 0 0 18px}
+
+/* tables */
+.tw{overflow:auto;max-height:420px;border:1px solid var(--ke-line-soft);border-radius:8px;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{position:sticky;top:0;background:var(--ke-band);text-align:left;font-weight:700;padding:7px 10px;border-bottom:1px solid var(--ke-line);white-space:nowrap;z-index:1}
+td{padding:7px 10px;border-bottom:1px solid var(--ke-line-soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tr.off td{color:var(--ke-faint)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td .iri{font-family:var(--ke-mono);font-size:11px;color:var(--ke-ink2);word-break:break-all}
+td .was{font-family:var(--ke-mono);font-size:10.5px;color:var(--ke-faint);word-break:break-all}
+.kind{display:inline-block;font:700 9.5px/1 var(--ke-sans);letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:3px;border:1px solid currentColor}
+.kind.vocabulary{color:var(--ke-kind-voc)} .kind.taxonomy{color:var(--ke-kind-tax)} .kind.ontology{color:var(--ke-kind-ont)} .kind.shapes{color:var(--ke-muted)}
+.pill{display:inline-block;font:700 9.5px/1 var(--ke-sans);letter-spacing:.05em;text-transform:uppercase;padding:3px 6px;border-radius:3px}
+.pill.ok{background:var(--ke-ok-soft);color:var(--ke-ok)} .pill.bad{background:var(--ke-bad-soft);color:var(--ke-bad)} .pill.warn{background:var(--ke-warn-soft);color:var(--ke-warn)} .pill.info{background:var(--ke-accent-soft);color:var(--ke-accent)}
+.fmt{font:600 10.5px/1 var(--ke-mono);color:var(--ke-muted)}
+
+/* layout preview */
+.tree{font-family:var(--ke-mono);font-size:11.5px;line-height:1.7;color:var(--ke-ink2);background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:8px;padding:10px 12px;margin-top:12px;white-space:pre;overflow-x:auto}
+.tree b{color:var(--ke-ink);font-weight:700}
+.tree .x{color:var(--ke-warn)}
+
+/* results */
+.score{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--ke-line-soft)}
+.sc{padding:12px 16px;border-left:1px solid var(--ke-line-soft)}
+.sc:first-child{border-left:0}
+.sc .k{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted)}
+.sc .v{font-size:22px;font-weight:700;margin-top:3px;font-variant-numeric:tabular-nums}
+.sc .s{font-size:11px;color:var(--ke-muted)}
+.v.err{color:var(--ke-bad)} .v.wrn{color:var(--ke-warn)} .v.okc{color:var(--ke-ok)}
+.tabsx{display:flex;gap:2px;border-bottom:1px solid var(--ke-line);padding:0 12px;overflow-x:auto}
+.tabsx button{background:none;border:0;padding:10px 12px;font-size:12.5px;font-weight:600;color:var(--ke-muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabsx button.on{color:var(--ke-accent);border-bottom-color:var(--ke-accent)}
+.pane{padding:14px 16px 16px}
+pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:8px;padding:12px 14px;overflow:auto;max-height:520px;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--ke-ink2)}
+.md{font-size:13px;color:var(--ke-ink2);max-height:620px;overflow:auto;padding-right:6px}
+.md h1{font-size:18px;margin:4px 0 8px;color:var(--ke-ink)} .md h2{font-size:15px;margin:18px 0 6px;color:var(--ke-accent)} .md h3{font-size:13.5px;margin:14px 0 4px;color:var(--ke-ink);font-family:var(--ke-mono)}
+.md p{margin:6px 0} .md ul{margin:4px 0 8px 20px} .md li{margin:2px 0}
+.md code{background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:3px;padding:0 3px;font-size:11px;word-break:break-all}
+.md table{margin:8px 0;border:1px solid var(--ke-line-soft)}
+.file{display:flex;gap:8px;align-items:center;font-family:var(--ke-mono);font-size:11.5px}
+.file a{color:var(--ke-accent);text-decoration:none;cursor:pointer}
+.file a:hover{text-decoration:underline}
+.loadres{margin-top:10px;display:grid;gap:4px;font-size:12px}
+.loadres div{display:flex;gap:8px;align-items:baseline}
+
+/* folder browser */
+.scrim{position:fixed;inset:0;background:rgba(15,20,26,.35);z-index:40;display:none}
+.scrim.on{display:block}
+.modal{position:fixed;left:50%;top:8vh;transform:translateX(-50%);width:min(640px,calc(100vw - 32px));max-height:84vh;display:none;flex-direction:column;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.25);z-index:41}
+.modal.on{display:flex}
+.modal-h{padding:14px 16px 10px;border-bottom:1px solid var(--ke-line-soft)}
+.modal-h .t{font-weight:700;font-size:14px}
+.crumbs{display:flex;flex-wrap:wrap;gap:2px;margin-top:8px;font-family:var(--ke-mono);font-size:11.5px}
+.crumbs button{background:none;border:0;padding:2px 4px;border-radius:4px;color:var(--ke-accent)}
+.crumbs button:hover{background:var(--ke-accent-soft)}
+.crumbs span{color:var(--ke-faint);padding:2px 0}
+.mlist{overflow:auto;flex:1;min-height:200px;padding:6px}
+.mlist button{display:flex;width:100%;gap:10px;align-items:center;padding:7px 10px;border:0;background:none;border-radius:6px;text-align:left;font-size:13px}
+.mlist button:hover{background:var(--ke-band)}
+.mlist .ico{width:16px;color:var(--ke-muted);flex:none;text-align:center}
+.mlist .rf{color:var(--ke-muted);font-family:var(--ke-mono);font-size:11.5px;cursor:default}
+.mlist .rf:hover{background:none}
+.modal-f{display:flex;gap:8px;align-items:center;padding:10px 16px;border-top:1px solid var(--ke-line-soft)}
+.modal-f .status{margin-right:auto}
+
+/* config drawer */
+.drawer textarea{font-family:var(--ke-mono);font-size:11.5px;min-height:380px;line-height:1.45;tab-size:2;resize:vertical}
+
+@media (max-width:860px){
+  .wrap{padding:20px 16px 56px}
+  .grid2,.grid4{grid-template-columns:1fr}
+  .score{grid-template-columns:repeat(2,1fr)}
+  .sc{border-top:1px solid var(--ke-line-soft)} .sc:nth-child(odd){border-left:0}
+  .path{flex-wrap:wrap}
+  .hide-sm{display:none}
+  .tw table{min-width:620px}
+}
+.revbtn{cursor:pointer;border:1px solid currentColor;padding:4px 7px}
+.revbtn:hover{filter:brightness(.92)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Knowledge engineering <span class="sep">•</span> Part III <span class="sep">•</span> §3.2 naming · §3.3 versioning · §3.7 term definition</div>
+  <h1>Ingestion</h1>
+  <p class="lede">Bring vocabularies, taxonomies and ontologies (Turtle, N-Triples or RDF/XML) into the standard. Each file gets new IRIs under the base URL, rebuilt metadata and a generated title and description where none is configured. Turtle and TriG copies go to separate folders, with a change record for the change log.</p>
+
+  <!-- 1 · Source -->
+  <section class="panel" id="p1">
+    <div class="panel-h"><span class="t"><span class="stepn">1</span>Source folder</span><span class="sub" id="extNote">.ttl · .nt · .rdf · .rdfs · .owl · .xml</span></div>
+    <div class="panel-b">
+      <div class="fld"><label for="src">Folder holding the files to ingest</label>
+        <div class="path"><input id="src" spellcheck="false" autocomplete="off" placeholder="~/Documents/…/legacy-assets">
+          <button class="btn" data-browse="src">Browse…</button>
+          <button class="btn pri" id="scanBtn">Scan</button></div>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <label class="chk"><input type="checkbox" id="recursive"> Include subfolders</label>
+        <span class="status" id="scanStatus"></span>
+      </div>
+      <div id="scanOut"></div>
+    </div>
+  </section>
+
+  <!-- 2 · Destination -->
+  <section class="panel" id="p2">
+    <div class="panel-h"><span class="t"><span class="stepn">2</span>Destination folder</span><span class="sub">Turtle and TriG are written to separate sub-folders</span></div>
+    <div class="panel-b">
+      <div class="grid2">
+        <div class="fld"><label for="dest">Write the results here</label>
+          <div class="path"><input id="dest" spellcheck="false" autocomplete="off" placeholder="~/Documents/…/ingested">
+            <button class="btn" data-browse="dest">Browse…</button></div></div>
+        <div class="fld"><label for="ttlDir">Turtle sub-folder</label><input id="ttlDir" value="ttl" spellcheck="false"></div>
+        <div class="fld"><label for="trigDir">TriG sub-folder</label><input id="trigDir" value="trig" spellcheck="false"></div>
+      </div>
+      <div class="tree" id="layout"></div>
+      <div id="destWarn"></div>
+    </div>
+  </section>
+
+  <!-- 3 · Settings -->
+  <section class="panel" id="p3">
+    <div class="panel-h"><span class="t"><span class="stepn">3</span>Metadata</span>
+      <button class="btn sm" id="cfgBtn" aria-expanded="false">Edit configuration…</button></div>
+    <div class="panel-b">
+      <div class="grid4">
+        <div class="fld"><label for="author">Author and editor</label><input id="author"></div>
+        <div class="fld"><label for="version">Starting version</label><input id="version" spellcheck="false" placeholder="0.1.0"></div>
+        <div class="fld"><label for="lstatus">Lifecycle status</label>
+          <select id="lstatus"><option>Draft</option><option>Candidate</option><option>Released</option></select></div>
+        <div class="fld"><label for="stamp">Modified date-time</label><input id="stamp" type="datetime-local" step="1" title="Leave empty to use the time of the run"></div>
+      </div>
+      <label class="hint" style="display:flex;gap:8px;align-items:center;margin-top:10px"><input type="checkbox" id="genDefs"> <span><b>Write missing definitions with Claude</b> — for terms with no definition in the file, its vocabulary term or the configuration. Each gets an editorial note to review it. <span id="genDefsNote" class="status"></span></span></label>
+      <div class="hint">Base URL <b class="mono" id="baseUrl">—</b>. These values apply to this run only; the defaults, legacy namespace rules, asset titles and descriptions, renames and definitions live in the configuration. Leave the date-time empty to stamp the time of the run.</div>
+      <div class="drawer hidden" id="cfgDrawer" style="margin-top:14px">
+        <div class="fld"><label for="cfgText">ke-ingest.config.json <span class="mono" id="cfgPath" style="text-transform:none;letter-spacing:0;font-weight:400"></span></label>
+          <textarea id="cfgText" spellcheck="false"></textarea></div>
+        <div class="row" style="margin-top:8px;justify-content:flex-end">
+          <span class="status" id="cfgStatus" style="margin-right:auto"></span>
+          <button class="btn" id="cfgReload">Discard changes</button>
+          <button class="btn pri" id="cfgSave">Save configuration</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Run -->
+  <section class="panel" id="p4">
+    <div class="panel-h"><span class="t"><span class="stepn">4</span>Ingest</span><span class="sub" id="runNote">Scan a source folder first</span></div>
+    <div class="panel-b">
+      <div class="row">
+        <button class="btn pri big" id="runBtn" disabled>Ingest</button>
+        <span class="status" id="runStatus"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reference ontologies -->
+  <section class="panel" id="pRef">
+    <div class="panel-h"><span class="t">Reference ontologies</span><span class="sub">BFO 2020 (ISO/IEC 21838-2), the RO Core relations and the RO extract the core domain ontology imports: loaded as they are, under their own IRIs, never ingested</span></div>
+    <div class="panel-b">
+      <div class="row" style="align-items:flex-end;gap:10px;flex-wrap:wrap">
+        <div class="fld" style="flex:1;min-width:260px"><label for="refBfo">BFO source — a URL, or the path of a downloaded file</label><input id="refBfo" class="mono" spellcheck="false"></div>
+        <button class="btn sm" data-ref="bfo">Load BFO</button>
+      </div>
+      <div class="row" style="align-items:flex-end;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <div class="fld" style="flex:1;min-width:260px"><label for="refRo">RO Core source — a URL, or the path of a downloaded file</label><input id="refRo" class="mono" spellcheck="false"></div>
+        <button class="btn sm" data-ref="ro">Load RO Core</button>
+      </div>
+      <div class="row" style="align-items:flex-end;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <div class="fld" style="flex:1;min-width:260px"><label for="refRx">RO extract — the BFO 2020, RO and IAO relations the core domain ontology uses that BFO and RO Core lack</label><input id="refRx" class="mono" spellcheck="false"></div>
+        <button class="btn sm" data-ref="rx">Load RO extract</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="fld" style="width:220px"><label for="refRepo">Repository</label><input id="refRepo" spellcheck="false"></div>
+        <span style="flex:1"></span>
+        <button class="btn pri" id="refBoth">Load all three</button>
+      </div>
+      <div class="status" id="refStatus" style="margin-top:8px">Defaults are the copies in <span class="mono">KE Baseline/Baseline Core v1.0/reference/</span>; a URL works too. Each replaces its own named graph: BFO in <span class="mono">http://purl.obolibrary.org/obo/bfo.owl</span>, RO Core in <span class="mono">http://purl.obolibrary.org/obo/ro/core.owl</span>, the RO extract in <span class="mono">https://www.insperity.com/reference/ro-extract/</span>. The workbench downloads the file itself and reads its format, so GraphDB needs no internet access.</div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section class="panel hidden" id="results">
+    <div class="score" id="score"></div>
+    <div class="panel-h"><span class="t">Results <span class="sub" id="resWhere"></span></span>
+      <div class="row">
+        <button class="btn sm" id="revealBtn">Show in Finder</button>
+        <button class="btn sm" id="reviewAllBtn" title="Open the files with conformance errors in Conformance Review, before loading them">Review errors…</button>
+        <button class="btn sm pri" id="loadBtn">Load into GraphDB…</button>
+      </div>
+    </div>
+    <div class="panel-b hidden" id="loadPanel" style="border-bottom:1px solid var(--ke-line-soft)">
+      <div class="callout info" id="loadExplain"></div>
+      <div class="row" style="margin-top:10px">
+        <div class="fld" style="width:220px"><label for="repo">Repository</label><input id="repo" spellcheck="false"></div>
+        <span style="flex:1"></span>
+        <button class="btn" id="loadCancel">Cancel</button>
+        <button class="btn pri" id="loadGo">Load</button>
+      </div>
+      <div class="loadres" id="loadRes"></div>
+    </div>
+    <div class="tabsx" role="tablist">
+      <button class="on" data-pane="r-out">Assets</button>
+      <button data-pane="r-cr">Change record</button>
+      <button data-pane="r-rep">Report</button>
+      <button data-pane="r-log">Log</button>
+    </div>
+    <div class="pane" id="r-out"></div>
+    <div class="pane hidden" id="r-cr"></div>
+    <div class="pane hidden" id="r-rep"><div class="md" id="repMd"></div></div>
+    <div class="pane hidden" id="r-log"><pre class="code" id="logPre"></pre></div>
+  </section>
+</div>
+
+<!-- Folder browser -->
+<div class="scrim" id="scrim"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal-h"><div class="t" id="mTitle">Choose a folder</div><div class="crumbs" id="crumbs"></div></div>
+  <div class="mlist" id="mlist"></div>
+  <div class="modal-f">
+    <span class="status" id="mStatus"></span>
+    <button class="btn" id="mCancel">Cancel</button>
+    <button class="btn pri" id="mUse">Use this folder</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const API = '/api/ingest/';
+  const ls = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } },
+               set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+  const plural = (n, w, pw) => `${n.toLocaleString()} ${n === 1 ? w : (pw || w + 's')}`;
+  let home = '', defaults = null, scanRes = null, runRes = null, cfgLoaded = '';
+
+  async function api(name, body) {
+    const opt = body === undefined ? {} : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) };
+    let r;
+    try { r = await fetch(API + name, opt); }
+    catch (e) { throw new Error('The workbench server is not reachable. Start it with proxy.py (or start-workbench.command).'); }
+    let d = null;
+    try { d = await r.json(); } catch (e) {}
+    if (!d) throw new Error(r.status === 404 || r.status === 501
+      ? 'This proxy.py has no ingestion API. Restart the workbench server so it picks up the new proxy.py.'
+      : 'Server answered ' + r.status);
+    return d;
+  }
+  const tilde = p => (home && p && p.startsWith(home + '/')) ? '~' + p.slice(home.length) : (p === home ? '~' : p);
+  function setStatus(id, msg, cls) { const el = $(id); el.textContent = msg || ''; el.className = 'status ' + (cls || ''); }
+
+  // ── defaults ──────────────────────────────────────────────────────────
+  async function init() {
+    try { defaults = await api('defaults'); }
+    catch (e) { setStatus('scanStatus', e.message, 'bad'); return; }
+    home = defaults.home;
+    const st = defaults.settings, last = defaults.last || {};
+    $('author').value = st.author || ''; $('version').value = st.initialVersion || '0.1.0';
+    if (![...$('lstatus').options].some(o => o.value === st.lifecycleStatus)) $('lstatus').insertAdjacentHTML('beforeend', `<option>${esc(st.lifecycleStatus)}</option>`);
+    $('lstatus').value = st.lifecycleStatus || 'Draft';
+    $('baseUrl').textContent = st.baseUrl;
+    $('extNote').textContent = defaults.extensions.join(' · ');
+    $('src').value = tilde(last.source || ls.get('ke-ingest-src', '')) || '';
+    $('dest').value = tilde(last.dest || ls.get('ke-ingest-dest', '')) || '';
+    $('ttlDir').value = last.ttlDir || 'ttl'; $('trigDir').value = last.trigDir || 'trig';
+    $('recursive').checked = !!last.recursive;
+    $('repo').value = ls.get('ke-repo', 'value-kb') || 'value-kb';
+    layout();
+    if ($('src').value) scan();
+  }
+
+  // ── scan ──────────────────────────────────────────────────────────────
+  async function scan() {
+    const src = $('src').value.trim();
+    if (!src) { setStatus('scanStatus', 'Enter or browse to a source folder', 'bad'); return; }
+    setStatus('scanStatus', 'Scanning…');
+    $('scanBtn').disabled = true;
+    try {
+      const d = await api('scan', { source: src, recursive: $('recursive').checked, dest: $('dest').value.trim(),
+                                    ttlDir: $('ttlDir').value.trim(), trigDir: $('trigDir').value.trim(), overrides: { initialVersion: $('version').value.trim() } });
+      if (!d.ok) { scanRes = null; $('scanOut').innerHTML = ''; setStatus('scanStatus', d.error, 'bad'); refresh(); return; }
+      scanRes = d;
+      ls.set('ke-ingest-src', d.source);
+      renderScan();
+    } catch (e) { setStatus('scanStatus', e.message, 'bad'); }
+    $('scanBtn').disabled = false;
+    refresh();
+  }
+  function renderScan() {
+    const rows = scanRes.files, ok = rows.filter(r => r.ok);
+    if (!rows.length) {
+      setStatus('scanStatus', 'No RDF files in this folder' + ($('recursive').checked ? ' or its subfolders' : ' — tick “Include subfolders” if they are further down'), 'warn');
+      $('scanOut').innerHTML = ''; return;
+    }
+    setStatus('scanStatus', `${plural(rows.length, 'file')} found · ${ok.length} ready · ${rows.length - ok.length} cannot be ingested`, ok.length ? 'ok' : 'bad');
+    $('scanOut').innerHTML = `<div class="tw"><table>
+      <thead><tr><th style="width:28px"><input type="checkbox" id="allChk" aria-label="Select all" ${ok.length ? 'checked' : 'disabled'}></th>
+      <th>File</th><th>Kind</th><th>Becomes</th><th class="num">Terms</th><th class="num hide-sm">Triples</th></tr></thead>
+      <tbody>${rows.map((r, i) => r.ok ? `
+        <tr data-i="${i}"><td><input type="checkbox" class="fchk" data-i="${i}" checked aria-label="Ingest ${esc(r.name)}"></td>
+          <td><div>${esc(r.rel)}</div><span class="fmt">${esc(r.format)}</span>${r.warning ? ` <span class="pill warn" title="${esc(r.warning)}">duplicate</span>` : ''}</td>
+          <td><span class="kind ${esc(r.kind)}">${esc(r.kind)}</span></td>
+          <td><div><b>${esc(r.title)}</b></div><div class="iri">${esc(r.new_iri)}</div><div class="was" title="Source header">was ${esc(r.header)}</div></td>
+          <td class="num">${r.terms}</td><td class="num hide-sm">${r.triples}</td></tr>` : `
+        <tr class="off"><td><input type="checkbox" disabled aria-label="Cannot be ingested"></td>
+          <td><div>${esc(r.rel)}</div></td><td><span class="pill bad">skipped</span></td>
+          <td colspan="3">${esc(r.error)}</td></tr>`).join('')}</tbody></table></div>`;
+    $('allChk') && $('allChk').addEventListener('change', e => { document.querySelectorAll('.fchk').forEach(c => c.checked = e.target.checked); refresh(); });
+    document.querySelectorAll('.fchk').forEach(c => c.addEventListener('change', refresh));
+  }
+  function selected() {
+    if (!scanRes) return [];
+    return [...document.querySelectorAll('.fchk')].filter(c => c.checked).map(c => scanRes.files[+c.dataset.i]);
+  }
+
+  // ── destination layout preview ────────────────────────────────────────
+  function layout() {
+    const dest = $('dest').value.trim() || '(destination)';
+    const t = $('ttlDir').value.trim() || 'ttl', g = $('trigDir').value.trim() || 'trig', v = $('version').value.trim() || '0.1.0';
+    const sel = selected();
+    const names = sel.length ? sel.map(r => { const p = r.new_iri.replace(/\/$/, '').split('/').slice(-2); return `${p[0]}-${p[1]}-${v}`; }) : ['{kind}-{domain}-' + v];
+    const existing = new Set((scanRes && scanRes.existing) || []);
+    const line = (dir, n, ext) => {
+      const hit = [...existing].some(x => x.endsWith('/' + dir + '/' + n + ext));
+      return `│   ├── ${n}${ext}${hit ? '  <span class="x">← exists, will be replaced</span>' : ''}`;
+    };
+    const stamp = 'change-record-{date-time}';
+    $('layout').innerHTML = [
+      `<b>${esc(tilde(dest))}/</b>`,
+      `├── <b>${esc(t)}/</b>            Turtle — for review, diffs and Standards Conformance`,
+      ...names.map(n => line(t, n, '.ttl')), `│   └── ${stamp}.ttl`,
+      `├── <b>${esc(g)}/</b>           TriG — import these into GraphDB (each asset in its own named graph)`,
+      ...names.map(n => line(g, n, '.trig')), `│   └── ${stamp}.trig   → graph …/graph/change-log`,
+      `├── crosswalk.csv       every legacy IRI and its new IRI`,
+      `└── ingestion-report-{date-time}.md`
+    ].join('\n');
+    const w = [...existing].filter(x => names.some(n => x.endsWith(n + '.ttl') || x.endsWith(n + '.trig')));
+    const corr = ((scanRes && scanRes.corrected) || []).filter(x => names.some(n => x.endsWith(n + '.ttl')));
+    $('destWarn').innerHTML = (w.length ? `<div class="callout">${plural(w.length, 'file')} already in the destination will be replaced by this run. Change records and reports are never overwritten; each run gets its own.</div>` : '')
+      + (corr.length ? `<div class="callout bad"><b>${plural(corr.length, 'file')} here ${corr.length === 1 ? 'was' : 'were'} corrected in Conformance Review</b> (${esc(corr.map(x => x.split('/').pop()).join(', '))}). Ingesting again starts ${corr.length === 1 ? 'it' : 'them'} over from the source, so those corrections would be gone from the folder (a copy is kept in <span class="mono">superseded/</span>). To load the corrected files, use <b>Load into GraphDB</b> in Conformance Review instead.</div>` : '');
+  }
+
+  // ── run button state ──────────────────────────────────────────────────
+  function refresh() {
+    const sel = selected(), dest = $('dest').value.trim();
+    const t = $('ttlDir').value.trim(), g = $('trigDir').value.trim();
+    let why = '';
+    if (!scanRes) why = 'Scan a source folder first';
+    else if (!sel.length) why = 'Select at least one file';
+    else if (!dest) why = 'Choose a destination folder';
+    else if (!t || !g) why = 'Name both sub-folders';
+    else if (t === g) why = 'The Turtle and TriG sub-folders must differ';
+    $('runBtn').disabled = !!why;
+    $('runBtn').textContent = sel.length ? `Ingest ${plural(sel.length, 'file')}` : 'Ingest';
+    $('runNote').textContent = why || `${plural(sel.length, 'file')} → ${tilde(dest)}`;
+    $('p1').classList.toggle('done', !!(scanRes && sel.length));
+    $('p2').classList.toggle('done', !!(dest && t && g && t !== g));
+    $('p3').classList.toggle('done', !!($('author').value.trim() && /^\d+\.\d+\.\d+$/.test($('version').value.trim())));
+    layout();
+  }
+  ['dest', 'ttlDir', 'trigDir', 'version', 'author'].forEach(id => $(id).addEventListener('input', refresh));
+  let destTimer;
+  $('dest').addEventListener('change', () => { ls.set('ke-ingest-dest', $('dest').value.trim()); if (scanRes) { clearTimeout(destTimer); destTimer = setTimeout(scan, 50); } });
+  ['ttlDir', 'trigDir'].forEach(id => $(id).addEventListener('change', () => scanRes && scan()));
+  $('scanBtn').addEventListener('click', scan);
+  $('src').addEventListener('keydown', e => { if (e.key === 'Enter') scan(); });
+  $('recursive').addEventListener('change', () => $('src').value.trim() && scan());
+
+  // ── run ───────────────────────────────────────────────────────────────
+  $('runBtn').addEventListener('click', async () => {
+    const sel = selected();
+    if (!/^\d+\.\d+\.\d+$/.test($('version').value.trim())) { setStatus('runStatus', 'Starting version must be MAJOR.MINOR.PATCH, for example 0.1.0', 'bad'); return; }
+    const stampVal = $('stamp').value;
+    const body = {
+      source: $('src').value.trim(), files: sel.length === scanRes.files.filter(r => r.ok).length ? [] : sel.map(r => r.path),
+      dest: $('dest').value.trim(), ttlDir: $('ttlDir').value.trim(), trigDir: $('trigDir').value.trim(),
+      recursive: $('recursive').checked,
+      timestamp: stampVal ? new Date(stampVal).toISOString() : null,
+      overrides: { author: $('author').value.trim(), initialVersion: $('version').value.trim(), lifecycleStatus: $('lstatus').value, generateDefinitions: $('genDefs').checked }
+    };
+    $('runBtn').disabled = true; setStatus('runStatus', `Ingesting ${plural(sel.length, 'file')}…`);
+    try {
+      const d = await api('run', body);
+      if (!d.ok) {
+        setStatus('runStatus', d.error + (d.skipped && d.skipped.length ? ' ' + d.skipped.map(x => x.name + ': ' + x.error).join('; ') : ''), 'bad');
+      } else {
+        runRes = d; ls.set('ke-ingest-dest', d.dest);
+        setStatus('runStatus', `Done · ${plural(d.outputs.length, 'asset')} written ${new Date().toLocaleTimeString()}`, 'ok');
+        $('p4').classList.add('done');
+        showResults(); scan();
+      }
+    } catch (e) { setStatus('runStatus', e.message, 'bad'); }
+    refresh();
+  });
+
+  function showResults() {
+    const d = runRes, o = d.outputs;
+    const sum = k => o.reduce((a, x) => a + x[k], 0);
+    $('results').classList.remove('hidden');
+    $('resWhere').textContent = '· ' + tilde(d.dest);
+    $('score').innerHTML = `
+      <div class="sc"><div class="k">Assets</div><div class="v">${o.length}</div><div class="s">${esc(o.map(x => x.kind).filter((v, i, a) => a.indexOf(v) === i).join(' · '))}</div></div>
+      <div class="sc"><div class="k">Terms</div><div class="v">${sum('terms').toLocaleString()}</div><div class="s">${sum('triples').toLocaleString()} triples</div></div>
+      <div class="sc"><div class="k">Errors</div><div class="v ${sum('errors') ? 'err' : 'okc'}">${sum('errors')}</div><div class="s">block Draft → Candidate</div></div>
+      <div class="sc"><div class="k">Warnings</div><div class="v ${sum('warnings') ? 'wrn' : 'okc'}">${sum('warnings')}</div><div class="s">review before release</div></div>
+      <div class="sc"><div class="k">Skipped</div><div class="v ${d.skipped.length ? 'wrn' : ''}">${d.skipped.length}</div><div class="s">${d.skipped.length ? 'see below' : 'all files ingested'}</div></div>`;
+    const rel = p => tilde(p);
+    $('r-out').innerHTML = `<div class="tw" style="margin-top:0;max-height:none"><table>
+      <thead><tr><th>Asset</th><th>Kind</th><th class="num">Terms</th><th>Conformance</th><th>Files</th></tr></thead>
+      <tbody>${o.map(x => `<tr>
+        <td><b>${esc(x.title)}</b><div class="iri">${esc(x.iri)}</div><div class="was">from ${esc(x.sources.join(', '))}</div></td>
+        <td><span class="kind ${esc(x.kind)}">${esc(x.kind)}</span></td>
+        <td class="num">${x.terms}<div class="was">${x.triples} triples</div></td>
+        <td>${x.errors ? `<button class="pill bad revbtn" data-review="${esc(x.ttl)}" title="Review and correct in Conformance Review">${plural(x.errors, 'error')} · Review ›</button> ` : '<span class="pill ok">no errors</span> '}${x.warnings ? `<span class="pill warn">${plural(x.warnings, 'warning')}</span>` : ''}
+            ${x.rules.length ? `<details style="margin-top:4px"><summary class="status" style="cursor:pointer">Findings</summary><ul style="margin:4px 0 0 16px;font-size:12px">${x.rules.map(r => `<li>${esc(r.rule)}: ${r.items.slice(0, 4).map(i => `<span class="mono" style="font-size:10.5px">${esc(i.iri.split('/').filter(Boolean).pop())}</span> ${esc(i.msg)}`).join('; ')}${r.items.length > 4 ? ` … +${r.items.length - 4}` : ''}</li>`).join('')}</ul></details>` : ''}</td>
+        <td><div class="file"><span class="pill info">ttl</span>${esc(x.ttl_name)}</div><div class="file" style="margin-top:3px"><span class="pill info">trig</span>${esc(x.trig_name)}</div></td>
+      </tr>`).join('')}</tbody></table></div>
+      ${d.skipped.length ? `<div class="callout"><b>Skipped</b><ul>${d.skipped.map(s => `<li><span class="mono">${esc(s.name)}</span> ${esc(s.error)}</li>`).join('')}</ul></div>` : ''}
+      <div class="hint" style="margin-top:10px">Turtle in <span class="mono">${esc(rel(d.ttl_dir))}</span> · TriG in <span class="mono">${esc(rel(d.trig_dir))}</span> · <span class="mono">${esc(rel(d.crosswalk))}</span></div>`;
+    $('r-cr').innerHTML = `<div class="row" style="margin-bottom:8px">
+        <span class="status">Appends to <span class="mono">${esc(d.change_record.graph)}</span> · <span class="mono">${esc(rel(d.change_record.ttl))}</span> and its <span class="mono">.trig</span> twin</span>
+        <span style="flex:1"></span><button class="btn sm" id="copyCr">Copy</button></div>
+      <pre class="code">${esc(d.change_record.text)}</pre>`;
+    $('copyCr').addEventListener('click', async () => { try { await navigator.clipboard.writeText(d.change_record.text); $('copyCr').textContent = 'Copied'; } catch (e) { $('copyCr').textContent = 'Copy failed'; } setTimeout(() => $('copyCr').textContent = 'Copy', 1500); });
+    $('repMd').innerHTML = md(d.report.markdown);
+    const withErr = o.filter(x => x.errors);
+    $('reviewAllBtn').disabled = !withErr.length;
+    $('reviewAllBtn').textContent = withErr.length ? `Review ${plural(withErr.length, 'file')} with errors…` : 'No errors to review';
+    $('r-out').querySelectorAll('[data-review]').forEach(b => b.addEventListener('click', () => openReview([b.dataset.review])));
+    $('logPre').textContent = d.log.join('\n');
+    $('loadPanel').classList.add('hidden'); $('loadRes').innerHTML = '';
+    $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.tabsx button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabsx button').forEach(x => x.classList.toggle('on', x === b));
+    ['r-out', 'r-cr', 'r-rep', 'r-log'].forEach(id => $(id).classList.toggle('hidden', id !== b.dataset.pane));
+  }));
+  // Conformance Review reads the files themselves, so errors can be corrected before anything is loaded
+  function openReview(files) {
+    const q = new URLSearchParams({ folder: runRes.ttl_dir });
+    files.forEach(f => q.append('file', f));
+    window.open('conformance-review.html?' + q.toString(), '_blank');
+  }
+  $('reviewAllBtn').addEventListener('click', () => { if (runRes) openReview(runRes.outputs.filter(x => x.errors).map(x => x.ttl)); });
+  $('revealBtn').addEventListener('click', async () => {
+    if (!runRes) return;
+    const d = await api('reveal', { path: runRes.dest }).catch(e => ({ ok: false, error: e.message }));
+    if (!d.ok) setStatus('runStatus', d.error, 'bad');
+  });
+
+  fetch('/api/ingest/define-status').then(r => r.ok ? r.json() : null).then(d => {
+    if (!d) return;
+    $('genDefsNote').textContent = d.key ? `Uses ${d.model}.` : `Needs an Anthropic API key: add ANTHROPIC_API_KEY=… to ${d.keyFile}.`;
+    if (!d.key) $('genDefs').disabled = true;
+  }).catch(() => {});
+
+  // ── load into GraphDB ─────────────────────────────────────────────────
+  $('loadBtn').addEventListener('click', () => {
+    if (!runRes) return;
+    const n = runRes.outputs.length;
+    $('loadExplain').innerHTML = `Loads the current files of <span class="mono">${esc(tilde(runRes.dest))}</span> into GraphDB — this run's ${plural(n, 'asset')}, any assets earlier runs put there, and corrections saved in Conformance Review. Each asset <b>replaces</b> the contents of its named graph (the asset IRI); change records are <b>added</b> to <span class="mono">${esc(runRes.change_record.graph)}</span>. Older copies an earlier run left behind are set aside, never loaded.`;
+    $('loadPanel').classList.remove('hidden'); $('loadRes').innerHTML = ''; $('repo').focus();
+  });
+  $('loadCancel').addEventListener('click', () => $('loadPanel').classList.add('hidden'));
+  async function loadFolder(force) {
+    const repo = $('repo').value.trim() || 'value-kb';
+    $('loadGo').disabled = true; $('loadRes').innerHTML = '<div class="status">Loading…</div>';
+    try {
+      // the whole destination folder: this run, earlier runs' current files, and any Conformance Review corrections
+      const d = await api('load-folder', { repo, dir: runRes.dest, force: !!force });
+      if (d.blocked && d.blocked.length) {
+        // blocking conformance errors (terms outside the base URL, another organization's content, invalid dates): nothing was sent
+        $('loadRes').innerHTML = `<div class="callout bad">${esc(d.error)}</div>
+          <ul style="margin:6px 0 0 18px;font-size:12px">${d.blocked.slice(0, 8).map(x => `<li><span class="mono">${esc(x.file)}</span> · ${esc(x.rule)}: ${esc(x.msg)}</li>`).join('')}${d.blockedCount > 8 ? `<li>… and ${d.blockedCount - 8} more</li>` : ''}</ul>
+          <div class="row" style="margin-top:8px"><a class="btn sm" href="conformance-review.html" target="_blank">Open Conformance Review</a><button class="btn sm" id="loadForceBtn">Load anyway</button></div>`;
+        $('loadForceBtn').addEventListener('click', () => loadFolder(true));
+        $('loadGo').disabled = false; return;
+      }
+      $('loadRes').innerHTML = (d.results || []).map(r => `<div><span class="pill ${r.ok ? 'ok' : 'bad'}">${r.ok ? esc(r.mode) : 'failed'}</span><span class="mono" style="font-size:11.5px">${esc(r.graph)}</span>${r.ok ? '' : `<span class="status bad">${esc(r.error)}</span>`}</div>`).join('')
+        + (d.ok ? `<div class="callout ok">Loaded into <b>${esc(d.repo)}</b>. Click Refresh in <a href="model-manager.html" target="_blank">Model Manager</a>, and reload any editor tab that was already open.</div>` : (d.error ? `<div class="callout bad">${esc(d.error)}</div>` : ''));
+      if (d.ok) try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+    } catch (e) { $('loadRes').innerHTML = `<div class="callout bad">${esc(e.message)}</div>`; }
+    $('loadGo').disabled = false;
+  }
+  $('loadGo').addEventListener('click', () => loadFolder(false));
+
+  // ── configuration ─────────────────────────────────────────────────────
+  $('cfgBtn').addEventListener('click', async () => {
+    const open = $('cfgDrawer').classList.toggle('hidden') === false;
+    $('cfgBtn').setAttribute('aria-expanded', open);
+    $('cfgBtn').textContent = open ? 'Close configuration' : 'Edit configuration…';
+    if (open && !cfgLoaded) await loadCfg();
+  });
+  async function loadCfg() {
+    const d = await api('config').catch(e => ({ ok: false, error: e.message }));
+    if (!d.ok) { setStatus('cfgStatus', d.error, 'bad'); return; }
+    cfgLoaded = d.text; $('cfgText').value = d.text; $('cfgPath').textContent = '· ' + tilde(d.path); setStatus('cfgStatus', '');
+  }
+  $('cfgReload').addEventListener('click', loadCfg);
+  $('cfgSave').addEventListener('click', async () => {
+    const d = await api('config', { text: $('cfgText').value }).catch(e => ({ ok: false, error: e.message }));
+    if (!d.ok) { setStatus('cfgStatus', d.error, 'bad'); return; }
+    cfgLoaded = $('cfgText').value;
+    setStatus('cfgStatus', 'Saved. The previous version is kept as ' + tilde(d.backup).split('/').pop(), 'ok');
+    const dd = await api('defaults'); defaults = dd;
+    $('author').value = dd.settings.author; $('version').value = dd.settings.initialVersion; $('lstatus').value = dd.settings.lifecycleStatus; $('baseUrl').textContent = dd.settings.baseUrl;
+    if (scanRes) scan();
+  });
+
+  // ── folder browser ────────────────────────────────────────────────────
+  let target = null, cur = null;
+  document.querySelectorAll('[data-browse]').forEach(b => b.addEventListener('click', () => openBrowser(b.dataset.browse)));
+  async function openBrowser(id) {
+    target = id;
+    $('mTitle').textContent = id === 'src' ? 'Choose the source folder' : 'Choose the destination folder';
+    $('scrim').classList.add('on'); $('modal').classList.add('on');
+    await go($(id).value.trim() || (id === 'dest' && $('src').value.trim()) || home || '~');
+    $('mUse').focus();
+  }
+  function closeBrowser() { $('scrim').classList.remove('on'); $('modal').classList.remove('on'); }
+  async function go(path) {
+    $('mStatus').textContent = 'Loading…';
+    let d = await api('browse?path=' + encodeURIComponent(path)).catch(e => ({ ok: false, error: e.message }));
+    if (!d.ok && d.nearest) { $('mStatus').textContent = d.error; d = await api('browse?path=' + encodeURIComponent(d.nearest)); }
+    if (!d.ok) { $('mStatus').textContent = d.error; return; }
+    cur = d.path;
+    const parts = d.path.split('/').filter(Boolean);
+    $('crumbs').innerHTML = `<button data-p="/">/</button>` + parts.map((p, i) => `<span>›</span><button data-p="/${esc(parts.slice(0, i + 1).join('/'))}">${esc(p)}</button>`).join('');
+    $('mlist').innerHTML = (d.parent ? `<button data-p="${esc(d.parent)}"><span class="ico">↑</span>Up one level</button>` : '')
+      + d.dirs.map(n => `<button data-p="${esc(d.path.replace(/\/$/, '') + '/' + n)}"><span class="ico">▸</span>${esc(n)}</button>`).join('')
+      + d.files.slice(0, 200).map(f => `<button class="rf" tabindex="-1" disabled><span class="ico">·</span>${esc(f.name)}</button>`).join('')
+      + (!d.dirs.length && !d.files.length ? '<div class="status" style="padding:10px">Empty folder</div>' : '');
+    $('mStatus').textContent = target === 'src' ? (d.files.length ? `${plural(d.files.length, 'RDF file')} here` : 'No RDF files directly in this folder') : tilde(d.path);
+  }
+  $('crumbs').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) go(b.dataset.p); });
+  $('mlist').addEventListener('click', e => { const b = e.target.closest('[data-p]'); if (b) go(b.dataset.p); });
+  $('mCancel').addEventListener('click', closeBrowser); $('scrim').addEventListener('click', closeBrowser);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('modal').classList.contains('on')) closeBrowser(); });
+  $('mUse').addEventListener('click', () => {
+    $(target).value = tilde(cur); closeBrowser();
+    if (target === 'src') scan(); else { ls.set('ke-ingest-dest', cur); scanRes ? scan() : refresh(); }
+  });
+
+  // ── tiny Markdown renderer for the report ─────────────────────────────
+  function md(src) {
+    const inline = s => esc(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    const out = [], lines = src.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      const l = lines[i];
+      if (/^### /.test(l)) out.push(`<h3>${inline(l.slice(4))}</h3>`);
+      else if (/^## /.test(l)) out.push(`<h2>${inline(l.slice(3))}</h2>`);
+      else if (/^# /.test(l)) out.push(`<h1>${inline(l.slice(2))}</h1>`);
+      else if (/^\|/.test(l)) {
+        const rows = []; while (i < lines.length && /^\|/.test(lines[i])) rows.push(lines[i++]); i--;
+        const cells = r => r.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+        out.push('<div class="tw" style="max-height:none"><table><thead><tr>' + cells(rows[0]).map(c => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>'
+          + rows.slice(2).map(r => '<tr>' + cells(r).map(c => `<td>${inline(c)}</td>`).join('') + '</tr>').join('') + '</tbody></table></div>');
+      } else if (/^- /.test(l)) {
+        const items = []; while (i < lines.length && /^- /.test(lines[i])) items.push(lines[i++].slice(2)); i--;
+        out.push('<ul>' + items.map(t => `<li>${inline(t)}</li>`).join('') + '</ul>');
+      } else if (l.trim()) out.push(`<p>${inline(l)}</p>`);
+    }
+    return out.join('');
+  }
+
+
+  // ── reference ontologies (BFO, RO Core): /api/ingest/load-url fetches the file and loads it into its own named graph ──
+  const REF = { bfo: { field: 'refBfo', key: 'ke-bfo-src', def: '../KE Baseline/Baseline Core v1.0/reference/bfo-core.ttl', graph: 'http://purl.obolibrary.org/obo/bfo.owl', name: 'BFO' },
+                ro:  { field: 'refRo', key: 'ke-ro-src', def: '../KE Baseline/Baseline Core v1.0/reference/ro-core.owl', graph: 'http://purl.obolibrary.org/obo/ro/core.owl', name: 'RO Core' },
+                rx:  { field: 'refRx', key: 'ke-rx-src', def: '../KE Baseline/Baseline Core v1.0/reference/ro-extract.ttl', graph: 'https://www.insperity.com/reference/ro-extract/', name: 'RO extract' } };
+  Object.values(REF).forEach(r => { $(r.field).value = ls.get(r.key, r.def) || r.def; $(r.field).addEventListener('change', () => ls.set(r.key, $(r.field).value.trim())); });
+  $('refRepo').value = ls.get('ke-repo', 'value-kb') || 'value-kb';
+  $('refRepo').addEventListener('change', () => ls.set('ke-repo', $('refRepo').value.trim()));
+  async function loadRef(k) {
+    const r = REF[k], src = $(r.field).value.trim() || r.def, web = /^https?:/i.test(src);
+    const d = await api('load-url', { url: web ? src : '', path: web ? '' : src, graph: r.graph, repo: $('refRepo').value.trim() || 'value-kb' });
+    if (!d.ok) throw new Error(r.name + ': ' + d.error);
+    return `${r.name} loaded (${(d.bytes / 1024).toFixed(0)} KB, ${d.format.replace('application/', '').replace('text/', '')})`;
+  }
+  async function runRef(keys) {
+    const btns = document.querySelectorAll('[data-ref], #refBoth'); btns.forEach(b => b.disabled = true);
+    setStatus('refStatus', 'Loading…'); const done = [];
+    try {
+      for (const k of keys) { done.push(await loadRef(k)); setStatus('refStatus', done.join(' · ') + ' …'); }
+      setStatus('refStatus', done.join(' · ') + ` into ${$('refRepo').value.trim() || 'value-kb'}. In Model Editor (Ontology), use ⚙ › Reload.`, 'ok');
+      try { window.top.postMessage({ type: 'ke-settings-changed' }, '*'); } catch (e) {}
+    } catch (e) { setStatus('refStatus', (done.length ? done.join(' · ') + ' · ' : '') + e.message, 'bad'); }
+    btns.forEach(b => b.disabled = false);
+  }
+  document.querySelectorAll('[data-ref]').forEach(b => b.addEventListener('click', () => runRef([b.dataset.ref])));
+  $('refBoth').addEventListener('click', () => runRef(['bfo', 'ro', 'rx']));
+  window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings' && e.data.repo) { $('repo').value = e.data.repo; $('refRepo').value = e.data.repo; } });
+  init();
+})();
+</script>
+</body>
+</html>

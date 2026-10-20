@@ -1,0 +1,1147 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-humanresource/> {
+  <https://www.insperity.com/vocabulary/domain-humanresource/> a skos:ConceptScheme;
+    rdfs:label "Domain humanresource vocabulary"@en;
+    skos:prefLabel "Domain humanresource vocabulary"@en;
+    skos:hasTopConcept <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    terms:description "The department within a company responsible for managing employee-related matters, including recruitment, compensation, benefits, training, and compliance with labor laws."@en;
+    terms:title "Domain humanresource vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:02:04.795Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Human Resource"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-humanresource/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/human-resource> a skos:Concept;
+    skos:prefLabel "Human resource"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:27:13.927Z"^^xsd:dateTime;
+    skos:definition "The department within a company responsible for managing employee-related matters, including recruitment, compensation, benefits, training, and compliance with labor laws."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:altLabel "Human Resources"@en, "HR"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/benefits-administration>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/compensation-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/compliance-and-risk-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/employee-development>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/employee-relations>, <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-strategy>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/information-systems>, <https://www.insperity.com/vocabulary/domain-humanresource/payroll>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/talent-acquisition>, <https://www.insperity.com/vocabulary/domain-humanresource/time-and-attendance> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/benefits-administration>
+    a skos:Concept;
+    skos:prefLabel "Benefits administration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Managing and administering employee benefits programs, such as health insurance, retirement plans, and paid time off."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/benefits-enrollment>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/deductions>, <https://www.insperity.com/vocabulary/domain-humanresource/plan-options>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/regulatory-compliance> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/compensation-management>
+    a skos:Concept;
+    skos:prefLabel "Compensation management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Designing and implementing a company’s compensation system, including salaries, wages, bonuses, and other forms of remuneration."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/bonus-programs>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/pay-equity>, <https://www.insperity.com/vocabulary/domain-humanresource/salary-structures>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/stock-options> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/compliance-and-risk-management>
+    a skos:Concept;
+    skos:prefLabel "Compliance & risk management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Identifying, assessing, and mitigating potential risks and ensuring compliance with relevant laws and regulations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/employee-rights-and-protections>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/health-and-safety>, <https://www.insperity.com/vocabulary/domain-humanresource/labor-laws> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-development> a
+      skos:Concept;
+    skos:prefLabel "Employee development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Activities and programs designed to enhance employees’ skills, knowledge, and abilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/career-development>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/employee-performance-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/learning-management>, <https://www.insperity.com/vocabulary/domain-humanresource/training-administration> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-relations> a skos:Concept;
+    skos:prefLabel "Employee relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Managing the relationship between the company and its employees, including communication and conflict resolution."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/conflict-resolution-and-mediation>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/employee-engagement>, <https://www.insperity.com/vocabulary/domain-humanresource/employee-experience>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/recognition-and-rewards> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-strategy>
+    a skos:Concept;
+    skos:prefLabel "Human resource strategy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Aligning HR practices and policies with the overall strategic goals of the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/organizational-development>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/talent-management>, <https://www.insperity.com/vocabulary/domain-humanresource/workforce-planning> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/information-systems> a
+      skos:Concept;
+    skos:prefLabel "Information systems"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Technology systems used to manage HR data and processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/employee-data-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-analytics>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-reporting> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/payroll> a skos:Concept;
+    skos:prefLabel "Payroll"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The process of calculating and distributing employee paychecks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/benefit-contributions>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/paycheck-generation>, <https://www.insperity.com/vocabulary/domain-humanresource/payroll-processing>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/salary-calculations>, <https://www.insperity.com/vocabulary/domain-humanresource/tax-deductions> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/talent-acquisition> a skos:Concept;
+    skos:prefLabel "Talent acquisition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The process of attracting, sourcing, and recruiting qualified candidates for open positions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/job-profile> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/time-and-attendance> a
+      skos:Concept;
+    skos:prefLabel "Time & attendance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Tracking employee work hours, absences, and leave."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/absences>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/employee-work-hours>, <https://www.insperity.com/vocabulary/domain-humanresource/leave-requests>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/overtime> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/benefits-enrollment> a
+      skos:Concept;
+    skos:prefLabel "Benefits enrollment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The process by which employees sign up for and make selections for their desired benefits package."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/benefits-administration>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/deductions> a skos:Concept;
+    skos:prefLabel "Deductions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Amounts withheld from an employee’s gross pay, including taxes, insurance premiums, and retirement contributions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/benefits-administration>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/plan-options> a skos:Concept;
+    skos:prefLabel "Plan options"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The different choices available to employees within a specific benefit program, such as different health insurance plans."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/benefits-administration>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/regulatory-compliance>
+    a skos:Concept;
+    skos:prefLabel "Regulatory compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Adhering to all applicable laws and regulations related to employment, labor, and workplace safety."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/benefits-administration>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/bonus-programs> a skos:Concept;
+    skos:prefLabel "Bonus programs"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Incentive programs that reward employees for achieving specific performance goals or exceeding expectations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compensation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/pay-equity> a skos:Concept;
+    skos:prefLabel "Pay equity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Ensuring fair and equal pay for employees performing similar work, regardless of gender, race, or other protected characteristics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compensation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/salary-structures> a skos:Concept;
+    skos:prefLabel "Salary structures"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A framework that defines the salary ranges for different job levels and roles within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compensation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/stock-options> a skos:Concept;
+    skos:prefLabel "Stock options"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A benefit that gives employees the right to purchase company stock at a predetermined price."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compensation-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-rights-and-protections>
+    a skos:Concept;
+    skos:prefLabel "Employee rights & protections"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Legal rights and safeguards provided to employees, such as protection from discrimination and harassment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compliance-and-risk-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/health-and-safety> a skos:Concept;
+    skos:prefLabel "Health & safety"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Promoting and maintaining a safe and healthy work environment for all employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compliance-and-risk-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/labor-laws> a skos:Concept;
+    skos:prefLabel "Labor laws"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Laws that govern the relationship between employers and employees, including wages, hours, and working conditions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/compliance-and-risk-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/career-development> a skos:Concept;
+    skos:prefLabel "Career development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Supporting employees in planning and managing their career paths within the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-performance-management>
+    a skos:Concept;
+    skos:prefLabel "Employee performance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A system for setting goals, monitoring performance, and providing feedback to employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/feedback-and-coaching>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/goal-setting>, <https://www.insperity.com/vocabulary/domain-humanresource/performance-appraisal> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/learning-management> a
+      skos:Concept;
+    skos:prefLabel "Learning management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The administration and delivery of training and development programs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/continuous-learning>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/innovation-initiatives>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/knowledge-sharing> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/training-administration>
+    a skos:Concept;
+    skos:prefLabel "Training administration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Managing and coordinating all aspects of employee training programs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/course-scheduling> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/feedback-and-coaching>
+    a skos:Concept;
+    skos:prefLabel "Feedback & coaching"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Providing employees with constructive criticism and guidance to improve their performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-performance-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/goal-setting> a skos:Concept;
+    skos:prefLabel "Goal setting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Establishing clear and measurable objectives for employees to work towards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-performance-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/performance-appraisal>
+    a skos:Concept;
+    skos:prefLabel "Performance appraisal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A formal evaluation of an employee’s performance over a specific period."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-performance-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/continuous-learning> a
+      skos:Concept;
+    skos:prefLabel "Continuous learning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Encouraging employees to continuously acquire new skills and knowledge."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/learning-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/innovation-initiatives>
+    a skos:Concept;
+    skos:prefLabel "Innovation initiatives"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Programs and activities designed to foster creativity and innovation within the workplace."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/learning-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/knowledge-sharing> a skos:Concept;
+    skos:prefLabel "Knowledge sharing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Facilitating the exchange of information and expertise among employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/learning-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/course-scheduling> a skos:Concept;
+    skos:prefLabel "Course scheduling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Planning and scheduling the delivery of training courses."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/training-administration>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/conflict-resolution-and-mediation>
+    a skos:Concept;
+    skos:prefLabel "Conflict resolution & mediation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Processes for resolving disputes and disagreements between employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-relations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-engagement> a
+      skos:Concept;
+    skos:prefLabel "Employee engagement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The level of emotional commitment and connection employees have to their work and the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-relations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/employee-survey-and-feedback>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/employee-voice> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-experience> a
+      skos:Concept;
+    skos:prefLabel "Employee experience"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The sum total of an employee’s interactions and experiences with the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-relations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/employee-wellbeing>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/meaningful-work>, <https://www.insperity.com/vocabulary/domain-humanresource/work-life-balance>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/workplace-flexibility> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/recognition-and-rewards>
+    a skos:Concept;
+    skos:prefLabel "Recognition & rewards"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Acknowledging and appreciating employees for their contributions and achievements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-relations>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-survey-and-feedback>
+    a skos:Concept;
+    skos:prefLabel "Employee survey & feedback"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Gathering feedback from employees to understand their perceptions and identify areas for improvement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-engagement>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-voice> a skos:Concept;
+    skos:prefLabel "Employee voice"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Encouraging employees to share their ideas, concerns, and suggestions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-engagement>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-wellbeing> a skos:Concept;
+    skos:prefLabel "Employee wellbeing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Supporting the physical, mental, and emotional health of employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-experience>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/meaningful-work> a skos:Concept;
+    skos:prefLabel "Meaningful work"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Work that is personally fulfilling and contributes to a larger purpose."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-experience>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/work-life-balance> a skos:Concept;
+    skos:prefLabel "Work-Life balance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Achieving a healthy balance between work responsibilities and personal life."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-experience>;
+    skos:altLabel "Work Life Balance"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/workplace-flexibility>
+    a skos:Concept;
+    skos:prefLabel "Workplace flexibility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Offering employees flexibility in their work schedules and locations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/employee-experience>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/organizational-development>
+    a skos:Concept;
+    skos:prefLabel "Organizational development"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Planned and systematic efforts to improve an organization’s effectiveness and efficiency."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/change-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/organization-structure>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/organizational-culture> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/talent-management> a skos:Concept;
+    skos:prefLabel "Talent management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Attracting, developing, and retaining high-performing employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/competencies>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/skills> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/workforce-planning> a skos:Concept;
+    skos:prefLabel "Workforce planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Analyzing future workforce needs and developing strategies to meet those needs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-strategy>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/headcount-management>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/succession-planning> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/change-management> a skos:Concept;
+    skos:prefLabel "Change management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Guiding and supporting employees through periods of organizational change."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/organization-structure>
+    a skos:Concept;
+    skos:prefLabel "Organization structure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The framework that defines how tasks are divided, grouped, and coordinated within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/organizational-culture>
+    a skos:Concept;
+    skos:prefLabel "Organizational culture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The shared values, beliefs, and norms that shape the behavior of people within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-development>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/civility>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/collaboration-and-communication>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/diversity-and-inclusion>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/values-and-ethics> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/civility> a skos:Concept;
+    skos:prefLabel "Civility"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Treating others with respect and courtesy in the workplace."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-culture>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/collaboration-and-communication>
+    a skos:Concept;
+    skos:prefLabel "Collaboration & communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Working effectively together and sharing information openly."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-culture>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/diversity-and-inclusion>
+    a skos:Concept;
+    skos:prefLabel "Diversity & inclusion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Creating a workplace that values and respects individual differences."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-culture>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/values-and-ethics> a skos:Concept;
+    skos:prefLabel "Values & ethics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The guiding principles and moral standards that govern an organization’s behavior."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/organizational-culture>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/competencies> a skos:Concept;
+    skos:prefLabel "Competencies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The knowledge, skills, and abilities required for successful job performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/talent-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/skills> a skos:Concept;
+    skos:prefLabel "Skills"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Specific proficiencies and expertise that individuals possess."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/talent-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/headcount-management> a
+      skos:Concept;
+    skos:prefLabel "Headcount management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Controlling and optimizing the number of employees within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/workforce-planning>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/succession-planning> a
+      skos:Concept;
+    skos:prefLabel "Succession planning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Identifying and developing potential candidates for key leadership positions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/workforce-planning>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-data-management>
+    a skos:Concept;
+    skos:prefLabel "Employee data management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Collecting, storing, and managing employee information securely and efficiently."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/information-systems>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-analytics>
+    a skos:Concept;
+    skos:prefLabel "Human resource analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Using data to analyze and improve HR practices and decision-making."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/information-systems>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/human-resource-reporting>
+    a skos:Concept;
+    skos:prefLabel "Human resource reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Generating reports and dashboards to track key HR metrics and trends."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/information-systems>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/benefit-contributions>
+    a skos:Concept;
+    skos:prefLabel "Benefit contributions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Employer and employee contributions to benefit programs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/payroll>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/paycheck-generation> a
+      skos:Concept;
+    skos:prefLabel "Paycheck generation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Issuing paychecks to employees electronically or through physical checks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/payroll>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/payroll-processing> a skos:Concept;
+    skos:prefLabel "Payroll processing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Calculating and withholding taxes and other deductions from employee pay."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/payroll>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/salary-calculations> a
+      skos:Concept;
+    skos:prefLabel "Salary calculations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Determining employee gross pay based on salary, hours worked, and other factors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/payroll>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/tax-deductions> a skos:Concept;
+    skos:prefLabel "Tax deductions"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Mandatory withholdings from employee pay for federal, state, and local taxes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/payroll>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management> a
+      skos:Concept;
+    skos:prefLabel "Candidate management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Tracking and managing job applicants throughout the hiring process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/talent-acquisition>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/applicant-tracking>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/interviewing>, <https://www.insperity.com/vocabulary/domain-humanresource/job-posting>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/offer-letters>, <https://www.insperity.com/vocabulary/domain-humanresource/onboarding>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/selection> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/job-profile> a skos:Concept;
+    skos:prefLabel "Job profile"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A document that outlines the key responsibilities, skills, and qualifications required for a specific job."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/talent-acquisition>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-humanresource/job-analysis>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/job-description>, <https://www.insperity.com/vocabulary/domain-humanresource/job-role>,
+      <https://www.insperity.com/vocabulary/domain-humanresource/job-title>, <https://www.insperity.com/vocabulary/domain-humanresource/salary-structure-and-benchmarking> .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/applicant-tracking> a skos:Concept;
+    skos:prefLabel "Applicant tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Using software to manage and streamline the application and screening process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/interviewing> a skos:Concept;
+    skos:prefLabel "Interviewing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Conducting interviews with job candidates to assess their skills and fit for the role."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/job-posting> a skos:Concept;
+    skos:prefLabel "Job posting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Advertising open positions to attract potential candidates."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/offer-letters> a skos:Concept;
+    skos:prefLabel "Offer letters"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Formal written offers of employment extended to selected candidates."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/onboarding> a skos:Concept;
+    skos:prefLabel "Onboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Integrating new hires into the organization and their roles."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/selection> a skos:Concept;
+    skos:prefLabel "Selection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The process of choosing the most qualified candidate for a position."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/candidate-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/job-analysis> a skos:Concept;
+    skos:prefLabel "Job analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A systematic process of gathering information about a job to create a job description."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/job-profile>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/job-description> a skos:Concept;
+    skos:prefLabel "Job description"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "A formal document that describes the duties, responsibilities, and requirements of a job."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/job-profile>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/job-role> a skos:Concept;
+    skos:prefLabel "Job role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The set of tasks and responsibilities associated with a particular job."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/job-profile>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/job-title> a skos:Concept;
+    skos:prefLabel "Job title"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The name given to a specific job within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/job-profile>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/salary-structure-and-benchmarking>
+    a skos:Concept;
+    skos:prefLabel "Salary structure & benchmarking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Determining competitive salary ranges for jobs based on market data and industry standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/job-profile>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/absences> a skos:Concept;
+    skos:prefLabel "Absences"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Periods of time when an employee is not at work, such as sick leave or vacation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/time-and-attendance>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/employee-work-hours> a
+      skos:Concept;
+    skos:prefLabel "Employee work hours"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "The number of hours an employee is scheduled or expected to work."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/time-and-attendance>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/leave-requests> a skos:Concept;
+    skos:prefLabel "Leave requests"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Formal requests for time off from work."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/time-and-attendance>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-humanresource/overtime> a skos:Concept;
+    skos:prefLabel "Overtime"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T19:00:01.134Z"^^xsd:dateTime;
+    skos:definition "Work performed beyond an employee’s regular work hours, typically paid at a higher rate."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-humanresource/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-humanresource/time-and-attendance>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

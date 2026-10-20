@@ -1,0 +1,2892 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/core-technicalservices/> {
+  <https://www.insperity.com/vocabulary/core-technicalservices/> a skos:ConceptScheme;
+    rdfs:label "Core technicalservices vocabulary"@en;
+    skos:prefLabel "Core technicalservices vocabulary"@en;
+    skos:hasTopConcept technicalservicesvoc:technical-services;
+    terms:description "Specialized support for technical products or services, often requiring advanced technical expertise."@en;
+    terms:title "Core technicalservices vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-04-03T16:43:33.627Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:technical-services a skos:Concept;
+    skos:prefLabel "Technical services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T16:59:14.591Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-engineering a skos:Concept;
+    skos:prefLabel "Data engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-operations a skos:Concept;
+    skos:prefLabel "Data operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-services a skos:Concept;
+    skos:prefLabel "Data services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:enterprise-search a skos:Concept;
+    skos:prefLabel "Enterprise search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:knowledge-engineering a skos:Concept;
+    skos:prefLabel "Knowledge engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:platform-operations a skos:Concept;
+    skos:prefLabel "Platform operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:presentation-services a skos:Concept;
+    skos:prefLabel "Presentation services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:process-management a skos:Concept;
+    skos:prefLabel "Process management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:quality-engineering a skos:Concept;
+    skos:prefLabel "Quality engineering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:release-management a skos:Concept;
+    skos:prefLabel "Release management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:security-management a skos:Concept;
+    skos:prefLabel "Security management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:systems-operations a skos:Concept;
+    skos:prefLabel "Systems operations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:workflow-automation a skos:Concept;
+    skos:prefLabel "Workflow automation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-integration-service a skos:Concept;
+    skos:prefLabel "Data integration service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:methodology-adherence a skos:Concept;
+    skos:prefLabel "Methodology adherence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:social-engineering-and-communication a skos:Concept;
+    skos:prefLabel "Social engineering & communication"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:connection-services a skos:Concept;
+    skos:prefLabel "Connection services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-extraction a skos:Concept;
+    skos:prefLabel "Data extraction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-loading a skos:Concept;
+    skos:prefLabel "Data loading"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-transformation a skos:Concept;
+    skos:prefLabel "Data transformation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:implementation a skos:Concept;
+    skos:prefLabel "Implementation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:knowledge-capture a skos:Concept;
+    skos:prefLabel "Knowledge capture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:mapping-validation a skos:Concept;
+    skos:prefLabel "Mapping validation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:measurement-validation a skos:Concept;
+    skos:prefLabel "Measurement validation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:query-validation a skos:Concept;
+    skos:prefLabel "Query validation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:ontology-discovery a skos:Concept;
+    skos:prefLabel "Ontology discovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:taxonomy-discovery a skos:Concept;
+    skos:prefLabel "Taxonomy discovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:vocabulary-discovery a skos:Concept;
+    skos:prefLabel "Vocabulary discovery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:domain-expertise a skos:Concept;
+    skos:prefLabel "Domain expertise"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:technical-expertise a skos:Concept;
+    skos:prefLabel "Technical expertise"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-asset-valuation a skos:Concept;
+    skos:prefLabel "Data asset valuation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-quality-management a skos:Concept;
+    skos:prefLabel "Data quality management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-asset-inventory a skos:Concept;
+    skos:prefLabel "Data asset inventory"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-asset-investment a skos:Concept;
+    skos:prefLabel "Data asset investment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-asset-prioritization a skos:Concept;
+    skos:prefLabel "Data asset prioritization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-asset-quantification a skos:Concept;
+    skos:prefLabel "Data asset quantification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-cleansing a skos:Concept;
+    skos:prefLabel "Data cleansing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-profiling a skos:Concept;
+    skos:prefLabel "Data profiling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-validation a skos:Concept;
+    skos:prefLabel "Data validation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-access-layer a skos:Concept;
+    skos:prefLabel "Data access layer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-acquisition a skos:Concept;
+    skos:prefLabel "Data acquisition"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-dispositioning a skos:Concept;
+    skos:prefLabel "Data dispositioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-management-rules a skos:Concept;
+    skos:prefLabel "Data management rules"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-modeling-services a skos:Concept;
+    skos:prefLabel "Data modeling services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:database-management a skos:Concept;
+    skos:prefLabel "Database management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:external-data-sourcing a skos:Concept;
+    skos:prefLabel "External data sourcing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:internal-data-sourcing a skos:Concept;
+    skos:prefLabel "Internal data sourcing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-issue-remediation a skos:Concept;
+    skos:prefLabel "Data issue remediation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:indexing-services a skos:Concept;
+    skos:prefLabel "Indexing services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:augmented-search a skos:Concept;
+    skos:prefLabel "Augmented search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:boolean-search a skos:Concept;
+    skos:prefLabel "Boolean search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:intelligent-search a skos:Concept;
+    skos:prefLabel "Intelligent search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:phonetic-search a skos:Concept;
+    skos:prefLabel "Phonetic search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:semantic-search a skos:Concept;
+    skos:prefLabel "Semantic search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:token-based-search a skos:Concept;
+    skos:prefLabel "Token based search"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:domain-ontologies a skos:Concept;
+    skos:prefLabel "Domain ontologies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:knowledge-graphs a skos:Concept;
+    skos:prefLabel "Knowledge graphs"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:knowledge-platforming a skos:Concept;
+    skos:prefLabel "Knowledge platforming"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:ontology-management a skos:Concept;
+    skos:prefLabel "Ontology management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:performance-management a skos:Concept;
+    skos:prefLabel "Performance management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:relationship-management a skos:Concept;
+    skos:prefLabel "Relationship management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:semantic-knowledge-layer a skos:Concept;
+    skos:prefLabel "Semantic knowledge layer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:taxonomies a skos:Concept;
+    skos:prefLabel "Taxonomies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:taxonomy-management a skos:Concept;
+    skos:prefLabel "Taxonomy management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:unified-content a skos:Concept;
+    skos:prefLabel "Unified content"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:visualization-management a skos:Concept;
+    skos:prefLabel "Visualization management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:vocabulary-management a skos:Concept;
+    skos:prefLabel "Vocabulary management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:continuity a skos:Concept;
+    skos:prefLabel "Continuity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:extensions-build a skos:Concept;
+    skos:prefLabel "Extensions build"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:knowledge-graph-support a skos:Concept;
+    skos:prefLabel "Knowledge graph support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:linear-scaling a skos:Concept;
+    skos:prefLabel "Linear scaling"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:location-based-intelligence a skos:Concept;
+    skos:prefLabel "Location based intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:semantic-mapping-support a skos:Concept;
+    skos:prefLabel "Semantic mapping support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:shacl-constraints a skos:Concept;
+    skos:prefLabel "SHACL constraints"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:application-programming-interface-support a skos:Concept;
+    skos:prefLabel "Application programming interface support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:relational-database-to-resource-description-framework-integration
+    a skos:Concept;
+    skos:prefLabel "Relational database to resource description framework integration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:security-support a skos:Concept;
+    skos:prefLabel "Security support"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:sql-queries a skos:Concept;
+    skos:prefLabel "SQL queries"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:build-taxonomies a skos:Concept;
+    skos:prefLabel "Build taxonomies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:manage-taxonomies a skos:Concept;
+    skos:prefLabel "Manage taxonomies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:auto-tagging-and-semantic-extension a skos:Concept;
+    skos:prefLabel "Auto tagging & semantic extension"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:build-associated-taxonomies a skos:Concept;
+    skos:prefLabel "Build associated taxonomies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:organize-entities-into-hierarchies a skos:Concept;
+    skos:prefLabel "Organize entities into hierarchies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:skos-based-vocabularies a skos:Concept;
+    skos:prefLabel "SKOS based vocabularies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:inference-management a skos:Concept;
+    skos:prefLabel "Inference management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:polymorphic-meaning a skos:Concept;
+    skos:prefLabel "Polymorphic meaning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:filtering a skos:Concept;
+    skos:prefLabel "Filtering"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:hierarchical-maps a skos:Concept;
+    skos:prefLabel "Hierarchical maps"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:natural-language-query a skos:Concept;
+    skos:prefLabel "Natural language query"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:visual-exploration a skos:Concept;
+    skos:prefLabel "Visual exploration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:visual-maps a skos:Concept;
+    skos:prefLabel "Visual maps"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:visual-optimization a skos:Concept;
+    skos:prefLabel "Visual optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:edge-categorization a skos:Concept;
+    skos:prefLabel "Edge categorization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:inferencing-rules a skos:Concept;
+    skos:prefLabel "Inferencing rules"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:instantiate-math-symbolics a skos:Concept;
+    skos:prefLabel "Instantiate math symbolics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:internationalized-resource-identifier-construction a skos:Concept;
+    skos:prefLabel "Internationalized resource identifier construction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:persisted-identifer-creation a skos:Concept;
+    skos:prefLabel "Persisted identifer creation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:property-assignment a skos:Concept;
+    skos:prefLabel "Property assignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:semantic-association a skos:Concept;
+    skos:prefLabel "Semantic association"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:term-mining a skos:Concept;
+    skos:prefLabel "Term mining"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:text-analysis-and-term-extraction a skos:Concept;
+    skos:prefLabel "Text analysis & term extraction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:weight-assignment a skos:Concept;
+    skos:prefLabel "Weight assignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:computing-service a skos:Concept;
+    skos:prefLabel "Computing service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:storage-management-services a skos:Concept;
+    skos:prefLabel "Storage management services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:archival-services a skos:Concept;
+    skos:prefLabel "Archival services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:disposal-services a skos:Concept;
+    skos:prefLabel "Disposal services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:retention-services a skos:Concept;
+    skos:prefLabel "Retention services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:behavioral-adaptation a skos:Concept;
+    skos:prefLabel "Behavioral adaptation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:customer-feedback a skos:Concept;
+    skos:prefLabel "Customer feedback"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:digital-user-experience a skos:Concept;
+    skos:prefLabel "Digital user experience"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:experiential-journey-design a skos:Concept;
+    skos:prefLabel "Experiential journey design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:form-generation a skos:Concept;
+    skos:prefLabel "Form generation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:human-centered-design a skos:Concept;
+    skos:prefLabel "Human centered design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:persona-tailoring a skos:Concept;
+    skos:prefLabel "Persona tailoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:session-management a skos:Concept;
+    skos:prefLabel "Session management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:transactional-journey-design a skos:Concept;
+    skos:prefLabel "Transactional journey design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:translation-services a skos:Concept;
+    skos:prefLabel "Translation services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:process-management-rules a skos:Concept;
+    skos:prefLabel "Process management rules"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:process-modeling-services a skos:Concept;
+    skos:prefLabel "Process modeling services"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:change-management a skos:Concept;
+    skos:prefLabel "Change management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:certification-management a skos:Concept;
+    skos:prefLabel "Certification management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:architecture-alignment a skos:Concept;
+    skos:prefLabel "Architecture alignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:authorization-management a skos:Concept;
+    skos:prefLabel "Authorization management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:credential-management a skos:Concept;
+    skos:prefLabel "Credential management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-management a skos:Concept;
+    skos:prefLabel "Data management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-management a skos:Concept;
+    skos:prefLabel "Identity management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T17:27:46.227Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:policy-management a skos:Concept;
+    skos:prefLabel "Policy management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:protection-management a skos:Concept;
+    skos:prefLabel "Protection management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:reporting-and-analytics a skos:Concept;
+    skos:prefLabel "Reporting & analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:threat-management a skos:Concept;
+    skos:prefLabel "Threat management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T17:28:55.071Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:entity-lifecycle-pattern a skos:Concept;
+    skos:prefLabel "Entity lifecycle pattern"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-lifecycle-pattern a skos:Concept;
+    skos:prefLabel "Identity lifecycle pattern"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:role-lifecycle-pattern a skos:Concept;
+    skos:prefLabel "Role lifecycle pattern"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:account-management a skos:Concept;
+    skos:prefLabel "Account management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:disposition-management a skos:Concept;
+    skos:prefLabel "Disposition management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:privilege-management a skos:Concept;
+    skos:prefLabel "Privilege management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:provisioning a skos:Concept;
+    skos:prefLabel "Provisioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:create-read-update-delete-provisioning a skos:Concept;
+    skos:prefLabel "Create read update delete provisioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:services-provisioning a skos:Concept;
+    skos:prefLabel "Services provisioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:systems-provisioning a skos:Concept;
+    skos:prefLabel "Systems provisioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:credential-assignment a skos:Concept;
+    skos:prefLabel "Credential assignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:credential-collection a skos:Concept;
+    skos:prefLabel "Credential collection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:credential-validation a skos:Concept;
+    skos:prefLabel "Credential validation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:digital-signature a skos:Concept;
+    skos:prefLabel "Digital signature"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-integrity a skos:Concept;
+    skos:prefLabel "Data integrity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-mapping a skos:Concept;
+    skos:prefLabel "Data mapping"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-publishing a skos:Concept;
+    skos:prefLabel "Data publishing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:directory-management a skos:Concept;
+    skos:prefLabel "Directory management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:metadata-management a skos:Concept;
+    skos:prefLabel "Metadata management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:registry-management a skos:Concept;
+    skos:prefLabel "Registry management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identities a skos:Concept;
+    skos:prefLabel "Identities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identities-to-entities a skos:Concept;
+    skos:prefLabel "Identities to entities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identities-to-roles a skos:Concept;
+    skos:prefLabel "Identities to roles"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:source-to-target-identities a skos:Concept;
+    skos:prefLabel "Source to target identities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:component-access a skos:Concept;
+    skos:prefLabel "Component access"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:content-access a skos:Concept;
+    skos:prefLabel "Content access"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-access a skos:Concept;
+    skos:prefLabel "Data access"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:directory-maintenance a skos:Concept;
+    skos:prefLabel "Directory maintenance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:location-access a skos:Concept;
+    skos:prefLabel "Location access"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:system-access a skos:Concept;
+    skos:prefLabel "System access"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:external-entities a skos:Concept;
+    skos:prefLabel "External entities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:internal-entities a skos:Concept;
+    skos:prefLabel "Internal entities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:logical-location a skos:Concept;
+    skos:prefLabel "Logical location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:physical-location a skos:Concept;
+    skos:prefLabel "Physical location"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:context-alignment a skos:Concept;
+    skos:prefLabel "Context alignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:context-capture a skos:Concept;
+    skos:prefLabel "Context capture"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:context-to-entity-mapping a skos:Concept;
+    skos:prefLabel "Context to entity mapping"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:centralized-administration a skos:Concept;
+    skos:prefLabel "Centralized administration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:delegated-administration a skos:Concept;
+    skos:prefLabel "Delegated administration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:group-administration a skos:Concept;
+    skos:prefLabel "Group administration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-federation a skos:Concept;
+    skos:prefLabel "Identity federation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-mediation a skos:Concept;
+    skos:prefLabel "Identity mediation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-propogation a skos:Concept;
+    skos:prefLabel "Identity propogation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-qualification-and-approval a skos:Concept;
+    skos:prefLabel "Identity qualification & approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:identity-registration a skos:Concept;
+    skos:prefLabel "Identity registration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:asset-security-policies a skos:Concept;
+    skos:prefLabel "Asset security policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:corporate-policies a skos:Concept;
+    skos:prefLabel "Corporate policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-security-policies a skos:Concept;
+    skos:prefLabel "Data security policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:laws-and-citations-compliance a skos:Concept;
+    skos:prefLabel "Laws & citations compliance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:network-security-policies a skos:Concept;
+    skos:prefLabel "Network security policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:physical-security-policies a skos:Concept;
+    skos:prefLabel "Physical security policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:policy-enforcement a skos:Concept;
+    skos:prefLabel "Policy enforcement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:quality-policies a skos:Concept;
+    skos:prefLabel "Quality policies"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-availability a skos:Concept;
+    skos:prefLabel "Data availability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-confidentiality a skos:Concept;
+    skos:prefLabel "Data confidentiality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-security-integrity a skos:Concept;
+    skos:prefLabel "Data security integrity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:constraint-management a skos:Concept;
+    skos:prefLabel "Constraint management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:rules-management a skos:Concept;
+    skos:prefLabel "Rules management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-categorization a skos:Concept;
+    skos:prefLabel "Data categorization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-masking a skos:Concept;
+    skos:prefLabel "Data masking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:data-releasability a skos:Concept;
+    skos:prefLabel "Data releasability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:decryption a skos:Concept;
+    skos:prefLabel "Decryption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:encryption-at-rest a skos:Concept;
+    skos:prefLabel "Encryption at rest"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:encryption-in-motion a skos:Concept;
+    skos:prefLabel "Encryption in motion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:resource-protection a skos:Concept;
+    skos:prefLabel "Resource protection"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:temporal-constraint-timer a skos:Concept;
+    skos:prefLabel "Temporal constraint timer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:token-assignment a skos:Concept;
+    skos:prefLabel "Token assignment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:token-management a skos:Concept;
+    skos:prefLabel "Token management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:exposure-analysis a skos:Concept;
+    skos:prefLabel "Exposure analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:predictive-analytics a skos:Concept;
+    skos:prefLabel "Predictive analytics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:resolution-assessment a skos:Concept;
+    skos:prefLabel "Resolution assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:investigation a skos:Concept;
+    skos:prefLabel "Investigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:mitigation a skos:Concept;
+    skos:prefLabel "Mitigation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:monitoring a skos:Concept;
+    skos:prefLabel "Monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:prevention a skos:Concept;
+    skos:prefLabel "Prevention"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:training a skos:Concept;
+    skos:prefLabel "Training"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime .
+  
+  technicalservicesvoc:external-entities terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Entities that are outside of the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:directory-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:internal-entities terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "Entities that are within the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:directory-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:logical-location terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "A location that is defined in software, such as a network address."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:internal-entities;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:physical-location terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "A physical location, such as a building or room."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:internal-entities;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:context-alignment terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of aligning data with its context."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:metadata-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:context-capture terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of capturing information about the context in which data is created or used."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:metadata-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:context-to-entity-mapping terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of mapping context information to entities in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:metadata-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:centralized-administration terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Administration of systems and applications from a central location."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:delegated-administration terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of delegating administrative tasks to other users or groups."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:group-administration terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of managing groups of users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-federation terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of enabling users to access resources across multiple security domains."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-mediation terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of translating between different identity formats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-propogation terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of propagating identity information across multiple systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-qualification-and-approval terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of qualifying and approving identities for access to resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-registration terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of registering identities in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:identity-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:asset-security-policies terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Policies that govern the security of assets, such as hardware and software."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:corporate-policies terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Policies that are specific to the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-security-policies terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Policies that govern the security of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:laws-and-citations-compliance terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Ensuring that systems and applications comply with relevant laws and regulations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:network-security-policies terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "Policies that govern the security of the network."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:physical-security-policies terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "Policies that govern the physical security of assets, such as hardware and data centers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:policy-enforcement terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of enforcing policies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:quality-policies terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "Policies that govern the quality of products and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-availability terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Ensuring that data is available when it is needed."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-security-policies;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-confidentiality terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Protecting data from unauthorized access."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-security-policies;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-security-integrity terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "Ensuring that data is not altered or destroyed in an unauthorized manner."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-security-policies;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:constraint-management terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of managing constraints on data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-enforcement;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:rules-management terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of managing rules that govern the behavior of systems and applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:policy-enforcement;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-categorization terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of classifying data into categories."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-masking terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of hiding sensitive data from unauthorized users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-releasability terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of determining whether data can be released to a third party."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:decryption terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of converting encrypted data back into its original form."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:encryption-at-rest terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of encrypting data that is stored on disk."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:encryption-in-motion terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of encrypting data that is in transit over a network."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:resource-protection terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of protecting resources, such as data and systems, from unauthorized access."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:temporal-constraint-timer terms:created "2025-04-04T17:46:06.732Z"^^xsd:dateTime;
+    skos:definition "A restriction placed on one or more temporal data items, which represent time points or time periods"@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:token-assignment terms:created "2025-04-04T17:45:32.287Z"^^xsd:dateTime;
+    skos:definition "The process of managing and assigning tokens, which are used to authenticate users and authorize access to resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:token-management terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of managing and assigning tokens, which are used to authenticate users and authorize access to resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:protection-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:exposure-analysis terms:created "2025-04-04T14:29:16.049Z"^^xsd:dateTime;
+    skos:definition "The process of identifying and assessing security vulnerabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:reporting-and-analytics;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:predictive-analytics terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The use of statistical techniques to predict future events."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:reporting-and-analytics;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:resolution-assessment terms:created "2025-04-04T14:28:58.696Z"^^xsd:dateTime;
+    skos:definition "The process of assessing the effectiveness of security controls."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:reporting-and-analytics;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:investigation terms:created "2025-04-04T17:47:35.703Z"^^xsd:dateTime;
+    skos:definition "A detailed analysis of detected threats to understand their nature, origin, potential impact, and to develop an effective incident response plan, including identifying and containing the incident, mitigating damage, and recovering compromised systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:threat-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:mitigation terms:created "2025-04-04T17:48:01.002Z"^^xsd:dateTime;
+    skos:definition "The proactive strategies and actions taken to reduce or minimize the potential impact of threats and vulnerabilities. It involves identifying risks, implementing protective measures, and continuously monitoring for threats to prevent security breaches."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:threat-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:monitoring terms:created "2025-04-04T17:48:27.140Z"^^xsd:dateTime;
+    skos:definition "A proactive security measure that enables organizations to detect, identify, and respond to potential security incidents in an increasingly sophisticated and pervasive era."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:threat-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:prevention terms:created "2025-04-04T17:48:52.903Z"^^xsd:dateTime;
+    skos:definition "Proactive measures and strategies implemented to block or deter threats from reaching or damaging systems, networks, or data before they can cause harm."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:threat-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:training terms:created "2025-04-04T17:49:17.401Z"^^xsd:dateTime;
+    skos:definition "Equipping individuals with the knowledge, skills, and awareness necessary to identify, assess, and respond to potential threats, ultimately enhancing an organization's ability to mitigate risks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:threat-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:technical-services skos:definition "Specialized support for technical products or services, often requiring advanced technical expertise."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-engineering skos:definition "The process of designing, building, and maintaining systems and infrastructure for collecting, storing, processing, and analyzing data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-operations skos:definition "The set of tasks and processes involved in managing and operating data systems and infrastructure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-services skos:definition "Services that provide access to and management of data assets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:enterprise-search skos:definition "Search functionality that spans across multiple data sources within an organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:knowledge-engineering skos:definition "The process of designing, building, and maintaining knowledge-based systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    skos:altLabel "KE"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:platform-operations skos:definition "The set of tasks and processes involved in managing and operating a software platform."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:presentation-services skos:definition "Services that provide a user interface for accessing and interacting with data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:process-management skos:definition "The process of designing, managing, and improving business processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:quality-engineering skos:definition "The process of ensuring that software products and services meet quality standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:release-management skos:definition "The process of planning, scheduling, and controlling the release of software updates and new features."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:security-management skos:definition "The process of managing security risks to systems and data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:systems-operations skos:definition "The set of tasks and processes involved in operating and maintaining systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:workflow-automation skos:definition "The process of automating business processes using workflow software."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:technical-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-integration-service skos:definition "A service that combines data from different sources into a unified view."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:methodology-adherence skos:definition "Following established procedures and best practices throughout a project or process."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:social-engineering-and-communication skos:definition "Using psychological manipulation to gain access to confidential information or systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:connection-services skos:definition "Services that establish and manage connections between systems, applications, and data sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-integration-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-extraction skos:definition "The process of retrieving data from source systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-integration-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-loading skos:definition "The process of transferring extracted data into a target system (e.g., database, data warehouse)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-integration-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-transformation skos:definition "The process of converting data from one format or structure to another."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-integration-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:implementation skos:definition "Putting a plan or design into action."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:methodology-adherence;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:knowledge-capture skos:definition "The process of identifying, documenting, and organizing knowledge assets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:methodology-adherence;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:mapping-validation skos:definition "Ensuring that data mappings between source and target systems are accurate and complete."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:methodology-adherence;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:measurement-validation skos:definition "Ensuring that data quality metrics are accurate and meaningful."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:methodology-adherence;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:query-validation skos:definition "Ensuring that data queries are syntactically correct and return the expected results."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:methodology-adherence;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:ontology-discovery skos:definition "The process of automatically identifying and extracting concepts, relationships, and rules from data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-capture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:taxonomy-discovery skos:definition "The process of automatically identifying and organizing terms into hierarchical structures."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-capture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:vocabulary-discovery skos:definition "The process of identifying and extracting relevant terms and phrases from a corpus of text."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-capture;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:domain-expertise skos:definition "Deep knowledge and understanding of a particular industry, subject area, or business function."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:social-engineering-and-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:technical-expertise skos:definition "Specialized knowledge and skills in a particular technology or technical area."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:social-engineering-and-communication;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-asset-valuation skos:definition "The process of determining the monetary or strategic worth of a specific set of data within an organization. This considers factors like revenue generation potential, cost savings, and competitive advantage."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-quality-management skos:definition "The process of ensuring that data is accurate, complete, consistent, timely, and relevant."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-operations, technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-asset-inventory skos:definition "A centralized repository or catalog that documents all data assets owned or managed by an organization. It typically includes information about data location, structure, quality, and sensitivity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-asset-valuation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-asset-investment skos:definition "The allocation of financial and human resources towards acquiring, storing, managing, protecting, and analyzing data assets to achieve specific business goals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-asset-valuation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-asset-prioritization skos:definition "A process for ranking data assets based on their perceived value, risk, and alignment with strategic objectives. This helps organizations focus resources on managing and leveraging the most critical data first."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-asset-valuation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-asset-quantification skos:definition "The practice of measuring and expressing the value of data assets using tangible metrics. This could involve calculating ROI on data-driven initiatives, assessing the impact of data quality on business outcomes, or determining the cost of poor data management."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-asset-valuation;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-cleansing skos:definition "The process of identifying and correcting errors and inconsistencies in data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-quality-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-profiling skos:definition "The process of analyzing data to understand its structure, content, and quality."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-quality-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-validation skos:definition "The process of ensuring that data meets predefined quality rules and standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-quality-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-access-layer skos:definition "A software layer that provides a standardized interface for accessing data from various sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-acquisition skos:definition "The process of obtaining and collecting data from various sources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-dispositioning skos:definition "The process of managing the lifecycle of data, including its storage, retention, and deletion."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-management-rules skos:definition "Policies and procedures that govern the management and use of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-modeling-services skos:definition "Services that help organizations design, develop, and maintain data models."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:database-management skos:definition "The process of managing and administering databases."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:external-data-sourcing skos:definition "Obtaining data from sources outside of the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-acquisition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:internal-data-sourcing skos:definition "Obtaining data from sources within the organization."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-acquisition;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-issue-remediation skos:definition "The process of identifying, investigating, and resolving data quality issues."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-dispositioning;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:indexing-services skos:definition "Services that create and maintain indexes to improve data retrieval performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:database-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:augmented-search skos:definition "Search functionality that leverages artificial intelligence (AI) and machine learning (ML) to improve search results."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:enterprise-search;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:boolean-search skos:definition "Search functionality that uses Boolean operators (AND, OR, NOT) to combine search terms."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:enterprise-search;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:intelligent-search skos:definition "Search functionality that leverages artificial intelligence (AI) and machine learning (ML) to improve search results."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:enterprise-search;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:phonetic-search skos:definition "Search functionality that finds words that sound similar to the search term."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:enterprise-search;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:semantic-search skos:definition "Search functionality that understands the meaning and intent behind search queries."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:enterprise-search;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:token-based-search skos:definition "Search functionality that breaks down search queries into individual words or phrases (tokens) to improve search accuracy."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:enterprise-search;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:domain-ontologies skos:definition "Formal representations of knowledge within a specific domain or industry."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:knowledge-graphs skos:definition "A knowledge representation technique that uses a graph structure to represent entities and their relationships."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    skos:altLabel "KG"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:knowledge-platforming skos:definition "The process of creating a centralized platform for managing and accessing knowledge assets."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:ontology-management skos:definition "The process of creating, maintaining, and evolving ontologies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:performance-management skos:definition "The process of monitoring, analyzing, and optimizing the performance of systems and applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:relationship-management skos:definition "The process of managing relationships between entities in a knowledge graph."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:semantic-knowledge-layer skos:definition "A layer of abstraction that provides a semantic view of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    skos:altLabel "SKL"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:taxonomies skos:definition "Hierarchical classifications of terms or concepts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:taxonomy-management skos:definition "The process of creating, maintaining, and evolving taxonomies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:unified-content skos:definition "Content that is managed and accessed from a single source."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:visualization-management skos:definition "The process of creating, managing, and displaying data visualizations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:vocabulary-management skos:definition "The process of creating, maintaining, and evolving vocabularies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:knowledge-engineering;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:continuity skos:definition "The ability of a system or process to operate without interruption."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:extensions-build skos:definition "The process of developing and deploying extensions or add-ons to existing systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:knowledge-graph-support skos:definition "Providing technical support and assistance for knowledge graph technologies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:linear-scaling skos:definition "The ability of a system to handle increasing workloads by adding more resources proportionally."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:location-based-intelligence skos:definition "The process of deriving insights from geographical data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:semantic-mapping-support skos:definition "Providing technical support and assistance for semantic mapping technologies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:shacl-constraints skos:definition "A language for expressing constraints on RDF graphs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:performance-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:application-programming-interface-support skos:definition "Providing technical support and assistance for application programming interfaces (APIs)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:semantic-knowledge-layer;
+    skos:altLabel "Application Programming Interfaces Support"@en, "API support"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:relational-database-to-resource-description-framework-integration
+    skos:definition "The process of integrating data from relational databases (RDB) into RDF graphs."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:semantic-knowledge-layer;
+    skos:altLabel "RDB 2 RDF Data Integration"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:security-support skos:definition "Providing technical support and assistance for security-related issues."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:semantic-knowledge-layer;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:sql-queries skos:definition "Queries written in Structured Query Language (SQL) to retrieve data from relational databases."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:semantic-knowledge-layer;
+    skos:altLabel "Structured Query Language Queries"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:build-taxonomies skos:definition "The process of creating new taxonomies from scratch."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:taxonomy-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:manage-taxonomies skos:definition "The process of creating, maintaining, and evolving taxonomies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:taxonomy-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:auto-tagging-and-semantic-extension skos:definition "The process of automatically assigning tags or keywords to content based on its meaning."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:build-taxonomies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:build-associated-taxonomies skos:definition "The process of creating taxonomies that are related to existing taxonomies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:build-taxonomies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:organize-entities-into-hierarchies skos:definition "The process of organizing entities into hierarchical structures based on their relationships."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:build-taxonomies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:skos-based-vocabularies skos:definition "Vocabularies that are based on the Simple Knowledge Organization System (SKOS)."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:build-taxonomies;
+    skos:altLabel "Simple Knowledge Organization System Based Vocabularies"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:inference-management skos:definition "The process of managing and controlling the inferences that are made by a knowledge-based system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:manage-taxonomies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:polymorphic-meaning skos:definition "The ability of a term or concept to have multiple meanings depending on the context."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:manage-taxonomies;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:filtering skos:definition "The process of selecting a subset of data based on specified criteria."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:visualization-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:hierarchical-maps skos:definition "Visualizations that display data in a hierarchical structure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:visualization-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:natural-language-query skos:definition "The ability to query data using natural language."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:visualization-management;
+    skos:altLabel "NLQ"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:visual-exploration skos:definition "The process of exploring data through interactive visualizations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:visualization-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:visual-maps skos:definition "Visualizations that display data in a hierarchical structure."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:visualization-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:visual-optimization skos:definition "The process of optimizing data visualizations for clarity and impact."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:visualization-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:edge-categorization skos:definition "The process of classifying relationships between entities in a knowledge graph."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:inferencing-rules skos:definition "Rules that are used to infer new knowledge from existing knowledge."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:instantiate-math-symbolics skos:definition "The process of creating instances of mathematical symbols in a knowledge graph."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:internationalized-resource-identifier-construction skos:definition
+      "The process of creating Internationalized Resource Identifiers (IRIs) for entities in a knowledge graph."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    skos:altLabel "Internationalized Resource Identifiers Construction"@en, "IRI construction"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:persisted-identifer-creation skos:definition "The process of creating persistent identifiers (PIDs) for entities in a knowledge graph."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:property-assignment skos:definition "The process of assigning properties to entities in a knowledge graph."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:semantic-association skos:definition "The process of identifying and representing relationships between entities based on their meaning."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:term-mining skos:definition "The process of identifying and extracting relevant terms from text."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:text-analysis-and-term-extraction skos:definition "The process of identifying and extracting relevant terms from text."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:weight-assignment skos:definition "The process of assigning weights to terms or concepts to indicate their importance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:vocabulary-management;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:computing-service skos:definition "A service that provides computing resources, such as processing power, memory, and storage."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:platform-operations;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:storage-management-services skos:definition "Services that provide management and administration of storage resources."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:computing-service;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:archival-services skos:definition "Services that provide long-term storage of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:storage-management-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:disposal-services skos:definition "Services that provide secure deletion of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:storage-management-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:retention-services skos:definition "Services that manage the retention and disposition of data based on legal and regulatory requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:storage-management-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:behavioral-adaptation skos:definition "The ability of a system to adapt its behavior based on user interactions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:customer-feedback skos:definition "Information provided by customers about their experiences with a product or service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:digital-user-experience skos:definition "The overall experience that a user has when interacting with a digital product or service."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:experiential-journey-design skos:definition "The process of designing user experiences that are engaging and memorable."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:form-generation skos:definition "The process of creating electronic forms for collecting data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:human-centered-design skos:definition "A design philosophy that prioritizes the needs and experiences of users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:persona-tailoring skos:definition "The process of customizing user experiences based on the characteristics of specific user groups."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:session-management skos:definition "The process of managing user sessions and maintaining user state."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:transactional-journey-design skos:definition "The process of designing user experiences for completing specific tasks or transactions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:translation-services skos:definition "Services that provide translation of text and other content into different languages."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:presentation-services;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:process-management-rules skos:definition "Policies and procedures that govern the execution of business processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:process-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:process-modeling-services skos:definition "Services that help organizations model and analyze their business processes."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:process-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:change-management skos:definition "The process of managing changes to systems and applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:quality-engineering;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:certification-management skos:definition "The process of managing certifications for systems, applications, and individuals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:release-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:architecture-alignment skos:definition "Ensuring that systems and applications are aligned with the overall enterprise architecture."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:authorization-management skos:definition "The process of managing access to resources based on user roles and permissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:credential-management skos:definition "The process of managing user credentials, such as passwords and digital certificates."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-management skos:definition "Encompasses the practices of collecting, organizing, protecting, and storing an organization's data to enable analysis and informed business decisions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-management skos:definition "The process of managing and securing digital identities within an organization, encompassing the identification, authentication, and authorization of users and devices to access resources and systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:policy-management skos:definition "The process of creating, managing, and enforcing policies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:protection-management skos:definition "The process of managing the protection of assets, such as data and systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:reporting-and-analytics skos:definition "The process of collecting, analyzing, and reporting on security-related data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:threat-management skos:definition "A comprehensive process that encompasses identifying, assessing, and responding to potential threats, using various strategies and techniques to mitigate risks and protect organizations or individuals."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:security-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:entity-lifecycle-pattern skos:definition "A pattern that describes the lifecycle of an entity in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:architecture-alignment;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identity-lifecycle-pattern skos:definition "A pattern that describes the lifecycle of an identity in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:architecture-alignment;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:role-lifecycle-pattern skos:definition "A pattern that describes the lifecycle of a role in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:architecture-alignment;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:account-management skos:definition "The process of creating, managing, and disabling user accounts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:authorization-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:disposition-management skos:definition "The process of managing the disposition of assets, such as hardware and software."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:authorization-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:privilege-management skos:definition "The process of managing user privileges and permissions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:authorization-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:provisioning skos:definition "The process of providing access to resources and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:authorization-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:create-read-update-delete-provisioning skos:definition "The process of provisioning access to create, read, update, and delete data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:provisioning;
+    skos:altLabel "CRUD Provisioning"@en;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:services-provisioning skos:definition "The process of provisioning access to services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:provisioning;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:systems-provisioning skos:definition "The process of provisioning access to systems."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:provisioning;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:credential-assignment skos:definition "The process of assigning credentials to users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:credential-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:credential-collection skos:definition "The process of collecting credentials from users."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:credential-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:credential-validation skos:definition "The process of verifying the authenticity of user credentials."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:credential-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:digital-signature skos:definition "An electronic signature that can be used to verify the authenticity and integrity of digital documents."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:credential-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-integrity skos:definition "The accuracy, completeness, and consistency of data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-mapping skos:definition "The process of mapping data between different systems or applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-publishing skos:definition "The process of making data available to consumers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:directory-management skos:definition "The process of maintaining directories, such as user directories and resource directories."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:metadata-management skos:definition "The process of managing metadata, which is data about data."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:registry-management skos:definition "The process of managing registries, which are databases of information about systems and applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-management;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identities skos:definition "Electronic representations of users, systems, or devices."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-integrity;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identities-to-entities skos:definition "The process of mapping identities to entities in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-mapping;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:identities-to-roles skos:definition "The process of mapping identities to roles in a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-mapping;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:source-to-target-identities skos:definition "The process of mapping identities between a source system and a target system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-mapping;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:component-access skos:definition "Access to individual components of a system."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-publishing;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:content-access skos:definition "Access to content, such as documents, images, and videos."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-publishing;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:data-access skos:definition "The ability to retrieve, modify, copy, or move data from IT systems on demand, ensuring users can access the necessary information while maintaining security and adhering to organizational policies."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-publishing;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:directory-maintenance skos:definition "The process of maintaining directories, such as user directories and resource directories."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-publishing;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:location-access skos:definition "Access to location-based information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-publishing;
+    owl:versionInfo "0.1.0" .
+  
+  technicalservicesvoc:system-access skos:definition "Access to systems and applications."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:broader technicalservicesvoc:data-publishing;
+    owl:versionInfo "0.1.0" .
+  
+  <https://www.insperity.com/vocabulary/core-technicalservices/> skos:altLabel "Vocabulary | Core | Technical Services"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/core-technicalservices/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:customer-feedback core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:digital-user-experience core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:experiential-journey-design core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:form-generation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:human-centered-design core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:persona-tailoring core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:session-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:transactional-journey-design core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:translation-services core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:process-management-rules core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:process-modeling-services core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:change-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:certification-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:architecture-alignment core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:entity-lifecycle-pattern, technicalservicesvoc:identity-lifecycle-pattern,
+      technicalservicesvoc:role-lifecycle-pattern .
+  
+  technicalservicesvoc:authorization-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:account-management, technicalservicesvoc:disposition-management,
+      technicalservicesvoc:privilege-management, technicalservicesvoc:provisioning .
+  
+  technicalservicesvoc:credential-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:credential-assignment, technicalservicesvoc:credential-collection,
+      technicalservicesvoc:credential-validation, technicalservicesvoc:digital-signature .
+  
+  technicalservicesvoc:data-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:data-integrity, technicalservicesvoc:data-mapping,
+      technicalservicesvoc:data-publishing, technicalservicesvoc:directory-management, technicalservicesvoc:metadata-management,
+      technicalservicesvoc:registry-management .
+  
+  technicalservicesvoc:identity-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:centralized-administration, technicalservicesvoc:delegated-administration,
+      technicalservicesvoc:group-administration, technicalservicesvoc:identity-federation,
+      technicalservicesvoc:identity-mediation, technicalservicesvoc:identity-propogation,
+      technicalservicesvoc:identity-qualification-and-approval, technicalservicesvoc:identity-registration .
+  
+  technicalservicesvoc:policy-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:asset-security-policies, technicalservicesvoc:corporate-policies,
+      technicalservicesvoc:data-security-policies, technicalservicesvoc:laws-and-citations-compliance,
+      technicalservicesvoc:network-security-policies, technicalservicesvoc:physical-security-policies,
+      technicalservicesvoc:policy-enforcement, technicalservicesvoc:quality-policies .
+  
+  technicalservicesvoc:protection-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:data-categorization, technicalservicesvoc:data-masking,
+      technicalservicesvoc:data-releasability, technicalservicesvoc:decryption, technicalservicesvoc:encryption-at-rest,
+      technicalservicesvoc:encryption-in-motion, technicalservicesvoc:resource-protection,
+      technicalservicesvoc:temporal-constraint-timer, technicalservicesvoc:token-assignment,
+      technicalservicesvoc:token-management .
+  
+  technicalservicesvoc:reporting-and-analytics core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:exposure-analysis, technicalservicesvoc:predictive-analytics,
+      technicalservicesvoc:resolution-assessment .
+  
+  technicalservicesvoc:threat-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:investigation, technicalservicesvoc:mitigation,
+      technicalservicesvoc:monitoring, technicalservicesvoc:prevention, technicalservicesvoc:training .
+  
+  technicalservicesvoc:entity-lifecycle-pattern core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identity-lifecycle-pattern core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:role-lifecycle-pattern core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:account-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:disposition-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:privilege-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:provisioning core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:create-read-update-delete-provisioning, technicalservicesvoc:services-provisioning,
+      technicalservicesvoc:systems-provisioning .
+  
+  technicalservicesvoc:create-read-update-delete-provisioning core:hasLifecycleStatus
+      core:Draft .
+  
+  technicalservicesvoc:services-provisioning core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:systems-provisioning core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:credential-assignment core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:credential-collection core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:credential-validation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:digital-signature core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-integrity core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:identities .
+  
+  technicalservicesvoc:data-mapping core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:identities-to-entities, technicalservicesvoc:identities-to-roles,
+      technicalservicesvoc:source-to-target-identities .
+  
+  technicalservicesvoc:data-publishing core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:component-access, technicalservicesvoc:content-access,
+      technicalservicesvoc:data-access, technicalservicesvoc:directory-maintenance, technicalservicesvoc:location-access,
+      technicalservicesvoc:system-access .
+  
+  technicalservicesvoc:directory-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:external-entities, technicalservicesvoc:internal-entities .
+  
+  technicalservicesvoc:metadata-management core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:context-alignment, technicalservicesvoc:context-capture,
+      technicalservicesvoc:context-to-entity-mapping .
+  
+  technicalservicesvoc:registry-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identities core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identities-to-entities core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identities-to-roles core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:source-to-target-identities core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:component-access core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:content-access core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-access core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:directory-maintenance core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:location-access core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:system-access core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:external-entities core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:internal-entities core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:logical-location, technicalservicesvoc:physical-location .
+  
+  technicalservicesvoc:logical-location core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:physical-location core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:context-alignment core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:context-capture core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:context-to-entity-mapping core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:centralized-administration core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:delegated-administration core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:group-administration core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identity-federation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identity-mediation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identity-propogation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identity-qualification-and-approval core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:identity-registration core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:asset-security-policies core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:corporate-policies core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-security-policies core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:data-availability, technicalservicesvoc:data-confidentiality,
+      technicalservicesvoc:data-security-integrity .
+  
+  technicalservicesvoc:laws-and-citations-compliance core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:network-security-policies core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:physical-security-policies core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:policy-enforcement core:hasLifecycleStatus core:Draft;
+    skos:narrower technicalservicesvoc:constraint-management, technicalservicesvoc:rules-management .
+  
+  technicalservicesvoc:quality-policies core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-availability core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-confidentiality core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-security-integrity core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:constraint-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:rules-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-categorization core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-masking core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:data-releasability core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:decryption core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:encryption-at-rest core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:encryption-in-motion core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:resource-protection core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:temporal-constraint-timer core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:token-assignment core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:token-management core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:exposure-analysis core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:predictive-analytics core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:resolution-assessment core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:investigation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:mitigation core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:monitoring core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:prevention core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:training core:hasLifecycleStatus core:Draft .
+  
+  technicalservicesvoc:technical-services skos:topConceptOf <https://www.insperity.com/vocabulary/core-technicalservices/>;
+    skos:narrower technicalservicesvoc:data-engineering, technicalservicesvoc:data-operations,
+      technicalservicesvoc:data-services, technicalservicesvoc:enterprise-search, technicalservicesvoc:knowledge-engineering,
+      technicalservicesvoc:platform-operations, technicalservicesvoc:presentation-services,
+      technicalservicesvoc:process-management, technicalservicesvoc:quality-engineering,
+      technicalservicesvoc:release-management, technicalservicesvoc:security-management,
+      technicalservicesvoc:systems-operations, technicalservicesvoc:workflow-automation .
+  
+  technicalservicesvoc:data-engineering skos:narrower technicalservicesvoc:data-integration-service,
+      technicalservicesvoc:methodology-adherence, technicalservicesvoc:social-engineering-and-communication .
+  
+  technicalservicesvoc:data-operations skos:narrower technicalservicesvoc:data-asset-valuation,
+      technicalservicesvoc:data-quality-management .
+  
+  technicalservicesvoc:data-services skos:narrower technicalservicesvoc:data-quality-management,
+      technicalservicesvoc:data-access-layer, technicalservicesvoc:data-acquisition, technicalservicesvoc:data-dispositioning,
+      technicalservicesvoc:data-management-rules, technicalservicesvoc:data-modeling-services,
+      technicalservicesvoc:database-management .
+  
+  technicalservicesvoc:enterprise-search skos:narrower technicalservicesvoc:augmented-search,
+      technicalservicesvoc:boolean-search, technicalservicesvoc:intelligent-search, technicalservicesvoc:phonetic-search,
+      technicalservicesvoc:semantic-search, technicalservicesvoc:token-based-search .
+  
+  technicalservicesvoc:knowledge-engineering skos:narrower technicalservicesvoc:domain-ontologies,
+      technicalservicesvoc:knowledge-graphs, technicalservicesvoc:knowledge-platforming,
+      technicalservicesvoc:ontology-management, technicalservicesvoc:performance-management,
+      technicalservicesvoc:relationship-management, technicalservicesvoc:semantic-knowledge-layer,
+      technicalservicesvoc:taxonomies, technicalservicesvoc:taxonomy-management, technicalservicesvoc:unified-content,
+      technicalservicesvoc:visualization-management, technicalservicesvoc:vocabulary-management .
+  
+  technicalservicesvoc:platform-operations skos:narrower technicalservicesvoc:computing-service .
+  
+  technicalservicesvoc:presentation-services skos:narrower technicalservicesvoc:behavioral-adaptation,
+      technicalservicesvoc:customer-feedback, technicalservicesvoc:digital-user-experience,
+      technicalservicesvoc:experiential-journey-design, technicalservicesvoc:form-generation,
+      technicalservicesvoc:human-centered-design, technicalservicesvoc:persona-tailoring,
+      technicalservicesvoc:session-management, technicalservicesvoc:transactional-journey-design,
+      technicalservicesvoc:translation-services .
+  
+  technicalservicesvoc:process-management skos:narrower technicalservicesvoc:process-management-rules,
+      technicalservicesvoc:process-modeling-services .
+  
+  technicalservicesvoc:quality-engineering skos:narrower technicalservicesvoc:change-management .
+  
+  technicalservicesvoc:release-management skos:narrower technicalservicesvoc:certification-management .
+  
+  technicalservicesvoc:security-management skos:narrower technicalservicesvoc:architecture-alignment,
+      technicalservicesvoc:authorization-management, technicalservicesvoc:credential-management,
+      technicalservicesvoc:data-management, technicalservicesvoc:identity-management, technicalservicesvoc:policy-management,
+      technicalservicesvoc:protection-management, technicalservicesvoc:reporting-and-analytics,
+      technicalservicesvoc:threat-management .
+  
+  technicalservicesvoc:data-integration-service skos:narrower technicalservicesvoc:connection-services,
+      technicalservicesvoc:data-extraction, technicalservicesvoc:data-loading, technicalservicesvoc:data-transformation .
+  
+  technicalservicesvoc:methodology-adherence skos:narrower technicalservicesvoc:implementation,
+      technicalservicesvoc:knowledge-capture, technicalservicesvoc:mapping-validation, technicalservicesvoc:measurement-validation,
+      technicalservicesvoc:query-validation .
+  
+  technicalservicesvoc:social-engineering-and-communication skos:narrower technicalservicesvoc:domain-expertise,
+      technicalservicesvoc:technical-expertise .
+  
+  technicalservicesvoc:knowledge-capture skos:narrower technicalservicesvoc:ontology-discovery,
+      technicalservicesvoc:taxonomy-discovery, technicalservicesvoc:vocabulary-discovery .
+  
+  technicalservicesvoc:data-asset-valuation skos:narrower technicalservicesvoc:data-asset-inventory,
+      technicalservicesvoc:data-asset-investment, technicalservicesvoc:data-asset-prioritization,
+      technicalservicesvoc:data-asset-quantification .
+  
+  technicalservicesvoc:data-quality-management skos:narrower technicalservicesvoc:data-cleansing,
+      technicalservicesvoc:data-profiling, technicalservicesvoc:data-validation .
+  
+  technicalservicesvoc:data-acquisition skos:narrower technicalservicesvoc:external-data-sourcing,
+      technicalservicesvoc:internal-data-sourcing .
+  
+  technicalservicesvoc:data-dispositioning skos:narrower technicalservicesvoc:data-issue-remediation .
+  
+  technicalservicesvoc:database-management skos:narrower technicalservicesvoc:indexing-services .
+  
+  technicalservicesvoc:performance-management skos:narrower technicalservicesvoc:continuity,
+      technicalservicesvoc:extensions-build, technicalservicesvoc:knowledge-graph-support,
+      technicalservicesvoc:linear-scaling, technicalservicesvoc:location-based-intelligence,
+      technicalservicesvoc:semantic-mapping-support, technicalservicesvoc:shacl-constraints .
+  
+  technicalservicesvoc:semantic-knowledge-layer skos:narrower technicalservicesvoc:application-programming-interface-support,
+      technicalservicesvoc:relational-database-to-resource-description-framework-integration,
+      technicalservicesvoc:security-support, technicalservicesvoc:sql-queries .
+  
+  technicalservicesvoc:taxonomy-management skos:narrower technicalservicesvoc:build-taxonomies,
+      technicalservicesvoc:manage-taxonomies .
+  
+  technicalservicesvoc:visualization-management skos:narrower technicalservicesvoc:filtering,
+      technicalservicesvoc:hierarchical-maps, technicalservicesvoc:natural-language-query,
+      technicalservicesvoc:visual-exploration, technicalservicesvoc:visual-maps, technicalservicesvoc:visual-optimization .
+  
+  technicalservicesvoc:vocabulary-management skos:narrower technicalservicesvoc:edge-categorization,
+      technicalservicesvoc:inferencing-rules, technicalservicesvoc:instantiate-math-symbolics,
+      technicalservicesvoc:internationalized-resource-identifier-construction, technicalservicesvoc:persisted-identifer-creation,
+      technicalservicesvoc:property-assignment, technicalservicesvoc:semantic-association,
+      technicalservicesvoc:term-mining, technicalservicesvoc:text-analysis-and-term-extraction,
+      technicalservicesvoc:weight-assignment .
+  
+  technicalservicesvoc:build-taxonomies skos:narrower technicalservicesvoc:auto-tagging-and-semantic-extension,
+      technicalservicesvoc:build-associated-taxonomies, technicalservicesvoc:organize-entities-into-hierarchies,
+      technicalservicesvoc:skos-based-vocabularies .
+  
+  technicalservicesvoc:manage-taxonomies skos:narrower technicalservicesvoc:inference-management,
+      technicalservicesvoc:polymorphic-meaning .
+  
+  technicalservicesvoc:computing-service skos:narrower technicalservicesvoc:storage-management-services .
+  
+  technicalservicesvoc:storage-management-services skos:narrower technicalservicesvoc:archival-services,
+      technicalservicesvoc:disposal-services, technicalservicesvoc:retention-services .
+}

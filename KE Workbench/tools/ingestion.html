@@ -232,7 +232,7 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
         <span style="flex:1"></span>
         <button class="btn pri" id="refBoth">Load all three</button>
       </div>
-      <div class="status" id="refStatus" style="margin-top:8px">Each replaces its own named graph: BFO in <span class="mono">http://purl.obolibrary.org/obo/bfo.owl</span>, RO Core in <span class="mono">http://purl.obolibrary.org/obo/ro/core.owl</span>, the RO extract (<span class="mono">reference/ro-extract.ttl</span> in the workbench folder) in <span class="mono">https://www.insperity.com/reference/ro-extract/</span>. The workbench downloads the file itself and reads its format, so GraphDB needs no internet access.</div>
+      <div class="status" id="refStatus" style="margin-top:8px">Defaults are the copies in <span class="mono">KE Baseline/Baseline Core v1.0/reference/</span>; a URL works too. Each replaces its own named graph: BFO in <span class="mono">http://purl.obolibrary.org/obo/bfo.owl</span>, RO Core in <span class="mono">http://purl.obolibrary.org/obo/ro/core.owl</span>, the RO extract in <span class="mono">https://www.insperity.com/reference/ro-extract/</span>. The workbench downloads the file itself and reads its format, so GraphDB needs no internet access.</div>
     </div>
   </section>
 
@@ -622,9 +622,9 @@ pre.code{font-family:var(--ke-mono);font-size:11.5px;line-height:1.5;background:
 
 
   // ── reference ontologies (BFO, RO Core): /api/ingest/load-url fetches the file and loads it into its own named graph ──
-  const REF = { bfo: { field: 'refBfo', key: 'ke-bfo-url', def: 'http://purl.obolibrary.org/obo/bfo.owl', graph: 'http://purl.obolibrary.org/obo/bfo.owl', name: 'BFO' },
-                ro:  { field: 'refRo', key: 'ke-ro-url', def: 'http://purl.obolibrary.org/obo/ro/core.owl', graph: 'http://purl.obolibrary.org/obo/ro/core.owl', name: 'RO Core' },
-                rx:  { field: 'refRx', key: 'ke-rx-path', def: 'reference/ro-extract.ttl', graph: 'https://www.insperity.com/reference/ro-extract/', name: 'RO extract' } };
+  const REF = { bfo: { field: 'refBfo', key: 'ke-bfo-src', def: '../KE Baseline/Baseline Core v1.0/reference/bfo-core.ttl', graph: 'http://purl.obolibrary.org/obo/bfo.owl', name: 'BFO' },
+                ro:  { field: 'refRo', key: 'ke-ro-src', def: '../KE Baseline/Baseline Core v1.0/reference/ro-core.owl', graph: 'http://purl.obolibrary.org/obo/ro/core.owl', name: 'RO Core' },
+                rx:  { field: 'refRx', key: 'ke-rx-src', def: '../KE Baseline/Baseline Core v1.0/reference/ro-extract.ttl', graph: 'https://www.insperity.com/reference/ro-extract/', name: 'RO extract' } };
   Object.values(REF).forEach(r => { $(r.field).value = ls.get(r.key, r.def) || r.def; $(r.field).addEventListener('change', () => ls.set(r.key, $(r.field).value.trim())); });
   $('refRepo').value = ls.get('ke-repo', 'value-kb') || 'value-kb';
   $('refRepo').addEventListener('change', () => ls.set('ke-repo', $('refRepo').value.trim()));

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Editor · Ontology</title>
+<script src="../assets/ke-sparql.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--ke-bg);color:var(--ke-ink);font:13px/1.4 var(--ke-sans);display:flex;flex-direction:column;overflow:hidden}
+  button,input,select{font:inherit;color:inherit}
+  .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);flex-wrap:wrap}
+  .bar h1{font-size:15px;margin:0 6px 0 0;font-weight:700;white-space:nowrap}
+  .bar h1 .k{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ke-kind-ont);margin-right:7px}
+  .sel{background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;max-width:420px;min-width:220px}
+  .sp{flex:1}
+  .btn{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 11px;cursor:pointer;white-space:nowrap}
+  .btn:hover:not(:disabled){border-color:var(--ke-accent);color:var(--ke-accent)}
+  .btn:disabled{opacity:.45;cursor:default}
+  .btn.primary{background:var(--ke-accent);border-color:var(--ke-accent);color:var(--ke-accent-ink);font-weight:700}
+  .btn.primary:hover:not(:disabled){filter:brightness(1.08);color:var(--ke-accent-ink)}
+  .btn.sm{padding:2px 8px;font-size:12px}
+  .btn.danger:hover:not(:disabled){border-color:var(--ke-bad);color:var(--ke-bad)}
+  .badge{display:inline-block;min-width:20px;padding:0 6px;border-radius:10px;background:var(--ke-warn-soft);color:var(--ke-warn);font-size:11px;font-weight:700;text-align:center}
+  .main{flex:1;display:grid;grid-template-columns:minmax(250px,320px) 1fr minmax(250px,300px);min-height:0}
+  .pane{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--ke-surface)}
+  .sec{display:flex;flex-direction:column;min-height:0}
+  .sec.models{flex:0 0 auto;max-height:38%;border-bottom:1px solid var(--ke-line)}
+  .sec.terms{flex:1}
+  .ph{padding:10px 12px 8px;display:flex;flex-direction:column;gap:7px;border-bottom:1px solid var(--ke-line-soft)}
+  .ph .t{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);font-weight:700;display:flex;align-items:center;gap:6px}
+  .search{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px}
+  .list{overflow:auto;padding:4px 0 16px;flex:1}
+  .hint{color:var(--ke-faint);font-size:12px;padding:8px 12px}
+  .kchip{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.04em;border-radius:3px;padding:1px 4px;color:#fff;flex:none}
+  .kchip.ont{background:var(--ke-kind-ont)} .kchip.tax{background:var(--ke-kind-tax)} .kchip.voc{background:var(--ke-kind-voc)}
+  :root[data-theme="dark"] .kchip{color:#0B1520}
+  .mrow{display:flex;align-items:center;gap:7px;padding:3px 12px;cursor:grab}
+  .mrow:hover{background:var(--ke-band)}
+  .mrow .lb{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mrow .imp{font-size:10px;color:var(--ke-accent)}
+  .mrow.target{opacity:.7}
+  .mrow{user-select:none}
+  .ghead{display:flex;align-items:center;gap:6px;padding:6px 12px 3px;font-size:11px;font-weight:700;color:var(--ke-muted);cursor:pointer;position:sticky;top:0;background:var(--ke-surface);z-index:1}
+  .ghead .lb{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .term{display:flex;align-items:center;gap:6px;padding:3px 12px;cursor:grab;user-select:none;white-space:nowrap;border-left:3px solid transparent}
+  .term:hover{background:var(--ke-band)}
+  .term.on{background:var(--ke-accent-soft);border-left-color:var(--ke-accent)}
+  .term .lb{overflow:hidden;text-overflow:ellipsis}
+  .term .oncv{font-size:10px;color:var(--ke-faint)}
+  /* canvas */
+  .cv{position:relative;overflow:hidden;background:var(--ke-bg);border-left:1px solid var(--ke-line);border-right:1px solid var(--ke-line);cursor:default;
+      background-image:radial-gradient(var(--ke-line) 1px,transparent 1px);background-size:22px 22px}
+  .cv.panning{cursor:grabbing}
+  .cv.dropping{outline:2px dashed var(--ke-accent);outline-offset:-6px}
+  .world{position:absolute;left:0;top:0;transform-origin:0 0}
+  svg.edges{position:absolute;left:0;top:0;width:1px;height:1px;overflow:visible}
+  .edge path.hit{stroke:transparent;stroke-width:14;fill:none;cursor:pointer}
+  .edge path.ln{stroke:var(--ke-ink2);stroke-width:1.4;fill:none}
+  .edge.isa path.ln{stroke-dasharray:5 4}
+  .edge.new path.ln{stroke:var(--ke-warn)}
+  .edge.on path.ln{stroke:var(--ke-accent);stroke-width:2.4}
+  .edge text{font-size:11px;fill:var(--ke-ink2);paint-order:stroke;stroke:var(--ke-bg);stroke-width:4px;stroke-linejoin:round;cursor:pointer}
+  .edge.new text{fill:var(--ke-warn)} .edge.on text{fill:var(--ke-accent);font-weight:700}
+  .tmp{stroke:var(--ke-accent);stroke-width:2;stroke-dasharray:4 3;fill:none}
+  .node{position:absolute;min-width:120px;max-width:220px;background:var(--ke-surface);border:1px solid var(--ke-line);border-left:4px solid var(--ke-kind-ont);border-radius:6px;
+        box-shadow:var(--ke-shadow);padding:6px 22px 6px 9px;cursor:move;user-select:none}
+  .node.tax{border-left-color:var(--ke-kind-tax)} .node.voc{border-left-color:var(--ke-kind-voc)} .node.ext{border-left-color:var(--ke-faint)}
+  .node.on{border-color:var(--ke-accent);box-shadow:0 0 0 2px var(--ke-accent-soft),var(--ke-shadow)}
+  .node.target-hover{border-color:var(--ke-ok);box-shadow:0 0 0 3px var(--ke-ok-soft)}
+  .node .nl{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .node .ns{font-size:10px;color:var(--ke-faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .node .h{position:absolute;right:-8px;top:50%;margin-top:-8px;width:16px;height:16px;border-radius:50%;background:var(--ke-accent);color:var(--ke-accent-ink);
+           font-size:12px;line-height:15px;text-align:center;cursor:crosshair;font-weight:700;opacity:.85}
+  .node .h:hover{opacity:1;transform:scale(1.15)}
+  body.dragging, body.dragging *{cursor:grabbing!important;user-select:none!important}
+  .ghost{position:fixed;z-index:90;pointer-events:none;display:none;background:var(--ke-accent);color:var(--ke-accent-ink);font-size:12px;font-weight:600;padding:4px 9px;border-radius:5px;box-shadow:var(--ke-shadow);white-space:nowrap}
+  .cvtools{position:absolute;right:10px;top:10px;display:flex;gap:4px;z-index:5}
+  .cvhelp{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);text-align:center;color:var(--ke-faint);pointer-events:none;max-width:380px;line-height:1.6}
+  .cvhelp b{color:var(--ke-muted)}
+  /* picker */
+  .picker{position:fixed;z-index:70;width:340px;max-height:430px;display:none;flex-direction:column;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+  .picker.open{display:flex}
+  .picker .hd{padding:10px 12px 8px;border-bottom:1px solid var(--ke-line-soft);font-size:12px}
+  .picker .hd b{font-weight:700}
+  .picker .rl{overflow:auto;flex:1;padding:4px 0}
+  .picker .r{padding:4px 12px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .picker .r:hover,.picker .r.hi{background:var(--ke-accent-soft)}
+  .picker .r .id{font-family:var(--ke-mono);font-size:10px;color:var(--ke-faint);margin-left:6px}
+  .picker .def{padding:8px 12px;border-top:1px solid var(--ke-line-soft);font-size:11px;color:var(--ke-muted);min-height:38px;max-height:80px;overflow:auto}
+  .picker .pat{display:flex;gap:10px;padding:8px 12px;border-top:1px solid var(--ke-line-soft);font-size:12px;flex-wrap:wrap}
+  .picker .pat label{display:flex;gap:4px;align-items:center;cursor:pointer}
+  .picker .warn{padding:8px 12px;font-size:12px;background:var(--ke-warn-soft);color:var(--ke-warn)}
+  /* inspector */
+  .side{padding:12px;overflow:auto;flex:1}
+  .side h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);margin:4px 0 8px;display:flex;align-items:center;gap:6px}
+  .kv{font-size:12px;margin-bottom:10px}
+  .kv .k{color:var(--ke-muted);font-size:11px}
+  .kv code{font-family:var(--ke-mono);font-size:11px;word-break:break-all;color:var(--ke-ink2)}
+  .rel{display:flex;gap:6px;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid var(--ke-line-soft)}
+  .rel .tx{flex:1;min-width:0}
+  .rel .x{cursor:pointer;color:var(--ke-faint);padding:0 4px}
+  .rel .x:hover{color:var(--ke-bad)}
+  .chg{font-size:12px;padding:5px 0;border-bottom:1px solid var(--ke-line-soft)}
+  .op{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:0 5px;border-radius:3px;margin-right:5px}
+  .op.add{background:var(--ke-ok-soft);color:var(--ke-ok)} .op.del{background:var(--ke-bad-soft);color:var(--ke-bad)} .op.imp{background:var(--ke-accent-soft);color:var(--ke-accent)}
+  .banner{margin:8px 12px;padding:8px 10px;border-radius:var(--ke-radius);background:var(--ke-warn-soft);color:var(--ke-warn);font-size:12px}
+  .banner .btn{margin-top:6px}
+  .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ke-ink);color:var(--ke-bg);padding:8px 14px;border-radius:6px;font-size:12px;box-shadow:var(--ke-shadow);display:none;z-index:80;max-width:80vw}
+  .toast.bad{background:var(--ke-bad);color:#fff}
+  .cfg{position:relative}
+  .pop{position:absolute;right:0;top:calc(100% + 6px);background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);box-shadow:var(--ke-shadow);padding:12px;width:320px;display:none;z-index:60}
+  .pop.open{display:block}
+  .pop label.f{display:block;font-size:11px;color:var(--ke-muted);margin:0 0 4px}
+  .pop input[type=text],.pop select{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;margin-bottom:10px}
+  .pop .ck{display:flex;gap:6px;align-items:flex-start;font-size:12px;margin-bottom:10px}
+  .pop code{font-family:var(--ke-mono);font-size:11px;word-break:break-all}
+  @media (max-width:900px){.main{grid-template-columns:1fr}.pane.left,.pane.right{display:none}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h1><span class="k"></span>Model Editor · Ontology</h1>
+  <select id="ontSel" class="sel" title="Ontology to edit — new relations are written into it"><option value="">Loading ontologies…</option></select>
+  <span class="sp"></span>
+  <button class="btn" id="btnUndo" title="Undo (Ctrl+Z)" disabled>Undo</button>
+  <button class="btn" id="btnDiscard" disabled>Discard</button>
+  <button class="btn primary" id="btnSave" title="Save to GraphDB (Ctrl+S)" disabled>Save <span id="saveCount"></span></button>
+  <div class="cfg">
+    <button class="btn" id="btnCfg" title="Settings">⚙</button>
+    <div class="pop" id="pop">
+      <label class="f" for="repoId">Repository</label>
+      <input id="repoId" type="text" value="value-kb">
+      <label class="f" for="relSrc">Relations list comes from</label>
+      <select id="relSrc"><option value="">BFO and RO relations (obo:BFO_ / obo:RO_)</option></select>
+      <label class="ck"><input type="checkbox" id="addImports" checked> When a term from another model is related, add <code>owl:imports</code> for that model</label>
+      <label class="f">Writes go to named graph</label>
+      <div><code id="graphOut">—</code></div>
+      <div style="margin-top:10px;text-align:right"><button class="btn sm" id="btnReload">Reload</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <section class="pane left">
+    <div class="sec models">
+      <div class="ph">
+        <div class="t">Models</div>
+        <input id="modelFilter" class="search" placeholder="Filter ontologies, taxonomies, vocabularies">
+      </div>
+      <div class="list" id="modelList"><div class="hint">Loading…</div></div>
+    </div>
+    <div class="sec terms">
+      <div class="ph">
+        <div class="t">Terms <span id="termCount" style="color:var(--ke-faint);font-weight:400;text-transform:none;letter-spacing:0"></span></div>
+        <input id="termSearch" class="search" placeholder="Find a class or concept">
+      </div>
+      <div id="bfoBanner"></div>
+      <div class="list" id="termList"><div class="hint">Tick models above to load their terms. Imports of the selected ontology load automatically.</div></div>
+    </div>
+  </section>
+
+  <section class="cv" id="cv">
+    <div class="world" id="world"><svg class="edges" id="edges"></svg><div id="nodes"></div></div>
+    <div class="cvtools">
+      <button class="btn sm" id="zIn" title="Zoom in">+</button>
+      <button class="btn sm" id="zOut" title="Zoom out">−</button>
+      <button class="btn sm" id="zFit" title="Fit to view">Fit</button>
+      <button class="btn sm" id="btnLayout" title="Lay out this ontology's class hierarchy (replaces the canvas; Undo restores it)">Show ontology</button>
+      <button class="btn sm" id="btnShowAll" title="Add every term that has a non-“is a” relation in this ontology">Show relations</button>
+      <button class="btn sm danger" id="btnClear" title="Clear the canvas (nothing is deleted)">Clear</button>
+    </div>
+    <div class="cvhelp" id="cvHelp">Choose an ontology, then drag terms from the left onto the canvas.<br>Drag from a node’s <b>+</b> handle to another node to create a relation.</div>
+  </section>
+
+  <section class="pane right">
+    <div class="side">
+      <h3>Inspector</h3>
+      <div id="insp" class="kv"><span class="k">Select a node or a relation.</span></div>
+      <h3 style="margin-top:16px">Pending changes <span id="chgBadge" class="badge" style="display:none"></span></h3>
+      <div id="changes"><div style="color:var(--ke-faint);font-size:12px">No unsaved changes.</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="picker" id="picker">
+  <div class="hd" id="pkHead"></div>
+  <div style="padding:8px 12px 4px"><input id="pkSearch" class="search" placeholder="Search relations"></div>
+  <div class="rl" id="pkList"></div>
+  <div class="def" id="pkDef">Hover a relation to see its definition.</div>
+  <div class="pat" id="pkPat">
+    <label title="Every A has this relation to some B — rdfs:subClassOf [owl:someValuesFrom]"><input type="radio" name="pat" value="some"> some (∃)</label>
+    <label title="A has this relation only to B — rdfs:subClassOf [owl:allValuesFrom]"><input type="radio" name="pat" value="only"> only (∀)</label>
+    <label title="A plain triple: A relation B (for concepts and individuals)"><input type="radio" name="pat" value="direct"> direct triple</label>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const S = window.KE_SPARQL, NS = S.NS;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const SUBCLASS = NS.rdfs + 'subClassOf';
+
+  // ---------------------------------------------------------------- state
+  let assets = [];                 // {iri,type,kind,label}
+  let target = null, tgraph = null, tgraphs = [];
+  let imports = new Set();
+  const loaded = new Map();        // model iri -> {iri,kind,label,terms:[{iri,depth}], open}
+  const termInfo = new Map();      // term iri -> {label, model, kind}
+  let relations = [];              // [{iri,label,parent,def,depth}]
+  const relLabel = new Map();
+  let nodes = new Map();           // iri -> {x,y}
+  let edges = new Map();           // key -> {s,p,o,pat}
+  let origEdges = new Map();
+  let history = [];
+  let selected = { nodes: new Set(), edge: null };
+  let termSel = new Set(), lastTerm = null, visibleTerms = [];
+  let view = { x: 40, y: 40, k: 1 };
+
+  const key = (e) => `${e.s}|${e.p}|${e.o}|${e.pat}`;
+  const lbl = (i) => (termInfo.get(i) || {}).label || S.localName(i);
+  const rl = (p) => p === SUBCLASS ? 'is a' : (relLabel.get(p) || S.localName(p));
+  const kindOfNode = (i) => (termInfo.get(i) || {}).kind || 'ext';
+  function toast(msg, bad) {
+    const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.style.display = 'block';
+    clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = 'none', bad ? 6000 : 2600);
+  }
+  function snapshot() { return { nodes: new Map([...nodes].map(([k, v]) => [k, { ...v }])), edges: new Map(edges) }; }
+  function restore(s) { nodes = new Map([...s.nodes].map(([k, v]) => [k, { ...v }])); edges = new Map(s.edges); }
+  function push() { history.push(snapshot()); if (history.length > 200) history.shift(); }
+
+  // ---------------------------------------------------------------- loading
+
+  // Terms of an OWL model: rdfs:isDefinedBy the model, in its named graph, or in its
+  // namespace (IRI#… or IRI/…) unless rdfs:isDefinedBy points to a different model.
+  function owlMemberPattern(m, gs, v) {
+    v = v || '?c';
+    const I = S.iri(m), base = m.replace(/[\/#]$/, '');
+    const gv = (gs || []).map(S.iri).join(' ');
+    const ns = `(STRSTARTS(STR(${v}), ${S.lit(base + '#')}) || STRSTARTS(STR(${v}), ${S.lit(base + '/')}))`;
+    return `{ ${v} rdfs:isDefinedBy ${I} . ${v} a owl:Class }`
+      + (gv ? ` UNION { VALUES ?gm { ${gv} } GRAPH ?gm { ${v} a owl:Class } }` : '')
+      + ` UNION { ${v} a owl:Class . FILTER(isIRI(${v}) && ${ns}) FILTER NOT EXISTS { ${v} rdfs:isDefinedBy ?otherDef FILTER(?otherDef != ${I}) } }`;
+  }
+
+  async function graphsOf(m) {
+    try {
+      const r = await S.select(`SELECT DISTINCT ?g WHERE { GRAPH ?g { ${S.iri(m)} a ?t } }`);
+      return r.map(x => x.g);
+    } catch (e) { return []; }
+  }
+
+  async function loadAssets() {
+    try { assets = await S.listAssets(); }
+    catch (e) { $('ontSel').innerHTML = '<option value="">GraphDB not reachable</option>'; $('modelList').innerHTML = '<div class="hint">GraphDB not reachable.</div>'; toast(e.message, true); return; }
+    const onts = assets.filter(a => a.type === 'ontology');
+    $('ontSel').innerHTML = '<option value="">Choose an ontology to edit…</option>' +
+      onts.map(a => `<option value="${esc(a.iri)}">${esc(a.label)} — ${esc(S.localName(a.iri))}</option>`).join('');
+    $('relSrc').innerHTML = '<option value="">BFO and RO relations (obo:BFO_ / obo:RO_)</option>' +
+      onts.map(a => `<option value="${esc(a.iri)}">${esc(a.label)}</option>`).join('');
+    $('relSrc').value = S.lsGet('ke-rel-src') || '';
+    renderModels();
+    await loadRelations();
+    const p = S.param('ontology') || S.lsGet('ke-ont-last');
+    if (p && onts.some(a => a.iri === p)) { $('ontSel').value = p; await openOntology(p, S.param('graph')); }
+  }
+
+  async function loadRelations() {
+    const src = $('relSrc').value;
+    let where;
+    if (src) {
+      const gs = await graphsOf(src);
+      const gv = (gs.length ? gs : [src]).map(S.iri).join(' ');
+      where = `{ VALUES ?g { ${gv} } GRAPH ?g { ?p a owl:ObjectProperty } } UNION { ?p a owl:ObjectProperty ; rdfs:isDefinedBy ${S.iri(src)} }`;
+    } else {
+      where = `?p a owl:ObjectProperty . FILTER(STRSTARTS(STR(?p), "http://purl.obolibrary.org/obo/BFO_") || STRSTARTS(STR(?p), "http://purl.obolibrary.org/obo/RO_"))`;
+    }
+    try {
+      const rows = await S.select(
+        `SELECT ?p (SAMPLE(?l0) AS ?l) (SAMPLE(?par0) AS ?par) (SAMPLE(?d0) AS ?d) WHERE {
+           ${where}
+           OPTIONAL { ?p rdfs:label ?l0 FILTER(LANG(?l0) = "en" || LANG(?l0) = "") }
+           OPTIONAL { ?p rdfs:subPropertyOf ?par0 FILTER(isIRI(?par0)) }
+           OPTIONAL { ?p obo:IAO_0000115|skos:definition ?d0 }
+         } GROUP BY ?p`);
+      relLabel.clear();
+      const byIri = new Map();
+      rows.filter(r => !/^(DEPRECATED|obsolete)\b/i.test(r.l || '')).forEach(r => { byIri.set(r.p, { iri: r.p, label: r.l || S.localName(r.p), parent: r.par, def: r.d || '' }); relLabel.set(r.p, r.l || S.localName(r.p)); });
+      // order as a tree by rdfs:subPropertyOf
+      const kids = new Map(); const rootsR = [];
+      byIri.forEach(r => { if (r.parent && byIri.has(r.parent) && r.parent !== r.iri) { if (!kids.has(r.parent)) kids.set(r.parent, []); kids.get(r.parent).push(r); } else rootsR.push(r); });
+      const sortL = (a, b) => a.label.localeCompare(b.label);
+      relations = [];
+      const seen = new Set();
+      const walk = (r, d) => { if (seen.has(r.iri)) return; seen.add(r.iri); relations.push({ ...r, depth: d }); (kids.get(r.iri) || []).sort(sortL).forEach(k => walk(k, d + 1)); };
+      rootsR.sort(sortL).forEach(r => walk(r, 0));
+      byIri.forEach(r => { if (!seen.has(r.iri)) walk(r, 0); });
+    } catch (e) { relations = []; toast(e.message, true); }
+    renderBanner();
+  }
+
+  function renderBanner() {
+    if (relations.length || $('relSrc').value) { $('bfoBanner').innerHTML = relations.length ? '' : '<div class="banner">The selected relation source has no object properties.</div>'; return; }
+    $('bfoBanner').innerHTML = `<div class="banner">No BFO or RO relations found in <b>${esc(S.repo())}</b>. Only “is a” is available until they are loaded.<br>
+      Load BFO and the RO Core relations on the <a href="ingestion.html" target="_blank">Ingestion</a> page, under <b>Reference ontologies</b>, then ⚙ › Reload here.</div>`;
+  }
+
+  async function openOntology(o, g) {
+    if (dirty() && !confirm('Discard unsaved changes?')) { $('ontSel').value = target || ''; return; }
+    target = o; S.lsSet('ke-ont-last', o);
+    const gs = await graphsOf(o);
+    tgraph = g && gs.includes(g) ? g : (gs[0] || null);
+    tgraphs = gs;
+    $('graphOut').textContent = tgraph || 'default graph (this ontology has no named graph)';
+    nodes = new Map(); edges = new Map(); origEdges = new Map(); history = []; selected = { nodes: new Set(), edge: null };
+    try {
+      const imp = await S.select(`SELECT DISTINCT ?i WHERE { ${S.iri(o)} owl:imports ?i }`);
+      imports = new Set(imp.map(r => r.i));
+    } catch (e) { imports = new Set(); }
+    // load the ontology itself and its imports
+    const want = [o, ...imports].filter(m => assets.some(a => a.iri === m));
+    for (const m of want) if (!loaded.has(m)) await loadModel(m);
+    await loadEdges();
+    // restore a saved (non-empty) layout, else lay out the ontology's class hierarchy
+    let lay = null; try { lay = JSON.parse(S.lsGet(layoutKey()) || 'null'); } catch (e) {}
+    // A saved layout is kept only if its terms still exist: after identifiers change (e.g. ProcessStep → process-step in 3.0.0)
+    // an old layout would show boxes for terms that are gone and none of the relations between the current ones.
+    if (lay && lay.nodes) {
+      const known = new Set([...((loaded.get(o) || {}).terms || []).map(t => t.iri), ...[...edges.values()].flatMap(e => [e.s, e.o])]);
+      const all = Object.keys(lay.nodes), keep = all.filter(i => known.has(i));
+      if (!all.length || keep.length < all.length / 2) { lay = null; try { localStorage.removeItem(layoutKey()); } catch (e) {} }
+      else lay.nodes = Object.fromEntries(keep.map(i => [i, lay.nodes[i]]));
+    }
+    if (lay) { Object.entries(lay.nodes).forEach(([i, p]) => nodes.set(i, p)); (lay.models || []).forEach(m => { if (!loaded.has(m) && assets.some(a => a.iri === m)) loadModel(m); }); }
+    else layoutOntology(true);
+    await ensureInfo([...nodes.keys()]);
+    renderModels(); renderAll(); fit();
+  }
+
+  async function loadModel(m) {
+    const a = assets.find(x => x.iri === m); if (!a) return;
+    const kind = a.type === 'ontology' ? (a.kind === 'tax' ? 'tax' : 'ont') : a.kind;
+    const isClass = a.type === 'ontology';
+    const entry = { iri: m, kind, label: a.label, terms: [], open: true, loading: true };
+    loaded.set(m, entry); renderModels(); renderTerms();
+    try {
+      let rows;
+      if (a.type === 'ontology') {
+        const gs = await graphsOf(m);
+        rows = await S.select(
+          `SELECT DISTINCT ?c ?b WHERE {
+             { SELECT DISTINCT ?c WHERE { ${owlMemberPattern(m, gs)} } }
+             OPTIONAL { ?c rdfs:subClassOf ?b FILTER(isIRI(?b)) }
+             FILTER(isIRI(?c))
+           }`);
+      } else {
+        const I = S.iri(m);
+        rows = await S.select(
+          `SELECT ?c ?b WHERE {
+             { ?c skos:inScheme ${I} } UNION { ${I} skos:hasTopConcept ?c } UNION { ?c skos:topConceptOf ${I} }
+             OPTIONAL { { ?c skos:broader ?b } UNION { ?b skos:narrower ?c } }
+           }`);
+      }
+      const members = new Set(rows.map(r => r.c));
+      const par = new Map();
+      rows.forEach(r => { if (!par.has(r.c)) par.set(r.c, new Set()); if (r.b && members.has(r.b) && r.b !== r.c) par.get(r.c).add(r.b); });
+      await fetchInfo([...members], m, kind, isClass);
+      const kids = new Map(); members.forEach(c => kids.set(c, []));
+      par.forEach((ps, c) => ps.forEach(p => kids.get(p).push(c)));
+      const sortL = (x, y) => lbl(x).localeCompare(lbl(y));
+      const out = [], seen = new Set();
+      const walk = (c, d) => { if (seen.has(c)) return; seen.add(c); out.push({ iri: c, depth: d }); kids.get(c).sort(sortL).forEach(k => walk(k, d + 1)); };
+      [...members].filter(c => !par.get(c).size).sort(sortL).forEach(c => walk(c, 0));
+      [...members].filter(c => !seen.has(c)).sort(sortL).forEach(c => walk(c, 0));
+      entry.terms = out;
+    } catch (e) { toast(e.message, true); }
+    entry.loading = false;
+    renderTerms(); renderNodes();
+  }
+
+  async function fetchInfo(list, model, kind, isClass) {
+    for (let i = 0; i < list.length; i += 400) {
+      const chunk = list.slice(i, i + 400);
+      const rows = await S.select(
+        `SELECT ?c ?l (LANG(?l) AS ?lang) ?src WHERE { VALUES ?c { ${chunk.map(S.iri).join(' ')} }
+           { ?c skos:prefLabel ?l BIND("pref" AS ?src) } UNION { ?c rdfs:label ?l BIND("rdfs" AS ?src) } }`);
+      const cand = new Map();
+      rows.forEach(r => { if (!cand.has(r.c)) cand.set(r.c, []); cand.get(r.c).push({ v: r.l, lang: r.lang || '', src: r.src }); });
+      chunk.forEach(c => {
+        const prev = termInfo.get(c);
+        if (prev && prev.model && model && prev.model !== model) return; // keep first home
+        termInfo.set(c, { label: cand.has(c) ? S.pickLabel(cand.get(c)) : S.localName(c), model: model || (prev && prev.model) || null, kind: kind || (prev && prev.kind) || 'ext', cls: isClass != null ? isClass : !!(prev && prev.cls) });
+      });
+    }
+  }
+  // Labels/kinds for canvas nodes that don't belong to a loaded model.
+  async function ensureInfo(list) {
+    const missing = list.filter(i => !termInfo.has(i));
+    if (!missing.length) return;
+    try {
+      await fetchInfo(missing, null, null);
+      const rows = await S.select(`SELECT ?c ?t WHERE { VALUES ?c { ${missing.map(S.iri).join(' ')} } ?c a ?t FILTER(?t IN (owl:Class, skos:Concept)) }`);
+      rows.forEach(r => { const t = termInfo.get(r.c); if (!t) return; if (r.t === NS.owl + 'Class') t.cls = true; if (t.kind === 'ext') t.kind = r.t === NS.skos + 'Concept' ? 'voc' : 'ont'; });
+    } catch (e) {}
+  }
+
+  function targetMember(v) { return owlMemberPattern(target, tgraphs, v); }
+  async function loadEdges() {
+    const relVals = relations.map(r => S.iri(r.iri)).join(' ');
+    try {
+      const rows = await S.select(
+        `SELECT DISTINCT ?s ?p ?o ?pat WHERE {
+           { SELECT DISTINCT ?s WHERE { ${targetMember('?s')} } }
+           { ?s rdfs:subClassOf ?r . FILTER(isBlank(?r)) ?r owl:onProperty ?p .
+             { ?r owl:someValuesFrom ?o BIND("some" AS ?pat) } UNION { ?r owl:allValuesFrom ?o BIND("only" AS ?pat) } }
+           UNION { ?s rdfs:subClassOf ?o . BIND(rdfs:subClassOf AS ?p) BIND("subclass" AS ?pat) }
+           ${relVals ? `UNION { VALUES ?p { ${relVals} } ?s ?p ?o . BIND("direct" AS ?pat) }` : ''}
+           FILTER(isIRI(?o) && isIRI(?p))
+         }`);
+      rows.forEach(r => { const e = { s: r.s, p: r.p, o: r.o, pat: r.pat }; edges.set(key(e), e); origEdges.set(key(e), e); });
+      // labels for relations outside the BFO/RO list (e.g. core:hasRole → "has role")
+      const unl = [...new Set(rows.map(r => r.p))].filter(p => p !== SUBCLASS && !relLabel.has(p));
+      if (unl.length) {
+        const ls = await S.select(`SELECT ?p (SAMPLE(?l0) AS ?l) WHERE { VALUES ?p { ${unl.map(S.iri).join(' ')} } ?p rdfs:label|skos:prefLabel ?l0 FILTER(LANG(?l0) = "en" || LANG(?l0) = "") } GROUP BY ?p`);
+        ls.forEach(r => { if (r.l) relLabel.set(r.p, r.l); });
+      }
+    } catch (e) { toast(e.message, true); }
+  }
+
+  // Place every term that takes part in a non-"is a" relation (or all, if few).
+  // Place the edited ontology's classes as a top-down tree (rdfs:subClassOf),
+  // plus any other terms they are related to.
+  const MAX_LAYOUT = 250;
+  function layoutOntology(initial) {
+    const entry = loaded.get(target);
+    const members = entry ? entry.terms.map(t => t.iri) : [];
+    if (!members.length) { if (!initial) toast('This ontology has no classes to show yet.'); return; }
+    const list = members.slice(0, MAX_LAYOUT), set = new Set(list);
+    if (!initial) push();
+    nodes = new Map();
+    const parentOf = new Map(), kids = new Map();
+    list.forEach(i => kids.set(i, []));
+    // Each class goes under its most specific parent (the one deepest in the hierarchy).
+    const ps = new Map(); list.forEach(i => ps.set(i, []));
+    edges.forEach(e => { if (e.pat === 'subclass' && set.has(e.s) && set.has(e.o) && e.s !== e.o) ps.get(e.s).push(e.o); });
+    const depth = new Map(), busy = new Set();
+    const dep = (i) => { if (depth.has(i)) return depth.get(i); if (busy.has(i)) return 0; busy.add(i);
+      const d = ps.get(i).length ? 1 + Math.max(...ps.get(i).map(dep)) : 0; busy.delete(i); depth.set(i, d); return d; };
+    list.forEach(i => { const cand = ps.get(i); if (!cand.length) return;
+      const best = cand.reduce((a, b) => dep(b) > dep(a) ? b : a); parentOf.set(i, best); kids.get(best).push(i); });
+    const sortL = (a, b) => lbl(a).localeCompare(lbl(b));
+    // Left-to-right tree: one column per level, each parent centred beside its children.
+    const W = 260, H = 54; let row = 0; const seen = new Set();
+    const place = (i, d) => {
+      seen.add(i);
+      const ks = kids.get(i).filter(k => !seen.has(k)).sort(sortL);
+      let y;
+      if (!ks.length) y = (row++) * H;
+      else { const ys = ks.map(k => place(k, d + 1)); y = (ys[0] + ys[ys.length - 1]) / 2; }
+      nodes.set(i, { x: d * W, y });
+      return y;
+    };
+    list.filter(i => !parentOf.has(i)).sort(sortL).forEach(r => place(r, 0));
+    list.filter(i => !seen.has(i)).forEach(r => place(r, 0));
+    // terms in other models that ontology members point to (non-"is a" relations)
+    const extra = [];
+    edges.forEach(e => { if (e.pat !== 'subclass' && set.has(e.s) && !nodes.has(e.o) && !extra.includes(e.o)) extra.push(e.o); });
+    const maxX = Math.max(0, ...[...nodes.values()].map(p => p.x));
+    extra.slice(0, 60).forEach((i, k) => nodes.set(i, { x: maxX + W * 1.6, y: k * H }));
+    selected = { nodes: new Set(), edge: null };
+    if (members.length > MAX_LAYOUT) toast(`Showing the first ${MAX_LAYOUT} of ${members.length} classes — drag others in from the left.`);
+    if (!initial) ensureInfo(extra).then(() => { renderAll(); fit(); saveLayout(); });
+  }
+  function showAllRelated(initial) {
+    const rel = [...edges.values()].filter(e => e.pat !== 'subclass');
+    const set = new Set(); rel.forEach(e => { set.add(e.s); set.add(e.o); });
+    const list = [...set].filter(i => !nodes.has(i)).slice(0, 60);
+    if (!list.length) { if (!initial) toast('No relations to show yet.'); return; }
+    if (!initial) push();
+    const n = list.length, cols = Math.ceil(Math.sqrt(n * 1.6));
+    const base = nodes.size ? Math.max(...[...nodes.values()].map(p => p.y)) + 140 : 0;
+    list.forEach((i, k) => nodes.set(i, { x: (k % cols) * 230, y: base + Math.floor(k / cols) * 120 }));
+    if (!initial) ensureInfo(list).then(() => { renderAll(); fit(); });
+  }
+
+  // ---------------------------------------------------------------- left: models & terms
+  function renderModels() {
+    const q = $('modelFilter').value.trim().toLowerCase();
+    const order = { ont: 0, tax: 1, voc: 2 };
+    const list = assets.map(a => ({ ...a, k: a.type === 'ontology' ? 'ont' : a.kind }))
+      .filter(a => !q || a.label.toLowerCase().includes(q) || a.iri.toLowerCase().includes(q))
+      .sort((a, b) => (order[a.k] - order[b.k]) || a.label.localeCompare(b.label));
+    $('modelList').innerHTML = list.length ? list.map(a => {
+      const isT = a.iri === target, imp = imports.has(a.iri);
+      return `<label class="mrow${isT ? ' target' : ''}" data-model="${esc(a.iri)}" title="${esc(a.iri)} — drag onto the canvas to place its terms"><input type="checkbox" data-m="${esc(a.iri)}" ${loaded.has(a.iri) ? 'checked' : ''} ${isT ? 'disabled' : ''}>
+        <span class="kchip ${a.k}">${a.k === 'ont' ? 'ONT' : a.k === 'tax' ? 'TAX' : 'VOC'}</span><span class="lb">${esc(a.label)}</span>${isT ? '<span class="imp">editing</span>' : imp ? '<span class="imp">imported</span>' : ''}</label>`;
+    }).join('') : '<div class="hint">No models match.</div>';
+    const missing = [...imports].filter(i => !assets.some(a => a.iri === i));
+    if (missing.length) $('modelList').insertAdjacentHTML('beforeend', missing.map(i => `<div class="mrow target" title="${esc(i)}"><span class="kchip ont" style="background:var(--ke-faint)">IMP</span><span class="lb">${esc(S.localName(i))}</span><span class="imp">not in repository</span></div>`).join(''));
+  }
+
+  function renderTerms() {
+    const q = $('termSearch').value.trim().toLowerCase();
+    const out = []; visibleTerms = []; let total = 0;
+    loaded.forEach(m => {
+      const terms = q ? m.terms.filter(t => lbl(t.iri).toLowerCase().includes(q) || t.iri.toLowerCase().includes(q)) : m.terms;
+      total += m.terms.length;
+      out.push(`<div class="ghead" data-g="${esc(m.iri)}"><span>${m.open || q ? '▾' : '▸'}</span><span class="kchip ${m.kind}">${m.kind.toUpperCase()}</span><span class="lb">${esc(m.label)}</span><span>${terms.length}</span></div>`);
+      if (!(m.open || q)) return;
+      if (!m.terms.length) { out.push(`<div class="hint">${m.loading ? 'Loading…' : 'No classes or concepts found.'}</div>`); return; }
+      terms.slice(0, 2000).forEach(t => {
+        visibleTerms.push(t.iri);
+        out.push(`<div class="term${termSel.has(t.iri) ? ' on' : ''}" data-iri="${esc(t.iri)}" data-m="${esc(m.iri)}" style="padding-left:${12 + (q ? 0 : Math.min(t.depth, 8) * 14)}px" title="${esc(t.iri)}"><span class="lb">${esc(lbl(t.iri))}</span>${nodes.has(t.iri) ? '<span class="oncv">● on canvas</span>' : ''}</div>`);
+      });
+      if (terms.length > 2000) out.push(`<div class="hint">${terms.length - 2000} more — refine the search.</div>`);
+    });
+    $('termCount').textContent = loaded.size ? `· ${total}` : '';
+    $('termList').innerHTML = out.length ? out.join('') : '<div class="hint">Tick models above to load their terms. Imports of the selected ontology load automatically.</div>';
+  }
+
+  $('modelList').addEventListener('change', ev => {
+    const m = ev.target.dataset.m; if (!m) return;
+    if (ev.target.checked) loadModel(m); else { loaded.delete(m); renderTerms(); }
+  });
+  $('termList').addEventListener('click', ev => {
+    const g = ev.target.closest('.ghead');
+    if (g) { const m = loaded.get(g.dataset.g); if (m) { m.open = !m.open; renderTerms(); } return; }
+    const el = ev.target.closest('.term'); if (!el || tSuppress) return;
+    const i = el.dataset.iri;
+    if (ev.shiftKey && lastTerm) {
+      const a = visibleTerms.indexOf(lastTerm), b = visibleTerms.indexOf(i);
+      if (a >= 0 && b >= 0) visibleTerms.slice(Math.min(a, b), Math.max(a, b) + 1).forEach(x => termSel.add(x));
+    } else if (ev.metaKey || ev.ctrlKey) { termSel.has(i) ? termSel.delete(i) : termSel.add(i); lastTerm = i; }
+    else { termSel.clear(); termSel.add(i); lastTerm = i; }
+    renderTerms();
+  });
+  $('termList').addEventListener('dblclick', ev => {
+    const el = ev.target.closest('.term'); if (!el || !target) return;
+    const r = $('cv').getBoundingClientRect();
+    addNodes([el.dataset.iri], (r.width / 2 - view.x) / view.k, (r.height / 2 - view.y) / view.k);
+  });
+  // Pointer-based dragging from the term list to the canvas (HTML5 drag-and-drop
+  // is unreliable inside iframes, embedded browser panes and with some trackpads).
+  let dragList = null, tpress = null, tSuppress = false;
+  const ghost = document.createElement('div'); ghost.className = 'ghost'; document.body.appendChild(ghost);
+  $('termList').addEventListener('pointerdown', ev => {
+    if (ev.button !== 0) return;
+    const el = ev.target.closest('.term'); if (!el) return;
+    tpress = { x: ev.clientX, y: ev.clientY, iri: el.dataset.iri };
+  });
+  // A whole model (ontology, taxonomy or vocabulary) can be dragged from the Models list.
+  $('modelList').addEventListener('pointerdown', ev => {
+    if (ev.button !== 0 || ev.target.matches('input')) return;
+    const el = ev.target.closest('.mrow'); if (!el || !el.dataset.model) return;
+    tpress = { x: ev.clientX, y: ev.clientY, model: el.dataset.model };
+  });
+  document.addEventListener('pointermove', ev => {
+    if (!tpress) return;
+    if (!dragList) {
+      if (Math.abs(ev.clientX - tpress.x) + Math.abs(ev.clientY - tpress.y) < 6) return;
+      if (tpress.model) { dragList = { model: tpress.model }; document.body.classList.add('dragging'); }
+      else if (!termSel.has(tpress.iri)) { termSel.clear(); termSel.add(tpress.iri); lastTerm = tpress.iri; }
+      if (!tpress.model) {
+        document.querySelectorAll('#termList .term').forEach(t => t.classList.toggle('on', termSel.has(t.dataset.iri)));
+        dragList = [...termSel]; document.body.classList.add('dragging');
+      }
+    }
+    ev.preventDefault();
+    ghost.textContent = dragList.model ? '⧉ ' + ((assets.find(a => a.iri === dragList.model) || {}).label || S.localName(dragList.model))
+      : dragList.length > 1 ? `${dragList.length} terms` : lbl(dragList[0]);
+    ghost.style.left = (ev.clientX + 12) + 'px'; ghost.style.top = (ev.clientY + 10) + 'px'; ghost.style.display = 'block';
+    const over = document.elementFromPoint(ev.clientX, ev.clientY);
+    $('cv').classList.toggle('dropping', !!(over && over.closest('#cv')));
+  });
+  document.addEventListener('pointerup', ev => {
+    if (!tpress) return;
+    const list = dragList; tpress = null; dragList = null;
+    ghost.style.display = 'none'; document.body.classList.remove('dragging'); $('cv').classList.remove('dropping');
+    if (!list) return;
+    tSuppress = true; setTimeout(() => { tSuppress = false; }, 0);
+    const over = document.elementFromPoint(ev.clientX, ev.clientY);
+    if (!over || !over.closest('#cv')) return;
+    if (!target) { toast('Choose the ontology to edit first.', true); return; }
+    const p = toWorld(ev.clientX, ev.clientY);
+    if (list.model) dropModel(list.model, p.x - 60, p.y - 18);
+    else addNodes(list, p.x - 60, p.y - 18);
+  });
+  // Place a model's classes/concepts on the canvas as an indented outline at (x, y).
+  async function dropModel(m, x, y) {
+    if (m === target) { layoutOntology(false); return; }
+    if (!loaded.has(m) || loaded.get(m).loading) { toast('Loading ' + ((assets.find(a => a.iri === m) || {}).label || S.localName(m)) + '…'); if (!loaded.has(m)) await loadModel(m); renderModels(); }
+    const entry = loaded.get(m);
+    const terms = (entry ? entry.terms : []).filter(t => !nodes.has(t.iri)).slice(0, MAX_LAYOUT);
+    if (!terms.length) { toast(entry && entry.terms.length ? 'All of its terms are already on the canvas.' : 'This model has no classes or concepts.'); return; }
+    push();
+    const minD = Math.min(...terms.map(t => t.depth));
+    terms.forEach((t, k) => nodes.set(t.iri, { x: x + (t.depth - minD) * 250, y: y + k * 58 }));
+    selected = { nodes: new Set(), edge: null };
+    renderAll(); saveLayout();
+    if (entry.terms.length > MAX_LAYOUT) toast(`Placed the first ${MAX_LAYOUT} of ${entry.terms.length} terms.`);
+  }
+  document.addEventListener('pointercancel', () => { tpress = null; dragList = null; ghost.style.display = 'none'; document.body.classList.remove('dragging'); });
+
+  // ---------------------------------------------------------------- canvas
+  const cv = $('cv'), world = $('world'), svg = $('edges');
+  function applyView() { world.style.transform = `translate(${view.x}px,${view.y}px) scale(${view.k})`; cv.style.backgroundPosition = `${view.x}px ${view.y}px`; cv.style.backgroundSize = `${22 * view.k}px ${22 * view.k}px`; }
+  function toWorld(cx, cy) { const r = cv.getBoundingClientRect(); return { x: (cx - r.left - view.x) / view.k, y: (cy - r.top - view.y) / view.k }; }
+
+  function addNodes(list, x, y) {
+    const fresh = list.filter(i => !nodes.has(i));
+    if (!fresh.length) { selected = { nodes: new Set(list), edge: null }; renderAll(); return; }
+    push();
+    const cols = Math.min(4, Math.ceil(Math.sqrt(fresh.length)));
+    fresh.forEach((i, k) => nodes.set(i, { x: x + (k % cols) * 200, y: y + Math.floor(k / cols) * 80 }));
+    selected = { nodes: new Set(fresh), edge: null };
+    renderAll(); saveLayout();
+  }
+
+  // pointer interactions: pan, move nodes, draw links
+  let act = null;
+  cv.addEventListener('pointerdown', ev => {
+    if (ev.button !== 0 || ev.target.closest('.cvtools')) return;
+    closePicker();
+    const h = ev.target.closest('.h'), nd = ev.target.closest('.node'), ed = ev.target.closest('.edge');
+    if (h && nd) {
+      act = { type: 'link', from: nd.dataset.iri };
+      ev.preventDefault(); cv.setPointerCapture(ev.pointerId); return;
+    }
+    if (nd) {
+      const i = nd.dataset.iri;
+      if (ev.shiftKey || ev.metaKey || ev.ctrlKey) { selected.nodes.has(i) ? selected.nodes.delete(i) : selected.nodes.add(i); }
+      else if (!selected.nodes.has(i)) selected.nodes = new Set([i]);
+      selected.edge = null;
+      const start = toWorld(ev.clientX, ev.clientY);
+      act = { type: 'move', start, orig: new Map([...selected.nodes].map(k => [k, { ...nodes.get(k) }])), moved: false };
+      cv.setPointerCapture(ev.pointerId); renderNodes(); renderEdges(); renderInspector(); return;
+    }
+    if (ed) { selected = { nodes: new Set(), edge: ed.dataset.k }; renderAll(); return; }
+    act = { type: 'pan', sx: ev.clientX, sy: ev.clientY, vx: view.x, vy: view.y, moved: false };
+    cv.setPointerCapture(ev.pointerId); cv.classList.add('panning');
+  });
+  cv.addEventListener('pointermove', ev => {
+    if (!act) return;
+    if (act.type === 'pan') { view.x = act.vx + ev.clientX - act.sx; view.y = act.vy + ev.clientY - act.sy; if (Math.abs(ev.clientX - act.sx) + Math.abs(ev.clientY - act.sy) > 3) act.moved = true; applyView(); }
+    else if (act.type === 'move') {
+      const p = toWorld(ev.clientX, ev.clientY), dx = p.x - act.start.x, dy = p.y - act.start.y;
+      if (!act.moved && Math.abs(dx) + Math.abs(dy) > 2) { act.moved = true; push(); }
+      if (act.moved) { act.orig.forEach((o, k) => nodes.set(k, { x: o.x + dx, y: o.y + dy })); positionNodes(); renderEdges(); }
+    } else if (act.type === 'link') {
+      const a = center(act.from), p = toWorld(ev.clientX, ev.clientY);
+      let t = svg.querySelector('.tmp'); if (!t) { t = document.createElementNS('http://www.w3.org/2000/svg', 'path'); t.setAttribute('class', 'tmp'); svg.appendChild(t); }
+      t.setAttribute('d', `M${a.x},${a.y} L${p.x},${p.y}`);
+      document.querySelectorAll('.node.target-hover').forEach(n => n.classList.remove('target-hover'));
+      const over = document.elementFromPoint(ev.clientX, ev.clientY); const on = over && over.closest('.node');
+      if (on && on.dataset.iri !== act.from) on.classList.add('target-hover');
+    }
+  });
+  cv.addEventListener('pointerup', ev => {
+    if (!act) return;
+    const a = act; act = null; cv.classList.remove('panning');
+    if (a.type === 'pan' && !a.moved) { selected = { nodes: new Set(), edge: null }; renderAll(); }
+    if (a.type === 'move' && a.moved) saveLayout();
+    if (a.type === 'link') {
+      const t = svg.querySelector('.tmp'); if (t) t.remove();
+      document.querySelectorAll('.node.target-hover').forEach(n => n.classList.remove('target-hover'));
+      const over = document.elementFromPoint(ev.clientX, ev.clientY); const on = over && over.closest('.node');
+      if (on && on.dataset.iri !== a.from) openPicker(a.from, on.dataset.iri, ev.clientX, ev.clientY, null);
+    }
+  });
+  cv.addEventListener('wheel', ev => {
+    ev.preventDefault();
+    const r = cv.getBoundingClientRect(), mx = ev.clientX - r.left, my = ev.clientY - r.top;
+    const k2 = Math.min(2.5, Math.max(0.2, view.k * Math.exp(-ev.deltaY * 0.0015)));
+    view.x = mx - (mx - view.x) * k2 / view.k; view.y = my - (my - view.y) * k2 / view.k; view.k = k2; applyView();
+  }, { passive: false });
+  function zoom(f) { const r = cv.getBoundingClientRect(), mx = r.width / 2, my = r.height / 2, k2 = Math.min(2.5, Math.max(0.2, view.k * f)); view.x = mx - (mx - view.x) * k2 / view.k; view.y = my - (my - view.y) * k2 / view.k; view.k = k2; applyView(); }
+  function fit() {
+    if (!nodes.size) { view = { x: 40, y: 40, k: 1 }; applyView(); return; }
+    const els = [...document.querySelectorAll('#nodes .node')];
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    nodes.forEach((p, i) => { const el = els.find(e => e.dataset.iri === i); const w = el ? el.offsetWidth : 140, h = el ? el.offsetHeight : 40; x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x + w); y1 = Math.max(y1, p.y + h); });
+    const r = cv.getBoundingClientRect(), pad = 60;
+    const k = Math.min(1.1, Math.max(0.2, Math.min((r.width - pad * 2) / (x1 - x0 || 1), (r.height - pad * 2) / (y1 - y0 || 1))));
+    if (k < 0.55) {
+      // Too big to read when fitted: show the top-left at a readable zoom; pan or zoom from there.
+      const kw = Math.min(1, Math.max(0.85, (r.width - pad * 2) / (x1 - x0 || 1)));
+      // anchor on the top node of the leftmost column (the root of a tree layout)
+      let ay = y0; nodes.forEach(p => { if (p.x <= x0 + 1 && (ay === y0 || p.y < ay)) ay = p.y; });
+      const firstLeft = [...nodes.values()].filter(p => p.x <= x0 + 1).sort((a, b) => a.y - b.y)[0];
+      if (firstLeft) ay = firstLeft.y;
+      view = { k: kw, x: pad - x0 * kw, y: r.height / 2 - (ay + 20) * kw }; applyView(); return;
+    }
+    view = { k, x: (r.width - (x1 - x0) * k) / 2 - x0 * k, y: (r.height - (y1 - y0) * k) / 2 - y0 * k }; applyView();
+  }
+
+  function renderNodes() {
+    $('cvHelp').style.display = nodes.size ? 'none' : '';
+    $('cvHelp').innerHTML = target ? 'Drag terms from the left onto the canvas, or click <b>Show ontology</b>.<br>Drag from a node’s <b>+</b> handle to another node to create a relation.' : 'Choose an ontology, then drag terms from the left onto the canvas.<br>Drag from a node’s <b>+</b> handle to another node to create a relation.';
+    const html = [];
+    nodes.forEach((p, i) => {
+      const k = kindOfNode(i), info = termInfo.get(i) || {};
+      const m = info.model ? (assets.find(a => a.iri === info.model) || {}).label || S.localName(info.model) : 'not in a loaded model';
+      html.push(`<div class="node ${k}${selected.nodes.has(i) ? ' on' : ''}" data-iri="${esc(i)}" style="left:${p.x}px;top:${p.y}px" title="${esc(i)}"><div class="nl">${esc(lbl(i))}</div><div class="ns">${esc(m)}</div><div class="h" title="Drag to another node to relate">+</div></div>`);
+    });
+    $('nodes').innerHTML = html.join('');
+  }
+  function positionNodes() { document.querySelectorAll('#nodes .node').forEach(el => { const p = nodes.get(el.dataset.iri); if (p) { el.style.left = p.x + 'px'; el.style.top = p.y + 'px'; } }); }
+  function box(i) {
+    const p = nodes.get(i); const el = document.querySelector(`#nodes .node[data-iri="${CSS.escape(i)}"]`);
+    return { x: p.x, y: p.y, w: el ? el.offsetWidth : 140, h: el ? el.offsetHeight : 40 };
+  }
+  function center(i) { const b = box(i); return { x: b.x + b.w / 2, y: b.y + b.h / 2 }; }
+  function clip(b, from, to) { // point where segment from->to leaves box b (centered at `from`)
+    const dx = to.x - from.x, dy = to.y - from.y; if (!dx && !dy) return from;
+    const sx = (b.w / 2 + 4) / Math.abs(dx || 1e-9), sy = (b.h / 2 + 4) / Math.abs(dy || 1e-9), s = Math.min(sx, sy, 1);
+    return { x: from.x + dx * s, y: from.y + dy * s };
+  }
+  // "is a" lines implied by another "is a" (A is a B, B is a C ⇒ A is a C) are not drawn.
+  function redundantIsA() {
+    const up = new Map();
+    edges.forEach(e => { if (e.pat === 'subclass' && e.s !== e.o) { if (!up.has(e.s)) up.set(e.s, []); up.get(e.s).push(e.o); } });
+    const anc = new Map();
+    const ancestors = (i, guard) => {
+      if (anc.has(i)) return anc.get(i);
+      guard = guard || new Set(); if (guard.has(i)) return new Set(); guard.add(i);
+      const out = new Set();
+      (up.get(i) || []).forEach(p => { out.add(p); ancestors(p, guard).forEach(a => out.add(a)); });
+      anc.set(i, out); return out;
+    };
+    const hide = new Set();
+    up.forEach((parents, s) => parents.forEach(o => {
+      if (parents.some(q => q !== o && ancestors(q).has(o))) hide.add(`${s}|${SUBCLASS}|${o}|subclass`);
+    }));
+    return hide;
+  }
+  function renderEdges() {
+    const hidden = redundantIsA();
+    const vis = [...edges.values()].filter(e => nodes.has(e.s) && nodes.has(e.o) && !(hidden.has(key(e)) && selected.edge !== key(e)));
+    const pairCount = new Map(), pairIdx = new Map();
+    vis.forEach(e => { const pk = [e.s, e.o].sort().join('|'); pairCount.set(pk, (pairCount.get(pk) || 0) + 1); });
+    const parts = [`<defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ke-ink2)"/></marker>
+      <marker id="arrN" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ke-warn)"/></marker>
+      <marker id="arrS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--ke-accent)"/></marker>
+      <marker id="tri" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L11,6 L1,11 z" fill="var(--ke-bg)" stroke="var(--ke-ink2)" stroke-width="1.3"/></marker></defs>`];
+    vis.forEach(e => {
+      const k = key(e), pk = [e.s, e.o].sort().join('|'), n = pairCount.get(pk), idx = pairIdx.get(pk) || 0; pairIdx.set(pk, idx + 1);
+      const a = center(e.s), b = center(e.o);
+      const sign = e.s < e.o ? 1 : -1, off = n > 1 ? (idx - (n - 1) / 2) * 34 * sign : 0;
+      const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, len = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+      const cx = mx - (b.y - a.y) / len * off * 2, cy = my + (b.x - a.x) / len * off * 2;
+      const p1 = clip(box(e.s), a, { x: cx, y: cy }), p2 = clip(box(e.o), b, { x: cx, y: cy });
+      const d = `M${p1.x},${p1.y} Q${cx},${cy} ${p2.x},${p2.y}`;
+      const isNew = !origEdges.has(k), on = selected.edge === k, isa = e.pat === 'subclass';
+      const lx = (p1.x + 2 * cx + p2.x) / 4, ly = (p1.y + 2 * cy + p2.y) / 4;
+      const tag = isa ? 'is a' : rl(e.p) + (e.pat === 'some' ? ' some' : e.pat === 'only' ? ' only' : '');
+      const mk = isa ? 'tri' : on ? 'arrS' : isNew ? 'arrN' : 'arr';
+      parts.push(`<g class="edge${isNew ? ' new' : ''}${on ? ' on' : ''}${isa ? ' isa' : ''}" data-k="${esc(k)}"><path class="hit" d="${d}"/><path class="ln" d="${d}" marker-end="url(#${mk})"/><text x="${lx}" y="${ly - 4}" text-anchor="middle">${esc(tag)}</text></g>`);
+    });
+    svg.innerHTML = parts.join('');
+  }
+  function renderAll() { renderNodes(); renderEdges(); renderInspector(); renderChanges(); renderTerms(); }
+
+  // ---------------------------------------------------------------- relation picker
+  let pk = null;
+  function openPicker(s, o, x, y, editKey) {
+    const sCls = !!(termInfo.get(s) || {}).cls || kindOfNode(s) === 'ont';
+    const defPat = editKey ? edges.get(editKey).pat : (sCls ? 'some' : 'direct');  // classes → restriction, concepts → triple
+    pk = { s, o, editKey, hi: 0, pat: defPat === 'subclass' ? 'some' : defPat };
+    $('pkHead').innerHTML = `<b>${esc(lbl(s))}</b> → <b>${esc(lbl(o))}</b>`;
+    document.querySelectorAll('#pkPat input').forEach(r => r.checked = r.value === pk.pat);
+    $('pkSearch').value = '';
+    renderPicker();
+    const p = $('picker'); p.classList.add('open');
+    const w = 340, h = Math.min(430, p.offsetHeight || 430);
+    p.style.left = Math.max(8, Math.min(x + 10, innerWidth - w - 8)) + 'px';
+    p.style.top = Math.max(8, Math.min(y + 10, innerHeight - h - 8)) + 'px';
+    setTimeout(() => $('pkSearch').focus(), 0);
+  }
+  function closePicker() { $('picker').classList.remove('open'); pk = null; }
+  function pickerItems() {
+    const q = $('pkSearch').value.trim().toLowerCase();
+    const items = [{ iri: SUBCLASS, label: 'is a (rdfs:subClassOf)', def: 'Every instance of the source is an instance of the target.', depth: 0 }].concat(relations);
+    return items.filter(r => !q || r.label.toLowerCase().includes(q) || S.localName(r.iri).toLowerCase().includes(q));
+  }
+  function renderPicker() {
+    const items = pickerItems(); const q = $('pkSearch').value.trim();
+    if (pk.hi >= items.length) pk.hi = 0;
+    $('pkList').innerHTML = (items.length ? items.map((r, i) => `<div class="r${i === pk.hi ? ' hi' : ''}" data-i="${i}" style="padding-left:${12 + (q ? 0 : r.depth * 14)}px">${esc(r.label)}<span class="id">${esc(r.iri === SUBCLASS ? 'rdfs' : S.localName(r.iri))}</span></div>`).join('') : '<div class="hint">No relation matches.</div>')
+      + (relations.length ? '' : '<div class="warn">No BFO/RO relations loaded — only “is a” is available. Use “Load BFO” in the left panel.</div>');
+    const cur = items[pk.hi]; $('pkDef').textContent = cur ? (cur.def || 'No definition recorded.') : '';
+  }
+  function choose(r) {
+    if (!pk || !r) return;
+    const pat = r.iri === SUBCLASS ? 'subclass' : pk.pat;
+    const e = { s: pk.s, p: r.iri, o: pk.o, pat };
+    if (edges.has(key(e)) && key(e) !== pk.editKey) { toast('That relation already exists.'); closePicker(); return; }
+    push();
+    if (pk.editKey) edges.delete(pk.editKey);
+    edges.set(key(e), e);
+    selected = { nodes: new Set(), edge: key(e) };
+    closePicker(); renderAll();
+    toast(`${lbl(e.s)} — ${rl(e.p)} — ${lbl(e.o)}`);
+  }
+  $('pkSearch').addEventListener('input', () => { pk.hi = 0; renderPicker(); });
+  $('pkSearch').addEventListener('keydown', ev => {
+    const items = pickerItems();
+    if (ev.key === 'ArrowDown') { pk.hi = Math.min(items.length - 1, pk.hi + 1); renderPicker(); ev.preventDefault(); }
+    else if (ev.key === 'ArrowUp') { pk.hi = Math.max(0, pk.hi - 1); renderPicker(); ev.preventDefault(); }
+    else if (ev.key === 'Enter') { choose(items[pk.hi]); ev.preventDefault(); }
+    else if (ev.key === 'Escape') { closePicker(); }
+  });
+  $('pkList').addEventListener('click', ev => { const r = ev.target.closest('.r'); if (r) choose(pickerItems()[+r.dataset.i]); });
+  $('pkList').addEventListener('mouseover', ev => { const r = ev.target.closest('.r'); if (!r) return; const it = pickerItems()[+r.dataset.i]; $('pkDef').textContent = it ? (it.def || 'No definition recorded.') : ''; });
+  $('pkPat').addEventListener('change', ev => { if (pk) pk.pat = ev.target.value; });
+  document.addEventListener('pointerdown', ev => { if (pk && !ev.target.closest('#picker') && !ev.target.closest('#cv')) closePicker(); });
+
+  // ---------------------------------------------------------------- inspector
+  function relRow(e) {
+    const k = key(e), out = e.s;
+    const txt = e.pat === 'subclass' ? `<b>${esc(lbl(e.s))}</b> is a <b>${esc(lbl(e.o))}</b>` : `<b>${esc(lbl(e.s))}</b> ${esc(rl(e.p))}${e.pat === 'some' ? ' some' : e.pat === 'only' ? ' only' : ''} <b>${esc(lbl(e.o))}</b>`;
+    return `<div class="rel"><span class="tx">${txt}${origEdges.has(k) ? '' : ' <span class="badge">new</span>'}</span><span class="x" data-del="${esc(k)}" title="Delete relation">✕</span></div>`;
+  }
+  function renderInspector() {
+    const el = $('insp');
+    if (selected.edge && edges.has(selected.edge)) {
+      const e = edges.get(selected.edge);
+      const r = relations.find(x => x.iri === e.p);
+      el.innerHTML = `<div class="k">Relation</div><div style="font-weight:700;margin:2px 0 6px">${esc(e.pat === 'subclass' ? 'is a' : rl(e.p))}</div>
+        <div class="k">IRI</div><code>${esc(e.p)}</code>
+        ${r && r.def ? `<div class="k" style="margin-top:6px">Definition</div><div style="font-size:12px">${esc(r.def)}</div>` : ''}
+        <div class="k" style="margin-top:6px">From → to</div><div>${esc(lbl(e.s))} → ${esc(lbl(e.o))}</div>
+        <div class="k" style="margin-top:6px">Stored as</div><div>${{ some: 'rdfs:subClassOf [ owl:onProperty … ; owl:someValuesFrom … ]', only: 'rdfs:subClassOf [ owl:onProperty … ; owl:allValuesFrom … ]', direct: 'a direct triple', subclass: 'rdfs:subClassOf' }[e.pat]}</div>
+        <div style="margin-top:10px;display:flex;gap:6px"><button class="btn sm" id="iChange">Change relation</button><button class="btn sm danger" id="iDel">Delete</button></div>`;
+      $('iDel').onclick = () => delEdge(selected.edge);
+      $('iChange').onclick = (ev) => { const r2 = ev.target.getBoundingClientRect(); openPicker(e.s, e.o, r2.left - 360, r2.top, selected.edge); };
+      return;
+    }
+    const ns = [...selected.nodes];
+    if (ns.length === 1) {
+      const i = ns[0], info = termInfo.get(i) || {};
+      const rels = [...edges.values()].filter(e => e.s === i || e.o === i);
+      el.innerHTML = `<div style="font-weight:700;margin-bottom:4px">${esc(lbl(i))}</div><div class="k">IRI</div><code>${esc(i)}</code>
+        <div class="k" style="margin-top:6px">From model</div><div>${esc(info.model ? ((assets.find(a => a.iri === info.model) || {}).label || info.model) : '—')}</div>
+        <div class="k" style="margin-top:10px">Relations in this ontology (${rels.length})</div>${rels.map(relRow).join('') || '<div class="k">None yet — drag from the + handle.</div>'}
+        <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" id="iRel">Show related</button><button class="btn sm" id="iHide">Hide from canvas</button></div>`;
+      $('iHide').onclick = () => hideNodes([i]);
+      $('iRel').onclick = () => showRelatedOf(i);
+      return;
+    }
+    if (ns.length > 1) { el.innerHTML = `<b>${ns.length} nodes</b><div style="margin-top:8px"><button class="btn sm" id="iHide">Hide from canvas</button></div>`; $('iHide').onclick = () => hideNodes(ns); return; }
+    el.innerHTML = '<span class="k">Select a node or a relation.</span>';
+  }
+  $('insp').addEventListener('click', ev => { const k = ev.target.dataset && ev.target.dataset.del; if (k) delEdge(k); });
+
+  function delEdge(k) { if (!edges.has(k)) return; push(); edges.delete(k); if (selected.edge === k) selected.edge = null; renderAll(); }
+  function hideNodes(list) { push(); list.forEach(i => nodes.delete(i)); selected = { nodes: new Set(), edge: null }; renderAll(); saveLayout(); }
+  async function showRelatedOf(i) {
+    const nb = new Set(); edges.forEach(e => { if (e.s === i) nb.add(e.o); if (e.o === i) nb.add(e.s); });
+    const fresh = [...nb].filter(x => !nodes.has(x));
+    if (!fresh.length) { toast('All related terms are already on the canvas.'); return; }
+    push(); await ensureInfo(fresh);
+    const c = nodes.get(i), R = 220;
+    fresh.forEach((x, k) => { const a = (2 * Math.PI * k) / fresh.length; nodes.set(x, { x: c.x + R * Math.cos(a), y: c.y + R * Math.sin(a) }); });
+    renderAll(); saveLayout();
+  }
+
+  // ---------------------------------------------------------------- diff + save
+  function diff() {
+    const adds = [...edges].filter(([k]) => !origEdges.has(k)).map(([, e]) => e);
+    const dels = [...origEdges].filter(([k]) => !edges.has(k)).map(([, e]) => e);
+    const newImports = new Set();
+    if ($('addImports').checked) adds.forEach(e => [e.s, e.o].forEach(t => { const m = (termInfo.get(t) || {}).model; if (m && m !== target && !imports.has(m)) newImports.add(m); }));
+    return { adds, dels, newImports: [...newImports] };
+  }
+  function dirty() { const d = diff(); return d.adds.length + d.dels.length; }
+  function renderChanges() {
+    const d = diff(), n = d.adds.length + d.dels.length;
+    const line = (e) => e.pat === 'subclass' ? `${esc(lbl(e.s))} <i>is a</i> ${esc(lbl(e.o))}` : `${esc(lbl(e.s))} <i>${esc(rl(e.p))}${e.pat === 'direct' ? '' : ' ' + e.pat}</i> ${esc(lbl(e.o))}`;
+    $('changes').innerHTML = n ? d.adds.map(e => `<div class="chg"><span class="op add">add</span>${line(e)}</div>`).join('')
+      + d.dels.map(e => `<div class="chg"><span class="op del">delete</span>${line(e)}</div>`).join('')
+      + d.newImports.map(m => `<div class="chg"><span class="op imp">import</span>${esc((assets.find(a => a.iri === m) || {}).label || m)}</div>`).join('')
+      : '<div style="color:var(--ke-faint);font-size:12px">No unsaved changes.</div>';
+    $('chgBadge').style.display = n ? '' : 'none'; $('chgBadge').textContent = n;
+    $('btnSave').disabled = !n; $('btnDiscard').disabled = !n; $('btnUndo').disabled = !history.length;
+    const sc = $('saveCount'); if (sc) sc.innerHTML = n ? `<span class="badge" style="background:var(--ke-accent-ink);color:var(--ke-accent)">${n}</span>` : '';
+  }
+  function tripleFor(e, bn) {
+    const s = S.iri(e.s), p = S.iri(e.p), o = S.iri(e.o);
+    if (e.pat === 'subclass') return `${s} rdfs:subClassOf ${o} .`;
+    if (e.pat === 'direct') return `${s} ${p} ${o} .`;
+    return `${s} rdfs:subClassOf ${bn} . ${bn} a owl:Restriction ; owl:onProperty ${p} ; ${e.pat === 'some' ? 'owl:someValuesFrom' : 'owl:allValuesFrom'} ${o} .`;
+  }
+  async function save() {
+    const d = diff(); if (!d.adds.length && !d.dels.length) return;
+    const ops = [];
+    d.dels.forEach(e => {
+      if (e.pat === 'some' || e.pat === 'only') {
+        const f = e.pat === 'some' ? 'owl:someValuesFrom' : 'owl:allValuesFrom';
+        const pat = `${S.iri(e.s)} rdfs:subClassOf ?r . ?r owl:onProperty ${S.iri(e.p)} ; ${f} ${S.iri(e.o)} . ?r ?x ?y`;
+        ops.push(`DELETE { GRAPH ?g { ${S.iri(e.s)} rdfs:subClassOf ?r . ?r ?x ?y } } WHERE { GRAPH ?g { ${pat} FILTER(isBlank(?r)) } }`);
+        ops.push(`DELETE { ${S.iri(e.s)} rdfs:subClassOf ?r . ?r ?x ?y } WHERE { ${pat} FILTER(isBlank(?r)) }`);
+      } else {
+        const t = tripleFor(e).replace(/ \.$/, '');
+        ops.push(`DELETE WHERE { GRAPH ?g { ${t} } }`, `DELETE DATA { ${t} . }`);
+      }
+    });
+    const ins = d.adds.map((e, i) => tripleFor(e, '_:r' + i));
+    d.newImports.forEach(m => ins.push(`${S.iri(target)} owl:imports ${S.iri(m)} .`));
+    if (ins.length) ops.push(tgraph ? `INSERT DATA { GRAPH ${S.iri(tgraph)} {\n  ${ins.join('\n  ')}\n} }` : `INSERT DATA {\n  ${ins.join('\n  ')}\n}`);
+    $('btnSave').disabled = true;
+    try {
+      await S.update(ops.join(' ;\n'));
+      d.newImports.forEach(m => imports.add(m));
+      origEdges = new Map(edges); history = [];
+      toast(`Saved ${d.adds.length + d.dels.length} change${d.adds.length + d.dels.length === 1 ? '' : 's'} to GraphDB`);
+      renderModels(); renderAll();
+    } catch (e) { toast(e.message, true); renderChanges(); }
+  }
+
+  // ---------------------------------------------------------------- layout persistence
+  function layoutKey() { return `ke-onto-layout:${S.repo()}:${target}`; }
+  let layT = null;
+  function saveLayout() {
+    clearTimeout(layT);
+    layT = setTimeout(() => { if (!target) return; const o = {}; nodes.forEach((p, i) => o[i] = { x: Math.round(p.x), y: Math.round(p.y) }); S.lsSet(layoutKey(), JSON.stringify({ nodes: o, models: [...loaded.keys()] })); }, 300);
+  }
+
+  // ---------------------------------------------------------------- controls
+  function undo() { if (!history.length) return; restore(history.pop()); selected = { nodes: new Set(), edge: null }; renderAll(); saveLayout(); }
+  $('ontSel').addEventListener('change', e => { if (e.target.value) openOntology(e.target.value); });
+  $('modelFilter').addEventListener('input', renderModels);
+  $('termSearch').addEventListener('input', renderTerms);
+  $('zIn').onclick = () => zoom(1.2); $('zOut').onclick = () => zoom(1 / 1.2); $('zFit').onclick = fit;
+  $('btnShowAll').onclick = () => { if (target) showAllRelated(false); renderAll(); };
+  $('btnLayout').onclick = () => { if (target) layoutOntology(false); };
+  $('btnClear').onclick = () => { if (!nodes.size) return; push(); nodes.clear(); selected = { nodes: new Set(), edge: null }; renderAll(); saveLayout(); };
+  $('btnUndo').onclick = undo;
+  $('btnDiscard').onclick = () => { push(); edges = new Map(origEdges); selected.edge = null; renderAll(); toast('Changes discarded'); };
+  $('btnSave').onclick = save;
+  $('addImports').addEventListener('change', () => { S.lsSet('ke-onto-add-imports', $('addImports').checked ? '1' : '0'); renderChanges(); });
+  $('relSrc').addEventListener('change', async () => { S.lsSet('ke-rel-src', $('relSrc').value); await loadRelations(); renderAll(); });
+  $('btnCfg').addEventListener('click', ev => { ev.stopPropagation(); $('pop').classList.toggle('open'); });
+  document.addEventListener('click', ev => { if (!ev.target.closest('.cfg')) $('pop').classList.remove('open'); });
+  $('repoId').addEventListener('change', () => { S.lsSet('ke-repo', $('repoId').value.trim()); location.reload(); });
+  $('btnReload').addEventListener('click', () => location.reload());
+  document.addEventListener('keydown', ev => {
+    if (ev.target.matches('input,select,textarea')) return;
+    const mod = ev.metaKey || ev.ctrlKey;
+    if (mod && ev.key.toLowerCase() === 'z') { ev.preventDefault(); undo(); }
+    else if (mod && ev.key.toLowerCase() === 's') { ev.preventDefault(); save(); }
+    else if (ev.key === 'Delete' || ev.key === 'Backspace') {
+      if (selected.edge) { ev.preventDefault(); delEdge(selected.edge); }
+      else if (selected.nodes.size) { ev.preventDefault(); hideNodes([...selected.nodes]); }
+    } else if (ev.key === 'Escape') { closePicker(); selected = { nodes: new Set(), edge: null }; renderAll(); }
+  });
+  window.addEventListener('beforeunload', ev => { if (dirty()) { ev.preventDefault(); ev.returnValue = ''; } });
+  window.addEventListener('resize', applyView);
+
+  const rp = S.param('repo') || S.lsGet('ke-repo'); if (rp) $('repoId').value = rp;
+  $('addImports').checked = S.lsGet('ke-onto-add-imports') !== '0';
+  applyView();
+  loadAssets();
+})();
+</script>
+</body>
+</html>

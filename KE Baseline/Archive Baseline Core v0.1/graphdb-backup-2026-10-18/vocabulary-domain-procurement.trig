@@ -1,0 +1,497 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix domainlegalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix domainmarketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+
+<https://www.insperity.com/vocabulary/domain-procurement/> {
+  <https://www.insperity.com/vocabulary/domain-procurement/> a skos:ConceptScheme;
+    rdfs:label "Domain procurement vocabulary"@en;
+    skos:prefLabel "Domain procurement vocabulary"@en;
+    skos:hasTopConcept <https://www.insperity.com/vocabulary/domain-procurement/procurement>;
+    terms:description "The process of acquiring goods, services, or works from an external source."@en;
+    terms:title "Domain procurement vocabulary"@en;
+    terms:contributor "Jeffrey Wallk";
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-16): ingested into the https://www.insperity.com/ namespace; IRIs, labels and metadata brought into line with Semantic Governance: Services, Architecture & Integration v1.8 (Draft), Part III."@en;
+    terms:created "2025-03-25T17:04:21.760Z"^^xsd:dateTime;
+    skos:altLabel "Vocabulary | Domain | Procurement"@en;
+    owl:versionInfo "0.1.0";
+    vann:preferredNamespaceUri "https://www.insperity.com/vocabulary/domain-procurement/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/procurement> a skos:Concept;
+    skos:prefLabel "Procurement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-25T17:30:15.250Z"^^xsd:dateTime;
+    skos:definition "The process of acquiring goods, services, or works from an external source."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:altLabel "Purchasing"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/business-operations-analytics-and-reporting>,
+      <https://www.insperity.com/vocabulary/domain-procurement/contract-management>, <https://www.insperity.com/vocabulary/domain-procurement/purchase-management>,
+      <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/business-operations-analytics-and-reporting>
+    a skos:Concept;
+    skos:prefLabel "Business operations / analytics & reporting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-04-01T15:18:29.102Z"^^xsd:dateTime;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/procurement>;
+    skos:altLabel "(Business operations / analytics & reporting)"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/cycle-time-analysis>,
+      <https://www.insperity.com/vocabulary/domain-procurement/spend-analysis> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/contract-management> a skos:Concept;
+    skos:prefLabel "Contract management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The management of legal agreements with suppliers, including negotiation, execution, performance monitoring, and compliance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/procurement>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/contract-compliance-monitoring>,
+      <https://www.insperity.com/vocabulary/domain-procurement/contract-origination>, <https://www.insperity.com/vocabulary/domain-procurement/contract-renewals>,
+      <https://www.insperity.com/vocabulary/domain-procurement/contract-terminations> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/purchase-management> a skos:Concept;
+    skos:prefLabel "Purchase management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of managing and controlling the purchase of goods and services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/procurement>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/order-management>,
+      <https://www.insperity.com/vocabulary/domain-procurement/purchase-order-approval>,
+      <https://www.insperity.com/vocabulary/domain-procurement/purchase-order-creation>,
+      <https://www.insperity.com/vocabulary/domain-procurement/requisition-management> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management> a skos:Concept;
+    skos:prefLabel "Sourcing management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of identifying, evaluating, and selecting suppliers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/procurement>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/agile-sourcing>,
+      <https://www.insperity.com/vocabulary/domain-procurement/ethical-sourcing>, <https://www.insperity.com/vocabulary/domain-procurement/sourcing-market-research-and-analysis>,
+      <https://www.insperity.com/vocabulary/domain-procurement/strategic-category-design>,
+      <https://www.insperity.com/vocabulary/domain-procurement/supplier-relationship-management> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/cycle-time-analysis> a skos:Concept;
+    skos:prefLabel "Cycle time analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Measuring the time taken to complete a specific procurement process, from requisition to purchase order."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/business-operations-analytics-and-reporting>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/spend-analysis> a skos:Concept;
+    skos:prefLabel "Spend analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Analyzing expenditure data to identify trends, savings opportunities, and supplier performance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/business-operations-analytics-and-reporting>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/contract-compliance-monitoring>
+    a skos:Concept;
+    skos:prefLabel "Contract compliance monitoring"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of ensuring that both the buyer and supplier adhere to the terms and conditions outlined in a contract."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/contract-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/contract-origination> a skos:Concept;
+    skos:prefLabel "Contract origination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of creating and finalizing a contract between a buyer and a supplier."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/contract-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/contract-renewals> a skos:Concept;
+    skos:prefLabel "Contract renewals"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of extending the term of an existing contract."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/contract-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/contract-terminations> a
+      skos:Concept;
+    skos:prefLabel "Contract terminations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of ending a contract before its expiration date."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/contract-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-management> a skos:Concept;
+    skos:prefLabel "Order management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of receiving, processing, and fulfilling customer orders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/purchase-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/order-delivery>,
+      <https://www.insperity.com/vocabulary/domain-procurement/order-history-and-tracking>,
+      <https://www.insperity.com/vocabulary/domain-procurement/order-installation>, <https://www.insperity.com/vocabulary/domain-procurement/order-invoicing>,
+      <https://www.insperity.com/vocabulary/domain-procurement/order-processing>, <https://www.insperity.com/vocabulary/domain-procurement/order-quote>,
+      <https://www.insperity.com/vocabulary/domain-procurement/order-shipment> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/purchase-order-approval>
+    a skos:Concept;
+    skos:prefLabel "Purchase order approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Authorizing a purchase order to proceed."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/purchase-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/purchase-order-creation>
+    a skos:Concept;
+    skos:prefLabel "Purchase order creation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Generating a legally binding document that formalizes a purchase from a supplier."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/purchase-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/requisition-management> a
+      skos:Concept;
+    skos:prefLabel "Requisition management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of managing internal requests for goods or services."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/purchase-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-delivery> a skos:Concept;
+    skos:prefLabel "Order delivery"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of delivering goods or services to the customer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-history-and-tracking>
+    a skos:Concept;
+    skos:prefLabel "Order history & tracking"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Maintaining and providing access to records of past orders and their delivery status."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-installation> a skos:Concept;
+    skos:prefLabel "Order installation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of installing and setting up goods at the customer’s location."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-invoicing> a skos:Concept;
+    skos:prefLabel "Order invoicing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of creating and sending invoices to customers for goods or services delivered."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-processing> a skos:Concept;
+    skos:prefLabel "Order processing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The steps involved in receiving, reviewing, and fulfilling customer orders."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-quote> a skos:Concept;
+    skos:prefLabel "Order quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "A formal offer from a supplier to provide goods or services at a specific price."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/order-shipment> a skos:Concept;
+    skos:prefLabel "Order shipment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "The process of preparing and dispatching goods to the customer."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/order-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/agile-sourcing> a skos:Concept;
+    skos:prefLabel "Agile sourcing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "A flexible and iterative approach to sourcing that emphasizes collaboration and rapid response to change."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/ethical-sourcing> a skos:Concept;
+    skos:prefLabel "Ethical sourcing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Ensuring that goods and services are sourced in a responsible and sustainable manner, considering social, environmental, and ethical factors."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/sourcing-market-research-and-analysis>
+    a skos:Concept;
+    skos:prefLabel "Sourcing market research & analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Researching and analyzing market trends, supplier capabilities, and pricing to inform sourcing decisions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/strategic-category-design>
+    a skos:Concept;
+    skos:prefLabel "Strategic category design"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Developing long-term sourcing strategies for specific product or service categories."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/supplier-relationship-management>
+    a skos:Concept;
+    skos:prefLabel "Supplier relationship management"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "Managing relationships with suppliers to optimize performance, foster collaboration, and drive value."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/sourcing-management>;
+    skos:altLabel "SRM"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower <https://www.insperity.com/vocabulary/domain-procurement/business-partner-account>,
+      <https://www.insperity.com/vocabulary/domain-procurement/supplier-diversity> .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/business-partner-account>
+    a skos:Concept;
+    skos:prefLabel "Business partner account"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "An account within a company’s system that holds information about a specific supplier."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/supplier-relationship-management>;
+    skos:altLabel "BPA"@en;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/vocabulary/domain-procurement/supplier-diversity> a skos:Concept;
+    skos:prefLabel "Supplier diversity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-16T17:19:14Z"^^xsd:dateTime;
+    terms:created "2025-03-31T20:34:04.413Z"^^xsd:dateTime;
+    skos:definition "A procurement practice that promotes the inclusion of businesses owned by underrepresented groups, such as women, minorities, and veterans."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-procurement/>;
+    skos:broader <https://www.insperity.com/vocabulary/domain-procurement/supplier-relationship-management>;
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+}

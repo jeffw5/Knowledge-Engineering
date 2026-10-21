@@ -1,0 +1,737 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix salesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+
+<https://www.insperity.com/taxonomy/domain-partner-and-channel/> {
+  <https://www.insperity.com/taxonomy/domain-partner-and-channel/> a skos:ConceptScheme;
+    rdfs:label "Partner and channel domain taxonomy"@en;
+    skos:prefLabel "Partner and channel domain taxonomy"@en;
+    skos:hasTopConcept partnerchanneltax:channel-partner-type, partnerchanneltax:partner-agreement,
+      partnerchanneltax:partner-attribution, partnerchanneltax:partner-measure, partnerchanneltax:partner-program,
+      partnerchanneltax:sales-channel, partnerchanneltax:technology-integration;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A classification of channel partner types, sales channels, partner program elements, partner agreements, partner attribution, partner measures and technology integrations."@en;
+    terms:title "Partner and channel domain taxonomy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_partner_and_channel.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.1.1 (2026-10-20): Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_partner_and_channel.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-20"^^xsd:date;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:commercial;
+    terms:isPartOf <https://www.insperity.com/domain/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/domain-partner-and-channel/0.1.1/>;
+    terms:source <https://www.insperity.com/vocabulary/core-asset/>, <https://www.insperity.com/vocabulary/core-capability/>,
+      <https://www.insperity.com/vocabulary/core-domain/>, <https://www.insperity.com/vocabulary/core-product/>,
+      <https://www.insperity.com/vocabulary/core-role/>, <https://www.insperity.com/vocabulary/core-measure/>,
+      <https://www.insperity.com/vocabulary/core-policy/>, <https://www.insperity.com/vocabulary/domain-commercial-operations/>,
+      <https://www.insperity.com/vocabulary/domain-partner-and-channel/>;
+    vaem:namespace "https://www.insperity.com/taxonomy/domain-partner-and-channel/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "partnerchanneltax";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "taxonomy-domain-partner-and-channel" .
+  
+  partnerchanneltax:channel-partner-type a skos:Concept;
+    rdfs:label "Channel partner type"@en;
+    skos:prefLabel "Channel partner type"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A kind of organization that bears the channel partner role for the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, productvoc:channel;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:accountant-partner, partnerchanneltax:alliance-partner,
+      partnerchanneltax:association-partner, partnerchanneltax:bank-partner, partnerchanneltax:benefits-broker,
+      partnerchanneltax:franchise-partner, partnerchanneltax:insurance-broker, partnerchanneltax:reseller,
+      partnerchanneltax:technology-partner;
+    core:hasPrimaryTerm rolevoc:partner;
+    core:formalizedBy partnerchannel:channel-partner;
+    skos:broadMatch roletax:partner .
+  
+  partnerchanneltax:partner-agreement a skos:Concept;
+    rdfs:label "Partner agreement"@en;
+    skos:prefLabel "Partner agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial agreement between the organization and a partner."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, policyvoc:agreement;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:alliance-agreement, partnerchanneltax:broker-of-record,
+      partnerchanneltax:referral-agreement;
+    core:hasPrimaryTerm policyvoc:agreement;
+    core:formalizedBy core:directive;
+    skos:broadMatch commercialopstax:commercial-agreement .
+  
+  partnerchanneltax:partner-attribution a skos:Concept;
+    rdfs:label "Partner attribution"@en;
+    skos:prefLabel "Partner attribution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset that records the credit given to a partner for a lead, opportunity or sale."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, domaincommercialoperationsvoc:attribution;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:partner-influenced-opportunity, partnerchanneltax:partner-sourced-opportunity;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:attribution;
+    core:formalizedBy core:information-asset;
+    skos:broadMatch commercialopstax:attribution .
+  
+  partnerchanneltax:partner-measure a skos:Concept;
+    rdfs:label "Partner measure"@en;
+    skos:prefLabel "Partner measure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A measure of the performance of the partner channel."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, measurevoc:measure;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:partner-sourced-pipeline, partnerchanneltax:partner-sourced-sales,
+      partnerchanneltax:referral-conversion-rate;
+    core:hasPrimaryTerm measurevoc:measure;
+    core:formalizedBy core:measure;
+    skos:broadMatch measuretax:key-performance-indicator .
+  
+  partnerchanneltax:partner-program a skos:Concept;
+    rdfs:label "Partner program"@en;
+    skos:prefLabel "Partner program"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A directive that sets the activities, benefits and rules under which partners refer, sell and are rewarded."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, partnerchannelvoc:program;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:co-marketing, partnerchanneltax:opportunity-registration,
+      partnerchanneltax:partner-enablement, partnerchanneltax:partner-incentive, partnerchanneltax:partner-level;
+    core:hasPrimaryTerm partnerchannelvoc:program;
+    core:formalizedBy partnerchannel:partner-program .
+  
+  partnerchanneltax:sales-channel a skos:Concept;
+    rdfs:label "Sales channel"@en;
+    skos:prefLabel "Sales channel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A route through which the organization's offerings reach their buyers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:sales, productvoc:channel;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:alliance-channel, partnerchanneltax:broker-channel,
+      partnerchanneltax:marketplace-channel, partnerchanneltax:referral-channel;
+    core:hasPrimaryTerm productvoc:channel;
+    core:formalizedBy core:asset .
+  
+  partnerchanneltax:technology-integration a skos:Concept;
+    rdfs:label "Technology integration"@en;
+    skos:prefLabel "Technology integration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A capability that connects a technology partner's software with the organization's, so that data and processes flow between them."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    owl:versionInfo "0.1.1";
+    terms:subject capabilityvoc:integration, assetvoc:technology;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:narrower partnerchanneltax:marketplace-listing;
+    core:hasPrimaryTerm capabilityvoc:integration;
+    core:formalizedBy core:capability .
+  
+  partnerchanneltax:accountant-partner a skos:Concept;
+    rdfs:label "Accountant partner"@en;
+    skos:prefLabel "Accountant partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that is an accounting firm advising small and mid-sized businesses on tax and payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    skos:altLabel "Accounting firm partner"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, partnerchannelvoc:accountant;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:partner .
+  
+  partnerchanneltax:alliance-partner a skos:Concept;
+    rdfs:label "Alliance partner"@en;
+    skos:prefLabel "Alliance partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that pursues shared commercial goals with the organization under an alliance."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, partnerchannelvoc:alliance;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:partner .
+  
+  partnerchanneltax:association-partner a skos:Concept;
+    rdfs:label "Association partner"@en;
+    skos:prefLabel "Association partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that is an association offering the organization's services to its members."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, partnerchannelvoc:association;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:partner .
+  
+  partnerchanneltax:bank-partner a skos:Concept;
+    rdfs:label "Bank partner"@en;
+    skos:prefLabel "Bank partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that is a bank referring its business clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, partnerchannelvoc:bank;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:partner .
+  
+  partnerchanneltax:benefits-broker a skos:Concept;
+    rdfs:label "Benefits broker"@en;
+    skos:prefLabel "Benefits broker"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that advises employers on benefits and may refer them to a professional employer organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:broker, domaincommercialoperationsvoc:benefit;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:broker;
+    skos:broadMatch roletax:broker .
+  
+  partnerchanneltax:franchise-partner a skos:Concept;
+    rdfs:label "Franchise partner"@en;
+    skos:prefLabel "Franchise partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that is a franchisor offering the organization's services to its franchises."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, partnerchannelvoc:franchise;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:partner .
+  
+  partnerchanneltax:insurance-broker a skos:Concept;
+    rdfs:label "Insurance broker"@en;
+    skos:prefLabel "Insurance broker"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that places insurance, including workers' compensation, for employers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:broker, domaincommercialoperationsvoc:insurance;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:broker;
+    skos:broadMatch roletax:broker .
+  
+  partnerchanneltax:reseller a skos:Concept;
+    rdfs:label "Reseller"@en;
+    skos:prefLabel "Reseller"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type that packages the organization's offerings with its own and sells them."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject partnerchannelvoc:reseller;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm partnerchannelvoc:reseller .
+  
+  partnerchanneltax:technology-partner a skos:Concept;
+    rdfs:label "Technology partner"@en;
+    skos:prefLabel "Technology partner"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A channel partner type whose software integrates with the organization's technology."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:channel-partner-type;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, assetvoc:technology;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:partner .
+  
+  partnerchanneltax:alliance-channel a skos:Concept;
+    rdfs:label "Alliance channel"@en;
+    skos:prefLabel "Alliance channel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales channel in which alliance partners offer the organization's services to their customers or members."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:sales-channel;
+    owl:versionInfo "0.1.1";
+    terms:subject productvoc:channel, partnerchannelvoc:alliance;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm productvoc:channel .
+  
+  partnerchanneltax:broker-channel a skos:Concept;
+    rdfs:label "Broker channel"@en;
+    skos:prefLabel "Broker channel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales channel in which brokers refer or place clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:sales-channel;
+    owl:versionInfo "0.1.1";
+    terms:subject productvoc:channel, rolevoc:broker;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm productvoc:channel .
+  
+  partnerchanneltax:marketplace-channel a skos:Concept;
+    rdfs:label "Marketplace channel"@en;
+    skos:prefLabel "Marketplace channel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales channel in which buyers find the organization's offerings on a marketplace."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:sales-channel;
+    owl:versionInfo "0.1.1";
+    terms:subject productvoc:channel, partnerchannelvoc:marketplace;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm productvoc:channel .
+  
+  partnerchanneltax:referral-channel a skos:Concept;
+    rdfs:label "Referral channel"@en;
+    skos:prefLabel "Referral channel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A sales channel in which partners, clients or others refer potential clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:sales-channel;
+    owl:versionInfo "0.1.1";
+    terms:subject productvoc:channel, domaincommercialoperationsvoc:referral;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm productvoc:channel .
+  
+  partnerchanneltax:co-marketing a skos:Concept;
+    rdfs:label "Co-marketing"@en;
+    skos:prefLabel "Co-marketing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner program element in which the organization and a partner plan, fund and run marketing together."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-program;
+    owl:versionInfo "0.1.1";
+    terms:subject partnerchannelvoc:co-marketing;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm partnerchannelvoc:co-marketing .
+  
+  partnerchanneltax:opportunity-registration a skos:Concept;
+    rdfs:label "Opportunity registration"@en;
+    skos:prefLabel "Opportunity registration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner program element by which a partner registers an opportunity it sourced, securing credit and protection for it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-program;
+    skos:altLabel "Deal registration"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject domaincommercialoperationsvoc:opportunity, domaincommercialoperationsvoc:registration;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:registration .
+  
+  partnerchanneltax:partner-enablement a skos:Concept;
+    rdfs:label "Partner enablement"@en;
+    skos:prefLabel "Partner enablement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner program element that equips partners with the knowledge, content and tools to refer and sell."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-program;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, domaincommercialoperationsvoc:enablement;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:enablement .
+  
+  partnerchanneltax:partner-incentive a skos:Concept;
+    rdfs:label "Partner incentive"@en;
+    skos:prefLabel "Partner incentive"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner program element that rewards partners for referrals and sales."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-program;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, domaincommercialoperationsvoc:incentive;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower partnerchanneltax:broker-commission, partnerchanneltax:referral-commission;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:incentive .
+  
+  partnerchanneltax:partner-level a skos:Concept;
+    rdfs:label "Partner level"@en;
+    skos:prefLabel "Partner level"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A position in a partner program that sets the benefits and requirements that apply to a partner."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-program;
+    skos:altLabel "Partner tier"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, measurevoc:level;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:level .
+  
+  partnerchanneltax:broker-commission a skos:Concept;
+    rdfs:label "Broker commission"@en;
+    skos:prefLabel "Broker commission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner incentive paid to a broker for a client it placed, often for as long as it remains broker of record."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-incentive;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:broker, domaincommercialoperationsvoc:commission;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:commission .
+  
+  partnerchanneltax:referral-commission a skos:Concept;
+    rdfs:label "Referral commission"@en;
+    skos:prefLabel "Referral commission"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner incentive paid for a referral that results in a sale."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-incentive;
+    skos:altLabel "Referral fee"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject domaincommercialoperationsvoc:commission, domaincommercialoperationsvoc:referral;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:commission;
+    skos:broadMatch commercialopstax:referral .
+  
+  partnerchanneltax:alliance-agreement a skos:Concept;
+    rdfs:label "Alliance agreement"@en;
+    skos:prefLabel "Alliance agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner agreement that sets the terms of an alliance."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-agreement;
+    owl:versionInfo "0.1.1";
+    terms:subject policyvoc:agreement, partnerchannelvoc:alliance;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm policyvoc:agreement .
+  
+  partnerchanneltax:broker-of-record a skos:Concept;
+    rdfs:label "Broker of record"@en;
+    skos:prefLabel "Broker of record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner agreement, made by a letter from a client, that designates the broker who represents the client for its benefits or insurance."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-agreement;
+    skos:altLabel "Broker of record letter"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject assetvoc:record, rolevoc:broker;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm assetvoc:record .
+  
+  partnerchanneltax:referral-agreement a skos:Concept;
+    rdfs:label "Referral agreement"@en;
+    skos:prefLabel "Referral agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner agreement that sets the terms on which a partner refers potential clients and is paid for them."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-agreement;
+    owl:versionInfo "0.1.1";
+    terms:subject policyvoc:agreement, domaincommercialoperationsvoc:referral;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm policyvoc:agreement .
+  
+  partnerchanneltax:partner-influenced-opportunity a skos:Concept;
+    rdfs:label "Partner-influenced opportunity"@en;
+    skos:prefLabel "Partner-influenced opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner attribution of an opportunity that a partner helped advance but did not source."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-attribution;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, domaincommercialoperationsvoc:influence, domaincommercialoperationsvoc:opportunity;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  partnerchanneltax:partner-sourced-opportunity a skos:Concept;
+    rdfs:label "Partner-sourced opportunity"@en;
+    skos:prefLabel "Partner-sourced opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner attribution of an opportunity that a partner brought to the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-attribution;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, assetvoc:source, domaincommercialoperationsvoc:opportunity;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  partnerchanneltax:partner-sourced-pipeline a skos:Concept;
+    rdfs:label "Partner-sourced pipeline"@en;
+    skos:prefLabel "Partner-sourced pipeline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner measure of the value of open opportunities that partners sourced."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, assetvoc:source, domaincommercialoperationsvoc:pipeline;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:pipeline .
+  
+  partnerchanneltax:partner-sourced-sales a skos:Concept;
+    rdfs:label "Partner-sourced sales"@en;
+    skos:prefLabel "Partner-sourced sales"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner measure of the sales in a period that partners sourced."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:partner, assetvoc:source, domaincommercialoperationsvoc:sale;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:sale .
+  
+  partnerchanneltax:referral-conversion-rate a skos:Concept;
+    rdfs:label "Referral conversion rate"@en;
+    skos:prefLabel "Referral conversion rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A partner measure of the share of referrals that become clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:partner-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:rate, domaincommercialoperationsvoc:conversion, domaincommercialoperationsvoc:referral;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  partnerchanneltax:marketplace-listing a skos:Concept;
+    rdfs:label "Marketplace listing"@en;
+    skos:prefLabel "Marketplace listing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A technology integration offered to buyers through a partner's marketplace."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-partner-and-channel/>;
+    skos:broader partnerchanneltax:technology-integration;
+    owl:versionInfo "0.1.1";
+    terms:subject capabilityvoc:integration, partnerchannelvoc:marketplace;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm capabilityvoc:integration .
+}

@@ -1,0 +1,697 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix salesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+
+<https://www.insperity.com/vocabulary/domain-legal/> {
+  <https://www.insperity.com/vocabulary/domain-legal/> a skos:ConceptScheme;
+    rdfs:label "Legal domain vocabulary"@en;
+    skos:prefLabel "Legal domain vocabulary"@en;
+    skos:hasTopConcept legalvoc:liability, legalvoc:accreditation, legalvoc:americans-with-disabilities-act,
+      legalvoc:arbitration, legalvoc:bond, legalvoc:certification, legalvoc:certified-professional-employer-organization,
+      legalvoc:confidentiality, legalvoc:consent, legalvoc:consolidated-omnibus-budget-reconciliation-act,
+      legalvoc:controlling-the-assault-of-non-solicited-pornography-and-marketing-act, legalvoc:counsel,
+      legalvoc:disclosure, legalvoc:dispute, legalvoc:employee-retirement-income-security-act,
+      legalvoc:employer-of-record, legalvoc:fair-labor-standards-act, legalvoc:family-and-medical-leave-act,
+      legalvoc:federal-insurance-contributions-act, legalvoc:federal-unemployment-tax-act,
+      legalvoc:fiduciary, legalvoc:filing, legalvoc:governing-law, legalvoc:health-insurance-portability-and-accountability-act,
+      legalvoc:indemnification, legalvoc:internal-revenue-code, legalvoc:law, legalvoc:lawsuit,
+      legalvoc:limitation, legalvoc:matter, legalvoc:multiple-employer-plan, legalvoc:multiple-employer-welfare-arrangement,
+      legalvoc:patient-protection-and-affordable-care-act, legalvoc:producer, legalvoc:provision,
+      legalvoc:remedy, legalvoc:small-business-efficiency-act, legalvoc:telephone-consumer-protection-act,
+      legalvoc:warranty;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A controlled vocabulary of the primitives of commercial and regulatory law as they bear on a professional employer organization's commercial operations: contract provisions, disputes and legal matters, the federal statutes that govern co-employment, benefits, employment taxes and marketing communication, and the registrations, certifications and financial assurances a professional employer organization must hold."@en;
+    terms:title "Legal domain vocabulary"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_legal.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.1.1 (2026-10-20): Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_legal.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-20"^^xsd:date;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:legal;
+    terms:isPartOf <https://www.insperity.com/domain/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/vocabulary/domain-legal/0.1.1/>;
+    vaem:namespace "https://www.insperity.com/vocabulary/domain-legal/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "legalvoc";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "vocabulary-domain-legal" .
+  
+  legalvoc:liability a skos:Concept;
+    rdfs:label "liability"@en;
+    skos:prefLabel "liability"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A legal responsibility of a party for a loss, harm or obligation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:accreditation a skos:Concept;
+    rdfs:label "accreditation"@en;
+    skos:prefLabel "accreditation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A certification granted by an independent body that a party meets its standards of practice."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:scopeNote "For example, the voluntary accreditation of professional employer organizations by an independent assurance body."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:americans-with-disabilities-act a skos:Concept;
+    rdfs:label "Americans with disabilities act"@en;
+    skos:prefLabel "Americans with disabilities act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that prohibits discrimination against people with disabilities, including in employment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "ADA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:arbitration a skos:Concept;
+    rdfs:label "arbitration"@en;
+    skos:prefLabel "arbitration"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A resolution of a dispute in which the parties agree to be bound by the decision of a neutral party outside the courts."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:bond a skos:Concept;
+    rdfs:label "bond"@en;
+    skos:prefLabel "bond"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A financial guarantee, issued by a surety, that a party will meet its obligations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:certification a skos:Concept;
+    rdfs:label "certification"@en;
+    skos:prefLabel "certification"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core (core-services \"certification services\" and \"product certification\" are polymorphic)."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A formal recognition by an authority that a party meets defined requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:certified-professional-employer-organization a skos:Concept;
+    rdfs:label "certified professional employer organization"@en;
+    skos:prefLabel "certified professional employer organization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A professional employer organization that the federal tax authority has certified to take on federal employment tax liability for wages it pays to worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "CPEO"@en;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3). Certification follows the Small business efficiency act."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:confidentiality a skos:Concept;
+    rdfs:label "confidentiality"@en;
+    skos:prefLabel "confidentiality"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An obligation to protect information from disclosure to parties not authorized to receive it."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:consent a skos:Concept;
+    rdfs:label "consent"@en;
+    skos:prefLabel "consent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A party's permission, freely given and informed, for something to be done that affects it."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:consolidated-omnibus-budget-reconciliation-act a skos:Concept;
+    rdfs:label "Consolidated omnibus budget reconciliation act"@en;
+    skos:prefLabel "Consolidated omnibus budget reconciliation act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that requires group health plans to offer continuation coverage to employees and dependents who lose coverage."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "COBRA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:controlling-the-assault-of-non-solicited-pornography-and-marketing-act a
+      skos:Concept;
+    rdfs:label "Controlling the assault of non-solicited pornography and marketing act"@en;
+    skos:prefLabel "Controlling the assault of non-solicited pornography and marketing act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that sets rules for commercial email, including identification, opt-out and content requirements."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "CAN-SPAM act"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:counsel a skos:Concept;
+    rdfs:label "counsel"@en;
+    skos:prefLabel "counsel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a lawyer who advises or represents a party."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:disclosure a skos:Concept;
+    rdfs:label "disclosure"@en;
+    skos:prefLabel "disclosure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A statement that makes information known to a party, as required by law or agreement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:dispute a skos:Concept;
+    rdfs:label "dispute"@en;
+    skos:prefLabel "dispute"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A disagreement between parties over rights, obligations or facts that requires resolution."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:employee-retirement-income-security-act a skos:Concept;
+    rdfs:label "Employee retirement income security act"@en;
+    skos:prefLabel "Employee retirement income security act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that sets standards for private-sector retirement and health benefit plans and the duties of their fiduciaries."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "ERISA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:employer-of-record a skos:Concept;
+    rdfs:label "employer of record"@en;
+    skos:prefLabel "employer of record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by the employer that reports wages and employment taxes for a worker under its own tax identifiers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:fair-labor-standards-act a skos:Concept;
+    rdfs:label "Fair labor standards act"@en;
+    skos:prefLabel "Fair labor standards act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that sets minimum wage, overtime, recordkeeping and child labor standards."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "FLSA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:family-and-medical-leave-act a skos:Concept;
+    rdfs:label "Family and medical leave act"@en;
+    skos:prefLabel "Family and medical leave act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that entitles eligible employees to job-protected leave for specified family and medical reasons."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "FMLA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:federal-insurance-contributions-act a skos:Concept;
+    rdfs:label "Federal insurance contributions act"@en;
+    skos:prefLabel "Federal insurance contributions act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that imposes payroll taxes on employers and employees to fund social security and medicare."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "FICA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:federal-unemployment-tax-act a skos:Concept;
+    rdfs:label "Federal unemployment tax act"@en;
+    skos:prefLabel "Federal unemployment tax act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that imposes an employer tax to fund unemployment insurance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "FUTA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:fiduciary a skos:Concept;
+    rdfs:label "fiduciary"@en;
+    skos:prefLabel "fiduciary"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a party that must act in the interest of another, such as the participants of a benefit plan."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:filing a skos:Concept;
+    rdfs:label "filing"@en;
+    skos:prefLabel "filing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A submission of a document to a regulator or court as required by law."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:governing-law a skos:Concept;
+    rdfs:label "governing law"@en;
+    skos:prefLabel "governing law"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "The law of the jurisdiction that the parties agree will govern the interpretation of their agreement."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:health-insurance-portability-and-accountability-act a skos:Concept;
+    rdfs:label "Health insurance portability and accountability act"@en;
+    skos:prefLabel "Health insurance portability and accountability act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that protects the privacy and security of health information and the portability of health coverage."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "HIPAA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:indemnification a skos:Concept;
+    rdfs:label "indemnification"@en;
+    skos:prefLabel "indemnification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An obligation of one party to compensate another for specified losses or liabilities."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:internal-revenue-code a skos:Concept;
+    rdfs:label "Internal revenue code"@en;
+    skos:prefLabel "Internal revenue code"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "The body of federal statutory tax law, including the provisions on employment taxes and certified professional employer organizations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "IRC"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:law a skos:Concept;
+    rdfs:label "law"@en;
+    skos:prefLabel "law"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A body of statutes, regulations and court decisions that a jurisdiction enforces."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:lawsuit a skos:Concept;
+    rdfs:label "lawsuit"@en;
+    skos:prefLabel "lawsuit"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A claim brought by one party against another in a court."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:limitation a skos:Concept;
+    rdfs:label "limitation"@en;
+    skos:prefLabel "limitation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A limit placed on the extent of a right, obligation or liability."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:matter a skos:Concept;
+    rdfs:label "matter"@en;
+    skos:prefLabel "matter"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A legal issue, case or transaction that is handled as a unit of legal work."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:multiple-employer-plan a skos:Concept;
+    rdfs:label "multiple employer plan"@en;
+    skos:prefLabel "multiple employer plan"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A retirement plan maintained by two or more unrelated employers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "MEP"@en;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:multiple-employer-welfare-arrangement a skos:Concept;
+    rdfs:label "multiple employer welfare arrangement"@en;
+    skos:prefLabel "multiple employer welfare arrangement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An arrangement that provides welfare benefits, such as health coverage, to the employees of two or more unrelated employers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "MEWA"@en;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:patient-protection-and-affordable-care-act a skos:Concept;
+    rdfs:label "Patient protection and affordable care act"@en;
+    skos:prefLabel "Patient protection and affordable care act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that sets requirements for health coverage, including the employer shared responsibility provisions for applicable large employers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "ACA"@en, "Affordable care act"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:producer a skos:Concept;
+    rdfs:label "producer"@en;
+    skos:prefLabel "producer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a party licensed to sell, solicit or negotiate insurance."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:provision a skos:Concept;
+    rdfs:label "provision"@en;
+    skos:prefLabel "provision"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A distinct part of a statute, regulation or policy that states a norm."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:scopeNote "The provision of a law or policy; the provision of an agreement is a clause (Commercial Operations)."@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:remedy a skos:Concept;
+    rdfs:label "remedy"@en;
+    skos:prefLabel "remedy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A means by which a right is enforced or a wrong is redressed, such as damages or termination."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:small-business-efficiency-act a skos:Concept;
+    rdfs:label "Small business efficiency act"@en;
+    skos:prefLabel "Small business efficiency act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that created the voluntary certification program for professional employer organizations."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "SBEA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:telephone-consumer-protection-act a skos:Concept;
+    rdfs:label "Telephone consumer protection act"@en;
+    skos:prefLabel "Telephone consumer protection act"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A federal statute that restricts telemarketing calls, automated dialing and text messages without prior consent."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    skos:altLabel "TCPA"@en;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+  
+  legalvoc:warranty a skos:Concept;
+    rdfs:label "warranty"@en;
+    skos:prefLabel "warranty"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A promise by a party that a stated fact about its offering is true, with a remedy if it is not."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-legal/>;
+    owl:versionInfo "0.1.1";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-legal/> .
+}

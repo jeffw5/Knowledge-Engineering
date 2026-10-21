@@ -1,0 +1,926 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix salesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+
+<https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> {
+  <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> a skos:ConceptScheme;
+    rdfs:label "Pricing and contracts domain taxonomy"@en;
+    skos:prefLabel "Pricing and contracts domain taxonomy"@en;
+    skos:hasTopConcept pricingcontractstax:agreement-status, pricingcontractstax:agreement-term,
+      pricingcontractstax:contract-management-step, pricingcontractstax:pricing-component,
+      pricingcontractstax:pricing-model, pricingcontractstax:quote, pricingcontractstax:underwriting-input,
+      pricingcontractstax:underwriting-outcome;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A classification of pricing components and models, quotes, underwriting inputs and outcomes, contract management steps, agreement terms and agreement statuses."@en;
+    terms:title "Pricing and contracts domain taxonomy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_pricing_and_contracts.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.2.0 (2026-10-20): Census moved to the Commercial Operations container (D2). Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_pricing_and_contracts.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-20"^^xsd:date;
+    owl:versionInfo "0.2.0";
+    terms:subject domainvoc:commercial;
+    terms:isPartOf <https://www.insperity.com/domain/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/0.2.0/>;
+    terms:source <https://www.insperity.com/vocabulary/core-asset/>, <https://www.insperity.com/vocabulary/core-event/>,
+      <https://www.insperity.com/vocabulary/core-issue/>, <https://www.insperity.com/vocabulary/core-lifecycle/>,
+      <https://www.insperity.com/vocabulary/core-location/>, <https://www.insperity.com/vocabulary/core-process/>,
+      <https://www.insperity.com/vocabulary/core-product/>, <https://www.insperity.com/vocabulary/core-role/>,
+      <https://www.insperity.com/vocabulary/core-rules/>, <https://www.insperity.com/vocabulary/core-services/>,
+      <https://www.insperity.com/vocabulary/core-time/>, <https://www.insperity.com/vocabulary/core-decision/>,
+      <https://www.insperity.com/vocabulary/core-governance/>, <https://www.insperity.com/vocabulary/core-job/>,
+      <https://www.insperity.com/vocabulary/core-measure/>, <https://www.insperity.com/vocabulary/core-policy/>,
+      <https://www.insperity.com/vocabulary/domain-commercial-operations/>, <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/>;
+    vaem:namespace "https://www.insperity.com/taxonomy/domain-pricing-and-contracts/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "pricingcontractstax";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "taxonomy-domain-pricing-and-contracts" .
+  
+  pricingcontractstax:agreement-status a skos:Concept;
+    rdfs:label "Agreement status"@en;
+    skos:prefLabel "Agreement status"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A status of a commercial agreement that records where it stands."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject lifecyclevoc:status, policyvoc:agreement;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:draft-agreement, pricingcontractstax:executed-agreement,
+      pricingcontractstax:expired-agreement, pricingcontractstax:terminated-agreement;
+    core:hasPrimaryTerm lifecyclevoc:status;
+    core:formalizedBy core:lifecycle-status .
+  
+  pricingcontractstax:agreement-term a skos:Concept;
+    rdfs:label "Agreement term"@en;
+    skos:prefLabel "Agreement term"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A clause that sets the period for which an agreement is in force and how it renews or ends."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject policyvoc:agreement, pricingcontractsvoc:term;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:effective-date, pricingcontractstax:initial-term,
+      pricingcontractstax:notice-period, pricingcontractstax:renewal-term;
+    core:hasPrimaryTerm pricingcontractsvoc:term;
+    core:formalizedBy commercialops:clause;
+    skos:broadMatch commercialopstax:clause .
+  
+  pricingcontractstax:contract-management-step a skos:Concept;
+    rdfs:label "Contract management step"@en;
+    skos:prefLabel "Contract management step"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A process step that prepares, agrees, maintains or ends a commercial agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:scopeNote "Process steps, not lifecycle stages: the agreement, as an asset, also has the five lifecycle stages (Baseline decision 11)."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject policyvoc:contract, processvoc:management, processvoc:step;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:contract-amendment, pricingcontractstax:contract-approval,
+      pricingcontractstax:contract-drafting, pricingcontractstax:contract-negotiation, pricingcontractstax:contract-renewal,
+      pricingcontractstax:contract-termination, pricingcontractstax:pricing-review, pricingcontractstax:signature;
+    core:hasPrimaryTerm processvoc:step;
+    core:formalizedBy core:process-step;
+    skos:broadMatch servicestax:contract-management .
+  
+  pricingcontractstax:pricing-component a skos:Concept;
+    rdfs:label "Pricing component"@en;
+    skos:prefLabel "Pricing component"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A measure that is one of the amounts or rates from which the price of a professional employer organization offering is built."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:component, decisionvoc:pricing;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:benefits-rate, pricingcontractstax:discount, pricingcontractstax:employer-burden,
+      pricingcontractstax:service-fee, pricingcontractstax:unemployment-insurance-rate,
+      pricingcontractstax:workers-compensation-rate;
+    core:hasPrimaryTerm assetvoc:component;
+    core:formalizedBy core:measure .
+  
+  pricingcontractstax:pricing-model a skos:Concept;
+    rdfs:label "Pricing model"@en;
+    skos:prefLabel "Pricing model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A directive that sets how the price of an offering is built from its pricing components."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:model, decisionvoc:pricing;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:bundled-pricing, pricingcontractstax:per-worksite-employee-pricing,
+      pricingcontractstax:percentage-of-payroll-pricing, pricingcontractstax:unbundled-pricing;
+    core:hasPrimaryTerm assetvoc:model;
+    core:formalizedBy core:directive;
+    skos:broadMatch producttax:pricing-models-and-structures .
+  
+  pricingcontractstax:quote a skos:Concept;
+    rdfs:label "Quote"@en;
+    skos:prefLabel "Quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset that states the prices at which the organization offers an offering to a prospect or client, valid for a stated period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject pricingcontractsvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:benefits-quote, pricingcontractstax:renewal-quote,
+      pricingcontractstax:workers-compensation-quote;
+    core:hasPrimaryTerm pricingcontractsvoc:quote;
+    core:formalizedBy pricingcontracts:quote;
+    skos:broadMatch commercialopstax:proposal .
+  
+  pricingcontractstax:underwriting-input a skos:Concept;
+    rdfs:label "Underwriting input"@en;
+    skos:prefLabel "Underwriting input"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset consumed by underwriting to assess the risk of covering a client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject processvoc:inputs, pricingcontractsvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:class-code, pricingcontractstax:experience-modification-factor,
+      pricingcontractstax:loss-run, pricingcontractstax:underwriting-guideline;
+    core:hasPrimaryTerm processvoc:inputs;
+    core:formalizedBy core:information-asset .
+  
+  pricingcontractstax:underwriting-outcome a skos:Concept;
+    rdfs:label "Underwriting outcome"@en;
+    skos:prefLabel "Underwriting outcome"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A decision reached by underwriting on whether, and on what terms, to offer coverage."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    owl:versionInfo "0.2.0";
+    terms:subject jobvoc:outcome, pricingcontractsvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:narrower pricingcontractstax:conditional-approval, pricingcontractstax:pricing-exception,
+      pricingcontractstax:underwriting-approval, pricingcontractstax:underwriting-denial;
+    core:hasPrimaryTerm jobvoc:outcome;
+    core:formalizedBy pricingcontracts:underwriting-decision;
+    skos:broadMatch decisiontax:eligibility-determination .
+  
+  pricingcontractstax:benefits-rate a skos:Concept;
+    rdfs:label "Benefits rate"@en;
+    skos:prefLabel "Benefits rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing component that is the amount charged per covered person for a benefit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-component;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:rate, domaincommercialoperationsvoc:benefit;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  pricingcontractstax:discount a skos:Concept;
+    rdfs:label "Discount"@en;
+    skos:prefLabel "Discount"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing component that reduces a standard price."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-component;
+    owl:versionInfo "0.2.0";
+    terms:subject pricingcontractsvoc:discount;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:discount;
+    skos:broadMatch producttax:discounts-and-promotions .
+  
+  pricingcontractstax:employer-burden a skos:Concept;
+    rdfs:label "Employer burden"@en;
+    skos:prefLabel "Employer burden"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing component that is the total cost the client would bear for its workers beyond wages."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-component;
+    skos:altLabel "Burden rate"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject rolevoc:employer, pricingcontractsvoc:burden;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:burden .
+  
+  pricingcontractstax:service-fee a skos:Concept;
+    rdfs:label "Service fee"@en;
+    skos:prefLabel "Service fee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing component charged for the organization's services, separate from pass-through costs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-component;
+    skos:altLabel "Administrative fee"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject servicesvoc:services, pricingcontractsvoc:fee;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower pricingcontractstax:per-worksite-employee-per-month-fee, pricingcontractstax:percentage-of-payroll-fee;
+    core:hasPrimaryTerm pricingcontractsvoc:fee .
+  
+  pricingcontractstax:unemployment-insurance-rate a skos:Concept;
+    rdfs:label "Unemployment insurance rate"@en;
+    skos:prefLabel "Unemployment insurance rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing component that is the state unemployment insurance tax rate applied to taxable wages."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-component;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:rate, domaincommercialoperationsvoc:insurance, domaincommercialoperationsvoc:unemployment;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  pricingcontractstax:workers-compensation-rate a skos:Concept;
+    rdfs:label "Workers' compensation rate"@en;
+    skos:prefLabel "Workers' compensation rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing component that is the rate charged per unit of pay for workers' compensation, set by class code and adjusted by the experience modification factor."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-component;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:rate, domaincommercialoperationsvoc:workers-compensation;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  pricingcontractstax:per-worksite-employee-per-month-fee a skos:Concept;
+    rdfs:label "Per worksite employee per month fee"@en;
+    skos:prefLabel "Per worksite employee per month fee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A service fee charged as a fixed amount for each worksite employee each month."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:service-fee;
+    skos:altLabel "PEPM fee"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject timevoc:month, locationvoc:worksite, rolevoc:employee, pricingcontractsvoc:fee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:fee .
+  
+  pricingcontractstax:percentage-of-payroll-fee a skos:Concept;
+    rdfs:label "Percentage of payroll fee"@en;
+    skos:prefLabel "Percentage of payroll fee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A service fee charged as a percentage of the client's gross payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:service-fee;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:payroll, pricingcontractsvoc:fee, pricingcontractsvoc:percentage;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:fee .
+  
+  pricingcontractstax:bundled-pricing a skos:Concept;
+    rdfs:label "Bundled pricing"@en;
+    skos:prefLabel "Bundled pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing model that charges one price for a bundle of services, without showing the cost of each."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-model;
+    owl:versionInfo "0.2.0";
+    terms:subject decisionvoc:pricing, productvoc:bundle;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingcontractstax:per-worksite-employee-pricing a skos:Concept;
+    rdfs:label "Per worksite employee pricing"@en;
+    skos:prefLabel "Per worksite employee pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing model that charges the service fee per worksite employee per period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-model;
+    owl:versionInfo "0.2.0";
+    terms:subject decisionvoc:pricing, locationvoc:worksite, rolevoc:employee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingcontractstax:percentage-of-payroll-pricing a skos:Concept;
+    rdfs:label "Percentage of payroll pricing"@en;
+    skos:prefLabel "Percentage of payroll pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing model that charges the service fee as a percentage of payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-model;
+    owl:versionInfo "0.2.0";
+    terms:subject decisionvoc:pricing, domaincommercialoperationsvoc:payroll, pricingcontractsvoc:percentage;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingcontractstax:unbundled-pricing a skos:Concept;
+    rdfs:label "Unbundled pricing"@en;
+    skos:prefLabel "Unbundled pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A pricing model that charges a service fee and passes through the cost of each component separately."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:pricing-model;
+    skos:altLabel "Itemized pricing"@en;
+    skos:scopeNote "Built from the same primitives as bundled pricing; the difference is in the definition."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject decisionvoc:pricing, productvoc:bundle;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingcontractstax:benefits-quote a skos:Concept;
+    rdfs:label "Benefits quote"@en;
+    skos:prefLabel "Benefits quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A quote of the rates for the benefit plans offered to a client's worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:quote;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:benefit, pricingcontractsvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:quote .
+  
+  pricingcontractstax:renewal-quote a skos:Concept;
+    rdfs:label "Renewal quote"@en;
+    skos:prefLabel "Renewal quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A quote of the prices offered to an existing client for a further term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:quote;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:renewal, pricingcontractsvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:quote .
+  
+  pricingcontractstax:workers-compensation-quote a skos:Concept;
+    rdfs:label "Workers' compensation quote"@en;
+    skos:prefLabel "Workers' compensation quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A quote of the workers' compensation rates for a client's class codes."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:quote;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:workers-compensation, pricingcontractsvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:quote .
+  
+  pricingcontractstax:class-code a skos:Concept;
+    rdfs:label "Class code"@en;
+    skos:prefLabel "Class code"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting input that classifies a worker's occupation by its workers' compensation risk."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-input;
+    owl:versionInfo "0.2.0";
+    terms:subject pricingcontractsvoc:class-code;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:class-code .
+  
+  pricingcontractstax:experience-modification-factor a skos:Concept;
+    rdfs:label "Experience modification factor"@en;
+    skos:prefLabel "Experience modification factor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting input that adjusts the client's workers' compensation premium for its claims history."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-input;
+    owl:versionInfo "0.2.0";
+    terms:subject pricingcontractsvoc:experience-modification-factor;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:experience-modification-factor .
+  
+  pricingcontractstax:loss-run a skos:Concept;
+    rdfs:label "Loss run"@en;
+    skos:prefLabel "Loss run"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting input that reports the client's history of insurance claims."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-input;
+    owl:versionInfo "0.2.0";
+    terms:subject pricingcontractsvoc:loss-run;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:loss-run .
+  
+  pricingcontractstax:underwriting-guideline a skos:Concept;
+    rdfs:label "Underwriting guideline"@en;
+    skos:prefLabel "Underwriting guideline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting input that states the criteria and limits underwriters apply."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-input;
+    owl:versionInfo "0.2.0";
+    terms:subject rulesvoc:guideline, pricingcontractsvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rulesvoc:guideline .
+  
+  pricingcontractstax:conditional-approval a skos:Concept;
+    rdfs:label "Conditional approval"@en;
+    skos:prefLabel "Conditional approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting outcome that accepts the client on conditions, such as a higher rate or a deposit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-outcome;
+    owl:versionInfo "0.2.0";
+    terms:subject processvoc:approval, rulesvoc:condition;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm processvoc:approval .
+  
+  pricingcontractstax:pricing-exception a skos:Concept;
+    rdfs:label "Pricing exception"@en;
+    skos:prefLabel "Pricing exception"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting outcome that approves a price or term outside the standard pricing model."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-outcome;
+    owl:versionInfo "0.2.0";
+    terms:subject decisionvoc:pricing, issuevoc:exception;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm issuevoc:exception;
+    skos:broadMatch decisiontax:exception-decision .
+  
+  pricingcontractstax:underwriting-approval a skos:Concept;
+    rdfs:label "Underwriting approval"@en;
+    skos:prefLabel "Underwriting approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting outcome that accepts the client at the quoted prices."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-outcome;
+    owl:versionInfo "0.2.0";
+    terms:subject processvoc:approval, pricingcontractsvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm processvoc:approval .
+  
+  pricingcontractstax:underwriting-denial a skos:Concept;
+    rdfs:label "Underwriting denial"@en;
+    skos:prefLabel "Underwriting denial"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An underwriting outcome that declines to offer coverage."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:underwriting-outcome;
+    skos:altLabel "Declination"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:denial, pricingcontractsvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:denial .
+  
+  pricingcontractstax:contract-amendment a skos:Concept;
+    rdfs:label "Contract amendment"@en;
+    skos:prefLabel "Contract amendment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step that changes the terms of an agreement in force."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:amendment, policyvoc:contract;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:amendment;
+    skos:broadMatch eventtax:agreement-amendment .
+  
+  pricingcontractstax:contract-approval a skos:Concept;
+    rdfs:label "Contract approval"@en;
+    skos:prefLabel "Contract approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step in which a designated party authorizes an agreement before it is signed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    owl:versionInfo "0.2.0";
+    terms:subject processvoc:approval, policyvoc:contract;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm processvoc:approval .
+  
+  pricingcontractstax:contract-drafting a skos:Concept;
+    rdfs:label "Contract drafting"@en;
+    skos:prefLabel "Contract drafting"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step that prepares the first version of an agreement from its template."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    owl:versionInfo "0.2.0";
+    terms:subject policyvoc:contract, processvoc:drafting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm processvoc:drafting .
+  
+  pricingcontractstax:contract-negotiation a skos:Concept;
+    rdfs:label "Contract negotiation"@en;
+    skos:prefLabel "Contract negotiation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step in which the parties negotiate the terms of an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    owl:versionInfo "0.2.0";
+    terms:subject policyvoc:contract, domaincommercialoperationsvoc:negotiation;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:negotiation .
+  
+  pricingcontractstax:contract-renewal a skos:Concept;
+    rdfs:label "Contract renewal"@en;
+    skos:prefLabel "Contract renewal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step that extends an agreement for a further term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:renewal, policyvoc:contract;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower pricingcontractstax:automatic-renewal;
+    core:hasPrimaryTerm eventvoc:renewal;
+    skos:broadMatch eventtax:agreement-renewal .
+  
+  pricingcontractstax:contract-termination a skos:Concept;
+    rdfs:label "Contract termination"@en;
+    skos:prefLabel "Contract termination"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step that ends an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:termination, policyvoc:contract;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:termination;
+    skos:broadMatch eventtax:agreement-termination .
+  
+  pricingcontractstax:pricing-review a skos:Concept;
+    rdfs:label "Pricing review"@en;
+    skos:prefLabel "Pricing review"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step that reviews and approves non-standard prices or terms."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    skos:altLabel "Deal desk review"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject decisionvoc:pricing, governancevoc:review;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm governancevoc:review .
+  
+  pricingcontractstax:signature a skos:Concept;
+    rdfs:label "Signature"@en;
+    skos:prefLabel "Signature"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract management step in which the parties sign the agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-management-step;
+    skos:altLabel "Contract execution"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject pricingcontractsvoc:signature;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:signature;
+    skos:broadMatch eventtax:agreement-execution .
+  
+  pricingcontractstax:automatic-renewal a skos:Concept;
+    rdfs:label "Automatic renewal"@en;
+    skos:prefLabel "Automatic renewal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contract renewal that happens without action by the parties unless one gives notice."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:contract-renewal;
+    skos:altLabel "Auto-renewal"@en, "Evergreen renewal"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:renewal, processvoc:automation;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:renewal .
+  
+  pricingcontractstax:effective-date a skos:Concept;
+    rdfs:label "Effective date"@en;
+    skos:prefLabel "Effective date"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement term that is the date from which the agreement, or a change to it, applies."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-term;
+    owl:versionInfo "0.2.0";
+    terms:subject timevoc:effective-date;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm timevoc:effective-date .
+  
+  pricingcontractstax:initial-term a skos:Concept;
+    rdfs:label "Initial term"@en;
+    skos:prefLabel "Initial term"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement term that is the first period for which the agreement is in force."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-term;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:start, pricingcontractsvoc:term;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:term .
+  
+  pricingcontractstax:notice-period a skos:Concept;
+    rdfs:label "Notice period"@en;
+    skos:prefLabel "Notice period"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement term that is the time a party must give before termination or non-renewal takes effect."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-term;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:notice, timevoc:period;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm timevoc:period .
+  
+  pricingcontractstax:renewal-term a skos:Concept;
+    rdfs:label "Renewal term"@en;
+    skos:prefLabel "Renewal term"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement term that is a further period for which the agreement is renewed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-term;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:renewal, pricingcontractsvoc:term;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingcontractsvoc:term .
+  
+  pricingcontractstax:draft-agreement a skos:Concept;
+    rdfs:label "Draft agreement"@en;
+    skos:prefLabel "Draft agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement status of an agreement that is being prepared and has not been signed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-status;
+    owl:versionInfo "0.2.0";
+    terms:subject policyvoc:agreement, processvoc:drafting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm policyvoc:agreement .
+  
+  pricingcontractstax:executed-agreement a skos:Concept;
+    rdfs:label "Executed agreement"@en;
+    skos:prefLabel "Executed agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement status of an agreement that all parties have signed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-status;
+    skos:altLabel "Signed agreement"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject policyvoc:agreement, processvoc:execution;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm policyvoc:agreement .
+  
+  pricingcontractstax:expired-agreement a skos:Concept;
+    rdfs:label "Expired agreement"@en;
+    skos:prefLabel "Expired agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement status of an agreement whose term has ended without renewal."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-status;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:expiration, policyvoc:agreement;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm policyvoc:agreement .
+  
+  pricingcontractstax:terminated-agreement a skos:Concept;
+    rdfs:label "Terminated agreement"@en;
+    skos:prefLabel "Terminated agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An agreement status of an agreement that a party has ended."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/>;
+    skos:broader pricingcontractstax:agreement-status;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:termination, policyvoc:agreement;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm policyvoc:agreement .
+}

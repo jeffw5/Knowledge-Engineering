@@ -1,0 +1,1023 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix salesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+
+<https://www.insperity.com/taxonomy/domain-commercial-operations/> {
+  <https://www.insperity.com/taxonomy/domain-commercial-operations/> a skos:ConceptScheme;
+    rdfs:label "Commercial operations domain taxonomy"@en;
+    skos:prefLabel "Commercial operations domain taxonomy"@en;
+    skos:hasTopConcept commercialopstax:claim, commercialopstax:commercial-activity, commercialopstax:commercial-agreement,
+      commercialopstax:commercial-event, commercialopstax:commercial-measure, commercialopstax:commercial-party-role,
+      commercialopstax:commercial-record, commercialopstax:employment-service, commercialopstax:market-structure,
+      commercialopstax:service-model;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A classification of the commercial roles, records, agreements, service models, markets, measures, events and processes shared by the Commercial Operations domains."@en;
+    terms:title "Commercial operations domain taxonomy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_commercial_operations.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.2.0 (2026-10-20): Census moved here from pricing and contracts, because sales and pricing and contracts both use it (D2); the container holds the PEO buyer persona graph that every domain addresses. Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_commercial_operations.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-20"^^xsd:date;
+    owl:versionInfo "0.2.0";
+    terms:subject domainvoc:commercial;
+    terms:isPartOf <https://www.insperity.com/domain/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/domain-commercial-operations/0.2.0/>;
+    terms:source <https://www.insperity.com/vocabulary/core-asset/>, <https://www.insperity.com/vocabulary/core-domain/>,
+      <https://www.insperity.com/vocabulary/core-event/>, <https://www.insperity.com/vocabulary/core-location/>,
+      <https://www.insperity.com/vocabulary/core-party/>, <https://www.insperity.com/vocabulary/core-process/>,
+      <https://www.insperity.com/vocabulary/core-product/>, <https://www.insperity.com/vocabulary/core-role/>,
+      <https://www.insperity.com/vocabulary/core-services/>, <https://www.insperity.com/vocabulary/core-logic/>,
+      <https://www.insperity.com/vocabulary/core-measure/>, <https://www.insperity.com/vocabulary/core-policy/>,
+      <https://www.insperity.com/vocabulary/core-value/>, <https://www.insperity.com/vocabulary/domain-commercial-operations/>;
+    vaem:namespace "https://www.insperity.com/taxonomy/domain-commercial-operations/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "commercialopstax";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "taxonomy-domain-commercial-operations" .
+  
+  commercialopstax:claim a skos:Concept;
+    rdfs:label "Claim"@en;
+    skos:prefLabel "Claim"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset that records a demand for a payment, remedy or right asserted to be owed."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:claim;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:insurance-claim, commercialopstax:workers-compensation-claim;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:claim;
+    core:formalizedBy core:information-asset .
+  
+  commercialopstax:commercial-activity a skos:Concept;
+    rdfs:label "Commercial activity"@en;
+    skos:prefLabel "Commercial activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A process step performed in pursuit of, or in service of, the organization's commercial relationships and shared by more than one commercial domain."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject partyvoc:commercial, processvoc:activity;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:attribution, commercialopstax:enablement, commercialopstax:negotiation,
+      commercialopstax:qualification;
+    core:hasPrimaryTerm processvoc:activity;
+    core:formalizedBy core:process-step .
+  
+  commercialopstax:commercial-agreement a skos:Concept;
+    rdfs:label "Commercial agreement"@en;
+    skos:prefLabel "Commercial agreement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A contractual instrument under which the organization provides offerings to a client or works with a partner."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:scopeNote "Specializes core taxonomy-core-policy \"Contractual instrument\", which already holds \"Client service agreement\", \"Service level agreement\" and \"Data processing agreement\"."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject partyvoc:commercial, policyvoc:agreement;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:clause;
+    core:hasPrimaryTerm policyvoc:agreement;
+    core:formalizedBy core:directive;
+    skos:broadMatch policytax:contractual-instrument .
+  
+  commercialopstax:commercial-event a skos:Concept;
+    rdfs:label "Commercial event"@en;
+    skos:prefLabel "Commercial event"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An event in the organization's commercial relationships that changes the state of a lead, opportunity or account."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:scopeNote "Agreement events (execution, amendment, renewal, termination) are in core taxonomy-core-event and are used directly."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:event, partyvoc:commercial;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:lead-conversion, commercialopstax:referral, commercialopstax:sale;
+    core:hasPrimaryTerm eventvoc:event;
+    core:formalizedBy core:event;
+    skos:broadMatch eventtax:business-event .
+  
+  commercialopstax:commercial-measure a skos:Concept;
+    rdfs:label "Commercial measure"@en;
+    skos:prefLabel "Commercial measure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A measure of the organization's commercial performance shared by the Commercial Operations domains."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject partyvoc:commercial, measurevoc:measure;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:conversion-rate, commercialopstax:paid-worksite-employees,
+      commercialopstax:pipeline-coverage, commercialopstax:win-rate;
+    core:hasPrimaryTerm measurevoc:measure;
+    core:formalizedBy core:measure;
+    skos:broadMatch measuretax:key-performance-indicator .
+  
+  commercialopstax:commercial-party-role a skos:Concept;
+    rdfs:label "Commercial party role"@en;
+    skos:prefLabel "Commercial party role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a party in the organization's commercial relationships that the core commercial roles do not already name."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:scopeNote "Specializes core taxonomy-core-role \"Commercial role\" (broker, client, partner, prospect, supplier), which the domains use directly."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject partyvoc:commercial, rolevoc:role;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:buyer, commercialopstax:competitor, commercialopstax:referral-source;
+    core:hasPrimaryTerm rolevoc:role;
+    core:formalizedBy core:role;
+    skos:broadMatch roletax:commercial-role .
+  
+  commercialopstax:commercial-record a skos:Concept;
+    rdfs:label "Commercial record"@en;
+    skos:prefLabel "Commercial record"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset that records the organization's pursuit of, or relationship with, a prospect or client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject partyvoc:commercial, assetvoc:record;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:account, commercialopstax:census, commercialopstax:commercial-signal,
+      commercialopstax:lead, commercialopstax:opportunity, commercialopstax:pipeline, commercialopstax:proposal;
+    core:hasPrimaryTerm assetvoc:record;
+    core:formalizedBy core:information-asset .
+  
+  commercialopstax:employment-service a skos:Concept;
+    rdfs:label "Employment service"@en;
+    skos:prefLabel "Employment service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A service within a professional employer organization offering that carries out an employer responsibility for a client's worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject servicesvoc:services, partyvoc:employment;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:employee-benefit-service, commercialopstax:payroll-service,
+      commercialopstax:unemployment-insurance, commercialopstax:workers-compensation-coverage;
+    core:hasPrimaryTerm servicesvoc:services;
+    core:formalizedBy core:service;
+    skos:broadMatch servicestax:business-services .
+  
+  commercialopstax:market-structure a skos:Concept;
+    rdfs:label "Market structure"@en;
+    skos:prefLabel "Market structure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An information asset that divides a market into the groups and assignments the organization targets and serves."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:model, productvoc:market;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:ideal-customer-profile, commercialopstax:segment, commercialopstax:territory;
+    core:hasPrimaryTerm assetvoc:model;
+    core:formalizedBy core:information-asset .
+  
+  commercialopstax:service-model a skos:Concept;
+    rdfs:label "Service model"@en;
+    skos:prefLabel "Service model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An offering arrangement that sets which employer responsibilities the organization takes on for a client and on what legal footing."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    owl:versionInfo "0.2.0";
+    terms:subject servicesvoc:services, assetvoc:model;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:narrower commercialopstax:administrative-services-model, commercialopstax:co-employment-service-model,
+      commercialopstax:human-capital-management-technology;
+    core:hasPrimaryTerm assetvoc:model;
+    core:formalizedBy core:offering .
+  
+  commercialopstax:buyer a skos:Concept;
+    rdfs:label "Buyer"@en;
+    skos:prefLabel "Buyer"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial party role borne by a party that evaluates, makes or influences a decision to acquire an offering."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-party-role;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:buyer;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:buyer .
+  
+  commercialopstax:competitor a skos:Concept;
+    rdfs:label "Competitor"@en;
+    skos:prefLabel "Competitor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial party role borne by an organization that offers buyers an alternative to the organization's offerings."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-party-role;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:competitor;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:competitor .
+  
+  commercialopstax:referral-source a skos:Concept;
+    rdfs:label "Referral source"@en;
+    skos:prefLabel "Referral source"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial party role borne by a party that refers potential clients to the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-party-role;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:source, domaincommercialoperationsvoc:referral;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm assetvoc:source .
+  
+  commercialopstax:account a skos:Concept;
+    rdfs:label "Account"@en;
+    skos:prefLabel "Account"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record of the relationship between the organization and a party that is, or may become, a client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:account;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower commercialopstax:client-account, commercialopstax:prospect-account;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:account .
+  
+  commercialopstax:census a skos:Concept;
+    rdfs:label "Census"@en;
+    skos:prefLabel "Census"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record that lists a prospective client's employees with the attributes needed to price benefits and coverage."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    skos:altLabel "Employee census"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:census;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:census .
+  
+  commercialopstax:commercial-signal a skos:Concept;
+    rdfs:label "Commercial signal"@en;
+    skos:prefLabel "Commercial signal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record of an observed change or behavior that indicates a likely development in a market, competitor, account or client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    owl:versionInfo "0.2.0";
+    terms:subject partyvoc:commercial, domaincommercialoperationsvoc:signal;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:signal .
+  
+  commercialopstax:lead a skos:Concept;
+    rdfs:label "Lead"@en;
+    skos:prefLabel "Lead"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record of a party, or a person at a party, that has shown interest in or fits the profile for the organization's offerings and has not yet been qualified."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:lead;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower commercialopstax:marketing-qualified-lead, commercialopstax:sales-qualified-lead;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:lead .
+  
+  commercialopstax:opportunity a skos:Concept;
+    rdfs:label "Opportunity"@en;
+    skos:prefLabel "Opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record of a potential sale that the organization has qualified and is actively pursuing."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:opportunity;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower commercialopstax:client-opportunity, commercialopstax:lost-opportunity,
+      commercialopstax:prospect-opportunity, commercialopstax:won-opportunity;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  commercialopstax:pipeline a skos:Concept;
+    rdfs:label "Pipeline"@en;
+    skos:prefLabel "Pipeline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record of the set of open opportunities arranged by the stage each has reached."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:pipeline;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:pipeline .
+  
+  commercialopstax:proposal a skos:Concept;
+    rdfs:label "Proposal"@en;
+    skos:prefLabel "Proposal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial record that sets out the offerings, terms and prices offered to a prospect or client for its decision."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-record;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:proposal;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:proposal .
+  
+  commercialopstax:client-account a skos:Concept;
+    rdfs:label "Client account"@en;
+    skos:prefLabel "Client account"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An account of a party that holds the client role under a signed agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:account;
+    owl:versionInfo "0.2.0";
+    terms:subject rolevoc:client, domaincommercialoperationsvoc:account;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:account .
+  
+  commercialopstax:prospect-account a skos:Concept;
+    rdfs:label "Prospect account"@en;
+    skos:prefLabel "Prospect account"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An account of a party that holds the prospect role and has not signed an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:account;
+    owl:versionInfo "0.2.0";
+    terms:subject rolevoc:prospect, domaincommercialoperationsvoc:account;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:account .
+  
+  commercialopstax:marketing-qualified-lead a skos:Concept;
+    rdfs:label "Marketing-qualified lead"@en;
+    skos:prefLabel "Marketing-qualified lead"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A lead that marketing has determined meets the engagement and fit criteria to pass to sales."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:lead;
+    skos:altLabel "MQL"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject domainvoc:marketing, domaincommercialoperationsvoc:lead, domaincommercialoperationsvoc:qualification;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:lead .
+  
+  commercialopstax:sales-qualified-lead a skos:Concept;
+    rdfs:label "Sales-qualified lead"@en;
+    skos:prefLabel "Sales-qualified lead"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A lead that sales has accepted as meeting the criteria to become an opportunity."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:lead;
+    skos:altLabel "SQL"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject domainvoc:sales, domaincommercialoperationsvoc:lead, domaincommercialoperationsvoc:qualification;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:lead .
+  
+  commercialopstax:client-opportunity a skos:Concept;
+    rdfs:label "Client opportunity"@en;
+    skos:prefLabel "Client opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An opportunity to sell additional offerings, or cover more workers, at an existing client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:opportunity;
+    owl:versionInfo "0.2.0";
+    terms:subject rolevoc:client, domaincommercialoperationsvoc:opportunity;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  commercialopstax:lost-opportunity a skos:Concept;
+    rdfs:label "Lost opportunity"@en;
+    skos:prefLabel "Lost opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An opportunity that ended without a sale because the buyer chose an alternative or did not decide."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:opportunity;
+    skos:altLabel "Closed lost"@en;
+    skos:scopeNote "Uses core-value loss (a reduction in value) for the value the organization did not gain."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject valuevoc:loss, domaincommercialoperationsvoc:opportunity;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  commercialopstax:prospect-opportunity a skos:Concept;
+    rdfs:label "Prospect opportunity"@en;
+    skos:prefLabel "Prospect opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An opportunity to win a new client from a party that holds the prospect role."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:opportunity;
+    skos:altLabel "New business opportunity"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject rolevoc:prospect, domaincommercialoperationsvoc:opportunity;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  commercialopstax:won-opportunity a skos:Concept;
+    rdfs:label "Won opportunity"@en;
+    skos:prefLabel "Won opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An opportunity that ended in a win: the buyer chose the organization and signed an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:opportunity;
+    skos:altLabel "Closed won"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:opportunity, domaincommercialoperationsvoc:win;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity .
+  
+  commercialopstax:clause a skos:Concept;
+    rdfs:label "Clause"@en;
+    skos:prefLabel "Clause"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A distinct provision of a commercial agreement that states a right, obligation, condition or term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-agreement;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:clause;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower commercialopstax:allocation-of-employer-responsibilities;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:clause .
+  
+  commercialopstax:allocation-of-employer-responsibilities a skos:Concept;
+    rdfs:label "Allocation of employer responsibilities"@en;
+    skos:prefLabel "Allocation of employer responsibilities"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A clause of a client service agreement that states which employer responsibilities the professional employer organization takes on, which the client keeps and which they share."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:clause;
+    skos:scopeNote "Most state professional employer organization statutes require the allocation to be in writing."@en;
+    owl:versionInfo "0.2.0";
+    terms:subject logicvoc:allocation, rolevoc:employer, rolevoc:responsibility;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:responsibility .
+  
+  commercialopstax:administrative-services-model a skos:Concept;
+    rdfs:label "Administrative services model"@en;
+    skos:prefLabel "Administrative services model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A service model in which the organization administers human resources, payroll and benefits for a client that remains the sole employer."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:service-model;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:model, domaincommercialoperationsvoc:administrative-services-organization;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:administrative-services-organization .
+  
+  commercialopstax:co-employment-service-model a skos:Concept;
+    rdfs:label "Co-employment service model"@en;
+    skos:prefLabel "Co-employment service model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A service model in which the organization, as a professional employer organization, enters a co-employment relationship with the client and shares employer responsibilities for its worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:service-model;
+    skos:altLabel "Professional employer organization model"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject servicesvoc:services, assetvoc:model, partyvoc:co-employment;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm assetvoc:model .
+  
+  commercialopstax:human-capital-management-technology a skos:Concept;
+    rdfs:label "Human capital management technology"@en;
+    skos:prefLabel "Human capital management technology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A service model in which the client licenses the organization's human capital management technology and runs its own workforce processes."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:service-model;
+    owl:versionInfo "0.2.0";
+    terms:subject assetvoc:technology, domaincommercialoperationsvoc:human-capital-management;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm assetvoc:technology .
+  
+  commercialopstax:employee-benefit-service a skos:Concept;
+    rdfs:label "Employee benefit service"@en;
+    skos:prefLabel "Employee benefit service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An employment service that provides worksite employees with benefits through plans the organization sponsors or administers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:employment-service;
+    owl:versionInfo "0.2.0";
+    terms:subject servicesvoc:services, rolevoc:employee, domaincommercialoperationsvoc:benefit;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm servicesvoc:services .
+  
+  commercialopstax:payroll-service a skos:Concept;
+    rdfs:label "Payroll service"@en;
+    skos:prefLabel "Payroll service"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An employment service that pays worksite employees and withholds, files and remits their employment taxes."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:employment-service;
+    owl:versionInfo "0.2.0";
+    terms:subject servicesvoc:services, domaincommercialoperationsvoc:payroll;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm servicesvoc:services .
+  
+  commercialopstax:unemployment-insurance a skos:Concept;
+    rdfs:label "Unemployment insurance"@en;
+    skos:prefLabel "Unemployment insurance"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An employment service under which employment taxes are paid to fund benefits for workers who lose their jobs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:employment-service;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:insurance, domaincommercialoperationsvoc:unemployment;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:insurance .
+  
+  commercialopstax:workers-compensation-coverage a skos:Concept;
+    rdfs:label "Workers' compensation coverage"@en;
+    skos:prefLabel "Workers' compensation coverage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An employment service that insures worksite employees under workers' compensation."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:employment-service;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:insurance, domaincommercialoperationsvoc:workers-compensation;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:insurance .
+  
+  commercialopstax:ideal-customer-profile a skos:Concept;
+    rdfs:label "Ideal customer profile"@en;
+    skos:prefLabel "Ideal customer profile"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A market structure that describes the kind of organization that gains the most value from the organization's offerings and is most valuable to serve."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:market-structure;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:ideal-customer-profile;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:ideal-customer-profile .
+  
+  commercialopstax:segment a skos:Concept;
+    rdfs:label "Segment"@en;
+    skos:prefLabel "Segment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A market structure that groups actual or potential buyers that share characteristics, needs or behaviors."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:market-structure;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:segment;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower commercialopstax:industry-segment, commercialopstax:size-segment;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:segment .
+  
+  commercialopstax:territory a skos:Concept;
+    rdfs:label "Territory"@en;
+    skos:prefLabel "Territory"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A market structure that assigns accounts, geographies or segments to the parties responsible for pursuing them."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:market-structure;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:territory;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:territory .
+  
+  commercialopstax:industry-segment a skos:Concept;
+    rdfs:label "Industry segment"@en;
+    skos:prefLabel "Industry segment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A segment of buyers that belong to the same industry."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:segment;
+    skos:altLabel "Vertical"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:industry, domaincommercialoperationsvoc:segment;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:segment .
+  
+  commercialopstax:size-segment a skos:Concept;
+    rdfs:label "Size segment"@en;
+    skos:prefLabel "Size segment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A segment of buyers grouped by the number of workers they employ."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:segment;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:scale, domaincommercialoperationsvoc:segment;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:segment .
+  
+  commercialopstax:conversion-rate a skos:Concept;
+    rdfs:label "Conversion rate"@en;
+    skos:prefLabel "Conversion rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial measure of the share of leads or opportunities at one stage that convert to the next."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-measure;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:rate, domaincommercialoperationsvoc:conversion;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  commercialopstax:paid-worksite-employees a skos:Concept;
+    rdfs:label "Paid worksite employees"@en;
+    skos:prefLabel "Paid worksite employees"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial measure of the number of worksite employees paid through the organization's payroll in a period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-measure;
+    skos:altLabel "Paid worksite employee count"@en;
+    owl:versionInfo "0.2.0";
+    terms:subject eventvoc:payment, locationvoc:worksite, rolevoc:employee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:employee .
+  
+  commercialopstax:pipeline-coverage a skos:Concept;
+    rdfs:label "Pipeline coverage"@en;
+    skos:prefLabel "Pipeline coverage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial measure of the value of open opportunities relative to the target for the period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-measure;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:coverage, domaincommercialoperationsvoc:pipeline;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:coverage .
+  
+  commercialopstax:win-rate a skos:Concept;
+    rdfs:label "Win rate"@en;
+    skos:prefLabel "Win rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial measure of the share of closed opportunities that ended in a win."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-measure;
+    owl:versionInfo "0.2.0";
+    terms:subject measurevoc:rate, domaincommercialoperationsvoc:win;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  commercialopstax:lead-conversion a skos:Concept;
+    rdfs:label "Lead conversion"@en;
+    skos:prefLabel "Lead conversion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial event in which a lead is accepted as an opportunity."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-event;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:conversion, domaincommercialoperationsvoc:lead;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:conversion;
+    skos:broadMatch eventtax:party-event .
+  
+  commercialopstax:referral a skos:Concept;
+    rdfs:label "Referral"@en;
+    skos:prefLabel "Referral"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial event in which a party recommends a potential client to the organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-event;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:referral;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:referral .
+  
+  commercialopstax:sale a skos:Concept;
+    rdfs:label "Sale"@en;
+    skos:prefLabel "Sale"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial event in which a buyer commits to acquire an offering from the organization under an agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-event;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:sale;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:sale .
+  
+  commercialopstax:attribution a skos:Concept;
+    rdfs:label "Attribution"@en;
+    skos:prefLabel "Attribution"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial activity that assigns credit for a lead, opportunity or sale to what sourced or influenced it."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-activity;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:attribution;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:attribution .
+  
+  commercialopstax:enablement a skos:Concept;
+    rdfs:label "Enablement"@en;
+    skos:prefLabel "Enablement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial activity that equips sellers, partners or client teams with the knowledge, content and tools they need."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-activity;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:enablement;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:enablement .
+  
+  commercialopstax:negotiation a skos:Concept;
+    rdfs:label "Negotiation"@en;
+    skos:prefLabel "Negotiation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial activity in which the parties discuss terms, prices or obligations to reach agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-activity;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:negotiation;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:negotiation .
+  
+  commercialopstax:qualification a skos:Concept;
+    rdfs:label "Qualification"@en;
+    skos:prefLabel "Qualification"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A commercial activity that determines whether a lead or opportunity meets the criteria to be pursued."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:commercial-activity;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:qualification;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:qualification .
+  
+  commercialopstax:insurance-claim a skos:Concept;
+    rdfs:label "Insurance claim"@en;
+    skos:prefLabel "Insurance claim"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A claim made against an insurance policy for a covered loss."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:claim;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:claim, domaincommercialoperationsvoc:insurance;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:claim .
+  
+  commercialopstax:workers-compensation-claim a skos:Concept;
+    rdfs:label "Workers' compensation claim"@en;
+    skos:prefLabel "Workers' compensation claim"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A claim by a worker for benefits under workers' compensation for an injury in the course of employment."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-commercial-operations/>;
+    skos:broader commercialopstax:claim;
+    owl:versionInfo "0.2.0";
+    terms:subject domaincommercialoperationsvoc:claim, domaincommercialoperationsvoc:workers-compensation;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:claim .
+}

@@ -1482,7 +1482,8 @@ def check(triples, base, policy=None, vocab=None):
             want = {'concept': ('vocabulary', 'taxonomy'), 'scheme': ('vocabulary', 'taxonomy'), 'shape': ('shapes',),
                     'class': ('ontology', 'taxonomy'), 'ontology': ('ontology', 'taxonomy', 'shapes')}[kind]
             if segs[0] not in want: r('URI pattern (§3.2)', 'warn', iri, f'{kind} under /{segs[0]}/')
-            if len(segs) > 1 and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', segs[1]): r('URI pattern (§3.2)', 'warn', iri, 'domain segment not lower-case hyphenated')
+            # naming standard (D26): a domain segment is lower-case hyphenated words, with levels L1.L2.L3 joined by dots
+            if len(segs) > 1 and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*(\.[a-z0-9]+(-[a-z0-9]+)*){0,2}', segs[1]): r('URI pattern (§3.2)', 'warn', iri, 'domain segment not lower-case hyphenated (levels joined by dots)')
             if kind in ('class', 'concept', 'shape') and len(segs) != 3: r('URI pattern (§3.2)', 'warn', iri, 'expected {kind}/{domain}/{Term}')
         if kind == 'class' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', local): r('Identifier case (§3.2)', 'warn', iri, 'class not lower-case hyphenated')
         if kind == 'concept' and segs and segs[0] == 'vocabulary' and not re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', local): r('Identifier case (§3.2)', 'warn', iri, 'vocabulary term not lower-case hyphenated')

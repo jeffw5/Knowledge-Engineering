@@ -1,0 +1,646 @@
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix customercareshp: <https://www.insperity.com/shapes/domain-customer-care/> .
+@prefix businessopstax: <https://www.insperity.com/taxonomy/business-operations/> .
+@prefix customercarevoc: <https://www.insperity.com/vocabulary/domain-customer-care/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix pricingtax: <https://www.insperity.com/taxonomy/domain-pricing/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix customercare: <https://www.insperity.com/ontology/domain-customer-care/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix techopstax: <https://www.insperity.com/taxonomy/technical-operations/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix marketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix apqc: <https://www.insperity.com/taxonomy/apqc-pcf/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix domainsalesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix pricing: <https://www.insperity.com/ontology/domain-pricing/> .
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix customercaretax: <https://www.insperity.com/taxonomy/domain-customer-care/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix pricingvoc: <https://www.insperity.com/vocabulary/domain-pricing/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix techopsvoc: <https://www.insperity.com/vocabulary/technical-operations/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix hrserviceopsvoc: <https://www.insperity.com/vocabulary/hr-service-operations/> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix pricingshp: <https://www.insperity.com/shapes/domain-pricing/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix hrserviceopstax: <https://www.insperity.com/taxonomy/hr-service-operations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix businessopsvoc: <https://www.insperity.com/vocabulary/business-operations/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+
+<https://www.insperity.com/vocabulary/domain-marketing/> {
+  <https://www.insperity.com/vocabulary/domain-marketing/> a skos:ConceptScheme;
+    rdfs:label "Domain Marketing Vocabulary"@en;
+    skos:prefLabel "Domain Marketing Vocabulary"@en;
+    skos:hasTopConcept marketingvoc:search-engine-optimization, marketingvoc:alternative,
+      marketingvoc:audience, marketingvoc:awareness, marketingvoc:battlecard, marketingvoc:campaign,
+      marketingvoc:case-study, marketingvoc:demand, marketingvoc:differentiator, marketingvoc:displacement,
+      marketingvoc:email, marketingvoc:firmographics, marketingvoc:funnel, marketingvoc:generation,
+      marketingvoc:impression, marketingvoc:intelligence, marketingvoc:intent, marketingvoc:interview,
+      marketingvoc:landscape, marketingvoc:nurturing, marketingvoc:positioning, marketingvoc:profile,
+      marketingvoc:public-relations, marketingvoc:research, marketingvoc:share, marketingvoc:social-media,
+      marketingvoc:status-quo, marketingvoc:strength, marketingvoc:strengths-weaknesses-opportunities-and-threats-analysis,
+      marketingvoc:threat, marketingvoc:touchpoint, marketingvoc:trade-show, marketingvoc:weakness,
+      marketingvoc:webinar;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A controlled vocabulary of the primitives of marketing professional employer organization services, including competitive intelligence: campaigns, audiences, funnels, positioning, demand, intent, and the intelligence, battlecards, landscapes and alternatives used to compete."@en;
+    terms:title "Domain Marketing Vocabulary"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_marketing.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.1.1 (2026-10-20): Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_marketing.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.2.0 (2026-10-21): Restructured to the operational areas and the naming standard (D26, D27): titled 'Domain Marketing Vocabulary', '… Taxonomy', '… Ontology' and '… Shapes'; imports the Commercial Operations ontology at its new IRI. Built by build_domains.py from spec_marketing.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-22"^^xsd:date;
+    owl:versionInfo "0.2.0";
+    terms:subject domainvoc:marketing;
+    terms:isPartOf <https://www.insperity.com/vocabulary/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/vocabulary/domain-marketing/0.2.0/>;
+    vaem:namespace "https://www.insperity.com/vocabulary/domain-marketing/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "marketingvoc";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "vocabulary-domain-marketing" .
+  
+  marketingvoc:search-engine-optimization a skos:Concept;
+    rdfs:label "search engine optimization"@en;
+    skos:prefLabel "search engine optimization"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The practice of improving content so that search engines show it to parties searching for related topics."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:altLabel "SEO"@en;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:alternative a skos:Concept;
+    rdfs:label "alternative"@en;
+    skos:prefLabel "alternative"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A different way a buyer could get a job done instead of acquiring the organization's offering, including doing nothing."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:audience a skos:Concept;
+    rdfs:label "audience"@en;
+    skos:prefLabel "audience"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A group of parties that a message or campaign is meant to reach."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:awareness a skos:Concept;
+    rdfs:label "awareness"@en;
+    skos:prefLabel "awareness"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The degree to which the parties in a market know of a brand or offering."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:battlecard a skos:Concept;
+    rdfs:label "battlecard"@en;
+    skos:prefLabel "battlecard"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A concise reference that equips sellers to position an offering against a specific competitor."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:campaign a skos:Concept;
+    rdfs:label "campaign"@en;
+    skos:prefLabel "campaign"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A coordinated set of marketing activities, run over a period through one or more channels, toward a stated objective."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:case-study a skos:Concept;
+    rdfs:label "case study"@en;
+    skos:prefLabel "case study"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A document that tells how a client used an offering to get a job done and what it gained."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:demand a skos:Concept;
+    rdfs:label "demand"@en;
+    skos:prefLabel "demand"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core (core-services \"demand management\" is polymorphic)."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A desire of buyers for an offering, backed by the ability and willingness to acquire it."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:differentiator a skos:Concept;
+    rdfs:label "differentiator"@en;
+    skos:prefLabel "differentiator"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A characteristic of an offering that sets it apart, favorably for its buyers, from competing alternatives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:displacement a skos:Concept;
+    rdfs:label "displacement"@en;
+    skos:prefLabel "displacement"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A replacement of a competitor as the provider of a client's offering."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:email a skos:Concept;
+    rdfs:label "email"@en;
+    skos:prefLabel "email"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core (core-location holds \"email address\")."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A message sent electronically from one party to another through an email address."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:firmographics a skos:Concept;
+    rdfs:label "firmographics"@en;
+    skos:prefLabel "firmographics"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The characteristics of an organization used to segment a market, such as industry, size, location and growth."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:funnel a skos:Concept;
+    rdfs:label "funnel"@en;
+    skos:prefLabel "funnel"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A model of the successive stages through which leads progress from awareness of the organization to a purchase."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:generation a skos:Concept;
+    rdfs:label "generation"@en;
+    skos:prefLabel "generation"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The creation of something, such as leads or demand, through deliberate activity."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:impression a skos:Concept;
+    rdfs:label "impression"@en;
+    skos:prefLabel "impression"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A single display of an advertisement or piece of content to a party."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:intelligence a skos:Concept;
+    rdfs:label "intelligence"@en;
+    skos:prefLabel "intelligence"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "Information gathered and analyzed to inform decisions about a market, competitor or environment."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:intent a skos:Concept;
+    rdfs:label "intent"@en;
+    skos:prefLabel "intent"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An indication, inferred from a party's behavior, that it is researching or ready to buy an offering."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:interview a skos:Concept;
+    rdfs:label "interview"@en;
+    skos:prefLabel "interview"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A structured conversation in which one party asks another questions to gather information."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:landscape a skos:Concept;
+    rdfs:label "landscape"@en;
+    skos:prefLabel "landscape"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An overview of the parties, offerings and forces that shape a market."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:nurturing a skos:Concept;
+    rdfs:label "nurturing"@en;
+    skos:prefLabel "nurturing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A sequence of communications that keeps a lead engaged until it is ready to be pursued."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:positioning a skos:Concept;
+    rdfs:label "positioning"@en;
+    skos:prefLabel "positioning"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The place an offering is meant to hold in the minds of a target segment relative to competing alternatives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:profile a skos:Concept;
+    rdfs:label "profile"@en;
+    skos:prefLabel "profile"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core (core-persona \"profile data\" is polymorphic)."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A structured description of the characteristics of a party, offering or group."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:public-relations a skos:Concept;
+    rdfs:label "public relations"@en;
+    skos:prefLabel "public relations"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The management of the information the organization shares with the public and the media to shape its reputation."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:altLabel "PR"@en;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:research a skos:Concept;
+    rdfs:label "research"@en;
+    skos:prefLabel "research"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A systematic investigation to establish facts or reach new conclusions."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:share a skos:Concept;
+    rdfs:label "share"@en;
+    skos:prefLabel "share"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A portion of a whole that belongs to or is held by a party."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:social-media a skos:Concept;
+    rdfs:label "social media"@en;
+    skos:prefLabel "social media"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "Websites and applications through which parties create and share content and take part in networks."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:status-quo a skos:Concept;
+    rdfs:label "status quo"@en;
+    skos:prefLabel "status quo"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "The buyer's current way of getting a job done, kept when it decides not to change."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:altLabel "do nothing"@en;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:strength a skos:Concept;
+    rdfs:label "strength"@en;
+    skos:prefLabel "strength"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A characteristic that gives a party or offering an advantage over others."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:strengths-weaknesses-opportunities-and-threats-analysis a skos:Concept;
+    rdfs:label "strengths, weaknesses, opportunities and threats analysis"@en;
+    skos:prefLabel "strengths, weaknesses, opportunities and threats analysis"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A framework for assessing a party or offering by its internal strengths and weaknesses and its external opportunities and threats."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:altLabel "SWOT analysis"@en;
+    skos:scopeNote "A multiword lexical unit naming a framework (Baseline decision 3); its \"opportunities\" is not the sales sense of opportunity."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:threat a skos:Concept;
+    rdfs:label "threat"@en;
+    skos:prefLabel "threat"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core (core-services \"threat management\" is polymorphic)."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A development outside a party's control that could harm its position or objectives."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:touchpoint a skos:Concept;
+    rdfs:label "touchpoint"@en;
+    skos:prefLabel "touchpoint"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A point at which a party encounters the organization, its brand or its offerings."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:trade-show a skos:Concept;
+    rdfs:label "trade show"@en;
+    skos:prefLabel "trade show"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An event at which organizations in an industry exhibit their offerings to buyers."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    skos:scopeNote "A multiword lexical unit (Baseline decision 3)."@en;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:weakness a skos:Concept;
+    rdfs:label "weakness"@en;
+    skos:prefLabel "weakness"@en;
+    skos:editorialNote "Candidate for promotion to the core: General primitive missing from the core."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A characteristic that puts a party or offering at a disadvantage relative to others."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+  
+  marketingvoc:webinar a skos:Concept;
+    rdfs:label "webinar"@en;
+    skos:prefLabel "webinar"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A presentation or seminar delivered live, or recorded, over the internet."@en;
+    skos:inScheme <https://www.insperity.com/vocabulary/domain-marketing/>;
+    owl:versionInfo "0.2.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/domain-marketing/> .
+}

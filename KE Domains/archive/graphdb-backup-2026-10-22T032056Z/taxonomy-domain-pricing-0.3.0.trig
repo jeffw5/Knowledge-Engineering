@@ -1,0 +1,658 @@
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix customercareshp: <https://www.insperity.com/shapes/domain-customer-care/> .
+@prefix businessopstax: <https://www.insperity.com/taxonomy/business-operations/> .
+@prefix customercarevoc: <https://www.insperity.com/vocabulary/domain-customer-care/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix pricingtax: <https://www.insperity.com/taxonomy/domain-pricing/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix customercare: <https://www.insperity.com/ontology/domain-customer-care/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix techopstax: <https://www.insperity.com/taxonomy/technical-operations/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix marketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix apqc: <https://www.insperity.com/taxonomy/apqc-pcf/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix domainsalesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix pricing: <https://www.insperity.com/ontology/domain-pricing/> .
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix customercaretax: <https://www.insperity.com/taxonomy/domain-customer-care/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix pricingvoc: <https://www.insperity.com/vocabulary/domain-pricing/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix techopsvoc: <https://www.insperity.com/vocabulary/technical-operations/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix hrserviceopsvoc: <https://www.insperity.com/vocabulary/hr-service-operations/> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix pricingshp: <https://www.insperity.com/shapes/domain-pricing/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix hrserviceopstax: <https://www.insperity.com/taxonomy/hr-service-operations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix businessopsvoc: <https://www.insperity.com/vocabulary/business-operations/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+
+<https://www.insperity.com/taxonomy/domain-pricing/> {
+  <https://www.insperity.com/taxonomy/domain-pricing/> a skos:ConceptScheme;
+    rdfs:label "Domain Pricing Taxonomy"@en;
+    skos:prefLabel "Domain Pricing Taxonomy"@en;
+    skos:hasTopConcept pricingtax:pricing-component, pricingtax:pricing-model, pricingtax:pricing-review,
+      pricingtax:quote, pricingtax:underwriting-input, pricingtax:underwriting-outcome;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A classification of pricing components and models, quotes, underwriting inputs and outcomes, and pricing review. Contract management, agreement terms and statuses are in Domain Legal."@en;
+    terms:title "Domain Pricing Taxonomy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    skos:changeNote "0.3.0 (2026-10-21): Restructured to the operational areas and the naming standard (D26, D27): titled 'Domain Pricing Vocabulary', '… Taxonomy', '… Ontology' and '… Shapes', at …/<kind>/domain-pricing/ (formerly Pricing and contracts, …/<kind>/domain-pricing-and-contracts/). Contract management steps, agreement terms and agreement statuses, with the term and signature primitives, moved to Domain Legal (Business Operations); pricing review stays here. Built by build_domains.py from spec_pricing.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_pricing.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.2.0 (2026-10-20): Census moved to the Commercial Operations container (D2). Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_pricing.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-22"^^xsd:date;
+    owl:versionInfo "0.3.0";
+    terms:subject domainvoc:commercial;
+    terms:isPartOf <https://www.insperity.com/taxonomy/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/domain-pricing/0.3.0/>;
+    terms:source <https://www.insperity.com/vocabulary/core-asset/>, <https://www.insperity.com/vocabulary/core-event/>,
+      <https://www.insperity.com/vocabulary/core-issue/>, <https://www.insperity.com/vocabulary/core-location/>,
+      <https://www.insperity.com/vocabulary/core-process/>, <https://www.insperity.com/vocabulary/core-product/>,
+      <https://www.insperity.com/vocabulary/core-role/>, <https://www.insperity.com/vocabulary/core-rules/>,
+      <https://www.insperity.com/vocabulary/core-services/>, <https://www.insperity.com/vocabulary/core-time/>,
+      <https://www.insperity.com/vocabulary/core-decision/>, <https://www.insperity.com/vocabulary/core-governance/>,
+      <https://www.insperity.com/vocabulary/core-job/>, <https://www.insperity.com/vocabulary/core-measure/>,
+      <https://www.insperity.com/vocabulary/commercial-operations/>, <https://www.insperity.com/vocabulary/domain-pricing/>;
+    vaem:namespace "https://www.insperity.com/taxonomy/domain-pricing/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "pricingtax";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "taxonomy-domain-pricing";
+    terms:replaces <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+  
+  pricingtax:pricing-component a skos:Concept;
+    rdfs:label "Pricing component"@en;
+    skos:prefLabel "Pricing component"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A measure that is one of the amounts or rates from which the price of a professional employer organization offering is built."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    owl:versionInfo "0.3.0";
+    terms:subject assetvoc:component, decisionvoc:pricing;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:narrower pricingtax:benefits-rate, pricingtax:discount, pricingtax:employer-burden,
+      pricingtax:service-fee, pricingtax:unemployment-insurance-rate, pricingtax:workers-compensation-rate;
+    core:hasPrimaryTerm assetvoc:component;
+    core:formalizedBy core:measure .
+  
+  pricingtax:pricing-model a skos:Concept;
+    rdfs:label "Pricing model"@en;
+    skos:prefLabel "Pricing model"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A directive that sets how the price of an offering is built from its pricing components."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    owl:versionInfo "0.3.0";
+    terms:subject assetvoc:model, decisionvoc:pricing;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:narrower pricingtax:bundled-pricing, pricingtax:per-worksite-employee-pricing,
+      pricingtax:percentage-of-payroll-pricing, pricingtax:unbundled-pricing;
+    core:hasPrimaryTerm assetvoc:model;
+    core:formalizedBy core:directive;
+    skos:broadMatch producttax:pricing-models-and-structures .
+  
+  pricingtax:pricing-review a skos:Concept;
+    rdfs:label "Pricing review"@en;
+    skos:prefLabel "Pricing review"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A process step that reviews and approves non-standard prices or terms before a proposal or agreement is offered."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:altLabel "Deal desk review"@en;
+    owl:versionInfo "0.3.0";
+    terms:subject decisionvoc:pricing, governancevoc:review;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing/>;
+    core:hasPrimaryTerm governancevoc:review;
+    core:formalizedBy core:process-step;
+    skos:broadMatch servicestax:contract-management .
+  
+  pricingtax:quote a skos:Concept;
+    rdfs:label "Quote"@en;
+    skos:prefLabel "Quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset that states the prices at which the organization offers an offering to a prospect or client, valid for a stated period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    owl:versionInfo "0.3.0";
+    terms:subject pricingvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:narrower pricingtax:benefits-quote, pricingtax:renewal-quote, pricingtax:workers-compensation-quote;
+    core:hasPrimaryTerm pricingvoc:quote;
+    core:formalizedBy pricing:quote;
+    skos:broadMatch <https://www.insperity.com/taxonomy/commercial-operations/proposal> .
+  
+  pricingtax:underwriting-input a skos:Concept;
+    rdfs:label "Underwriting input"@en;
+    skos:prefLabel "Underwriting input"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset consumed by underwriting to assess the risk of covering a client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    owl:versionInfo "0.3.0";
+    terms:subject processvoc:inputs, pricingvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:narrower pricingtax:class-code, pricingtax:experience-modification-factor, pricingtax:loss-run,
+      pricingtax:underwriting-guideline;
+    core:hasPrimaryTerm processvoc:inputs;
+    core:formalizedBy core:information-asset .
+  
+  pricingtax:underwriting-outcome a skos:Concept;
+    rdfs:label "Underwriting outcome"@en;
+    skos:prefLabel "Underwriting outcome"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A decision reached by underwriting on whether, and on what terms, to offer coverage."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    owl:versionInfo "0.3.0";
+    terms:subject jobvoc:outcome, pricingvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:narrower pricingtax:conditional-approval, pricingtax:pricing-exception, pricingtax:underwriting-approval,
+      pricingtax:underwriting-denial;
+    core:hasPrimaryTerm jobvoc:outcome;
+    core:formalizedBy pricing:underwriting-decision;
+    skos:broadMatch decisiontax:eligibility-determination .
+  
+  pricingtax:benefits-rate a skos:Concept;
+    rdfs:label "Benefits rate"@en;
+    skos:prefLabel "Benefits rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing component that is the amount charged per covered person for a benefit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-component;
+    owl:versionInfo "0.3.0";
+    terms:subject measurevoc:rate, <https://www.insperity.com/vocabulary/commercial-operations/benefit>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  pricingtax:discount a skos:Concept;
+    rdfs:label "Discount"@en;
+    skos:prefLabel "Discount"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing component that reduces a standard price."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-component;
+    owl:versionInfo "0.3.0";
+    terms:subject pricingvoc:discount;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:discount;
+    skos:broadMatch producttax:discounts-and-promotions .
+  
+  pricingtax:employer-burden a skos:Concept;
+    rdfs:label "Employer burden"@en;
+    skos:prefLabel "Employer burden"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing component that is the total cost the client would bear for its workers beyond wages."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-component;
+    skos:altLabel "Burden rate"@en;
+    owl:versionInfo "0.3.0";
+    terms:subject rolevoc:employer, pricingvoc:burden;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:burden .
+  
+  pricingtax:service-fee a skos:Concept;
+    rdfs:label "Service fee"@en;
+    skos:prefLabel "Service fee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing component charged for the organization's services, separate from pass-through costs."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-component;
+    skos:altLabel "Administrative fee"@en;
+    owl:versionInfo "0.3.0";
+    terms:subject servicesvoc:services, pricingvoc:fee;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower pricingtax:per-worksite-employee-per-month-fee, pricingtax:percentage-of-payroll-fee;
+    core:hasPrimaryTerm pricingvoc:fee .
+  
+  pricingtax:unemployment-insurance-rate a skos:Concept;
+    rdfs:label "Unemployment insurance rate"@en;
+    skos:prefLabel "Unemployment insurance rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing component that is the state unemployment insurance tax rate applied to taxable wages."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-component;
+    owl:versionInfo "0.3.0";
+    terms:subject measurevoc:rate, <https://www.insperity.com/vocabulary/commercial-operations/insurance>,
+      <https://www.insperity.com/vocabulary/commercial-operations/unemployment>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  pricingtax:workers-compensation-rate a skos:Concept;
+    rdfs:label "Workers' compensation rate"@en;
+    skos:prefLabel "Workers' compensation rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing component that is the rate charged per unit of pay for workers' compensation, set by class code and adjusted by the experience modification factor."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-component;
+    owl:versionInfo "0.3.0";
+    terms:subject measurevoc:rate, <https://www.insperity.com/vocabulary/commercial-operations/workers-compensation>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  pricingtax:per-worksite-employee-per-month-fee a skos:Concept;
+    rdfs:label "Per worksite employee per month fee"@en;
+    skos:prefLabel "Per worksite employee per month fee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A service fee charged as a fixed amount for each worksite employee each month."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:service-fee;
+    skos:altLabel "PEPM fee"@en;
+    owl:versionInfo "0.3.0";
+    terms:subject timevoc:month, locationvoc:worksite, rolevoc:employee, pricingvoc:fee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:fee .
+  
+  pricingtax:percentage-of-payroll-fee a skos:Concept;
+    rdfs:label "Percentage of payroll fee"@en;
+    skos:prefLabel "Percentage of payroll fee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A service fee charged as a percentage of the client's gross payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:service-fee;
+    owl:versionInfo "0.3.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/payroll>,
+      pricingvoc:fee, pricingvoc:percentage;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:fee .
+  
+  pricingtax:bundled-pricing a skos:Concept;
+    rdfs:label "Bundled pricing"@en;
+    skos:prefLabel "Bundled pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing model that charges one price for a bundle of services, without showing the cost of each."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-model;
+    owl:versionInfo "0.3.0";
+    terms:subject decisionvoc:pricing, productvoc:bundle;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingtax:per-worksite-employee-pricing a skos:Concept;
+    rdfs:label "Per worksite employee pricing"@en;
+    skos:prefLabel "Per worksite employee pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing model that charges the service fee per worksite employee per period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-model;
+    owl:versionInfo "0.3.0";
+    terms:subject decisionvoc:pricing, locationvoc:worksite, rolevoc:employee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingtax:percentage-of-payroll-pricing a skos:Concept;
+    rdfs:label "Percentage of payroll pricing"@en;
+    skos:prefLabel "Percentage of payroll pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing model that charges the service fee as a percentage of payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-model;
+    owl:versionInfo "0.3.0";
+    terms:subject decisionvoc:pricing, <https://www.insperity.com/vocabulary/commercial-operations/payroll>,
+      pricingvoc:percentage;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingtax:unbundled-pricing a skos:Concept;
+    rdfs:label "Unbundled pricing"@en;
+    skos:prefLabel "Unbundled pricing"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A pricing model that charges a service fee and passes through the cost of each component separately."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:pricing-model;
+    skos:altLabel "Itemized pricing"@en;
+    skos:scopeNote "Built from the same primitives as bundled pricing; the difference is in the definition."@en;
+    owl:versionInfo "0.3.0";
+    terms:subject decisionvoc:pricing, productvoc:bundle;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm decisionvoc:pricing .
+  
+  pricingtax:benefits-quote a skos:Concept;
+    rdfs:label "Benefits quote"@en;
+    skos:prefLabel "Benefits quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A quote of the rates for the benefit plans offered to a client's worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:quote;
+    owl:versionInfo "0.3.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/benefit>,
+      pricingvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:quote .
+  
+  pricingtax:renewal-quote a skos:Concept;
+    rdfs:label "Renewal quote"@en;
+    skos:prefLabel "Renewal quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A quote of the prices offered to an existing client for a further term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:quote;
+    owl:versionInfo "0.3.0";
+    terms:subject eventvoc:renewal, pricingvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:quote .
+  
+  pricingtax:workers-compensation-quote a skos:Concept;
+    rdfs:label "Workers' compensation quote"@en;
+    skos:prefLabel "Workers' compensation quote"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A quote of the workers' compensation rates for a client's class codes."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:quote;
+    owl:versionInfo "0.3.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/workers-compensation>,
+      pricingvoc:quote;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:quote .
+  
+  pricingtax:class-code a skos:Concept;
+    rdfs:label "Class code"@en;
+    skos:prefLabel "Class code"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting input that classifies a worker's occupation by its workers' compensation risk."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-input;
+    owl:versionInfo "0.3.0";
+    terms:subject pricingvoc:class-code;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:class-code .
+  
+  pricingtax:experience-modification-factor a skos:Concept;
+    rdfs:label "Experience modification factor"@en;
+    skos:prefLabel "Experience modification factor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting input that adjusts the client's workers' compensation premium for its claims history."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-input;
+    owl:versionInfo "0.3.0";
+    terms:subject pricingvoc:experience-modification-factor;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:experience-modification-factor .
+  
+  pricingtax:loss-run a skos:Concept;
+    rdfs:label "Loss run"@en;
+    skos:prefLabel "Loss run"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting input that reports the client's history of insurance claims."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-input;
+    owl:versionInfo "0.3.0";
+    terms:subject pricingvoc:loss-run;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm pricingvoc:loss-run .
+  
+  pricingtax:underwriting-guideline a skos:Concept;
+    rdfs:label "Underwriting guideline"@en;
+    skos:prefLabel "Underwriting guideline"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting input that states the criteria and limits underwriters apply."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-input;
+    owl:versionInfo "0.3.0";
+    terms:subject rulesvoc:guideline, pricingvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rulesvoc:guideline .
+  
+  pricingtax:conditional-approval a skos:Concept;
+    rdfs:label "Conditional approval"@en;
+    skos:prefLabel "Conditional approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting outcome that accepts the client on conditions, such as a higher rate or a deposit."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-outcome;
+    owl:versionInfo "0.3.0";
+    terms:subject processvoc:approval, rulesvoc:condition;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm processvoc:approval .
+  
+  pricingtax:pricing-exception a skos:Concept;
+    rdfs:label "Pricing exception"@en;
+    skos:prefLabel "Pricing exception"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting outcome that approves a price or term outside the standard pricing model."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-outcome;
+    owl:versionInfo "0.3.0";
+    terms:subject decisionvoc:pricing, issuevoc:exception;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm issuevoc:exception;
+    skos:broadMatch decisiontax:exception-decision .
+  
+  pricingtax:underwriting-approval a skos:Concept;
+    rdfs:label "Underwriting approval"@en;
+    skos:prefLabel "Underwriting approval"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting outcome that accepts the client at the quoted prices."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-outcome;
+    owl:versionInfo "0.3.0";
+    terms:subject processvoc:approval, pricingvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm processvoc:approval .
+  
+  pricingtax:underwriting-denial a skos:Concept;
+    rdfs:label "Underwriting denial"@en;
+    skos:prefLabel "Underwriting denial"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An underwriting outcome that declines to offer coverage."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-pricing/>;
+    skos:broader pricingtax:underwriting-outcome;
+    skos:altLabel "Declination"@en;
+    owl:versionInfo "0.3.0";
+    terms:subject eventvoc:denial, pricingvoc:underwriting;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:denial .
+}

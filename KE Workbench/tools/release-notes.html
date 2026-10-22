@@ -29,6 +29,9 @@ h1{font-size:28px;letter-spacing:-.012em;margin:8px 0 4px}
 .rel-b{padding:6px 18px 14px}
 .grp{margin-top:10px}
 .grp-h{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.grp-h.ref{color:var(--ke-muted)}
+.refs a{color:var(--ke-accent);font-weight:600}
+.refs .nt{color:var(--ke-muted)}
 .grp-h.new{color:var(--ke-ok)} .grp-h.improved{color:var(--ke-accent)} .grp-h.fixed{color:var(--ke-warn)} .grp-h.removed{color:var(--ke-bad)} .grp-h.breaking{color:var(--ke-bad)}
 ul{list-style:none}
 li{position:relative;padding:3px 0 3px 16px;color:var(--ke-ink)}
@@ -44,7 +47,7 @@ code{font-family:var(--ke-mono);font-size:.9em}
   <p class="lede">What changed in each release of the KE Workbench — new tools and features, improvements, and fixes. The newest release is first.</p>
   <nav class="toc" id="toc"></nav>
   <div id="list"></div>
-  <p class="foot">The notes live in <code>assets/ke-releases.js</code>; add an entry there for each release and bump <code>version</code> in <code>assets/ke-registry.js</code> to match.</p>
+  <p class="foot">The notes live in <code>assets/ke-releases.js</code>; add an entry there for each release (with <code>links</code> for its references) and bump <code>version</code> in <code>assets/ke-registry.js</code> to match.</p>
 </div>
 <script>
 (function () {
@@ -52,12 +55,14 @@ code{font-family:var(--ke-mono);font-size:.9em}
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const label = { breaking: 'Breaking changes', new: 'New', improved: 'Improved', fixed: 'Fixed', removed: 'Removed' };
   const fmt = d => { try { return new Date(d + 'T12:00:00').toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) { return d; } };
+  // a release may list references: { label, href, note }. Outside links open in a new window, workbench pages in a tab.
+  const refs = r => !(r.links && r.links.length) ? '' : `<div class="grp refs"><div class="grp-h ref">Reference</div><ul>${r.links.map(l => `<li><a href="${esc(l.href)}"${/^https?:/.test(l.href) ? ' target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a>${l.note ? ` <span class="nt">· ${esc(l.note)}</span>` : ''}</li>`).join('')}</ul></div>`;
   document.getElementById('cur').textContent = cur;
   document.getElementById('toc').innerHTML = R.map(r => `<a href="#v${esc(r.version)}" class="${r.version === cur ? 'cur' : ''}">${esc(r.version)}</a>`).join('');
   document.getElementById('list').innerHTML = R.map(r => `
     <section class="rel" id="v${esc(r.version)}">
       <div class="rel-h"><span class="v">${esc(r.version)}</span><span class="t">${esc(r.title || '')}</span>${r.version === cur ? '<span class="cur-tag">Current</span>' : ''}<span class="d">${esc(fmt(r.date))}</span></div>
-      <div class="rel-b">${r.groups.map(g => `<div class="grp"><div class="grp-h ${g.kind}">${label[g.kind] || esc(g.kind)}</div><ul>${g.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}</div>
+      <div class="rel-b">${r.groups.map(g => `<div class="grp"><div class="grp-h ${g.kind}">${label[g.kind] || esc(g.kind)}</div><ul>${g.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>`).join('')}${refs(r)}</div>
     </section>`).join('');
   document.getElementById('toc').addEventListener('click', ev => {
     const a = ev.target.closest('a'); if (!a) return; ev.preventDefault();

@@ -140,6 +140,61 @@
   table.sipoc tr[data-step]{cursor:pointer}
   table.sipoc .out{color:var(--ke-faint)}
   .sub{color:var(--ke-faint);font-size:11px}
+  /* topology */
+  .main.topo{grid-template-columns:minmax(0,1fr) minmax(280px,360px)}
+  .main.topo .left{display:none}
+  .tbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
+  .tbar .legend{margin:0}
+  .lv{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:0}
+  .treebox{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);padding:14px 16px;overflow-x:auto;box-shadow:var(--ke-shadow)}
+  .tn{display:block}
+  .kids{margin:2px 0 2px 13px;padding-left:16px;border-left:1px solid var(--ke-line);position:relative}
+  .kids>.tn{position:relative;padding:2px 0}
+  .kids>.tn::before{content:'';position:absolute;left:-16px;top:17px;width:12px;border-top:1px solid var(--ke-line)}
+  .nb{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;max-width:100%;background:var(--ke-surface);border:1px solid var(--ke-line);border-left:4px solid var(--lc);border-radius:var(--ke-radius);padding:5px 10px 5px 8px;position:relative;min-height:32px}
+  .nb .tg{position:static;order:-1;flex:none}
+  .nb .tgsp{order:-1;width:20px;flex:none}
+  .nb .lvn{flex:none;min-width:120px}
+  .nb .nm{flex:1 1 260px;min-width:0;padding-right:0}
+  .nb .nc{flex:none}
+  .nb.click{cursor:pointer}
+  .nb.click:hover{border-color:var(--ke-accent);border-left-color:var(--lc)}
+  .nb.on{outline:2px solid var(--ke-accent);outline-offset:1px}
+  .nb:focus-visible{outline:2px solid var(--ke-accent);outline-offset:1px}
+  .nb .lvn{font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--lc)}
+  .nb .nc{display:flex;gap:4px;flex-wrap:wrap}
+  .nb .nm{font-weight:700;font-size:13px;line-height:1.3}
+  .nb .tg{width:20px;height:20px;border:0;background:none;color:var(--ke-muted);cursor:pointer;border-radius:4px;font-size:11px;line-height:20px;padding:0}
+  .nb .tg:hover{background:var(--ke-band);color:var(--ke-accent)}
+  .nb.l-area{--lc:var(--ke-kind-voc,#5b6b7f)}
+  .nb.l-domain{--lc:var(--ke-kind-tax)}
+  .nb.l-service{--lc:var(--ke-accent)}
+  .nb.l-process{--lc:var(--ke-kind-ont)}
+  .nb.l-process.shared{border-style:solid dashed solid solid}
+  :root{--lc2:color-mix(in srgb,var(--ke-kind-ont) 50%,var(--ke-muted))}
+  .nb.l-group{--lc:var(--ke-muted);background:var(--ke-sunk)}
+  .nb.l-group .nm{display:none}
+  .nb.l-group .lvn{min-width:0}
+  .nb.l-area .nm,.nb.l-domain .nm{font-size:14px}
+  .nb.l-apqc2,.nb.l-apqc3,.nb.l-apqc4{--lc:var(--lc2)}
+  .nb.l-activity{--lc:var(--ke-kind-ont)}
+  .nb.l-na{--lc:var(--ke-line)}
+  .nb .num{font-family:var(--ke-mono);font-size:11px;color:var(--ke-muted);font-weight:400}
+  table.sipoc .num{font-family:var(--ke-mono);font-size:11px;color:var(--ke-muted);font-weight:400}
+  .tbar .seg button{padding:3px 10px;font-size:12px}
+  .tfil{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 10px;padding:8px 10px;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius)}
+  .tfil label{font-size:11px;color:var(--ke-muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .tfil .mini{max-width:230px}
+  .tfil .ck{display:inline-flex;gap:5px;align-items:center;font-size:12px;color:var(--ke-ink2);text-transform:none;letter-spacing:0;font-weight:400}
+  .nb.nodata{background:var(--ke-sunk);border-style:dashed;border-left-style:solid;opacity:.85}
+  .nb.nodata .nm{color:var(--ke-muted)}
+  .sipo-h{margin:18px 0 8px;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);padding:10px 12px}
+  .sipo-h .k{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--ke-kind-ont)}
+  .sipo-h h3{margin:2px 0 4px;font-size:16px}
+  .sipo-h p{margin:0 0 6px;color:var(--ke-ink2);max-width:80ch}
+  .sipo-h .ids{display:flex;gap:12px;flex-wrap:wrap;color:var(--ke-muted);font-size:12px}
+  table.sipoc td.ck{white-space:nowrap}
+  @media print{.bar,.pane.right,.ph,.tbar .btn{display:none!important}body{overflow:visible;height:auto}.main,.main.topo{display:block}.scroll{overflow:visible}.treebox{box-shadow:none}}
   @media (max-width:900px){body{overflow:auto;height:auto}.main{display:block}.pane.right{display:none}.list,.scroll{overflow:visible}.pane.mid{border:0;border-top:1px solid var(--ke-line)}}
 </style>
 </head>
@@ -148,7 +203,8 @@
   <h1><span class="k"></span>Service Assembly</h1>
   <select id="manSel" class="sel" title="The release manifest of the domain assembly to view"><option value="">Loading assemblies…</option></select>
   <div class="seg" role="tablist" aria-label="View">
-    <button id="vCat" class="on" role="tab" aria-selected="true">Services</button>
+    <button id="vTop" class="on" role="tab" aria-selected="true">Topology</button>
+    <button id="vCat" role="tab" aria-selected="false">Services</button>
     <button id="vCov" role="tab" aria-selected="false">Coverage</button>
   </div>
   <span class="sp"></span>
@@ -168,6 +224,7 @@
   <section class="pane left">
     <div class="ph">
       <div class="t">Services <span class="n" id="svcCount"></span></div>
+      <div class="sub" id="svcDomNote"></div>
       <div class="row2"><input id="svcSearch" class="search" placeholder="Filter services or steps" aria-label="Filter services"></div>
       <div class="row2">
         <select id="fProc" class="mini" aria-label="Process"><option value="">Any process</option></select>
@@ -202,7 +259,7 @@
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const BASE = 'https://www.insperity.com/';
   const CORE = BASE + 'ontology/core/';
-  const CO = BASE + 'ontology/domain-commercial-operations/';
+  const CO = BASE + 'ontology/commercial-operations/';    // the Commercial Operations area ontology (D26)
   const RDF = S.NS.rdf, RDFS = S.NS.rdfs, OWL = S.NS.owl, SKOS = S.NS.skos, DCT = S.NS.dct;
   const SH = 'http://www.w3.org/ns/shacl#';
   const T = RDF + 'type';
@@ -210,7 +267,7 @@
   const C = (x) => CORE + x;
   const SUPPLIER = CO + 'hasSupplier', CUSTOMER = CO + 'hasCustomer';
   // resources of the value map (persona, jobs, job steps, outcomes) never belong in a service assembly (D24)
-  const VALUE_MAP_RX = /\/resource\/domain-[a-z0-9-]+\/(persona-graph|persona|job-study|job|job-step|desired-outcome|delivered-outcome|value-map)\//;
+  const VALUE_MAP_RX = /\/resource\/[a-z0-9.-]+\/(persona-graph|persona|job-study|job|job-step|desired-outcome|delivered-outcome|value-map)\//;
 
   function toast(msg, bad) {
     const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.style.display = 'block';
@@ -242,9 +299,21 @@
     const e = st.extra.get(x); if (e && e.label) return e.label;
     return S.localName(x);
   }
+  // the area or domain an IRI belongs to: 'core', an area slug (commercial-operations…), 'domain-<L1>[.<L2>]', or null
+  const AREAS = ['commercial-operations', 'business-operations', 'hr-service-operations', 'technical-operations', 'enterprise-services', 'apqc-pcf'];
   function domainOf(u) {
-    const m = String(u).match(/^https:\/\/www\.insperity\.com\/(?:vocabulary|taxonomy|ontology|shapes|resource)\/(core(?:-[a-z]+)?|domain-([a-z0-9-]+))\//);
-    return m ? (m[2] || 'core') : null;
+    const m = String(u).match(/^https:\/\/www\.insperity\.com\/(?:vocabulary|taxonomy|ontology|shapes|resource)\/([a-z0-9.-]+)\//);
+    if (!m) return null;
+    if (/^core(-[a-z]+)?$/.test(m[1])) return 'core';
+    return (m[1].startsWith('domain-') || AREAS.includes(m[1])) ? m[1] : null;
+  }
+  // D27: classes, relations and instances may refer to the core, any area's shared assets of their own area, their parent domains and themselves
+  function insulated(own, d) {
+    if (!d || !own || d === 'core' || d === own || d === 'apqc-pcf') return true;
+    if (own.startsWith(d + '.')) return true;                       // a parent domain (L1 of an L2)
+    // the domain's own operational area, read from its ontology's dcterms:isPartOf (D26)
+    const area = domainOf(one(BASE + 'ontology/' + own.split('.')[0] + '/', DCT + 'isPartOf') || '');
+    return d === area;
   }
   function noteVal(x, prefix) {
     for (const o of objs(x, SKOS + 'note')) { const i = o.v.indexOf(prefix); if (i >= 0) return o.v.slice(i + prefix.length).split('.')[0].trim(); }
@@ -281,7 +350,7 @@
     const add = [];
     st.triples.forEach(([g, s, p, o]) => { const inv = INV.get(p); if (inv && o.t === 'uri') add.push([g, o.v, inv, { t: 'uri', v: s }]); });
     add.forEach((x) => addT(...x));
-    const assemblyGraphs = new Set(iris(manifest, DCT + 'hasPart'));
+    const assemblyGraphs = new Set(manifest.flatMap((x) => iris(x, DCT + 'hasPart')));
     const inAssembly = (n) => [...(st.graphsOf.get(n) || [])].some((g) => assemblyGraphs.has(g));
     const nodes = []; st.spo.forEach((m, s) => { if (inAssembly(s)) nodes.push(s); });
     const allSteps = nodes.filter((s) => isA(s, C('process-step')));
@@ -302,6 +371,8 @@
     services.forEach((s) => s.steps.forEach((x) => { if (!stepUse.has(x)) stepUse.set(x, []); stepUse.get(x).push(s.iri); }));
     A = { manifest, assemblyGraphs, services, processes, allSteps, stepUse };
     services.forEach((s) => { s.findings = validate(s); });
+    A.actFindings = new Map();
+    processes.forEach((P) => A.actFindings.set(P.iri, validate({ iri: P.iri, processes: [P.iri], steps: P.steps })));
   }
   // steps in the order of core:precedes (topological, stable by label)
   function order(steps) {
@@ -382,7 +453,7 @@
       const own = domainOf(n);
       (st.spo.get(n) || new Map()).forEach((os, p) => os.forEach((o) => {
         if (o.t !== 'uri') return; const d = domainOf(o.v);
-        if (d && own && d !== 'core' && d !== own && d !== 'commercial-operations') f.push({ sev: 'error', node: n, msg: 'Refers to a sibling domain.', why: o.v, src: 'assembly' });
+        if (!insulated(own, d) && !(p === DCT + 'subject' || p === C('hasPrimaryTerm'))) f.push({ sev: 'error', node: n, msg: 'Refers to a domain outside its area and lineage (D27).', why: o.v, src: 'assembly' });
         if (VALUE_MAP_RX.test(o.v) && [...(st.graphsOf.get(n) || [])].some((g) => A.assemblyGraphs.has(g)))
           f.push({ sev: 'error', node: n, msg: 'Refers to the persona or value map: that belongs in the value map, a separate assembly (D24).', why: S.localName(p) + ' ' + o.v, src: 'assembly' });
       }));
@@ -406,11 +477,62 @@
     });
     return f;
   }
-  const count = (fs, sev) => fs.filter((x) => x.sev === sev).length;
+  // findings the core shapes raise on every assembly, until the core is revised (open question 16): the process
+  // shape reaches process steps (a step is a process), and assets have no lifecycle yet. Shown apart, not counted.
+  function isKnown(f) {
+    if (/^process-shape/.test(f.src) && typesOf(f.node).has(C('process-step'))) return true;
+    if (/^asset-shape/.test(f.src) && /lifecycle/i.test(f.msg)) return true;
+    return false;
+  }
+  const live = (fs) => (sel.hideKnown ? fs.filter((f) => !isKnown(f)) : fs);
+  const count = (fs, sev) => live(fs).filter((x) => x.sev === sev).length;
 
   // ── loading ──────────────────────────────────────────────────────────────
   let manifests = [];
+  // the domain register: every operational area's domains, L1 › L2 › L3, from the area taxonomies (concepts whose primary term is the core
+  // vocabulary's "domain", under the area's "<area> domain" top concept), and which domains have an ontology (D26)
+  const AREA_SLUGS = ['commercial-operations', 'business-operations', 'hr-service-operations', 'technical-operations'];
+  let REG = { nodes: new Map(), ontologies: new Map() };
+  async function loadRegister() {
+    REG = { nodes: new Map(), ontologies: new Map() };
+    try {
+      const rows = await S.select(`# ke-q:domains
+        SELECT ?c ?label ?broader ?scheme WHERE {
+          GRAPH ?g { ?c skos:inScheme ?scheme ; core:hasPrimaryTerm <${BASE}vocabulary/core-domain/domain> ; skos:prefLabel ?label . OPTIONAL { ?c skos:broader ?broader } }
+          FILTER(?scheme IN (${AREA_SLUGS.map((a) => '<' + BASE + 'taxonomy/' + a + '/>').join(', ')}) && (LANG(?label) = "en" || LANG(?label) = ""))
+        }`);
+      const onts = await S.select(`# ke-q:domain-ontologies
+        SELECT ?o (SAMPLE(?t) AS ?title) (SAMPLE(?v) AS ?version) (SAMPLE(?a) AS ?area) WHERE {
+          GRAPH ?g { ?o a owl:Ontology . OPTIONAL { ?o dct:isPartOf ?a } OPTIONAL { ?o dct:title ?t } OPTIONAL { ?o owl:versionInfo ?v } }
+          FILTER(STRSTARTS(STR(?o), "${BASE}ontology/"))
+        } GROUP BY ?o`);
+      onts.forEach((r) => { const d = /^https:\/\/www\.insperity\.com\/ontology\/[a-z0-9.-]+\/$/.test(r.o) && domainOf(r.o); if (d) REG.ontologies.set(d, { title: (r.title || '').replace(/\s+Ontology$/, ''), version: r.version || '', area: domainOf(r.area || '') }); });
+      const byC = new Map(); rows.forEach((r) => { if (!byC.has(r.c)) byC.set(r.c, { c: r.c, label: r.label, broader: r.broader || null, scheme: r.scheme }); });
+      const slugOf = (c, seen = new Set()) => {
+        const x = byC.get(c); if (!x || seen.has(c)) return null; seen.add(c);
+        if (!x.broader || !byC.has(x.broader)) return { area: domainOf(x.scheme), segs: [] };        // the area's top concept
+        const up = slugOf(x.broader, seen); if (!up) return null;
+        return { area: up.area, segs: up.segs.concat(S.localName(c).replace(/-domain$/, '')) };
+      };
+      byC.forEach((x) => {
+        const r = slugOf(x.c); if (!r || !r.segs.length) return;
+        const slug = 'domain-' + r.segs.join('.');
+        REG.nodes.set(slug, { slug, area: r.area, level: r.segs.length, parent: r.segs.length > 1 ? 'domain-' + r.segs.slice(0, -1).join('.') : null,
+          label: titleCase(x.label.replace(/\s+domain$/i, '')), concept: x.c });
+      });
+    } catch (e) { /* the register is optional: without it the topology shows only domains that have services */ }
+  }
+  const SMALL = new Set(['and', 'or', 'of', 'the', 'for', 'to', 'in', 'on', 'a', 'an']);
+  const titleCase = (t) => t.split(' ').map((w, i) => (i && SMALL.has(w) ? w : w.replace(/^[a-z]/, (c) => c.toUpperCase()))).join(' ');
+  // the name of a domain by the naming standard: its ontology title, else 'Domain <L1>[.<L2>…]' from the register labels
+  function domainTitle(slug) {
+    const o = REG.ontologies.get(slug); if (o && o.title) return o.title;
+    const n = REG.nodes.get(slug);
+    if (n) { const chain = []; let cur = n; while (cur) { chain.unshift(cur.label.replace(/^[a-z]/, (c) => c.toUpperCase())); cur = cur.parent && REG.nodes.get(cur.parent); } return 'Domain ' + chain.join('.'); }
+    return assetTitle(slug);
+  }
   async function loadManifests() {
+    await loadRegister();
     try {
       // service assemblies only: a manifest that lists at least one service graph (a value map manifest does not)
       manifests = await S.select(`# ke-q:manifests
@@ -421,12 +543,12 @@
     } catch (e) { $('manSel').innerHTML = '<option value="">GraphDB not reachable</option>'; showEmpty('GraphDB is not reachable', esc(e.message)); return; }
     if (!manifests.length) {
       $('manSel').innerHTML = '<option value="">No assemblies loaded</option>';
-      showEmpty('No service assembly in this repository', 'Load one with <code>KE Domains/Commercial Operations/graphdb-load.command</code>, then Reload. A service assembly is found by its release manifest (core concept “Release manifest”) that lists service graphs.');
+      showEmpty('No service assembly in this repository', 'Load one with <code>KE Domains/graphdb-load.command</code>, then Reload. A service assembly is found by its release manifest (core concept “Release manifest”) that lists service graphs.');
       return;
     }
-    $('manSel').innerHTML = manifests.map((m) => `<option value="${esc(m.m)}">${esc(m.label || S.localName(m.m))}</option>`).join('');
-    const want = S.param('manifest') || S.lsGet('ke-sa-manifest');
-    if (want && manifests.some((m) => m.m === want)) $('manSel').value = want;
+    $('manSel').innerHTML = (manifests.length > 1 ? `<option value="*">All service assemblies (${manifests.length})</option>` : '') + manifests.map((m) => `<option value="${esc(m.m)}">${esc(m.label || S.localName(m.m))}</option>`).join('');
+    const want = S.param('manifest') || S.lsGet('ke-sa-manifest') || (manifests.length > 1 ? '*' : '');
+    if (want && (want === '*' ? manifests.length > 1 : manifests.some((m) => m.m === want))) $('manSel').value = want;
     await loadAssembly($('manSel').value);
   }
   function showEmpty(h, body) {
@@ -440,12 +562,13 @@
     $('svcList').innerHTML = '<div class="loading">Loading…</div>'; $('mid').innerHTML = '<div class="loading">Reading the assembly from GraphDB…</div>';
     const t0 = performance.now();
     try {
+      const ms = m === '*' ? manifests.map((x) => x.m) : [m];
       const head = await S.select(`# ke-q:manifest
-        SELECT ?p ?o WHERE { GRAPH ?g { <${m}> ?p ?o } FILTER(?p IN (dct:hasPart, dct:requires)) }`);
+        SELECT ?p ?o WHERE { VALUES ?m { ${ms.map((x) => '<' + x + '>').join(' ')} } GRAPH ?g { ?m ?p ?o } FILTER(?p IN (dct:hasPart, dct:requires)) }`);
       const partsG = head.filter((r) => r.p === DCT + 'hasPart').map((r) => r.o);
       const req = head.filter((r) => r.p === DCT + 'requires').map((r) => plain(r.o));
-      const manGraph = manifests.find((x) => x.m === m).g;
-      const graphs = [...new Set([manGraph, ...partsG, ...req, CORE, BASE + 'shapes/core/'])];
+      const manGraphs = manifests.filter((x) => ms.includes(x.m)).map((x) => x.g);
+      const graphs = [...new Set([...manGraphs, ...partsG, ...req, CORE, BASE + 'shapes/core/'])];
       st = newStore();
       const rows = await S.select(`# ke-q:graphs
         SELECT ?g ?s ?p ?o WHERE { VALUES ?g { ${graphs.map((g) => '<' + g + '>').join(' ')} } GRAPH ?g { ?s ?p ?o } }`);
@@ -457,16 +580,19 @@
         addT(r.g, s, r.p, o);
       });
       const need = new Set();
-      st.triples.forEach(([g, s, p, o]) => { if (o.t === 'uri' && (p === DCT + 'type' || p === T) && !st.spo.has(o.v)) need.add(o.v); });
+      // classes and concepts not in the loaded graphs, or only mentioned there without their type: ask the repository
+      st.triples.forEach(([g, s, p, o]) => { if (o.t === 'uri' && (p === DCT + 'type' || p === T) && !(st.spo.has(o.v) && st.spo.get(o.v).has(T))) need.add(o.v); });
+      // the APQC elements the kinds of processes and steps are anchored to (broad or exact match), for the topology
+      st.triples.forEach(([g, s, p, o]) => { if (o.t === 'uri' && (p === SKOS + 'broadMatch' || p === SKOS + 'exactMatch') && domainOf(o.v) === 'apqc-pcf' && !st.spo.has(o.v)) need.add(o.v); });
       if (need.size) {
         const ext = await S.select(`# ke-q:labels
-          SELECT ?x (SAMPLE(?l) AS ?label) (MAX(IF(?t = skos:Concept, 1, 0)) AS ?concept) (MAX(IF(?t = owl:Class, 1, 0)) AS ?cls) WHERE {
+          SELECT ?x (SAMPLE(?l) AS ?label) (MAX(IF(?t = skos:Concept, 1, 0)) AS ?concept) (MAX(IF(?t = owl:Class, 1, 0)) AS ?cls) (SAMPLE(?n) AS ?notation) WHERE {
             VALUES ?x { ${[...need].map((x) => '<' + x + '>').join(' ')} }
-            OPTIONAL { ?x skos:prefLabel ?l FILTER(LANG(?l) = "en" || LANG(?l) = "") } OPTIONAL { ?x a ?t }
+            OPTIONAL { ?x skos:prefLabel ?l FILTER(LANG(?l) = "en" || LANG(?l) = "") } OPTIONAL { ?x a ?t } OPTIONAL { ?x skos:notation ?n }
           } GROUP BY ?x`);
-        ext.forEach((r) => st.extra.set(r.x, { label: r.label, concept: r.concept === '1', cls: r.cls === '1' }));
+        ext.forEach((r) => st.extra.set(r.x, { label: r.label, concept: r.concept === '1', cls: r.cls === '1', notation: r.notation || '' }));
       }
-      supCache.clear(); indexModel(); parseShapes(); buildModel(m);
+      supCache.clear(); indexModel(); parseShapes(); buildModel(ms);
       $('loadNote').textContent = `${rows.length.toLocaleString()} statements from ${graphs.length} graphs · ${Math.round(performance.now() - t0)} ms`;
       fillFilters();
       const want = S.param('service');
@@ -485,7 +611,21 @@
   }
 
   // ── rendering ────────────────────────────────────────────────────────────
-  const sel = { service: null, process: null, step: null, tab: 'detail', view: 'catalog' };
+  const sel = { service: null, process: null, step: null, tab: 'detail', view: ['topology', 'catalog', 'coverage'].includes(S.param('view')) ? S.param('view') : 'topology', collapsed: new Set(), opened: new Set(), hideKnown: true, pdepth: 3, showNA: false, tproc: null, tact: null, tel: null, fArea: '', fDom: ['', '', ''], hideEmpty: false };
+  try { const f = JSON.parse(S.lsGet('ke-sa-domfilter') || 'null'); if (f) { sel.fArea = f.a || ''; sel.fDom = f.d || ['', '', '']; sel.hideEmpty = !!f.h; } } catch (e) { /* ignore */ }
+  if (S.param('domain')) { const d = S.param('domain'); const segs = d.replace(/^domain-/, '').split('.'); sel.fDom = [0, 1, 2].map((i) => (segs[i] ? 'domain-' + segs.slice(0, i + 1).join('.') : '')); }
+  const saveDomFilter = () => S.lsSet('ke-sa-domfilter', JSON.stringify({ a: sel.fArea, d: sel.fDom, h: sel.hideEmpty }));
+  // the selected domain (deepest level chosen) and whether a domain slug or area is inside it
+  const fDomain = () => sel.fDom[2] || sel.fDom[1] || sel.fDom[0] || '';
+  function inDomainFilter(area, d) {
+    if (sel.fArea && area !== sel.fArea) return false;
+    const f = fDomain(); if (!f) return true;
+    return !!d && (d === f || d.startsWith(f + '.'));
+  }
+  const areaOfDomain = (d) => (REG.nodes.get(d) || {}).area || (REG.ontologies.get(d.split('.')[0]) || {}).area || domainOf(one(BASE + 'ontology/' + d.split('.')[0] + '/', DCT + 'isPartOf') || '') || 'unassigned';
+  const svcDomain = (s) => domainOf(s.iri) || 'unassigned';
+  const svcArea = (s) => { const d = svcDomain(s); return d.startsWith('domain-') ? areaOfDomain(d) : (AREAS.includes(d) ? d : 'unassigned'); };
+  const svcInFilter = (s) => { const d = svcDomain(s); return inDomainFilter(svcArea(s), d.startsWith('domain-') ? d : null); };
   function svcOf(iri) { return A.services.find((s) => s.iri === iri); }
   function chipsFor(s) {
     const e = count(s.findings, 'error'), w = count(s.findings, 'warning');
@@ -494,6 +634,7 @@
   function renderList() {
     const q = $('svcSearch').value.trim().toLowerCase(), fp = $('fProc').value, fs = $('fStage').value, fm = $('fMode').value, fx = $('fStatus').value;
     const shown = A.services.filter((s) => {
+      if (!svcInFilter(s)) return false;
       if (q && !(s.label.toLowerCase().includes(q) || s.processes.some((p) => label(p).toLowerCase().includes(q)) || s.steps.some((x) => label(x).toLowerCase().includes(q)))) return false;
       if (fp && !s.processes.includes(fp)) return false;
       if (fs && !s.steps.some((x) => stageOf(x) === fs)) return false;
@@ -504,6 +645,8 @@
       return true;
     }).sort((a, b) => (count(b.findings, 'error') - count(a.findings, 'error')) || a.label.localeCompare(b.label));
     $('svcCount').textContent = shown.length === A.services.length ? String(A.services.length) : `${shown.length} of ${A.services.length}`;
+    const fd = fDomain() || sel.fArea;
+    $('svcDomNote').innerHTML = fd ? `In ${esc(fDomain() ? domainTitle(fDomain()) : assetTitle(sel.fArea))} <a data-fclear="1" style="color:var(--ke-accent);cursor:pointer">clear</a> <span class="sub">(set on Topology)</span>` : '';
     $('svcList').innerHTML = shown.length ? shown.map((s) => `
       <div class="row${s.iri === sel.service ? ' on' : ''}" data-svc="${esc(s.iri)}" tabindex="0" role="button" aria-pressed="${s.iri === sel.service}">
         <span class="lb" title="${esc(s.label)}">${esc(s.label)}</span>
@@ -512,10 +655,23 @@
       </div>`).join('') : '<div class="hint">No service matches the filters.</div>';
   }
   function crumbs() {
-    const man = manifests.find((m) => m.m === A.manifest);
+    const man = A.manifest.length > 1 ? { label: 'All service assemblies' } : manifests.find((m) => m.m === A.manifest[0]);
     const s = svcOf(sel.service);
     const bits = [`<a data-go="catalog">${esc(man ? man.label : 'Assembly')}</a>`];
     if (sel.view === 'coverage') bits.push('<span>›</span><span>Coverage</span>');
+    else if (sel.view === 'topology') {
+      bits.push('<span>›</span>', s || sel.tact || sel.tel ? '<a data-tgo="top">Topology</a>' : '<span>Topology</span>');
+      if (sel.tact || sel.tel) {
+        const d = sel.tact ? procDomain(sel.tact) : sel.tel.dom;
+        bits.push('<span>›</span>', `<span>${esc(domainTitle(d))}</span>`);
+        if (sel.tel) bits.push('<span>›</span>', `<span>${esc(elNotation(sel.tel.el) + ' ' + label(sel.tel.el))}</span>`);
+        if (sel.tact) { const a = apqcOf(sel.tact); if (a) bits.push('<span>›</span>', `<span>${esc((a.exact ? '' : 'extends ') + a.notation)}</span>`); bits.push('<span>›</span>', `<span>${esc(label(sel.tact))}</span>`); }
+      } else {
+      if (s) bits.push('<span>›</span>', sel.tproc ? `<a data-tsvc="${esc(s.iri)}">${esc(s.label)}</a>` : `<span>${esc(s.label)}</span>`);
+      if (s && sel.tproc) bits.push('<span>›</span>', `<span>${esc(label(sel.tproc))}</span>`);
+      }
+      if (sel.step) bits.push('<span>›</span>', `<span>${esc(label(sel.step))}</span>`);
+    }
     else if (s) {
       const proc = sel.step ? processOf(sel.step) : sel.process;
       bits.push('<span>›</span>', proc || sel.step ? `<a data-go="service">${esc(s.label)}</a>` : `<span>${esc(s.label)}</span>`);
@@ -539,6 +695,7 @@
   }
   function renderMid() {
     if (sel.view === 'coverage') return renderCoverage();
+    if (sel.view === 'topology') return renderTopology();
     const s = svcOf(sel.service);
     if (!s) { $('mid').innerHTML = '<div class="empty"><h2>No services in this assembly</h2><div>Its manifest lists no service graph with a service in it.</div></div>'; return; }
     const lanes = s.processes.map((p, i) => {
@@ -557,18 +714,7 @@
     const strays = s.delivery.filter((d) => !s.processes.some((p) => A.processes.get(p).steps.includes(d)));
     const rows = s.processes.map((p) => {
       const P = A.processes.get(p);
-      return `<tr class="proc"><td colspan="6">${esc(P.label)}</td></tr>` + P.steps.map((x) => {
-        const m = sipocm(x);
-        const sup = m.supOut.map((r) => `${esc(label(r))} <span class="sub">outside</span>`).concat(m.sup.map((v) => `${esc(label(v.step))} <span class="sub">${esc(performers(v.step))}</span>`));
-        const inSvc = m.cus.filter((v) => s.steps.includes(v.step)), other = [...new Set(m.cus.filter((v) => !s.steps.includes(v.step)).map((v) => v.step))];
-        const cus = m.cusOut.map((r) => `${esc(label(r))} <span class="sub">outside</span>`).concat(inSvc.map((v) => `${esc(label(v.step))} <span class="sub">${esc(performers(v.step))}</span>`))
-          .concat(other.length ? [`<span class="sub" title="${esc(other.map(label).join(', '))}">and ${other.length} step${other.length === 1 ? '' : 's'} of other services</span>`] : []);
-        const meas = m.measures.map((r) => `${esc(label(r))}${noteVal(r, 'Unit:') ? ` <span class="sub">${esc(noteVal(r, 'Unit:'))}, ${esc(noteVal(r, 'Direction:'))}</span>` : ''}`);
-        return `<tr data-step="${esc(x)}" class="${x === sel.step ? 'on' : ''}">
-          <td>${[...new Set(sup)].join('<br>') || '<span class="out">—</span>'}</td><td>${list(m.ins)}</td>
-          <td class="st">${esc(label(x))}${s.delivery.includes(x) ? ' <span class="chip acc">delivery</span>' : ''}<div class="sub">${esc(performers(x))}</div></td>
-          <td>${list(m.outs)}</td><td>${[...new Set(cus)].join('<br>') || '<span class="out">—</span>'}</td><td>${meas.join('<br>') || '<span class="out">—</span>'}</td></tr>`;
-      }).join('');
+      return `<tr class="proc"><td colspan="6">${esc(P.label)}</td></tr>` + P.steps.map((x) => sipocRow(s, x)).join('');
     }).join('');
     $('mid').innerHTML = `
       <div class="svc-head">
@@ -581,6 +727,22 @@
       ${strays.length ? `<div class="note">The delivery step ${esc(strays.map(label).join(', '))} is not a step of any process that enables this service.</div>` : ''}
       <div class="sec">SIPOCM <span class="n">supplier, input, process step, output, customer, measure · suppliers and customers inside the assembly are derived from the data flow; “outside” ones are stated (has supplier, has customer)</span></div>
       <div class="tw"><table class="t sipoc"><thead><tr><th><span class="ab">S</span>Supplier</th><th><span class="ab">I</span>Input</th><th><span class="ab">P</span>Process step</th><th><span class="ab">O</span>Output</th><th><span class="ab">C</span>Customer</th><th><span class="ab">M</span>Measure</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+  function sipocRow(s, x, check) {
+        const m = sipocm(x);
+        const own = procDomain(x);
+        const who = (y) => { const d = procDomain(y); return d !== own && domShort(d) ? domShort(d) : performers(y); };
+        const sup = m.supOut.map((r) => `${esc(label(r))} <span class="sub">outside</span>`).concat([...new Set(m.sup.map((v) => v.step))].map((y) => `${esc(label(y))} <span class="sub">${esc(who(y))}</span>`));
+        const inSvc = [...new Set(m.cus.filter((v) => s.steps.includes(v.step)).map((v) => v.step))], other = [...new Set(m.cus.filter((v) => !s.steps.includes(v.step)).map((v) => v.step))];
+        const shown = other.slice(0, 3), rest = other.slice(3);
+        const cus = m.cusOut.map((r) => `${esc(label(r))} <span class="sub">outside</span>`).concat(inSvc.map((y) => `${esc(label(y))} <span class="sub">${esc(who(y))}</span>`))
+          .concat(shown.map((y) => `${esc(label(y))} <span class="sub">${esc(who(y))}</span>`))
+          .concat(rest.length ? [`<span class="sub" title="${esc(rest.map((y) => label(y) + ' (' + who(y) + ')').join(', '))}">and ${rest.length} more step${rest.length === 1 ? '' : 's'}</span>`] : []);
+        const meas = m.measures.map((r) => `${esc(label(r))}${noteVal(r, 'Unit:') ? ` <span class="sub">${esc(noteVal(r, 'Unit:'))}, ${esc(noteVal(r, 'Direction:'))}</span>` : ''}`);
+        return `<tr data-step="${esc(x)}" class="${x === sel.step ? 'on' : ''}">
+          <td>${[...new Set(sup)].join('<br>') || '<span class="out">—</span>'}</td><td>${list(m.ins)}</td>
+          <td class="st">${one(x, SKOS + 'notation') && !/^PX-/.test(one(x, SKOS + 'notation')) ? `<span class="num">${esc(one(x, SKOS + 'notation'))}</span> ` : ''}${esc(label(x))}${s.delivery.includes(x) ? ' <span class="chip acc">delivery</span>' : ''}<div class="sub">${esc(performers(x))}${modeOf(x) !== '—' ? ' · ' + esc(modeOf(x).toLowerCase()) : ''}</div></td>
+          <td>${list(m.outs)}</td><td>${[...new Set(cus)].join('<br>') || '<span class="out">—</span>'}</td><td>${meas.join('<br>') || '<span class="out">—</span>'}</td>${check ? `<td class="ck">${statusChip(scopeFindings(s, stepScope(x)))}</td>` : ''}</tr>`;
   }
   function renderCoverage() {
     const svcs = A.services;
@@ -600,20 +762,302 @@
       <div class="legend"><span>● the step that delivers the service</span><span>○ a step of a process that enables it</span></div>
       <div class="tw"><table class="t grid"><thead>${head('<th>Step</th><th>Process</th><th>Stage</th>')}</thead><tbody>${sRows}</tbody></table></div>`;
   }
+
+  // ── topology: Operational area › Domain › Service › Process; a process opens its SIPOCM, one row per step ──
+  function assetTitle(slug, kind) {
+    const r = !kind && REG.ontologies.get(slug); if (r && r.title) return r.title;
+    const t = objs(BASE + (kind || 'ontology') + '/' + slug + '/', DCT + 'title'); const en = t.find((o) => o.lang === 'en') || t[0];
+    if (en) return en.v.replace(/\s+(Ontology|Taxonomy|Vocabulary|Shapes)$/, '');
+    if (slug === 'unassigned') return 'Not in an operational area';
+    return slug.replace(/^domain-/, 'Domain ').split('.').map((x) => x.replace(/-/g, ' ').replace(/\b[a-z]/g, (c) => c.toUpperCase())).join('.');
+  }
+  const stepScope = (x) => new Set([x, ...iris(x, C('produces')), ...iris(x, C('measuredBy'))]);
+  const procScope = (p) => { const out = new Set([p]); A.processes.get(p).steps.forEach((x) => stepScope(x).forEach((y) => out.add(y))); return out; };
+  const scopeFindings = (s, scope) => s.findings.filter((f) => scope.has(f.node));
+  function statusChip(fs) {
+    const e = count(fs, 'error'), w = count(fs, 'warning');
+    return e ? `<span class="chip bad">${e} error${e > 1 ? 's' : ''}</span>` : w ? `<span class="chip warn">${w} warning${w > 1 ? 's' : ''}</span>` : '<span class="chip ok">valid</span>';
+  }
+  // ── APQC position of an activity (D28): its dcterms:type is the element it is (notation equal) or extends; older
+  // processes reach it through their kind concept (skos:exactMatch: it is the element, skos:broadMatch: it extends it)
+  const APQC = BASE + 'taxonomy/apqc-pcf/';
+  const isEl = (x) => String(x).startsWith(APQC + 'element-');
+  const elNotation = (e) => one(e, SKOS + 'notation') || (st.extra.get(e) || {}).notation || '';
+  const elDepth = (n) => (/^\d+\.0$/.test(n) ? 1 : n.split('.').length);
+  const numKey = (n) => String(n).split(/[.-]/).map((x) => (/^\d+$/.test(x) ? x.padStart(4, '0') : 'z' + x)).join('.');
+  function apqcOf(x) {
+    const direct = iris(x, DCT + 'type').find(isEl);
+    if (direct) { const n = elNotation(direct); return { iri: direct, exact: one(x, SKOS + 'notation') === n, notation: n, label: label(direct) }; }
+    for (const k of iris(x, DCT + 'type')) {
+      const m = iris(k, SKOS + 'exactMatch').concat(iris(k, SKOS + 'broadMatch')).find(isEl);
+      if (m) return { iri: m, exact: iris(k, SKOS + 'exactMatch').includes(m), notation: elNotation(m), label: label(m) };
+    }
+    return null;
+  }
+  const applicability = (e) => noteFull(e, 'PEO applicability: ');
+  function noteFull(x, prefix) { for (const o of objs(x, SKOS + 'note')) if (o.v.startsWith(prefix)) return o.v.slice(prefix.length); return ''; }
+  // the domain that owns a registry element (skos:related to the domain concept of its area taxonomy)
+  let ELOWNER = null;
+  function elOwner(e) {
+    if (!ELOWNER) { ELOWNER = new Map(); REG.nodes.forEach((n) => ELOWNER.set(n.concept, n.slug)); }
+    const c = iris(e, SKOS + 'related').find((y) => ELOWNER.has(y));
+    return c ? ELOWNER.get(c) : null;
+  }
+  const procDomain = (p) => domainOf(p) || 'unassigned';
+  const domShort = (d) => (d && d.startsWith('domain-') ? domainTitle(d).replace(/^Domain /, '') : '');
+  // the activities of the loaded assemblies, by domain
+  function actsOf(d) { return [...A.processes.values()].filter((P) => procDomain(P.iri) === d); }
+  // a context for SIPOCM and validation that is not a service: one activity, or every activity under an APQC element in a domain
+  function topoCtx() {
+    let procs, lbl, iri;
+    if (sel.tact) { procs = [sel.tact]; lbl = label(sel.tact); iri = sel.tact; }
+    else if (sel.tel) { procs = elActs(sel.tel.el, sel.tel.dom); lbl = label(sel.tel.el); iri = sel.tel.el; }
+    else return null;
+    const steps = [...new Set(procs.flatMap((p) => A.processes.get(p).steps))];
+    const delivery = steps.filter((x) => subs(C('deliveryOf'), x).length || iris(x, C('deliveryOf')).length);
+    const fs = [...new Map(procs.flatMap((p) => A.actFindings.get(p) || []).map((f) => [f.node + '|' + f.msg + '|' + f.why, f])).values()];
+    return { iri, label: lbl, processes: procs, steps, delivery, findings: fs, kinds: iris(iri, DCT + 'type'), def: one(iri, SKOS + 'definition'), scope: one(iri, SKOS + 'scopeNote'), pseudo: true };
+  }
+  function elActs(el, dom) {
+    const n = elNotation(el);
+    return actsOf(dom).filter((P) => { const a = apqcOf(P.iri); return a && (a.iri === el || (a.notation && (a.notation + '.').startsWith(n + '.'))); })
+      .sort((a, b) => numKey(one(a.iri, SKOS + 'notation') || apqcOf(a.iri).notation + '.x').localeCompare(numKey(one(b.iri, SKOS + 'notation') || apqcOf(b.iri).notation + '.x'))).map((P) => P.iri);
+  }
+  function topoTree() {
+    const roots = new Map();
+    const node = (map, key, level, lbl, extra) => { if (!map.has(key)) map.set(key, Object.assign({ key, level, label: lbl, kids: new Map(), svcs: new Set(), acts: new Set() }, extra || {})); return map.get(key); };
+    const areaNode = (a) => node(roots, 'a:' + a, 'area', assetTitle(a));
+    // domain node for a slug, creating its parents (L1 › L2 › L3) under its area; returns the chain
+    const domChain = (d) => {
+      const segs = d.replace(/^domain-/, '').split('.');
+      const area = areaOfDomain(d);
+      const chain = [areaNode(area)];
+      segs.forEach((_, i) => { const dk = 'domain-' + segs.slice(0, i + 1).join('.'); chain.push(node(chain[chain.length - 1].kids, 'd:' + dk, 'domain', domainTitle(dk), { slug: dk, depth: i + 1, area })); });
+      return chain;
+    };
+    REG.nodes.forEach((n) => { if (inDomainFilter(n.area, n.slug) || (fDomain() && fDomain().startsWith(n.slug + '.'))) domChain(n.slug); });
+    AREA_SLUGS.forEach((a) => { if (REG.nodes.size && (!sel.fArea || sel.fArea === a) && !fDomain()) areaNode(a); });
+    // services, grouped under each domain
+    A.services.filter(svcInFilter).forEach((s) => {
+      const d = svcDomain(s);
+      const chain = d.startsWith('domain-') ? domChain(d) : [areaNode(svcArea(s))];
+      chain.forEach((n) => n.svcs.add(s.iri));
+      const grp = node(chain[chain.length - 1].kids, 'g:s:' + d, 'group', 'Services', { group: 'services', dom: d, order: 0 });
+      grp.svcs.add(s.iri);
+      const sn = node(grp.kids, 's:' + s.iri, 'service', s.label); sn.svc = s.iri; sn.svcs.add(s.iri);
+      s.processes.forEach((p) => { const pn = node(sn.kids, 'p:' + s.iri + '|' + p, 'process', label(p)); pn.svc = s.iri; pn.proc = p; });
+    });
+    // processes: APQC process group (L2) › process (L3) › activity (L4), with the domain's not-applicable elements (D28)
+    const doms = new Set([...A.processes.keys()].map(procDomain).filter((d) => d.startsWith('domain-') && inDomainFilter(areaOfDomain(d), d)));
+    doms.forEach((d) => {
+      const chain = domChain(d);
+      const grp = node(chain[chain.length - 1].kids, 'g:p:' + d, 'group', `Processes · APQC PCF`, { group: 'processes', dom: d, order: 1 });
+      const elNode = (e) => {          // the node of a registry element, with its ancestors up to the process group
+        const n = elNotation(e), dp = elDepth(n);
+        if (dp <= 1) return grp;
+        const up = iris(e, SKOS + 'broader')[0];
+        const parentNode = dp === 2 || !up ? grp : elNode(up);
+        return node(parentNode.kids, 'e:' + d + '|' + e, 'apqc' + Math.min(dp, 4), label(e), { el: e, num: n, dom: d, owner: elOwner(e) });
+      };
+      actsOf(d).forEach((P) => {
+        const a = apqcOf(P.iri);
+        chain.forEach((n) => n.acts.add(P.iri)); grp.acts.add(P.iri);
+        if (!a) { node(grp.kids, 'x:' + P.iri, 'activity', P.label, { act: P.iri, num: one(P.iri, SKOS + 'notation') || '', dom: d }); return; }
+        const dp = elDepth(a.notation);
+        if (a.exact && dp === 3) { const en = elNode(a.iri); en.act = P.iri; en.acts.add(P.iri); markUp(en); return; }
+        const holder = a.exact ? elNode(iris(a.iri, SKOS + 'broader')[0] || a.iri) : (dp >= 4 ? elNode(iris(a.iri, SKOS + 'broader')[0] || a.iri) : elNode(a.iri));
+        const an = node(holder.kids, 'x:' + P.iri, 'activity', P.label, { act: P.iri, num: one(P.iri, SKOS + 'notation') || a.notation, ext: !a.exact, extends: a.notation, dom: d });
+        an.acts.add(P.iri); markUp(holder);
+      });
+      function markUp(n0) { /* acts counts are rolled up when rendering */ }
+      if (sel.showNA) {
+        [...st.spo.keys()].filter((e) => isEl(e) && elOwner(e) === d && applicability(e).startsWith('Not applicable')).forEach((e) => {
+          const n = elNotation(e), dp = elDepth(n);
+          if (dp < 2 || dp > 4) return;
+          const up = iris(e, SKOS + 'broader')[0];
+          if (up && applicability(up).startsWith('Not applicable') && elOwner(up) === d) return;   // shown under its not-applicable parent
+          const holder = dp === 2 ? grp : elNode(up);
+          node(holder.kids, 'n:' + d + '|' + e, 'na', label(e), { el: e, num: n, dom: d, why: applicability(e).replace(/^Not applicable\.\s*/, '') });
+        });
+      }
+    });
+    const rank = { area: 0, domain: 1, group: 2, service: 3, process: 4, apqc2: 5, apqc3: 5, apqc4: 5, activity: 5, na: 5 };
+    const fix = (m) => [...m.values()].map((n) => Object.assign(n, { kids: n.level === 'service' ? [...n.kids.values()] : fix(n.kids).sort((a, b) => (rank[a.level] - rank[b.level]) || ((a.order || 0) - (b.order || 0)) || (a.num || b.num ? numKey(a.num || '').localeCompare(numKey(b.num || '')) : a.label.localeCompare(b.label))) }));
+    let out = fix(roots);
+    const roll = (n) => { n.kids.forEach((k) => { roll(k); if (k.level !== 'service' && k.level !== 'process') k.acts.forEach((x) => n.acts.add(x)); }); };
+    out.forEach(roll);
+    if (sel.hideEmpty) { const prune = (ns) => ns.filter((n) => !['area', 'domain'].includes(n.level) || n.svcs.size || n.acts.size).map((n) => Object.assign(n, { kids: ['area', 'domain'].includes(n.level) ? prune(n.kids) : n.kids })); out = prune(out); }
+    return out.sort((a, b) => a.label.localeCompare(b.label));
+  }
+  function domainFilterBar() {
+    const nodes = [...REG.nodes.values()];
+    const areas = [...new Set(nodes.map((n) => n.area).concat(A.services.map(svcArea)))].filter((a) => a && a !== 'unassigned').sort();
+    const opts = (lvl) => {
+      const parent = lvl ? sel.fDom[lvl - 1] : null;
+      if (lvl && !parent) return null;
+      const xs = nodes.filter((n) => n.level === lvl + 1 && (lvl ? n.parent === parent : (!sel.fArea || n.area === sel.fArea)));
+      A.services.forEach((s) => { const d = svcDomain(s); if (!d.startsWith('domain-')) return; const segs = d.replace(/^domain-/, '').split('.'); if (segs.length > lvl) { const slug = 'domain-' + segs.slice(0, lvl + 1).join('.'); if (!xs.some((n) => n.slug === slug) && (lvl ? slug.startsWith(parent + '.') : (!sel.fArea || areaOfDomain(slug) === sel.fArea))) xs.push({ slug, label: domainTitle(slug) }); } });
+      return xs.sort((a, b) => domainTitle(a.slug).localeCompare(domainTitle(b.slug)));
+    };
+    const select = (lvl) => { const xs = opts(lvl); if (!xs || !xs.length) return '';
+      return `<label for="fD${lvl}">L${lvl + 1}</label><select id="fD${lvl}" class="mini" data-fdom="${lvl}"><option value="">Any L${lvl + 1} domain</option>${xs.map((n) => `<option value="${esc(n.slug)}"${sel.fDom[lvl] === n.slug ? ' selected' : ''}>${esc(lvl ? domainTitle(n.slug).split('.').pop() : domainTitle(n.slug))}</option>`).join('')}</select>`; };
+    return `<div class="tfil"><label for="fArea">Area</label><select id="fArea" class="mini" data-farea="1"><option value="">All operational areas</option>${areas.map((a) => `<option value="${esc(a)}"${sel.fArea === a ? ' selected' : ''}>${esc(assetTitle(a))}</option>`).join('')}</select>
+      ${select(0)}${select(1)}${select(2)}
+      <label class="ck"><input type="checkbox" data-fempty="1"${sel.hideEmpty ? ' checked' : ''}> Only domains with a model</label>
+      <label class="ck"><input type="checkbox" data-fna="1"${sel.showNA ? ' checked' : ''}> Show not applicable</label>
+      <label class="ck" title="The core process shape reaches every process step, and no asset has a lifecycle yet (open question 16)"><input type="checkbox" data-fknown="1"${sel.hideKnown ? ' checked' : ''}> Set aside known core warnings</label>
+      ${sel.fArea || fDomain() ? '<button class="btn sm" data-fclear="1">Clear</button>' : ''}</div>`;
+  }
+  const LEVEL = { area: 'Operational area', domain: 'Domain', service: 'Service', process: 'Process', group: '', apqc2: 'Process group · L2', apqc3: 'Process · L3', apqc4: 'Activity · L4', activity: 'Activity · L4', na: 'Not applicable' };
+  const plural = (n, w) => `${n} ${w}${n === 1 ? '' : w.endsWith('s') ? 'es' : 's'}`;
+  // which nodes are open: an explicit toggle wins; otherwise process groups open to the chosen level, services closed
+  function isOpen(n) {
+    if (sel.opened.has(n.key)) return true;
+    if (sel.collapsed.has(n.key)) return false;
+    if (n.level === 'service') return false;
+    if (n.level === 'apqc2') return sel.pdepth >= 3;
+    if (n.level === 'apqc3') return sel.pdepth >= 4;
+    return true;
+  }
+  const dedupe = (fs) => [...new Map(fs.map((f) => [f.node + '|' + f.msg + '|' + f.why, f])).values()];
+  function actChips(p, s) {
+    const P = A.processes.get(p), fs = s ? scopeFindings(s, procScope(p)) : (A.actFindings.get(p) || []);
+    const ap = apqcOf(p);
+    return `<span class="chip plain">${plural(P.steps.length, 'step')}</span>${statusChip(fs)}`
+      + (s && P.steps.some((x) => s.delivery.includes(x)) ? '<span class="chip acc" title="A step of this activity delivers the service">delivers</span>' : '')
+      + (P.services.length > 1 ? `<span class="chip acc" title="Copy number: the services this activity enables">shared · ${P.services.length}</span>` : (!s && P.services.length === 1 ? '<span class="chip acc" title="The service this activity enables">1 service</span>' : ''))
+      + (!s && !P.services.length ? '<span class="chip plain" title="No service names this activity with core:supports">no service</span>' : '')
+      + (ap ? (ap.exact ? (s ? `<span class="chip plain" title="${esc(ap.label)}">APQC ${esc(ap.notation)}</span>` : '') : `<span class="chip warn" title="${esc('A PEO extension of APQC ' + ap.notation + ' ' + ap.label)}">PEO extension</span>`) : '');
+  }
+  function tnode(n) {
+    const open = isOpen(n);
+    let chips = '', attrs = '', on = false, cls = '';
+    if (n.level === 'process') {
+      const s = svcOf(n.svc);
+      on = sel.service === n.svc && sel.tproc === n.proc;
+      attrs = ` data-tsvc="${esc(n.svc)}" data-tproc="${esc(n.proc)}" tabindex="0" role="button" title="Show the SIPOCM of ${esc(label(n.proc))}"`;
+      chips = actChips(n.proc, s);
+      if (A.processes.get(n.proc).services.length > 1) cls = ' shared';
+    } else if (n.level === 'service') {
+      const s = svcOf(n.svc);
+      on = sel.service === n.svc && !sel.tproc && !sel.tact && !sel.tel;
+      attrs = ` data-tsvc="${esc(n.svc)}" tabindex="0" role="button" title="Show the SIPOCM of every activity that enables ${esc(s.label)}"`;
+      chips = `<span class="chip plain">${plural(s.processes.length, 'activity').replace('activitys', 'activities').replace('activityes', 'activities')}</span><span class="chip plain">${plural(s.steps.length, 'step')}</span>${statusChip(s.findings)}`;
+    } else if (n.level === 'activity' || (n.level === 'apqc3' && n.act)) {
+      const p = n.act;
+      on = sel.tact === p;
+      attrs = ` data-tact="${esc(p)}" tabindex="0" role="button" title="Show the SIPOCM of ${esc(label(p))}"`;
+      chips = actChips(p, null);
+      if (n.level === 'apqc3') chips = '<span class="chip plain" title="APQC lists no activities under this process: it is itself the activity">activity</span>' + chips;
+    } else if (n.level === 'apqc2' || n.level === 'apqc3' || n.level === 'apqc4') {
+      on = sel.tel && sel.tel.el === n.el && sel.tel.dom === n.dom && !sel.tact;
+      const own = n.owner && n.owner !== n.dom ? n.owner : null;
+      attrs = n.acts.size ? ` data-tel="${esc(n.el)}" data-tdom="${esc(n.dom)}" tabindex="0" role="button" title="Show the SIPOCM of every activity under ${esc(n.label)}"` : '';
+      const fs = dedupe([...n.acts].flatMap((p) => A.actFindings.get(p) || []));
+      chips = `<span class="chip plain">${plural(n.acts.size, 'activity').replace('activitys', 'activities').replace('activityes', 'activities')}</span>${n.acts.size ? statusChip(fs) : ''}` + (own ? `<span class="chip plain" title="The element is owned by ${esc(domainTitle(own))}; this domain performs the activities below it">owned by ${esc(domShort(own) || own)}</span>` : '');
+    } else if (n.level === 'na') {
+      cls = ' nodata';
+      chips = `<span class="chip plain" title="${esc(n.why)}">not applicable</span>`;
+    } else if (n.level === 'group') {
+      const isP = n.group === 'processes';
+      chips = isP ? `<span class="chip plain">${plural(n.acts.size, 'activity').replace('activitys', 'activities').replace('activityes', 'activities')}</span>` : `<span class="chip plain">${plural(n.svcs.size, 'service')}</span>`;
+    } else if (!n.svcs.size && !n.acts.size) {
+      const o = n.level === 'domain' && REG.ontologies.get(n.slug);
+      const doms = n.kids.filter((k) => k.level === 'domain').length;
+      chips = (doms ? `<span class="chip plain">${plural(doms, 'domain')}</span>` : '') + `<span class="chip plain" title="No service assembly is loaded for this ${n.level === 'area' ? 'area' : 'domain'}">no service model yet</span>`
+        + (n.level === 'domain' ? (o ? `<span class="chip plain" title="Its ontology is loaded">ontology ${esc(o.version)}</span>` : '<span class="chip plain" title="Listed in the area taxonomy; no ontology loaded">not started</span>') : '');
+      cls = ' nodata';
+    } else {
+      const svcs = [...n.svcs].map(svcOf);
+      const doms = n.kids.filter((k) => k.level === 'domain').length;
+      const fs = dedupe(svcs.flatMap((s) => s.findings).concat([...n.acts].flatMap((p) => A.actFindings.get(p) || [])));
+      chips = (doms ? `<span class="chip plain">${plural(doms, 'domain')}</span>` : '') + `<span class="chip plain">${plural(svcs.length, 'service')}</span><span class="chip plain">${plural(n.acts.size, 'activity').replace('activitys', 'activities').replace('activityes', 'activities')}</span>${statusChip(fs)}`;
+    }
+    const tg = n.kids.length ? `<button class="tg" data-tog="${esc(n.key)}" aria-expanded="${open}" aria-label="${open ? 'Collapse' : 'Expand'} ${esc(n.label)}">${open ? '▾' : '▸'}</button>` : '<span class="tgsp"></span>';
+    const lvName = n.level === 'domain' ? 'Domain · L' + (n.depth || 1)
+      : n.level === 'group' ? (n.group === 'processes' ? 'APQC PCF levels L2 › L3 › L4' : 'Services')
+      : n.level === 'activity' && n.ext ? `PEO extension · extends ${n.extends}` : LEVEL[n.level];
+    const num = (n.level.startsWith('apqc') || n.level === 'activity' || n.level === 'na') && n.num && !(n.level === 'activity' && n.ext) ? `<span class="num">${esc(n.num)}</span> ` : '';
+    return `<div class="tn"><div class="nb l-${n.level}${n.group ? ' g-' + n.group : ''}${cls}${attrs ? ' click' : ''}${on ? ' on' : ''}"${attrs}>${tg}
+        <span class="lvn">${lvName}</span><span class="nm">${num}${esc(n.label)}</span><span class="nc">${chips}</span></div>
+      ${n.kids.length && open ? `<div class="kids">${n.kids.map(tnode).join('')}</div>` : ''}</div>`;
+  }
+  function allKeys(ns, out) { ns.forEach((n) => { if (n.kids.length) out.push(n.key); allKeys(n.kids, out); }); return out; }
+  const SIPOC_HEAD = '<thead><tr><th><span class="ab">S</span>Supplier</th><th><span class="ab">I</span>Input</th><th><span class="ab">P</span>Process step</th><th><span class="ab">O</span>Output</th><th><span class="ab">C</span>Customer</th><th><span class="ab">M</span>Measure</th><th>Check</th></tr></thead>';
+  function actHeadRow(p, ctx) {
+    const n = one(p, SKOS + 'notation'), ap = apqcOf(p);
+    return `<tr class="proc"><td colspan="7">${n && ap && ap.exact ? `<span class="num">${esc(n)}</span> ` : ''}${esc(label(p))}${ap && !ap.exact ? ` <span class="chip warn">PEO extension of ${esc(ap.notation)}</span>` : ''}</td></tr>`;
+  }
+  function renderTopology() {
+    const tree = topoTree();
+    const s0 = svcOf(sel.service), s = s0 && svcInFilter(s0) ? s0 : null;
+    const ctx = topoCtx();
+    let panel = '<div class="note">Click an activity, a process (L3) or a process group (L2) for its SIPOCM: one row per step, grouped by activity. Click a service for the SIPOCM of every activity that enables it.</div>';
+    const legend = `<div class="legend" style="margin-top:8px"><span>Suppliers and customers inside the assemblies are derived from the data flow (the step that produces an input, or consumes an output), with the domain of each; “outside” ones are stated (has supplier, has customer)</span><span>Click a step for its detail</span></div>`;
+    if (ctx) {
+      const many = ctx.processes.length > 1;
+      const rows = ctx.processes.map((p) => (many ? actHeadRow(p, ctx) : '') + (A.processes.get(p).steps.map((x) => sipocRow(ctx, x, true)).join('') || '<tr><td colspan="7" class="out">This activity has no steps.</td></tr>')).join('');
+      let head;
+      if (sel.tact) {
+        const p = sel.tact, P = A.processes.get(p), ap = apqcOf(p), n = one(p, SKOS + 'notation');
+        head = `<div class="sipo-h"><span class="k">${ap && !ap.exact ? 'PEO extension' : 'Activity · L4'} · ${esc(domainTitle(procDomain(p)))}</span><h3>${n && ap && ap.exact ? `<span class="num">${esc(n)}</span> ` : ''}${esc(P.label)}</h3>
+          ${one(p, SKOS + 'definition') ? `<p>${esc(one(p, SKOS + 'definition'))}</p>` : ''}${one(p, SKOS + 'scopeNote') ? `<p class="sub">${esc(one(p, SKOS + 'scopeNote'))}</p>` : ''}
+          <div class="ids"><span>${plural(P.steps.length, 'step')} in order (core:precedes)</span><span>${P.services.length ? 'Enables ' + esc(P.services.map(label).join(', ')) : 'Enables no service yet'}</span>
+          ${ap ? `<span>APQC ${esc(ap.notation)} ${esc(ap.label)} <span class="sub">${ap.exact ? 'is the element' : 'extends the element'}</span></span>` : '<span>No APQC anchor</span>'}
+          <span>${statusChip(ctx.findings)} <span class="link" data-tab-go="validation" style="color:var(--ke-accent);cursor:pointer">see Validation</span></span></div></div>`;
+      } else {
+        const e = sel.tel.el, n = elNotation(e), own = elOwner(e);
+        head = `<div class="sipo-h"><span class="k">${esc(LEVEL['apqc' + Math.min(elDepth(n), 4)])} · ${esc(domainTitle(sel.tel.dom))}</span><h3><span class="num">${esc(n)}</span> ${esc(label(e))}</h3>
+          <p class="sub">${esc(applicability(e) ? 'PEO applicability: ' + applicability(e) : '')}${own && own !== sel.tel.dom ? ' Owned by ' + esc(domainTitle(own)) + '.' : ''}</p>
+          <div class="ids"><span>${plural(ctx.processes.length, 'activity').replace('activitys', 'activities').replace('activityes', 'activities')} · ${plural(ctx.steps.length, 'step')}</span><span>${statusChip(ctx.findings)} <span class="link" data-tab-go="validation" style="color:var(--ke-accent);cursor:pointer">see Validation</span></span></div></div>`;
+      }
+      panel = head + `<div class="tw"><table class="t sipoc">${SIPOC_HEAD}<tbody>${rows}</tbody></table></div>` + legend;
+    } else if (s) {
+      const procs = sel.tproc ? [sel.tproc] : s.processes;
+      const rows = procs.map((p) => (sel.tproc ? '' : actHeadRow(p, s)) + (A.processes.get(p).steps.map((x) => sipocRow(s, x, true)).join('') || '<tr><td colspan="7" class="out">This activity has no steps.</td></tr>')).join('');
+      let head;
+      if (sel.tproc) {
+        const P = A.processes.get(sel.tproc), ap = apqcOf(sel.tproc), fs = scopeFindings(s, procScope(sel.tproc));
+        head = `<div class="sipo-h"><span class="k">Activity · enables ${esc(s.label)}</span><h3>${esc(P.label)}</h3>
+          ${one(P.iri, SKOS + 'definition') ? `<p>${esc(one(P.iri, SKOS + 'definition'))}</p>` : ''}
+          <div class="ids"><span>${plural(P.steps.length, 'step')} in order (core:precedes)</span><span>Enables ${esc(P.services.map(label).join(', '))}</span>
+          ${ap ? `<span>APQC ${esc(ap.notation)} ${esc(ap.label)} <span class="sub">${ap.exact ? 'is the element' : 'extends the element'}</span></span>` : '<span>No APQC anchor</span>'}
+          <span>${statusChip(fs)} <span class="link" data-tab-go="validation" style="color:var(--ke-accent);cursor:pointer">see Validation</span></span></div></div>`;
+      } else {
+        head = `<div class="sipo-h"><span class="k">Service · ${esc(domainTitle(svcDomain(s)))}</span><h3>${esc(s.label)}</h3>${s.def ? `<p>${esc(s.def)}</p>` : ''}
+          <div class="ids"><span>Enabled by ${plural(s.processes.length, 'activity').replace('activitys', 'activities').replace('activityes', 'activities')}</span><span>Delivered by ${esc(s.delivery.map(label).join(', ') || '—')}</span><span>${statusChip(s.findings)}</span></div></div>`;
+      }
+      panel = head + `<div class="tw"><table class="t sipoc">${SIPOC_HEAD}<tbody>${rows}</tbody></table></div>` + legend;
+    }
+    const lv = (d, t) => `<button class="${sel.pdepth === d ? 'on' : ''}" data-pdepth="${d}" aria-pressed="${sel.pdepth === d}">${t}</button>`;
+    $('mid').innerHTML = `
+      <div class="sec">Service topology <span class="n">operational area › domain (L1 › L2 › L3) › services, and processes on APQC PCF: process group (L2) › process (L3) › activity (L4), whose steps (L5 tasks) are the SIPOCM rows</span></div>
+      <div class="tbar">
+        <span class="seg" role="group" aria-label="Process levels shown">${lv(2, 'L2')}${lv(3, 'L3')}${lv(4, 'L4')}</span>
+        <button class="btn sm" data-tall="open">Expand all</button><button class="btn sm" data-tall="close">Collapse all</button><button class="btn sm" data-print="1">Print</button>
+        <div class="legend"><span><span class="lv" style="background:var(--ke-kind-voc,#5b6b7f)"></span>Area</span><span><span class="lv" style="background:var(--ke-kind-tax)"></span>Domain</span><span><span class="lv" style="background:var(--ke-accent)"></span>Service</span><span><span class="lv" style="background:var(--lc2)"></span>Process group (L2) and process (L3)</span><span><span class="lv" style="background:var(--ke-kind-ont)"></span>Activity (L4)</span></div>
+      </div>
+      ${domainFilterBar()}
+      <div class="treebox">${tree.length ? tree.map(tnode).join('') : '<div class="hint">No domain matches the filter.</div>'}</div>
+      <div id="sipoPanel">${panel}</div>`;
+  }
   function renderInsp() {
     document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('on', t.dataset.tab === sel.tab));
-    const s = svcOf(sel.service);
-    if (!s) { $('insp').innerHTML = '<div class="hint">Select a service.</div>'; return; }
+    const s = (sel.view === 'topology' && topoCtx()) || svcOf(sel.service);
+    if (!s) { $('insp').innerHTML = '<div class="hint">Select a service, an activity or a process.</div>'; return; }
     const focus = sel.step || sel.process;
     if (sel.tab === 'validation') {
       let scope = null;
       if (sel.step) scope = new Set([sel.step, ...iris(sel.step, C('produces')), ...iris(sel.step, C('measuredBy'))]);
       else if (sel.process) scope = new Set([sel.process, ...A.processes.get(sel.process).steps]);
-      const fs = scope ? s.findings.filter((f) => scope.has(f.node)) : s.findings;
+      const all = scope ? s.findings.filter((f) => scope.has(f.node)) : s.findings;
+      const fs = live(all), known = all.filter((f) => sel.hideKnown && isKnown(f));
       const e = count(fs, 'error'), w = count(fs, 'warning');
+      const card = (f) => `<div class="find ${f.sev}"><div class="h"><span class="chip ${f.sev === 'error' ? 'bad' : 'warn'}">${f.sev}</span><span class="link" data-node="${esc(f.node)}">${esc(label(f.node))}</span></div><div class="m">${esc(f.msg)}</div><div class="w">${esc(f.why)} · ${esc(f.src)}</div></div>`;
       $('insp').innerHTML = `<h3>${esc(focus ? label(focus) : s.label)}</h3>
-        <p>${e} error${e === 1 ? '' : 's'}, ${w} warning${w === 1 ? '' : 's'} from the shapes the manifest requires and the assembly checks (typing, classification, insulation, no persona or value map content)${sel.step ? ', for this step, its outputs and measures' : sel.process ? ', for this process and its steps' : ', over the service, its processes, steps and their SIPOCM'}.</p>
-        ${fs.length ? fs.sort((a, b) => (a.sev === b.sev ? 0 : a.sev === 'error' ? -1 : 1)).map((f) => `<div class="find ${f.sev}"><div class="h"><span class="chip ${f.sev === 'error' ? 'bad' : 'warn'}">${f.sev}</span><span class="link" data-node="${esc(f.node)}">${esc(label(f.node))}</span></div><div class="m">${esc(f.msg)}</div><div class="w">${esc(f.why)} · ${esc(f.src)}</div></div>`).join('') : '<div class="note">All shapes hold.</div>'}`;
+        <p>${e} error${e === 1 ? '' : 's'}, ${w} warning${w === 1 ? '' : 's'} from the shapes the manifest requires and the assembly checks (typing, classification, insulation, no persona or value map content)${sel.step ? ', for this step, its outputs and measures' : sel.process ? ', for this activity and its steps' : ', over everything selected, its activities, steps and their SIPOCM'}.</p>
+        ${fs.length ? fs.sort((a, b) => (a.sev === b.sev ? 0 : a.sev === 'error' ? -1 : 1)).map(card).join('') : '<div class="note">All shapes hold.</div>'}
+        ${known.length ? `<details class="note"><summary>${known.length} known core warning${known.length === 1 ? '' : 's'} set aside</summary><p>The core process shape reaches every process step (a step is a process), and no asset has a lifecycle yet: open question 16. Untick “Set aside known core warnings” on the topology to count them.</p>${known.slice(0, 40).map(card).join('')}${known.length > 40 ? `<p>… and ${known.length - 40} more.</p>` : ''}</details>` : ''}`;
       return;
     }
     if (sel.tab === 'usedby') {
@@ -656,6 +1100,19 @@
         <dt>IRI</dt><dd class="mono">${esc(P.iri)}</dd></dl>`;
       return;
     }
+    if (s.pseudo) {
+      const e = s.iri, n = elNotation(e), own = elOwner(e);
+      $('insp').innerHTML = `<h3>${esc(n)} ${esc(s.label)}</h3>
+        <dl><dt>APQC level</dt><dd>${esc(LEVEL['apqc' + Math.min(elDepth(n), 4)] || '')}, PCF ${esc((one(APQC, DCT + 'source') || '').match(/version ([\d.]+)/) ? one(APQC, DCT + 'source').match(/version ([\d.]+)/)[1] : '')}</dd>
+        <dt>Element ID</dt><dd>${esc(one(e, DCT + 'identifier') || S.localName(e).replace('element-', ''))}</dd>
+        <dt>Owner</dt><dd>${esc(own ? domainTitle(own) : '—')}</dd>
+        <dt>Applicability</dt><dd>${esc(applicability(e) || '—')}</dd>
+        <dt>Activities here</dt><dd>${s.processes.map((p) => `<span class="link" data-act-go="${esc(p)}">${esc((one(p, SKOS + 'notation') || '') + ' ' + label(p))}</span>`).join('<br>') || '—'}</dd>
+        <dt>Steps</dt><dd>${s.steps.length}</dd>
+        <dt>IRI</dt><dd class="mono">${esc(e)}</dd></dl>
+        <div class="note">The APQC name is kept as APQC publishes it in the reference registry; the activities and steps carry labels that follow the naming rules.</div>`;
+      return;
+    }
     $('insp').innerHTML = `<h3>${esc(s.label)}</h3>${s.scope ? `<p>${esc(s.scope)}</p>` : ''}
       <dl><dt>Class</dt><dd>${esc(iris(s.iri, T).map(S.localName).join(', '))}</dd><dt>Kind</dt><dd>${esc(s.kinds.map(label).join(', '))}</dd>
       <dt>Enabled by</dt><dd>${s.processes.map((p) => `<span class="link" data-proc="${esc(p)}">${esc(label(p))}</span>`).join('<br>') || '—'}</dd>
@@ -665,9 +1122,8 @@
       <div class="note">Select a process or a step to see its detail and every service that uses it. The buyer personas, their job steps and desired outcomes are a separate assembly, the value map.</div>`;
   }
   function renderAll() {
-    $('main').classList.toggle('cov', sel.view === 'coverage');
-    $('vCat').classList.toggle('on', sel.view === 'catalog'); $('vCov').classList.toggle('on', sel.view === 'coverage');
-    $('vCat').setAttribute('aria-selected', sel.view === 'catalog'); $('vCov').setAttribute('aria-selected', sel.view === 'coverage');
+    $('main').classList.toggle('cov', sel.view === 'coverage'); $('main').classList.toggle('topo', sel.view === 'topology');
+    [['vTop', 'topology'], ['vCat', 'catalog'], ['vCov', 'coverage']].forEach(([id, v]) => { $(id).classList.toggle('on', sel.view === v); $(id).setAttribute('aria-selected', sel.view === v); });
     renderList(); crumbs(); renderMid(); renderInsp();
   }
   function pickStep(x) { sel.step = x; sel.process = x ? processOf(x) || null : sel.process; if (sel.tab === 'usedby' && !x) sel.tab = 'detail'; crumbs(); renderMid(); renderInsp(); }
@@ -679,12 +1135,27 @@
   $('btnCfg').addEventListener('click', () => $('pop').classList.toggle('on'));
   $('repoId').addEventListener('change', () => { S.lsSet('ke-repo', $('repoId').value.trim()); $('pop').classList.remove('on'); loadManifests(); });
   ['svcSearch', 'fProc', 'fStage', 'fMode', 'fStatus'].forEach((id) => $(id).addEventListener(id === 'svcSearch' ? 'input' : 'change', () => A && renderList()));
-  $('vCat').addEventListener('click', () => { sel.view = 'catalog'; renderAll(); });
+  $('vTop').addEventListener('click', () => { sel.view = 'topology'; renderAll(); });
+  $('vCat').addEventListener('click', () => { sel.view = 'catalog'; sel.process = sel.tproc; renderAll(); });
   $('vCov').addEventListener('click', () => { sel.view = 'coverage'; renderAll(); });
   document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { sel.tab = t.dataset.tab; renderInsp(); }));
   const activate = (fn) => (ev) => { if (ev.type === 'keydown' && ev.key !== 'Enter' && ev.key !== ' ') return; if (ev.type === 'keydown' && ev.target.closest('input,select')) return; if (ev.type === 'keydown') ev.preventDefault(); fn(ev); };
   const onPick = activate((ev) => {
     const t = ev.target;
+    const tog = t.closest('[data-tog]'), tall = t.closest('[data-tall]'), tn = t.closest('[data-tsvc]'), tgo = t.closest('[data-tgo]');
+    const ag = t.closest('[data-act-go]');
+    if (ag) { if (ev.type === 'click') { sel.tact = ag.dataset.actGo; sel.tel = null; sel.process = sel.tact; sel.step = null; renderAll(); } return; }
+    if (t.closest('[data-fclear]')) { if (ev.type === 'click') { sel.fArea = ''; sel.fDom = ['', '', '']; saveDomFilter(); renderList(); renderMid(); } return; }
+    if (t.closest('select,input[type=checkbox]')) return;
+    if (t.closest('[data-print]')) { if (ev.type === 'click') window.print(); return; }
+    const ta = t.closest('[data-tact]'), te = t.closest('[data-tel]'), pd = t.closest('[data-pdepth]');
+    if (tog) { const k = tog.dataset.tog; const nodeOpen = tog.getAttribute('aria-expanded') === 'true'; sel.opened.delete(k); sel.collapsed.delete(k); (nodeOpen ? sel.collapsed : sel.opened).add(k); renderMid(); return; }
+    if (tall) { const keys = allKeys(topoTree(), []); if (tall.dataset.tall === 'close') { sel.opened = new Set(); sel.collapsed = new Set(keys.filter((k) => !k.startsWith('a:'))); } else { sel.collapsed = new Set(); sel.opened = new Set(keys); } renderMid(); return; }
+    if (pd) { sel.pdepth = Number(pd.dataset.pdepth); sel.opened = new Set([...sel.opened].filter((k) => !k.startsWith('e:'))); sel.collapsed = new Set([...sel.collapsed].filter((k) => !k.startsWith('e:'))); renderMid(); return; }
+    if (tgo) { sel.tproc = null; sel.tact = null; sel.tel = null; sel.process = null; sel.step = null; sel.service = null; crumbs(); renderMid(); renderInsp(); return; }
+    if (ta && !t.closest('.tg')) { sel.tact = ta.dataset.tact; sel.tel = null; sel.tproc = null; sel.process = sel.tact; sel.step = null; if (sel.tab === 'usedby' && !sel.tact) sel.tab = 'detail'; renderAll(); const p = $('sipoPanel'); if (p && p.getBoundingClientRect().top > window.innerHeight - 120) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if (te && !t.closest('.tg')) { sel.tel = { el: te.dataset.tel, dom: te.dataset.tdom }; sel.tact = null; sel.tproc = null; sel.process = null; sel.step = null; if (sel.tab === 'usedby') sel.tab = 'detail'; renderAll(); const p = $('sipoPanel'); if (p && p.getBoundingClientRect().top > window.innerHeight - 120) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+    if (tn) { sel.service = tn.dataset.tsvc; sel.tproc = tn.dataset.tproc || null; sel.tact = null; sel.tel = null; sel.process = sel.tproc; sel.step = null; if (sel.tab === 'usedby' && !sel.tproc) sel.tab = 'detail'; renderAll(); if (ev.type === 'click' || ev.type === 'keydown') { const p = $('sipoPanel'); if (p && p.getBoundingClientRect().top > window.innerHeight - 120) p.scrollIntoView({ behavior: 'smooth', block: 'start' }); } return; }
     const r = t.closest('[data-svc]'), c = t.closest('[data-step]'), g = t.closest('[data-go]'), pr = t.closest('[data-proc]'),
           n = t.closest('[data-node]'), sg = t.closest('[data-svc-go]'), tg = t.closest('[data-tab-go]'), stg = t.closest('[data-step-go]'), cp = t.closest('[data-cov-proc]');
     if (r) { sel.service = r.dataset.svc; sel.step = null; sel.process = null; if (sel.tab === 'usedby') sel.tab = 'detail'; renderAll(); }
@@ -698,6 +1169,16 @@
     else if (n) { const node = n.dataset.node, s = svcOf(sel.service); if (s && s.steps.includes(node)) { sel.tab = 'detail'; pickStep(node); } else if (A.processes.has(node)) { sel.tab = 'detail'; pickProcess(node); } }
   });
   document.addEventListener('click', onPick); document.addEventListener('keydown', onPick);
+  document.addEventListener('change', (e) => {
+    const t = e.target; if (!A) return;
+    if (t.dataset.farea) { sel.fArea = t.value; sel.fDom = ['', '', '']; }
+    else if (t.dataset.fdom != null) { const l = Number(t.dataset.fdom); sel.fDom = sel.fDom.map((v, i) => (i < l ? v : i === l ? t.value : '')); }
+    else if (t.dataset.fempty) sel.hideEmpty = t.checked;
+    else if (t.dataset.fna) sel.showNA = t.checked;
+    else if (t.dataset.fknown) { sel.hideKnown = t.checked; saveDomFilter(); renderList(); renderMid(); renderInsp(); return; }
+    else return;
+    saveDomFilter(); renderList(); renderMid();
+  });
   document.addEventListener('click', (e) => { if (!e.target.closest('.cfg')) $('pop').classList.remove('on'); });
 
   window.KE_SA = { get model() { return A; }, sipocm: (x) => sipocm(x) };

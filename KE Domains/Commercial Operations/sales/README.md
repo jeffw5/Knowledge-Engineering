@@ -1,6 +1,6 @@
-# Sales
+# Domain Sales
 
-A domain of the Commercial Operations operational area. It refers only to the core (Baseline Core v1.0) and to the Commercial Operations container, never to a sibling domain, so it can change without affecting them.
+A domain of the Commercial Operations operational area. Its classes, relations and concepts refer only to the core (Baseline Core v1.0), the Commercial Operations ontology, never to a sibling domain, so it can change without affecting them. It may cite vocabulary primitives of any domain (D27).
 
 The sales ontology. It extends the core domain ontology and the Commercial Operations ontology with the selling process and its steps, anchored on the process step, the sales processes that enable sales services, and sales quotas. Selling steps are bridged to the buyer persona's job steps through core:addresses in the value map, a separate assembly.
 
@@ -8,12 +8,12 @@ The sales ontology. It extends the core domain ontology and the Commercial Opera
 
 | Asset | Named graph | Triples |
 |---|---|---:|
-| `ttl/vocabulary-domain-sales-0.3.0.ttl` · `trig/vocabulary-domain-sales-0.3.0.trig` | `https://www.insperity.com/vocabulary/domain-sales/` | 184 |
-| `ttl/taxonomy-domain-sales-0.3.0.ttl` · `trig/taxonomy-domain-sales-0.3.0.trig` | `https://www.insperity.com/taxonomy/domain-sales/` | 964 |
-| `ttl/ontology-domain-sales-0.3.0.ttl` · `trig/ontology-domain-sales-0.3.0.trig` | `https://www.insperity.com/ontology/domain-sales/` | 101 |
-| `ttl/shapes-domain-sales-0.3.0.ttl` · `trig/shapes-domain-sales-0.3.0.trig` | `https://www.insperity.com/shapes/domain-sales/` | 92 |
+| `ttl/vocabulary-domain-sales-0.4.0.ttl` · `trig/vocabulary-domain-sales-0.4.0.trig` | `https://www.insperity.com/vocabulary/domain-sales/` | 185 |
+| `ttl/taxonomy-domain-sales-0.4.0.ttl` · `trig/taxonomy-domain-sales-0.4.0.trig` | `https://www.insperity.com/taxonomy/domain-sales/` | 971 |
+| `ttl/ontology-domain-sales-0.4.0.ttl` · `trig/ontology-domain-sales-0.4.0.trig` | `https://www.insperity.com/ontology/domain-sales/` | 102 |
+| `ttl/shapes-domain-sales-0.4.0.ttl` · `trig/shapes-domain-sales-0.4.0.trig` | `https://www.insperity.com/shapes/domain-sales/` | 93 |
 
-Built from `../_build/spec_sales.py` by `../_build/build_domains.py`. Edit the spec and rebuild, or edit the Turtle in the KE Workbench; a rebuild overwrites hand edits to these files.
+Built from `KE Domains/_build/spec_sales.py` by `KE Domains/_build/build_domains.py`. Edit the spec and rebuild, or edit the Turtle in the KE Workbench; a rebuild overwrites hand edits to these files.
 
 ## Vocabulary (13 primitives)
 

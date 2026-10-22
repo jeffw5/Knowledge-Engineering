@@ -1,0 +1,4049 @@
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix customercareshp: <https://www.insperity.com/shapes/domain-customer-care/> .
+@prefix businessopstax: <https://www.insperity.com/taxonomy/business-operations/> .
+@prefix customercarevoc: <https://www.insperity.com/vocabulary/domain-customer-care/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix pricingtax: <https://www.insperity.com/taxonomy/domain-pricing/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix customercare: <https://www.insperity.com/ontology/domain-customer-care/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix techopstax: <https://www.insperity.com/taxonomy/technical-operations/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix marketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix apqc: <https://www.insperity.com/taxonomy/apqc-pcf/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix domainsalesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix pricing: <https://www.insperity.com/ontology/domain-pricing/> .
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix customercaretax: <https://www.insperity.com/taxonomy/domain-customer-care/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix pricingvoc: <https://www.insperity.com/vocabulary/domain-pricing/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix techopsvoc: <https://www.insperity.com/vocabulary/technical-operations/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix hrserviceopsvoc: <https://www.insperity.com/vocabulary/hr-service-operations/> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix pricingshp: <https://www.insperity.com/shapes/domain-pricing/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix hrserviceopstax: <https://www.insperity.com/taxonomy/hr-service-operations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix businessopsvoc: <https://www.insperity.com/vocabulary/business-operations/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+
+<https://www.insperity.com/taxonomy/apqc-pcf/> {
+  apqc:element-10188 a skos:Concept;
+    rdfs:label "Identify potential customers"@en;
+    skos:prefLabel "Identify potential customers"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10190 a skos:Concept;
+    rdfs:label "Perform sales calls"@en;
+    skos:prefLabel "Perform sales calls"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10191 a skos:Concept;
+    rdfs:label "Perform pre-sales activities"@en;
+    skos:prefLabel "Perform pre-sales activities"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11779 a skos:Concept;
+    rdfs:label "Develop and manage sales proposals, bids, and quotes"@en;
+    skos:prefLabel "Develop and manage sales proposals, bids, and quotes"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  <https://www.insperity.com/taxonomy/apqc-pcf/> a skos:ConceptScheme;
+    rdfs:label "APQC Process Classification Framework Taxonomy"@en;
+    skos:prefLabel "APQC Process Classification Framework Taxonomy"@en;
+    skos:hasTopConcept apqc:element-10004;
+    skos:editorialNote "Loaded so far: category 3.0 Market and Sell Products and Services. Load the other categories from a licensed copy; check numbering against PCF 8.0."@en;
+    terms:description "The read-only reference registry of the APQC Cross-Industry Process Classification Framework (PCF) 7.2.1 (D25). Each element keeps its APQC name, hierarchy number (skos:notation) and element ID (dct:identifier), and names the one domain that owns it. Domain taxonomies link their process kinds to it; internal domain services are built on it. External services follow the HR Services & PEO Enterprise Business Model instead."@en;
+    terms:title "APQC Process Classification Framework Taxonomy"@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10004 a skos:Concept;
+    rdfs:label "Market and Sell Products and Services"@en;
+    skos:prefLabel "Market and Sell Products and Services"@en;
+    skos:editorialNote "Owner: Commercial Operations."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10101 a skos:Concept;
+    rdfs:label "Understand markets, customers, and capabilities"@en;
+    skos:prefLabel "Understand markets, customers, and capabilities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10102 a skos:Concept;
+    rdfs:label "Develop marketing strategy"@en;
+    skos:prefLabel "Develop marketing strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10103 a skos:Concept;
+    rdfs:label "Develop sales strategy"@en;
+    skos:prefLabel "Develop sales strategy"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10105 a skos:Concept;
+    rdfs:label "Develop and manage sales plans"@en;
+    skos:prefLabel "Develop and manage sales plans"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20008 a skos:Concept;
+    rdfs:label "Develop and manage marketing plans"@en;
+    skos:prefLabel "Develop and manage marketing plans"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10106 a skos:Concept;
+    rdfs:label "Perform customer and market intelligence analysis"@en;
+    skos:prefLabel "Perform customer and market intelligence analysis"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10107 a skos:Concept;
+    rdfs:label "Evaluate and prioritize market opportunities"@en;
+    skos:prefLabel "Evaluate and prioritize market opportunities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10108 a skos:Concept;
+    rdfs:label "Conduct customer and market research"@en;
+    skos:prefLabel "Conduct customer and market research"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10109 a skos:Concept;
+    rdfs:label "Identify market segments"@en;
+    skos:prefLabel "Identify market segments"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10110 a skos:Concept;
+    rdfs:label "Analyze market and industry trends"@en;
+    skos:prefLabel "Analyze market and industry trends"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10111 a skos:Concept;
+    rdfs:label "Analyze competing organizations, competitive/substitute products/services"@en;
+    skos:prefLabel "Analyze competing organizations, competitive/substitute products/services"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10112 a skos:Concept;
+    rdfs:label "Evaluate existing products/services"@en;
+    skos:prefLabel "Evaluate existing products/services"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10113 a skos:Concept;
+    rdfs:label "Assess internal and external business environment"@en;
+    skos:prefLabel "Assess internal and external business environment"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10114 a skos:Concept;
+    rdfs:label "Understand consumer needs and predict customer purchasing behavior"@en;
+    skos:prefLabel "Understand consumer needs and predict customer purchasing behavior"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10115 a skos:Concept;
+    rdfs:label "Determine market share gain/loss"@en;
+    skos:prefLabel "Determine market share gain/loss"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10116 a skos:Concept;
+    rdfs:label "Quantify market opportunities"@en;
+    skos:prefLabel "Quantify market opportunities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10117 a skos:Concept;
+    rdfs:label "Determine target segments"@en;
+    skos:prefLabel "Determine target segments"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10118 a skos:Concept;
+    rdfs:label "Prioritize opportunities consistent with capabilities and overall business strategy"@en;
+    skos:prefLabel "Prioritize opportunities consistent with capabilities and overall business strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10119 a skos:Concept;
+    rdfs:label "Validate opportunities"@en;
+    skos:prefLabel "Validate opportunities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18941 a skos:Concept;
+    rdfs:label "Identify under-served and saturated market segments"@en;
+    skos:prefLabel "Identify under-served and saturated market segments"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10120 a skos:Concept;
+    rdfs:label "Test with customers/consumers"@en;
+    skos:prefLabel "Test with customers/consumers"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10121 a skos:Concept;
+    rdfs:label "Confirm internal capabilities"@en;
+    skos:prefLabel "Confirm internal capabilities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10123 a skos:Concept;
+    rdfs:label "Define pricing strategy"@en;
+    skos:prefLabel "Define pricing strategy"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11168 a skos:Concept;
+    rdfs:label "Define offering and customer value proposition"@en;
+    skos:prefLabel "Define offering and customer value proposition"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16848 a skos:Concept;
+    rdfs:label "Develop marketing communication strategy"@en;
+    skos:prefLabel "Develop marketing communication strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18924 a skos:Concept;
+    rdfs:label "Design and manage customer loyalty program"@en;
+    skos:prefLabel "Design and manage customer loyalty program"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20000 a skos:Concept;
+    rdfs:label "Define and manage channel strategy"@en;
+    skos:prefLabel "Define and manage channel strategy"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20006 a skos:Concept;
+    rdfs:label "Analyze and manage channel performance"@en;
+    skos:prefLabel "Analyze and manage channel performance"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11169 a skos:Concept;
+    rdfs:label "Define offering and positioning"@en;
+    skos:prefLabel "Define offering and positioning"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11170 a skos:Concept;
+    rdfs:label "Develop value proposition including brand positioning for target segments"@en;
+    skos:prefLabel "Develop value proposition including brand positioning for target segments"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11171 a skos:Concept;
+    rdfs:label "Validate value proposition with target segments"@en;
+    skos:prefLabel "Validate value proposition with target segments"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11172 a skos:Concept;
+    rdfs:label "Develop new branding"@en;
+    skos:prefLabel "Develop new branding"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10124 a skos:Concept;
+    rdfs:label "Establish guidelines for applying pricing and discounting of products/services"@en;
+    skos:prefLabel "Establish guidelines for applying pricing and discounting of products/services"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10125 a skos:Concept;
+    rdfs:label "Approve pricing strategies/policies and targets"@en;
+    skos:prefLabel "Approve pricing strategies/policies and targets"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-13169 a skos:Concept;
+    rdfs:label "Conduct pricing analysis"@en;
+    skos:prefLabel "Conduct pricing analysis"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-19999 a skos:Concept;
+    rdfs:label "Establish pricing targets"@en;
+    skos:prefLabel "Establish pricing targets"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10126 a skos:Concept;
+    rdfs:label "Evaluate channel attributes and potential partners"@en;
+    skos:prefLabel "Evaluate channel attributes and potential partners"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10127 a skos:Concept;
+    rdfs:label "Determine channel role and fit with target segments"@en;
+    skos:prefLabel "Determine channel role and fit with target segments"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10128 a skos:Concept;
+    rdfs:label "Select channels for target segments"@en;
+    skos:prefLabel "Select channels for target segments"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20001 a skos:Concept;
+    rdfs:label "Determine channels to be supported"@en;
+    skos:prefLabel "Determine channels to be supported"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20002 a skos:Concept;
+    rdfs:label "Establish channel objectives"@en;
+    skos:prefLabel "Establish channel objectives"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20003 a skos:Concept;
+    rdfs:label "Identify required channel capabilities"@en;
+    skos:prefLabel "Identify required channel capabilities"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20004 a skos:Concept;
+    rdfs:label "Orchestrate seamless customer experience across supported channels"@en;
+    skos:prefLabel "Orchestrate seamless customer experience across supported channels"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20005 a skos:Concept;
+    rdfs:label "Develop and manage execution roadmap"@en;
+    skos:prefLabel "Develop and manage execution roadmap"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16590 a skos:Concept;
+    rdfs:label "Define omni-channel strategy"@en;
+    skos:prefLabel "Define omni-channel strategy"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16591 a skos:Concept;
+    rdfs:label "Define omni-channel requirements"@en;
+    skos:prefLabel "Define omni-channel requirements"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16592 a skos:Concept;
+    rdfs:label "Develop omni-channel policies and procedures"@en;
+    skos:prefLabel "Develop omni-channel policies and procedures"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16500 a skos:Concept;
+    rdfs:label "Analyze performance"@en;
+    skos:prefLabel "Analyze performance"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16501 a skos:Concept;
+    rdfs:label "Develop plan for improvements"@en;
+    skos:prefLabel "Develop plan for improvements"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16573 a skos:Concept;
+    rdfs:label "Establish channel-specific metrics and targets"@en;
+    skos:prefLabel "Establish channel-specific metrics and targets"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16574 a skos:Concept;
+    rdfs:label "Monitor and report performance"@en;
+    skos:prefLabel "Monitor and report performance"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16575 a skos:Concept;
+    rdfs:label "Monitor and report events influencing factors"@en;
+    skos:prefLabel "Monitor and report events influencing factors"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16849 a skos:Concept;
+    rdfs:label "Develop customer communication calendar"@en;
+    skos:prefLabel "Develop customer communication calendar"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16850 a skos:Concept;
+    rdfs:label "Define public relations (PR) strategy"@en;
+    skos:prefLabel "Define public relations (PR) strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16851 a skos:Concept;
+    rdfs:label "Define direct marketing strategy"@en;
+    skos:prefLabel "Define direct marketing strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16852 a skos:Concept;
+    rdfs:label "Define internal marketing communication strategy"@en;
+    skos:prefLabel "Define internal marketing communication strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16853 a skos:Concept;
+    rdfs:label "Identify new media for marketing communication"@en;
+    skos:prefLabel "Identify new media for marketing communication"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16854 a skos:Concept;
+    rdfs:label "Define new media communication strategy"@en;
+    skos:prefLabel "Define new media communication strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16855 a skos:Concept;
+    rdfs:label "Define point of sale (POS) communication strategy"@en;
+    skos:prefLabel "Define point of sale (POS) communication strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18627 a skos:Concept;
+    rdfs:label "Define communication guidelines and mechanisms"@en;
+    skos:prefLabel "Define communication guidelines and mechanisms"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16633 a skos:Concept;
+    rdfs:label "Monitor customer loyalty program benefits to the enterprise and the customer"@en;
+    skos:prefLabel "Monitor customer loyalty program benefits to the enterprise and the customer"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18925 a skos:Concept;
+    rdfs:label "Acquire members to customer loyalty program"@en;
+    skos:prefLabel "Acquire members to customer loyalty program"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18926 a skos:Concept;
+    rdfs:label "Build engagement and relationship with members"@en;
+    skos:prefLabel "Build engagement and relationship with members"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18927 a skos:Concept;
+    rdfs:label "Optimize loyalty program value to both the enterprise and the customer"@en;
+    skos:prefLabel "Optimize loyalty program value to both the enterprise and the customer"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20007 a skos:Concept;
+    rdfs:label "Define customer loyalty program"@en;
+    skos:prefLabel "Define customer loyalty program"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10148 a skos:Concept;
+    rdfs:label "Establish goals, objectives, and metrics for products/services by channel/segment"@en;
+    skos:prefLabel "Establish goals, objectives, and metrics for products/services by channel/segment"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10149 a skos:Concept;
+    rdfs:label "Establish marketing budgets"@en;
+    skos:prefLabel "Establish marketing budgets"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10153 a skos:Concept;
+    rdfs:label "Track customer management measures"@en;
+    skos:prefLabel "Track customer management measures"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10154 a skos:Concept;
+    rdfs:label "Develop and manage packaging strategy"@en;
+    skos:prefLabel "Develop and manage packaging strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16613 a skos:Concept;
+    rdfs:label "Analyze and respond to customer insight"@en;
+    skos:prefLabel "Analyze and respond to customer insight"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20010 a skos:Concept;
+    rdfs:label "Develop and manage promotional activities"@en;
+    skos:prefLabel "Develop and manage promotional activities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20593 a skos:Concept;
+    rdfs:label "Develop and manage pricing"@en;
+    skos:prefLabel "Develop and manage pricing"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10155 a skos:Concept;
+    rdfs:label "Confirm marketing alignment to business strategy"@en;
+    skos:prefLabel "Confirm marketing alignment to business strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10156 a skos:Concept;
+    rdfs:label "Determine costs of marketing"@en;
+    skos:prefLabel "Determine costs of marketing"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10157 a skos:Concept;
+    rdfs:label "Create marketing budget"@en;
+    skos:prefLabel "Create marketing budget"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-17683 a skos:Concept;
+    rdfs:label "Determine projected ROI for marketing investment"@en;
+    skos:prefLabel "Determine projected ROI for marketing investment"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10163 a skos:Concept;
+    rdfs:label "Determine pricing based on volume/unit forecast"@en;
+    skos:prefLabel "Determine pricing based on volume/unit forecast"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10164 a skos:Concept;
+    rdfs:label "Execute pricing plan"@en;
+    skos:prefLabel "Execute pricing plan"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10165 a skos:Concept;
+    rdfs:label "Evaluate pricing performance"@en;
+    skos:prefLabel "Evaluate pricing performance"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10166 a skos:Concept;
+    rdfs:label "Refine pricing as needed"@en;
+    skos:prefLabel "Refine pricing as needed"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11495 a skos:Concept;
+    rdfs:label "Implement promotional pricing programs"@en;
+    skos:prefLabel "Implement promotional pricing programs"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11496 a skos:Concept;
+    rdfs:label "Implement other retail pricing programs"@en;
+    skos:prefLabel "Implement other retail pricing programs"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11497 a skos:Concept;
+    rdfs:label "Communicate and implement price changes"@en;
+    skos:prefLabel "Communicate and implement price changes"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-17684 a skos:Concept;
+    rdfs:label "Achieve regulatory approval for pricing"@en;
+    skos:prefLabel "Achieve regulatory approval for pricing"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18948 a skos:Concept;
+    rdfs:label "Determine corporate incentives"@en;
+    skos:prefLabel "Determine corporate incentives"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20009 a skos:Concept;
+    rdfs:label "Understand resource requirements for each product/service and delivery channel/method"@en;
+    skos:prefLabel "Understand resource requirements for each product/service and delivery channel/method"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10159 a skos:Concept;
+    rdfs:label "Develop marketing messages"@en;
+    skos:prefLabel "Develop marketing messages"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10160 a skos:Concept;
+    rdfs:label "Define target audience"@en;
+    skos:prefLabel "Define target audience"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10167 a skos:Concept;
+    rdfs:label "Define promotional concepts and objectives"@en;
+    skos:prefLabel "Define promotional concepts and objectives"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10168 a skos:Concept;
+    rdfs:label "Plan and test promotional activities"@en;
+    skos:prefLabel "Plan and test promotional activities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10169 a skos:Concept;
+    rdfs:label "Execute promotional activities"@en;
+    skos:prefLabel "Execute promotional activities"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10170 a skos:Concept;
+    rdfs:label "Evaluate promotional performance metrics"@en;
+    skos:prefLabel "Evaluate promotional performance metrics"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10171 a skos:Concept;
+    rdfs:label "Refine promotional performance metrics"@en;
+    skos:prefLabel "Refine promotional performance metrics"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10172 a skos:Concept;
+    rdfs:label "Incorporate learning into future/planned consumer promotions"@en;
+    skos:prefLabel "Incorporate learning into future/planned consumer promotions"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10173 a skos:Concept;
+    rdfs:label "Determine customer lifetime value"@en;
+    skos:prefLabel "Determine customer lifetime value"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10174 a skos:Concept;
+    rdfs:label "Analyze customer revenue trend"@en;
+    skos:prefLabel "Analyze customer revenue trend"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10175 a skos:Concept;
+    rdfs:label "Analyze customer attrition and retention rates"@en;
+    skos:prefLabel "Analyze customer attrition and retention rates"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10176 a skos:Concept;
+    rdfs:label "Analyze customer metrics"@en;
+    skos:prefLabel "Analyze customer metrics"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10177 a skos:Concept;
+    rdfs:label "Revise customer strategies, objectives, and plans based on metrics"@en;
+    skos:prefLabel "Revise customer strategies, objectives, and plans based on metrics"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16614 a skos:Concept;
+    rdfs:label "Analyze customer website activity"@en;
+    skos:prefLabel "Analyze customer website activity"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16615 a skos:Concept;
+    rdfs:label "Analyze customer purchase patterns"@en;
+    skos:prefLabel "Analyze customer purchase patterns"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16616 a skos:Concept;
+    rdfs:label "Develop business rules to provide personalized offers"@en;
+    skos:prefLabel "Develop business rules to provide personalized offers"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16617 a skos:Concept;
+    rdfs:label "Monitor effectiveness of personalized offers and adjust offers accordingly"@en;
+    skos:prefLabel "Monitor effectiveness of personalized offers and adjust offers accordingly"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16627 a skos:Concept;
+    rdfs:label "Monitor and respond to social media activity"@en;
+    skos:prefLabel "Monitor and respond to social media activity"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10178 a skos:Concept;
+    rdfs:label "Plan packaging strategy"@en;
+    skos:prefLabel "Plan packaging strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10179 a skos:Concept;
+    rdfs:label "Test packaging options"@en;
+    skos:prefLabel "Test packaging options"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10180 a skos:Concept;
+    rdfs:label "Execute packaging strategy"@en;
+    skos:prefLabel "Execute packaging strategy"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10181 a skos:Concept;
+    rdfs:label "Refine packaging"@en;
+    skos:prefLabel "Refine packaging"@en;
+    skos:editorialNote "Owner: Domain Marketing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10129 a skos:Concept;
+    rdfs:label "Develop sales forecast"@en;
+    skos:prefLabel "Develop sales forecast"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10130 a skos:Concept;
+    rdfs:label "Develop sales partner/alliance relationships"@en;
+    skos:prefLabel "Develop sales partner/alliance relationships"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10131 a skos:Concept;
+    rdfs:label "Establish overall sales budgets"@en;
+    skos:prefLabel "Establish overall sales budgets"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10132 a skos:Concept;
+    rdfs:label "Establish sales goals and measures"@en;
+    skos:prefLabel "Establish sales goals and measures"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10133 a skos:Concept;
+    rdfs:label "Establish customer management measures"@en;
+    skos:prefLabel "Establish customer management measures"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10134 a skos:Concept;
+    rdfs:label "Gather current and historic order information"@en;
+    skos:prefLabel "Gather current and historic order information"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10135 a skos:Concept;
+    rdfs:label "Analyze sales trends and patterns"@en;
+    skos:prefLabel "Analyze sales trends and patterns"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10136 a skos:Concept;
+    rdfs:label "Generate sales forecast"@en;
+    skos:prefLabel "Generate sales forecast"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10137 a skos:Concept;
+    rdfs:label "Analyze historical and planned promotions and events"@en;
+    skos:prefLabel "Analyze historical and planned promotions and events"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10138 a skos:Concept;
+    rdfs:label "Identify alliance opportunities"@en;
+    skos:prefLabel "Identify alliance opportunities"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10139 a skos:Concept;
+    rdfs:label "Design alliance programs and methods for selecting and managing relationships"@en;
+    skos:prefLabel "Design alliance programs and methods for selecting and managing relationships"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10140 a skos:Concept;
+    rdfs:label "Select alliances"@en;
+    skos:prefLabel "Select alliances"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10141 a skos:Concept;
+    rdfs:label "Develop partner and alliance management strategies"@en;
+    skos:prefLabel "Develop partner and alliance management strategies"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10142 a skos:Concept;
+    rdfs:label "Establish partner and alliance management goals"@en;
+    skos:prefLabel "Establish partner and alliance management goals"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11465 a skos:Concept;
+    rdfs:label "Develop trade customer trade strategy and customer objectives/targets"@en;
+    skos:prefLabel "Develop trade customer trade strategy and customer objectives/targets"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11466 a skos:Concept;
+    rdfs:label "Conduct planning activities for major trade customers"@en;
+    skos:prefLabel "Conduct planning activities for major trade customers"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11468 a skos:Concept;
+    rdfs:label "Communicate planning information to customer teams"@en;
+    skos:prefLabel "Communicate planning information to customer teams"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11521 a skos:Concept;
+    rdfs:label "Define trade programs and funding options"@en;
+    skos:prefLabel "Define trade programs and funding options"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11522 a skos:Concept;
+    rdfs:label "Develop promotional and category management calendars (trade marketing calendars)"@en;
+    skos:prefLabel "Develop promotional and category management calendars (trade marketing calendars)"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11523 a skos:Concept;
+    rdfs:label "Create strategic and tactical sales plans by customer"@en;
+    skos:prefLabel "Create strategic and tactical sales plans by customer"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18629 a skos:Concept;
+    rdfs:label "Establish partner and alliance agreements"@en;
+    skos:prefLabel "Establish partner and alliance agreements"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10143 a skos:Concept;
+    rdfs:label "Calculate product revenue"@en;
+    skos:prefLabel "Calculate product revenue"@en;
+    skos:editorialNote "Owner: Domain Finance."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10144 a skos:Concept;
+    rdfs:label "Determine variable costs"@en;
+    skos:prefLabel "Determine variable costs"@en;
+    skos:editorialNote "Owner: Domain Finance."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10145 a skos:Concept;
+    rdfs:label "Determine overhead and fixed costs"@en;
+    skos:prefLabel "Determine overhead and fixed costs"@en;
+    skos:editorialNote "Owner: Domain Finance."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10146 a skos:Concept;
+    rdfs:label "Calculate net profit"@en;
+    skos:prefLabel "Calculate net profit"@en;
+    skos:editorialNote "Owner: Domain Finance."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10147 a skos:Concept;
+    rdfs:label "Create budget"@en;
+    skos:prefLabel "Create budget"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-17682 a skos:Concept;
+    rdfs:label "Calculate product market share"@en;
+    skos:prefLabel "Calculate product market share"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10183 a skos:Concept;
+    rdfs:label "Manage customers and accounts"@en;
+    skos:prefLabel "Manage customers and accounts"@en;
+    skos:editorialNote "Owner: Domain Customer Care."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10185 a skos:Concept;
+    rdfs:label "Manage sales orders"@en;
+    skos:prefLabel "Manage sales orders"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10187 a skos:Concept;
+    rdfs:label "Manage sales partners and alliances"@en;
+    skos:prefLabel "Manage sales partners and alliances"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20594 a skos:Concept;
+    rdfs:label "Manage leads/opportunities"@en;
+    skos:prefLabel "Manage leads/opportunities"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10184 a skos:Concept;
+    rdfs:label "Manage customer sales calls"@en;
+    skos:prefLabel "Manage customer sales calls"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10189 a skos:Concept;
+    rdfs:label "Identify/receive leads/opportunities"@en;
+    skos:prefLabel "Identify/receive leads/opportunities"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10209 a skos:Concept;
+    rdfs:label "Determine sales resource allocation"@en;
+    skos:prefLabel "Determine sales resource allocation"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11773 a skos:Concept;
+    rdfs:label "Match opportunities to business strategy"@en;
+    skos:prefLabel "Match opportunities to business strategy"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18115 a skos:Concept;
+    rdfs:label "Validate and qualify leads/opportunities"@en;
+    skos:prefLabel "Validate and qualify leads/opportunities"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18116 a skos:Concept;
+    rdfs:label "Develop opportunity win plans"@en;
+    skos:prefLabel "Develop opportunity win plans"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20011 a skos:Concept;
+    rdfs:label "Manage opportunity pipeline"@en;
+    skos:prefLabel "Manage opportunity pipeline"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10192 a skos:Concept;
+    rdfs:label "Close the sale"@en;
+    skos:prefLabel "Close the sale"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10193 a skos:Concept;
+    rdfs:label "Record outcome of sales process"@en;
+    skos:prefLabel "Record outcome of sales process"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20012 a skos:Concept;
+    rdfs:label "Manage customer meetings/workshops"@en;
+    skos:prefLabel "Manage customer meetings/workshops"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11173 a skos:Concept;
+    rdfs:label "Develop sales/key account plan"@en;
+    skos:prefLabel "Develop sales/key account plan"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11174 a skos:Concept;
+    rdfs:label "Manage customer relationships"@en;
+    skos:prefLabel "Manage customer relationships"@en;
+    skos:editorialNote "Owner: Domain Customer Care."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-14208 a skos:Concept;
+    rdfs:label "Manage customer master data"@en;
+    skos:prefLabel "Manage customer master data"@en;
+    skos:editorialNote "Owner: Domain Customer Care."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20013 a skos:Concept;
+    rdfs:label "Select key customers/accounts"@en;
+    skos:prefLabel "Select key customers/accounts"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20014 a skos:Concept;
+    rdfs:label "Manage sales/key account plan"@en;
+    skos:prefLabel "Manage sales/key account plan"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16598 a skos:Concept;
+    rdfs:label "Collect and merge internal and third-party customer information"@en;
+    skos:prefLabel "Collect and merge internal and third-party customer information"@en;
+    skos:editorialNote "Owner: Domain Customer Care."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-16599 a skos:Concept;
+    rdfs:label "De-duplicate customer data"@en;
+    skos:prefLabel "De-duplicate customer data"@en;
+    skos:editorialNote "Owner: Domain Customer Care."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11780 a skos:Concept;
+    rdfs:label "Refine customer requirements"@en;
+    skos:prefLabel "Refine customer requirements"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11781 a skos:Concept;
+    rdfs:label "Receive Request For Proposal (RFP)/Request For Quote (RFQ)"@en;
+    skos:prefLabel "Receive Request For Proposal (RFP)/Request For Quote (RFQ)"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11782 a skos:Concept;
+    rdfs:label "Review RFP/RFQ request"@en;
+    skos:prefLabel "Review RFP/RFQ request"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11783 a skos:Concept;
+    rdfs:label "Perform competitive analysis"@en;
+    skos:prefLabel "Perform competitive analysis"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11784 a skos:Concept;
+    rdfs:label "Validate with strategy/business plans"@en;
+    skos:prefLabel "Validate with strategy/business plans"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11785 a skos:Concept;
+    rdfs:label "Understand customer business and requirements"@en;
+    skos:prefLabel "Understand customer business and requirements"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11787 a skos:Concept;
+    rdfs:label "Identify staffing requirements"@en;
+    skos:prefLabel "Identify staffing requirements"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11788 a skos:Concept;
+    rdfs:label "Develop pricing and scheduling estimates"@en;
+    skos:prefLabel "Develop pricing and scheduling estimates"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11789 a skos:Concept;
+    rdfs:label "Conduct profitability analysis"@en;
+    skos:prefLabel "Conduct profitability analysis"@en;
+    skos:editorialNote "Owner: Domain Pricing."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11790 a skos:Concept;
+    rdfs:label "Submit/present bid/proposal/quote to customer"@en;
+    skos:prefLabel "Submit/present bid/proposal/quote to customer"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-11793 a skos:Concept;
+    rdfs:label "Manage notification outcome"@en;
+    skos:prefLabel "Manage notification outcome"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20015 a skos:Concept;
+    rdfs:label "Develop solution and delivery approach"@en;
+    skos:prefLabel "Develop solution and delivery approach"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20016 a skos:Concept;
+    rdfs:label "Manage internal reviews"@en;
+    skos:prefLabel "Manage internal reviews"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20017 a skos:Concept;
+    rdfs:label "Manage internal approvals"@en;
+    skos:prefLabel "Manage internal approvals"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20018 a skos:Concept;
+    rdfs:label "Revise bid/proposal/quote"@en;
+    skos:prefLabel "Revise bid/proposal/quote"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10194 a skos:Concept;
+    rdfs:label "Accept and validate sales orders"@en;
+    skos:prefLabel "Accept and validate sales orders"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10195 a skos:Concept;
+    rdfs:label "Collect and maintain account information"@en;
+    skos:prefLabel "Collect and maintain account information"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10196 a skos:Concept;
+    rdfs:label "Determine availability"@en;
+    skos:prefLabel "Determine availability"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10197 a skos:Concept;
+    rdfs:label "Determine fulfillment process"@en;
+    skos:prefLabel "Determine fulfillment process"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10198 a skos:Concept;
+    rdfs:label "Enter orders into system"@en;
+    skos:prefLabel "Enter orders into system"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10199 a skos:Concept;
+    rdfs:label "Process back orders and updates"@en;
+    skos:prefLabel "Process back orders and updates"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10200 a skos:Concept;
+    rdfs:label "Handle sales order inquiries including post-order fulfillment transactions"@en;
+    skos:prefLabel "Handle sales order inquiries including post-order fulfillment transactions"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-17404 a skos:Concept;
+    rdfs:label "Identify/perform cross-sell/up-sell activity"@en;
+    skos:prefLabel "Identify/perform cross-sell/up-sell activity"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10201 a skos:Concept;
+    rdfs:label "Administer key account details"@en;
+    skos:prefLabel "Administer key account details"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10202 a skos:Concept;
+    rdfs:label "Retrieve full customer details"@en;
+    skos:prefLabel "Retrieve full customer details"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10203 a skos:Concept;
+    rdfs:label "Modify involved party details"@en;
+    skos:prefLabel "Modify involved party details"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10204 a skos:Concept;
+    rdfs:label "Record address details"@en;
+    skos:prefLabel "Record address details"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10205 a skos:Concept;
+    rdfs:label "Record contact details"@en;
+    skos:prefLabel "Record contact details"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10206 a skos:Concept;
+    rdfs:label "Record key customer communication profile details"@en;
+    skos:prefLabel "Record key customer communication profile details"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10207 a skos:Concept;
+    rdfs:label "Review involved party information"@en;
+    skos:prefLabel "Review involved party information"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10208 a skos:Concept;
+    rdfs:label "Terminate involved party information"@en;
+    skos:prefLabel "Terminate involved party information"@en;
+    skos:editorialNote "Owner: Domain Sales."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10211 a skos:Concept;
+    rdfs:label "Provide sales and product/service training to sales partners/alliances"@en;
+    skos:prefLabel "Provide sales and product/service training to sales partners/alliances"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-10214 a skos:Concept;
+    rdfs:label "Evaluate partner/alliance results"@en;
+    skos:prefLabel "Evaluate partner/alliance results"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-14209 a skos:Concept;
+    rdfs:label "Manage sales partner/alliance master data"@en;
+    skos:prefLabel "Manage sales partner/alliance master data"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-18641 a skos:Concept;
+    rdfs:label "Provide marketing materials to sales partners/alliances"@en;
+    skos:prefLabel "Provide marketing materials to sales partners/alliances"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en;
+    terms:creator "Jeffrey Wallk" .
+  
+  apqc:element-20019 a skos:Concept;
+    rdfs:label "Provide certification enablement training"@en;
+    skos:prefLabel "Provide certification enablement training"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en .
+  
+  apqc:element-20020 a skos:Concept;
+    rdfs:label "Manage certifications and skills"@en;
+    skos:prefLabel "Manage certifications and skills"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en .
+  
+  apqc:element-20021 a skos:Concept;
+    rdfs:label "Provide support to partners/alliances"@en;
+    skos:prefLabel "Provide support to partners/alliances"@en;
+    skos:editorialNote "Owner: Domain Sales.Partner & Channel."@en .
+  
+  apqc:element-20019 terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10211;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-20020 terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10211;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-20021 terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10211;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10188 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10190 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10184;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10191 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10184;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-11779 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10105;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  <https://www.insperity.com/taxonomy/apqc-pcf/> terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:altLabel "APQC PCF Taxonomy"@en .
+  
+  apqc:element-10004 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:scopeNote "APQC PCF 7.2.1 category."@en .
+  
+  apqc:element-10101 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10004;
+    skos:scopeNote "APQC PCF 7.2.1 process group."@en .
+  
+  apqc:element-10102 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10004;
+    skos:scopeNote "APQC PCF 7.2.1 process group."@en .
+  
+  apqc:element-10103 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10004;
+    skos:scopeNote "APQC PCF 7.2.1 process group."@en .
+  
+  apqc:element-10105 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10004;
+    skos:scopeNote "APQC PCF 7.2.1 process group."@en .
+  
+  apqc:element-20008 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10004;
+    skos:scopeNote "APQC PCF 7.2.1 process group."@en .
+  
+  apqc:element-10106 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10101;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10107 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10101;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10108 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10106;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10109 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10106;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10110 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10106;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10111 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10106;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10112 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10106;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10113 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10106;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10114 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10108;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10115 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10109;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10116 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10107;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10117 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10107;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10118 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10107;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10119 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10107;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18941 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10117;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10120 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10119;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10121 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10119;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10123 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10102;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-11168 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10102;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-16848 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10102;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-18924 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10102;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-20000 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10102;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-20006 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10102;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-11169 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11168;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11170 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11168;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11171 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11168;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11172 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11168;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10124 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10123;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10125 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10123;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-13169 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10123;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-19999 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10123;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10126 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10127 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10128 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20001 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20002 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20003 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20004 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20005 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20000;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16590 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20004;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-16591 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20004;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-16592 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20004;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-16500 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20006;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16501 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20006;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16573 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20006;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16574 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20006;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16575 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20006;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16849 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16850 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16851 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16852 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16853 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16854 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16855 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18627 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16848;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16633 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-18924;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18925 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-18924;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18926 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-18924;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18927 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-18924;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20007 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-18924;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10148 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10149 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10153 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10154 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-16613 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-20010 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-20593 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20008;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10155 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10149;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10156 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10149;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10157 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10149;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-17683 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10149;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10163 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10164 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10165 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10166 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11495 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11496 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11497 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-17684 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18948 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20009 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20593;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10159 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10160 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10167 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10168 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10169 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10170 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10171 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10172 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20010;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10173 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10153;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10174 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10153;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10175 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10153;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10176 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10153;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10177 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10153;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16614 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16613;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16615 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16613;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16616 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16613;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16617 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16613;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16627 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-16613;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10178 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10154;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10179 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10154;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10180 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10154;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10181 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10154;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10129 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10103;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10130 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10103;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10131 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10103;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10132 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10103;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10133 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10103;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10134 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10129;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10135 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10129;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10136 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10129;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10137 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10129;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10138 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10139 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10140 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10141 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10142 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11465 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11466 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11468 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11521 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11522 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11523 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18629 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10130;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10143 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10131;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10144 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10131;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10145 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10131;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10146 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10131;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10147 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10131;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-17682 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10131;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10183 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10105;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10185 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10105;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10187 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10105;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-20594 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10105;
+    skos:scopeNote "APQC PCF 7.2.1 process."@en .
+  
+  apqc:element-10184 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10189 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10209 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11773 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18115 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18116 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20011 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-20594;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10192 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10184;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10193 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10184;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-20012 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10184;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-11173 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10183;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11174 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10183;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-14208 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10183;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20013 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10183;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20014 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10183;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-16598 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-14208;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-16599 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-14208;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-11780 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11781 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11782 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11783 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11784 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11785 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11787 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11788 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11789 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11790 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-11793 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20015 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20016 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20017 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-20018 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-11779;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10194 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10195 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10196 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10197 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10198 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10199 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10200 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-17404 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10185;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10201 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10202 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10203 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10204 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10205 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10206 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10207 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10208 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10195;
+    skos:scopeNote "APQC PCF 7.2.1 task."@en .
+  
+  apqc:element-10211 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10187;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10214 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10187;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-14209 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10187;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-18641 terms:modified "2026-10-22T02:04:03Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:inScheme <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:broader apqc:element-10187;
+    skos:scopeNote "APQC PCF 7.2.1 activity."@en .
+  
+  apqc:element-10188 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10190 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.8.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10191 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.8.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11779 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-11780, apqc:element-11781, apqc:element-11782, apqc:element-11783,
+      apqc:element-11784, apqc:element-11785, apqc:element-11787, apqc:element-11788, apqc:element-11789,
+      apqc:element-11790, apqc:element-11793, apqc:element-20015, apqc:element-20016, apqc:element-20017,
+      apqc:element-20018 .
+  
+  apqc:element-10004 skos:related <https://www.insperity.com/taxonomy/commercial-operations/commercial-operations-domain>;
+    skos:notation "3.0";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/apqc-pcf/>;
+    skos:narrower apqc:element-10101, apqc:element-10102, apqc:element-10103, apqc:element-10105,
+      apqc:element-20008 .
+  
+  apqc:element-10101 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10106, apqc:element-10107 .
+  
+  apqc:element-10102 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10123, apqc:element-11168, apqc:element-16848, apqc:element-18924,
+      apqc:element-20000, apqc:element-20006 .
+  
+  apqc:element-10103 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10129, apqc:element-10130, apqc:element-10131, apqc:element-10132,
+      apqc:element-10133 .
+  
+  apqc:element-10105 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-11779, apqc:element-10183, apqc:element-10185, apqc:element-10187,
+      apqc:element-20594 .
+  
+  apqc:element-20008 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10148, apqc:element-10149, apqc:element-10153, apqc:element-10154,
+      apqc:element-16613, apqc:element-20010, apqc:element-20593 .
+  
+  apqc:element-10106 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10108, apqc:element-10109, apqc:element-10110, apqc:element-10111,
+      apqc:element-10112, apqc:element-10113 .
+  
+  apqc:element-10107 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10116, apqc:element-10117, apqc:element-10118, apqc:element-10119 .
+  
+  apqc:element-10108 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10114 .
+  
+  apqc:element-10109 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10115 .
+  
+  apqc:element-10110 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10111 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10112 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10113 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10114 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10115 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.1.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10116 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10117 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-18941 .
+  
+  apqc:element-10118 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10119 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10120, apqc:element-10121 .
+  
+  apqc:element-18941 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10120 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.4.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10121 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.1.2.4.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10123 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10124, apqc:element-10125, apqc:element-13169, apqc:element-19999 .
+  
+  apqc:element-11168 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-11169, apqc:element-11170, apqc:element-11171, apqc:element-11172 .
+  
+  apqc:element-16848 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-16849, apqc:element-16850, apqc:element-16851, apqc:element-16852,
+      apqc:element-16853, apqc:element-16854, apqc:element-16855, apqc:element-18627 .
+  
+  apqc:element-18924 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-16633, apqc:element-18925, apqc:element-18926, apqc:element-18927,
+      apqc:element-20007 .
+  
+  apqc:element-20000 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10126, apqc:element-10127, apqc:element-10128, apqc:element-20001,
+      apqc:element-20002, apqc:element-20003, apqc:element-20004, apqc:element-20005 .
+  
+  apqc:element-20006 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-16500, apqc:element-16501, apqc:element-16573, apqc:element-16574,
+      apqc:element-16575 .
+  
+  apqc:element-11169 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11170 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.1.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11171 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.1.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11172 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.1.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10124 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.2.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10125 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.2.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-13169 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.2.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-19999 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.2.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10126 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10127 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10128 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20001 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20002 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20003 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20004 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-16590, apqc:element-16591, apqc:element-16592 .
+  
+  apqc:element-20005 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16590 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.7.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16591 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.7.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16592 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.3.7.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16500 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.4.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16501 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.4.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16573 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.4.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16574 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.4.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16575 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.2.4.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16849 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16850 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16851 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16852 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16853 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16854 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16855 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18627 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.5.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16633 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.6.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18925 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.6.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18926 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.6.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18927 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.6.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20007 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.2.6.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10148 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10149 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10155, apqc:element-10156, apqc:element-10157, apqc:element-17683 .
+  
+  apqc:element-10153 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10173, apqc:element-10174, apqc:element-10175, apqc:element-10176,
+      apqc:element-10177 .
+  
+  apqc:element-10154 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10178, apqc:element-10179, apqc:element-10180, apqc:element-10181 .
+  
+  apqc:element-16613 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-16614, apqc:element-16615, apqc:element-16616, apqc:element-16617,
+      apqc:element-16627 .
+  
+  apqc:element-20010 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10159, apqc:element-10160, apqc:element-10167, apqc:element-10168,
+      apqc:element-10169, apqc:element-10170, apqc:element-10171, apqc:element-10172 .
+  
+  apqc:element-20593 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10163, apqc:element-10164, apqc:element-10165, apqc:element-10166,
+      apqc:element-11495, apqc:element-11496, apqc:element-11497, apqc:element-17684, apqc:element-18948,
+      apqc:element-20009 .
+  
+  apqc:element-10155 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10156 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10157 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-17683 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10163 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10164 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10165 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10166 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11495 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11496 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11497 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.9";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-17684 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.10";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18948 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20009 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.3.3.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10159 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10160 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10167 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10168 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10169 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10170 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10171 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10172 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.4.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10173 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.5.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10174 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.5.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10175 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.5.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10176 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.5.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10177 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.5.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16614 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.6.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16615 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.6.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16616 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.6.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16617 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.6.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16627 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.6.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10178 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.7.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10179 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.7.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10180 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.7.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10181 skos:related <https://www.insperity.com/taxonomy/commercial-operations/marketing-domain>;
+    skos:notation "3.3.7.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10129 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10134, apqc:element-10135, apqc:element-10136, apqc:element-10137 .
+  
+  apqc:element-10130 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10138, apqc:element-10139, apqc:element-10140, apqc:element-10141,
+      apqc:element-10142, apqc:element-11465, apqc:element-11466, apqc:element-11468, apqc:element-11521,
+      apqc:element-11522, apqc:element-11523, apqc:element-18629 .
+  
+  apqc:element-10131 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10143, apqc:element-10144, apqc:element-10145, apqc:element-10146,
+      apqc:element-10147, apqc:element-17682 .
+  
+  apqc:element-10132 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10133 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10134 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10135 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.1.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10136 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.1.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10137 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.1.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10138 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10139 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10140 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10141 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10142 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11465 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11466 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11468 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.12";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11521 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11522 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.10";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11523 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.11";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18629 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.4.2.9";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10143 skos:related businessopstax:finance-domain;
+    skos:notation "3.4.3.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10144 skos:related businessopstax:finance-domain;
+    skos:notation "3.4.3.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10145 skos:related businessopstax:finance-domain;
+    skos:notation "3.4.3.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10146 skos:related businessopstax:finance-domain;
+    skos:notation "3.4.3.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10147 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.3.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-17682 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.4.3.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10183 skos:related <https://www.insperity.com/taxonomy/commercial-operations/customer-care-domain>;
+    skos:notation "3.5.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-11173, apqc:element-11174, apqc:element-14208, apqc:element-20013,
+      apqc:element-20014 .
+  
+  apqc:element-10185 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10194, apqc:element-10195, apqc:element-10196, apqc:element-10197,
+      apqc:element-10198, apqc:element-10199, apqc:element-10200, apqc:element-17404 .
+  
+  apqc:element-10187 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10211, apqc:element-10214, apqc:element-14209, apqc:element-18641 .
+  
+  apqc:element-20594 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10188, apqc:element-10184, apqc:element-10189, apqc:element-10209,
+      apqc:element-11773, apqc:element-18115, apqc:element-18116, apqc:element-20011 .
+  
+  apqc:element-10184 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10190, apqc:element-10191, apqc:element-10192, apqc:element-10193,
+      apqc:element-20012 .
+  
+  apqc:element-10189 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10209 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11773 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18115 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18116 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20011 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10192 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.8.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10193 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.8.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20012 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.1.8.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11173 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11174 skos:related <https://www.insperity.com/taxonomy/commercial-operations/customer-care-domain>;
+    skos:notation "3.5.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-14208 skos:related <https://www.insperity.com/taxonomy/commercial-operations/customer-care-domain>;
+    skos:notation "3.5.2.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-16598, apqc:element-16599 .
+  
+  apqc:element-20013 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20014 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16598 skos:related <https://www.insperity.com/taxonomy/commercial-operations/customer-care-domain>;
+    skos:notation "3.5.2.5.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-16599 skos:related <https://www.insperity.com/taxonomy/commercial-operations/customer-care-domain>;
+    skos:notation "3.5.2.5.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11780 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11781 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11782 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11783 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11784 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11785 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11787 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11788 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.9";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11789 skos:related <https://www.insperity.com/taxonomy/commercial-operations/pricing-domain>;
+    skos:notation "3.5.3.10";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11790 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.13";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-11793 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.15";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20015 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20016 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.11";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20017 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.12";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20018 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.3.14";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10194 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10195 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-10201, apqc:element-10202, apqc:element-10203, apqc:element-10204,
+      apqc:element-10205, apqc:element-10206, apqc:element-10207, apqc:element-10208 .
+  
+  apqc:element-10196 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10197 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10198 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10199 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10200 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-17404 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10201 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10202 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10203 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10204 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10205 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.5";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10206 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.6";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10207 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.7";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10208 skos:related <https://www.insperity.com/taxonomy/commercial-operations/sales-domain>;
+    skos:notation "3.5.4.2.8";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-10211 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower apqc:element-20019, apqc:element-20020, apqc:element-20021 .
+  
+  apqc:element-10214 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-14209 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.4";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-18641 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20019 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.1.1";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20020 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.1.2";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  apqc:element-20021 skos:related <https://www.insperity.com/taxonomy/commercial-operations/partner-and-channel-domain>;
+    skos:notation "3.5.5.1.3";
+    owl:versionInfo "0.1.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/taxonomy/apqc-pcf/> owl:versionInfo "0.1.0";
+    owl:versionIRI <https://www.insperity.com/taxonomy/apqc-pcf/0.1.0/>;
+    terms:source "APQC Cross-Industry Process Classification Framework (PCF) version 7.2.1, September 2018. https://www.apqc.org/process-frameworks";
+    core:hasLifecycleStatus core:Draft;
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity> .
+  
+  apqc:element-10188 terms:identifier "10188" .
+  
+  apqc:element-10190 terms:identifier "10190" .
+  
+  apqc:element-10191 terms:identifier "10191" .
+  
+  apqc:element-11779 terms:identifier "11779" .
+  
+  <https://www.insperity.com/taxonomy/apqc-pcf/> terms:identifier "taxonomy-apqc-pcf";
+    terms:rights "Process Classification Framework © APQC. Used with attribution."@en .
+  
+  apqc:element-10004 terms:identifier "10004" .
+  
+  apqc:element-10101 terms:identifier "10101" .
+  
+  apqc:element-10102 terms:identifier "10102" .
+  
+  apqc:element-10103 terms:identifier "10103" .
+  
+  apqc:element-10105 terms:identifier "10105" .
+  
+  apqc:element-20008 terms:identifier "20008" .
+  
+  apqc:element-10106 terms:identifier "10106" .
+  
+  apqc:element-10107 terms:identifier "10107" .
+  
+  apqc:element-10108 terms:identifier "10108" .
+  
+  apqc:element-10109 terms:identifier "10109" .
+  
+  apqc:element-10110 terms:identifier "10110" .
+  
+  apqc:element-10111 terms:identifier "10111" .
+  
+  apqc:element-10112 terms:identifier "10112" .
+  
+  apqc:element-10113 terms:identifier "10113" .
+  
+  apqc:element-10114 terms:identifier "10114" .
+  
+  apqc:element-10115 terms:identifier "10115" .
+  
+  apqc:element-10116 terms:identifier "10116" .
+  
+  apqc:element-10117 terms:identifier "10117" .
+  
+  apqc:element-10118 terms:identifier "10118" .
+  
+  apqc:element-10119 terms:identifier "10119" .
+  
+  apqc:element-18941 terms:identifier "18941" .
+  
+  apqc:element-10120 terms:identifier "10120" .
+  
+  apqc:element-10121 terms:identifier "10121" .
+  
+  apqc:element-10123 terms:identifier "10123" .
+  
+  apqc:element-11168 terms:identifier "11168" .
+  
+  apqc:element-16848 terms:identifier "16848" .
+  
+  apqc:element-18924 terms:identifier "18924" .
+  
+  apqc:element-20000 terms:identifier "20000" .
+  
+  apqc:element-20006 terms:identifier "20006" .
+  
+  apqc:element-11169 terms:identifier "11169" .
+  
+  apqc:element-11170 terms:identifier "11170" .
+  
+  apqc:element-11171 terms:identifier "11171" .
+  
+  apqc:element-11172 terms:identifier "11172" .
+  
+  apqc:element-10124 terms:identifier "10124" .
+  
+  apqc:element-10125 terms:identifier "10125" .
+  
+  apqc:element-13169 terms:identifier "13169" .
+  
+  apqc:element-19999 terms:identifier "19999" .
+  
+  apqc:element-10126 terms:identifier "10126" .
+  
+  apqc:element-10127 terms:identifier "10127" .
+  
+  apqc:element-10128 terms:identifier "10128" .
+  
+  apqc:element-20001 terms:identifier "20001" .
+  
+  apqc:element-20002 terms:identifier "20002" .
+  
+  apqc:element-20003 terms:identifier "20003" .
+  
+  apqc:element-20004 terms:identifier "20004" .
+  
+  apqc:element-20005 terms:identifier "20005" .
+  
+  apqc:element-16590 terms:identifier "16590" .
+  
+  apqc:element-16591 terms:identifier "16591" .
+  
+  apqc:element-16592 terms:identifier "16592" .
+  
+  apqc:element-16500 terms:identifier "16500" .
+  
+  apqc:element-16501 terms:identifier "16501" .
+  
+  apqc:element-16573 terms:identifier "16573" .
+  
+  apqc:element-16574 terms:identifier "16574" .
+  
+  apqc:element-16575 terms:identifier "16575" .
+  
+  apqc:element-16849 terms:identifier "16849" .
+  
+  apqc:element-16850 terms:identifier "16850" .
+  
+  apqc:element-16851 terms:identifier "16851" .
+  
+  apqc:element-16852 terms:identifier "16852" .
+  
+  apqc:element-16853 terms:identifier "16853" .
+  
+  apqc:element-16854 terms:identifier "16854" .
+  
+  apqc:element-16855 terms:identifier "16855" .
+  
+  apqc:element-18627 terms:identifier "18627" .
+  
+  apqc:element-16633 terms:identifier "16633" .
+  
+  apqc:element-18925 terms:identifier "18925" .
+  
+  apqc:element-18926 terms:identifier "18926" .
+  
+  apqc:element-18927 terms:identifier "18927" .
+  
+  apqc:element-20007 terms:identifier "20007" .
+  
+  apqc:element-10148 terms:identifier "10148" .
+  
+  apqc:element-10149 terms:identifier "10149" .
+  
+  apqc:element-10153 terms:identifier "10153" .
+  
+  apqc:element-10154 terms:identifier "10154" .
+  
+  apqc:element-16613 terms:identifier "16613" .
+  
+  apqc:element-20010 terms:identifier "20010" .
+  
+  apqc:element-20593 terms:identifier "20593" .
+  
+  apqc:element-10155 terms:identifier "10155" .
+  
+  apqc:element-10156 terms:identifier "10156" .
+  
+  apqc:element-10157 terms:identifier "10157" .
+  
+  apqc:element-17683 terms:identifier "17683" .
+  
+  apqc:element-10163 terms:identifier "10163" .
+  
+  apqc:element-10164 terms:identifier "10164" .
+  
+  apqc:element-10165 terms:identifier "10165" .
+  
+  apqc:element-10166 terms:identifier "10166" .
+  
+  apqc:element-11495 terms:identifier "11495" .
+  
+  apqc:element-11496 terms:identifier "11496" .
+  
+  apqc:element-11497 terms:identifier "11497" .
+  
+  apqc:element-17684 terms:identifier "17684" .
+  
+  apqc:element-18948 terms:identifier "18948" .
+  
+  apqc:element-20009 terms:identifier "20009" .
+  
+  apqc:element-10159 terms:identifier "10159" .
+  
+  apqc:element-10160 terms:identifier "10160" .
+  
+  apqc:element-10167 terms:identifier "10167" .
+  
+  apqc:element-10168 terms:identifier "10168" .
+  
+  apqc:element-10169 terms:identifier "10169" .
+  
+  apqc:element-10170 terms:identifier "10170" .
+  
+  apqc:element-10171 terms:identifier "10171" .
+  
+  apqc:element-10172 terms:identifier "10172" .
+  
+  apqc:element-10173 terms:identifier "10173" .
+  
+  apqc:element-10174 terms:identifier "10174" .
+  
+  apqc:element-10175 terms:identifier "10175" .
+  
+  apqc:element-10176 terms:identifier "10176" .
+  
+  apqc:element-10177 terms:identifier "10177" .
+  
+  apqc:element-16614 terms:identifier "16614" .
+  
+  apqc:element-16615 terms:identifier "16615" .
+  
+  apqc:element-16616 terms:identifier "16616" .
+  
+  apqc:element-16617 terms:identifier "16617" .
+  
+  apqc:element-16627 terms:identifier "16627" .
+  
+  apqc:element-10178 terms:identifier "10178" .
+  
+  apqc:element-10179 terms:identifier "10179" .
+  
+  apqc:element-10180 terms:identifier "10180" .
+  
+  apqc:element-10181 terms:identifier "10181" .
+  
+  apqc:element-10129 terms:identifier "10129" .
+  
+  apqc:element-10130 terms:identifier "10130" .
+  
+  apqc:element-10131 terms:identifier "10131" .
+  
+  apqc:element-10132 terms:identifier "10132" .
+  
+  apqc:element-10133 terms:identifier "10133" .
+  
+  apqc:element-10134 terms:identifier "10134" .
+  
+  apqc:element-10135 terms:identifier "10135" .
+  
+  apqc:element-10136 terms:identifier "10136" .
+  
+  apqc:element-10137 terms:identifier "10137" .
+  
+  apqc:element-10138 terms:identifier "10138" .
+  
+  apqc:element-10139 terms:identifier "10139" .
+  
+  apqc:element-10140 terms:identifier "10140" .
+  
+  apqc:element-10141 terms:identifier "10141" .
+  
+  apqc:element-10142 terms:identifier "10142" .
+  
+  apqc:element-11465 terms:identifier "11465" .
+  
+  apqc:element-11466 terms:identifier "11466" .
+  
+  apqc:element-11468 terms:identifier "11468" .
+  
+  apqc:element-11521 terms:identifier "11521" .
+  
+  apqc:element-11522 terms:identifier "11522" .
+  
+  apqc:element-11523 terms:identifier "11523" .
+  
+  apqc:element-18629 terms:identifier "18629" .
+  
+  apqc:element-10143 terms:identifier "10143" .
+  
+  apqc:element-10144 terms:identifier "10144" .
+  
+  apqc:element-10145 terms:identifier "10145" .
+  
+  apqc:element-10146 terms:identifier "10146" .
+  
+  apqc:element-10147 terms:identifier "10147" .
+  
+  apqc:element-17682 terms:identifier "17682" .
+  
+  apqc:element-10183 terms:identifier "10183" .
+  
+  apqc:element-10185 terms:identifier "10185" .
+  
+  apqc:element-10187 terms:identifier "10187" .
+  
+  apqc:element-20594 terms:identifier "20594" .
+  
+  apqc:element-10184 terms:identifier "10184" .
+  
+  apqc:element-10189 terms:identifier "10189" .
+  
+  apqc:element-10209 terms:identifier "10209" .
+  
+  apqc:element-11773 terms:identifier "11773" .
+  
+  apqc:element-18115 terms:identifier "18115" .
+  
+  apqc:element-18116 terms:identifier "18116" .
+  
+  apqc:element-20011 terms:identifier "20011" .
+  
+  apqc:element-10192 terms:identifier "10192" .
+  
+  apqc:element-10193 terms:identifier "10193" .
+  
+  apqc:element-20012 terms:identifier "20012" .
+  
+  apqc:element-11173 terms:identifier "11173" .
+  
+  apqc:element-11174 terms:identifier "11174" .
+  
+  apqc:element-14208 terms:identifier "14208" .
+  
+  apqc:element-20013 terms:identifier "20013" .
+  
+  apqc:element-20014 terms:identifier "20014" .
+  
+  apqc:element-16598 terms:identifier "16598" .
+  
+  apqc:element-16599 terms:identifier "16599" .
+  
+  apqc:element-11780 terms:identifier "11780" .
+  
+  apqc:element-11781 terms:identifier "11781" .
+  
+  apqc:element-11782 terms:identifier "11782" .
+  
+  apqc:element-11783 terms:identifier "11783" .
+  
+  apqc:element-11784 terms:identifier "11784" .
+  
+  apqc:element-11785 terms:identifier "11785" .
+  
+  apqc:element-11787 terms:identifier "11787" .
+  
+  apqc:element-11788 terms:identifier "11788" .
+  
+  apqc:element-11789 terms:identifier "11789" .
+  
+  apqc:element-11790 terms:identifier "11790" .
+  
+  apqc:element-11793 terms:identifier "11793" .
+  
+  apqc:element-20015 terms:identifier "20015" .
+  
+  apqc:element-20016 terms:identifier "20016" .
+  
+  apqc:element-20017 terms:identifier "20017" .
+  
+  apqc:element-20018 terms:identifier "20018" .
+  
+  apqc:element-10194 terms:identifier "10194" .
+  
+  apqc:element-10195 terms:identifier "10195" .
+  
+  apqc:element-10196 terms:identifier "10196" .
+  
+  apqc:element-10197 terms:identifier "10197" .
+  
+  apqc:element-10198 terms:identifier "10198" .
+  
+  apqc:element-10199 terms:identifier "10199" .
+  
+  apqc:element-10200 terms:identifier "10200" .
+  
+  apqc:element-17404 terms:identifier "17404" .
+  
+  apqc:element-10201 terms:identifier "10201" .
+  
+  apqc:element-10202 terms:identifier "10202" .
+  
+  apqc:element-10203 terms:identifier "10203" .
+  
+  apqc:element-10204 terms:identifier "10204" .
+  
+  apqc:element-10205 terms:identifier "10205" .
+  
+  apqc:element-10206 terms:identifier "10206" .
+  
+  apqc:element-10207 terms:identifier "10207" .
+  
+  apqc:element-10208 terms:identifier "10208" .
+  
+  apqc:element-10211 terms:identifier "10211" .
+  
+  apqc:element-10214 terms:identifier "10214" .
+  
+  apqc:element-14209 terms:identifier "14209" .
+  
+  apqc:element-18641 terms:identifier "18641" .
+  
+  apqc:element-20019 terms:identifier "20019" .
+  
+  apqc:element-20020 terms:identifier "20020" .
+  
+  apqc:element-20021 terms:identifier "20021" .
+}

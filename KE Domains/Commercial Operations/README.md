@@ -1,93 +1,37 @@
 # Commercial Operations
 
-The domain-specific vocabularies, taxonomies, ontologies and shapes of the Commercial Operations operational area of a professional employer organization, built on **Baseline Core v1.0** (`../../KE Baseline/Baseline Core v1.0`), which they read and never change.
+The operational area that sells, markets, prices and cares for the organization's offerings and clients (D26). Built on Baseline Core v1.0; see `../README.md` for the hierarchy, naming and insulation rules.
 
-Commercial Operations container and Sales 0.3.0, Pricing and contracts 0.2.0, other domains 0.1.1 · Draft · author Jeffrey Wallk · Semantic Governance: Services, Architecture & Integration v1.9 (Draft), Part III
-
-## Structure
-
-```
-KE Domains/
-  Commercial Operations/                 one folder per operational area
-    commercial-operations/  ttl/ trig/   the container: what two or more domains share
-                            assembly/    the PEO buyer persona graph, shared by every domain
-    sales/                  ttl/ trig/
-                            assembly/    process, step and service graphs, the manifest, and the assembly report
-    marketing/              ttl/ trig/   includes competitive intelligence
-    legal/                  ttl/ trig/   commercial and regulatory
-    customer-success/       ttl/ trig/
-    pricing-and-contracts/  ttl/ trig/
-    partner-and-channel/    ttl/ trig/
-    review/        design decisions, open questions, build report, concept links, promotion candidates, homonyms
-    change-log/    PROV-O change records for the audit log (append-only)
-    _build/        the domain specs and build_domains.py; the assembly spec and build_assembly.py
-    archive/       superseded releases and GraphDB backups of replaced graphs
-    graphdb-load.command
-```
-
-Each domain folder holds four assets, each in its own named graph:
-
-| Asset | IRI pattern | Prefixes |
+| Folder | Asset names | IRIs |
 |---|---|---|
-| `vocabulary-domain-<name>` | `https://www.insperity.com/vocabulary/domain-<name>/` | `salesvoc:` |
-| `taxonomy-domain-<name>` | `https://www.insperity.com/taxonomy/domain-<name>/` | `salestax:` |
-| `ontology-domain-<name>` | `https://www.insperity.com/ontology/domain-<name>/` | `sales:` |
-| `shapes-domain-<name>` | `https://www.insperity.com/shapes/domain-<name>/` | `salesshp:` |
+| `commercial-operations/` | Commercial Operations Vocabulary, Taxonomy, Ontology, Shapes (0.4.0): what two or more of the area's domains share, and a taxonomy of its domains | `…/<kind>/commercial-operations/` |
+| `sales/` | Domain Sales (0.4.0) | `…/<kind>/domain-sales/` |
+| `sales/partner-and-channel/` | Domain Sales.Partner & Channel (0.2.0), an L2 domain of Sales | `…/<kind>/domain-sales.partner-and-channel/` |
+| `marketing/` | Domain Marketing (0.2.0), including competitive intelligence | `…/<kind>/domain-marketing/` |
+| `pricing/` | Domain Pricing (0.3.0), formerly Pricing and contracts | `…/<kind>/domain-pricing/` |
+| `customer-care/` | Domain Customer Care (0.2.0), formerly Customer success | `…/<kind>/domain-customer-care/` |
+| `sales/assembly/` | Sales assembly 0.5.0 and Sales value map 0.3.0 | `…/resource/domain-sales/…` |
+| `sales/partner-and-channel/assembly/` | Domain Sales.Partner & Channel assembly 0.1.0 | `…/resource/domain-sales.partner-and-channel/…` |
+| `marketing/assembly/`, `pricing/assembly/`, `customer-care/assembly/` | Domain Marketing, Pricing and Customer Care assemblies 0.1.0 | `…/resource/domain-<domain>/…` |
+| `commercial-operations/assembly/` | The records and outside parties the domains share, and the PEO buyer persona graph 0.2.0 (part of the value map) | `…/resource/commercial-operations/…` |
 
-The ontology prefixes are `commercialops:`, `sales:`, `marketing:`, `legal:`, `customersuccess:`, `pricingcontracts:` and `partnerchannel:`.
+Changes in 0.4.0 (2026-10-21):
+- Legal moved to Business Operations. With it went the client service agreement, commercial agreement and clause, and the contract management steps, agreement terms and statuses that were in Pricing and contracts.
+- Partner and channel became an L2 domain of Sales.
+- The previous versions are in `../archive/superseded-0.4.0/`.
 
-## Contents
+Some primitives shared well beyond this area, such as benefit, payroll, insurance, workers' compensation and claim, still live in the Commercial Operations vocabulary. Every area may cite them (D27). They will move to the HR Service Operations domain that owns each subject once those domains are built.
 
-| Domain | Version | Primitives | Concepts | Classes | Relations | Shapes |
-|---|---|---:|---:|---:|---:|---:|
-| Commercial operations (container) | 0.3.0 | 38 | 55 | 10 | 3 | 5 |
-| Sales | 0.3.0 | 13 | 59 | 4 | 0 | 3 |
-| Marketing (incl. competitive intelligence) | 0.1.1 | 34 | 66 | 3 | 0 | 3 |
-| Legal (commercial and regulatory) | 0.1.1 | 39 | 68 | 9 | 2 | 4 |
-| Customer success | 0.1.1 | 13 | 50 | 4 | 0 | 3 |
-| Pricing and contracts | 0.2.0 | 12 | 48 | 3 | 0 | 2 |
-| Partner and channel | 0.1.1 | 9 | 36 | 2 | 0 | 2 |
-| **Total** | | **158** | **382** | **35** | **5** | **22** |
+## Processes and services on APQC PCF 7.4 (D28)
 
-9,827 triples in the domain assets, plus the assembly graphs (`sales/assembly/README.md`). Each domain's `README.md` lists its top concepts, classes, axioms and shapes.
+Every domain's processes follow APQC: process group (L2) › process (L3) › activity (L4), with the activity's tasks (L5) as its steps. Each step carries a drafted SIPOCM, and each domain has its services. The content is authored in `../_build/apqc_commercial.py` and built by `../_build/build_assembly.py`; the report is `commercial-operations/assembly/assembly-report.md`.
 
-## How the domains are insulated
+| Domain | APQC elements it owns | Activities | Steps | Services |
+|---|---|---:|---:|---:|
+| Sales | 3.4 (but 3.4.2 and Finance's 3.4.3.2–5), 3.5 (but 3.5.2.4–5, 3.5.3.10, 3.5.5) | 41 | 56 + 7 earlier | 14 + 2 earlier |
+| Sales.Partner & Channel | 3.2.3, 3.2.4, 3.4.2, 3.5.5 | 26 | 30 | 5 |
+| Marketing | 3.1, 3.2 (but 3.2.2–4), 3.3 (but 3.3.3) | 54 | 56 | 11 |
+| Pricing | 3.2.2, 3.3.3, 3.5.3.10 | 15 | 17 | 4 |
+| Customer Care | 3.5.2.4, 3.5.2.5, 6.0 | 39 | 49 | 9 |
 
-1. **One folder and four named graphs per domain.** A domain is loaded, reloaded or rolled back on its own.
-2. **Siblings never refer to each other.** A domain refers only to the core, the Commercial Operations container and itself. Anything two domains share (account, lead, opportunity, proposal, client service agreement, clause, competitor, worksite employee, sale, benefit, payroll, insurance, workers' compensation…) lives in the container. The build refuses a sibling reference, and the load script checks for one again in GraphDB.
-3. **Pinned to a core version.** Each domain ontology imports the core and container ontologies by their ontology IRIs, so the KE Workbench resolves them, and records the versions it was built against with `dcterms:requires` (`…/ontology/core/0.1.0/`). A change to the core reaches a domain only when that domain is rebuilt against the new core and re-released.
-4. **The baseline stays untouched.** Nothing here writes a core file or a core graph. Where a core taxonomy concept is formalized by a domain class (for example core "Statute" → `legal:statute`), the `core:formalizedBy` triple is stored in the domain's own ontology graph. The load script counts the baseline statements before and after the load and stops if they differ.
-
-## Assembly
-
-A domain is assembled from components (design decisions D17–D24). The vocabulary, taxonomy and ontology are the parts catalog and the joining rules. The components are instance graphs. The **service assembly** is Service › Process › Process step:
-- a party graph of who takes part (the organization, its agents, and the roles of outside parties);
-- step graphs, one per reusable step, each with its SIPOCM (supplier, input, process step, output, customer, measure);
-- process graphs, one per process, which build it from steps with `core:hasStep` and `core:precedes`;
-- service graphs, one per service, which join the processes that enable it (`core:supports`) and its delivery step (`core:deliveryOf`);
-- a manifest listing the component versions that make a release.
-
-The **value map** is a separate assembly: the buyer persona graph (jobs, job steps and desired outcomes, in the container) and a value-map graph that says which job steps each step addresses and what each service delivers today, with its own manifest.
-
-The build validates both against the shapes and measures the service assembly (assembly index, copy number) and the value map (value gaps between desired and delivered outcomes). Sales is the first domain assembled, with two services; see `sales/assembly/README.md`.
-
-## Load into GraphDB
-
-Load Baseline Core v1.0 first, then double-click `graphdb-load.command`. You can also run it with a repository and domains: `./graphdb-load.command value-kb sales legal`. For each domain it loads, it:
-
-1. backs up that domain's graphs to `archive/graphdb-backup-<time>/`;
-2. clears and reloads only those graphs, and removes the domain's assembly graphs that the current release no longer has;
-3. appends the change records to the audit log;
-4. runs the checks: BFO lineage, `core:formalizedBy`, primitives, broad matches, assembly typing, sibling references and the baseline statement count.
-
-Only the latest version of each asset is loaded, followed by the domain's assembly graphs.
-
-The repository is never cleared. Then, in the KE Workbench, go to Model Editor (Ontology) › ⚙ › Reload.
-
-## Rebuild
-
-From this folder: `python3 _build/build_domains.py` (or `--only sales` to rewrite one domain), then `python3 _build/build_assembly.py` to rebuild, validate and measure the assembly. The build reads the core from `../../KE Baseline/Baseline Core v1.0/ttl` and the Part III checks and Turtle writer from `../../KE Workbench/ingest/ke_ingest.py`. It writes `ttl/` and `trig/` and refreshes `review/`, and it exits with an error if any rule fails. A rebuild overwrites hand edits to the generated files, so make lasting changes in the spec.
-
-## Review before Candidate
-
-See `review/open-questions.md`. In short: 20 general primitives are proposed for promotion to the core; the legal deontic classes are probably core material too; there are three sense collisions with core terms; and the definitions of law and regulation need review by counsel.
+The workbook `sales/Sales Services and Processes.xlsx` (APQC 7.2.1) is superseded by the assemblies.

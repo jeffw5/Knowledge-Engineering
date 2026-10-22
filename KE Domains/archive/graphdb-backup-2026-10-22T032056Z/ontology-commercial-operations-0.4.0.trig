@@ -1,0 +1,408 @@
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix customercareshp: <https://www.insperity.com/shapes/domain-customer-care/> .
+@prefix businessopstax: <https://www.insperity.com/taxonomy/business-operations/> .
+@prefix customercarevoc: <https://www.insperity.com/vocabulary/domain-customer-care/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix pricingtax: <https://www.insperity.com/taxonomy/domain-pricing/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix customercare: <https://www.insperity.com/ontology/domain-customer-care/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix techopstax: <https://www.insperity.com/taxonomy/technical-operations/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix marketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix apqc: <https://www.insperity.com/taxonomy/apqc-pcf/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix domainsalesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix pricing: <https://www.insperity.com/ontology/domain-pricing/> .
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix customercaretax: <https://www.insperity.com/taxonomy/domain-customer-care/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix pricingvoc: <https://www.insperity.com/vocabulary/domain-pricing/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix techopsvoc: <https://www.insperity.com/vocabulary/technical-operations/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix hrserviceopsvoc: <https://www.insperity.com/vocabulary/hr-service-operations/> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix pricingshp: <https://www.insperity.com/shapes/domain-pricing/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix hrserviceopstax: <https://www.insperity.com/taxonomy/hr-service-operations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix businessopsvoc: <https://www.insperity.com/vocabulary/business-operations/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+
+<https://www.insperity.com/ontology/commercial-operations/> {
+  <https://www.insperity.com/ontology/commercial-operations/> a owl:Ontology;
+    rdfs:label "Commercial Operations Ontology"@en;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "The container ontology of the Commercial Operations operational area. It extends the core domain ontology with the classes every commercial domain shares (account, lead, opportunity, proposal, client service agreement, clause, competitor, worksite employee, sale), so that the sales, marketing, legal, customer success, pricing and contracts, and partner and channel ontologies import only the core and this ontology, never each other."@en;
+    terms:title "Commercial Operations Ontology"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_commercial_operations.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.2.0 (2026-10-20): Census moved here from pricing and contracts, because sales and pricing and contracts both use it (D2); the container holds the PEO buyer persona graph that every domain addresses. Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_commercial_operations.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.3.0 (2026-10-20): Supplier and customer of a process step (has supplier, has customer) for the SIPOCM view of assembled processes (D24), with a shape that checks they point to a party or a role. Built by build_domains.py from spec_commercial_operations.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.4.0 (2026-10-21): Restructured to the operational areas and the naming standard (D26, D27): titled 'Commercial Operations Vocabulary', '… Taxonomy', '… Ontology' and '… Shapes', at …/<kind>/commercial-operations/ (formerly …/<kind>/domain-commercial-operations/). The client service agreement, commercial agreement and clause (classes, concepts and the clause primitive) moved to Domain Legal in Business Operations. A taxonomy branch lists the area's domains. Built by build_domains.py from spec_commercial_operations.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-22"^^xsd:date;
+    owl:versionInfo "0.4.0";
+    terms:subject domainvoc:commercial;
+    owl:imports <https://www.insperity.com/ontology/core/>;
+    owl:versionIRI <https://www.insperity.com/ontology/commercial-operations/0.4.0/>;
+    vaem:namespace "https://www.insperity.com/ontology/commercial-operations/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "commercialops";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>, <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl>;
+    terms:identifier "ontology-commercial-operations";
+    terms:requires <https://www.insperity.com/ontology/core/0.1.0/>;
+    terms:replaces <https://www.insperity.com/ontology/commercial-operations/> .
+  
+  <https://www.insperity.com/ontology/commercial-operations/account> a owl:Class;
+    rdfs:subClassOf core:information-asset, _:node12025;
+    rdfs:label "Account"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Account"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset that records the commercial relationship between the organization and a party that is, or may become, a client."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/account>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/account> .
+  
+  _:node12025 a owl:Restriction;
+    owl:onProperty core:concerns;
+    owl:someValuesFrom core:party .
+  
+  <https://www.insperity.com/ontology/commercial-operations/lead> a owl:Class;
+    rdfs:subClassOf core:information-asset, _:node12026;
+    rdfs:label "Lead"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Lead"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset that records a party, or a person at a party, that has shown interest in or fits the profile for the organization's offerings and has not yet been qualified."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/lead>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/lead> .
+  
+  _:node12026 a owl:Restriction;
+    owl:onProperty core:concerns;
+    owl:someValuesFrom core:party .
+  
+  <https://www.insperity.com/ontology/commercial-operations/opportunity> a owl:Class;
+    rdfs:subClassOf core:information-asset, _:node12027, _:node12028, _:node12029;
+    rdfs:label "Opportunity"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Opportunity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset that records a potential sale of one or more offerings to a prospect or client that the organization has qualified and is pursuing."@en;
+    skos:scopeNote "The opportunity is the record; the selling steps that advance it consume and produce it (core:consumes, core:produces), so its history stays anchored on the process step."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/opportunity>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/opportunity> .
+  
+  _:node12027 a owl:Restriction;
+    owl:onProperty core:concerns;
+    owl:someValuesFrom core:party .
+  
+  _:node12028 a owl:Restriction;
+    owl:onProperty core:concerns;
+    owl:someValuesFrom core:offering .
+  
+  _:node12029 a owl:Restriction;
+    owl:onProperty <https://www.insperity.com/ontology/commercial-operations/attributedTo>;
+    owl:allValuesFrom core:party .
+  
+  <https://www.insperity.com/ontology/commercial-operations/attributedTo> a owl:ObjectProperty;
+    rdfs:subPropertyOf core:concerns;
+    rdfs:label "attributed to"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "attributed to"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A relation between a lead, opportunity or sale and the party credited with sourcing or influencing it."@en;
+    skos:scopeNote "The campaign or channel credited is reached through the process step the party performed."@en;
+    owl:versionInfo "0.4.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/ontology/commercial-operations/proposal> a owl:Class;
+    rdfs:subClassOf core:information-asset, _:node12030;
+    rdfs:label "Proposal"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Proposal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset that sets out the offerings, terms and prices the organization offers a prospect or client in pursuit of an opportunity."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/proposal>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/proposal> .
+  
+  _:node12030 a owl:Restriction;
+    owl:onProperty core:concerns;
+    owl:someValuesFrom <https://www.insperity.com/ontology/commercial-operations/opportunity> .
+  
+  <https://www.insperity.com/ontology/commercial-operations/census> a owl:Class;
+    rdfs:subClassOf core:information-asset, _:node12031;
+    rdfs:label "Census"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Census"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An information asset that lists a prospective client's employees with the attributes needed to price benefits and coverage."@en;
+    skos:scopeNote "Holds personal information about the employees it lists; its handling is governed by the data protection and retention norms of the legal domain."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/census>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/census> .
+  
+  _:node12031 a owl:Restriction;
+    owl:onProperty core:concerns;
+    owl:someValuesFrom core:person .
+  
+  <https://www.insperity.com/ontology/commercial-operations/competitor> a owl:Class;
+    rdfs:subClassOf core:role, _:node12032;
+    rdfs:label "Competitor"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Competitor"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A role borne by an organization that offers buyers an alternative to the organization's offerings for the same job."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/competitor>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/competitor> .
+  
+  _:node12032 a owl:Restriction;
+    owl:onProperty core:roleOf;
+    owl:someValuesFrom core:organization .
+  
+  <https://www.insperity.com/ontology/commercial-operations/worksite-employee> a owl:Class;
+    rdfs:subClassOf core:role, _:node12033;
+    rdfs:label "Worksite employee"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Worksite employee"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A role borne by a person employed at a client's worksite under a co-employment relationship between the client and a professional employer organization."@en;
+    skos:altLabel "WSE"@en;
+    skos:scopeNote "The unit in which a professional employer organization sizes opportunities, prices services and counts paid worksite employees. Formalizes core taxonomy-core-role \"Worksite employee\"."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject rolevoc:employee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:employee .
+  
+  _:node12033 a owl:Restriction;
+    owl:onProperty core:roleOf;
+    owl:someValuesFrom core:person .
+  
+  <https://www.insperity.com/ontology/commercial-operations/sale> a owl:Class;
+    rdfs:subClassOf core:event, _:node12034;
+    rdfs:label "Sale"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "Sale"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "An event in which a buyer commits to acquire an offering from the organization under an agreement."@en;
+    owl:versionInfo "0.4.0";
+    terms:subject <https://www.insperity.com/vocabulary/commercial-operations/sale>;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm <https://www.insperity.com/vocabulary/commercial-operations/sale> .
+  
+  _:node12034 a owl:Restriction;
+    owl:onProperty core:triggers;
+    owl:allValuesFrom core:process-step .
+  
+  <https://www.insperity.com/ontology/commercial-operations/hasSupplier> a owl:ObjectProperty;
+    rdfs:subPropertyOf obo:RO_0000057;
+    rdfs:label "has supplier"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "has supplier"@en;
+    skos:editorialNote "Candidate for promotion to the core: supplier is the S of SIPOC and applies to every process, not only commercial ones; the core has consumes and produces but no supplier."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A relation between a process step and a party, or a role, outside the process that provides one of the inputs the step consumes."@en;
+    skos:scopeNote "Stated only for suppliers outside the assembled process, such as the prospect who sends its census. Inside a process, the supplier of an input is derived: whoever performs the step that produces it (D24). Specializes has participant: the supplier takes part in the step at its boundary, by handing over the input."@en;
+    owl:versionInfo "0.4.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  <https://www.insperity.com/ontology/commercial-operations/hasCustomer> a owl:ObjectProperty;
+    rdfs:subPropertyOf obo:RO_0000057;
+    rdfs:label "has customer"@en;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/commercial-operations/>;
+    skos:prefLabel "has customer"@en;
+    skos:editorialNote "Candidate for promotion to the core: customer is the C of SIPOC and applies to every process, not only commercial ones; the core has consumes and produces but no customer."@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-22T02:04:02Z"^^xsd:dateTime;
+    terms:created "2026-10-22"^^xsd:date;
+    skos:definition "A relation between a process step and a party, or a role, outside the process that receives one of the outputs the step produces."@en;
+    skos:scopeNote "Stated only for customers outside the assembled process, such as the prospect a cost comparison is handed to. Inside a process, the customer of an output is derived: whoever performs the step that consumes it (D24). Specializes has participant: the customer takes part in the step at its boundary, by receiving the output."@en;
+    owl:versionInfo "0.4.0";
+    core:hasLifecycleStatus core:Draft .
+  
+  roletax:worksite-employee core:formalizedBy <https://www.insperity.com/ontology/commercial-operations/worksite-employee> .
+}

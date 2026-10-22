@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Assembly</title>
+<script src="../assets/ke-sparql.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:var(--ke-bg);color:var(--ke-ink);font:13px/1.4 var(--ke-sans);display:flex;flex-direction:column;overflow:hidden}
+  button,input,select{font:inherit;color:inherit}
+  code,.mono{font-family:var(--ke-mono);font-size:11.5px}
+  .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--ke-surface);border-bottom:1px solid var(--ke-line);flex-wrap:wrap}
+  .bar h1{font-size:15px;margin:0 6px 0 0;font-weight:700;white-space:nowrap}
+  .bar h1 .k{display:inline-block;width:10px;height:10px;border-radius:2px;background:var(--ke-kind-ont);margin-right:7px;vertical-align:0}
+  .sel{background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;max-width:360px;min-width:200px}
+  .sp{flex:1}
+  .btn{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 11px;cursor:pointer;white-space:nowrap}
+  .btn:hover:not(:disabled){border-color:var(--ke-accent);color:var(--ke-accent)}
+  .btn:focus-visible,.row:focus-visible,.card:focus-visible,.tab:focus-visible,.seg button:focus-visible{outline:2px solid var(--ke-accent);outline-offset:1px}
+  .btn.sm{padding:2px 8px;font-size:12px}
+  .seg{display:inline-flex;border:1px solid var(--ke-line);border-radius:var(--ke-radius);overflow:hidden}
+  .seg button{background:var(--ke-surface);border:0;padding:5px 12px;cursor:pointer;border-right:1px solid var(--ke-line)}
+  .seg button:last-child{border-right:0}
+  .seg button.on{background:var(--ke-accent);color:var(--ke-accent-ink);font-weight:700}
+  .cfg{position:relative}
+  .pop{position:absolute;right:0;top:34px;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);box-shadow:var(--ke-shadow);padding:12px;width:300px;display:none;z-index:40}
+  .pop.on{display:block}
+  .pop label{display:block;font-size:11px;color:var(--ke-muted);margin:0 0 4px}
+  .pop input{width:100%;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px;margin-bottom:8px}
+  .main{flex:1;display:grid;grid-template-columns:minmax(260px,330px) minmax(0,1fr) minmax(280px,360px);min-height:0}
+  .main.cov{grid-template-columns:minmax(0,1fr)}
+  .main.cov .left,.main.cov .right{display:none}
+  .pane{display:flex;flex-direction:column;min-height:0;min-width:0;background:var(--ke-surface)}
+  .pane.mid{background:var(--ke-bg);border-left:1px solid var(--ke-line);border-right:1px solid var(--ke-line)}
+  .ph{padding:10px 12px 8px;border-bottom:1px solid var(--ke-line-soft);display:flex;flex-direction:column;gap:7px;background:var(--ke-surface)}
+  .ph .t{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);font-weight:700;display:flex;align-items:center;gap:6px}
+  .ph .t .n{color:var(--ke-faint);font-weight:400;letter-spacing:0;text-transform:none}
+  .row2{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .search{flex:1;min-width:120px;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:5px 8px}
+  .mini{background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:3px 6px;font-size:12px}
+  .list{flex:1;overflow:auto;padding:4px 0 24px}
+  .hint{color:var(--ke-faint);font-size:12px;padding:10px 12px}
+  .empty{margin:40px auto;max-width:520px;text-align:center;color:var(--ke-muted)}
+  .empty h2{font-size:15px;color:var(--ke-ink);margin:0 0 6px}
+  .empty code{background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:4px;padding:1px 5px}
+  /* catalog rows */
+  .row{display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:8px 12px;border-left:3px solid transparent;border-bottom:1px solid var(--ke-line-soft);cursor:pointer}
+  .row:hover{background:var(--ke-band)}
+  .row.on{background:var(--ke-accent-soft);border-left-color:var(--ke-accent)}
+  .row .lb{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .row .meta{grid-column:1/-1;color:var(--ke-muted);font-size:12px;display:flex;gap:10px;flex-wrap:wrap}
+  .row .chips{display:flex;gap:4px;align-items:center}
+  .chip{display:inline-flex;align-items:center;gap:3px;padding:0 7px;height:19px;border-radius:10px;font-size:11px;font-weight:700;white-space:nowrap;border:1px solid transparent}
+  .chip.ok{background:var(--ke-ok-soft);color:var(--ke-ok)}
+  .chip.warn{background:var(--ke-warn-soft);color:var(--ke-warn)}
+  .chip.bad{background:var(--ke-bad-soft);color:var(--ke-bad)}
+  .chip.plain{background:var(--ke-sunk);color:var(--ke-muted);border-color:var(--ke-line-soft);font-weight:400}
+  .chip.acc{background:var(--ke-accent-soft);color:var(--ke-accent)}
+  /* assembly */
+  .crumbs{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--ke-muted);flex-wrap:wrap}
+  .crumbs a{color:var(--ke-accent);cursor:pointer;text-decoration:none}
+  .crumbs a:hover{text-decoration:underline}
+  .scroll{flex:1;overflow:auto;padding:14px 16px 40px;min-width:0}
+  .svc-head h2{font-size:18px;margin:0 0 4px;text-wrap:balance}
+  .svc-head p{margin:0 0 6px;color:var(--ke-ink2);max-width:72ch}
+  .svc-head .ids{display:flex;gap:10px;flex-wrap:wrap;color:var(--ke-faint);font-size:12px}
+  .sec{margin:18px 0 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ke-accent);font-weight:700;display:flex;gap:8px;align-items:center}
+  .sec .n{color:var(--ke-faint);font-weight:400;letter-spacing:0;text-transform:none}
+  .flow{display:flex;align-items:stretch;gap:0;overflow-x:auto;padding:4px 2px 10px}
+  .arrow{flex:none;width:30px;display:flex;align-items:center;justify-content:center;color:var(--ke-faint);font-size:16px}
+  .card{flex:none;width:218px;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);padding:10px 11px;cursor:pointer;display:flex;flex-direction:column;gap:6px;box-shadow:var(--ke-shadow)}
+  .card:hover{border-color:var(--ke-accent)}
+  .card.on{outline:2px solid var(--ke-accent);outline-offset:-1px}
+  .card.delivery{border-width:2px;border-color:var(--ke-kind-ont)}
+  .card .role{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--ke-muted)}
+  .card.delivery .role{color:var(--ke-kind-ont)}
+  .card .lb{font-weight:700;font-size:13.5px}
+  .card .kv{font-size:12px;color:var(--ke-ink2)}
+  .card .kv b{color:var(--ke-muted);font-weight:400}
+  .card .foot{display:flex;gap:4px;flex-wrap:wrap;margin-top:auto}
+  table.t{border-collapse:collapse;width:100%;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius);font-size:12.5px}
+  table.t th{background:var(--ke-band);text-align:left;font-weight:700;padding:6px 8px;border-bottom:1px solid var(--ke-line);white-space:nowrap}
+  table.t td{padding:6px 8px;border-bottom:1px solid var(--ke-line-soft);vertical-align:top}
+  table.t td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  table.t tr.js td{background:var(--ke-sunk);font-weight:700}
+  .tw{overflow-x:auto}
+  /* inspector */
+  .tabs{display:flex;border-bottom:1px solid var(--ke-line)}
+  .tab{flex:1;background:none;border:0;border-bottom:2px solid transparent;padding:8px 6px;cursor:pointer;color:var(--ke-muted);font-weight:700;font-size:12px}
+  .tab.on{color:var(--ke-accent);border-bottom-color:var(--ke-accent)}
+  .insp{flex:1;overflow:auto;padding:12px 14px 40px}
+  .insp h3{font-size:14px;margin:0 0 4px}
+  .insp p{margin:0 0 8px;color:var(--ke-ink2)}
+  .insp dl{margin:0;display:grid;grid-template-columns:110px 1fr;gap:5px 10px;font-size:12px}
+  .insp dt{color:var(--ke-muted)}
+  .insp dd{margin:0;min-width:0;overflow-wrap:anywhere}
+  .insp .link{color:var(--ke-accent);cursor:pointer}
+  .insp .link:hover{text-decoration:underline}
+  .find{border:1px solid var(--ke-line);border-left-width:3px;border-radius:var(--ke-radius);padding:7px 9px;margin:0 0 7px;background:var(--ke-surface)}
+  .find.error{border-left-color:var(--ke-bad)}
+  .find.warning{border-left-color:var(--ke-warn)}
+  .find .h{display:flex;gap:6px;align-items:center;font-size:12px;font-weight:700}
+  .find .m{font-size:12px;color:var(--ke-ink2);margin-top:2px}
+  .find .w{font-size:11px;color:var(--ke-faint);margin-top:2px;overflow-wrap:anywhere}
+  .note{font-size:12px;color:var(--ke-muted);background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:var(--ke-radius);padding:8px 10px;margin:8px 0}
+  /* coverage */
+  table.t.grid{width:auto;min-width:min(100%,640px)}
+  .grid td:first-child{min-width:240px}
+  .grid td.c{text-align:center;font-size:13px;color:var(--ke-kind-ont);font-weight:700}
+  .grid td.c.s{color:var(--ke-accent)}
+  .grid th.v{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font-weight:400;padding:8px 6px;width:34px;max-height:220px;overflow:hidden;text-overflow:ellipsis;text-align:left}
+  .grid thead th{vertical-align:bottom}
+  .grid tr.gap td:first-child{box-shadow:inset 3px 0 0 var(--ke-bad)}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ke-muted);margin:6px 0 10px}
+  .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ke-ink);color:var(--ke-bg);padding:8px 14px;border-radius:6px;font-size:12px;box-shadow:var(--ke-shadow);display:none;z-index:60;max-width:80vw}
+  .toast.bad{background:var(--ke-bad);color:#fff}
+  .loading{color:var(--ke-muted);padding:30px;text-align:center}
+  /* processes and SIPOCM */
+  .lane{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);margin:0 0 10px;box-shadow:var(--ke-shadow)}
+  .lane.on{outline:2px solid var(--ke-accent);outline-offset:-1px}
+  .lane-h{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--ke-line-soft);cursor:pointer;flex-wrap:wrap}
+  .lane-h:hover{background:var(--ke-band)}
+  .lane-h:focus-visible{outline:2px solid var(--ke-accent);outline-offset:-2px}
+  .lane-h .pn{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;color:var(--ke-kind-tax)}
+  .lane-h .lb{font-weight:700;font-size:14px}
+  .lane .flow{padding:10px 10px 12px}
+  .lane .card{box-shadow:none;background:var(--ke-bg)}
+  .between{display:flex;justify-content:center;color:var(--ke-faint);font-size:12px;margin:-4px 0 6px}
+  table.sipoc td{font-size:12px}
+  table.sipoc td.st{font-weight:700;white-space:nowrap}
+  table.sipoc th .ab{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;border-radius:4px;background:var(--ke-accent-soft);color:var(--ke-accent);font-weight:700;margin-right:5px}
+  table.sipoc tr.on td{background:var(--ke-accent-soft)}
+  table.sipoc tr.proc td{background:var(--ke-sunk);font-weight:700;color:var(--ke-ink2)}
+  table.sipoc tr[data-step]{cursor:pointer}
+  table.sipoc .out{color:var(--ke-faint)}
+  .sub{color:var(--ke-faint);font-size:11px}
+  @media (max-width:900px){body{overflow:auto;height:auto}.main{display:block}.pane.right{display:none}.list,.scroll{overflow:visible}.pane.mid{border:0;border-top:1px solid var(--ke-line)}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h1><span class="k"></span>Service Assembly</h1>
+  <select id="manSel" class="sel" title="The release manifest of the domain assembly to view"><option value="">Loading assemblies…</option></select>
+  <div class="seg" role="tablist" aria-label="View">
+    <button id="vCat" class="on" role="tab" aria-selected="true">Services</button>
+    <button id="vCov" role="tab" aria-selected="false">Coverage</button>
+  </div>
+  <span class="sp"></span>
+  <span id="loadNote" style="color:var(--ke-faint);font-size:12px"></span>
+  <button class="btn" id="btnReload" title="Read the assembly from GraphDB again">Reload</button>
+  <div class="cfg">
+    <button class="btn" id="btnCfg" title="Settings" aria-label="Settings">⚙</button>
+    <div class="pop" id="pop">
+      <label for="repoId">Repository</label>
+      <input id="repoId" type="text" value="value-kb">
+      <div style="font-size:11px;color:var(--ke-faint)">Read only. The page reads the graphs a release manifest lists and the shapes and ontologies they require; it writes nothing.</div>
+    </div>
+  </div>
+</div>
+
+<div class="main" id="main">
+  <section class="pane left">
+    <div class="ph">
+      <div class="t">Services <span class="n" id="svcCount"></span></div>
+      <div class="row2"><input id="svcSearch" class="search" placeholder="Filter services or steps" aria-label="Filter services"></div>
+      <div class="row2">
+        <select id="fProc" class="mini" aria-label="Process"><option value="">Any process</option></select>
+        <select id="fStage" class="mini" aria-label="Selling stage"><option value="">Any stage</option></select>
+        <select id="fMode" class="mini" aria-label="Delivery mode"><option value="">Any mode</option><option>Manual</option><option>Automated</option><option>Hybrid</option></select>
+        <select id="fStatus" class="mini" aria-label="Status"><option value="">Any status</option><option value="error">Has errors</option><option value="warning">Has warnings</option><option value="clean">Clean</option></select>
+      </div>
+    </div>
+    <div class="list" id="svcList"><div class="loading">Loading…</div></div>
+  </section>
+
+  <section class="pane mid">
+    <div class="ph"><div class="crumbs" id="crumbs"></div></div>
+    <div class="scroll" id="mid"><div class="loading">Loading…</div></div>
+  </section>
+
+  <section class="pane right">
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="detail" role="tab">Detail</button>
+      <button class="tab" data-tab="validation" role="tab">Validation</button>
+      <button class="tab" data-tab="usedby" role="tab">Used by</button>
+    </div>
+    <div class="insp" id="insp"><div class="hint">Select a service, then a process or a step.</div></div>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  const S = window.KE_SPARQL;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const BASE = 'https://www.insperity.com/';
+  const CORE = BASE + 'ontology/core/';
+  const CO = BASE + 'ontology/commercial-operations/';    // the Commercial Operations area ontology (D26)
+  const RDF = S.NS.rdf, RDFS = S.NS.rdfs, OWL = S.NS.owl, SKOS = S.NS.skos, DCT = S.NS.dct;
+  const SH = 'http://www.w3.org/ns/shacl#';
+  const T = RDF + 'type';
+  const MANIFEST = BASE + 'taxonomy/core-governance/release-manifest';
+  const C = (x) => CORE + x;
+  const SUPPLIER = CO + 'hasSupplier', CUSTOMER = CO + 'hasCustomer';
+  // resources of the value map (persona, jobs, job steps, outcomes) never belong in a service assembly (D24)
+  const VALUE_MAP_RX = /\/resource\/[a-z0-9.-]+\/(persona-graph|persona|job-study|job|job-step|desired-outcome|delivered-outcome|value-map)\//;
+
+  function toast(msg, bad) {
+    const t = $('toast'); t.textContent = msg; t.className = 'toast' + (bad ? ' bad' : ''); t.style.display = 'block';
+    clearTimeout(toast._t); toast._t = setTimeout(() => t.style.display = 'none', bad ? 6000 : 2600);
+  }
+
+  // ── in-memory store of the assembly ───────────────────────────────────────
+  const key = (o) => (o.t === 'literal' ? 'L' : o.t === 'bnode' ? 'B' : 'I') + '|' + o.v;
+  let st;
+  function newStore() { return { spo: new Map(), pos: new Map(), graphsOf: new Map(), triples: [], extra: new Map() }; }
+  function addT(g, s, p, o) {
+    if (!st.spo.has(s)) st.spo.set(s, new Map());
+    const m = st.spo.get(s); if (!m.has(p)) m.set(p, []);
+    if (m.get(p).some((x) => key(x) === key(o))) return;
+    m.get(p).push(o);
+    const k = key(o); if (!st.pos.has(k)) st.pos.set(k, new Map());
+    const r = st.pos.get(k); if (!r.has(p)) r.set(p, []); r.get(p).push(s);
+    if (!st.graphsOf.has(s)) st.graphsOf.set(s, new Set()); st.graphsOf.get(s).add(g);
+    st.triples.push([g, s, p, o]);
+  }
+  const objs = (s, p) => (st.spo.get(s) && st.spo.get(s).get(p)) || [];
+  const iris = (s, p) => objs(s, p).filter((o) => o.t === 'uri').map((o) => o.v);
+  const one = (s, p) => { const o = objs(s, p)[0]; return o ? o.v : null; };
+  const subs = (p, oIri) => { const r = st.pos.get('I|' + oIri); return (r && r.get(p)) || []; };
+  function label(x) {
+    const l = objs(x, SKOS + 'prefLabel').concat(objs(x, RDFS + 'label'));
+    const en = l.find((o) => o.lang === 'en') || l[0];
+    if (en) return en.v;
+    const e = st.extra.get(x); if (e && e.label) return e.label;
+    return S.localName(x);
+  }
+  // the area or domain an IRI belongs to: 'core', an area slug (commercial-operations…), 'domain-<L1>[.<L2>]', or null
+  const AREAS = ['commercial-operations', 'business-operations', 'hr-service-operations', 'technical-operations', 'enterprise-services', 'apqc-pcf'];
+  function domainOf(u) {
+    const m = String(u).match(/^https:\/\/www\.insperity\.com\/(?:vocabulary|taxonomy|ontology|shapes|resource)\/([a-z0-9.-]+)\//);
+    if (!m) return null;
+    if (/^core(-[a-z]+)?$/.test(m[1])) return 'core';
+    return (m[1].startsWith('domain-') || AREAS.includes(m[1])) ? m[1] : null;
+  }
+  // D27: classes, relations and instances may refer to the core, any area's shared assets of their own area, their parent domains and themselves
+  function insulated(own, d) {
+    if (!d || !own || d === 'core' || d === own || d === 'apqc-pcf') return true;
+    if (own.startsWith(d + '.')) return true;                       // a parent domain (L1 of an L2)
+    // the domain's own operational area, read from its ontology's dcterms:isPartOf (D26)
+    const area = domainOf(one(BASE + 'ontology/' + own.split('.')[0] + '/', DCT + 'isPartOf') || '');
+    return d === area;
+  }
+  function noteVal(x, prefix) {
+    for (const o of objs(x, SKOS + 'note')) { const i = o.v.indexOf(prefix); if (i >= 0) return o.v.slice(i + prefix.length).split('.')[0].trim(); }
+    return '';
+  }
+
+  let SUP, INV, CLASSES, CONCEPTS;
+  function indexModel() {
+    SUP = new Map(); INV = new Map(); CLASSES = new Set(); CONCEPTS = new Set();
+    st.spo.forEach((m, s) => {
+      (m.get(T) || []).forEach((o) => { if (o.v === OWL + 'Class') CLASSES.add(s); if (o.v === SKOS + 'Concept' && s.includes('/taxonomy/')) CONCEPTS.add(s); });
+      (m.get(RDFS + 'subClassOf') || []).forEach((o) => { if (o.t === 'uri') { if (!SUP.has(s)) SUP.set(s, new Set()); SUP.get(s).add(o.v); } });
+      (m.get(OWL + 'inverseOf') || []).forEach((o) => { if (o.t === 'uri') { INV.set(s, o.v); INV.set(o.v, s); } });
+    });
+    st.extra.forEach((e, x) => { if (e.concept) CONCEPTS.add(x); if (e.cls) CLASSES.add(x); });
+  }
+  const supCache = new Map();
+  function supers(c) {
+    if (supCache.has(c)) return supCache.get(c);
+    const out = new Set(), todo = [c];
+    while (todo.length) { const x = todo.pop(); (SUP.get(x) || []).forEach((y) => { if (!out.has(y)) { out.add(y); todo.push(y); } }); }
+    supCache.set(c, out); return out;
+  }
+  function typesOf(n) {
+    const ts = new Set(iris(n, T)); const all = new Set(ts);
+    ts.forEach((t) => supers(t).forEach((x) => all.add(x)));
+    return all;
+  }
+  const isA = (n, cls) => typesOf(n).has(cls);
+
+  // ── the assembly: Service › Process › Process step ─────────────────────────
+  let A;
+  function buildModel(manifest) {
+    const add = [];
+    st.triples.forEach(([g, s, p, o]) => { const inv = INV.get(p); if (inv && o.t === 'uri') add.push([g, o.v, inv, { t: 'uri', v: s }]); });
+    add.forEach((x) => addT(...x));
+    const assemblyGraphs = new Set(iris(manifest, DCT + 'hasPart'));
+    const inAssembly = (n) => [...(st.graphsOf.get(n) || [])].some((g) => assemblyGraphs.has(g));
+    const nodes = []; st.spo.forEach((m, s) => { if (inAssembly(s)) nodes.push(s); });
+    const allSteps = nodes.filter((s) => isA(s, C('process-step')));
+    const processes = new Map();   // process -> {iri, label, steps (ordered), services}
+    nodes.filter((s) => isA(s, C('process')) && !isA(s, C('process-step'))).forEach((p) => {
+      processes.set(p, { iri: p, label: label(p), steps: order(iris(p, C('hasStep'))), services: [] });
+    });
+    const services = nodes.filter((s) => isA(s, C('service'))).map((s) => {
+      const delivery = subs(C('deliveryOf'), s);
+      const procs = orderProcesses(subs(C('supports'), s).filter((p) => processes.has(p)));
+      procs.forEach((p) => processes.get(p).services.push(s));
+      const steps = [...new Set(procs.flatMap((p) => processes.get(p).steps))];
+      delivery.forEach((d) => { if (!steps.includes(d)) steps.push(d); });
+      return { iri: s, label: label(s), kinds: iris(s, DCT + 'type'), def: one(s, SKOS + 'definition'), scope: one(s, SKOS + 'scopeNote'),
+               delivery, processes: procs, steps, graph: [...(st.graphsOf.get(s) || [])].find((g) => assemblyGraphs.has(g)) };
+    }).sort((a, b) => a.label.localeCompare(b.label));
+    const stepUse = new Map();
+    services.forEach((s) => s.steps.forEach((x) => { if (!stepUse.has(x)) stepUse.set(x, []); stepUse.get(x).push(s.iri); }));
+    A = { manifest, assemblyGraphs, services, processes, allSteps, stepUse };
+    services.forEach((s) => { s.findings = validate(s); });
+  }
+  // steps in the order of core:precedes (topological, stable by label)
+  function order(steps) {
+    const set = new Set(steps), indeg = new Map(steps.map((x) => [x, 0]));
+    steps.forEach((x) => iris(x, C('precedes')).forEach((y) => { if (set.has(y)) indeg.set(y, indeg.get(y) + 1); }));
+    const out = [], ready = steps.filter((x) => !indeg.get(x)).sort((a, b) => label(a).localeCompare(label(b)));
+    while (ready.length) {
+      const x = ready.shift(); out.push(x);
+      iris(x, C('precedes')).filter((y) => set.has(y)).forEach((y) => { indeg.set(y, indeg.get(y) - 1); if (!indeg.get(y)) ready.push(y); });
+    }
+    steps.forEach((x) => { if (!out.includes(x)) out.push(x); });
+    return out;
+  }
+  // processes in data-flow order: a process whose steps produce what another's steps consume comes first
+  function orderProcesses(ps) {
+    const stepsOf = (p) => iris(p, C('hasStep'));
+    const feeds = (a, b) => stepsOf(a).some((x) => iris(x, C('produces')).some((r) => stepsOf(b).some((y) => iris(y, C('consumes')).includes(r))));
+    return ps.slice().sort((a, b) => (feeds(a, b) ? -1 : feeds(b, a) ? 1 : label(a).localeCompare(label(b))));
+  }
+  function stageOf(step) {
+    const k = iris(step, DCT + 'type').find((t) => /\/taxonomy\/domain-[a-z-]+\/(discover|qualify|evaluate|propose|decide|onboard)$/.test(t));
+    return k ? label(k) : '';
+  }
+  function kindOf(x) { const ks = iris(x, DCT + 'type'); return ks.find((t) => !/\/(discover|qualify|evaluate|propose|decide|onboard|operational-process)$/.test(t)) || ks[0]; }
+  function modeOf(step) {
+    const ps = iris(step, C('performedBy'));
+    const human = ps.some((p) => isA(p, C('party'))), agent = ps.some((p) => !isA(p, C('party')));
+    return human && agent ? 'Hybrid' : agent ? 'Automated' : human ? 'Manual' : '—';
+  }
+  const processOf = (step) => iris(step, C('isStepOf')).find((p) => A.processes.has(p));
+  const performers = (x) => iris(x, C('performedBy')).map(label).join(', ');
+  // SIPOCM of a step. Inside the assembly, suppliers and customers are derived from the data flow (D24): whoever performs
+  // the step that produces an input, or that consumes an output. Outside parties are stated with has supplier / has customer.
+  function sipocm(x) {
+    const ins = iris(x, C('consumes')), outs = iris(x, C('produces'));
+    const sup = [], cus = [];
+    ins.forEach((r) => A.allSteps.filter((y) => y !== x && iris(y, C('produces')).includes(r)).forEach((y) => sup.push({ step: y, rec: r })));
+    outs.forEach((r) => A.allSteps.filter((y) => y !== x && iris(y, C('consumes')).includes(r)).forEach((y) => cus.push({ step: y, rec: r })));
+    return { sup, supOut: iris(x, SUPPLIER), ins, outs, cus, cusOut: iris(x, CUSTOMER), measures: iris(x, C('measuredBy')) };
+  }
+
+  // ── validation: the shapes the manifest requires, over this service's parts ──
+  let SHAPES;
+  function parseShapes() {
+    SHAPES = [];
+    const list = (b) => { const out = []; let cur = b; let n = 0; while (cur && cur.v !== RDF + 'nil' && n++ < 50) { const f = objs(cur.v, RDF + 'first')[0]; if (f) out.push(f); cur = objs(cur.v, RDF + 'rest')[0]; } return out; };
+    st.spo.forEach((m, s) => {
+      if (!(m.get(T) || []).some((o) => o.v === SH + 'NodeShape')) return;
+      const targets = (m.get(SH + 'targetClass') || []).map((o) => o.v);
+      const props = (m.get(SH + 'property') || []).map((b) => {
+        const path = objs(b.v, SH + 'path')[0];
+        let p = path && path.v, inverse = false;
+        if (path && path.t === 'bnode') { p = one(path.v, SH + 'inversePath'); inverse = true; }
+        return { path: p, inverse, cls: one(b.v, SH + 'class'), or: objs(b.v, SH + 'or').length ? list(objs(b.v, SH + 'or')[0]).map((x) => one(x.v, SH + 'class')) : null,
+                 min: one(b.v, SH + 'minCount') != null ? Number(one(b.v, SH + 'minCount')) : null,
+                 max: one(b.v, SH + 'maxCount') != null ? Number(one(b.v, SH + 'maxCount')) : null,
+                 msg: one(b.v, SH + 'message') || '', sev: one(b.v, SH + 'severity') === SH + 'Warning' ? 'warning' : 'error' };
+      });
+      SHAPES.push({ iri: s, targets, props, domain: domainOf(s) });
+    });
+  }
+  function parts(s) {
+    const out = new Set([s.iri]);
+    s.processes.forEach((p) => out.add(p));
+    s.steps.forEach((x) => {
+      out.add(x);
+      [C('consumes'), C('produces'), C('measuredBy'), C('performedBy'), C('fulfillsRole'), SUPPLIER, CUSTOMER].forEach((p) => iris(x, p).forEach((r) => out.add(r)));
+    });
+    return [...out];
+  }
+  function validate(s) {
+    const f = [];
+    parts(s).forEach((n) => {
+      const ts = iris(n, T);
+      if (!ts.length) f.push({ sev: 'error', node: n, msg: 'Not typed by any class, or not defined by any component of the assembly.', why: 'rdf:type is missing', src: 'assembly' });
+      ts.filter((t) => !CLASSES.has(t)).forEach((t) => f.push({ sev: 'error', node: n, msg: 'Typed by a class that is not loaded.', why: S.localName(t), src: 'assembly' }));
+      iris(n, DCT + 'type').filter((t) => !CONCEPTS.has(t)).forEach((t) => f.push({ sev: 'error', node: n, msg: 'Classified by a concept that is not loaded.', why: t, src: 'assembly' }));
+      const own = domainOf(n);
+      (st.spo.get(n) || new Map()).forEach((os, p) => os.forEach((o) => {
+        if (o.t !== 'uri') return; const d = domainOf(o.v);
+        if (!insulated(own, d) && !(p === DCT + 'subject' || p === C('hasPrimaryTerm'))) f.push({ sev: 'error', node: n, msg: 'Refers to a domain outside its area and lineage (D27).', why: o.v, src: 'assembly' });
+        if (VALUE_MAP_RX.test(o.v) && [...(st.graphsOf.get(n) || [])].some((g) => A.assemblyGraphs.has(g)))
+          f.push({ sev: 'error', node: n, msg: 'Refers to the persona or value map: that belongs in the value map, a separate assembly (D24).', why: S.localName(p) + ' ' + o.v, src: 'assembly' });
+      }));
+      const tset = typesOf(n);
+      SHAPES.forEach((sh) => {
+        if (!sh.targets.some((t) => tset.has(t))) return;
+        sh.props.forEach((pr) => {
+          if (!pr.path) return;
+          const vals = pr.inverse ? subs(pr.path, n).map((v) => ({ t: 'uri', v })) : objs(n, pr.path);
+          let why = null;
+          if (pr.min != null && vals.length < pr.min) why = `${vals.length} value${vals.length === 1 ? '' : 's'}, at least ${pr.min} required`;
+          else if (pr.max != null && vals.length > pr.max) why = `${vals.length} values, at most ${pr.max} allowed`;
+          else for (const v of vals) {
+            const vt = v.t === 'uri' ? typesOf(v.v) : new Set();
+            if (pr.cls && !vt.has(pr.cls)) { why = `${label(v.v)} is not a ${S.localName(pr.cls)}`; break; }
+            if (pr.or && !pr.or.some((c) => vt.has(c))) { why = `${label(v.v)} matches none of the allowed classes`; break; }
+          }
+          if (why) f.push({ sev: pr.sev, node: n, msg: pr.msg, why, src: S.localName(sh.iri) + (sh.domain ? ' (' + sh.domain + ')' : '') });
+        });
+      });
+    });
+    return f;
+  }
+  const count = (fs, sev) => fs.filter((x) => x.sev === sev).length;
+
+  // ── loading ──────────────────────────────────────────────────────────────
+  let manifests = [];
+  async function loadManifests() {
+    try {
+      // service assemblies only: a manifest that lists at least one service graph (a value map manifest does not)
+      manifests = await S.select(`# ke-q:manifests
+        SELECT ?m ?g (SAMPLE(?l) AS ?label) WHERE {
+          GRAPH ?g { ?m dct:type <${MANIFEST}> ; dct:hasPart ?part . OPTIONAL { ?m skos:prefLabel ?l } }
+          FILTER(CONTAINS(STR(?part), "/service-graph/"))
+        } GROUP BY ?m ?g ORDER BY ?label`);
+    } catch (e) { $('manSel').innerHTML = '<option value="">GraphDB not reachable</option>'; showEmpty('GraphDB is not reachable', esc(e.message)); return; }
+    if (!manifests.length) {
+      $('manSel').innerHTML = '<option value="">No assemblies loaded</option>';
+      showEmpty('No service assembly in this repository', 'Load one with <code>KE Domains/graphdb-load.command</code>, then Reload. A service assembly is found by its release manifest (core concept “Release manifest”) that lists service graphs.');
+      return;
+    }
+    $('manSel').innerHTML = manifests.map((m) => `<option value="${esc(m.m)}">${esc(m.label || S.localName(m.m))}</option>`).join('');
+    const want = S.param('manifest') || S.lsGet('ke-sa-manifest');
+    if (want && manifests.some((m) => m.m === want)) $('manSel').value = want;
+    await loadAssembly($('manSel').value);
+  }
+  function showEmpty(h, body) {
+    $('svcList').innerHTML = ''; $('insp').innerHTML = ''; $('crumbs').innerHTML = '';
+    $('mid').innerHTML = `<div class="empty"><h2>${esc(h)}</h2><div>${body}</div></div>`;
+  }
+  const plain = (u) => u.replace(/\d+\.\d+\.\d+\/$/, '');
+  async function loadAssembly(m) {
+    if (!m) return;
+    S.lsSet('ke-sa-manifest', m);
+    $('svcList').innerHTML = '<div class="loading">Loading…</div>'; $('mid').innerHTML = '<div class="loading">Reading the assembly from GraphDB…</div>';
+    const t0 = performance.now();
+    try {
+      const head = await S.select(`# ke-q:manifest
+        SELECT ?p ?o WHERE { GRAPH ?g { <${m}> ?p ?o } FILTER(?p IN (dct:hasPart, dct:requires)) }`);
+      const partsG = head.filter((r) => r.p === DCT + 'hasPart').map((r) => r.o);
+      const req = head.filter((r) => r.p === DCT + 'requires').map((r) => plain(r.o));
+      const manGraph = manifests.find((x) => x.m === m).g;
+      const graphs = [...new Set([manGraph, ...partsG, ...req, CORE, BASE + 'shapes/core/'])];
+      st = newStore();
+      const rows = await S.select(`# ke-q:graphs
+        SELECT ?g ?s ?p ?o WHERE { VALUES ?g { ${graphs.map((g) => '<' + g + '>').join(' ')} } GRAPH ?g { ?s ?p ?o } }`);
+      rows.forEach((r) => {
+        const s = r['s$'].type === 'bnode' ? 'b:' + r.g + '|' + r.s : r.s;
+        const ob = r['o$'];
+        const o = ob.type === 'literal' || ob.type === 'typed-literal' ? { t: 'literal', v: ob.value, lang: ob['xml:lang'] || '', dt: ob.datatype || '' }
+          : ob.type === 'bnode' ? { t: 'bnode', v: 'b:' + r.g + '|' + ob.value } : { t: 'uri', v: ob.value };
+        addT(r.g, s, r.p, o);
+      });
+      const need = new Set();
+      st.triples.forEach(([g, s, p, o]) => { if (o.t === 'uri' && (p === DCT + 'type' || p === T) && !st.spo.has(o.v)) need.add(o.v); });
+      if (need.size) {
+        const ext = await S.select(`# ke-q:labels
+          SELECT ?x (SAMPLE(?l) AS ?label) (MAX(IF(?t = skos:Concept, 1, 0)) AS ?concept) (MAX(IF(?t = owl:Class, 1, 0)) AS ?cls) WHERE {
+            VALUES ?x { ${[...need].map((x) => '<' + x + '>').join(' ')} }
+            OPTIONAL { ?x skos:prefLabel ?l FILTER(LANG(?l) = "en" || LANG(?l) = "") } OPTIONAL { ?x a ?t }
+          } GROUP BY ?x`);
+        ext.forEach((r) => st.extra.set(r.x, { label: r.label, concept: r.concept === '1', cls: r.cls === '1' }));
+      }
+      supCache.clear(); indexModel(); parseShapes(); buildModel(m);
+      $('loadNote').textContent = `${rows.length.toLocaleString()} statements from ${graphs.length} graphs · ${Math.round(performance.now() - t0)} ms`;
+      fillFilters();
+      const want = S.param('service');
+      const hit = want && A.services.find((s) => s.iri.endsWith('/' + want) || s.iri === want);
+      sel.service = hit ? hit.iri : (A.services[0] && A.services[0].iri);
+      sel.step = null; sel.process = null;
+      renderAll();
+    } catch (e) { showEmpty('The assembly could not be read', esc(e.message)); toast(e.message, true); }
+  }
+  function fillFilters() {
+    const stages = [...new Set(A.allSteps.map(stageOf).filter(Boolean))];
+    const ord = ['Discover', 'Qualify', 'Evaluate', 'Propose', 'Decide', 'Onboard'];
+    stages.sort((a, b) => ord.indexOf(a) - ord.indexOf(b));
+    $('fStage').innerHTML = '<option value="">Any stage</option>' + stages.map((x) => `<option>${esc(x)}</option>`).join('');
+    $('fProc').innerHTML = '<option value="">Any process</option>' + [...A.processes.values()].sort((a, b) => a.label.localeCompare(b.label)).map((p) => `<option value="${esc(p.iri)}">${esc(p.label)}</option>`).join('');
+  }
+
+  // ── rendering ────────────────────────────────────────────────────────────
+  const sel = { service: null, process: null, step: null, tab: 'detail', view: 'catalog' };
+  function svcOf(iri) { return A.services.find((s) => s.iri === iri); }
+  function chipsFor(s) {
+    const e = count(s.findings, 'error'), w = count(s.findings, 'warning');
+    return e ? `<span class="chip bad" title="Validation errors">${e} error${e > 1 ? 's' : ''}</span>` : w ? `<span class="chip warn" title="Validation warnings">${w} warning${w > 1 ? 's' : ''}</span>` : '<span class="chip ok" title="All shapes hold">valid</span>';
+  }
+  function renderList() {
+    const q = $('svcSearch').value.trim().toLowerCase(), fp = $('fProc').value, fs = $('fStage').value, fm = $('fMode').value, fx = $('fStatus').value;
+    const shown = A.services.filter((s) => {
+      if (q && !(s.label.toLowerCase().includes(q) || s.processes.some((p) => label(p).toLowerCase().includes(q)) || s.steps.some((x) => label(x).toLowerCase().includes(q)))) return false;
+      if (fp && !s.processes.includes(fp)) return false;
+      if (fs && !s.steps.some((x) => stageOf(x) === fs)) return false;
+      if (fm && !s.steps.some((x) => modeOf(x) === fm)) return false;
+      if (fx === 'error' && !count(s.findings, 'error')) return false;
+      if (fx === 'warning' && !count(s.findings, 'warning')) return false;
+      if (fx === 'clean' && s.findings.length) return false;
+      return true;
+    }).sort((a, b) => (count(b.findings, 'error') - count(a.findings, 'error')) || a.label.localeCompare(b.label));
+    $('svcCount').textContent = shown.length === A.services.length ? String(A.services.length) : `${shown.length} of ${A.services.length}`;
+    $('svcList').innerHTML = shown.length ? shown.map((s) => `
+      <div class="row${s.iri === sel.service ? ' on' : ''}" data-svc="${esc(s.iri)}" tabindex="0" role="button" aria-pressed="${s.iri === sel.service}">
+        <span class="lb" title="${esc(s.label)}">${esc(s.label)}</span>
+        <span class="chips">${chipsFor(s)}</span>
+        <span class="meta"><span>Enabled by ${esc(s.processes.map(label).join(', ') || '—')}</span><span>${s.steps.length} step${s.steps.length === 1 ? '' : 's'}</span></span>
+      </div>`).join('') : '<div class="hint">No service matches the filters.</div>';
+  }
+  function crumbs() {
+    const man = manifests.find((m) => m.m === A.manifest);
+    const s = svcOf(sel.service);
+    const bits = [`<a data-go="catalog">${esc(man ? man.label : 'Assembly')}</a>`];
+    if (sel.view === 'coverage') bits.push('<span>›</span><span>Coverage</span>');
+    else if (s) {
+      const proc = sel.step ? processOf(sel.step) : sel.process;
+      bits.push('<span>›</span>', proc || sel.step ? `<a data-go="service">${esc(s.label)}</a>` : `<span>${esc(s.label)}</span>`);
+      if (proc) bits.push('<span>›</span>', sel.step ? `<a data-proc="${esc(proc)}">${esc(label(proc))}</a>` : `<span>${esc(label(proc))}</span>`);
+      if (sel.step) bits.push('<span>›</span>', `<span>${esc(label(sel.step))}</span>`);
+    }
+    $('crumbs').innerHTML = bits.join(' ');
+  }
+  const list = (xs) => xs.length ? xs.map((x) => esc(label(x))).join('<br>') : '<span class="out">—</span>';
+  function stepCard(s, x, i) {
+    const delivery = s.delivery.includes(x), uses = (A.stepUse.get(x) || []).length;
+    const io = (p) => iris(x, C(p)).map(label).join(', ') || '—';
+    return (i ? '<div class="arrow" aria-hidden="true">→</div>' : '') + `
+      <div class="card${delivery ? ' delivery' : ''}${x === sel.step ? ' on' : ''}" data-step="${esc(x)}" tabindex="0" role="button">
+        <span class="role">${delivery ? 'Delivers the service' : 'Process step'}</span>
+        <span class="lb">${esc(label(x))}</span>
+        <span class="kv"><b>Inputs</b> ${esc(io('consumes'))}</span>
+        <span class="kv"><b>Outputs</b> ${esc(io('produces'))}</span>
+        <span class="foot"><span class="chip plain">${esc(stageOf(x) || 'no stage')}</span><span class="chip plain">${esc(modeOf(x))}</span>${uses > 1 ? `<span class="chip acc" title="Copy number: the number of services that use this step">used by ${uses}</span>` : ''}</span>
+      </div>`;
+  }
+  function renderMid() {
+    if (sel.view === 'coverage') return renderCoverage();
+    const s = svcOf(sel.service);
+    if (!s) { $('mid').innerHTML = '<div class="empty"><h2>No services in this assembly</h2><div>Its manifest lists no service graph with a service in it.</div></div>'; return; }
+    const lanes = s.processes.map((p, i) => {
+      const P = A.processes.get(p), uses = P.services.length;
+      const flowsFrom = i ? s.processes.slice(0, i).filter((q) => A.processes.get(q).steps.some((x) => iris(x, C('produces')).some((r) => P.steps.some((y) => iris(y, C('consumes')).includes(r))))) : [];
+      return (flowsFrom.length ? `<div class="between">↓ ${esc(flowsFrom.map(label).join(', '))} supplies inputs to ${esc(P.label)}</div>` : '') + `
+      <div class="lane${p === sel.process && !sel.step ? ' on' : ''}">
+        <div class="lane-h" data-proc="${esc(p)}" tabindex="0" role="button">
+          <span class="pn">Process</span><span class="lb">${esc(P.label)}</span>
+          <span class="chip plain">${P.steps.length} step${P.steps.length === 1 ? '' : 's'}</span>
+          ${uses > 1 ? `<span class="chip acc" title="Copy number: the number of services this process enables">enables ${uses} services</span>` : ''}
+        </div>
+        <div class="flow">${P.steps.map((x, j) => stepCard(s, x, j)).join('') || '<div class="hint">This process has no steps.</div>'}</div>
+      </div>`;
+    }).join('');
+    const strays = s.delivery.filter((d) => !s.processes.some((p) => A.processes.get(p).steps.includes(d)));
+    const rows = s.processes.map((p) => {
+      const P = A.processes.get(p);
+      return `<tr class="proc"><td colspan="6">${esc(P.label)}</td></tr>` + P.steps.map((x) => {
+        const m = sipocm(x);
+        const sup = m.supOut.map((r) => `${esc(label(r))} <span class="sub">outside</span>`).concat(m.sup.map((v) => `${esc(label(v.step))} <span class="sub">${esc(performers(v.step))}</span>`));
+        const inSvc = m.cus.filter((v) => s.steps.includes(v.step)), other = [...new Set(m.cus.filter((v) => !s.steps.includes(v.step)).map((v) => v.step))];
+        const cus = m.cusOut.map((r) => `${esc(label(r))} <span class="sub">outside</span>`).concat(inSvc.map((v) => `${esc(label(v.step))} <span class="sub">${esc(performers(v.step))}</span>`))
+          .concat(other.length ? [`<span class="sub" title="${esc(other.map(label).join(', '))}">and ${other.length} step${other.length === 1 ? '' : 's'} of other services</span>`] : []);
+        const meas = m.measures.map((r) => `${esc(label(r))}${noteVal(r, 'Unit:') ? ` <span class="sub">${esc(noteVal(r, 'Unit:'))}, ${esc(noteVal(r, 'Direction:'))}</span>` : ''}`);
+        return `<tr data-step="${esc(x)}" class="${x === sel.step ? 'on' : ''}">
+          <td>${[...new Set(sup)].join('<br>') || '<span class="out">—</span>'}</td><td>${list(m.ins)}</td>
+          <td class="st">${esc(label(x))}${s.delivery.includes(x) ? ' <span class="chip acc">delivery</span>' : ''}<div class="sub">${esc(performers(x))}</div></td>
+          <td>${list(m.outs)}</td><td>${[...new Set(cus)].join('<br>') || '<span class="out">—</span>'}</td><td>${meas.join('<br>') || '<span class="out">—</span>'}</td></tr>`;
+      }).join('');
+    }).join('');
+    $('mid').innerHTML = `
+      <div class="svc-head">
+        <h2>${esc(s.label)}</h2>
+        ${s.def ? `<p>${esc(s.def)}</p>` : ''}
+        <div class="ids"><span>Kind: ${esc(s.kinds.map(label).join(', ') || '—')}</span><span>Delivered by: ${esc(s.delivery.map(label).join(', ') || '—')}</span><span>Graph: <code>${esc((s.graph || '').replace(BASE, '…/'))}</code></span></div>
+      </div>
+      <div class="sec">Enabled by <span class="n">${s.processes.length} process${s.processes.length === 1 ? '' : 'es'} (core:supports) · each built from its steps (core:hasStep) in order (core:precedes) · the outlined step hands the service over (core:deliveryOf)</span></div>
+      ${lanes || '<div class="hint">No process enables this service.</div>'}
+      ${strays.length ? `<div class="note">The delivery step ${esc(strays.map(label).join(', '))} is not a step of any process that enables this service.</div>` : ''}
+      <div class="sec">SIPOCM <span class="n">supplier, input, process step, output, customer, measure · suppliers and customers inside the assembly are derived from the data flow; “outside” ones are stated (has supplier, has customer)</span></div>
+      <div class="tw"><table class="t sipoc"><thead><tr><th><span class="ab">S</span>Supplier</th><th><span class="ab">I</span>Input</th><th><span class="ab">P</span>Process step</th><th><span class="ab">O</span>Output</th><th><span class="ab">C</span>Customer</th><th><span class="ab">M</span>Measure</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+  function renderCoverage() {
+    const svcs = A.services;
+    const cell = (has, title, sym) => has ? `<td class="c" title="${esc(title)}">${sym}</td>` : '<td></td>';
+    const procs = [...A.processes.values()].sort((a, b) => (b.services.length - a.services.length) || a.label.localeCompare(b.label));
+    const pRows = procs.map((P) => `<tr class="${P.services.length ? '' : 'gap'}"><td><a class="link" data-cov-proc="${esc(P.iri)}" style="color:var(--ke-accent);cursor:pointer">${esc(P.label)}</a></td><td class="num">${P.steps.length}</td>${svcs.map((s) => cell(P.services.includes(s.iri), 'enables ' + s.label, '●')).join('')}<td class="num">${P.services.length}</td></tr>`).join('');
+    const steps = [...A.allSteps].sort((a, b) => ((A.stepUse.get(b) || []).length - (A.stepUse.get(a) || []).length) || label(a).localeCompare(label(b)));
+    const sRows = steps.map((x) => {
+      const used = A.stepUse.get(x) || [];
+      return `<tr class="${used.length ? '' : 'gap'}"><td>${esc(label(x))}</td><td>${esc(label(processOf(x) || '') || '—')}</td><td>${esc(stageOf(x))}</td>${svcs.map((s) => { const sv = svcOf(s.iri); return sv.steps.includes(x) ? `<td class="c${sv.delivery.includes(x) ? '' : ' s'}" title="${sv.delivery.includes(x) ? 'delivers' : 'enables'} ${esc(s.label)}">${sv.delivery.includes(x) ? '●' : '○'}</td>` : '<td></td>'; }).join('')}<td class="num">${used.length}</td></tr>`;
+    }).join('');
+    const head = (first) => `<tr>${first}${svcs.map((s) => `<th class="v" title="${esc(s.label)}">${esc(s.label)}</th>`).join('')}<th>Copy number</th></tr>`;
+    $('mid').innerHTML = `
+      <div class="sec">Processes by service <span class="n">${procs.length} processes · ${svcs.length} services · shared processes first: they are the platform candidates · a red edge marks a process no service uses</span></div>
+      <div class="tw"><table class="t grid"><thead>${head('<th>Process</th><th>Steps</th>')}</thead><tbody>${pRows}</tbody></table></div>
+      <div class="sec">Steps by service <span class="n">${steps.length} steps</span></div>
+      <div class="legend"><span>● the step that delivers the service</span><span>○ a step of a process that enables it</span></div>
+      <div class="tw"><table class="t grid"><thead>${head('<th>Step</th><th>Process</th><th>Stage</th>')}</thead><tbody>${sRows}</tbody></table></div>`;
+  }
+  function renderInsp() {
+    document.querySelectorAll('.tab').forEach((t) => t.classList.toggle('on', t.dataset.tab === sel.tab));
+    const s = svcOf(sel.service);
+    if (!s) { $('insp').innerHTML = '<div class="hint">Select a service.</div>'; return; }
+    const focus = sel.step || sel.process;
+    if (sel.tab === 'validation') {
+      let scope = null;
+      if (sel.step) scope = new Set([sel.step, ...iris(sel.step, C('produces')), ...iris(sel.step, C('measuredBy'))]);
+      else if (sel.process) scope = new Set([sel.process, ...A.processes.get(sel.process).steps]);
+      const fs = scope ? s.findings.filter((f) => scope.has(f.node)) : s.findings;
+      const e = count(fs, 'error'), w = count(fs, 'warning');
+      $('insp').innerHTML = `<h3>${esc(focus ? label(focus) : s.label)}</h3>
+        <p>${e} error${e === 1 ? '' : 's'}, ${w} warning${w === 1 ? '' : 's'} from the shapes the manifest requires and the assembly checks (typing, classification, insulation, no persona or value map content)${sel.step ? ', for this step, its outputs and measures' : sel.process ? ', for this process and its steps' : ', over the service, its processes, steps and their SIPOCM'}.</p>
+        ${fs.length ? fs.sort((a, b) => (a.sev === b.sev ? 0 : a.sev === 'error' ? -1 : 1)).map((f) => `<div class="find ${f.sev}"><div class="h"><span class="chip ${f.sev === 'error' ? 'bad' : 'warn'}">${f.sev}</span><span class="link" data-node="${esc(f.node)}">${esc(label(f.node))}</span></div><div class="m">${esc(f.msg)}</div><div class="w">${esc(f.why)} · ${esc(f.src)}</div></div>`).join('') : '<div class="note">All shapes hold.</div>'}`;
+      return;
+    }
+    if (sel.tab === 'usedby') {
+      if (!focus) { $('insp').innerHTML = '<div class="hint">Select a process or a step to see every service that uses it.</div>'; return; }
+      const uses = sel.step ? (A.stepUse.get(sel.step) || []) : A.processes.get(sel.process).services;
+      $('insp').innerHTML = `<h3>${esc(label(focus))}</h3><p>Copy number <b>${uses.length}</b>: ${uses.length > 1 ? 'a change to this ' + (sel.step ? 'step' : 'process') + ' changes every service below.' : 'only this service uses it.'}</p>
+        <table class="t"><thead><tr><th>Service</th><th>Role</th></tr></thead><tbody>${uses.map((u) => { const sv = svcOf(u); return `<tr><td><span class="link" data-svc-go="${esc(u)}">${esc(label(u))}</span></td><td>${sel.step ? (sv.delivery.includes(sel.step) ? 'delivers it' : 'step of ' + esc(label(processOf(sel.step) || ''))) : 'enables it'}</td></tr>`; }).join('')}</tbody></table>`;
+      return;
+    }
+    if (sel.step) {
+      const x = sel.step, m = sipocm(x);
+      $('insp').innerHTML = `<h3>${esc(label(x))}</h3>${one(x, SKOS + 'definition') ? `<p>${esc(one(x, SKOS + 'definition'))}</p>` : ''}
+        <dl>
+          <dt>Process</dt><dd>${processOf(x) ? `<span class="link" data-proc="${esc(processOf(x))}">${esc(label(processOf(x)))}</span>` : '—'}</dd>
+          <dt>Role here</dt><dd>${s.delivery.includes(x) ? 'Delivers this service (core:deliveryOf)' : 'A step of a process that enables this service'}</dd>
+          <dt>Kind</dt><dd>${esc(label(kindOf(x)))}</dd>
+          <dt>Stage</dt><dd>${esc(stageOf(x) || '—')}</dd>
+          <dt>Mode</dt><dd>${esc(modeOf(x))}</dd>
+          <dt>S · Suppliers</dt><dd>${m.supOut.map((r) => esc(label(r)) + ' <span class="sub">outside</span>').concat(m.sup.map((v) => esc(label(v.step)) + ` <span class="sub">supplies ${esc(label(v.rec))}</span>`)).join('<br>') || '—'}</dd>
+          <dt>I · Inputs</dt><dd>${list(m.ins)}</dd>
+          <dt>P · Performed by</dt><dd>${list(iris(x, C('performedBy')))}</dd>
+          <dt>Role fulfilled</dt><dd>${list(iris(x, C('fulfillsRole')))}</dd>
+          <dt>O · Outputs</dt><dd>${list(m.outs)}</dd>
+          <dt>C · Customers</dt><dd>${m.cusOut.map((r) => esc(label(r)) + ' <span class="sub">outside</span>').concat(m.cus.map((v) => esc(label(v.step)) + ` <span class="sub">uses ${esc(label(v.rec))}</span>`)).join('<br>') || '—'}</dd>
+          <dt>M · Measures</dt><dd>${m.measures.map((r) => esc(label(r)) + `<div class="sub">${esc(one(r, SKOS + 'definition') || '')} ${esc(noteVal(r, 'Unit:'))}${noteVal(r, 'Direction:') ? ', ' + esc(noteVal(r, 'Direction:')) : ''}</div>`).join('') || '—'}</dd>
+          <dt>Precedes</dt><dd>${list(iris(x, C('precedes')))}</dd>
+          <dt>Used by</dt><dd><span class="link" data-tab-go="usedby">${(A.stepUse.get(x) || []).length} service${(A.stepUse.get(x) || []).length === 1 ? '' : 's'}</span></dd>
+          <dt>Graph</dt><dd class="mono">${esc([...(st.graphsOf.get(x) || [])].filter((g) => A.assemblyGraphs.has(g) && g.includes('/step-graph/')).map((g) => g.replace(BASE, '…/')).join(', '))}</dd>
+          <dt>IRI</dt><dd class="mono">${esc(x)}</dd>
+        </dl>`;
+      return;
+    }
+    if (sel.process) {
+      const P = A.processes.get(sel.process);
+      $('insp').innerHTML = `<h3>${esc(P.label)}</h3>${one(P.iri, SKOS + 'definition') ? `<p>${esc(one(P.iri, SKOS + 'definition'))}</p>` : ''}
+        <dl><dt>Class</dt><dd>${esc(iris(P.iri, T).map(S.localName).join(', '))}</dd><dt>Kind</dt><dd>${esc(iris(P.iri, DCT + 'type').map(label).join(', '))}</dd>
+        <dt>Steps</dt><dd>${P.steps.map((x, i) => `${i + 1}. <span class="link" data-step-go="${esc(x)}">${esc(label(x))}</span>`).join('<br>')}</dd>
+        <dt>Enables</dt><dd><span class="link" data-tab-go="usedby">${P.services.length} service${P.services.length === 1 ? '' : 's'}</span></dd>
+        <dt>Graph</dt><dd class="mono">${esc([...(st.graphsOf.get(P.iri) || [])].filter((g) => A.assemblyGraphs.has(g) && g.includes('/process-graph/')).map((g) => g.replace(BASE, '…/')).join(', '))}</dd>
+        <dt>IRI</dt><dd class="mono">${esc(P.iri)}</dd></dl>`;
+      return;
+    }
+    $('insp').innerHTML = `<h3>${esc(s.label)}</h3>${s.scope ? `<p>${esc(s.scope)}</p>` : ''}
+      <dl><dt>Class</dt><dd>${esc(iris(s.iri, T).map(S.localName).join(', '))}</dd><dt>Kind</dt><dd>${esc(s.kinds.map(label).join(', '))}</dd>
+      <dt>Enabled by</dt><dd>${s.processes.map((p) => `<span class="link" data-proc="${esc(p)}">${esc(label(p))}</span>`).join('<br>') || '—'}</dd>
+      <dt>Delivered by</dt><dd>${list(s.delivery)}</dd>
+      <dt>Steps</dt><dd>${s.steps.length}</dd>
+      <dt>IRI</dt><dd class="mono">${esc(s.iri)}</dd></dl>
+      <div class="note">Select a process or a step to see its detail and every service that uses it. The buyer personas, their job steps and desired outcomes are a separate assembly, the value map.</div>`;
+  }
+  function renderAll() {
+    $('main').classList.toggle('cov', sel.view === 'coverage');
+    $('vCat').classList.toggle('on', sel.view === 'catalog'); $('vCov').classList.toggle('on', sel.view === 'coverage');
+    $('vCat').setAttribute('aria-selected', sel.view === 'catalog'); $('vCov').setAttribute('aria-selected', sel.view === 'coverage');
+    renderList(); crumbs(); renderMid(); renderInsp();
+  }
+  function pickStep(x) { sel.step = x; sel.process = x ? processOf(x) || null : sel.process; if (sel.tab === 'usedby' && !x) sel.tab = 'detail'; crumbs(); renderMid(); renderInsp(); }
+  function pickProcess(p) { sel.process = p; sel.step = null; crumbs(); renderMid(); renderInsp(); }
+
+  // ── events ───────────────────────────────────────────────────────────────
+  $('manSel').addEventListener('change', (e) => loadAssembly(e.target.value));
+  $('btnReload').addEventListener('click', () => loadManifests());
+  $('btnCfg').addEventListener('click', () => $('pop').classList.toggle('on'));
+  $('repoId').addEventListener('change', () => { S.lsSet('ke-repo', $('repoId').value.trim()); $('pop').classList.remove('on'); loadManifests(); });
+  ['svcSearch', 'fProc', 'fStage', 'fMode', 'fStatus'].forEach((id) => $(id).addEventListener(id === 'svcSearch' ? 'input' : 'change', () => A && renderList()));
+  $('vCat').addEventListener('click', () => { sel.view = 'catalog'; renderAll(); });
+  $('vCov').addEventListener('click', () => { sel.view = 'coverage'; renderAll(); });
+  document.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { sel.tab = t.dataset.tab; renderInsp(); }));
+  const activate = (fn) => (ev) => { if (ev.type === 'keydown' && ev.key !== 'Enter' && ev.key !== ' ') return; if (ev.type === 'keydown' && ev.target.closest('input,select')) return; if (ev.type === 'keydown') ev.preventDefault(); fn(ev); };
+  const onPick = activate((ev) => {
+    const t = ev.target;
+    const r = t.closest('[data-svc]'), c = t.closest('[data-step]'), g = t.closest('[data-go]'), pr = t.closest('[data-proc]'),
+          n = t.closest('[data-node]'), sg = t.closest('[data-svc-go]'), tg = t.closest('[data-tab-go]'), stg = t.closest('[data-step-go]'), cp = t.closest('[data-cov-proc]');
+    if (r) { sel.service = r.dataset.svc; sel.step = null; sel.process = null; if (sel.tab === 'usedby') sel.tab = 'detail'; renderAll(); }
+    else if (c) pickStep(sel.step === c.dataset.step ? null : c.dataset.step);
+    else if (pr) pickProcess(pr.dataset.proc);
+    else if (stg) pickStep(stg.dataset.stepGo);
+    else if (g) { if (g.dataset.go === 'catalog') sel.view = 'catalog'; sel.step = null; sel.process = null; renderAll(); }
+    else if (sg) { sel.service = sg.dataset.svcGo; renderAll(); }
+    else if (tg) { sel.tab = tg.dataset.tabGo; renderInsp(); }
+    else if (cp) { const P = A.processes.get(cp.dataset.covProc); sel.view = 'catalog'; if (P.services[0]) sel.service = P.services[0]; sel.step = null; sel.process = P.iri; renderAll(); }
+    else if (n) { const node = n.dataset.node, s = svcOf(sel.service); if (s && s.steps.includes(node)) { sel.tab = 'detail'; pickStep(node); } else if (A.processes.has(node)) { sel.tab = 'detail'; pickProcess(node); } }
+  });
+  document.addEventListener('click', onPick); document.addEventListener('keydown', onPick);
+  document.addEventListener('click', (e) => { if (!e.target.closest('.cfg')) $('pop').classList.remove('on'); });
+
+  window.KE_SA = { get model() { return A; }, sipocm: (x) => sipocm(x) };
+  loadManifests();
+})();
+</script>
+</body>
+</html>

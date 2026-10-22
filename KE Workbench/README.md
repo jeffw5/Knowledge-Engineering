@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **3.5.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **3.9.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -205,3 +205,35 @@ Load order in GraphDB: Ingestion › Reference ontologies › Load all three (BF
 Suppliers and customers inside the assembly are derived from the data flow; parties outside it come from `commercialops:hasSupplier` and `commercialops:hasCustomer`. Buyer personas, job steps and desired outcomes are not on this page: they are the value map, a separate assembly with its own manifest, for the Value Mapping page.
 
 Open a service directly with `tools/service-assembly.html?manifest=<manifest IRI>&service=<service id>`. GraphDB is the source of truth for assembly edits (D23); editing controls will be added to this page, and `_build/build_assembly.py` stays the release check and computes the assembly measures.
+
+## Operational areas and naming (3.6.0)
+
+The KE Domains folder is organized by operational area: Commercial Operations, Business Operations, HR Service Operations and Technical Operations, plus the APQC PCF reference registry and the enterprise service catalog (see `KE Domains/README.md` and design decisions D25–D27).
+- **Naming standard.** Asset names follow it ("Commercial Operations Ontology", "Domain Sales Taxonomy"). Nested domains join their levels with dots in one IRI segment (`…/domain-sales.partner-and-channel/`), and the §3.2 URI pattern check in `ingest/ke_ingest.py` accepts this.
+- **Loading.** Load everything with `KE Domains/graphdb-load.command`. It replaces the previous `KE Domains/Commercial Operations/graphdb-load.command`, and it removes the graphs of retired names such as `…/domain-customer-success/` after backing them up.
+- **Service Assembly** works as before, at the new IRIs.
+
+
+## Service topology (3.7.0)
+
+Service Assembly opens on **Topology**: the assembly as a tree, Operational area › Domain › Service › Process (nested domains such as `domain-sales.partner-and-channel` sit under their parent).
+
+1. Run `KE Domains/graphdb-load.command`, open **Service Assembly** and pick the assembly (for example *Sales assembly 0.4.0*).
+2. Each box shows its level, counts and validation status. A process box also shows its steps, *delivers* when one of its steps hands the service over, its **APQC** anchor (from its kind concept's `skos:exactMatch` or `skos:broadMatch`), and *shared · N* with a dashed edge when several services use it.
+3. **Click a process**: its SIPOCM appears below the tree, one row per step in order, with a *Check* column for each step's validation status. **Click a service** for the SIPOCM of all its processes. Click a step row for its detail on the right; *Validation* and *Used by* work as on the Services view.
+4. *Expand all*, *Collapse all* (the ▾ on a box collapses just that branch) and *Print* for sign-off.
+
+Rolled-up status on areas and domains counts each finding once, even when a shared process is checked under several services. The other views open with `?view=catalog` or `?view=coverage`.
+
+## Topology across every domain (3.8.0)
+
+- The topology lists every operational area and all of its domains, from the area taxonomies (L1 › L2 › L3). Domains without a service assembly are dashed boxes: *ontology x.y.z* if the domain ontology is loaded, *not started* if the domain is only in the area taxonomy.
+- **Filters:** Area, then L1, L2 and L3 (each shows the children of the level above), and *Only domains with services*. The filter also applies to the Services view and is remembered; `?domain=<domain slug>` sets it from a link.
+- **All service assemblies** appears at the top of the assembly list once more than one is loaded, and reads them all into one topology.
+
+## Commercial Operations on APQC PCF 7.4 (3.9.0)
+
+- **Every Commercial Operations domain is assembled**: Sales, Sales.Partner & Channel, Marketing and Pricing on APQC category 3.0, Customer Care on 6.0 (design decisions D28, D29 in `KE Domains/review/design-decisions.md`). Run `KE Domains/graphdb-load.command`, then Service Assembly › Reload.
+- **Topology on APQC's levels**: Area › Domain › process group (L2) › process (L3) › activity (L4); the L2 / L3 / L4 buttons set the depth. Click an activity for its SIPOCM, one row per step (the L5 tasks). Each domain also lists its services.
+- **Reference**: `reference/apqc-pcf/index.html` holds the version in use (7.4, August 2024), the links to APQC's PDF and Excel, categories 3.0 and 6.0 as an outline, and the 7.2.1 → 7.4 crosswalk. The master copy is `KE Domains/Reference/apqc-pcf/`. APQC may ask you to sign in to download, so to keep the PDF or Excel itself, save it in both folders.
+- Release Notes entries can carry `links` (label, href, note), shown under *Reference*.

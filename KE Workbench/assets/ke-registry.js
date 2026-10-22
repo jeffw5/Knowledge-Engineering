@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '3.5.0',
+  version: '3.9.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -25,7 +25,7 @@ window.KE_REGISTRY = {
           desc: 'Load imported ontologies and taxonomies on the left, drag terms onto a canvas and connect them with relations from BFO.',
           functions: ['Unified modeling'], std: ['3.1', '3.7', '3.9'] },
         { id: 'service-assembly', code: 'SA', file: 'tools/service-assembly.html', title: 'Service Assembly', live: true, isNew: true,
-          desc: 'Service › Process › Process step: the services of a domain assembly, the processes that enable each one and their steps in order, with the SIPOCM (supplier, input, process step, output, customer, measure) of every step, where each process and step is reused, the SHACL shapes and assembly checks for each service, and coverage of processes and steps by service. Read only.',
+          desc: 'Service topology (Operational area › Domain › Service › Process, with the SIPOCM of a process one row per step) and Service › Process › Process step: the services of a domain assembly, the processes that enable each one and their steps in order, with the SIPOCM (supplier, input, process step, output, customer, measure) of every step, where each process and step is reused, the SHACL shapes and assembly checks for each service, and coverage of processes and steps by service. Read only.',
           functions: ['Impact visualization', 'Governance workflow'], std: ['3.1', '3.7', '3.9'] },
         { id: 'model-editor', code: 'ME', file: 'tools/model-editor.html', title: 'Model Editor (classic)', live: true, hidden: true,
           desc: 'The original node-level ontology editor, kept for reference.',
@@ -96,6 +96,9 @@ window.KE_REGISTRY = {
         { id: 'release-notes', code: 'RN', file: 'tools/release-notes.html', title: 'Release Notes', isNew: true,
           desc: 'What changed in each workbench release: new tools and features, improvements and fixes.',
           functions: ['Artifact versioning'], std: [] },
+        { id: 'apqc-pcf', code: 'PC', file: 'reference/apqc-pcf/index.html', title: 'APQC PCF 7.4', isNew: true,
+          desc: 'The APQC Process Classification Framework the Commercial Operations domains are built on: the version in use and APQC\u2019s links, categories 3.0 and 6.0 as a searchable outline to L5, and the 7.2.1 \u2192 7.4 crosswalk.',
+          functions: ['Impact visualization'], std: ['3.9'] },
         { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v1.9_DRAFT.pdf', title: 'Semantic Governance v1.9',
           desc: 'The standards guide: services, architecture and integration, and Part III knowledge engineering standards.',
           functions: [], std: [] }

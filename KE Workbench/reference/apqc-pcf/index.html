@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APQC PCF Reference</title>
+<link rel="stylesheet" href="../../assets/ke-theme.css">
+<script src="../../assets/ke-bridge.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:var(--ke-bg);color:var(--ke-ink);font:13.5px/1.5 var(--ke-sans)}
+.wrap{max-width:980px;margin:0 auto;padding:26px 24px 60px}
+.eyebrow{font:700 11px/1.2 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+h1{font-size:26px;margin:8px 0 4px}
+.lede{color:var(--ke-ink2);max-width:760px;margin:0 0 14px}
+.card{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);padding:14px 16px;margin:0 0 14px}
+dl{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;margin:0}
+dt{color:var(--ke-muted)} dd{margin:0}
+a{color:var(--ke-accent)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+.bar input{flex:1;min-width:200px;background:var(--ke-sunk);border:1px solid var(--ke-line);border-radius:var(--ke-radius);padding:6px 9px;font:inherit;color:inherit}
+.seg{display:inline-flex;border:1px solid var(--ke-line);border-radius:var(--ke-radius);overflow:hidden}
+.seg button{background:var(--ke-surface);border:0;border-right:1px solid var(--ke-line);padding:5px 11px;cursor:pointer;font:inherit;color:inherit}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--ke-accent);color:var(--ke-accent-ink);font-weight:700}
+.el{display:grid;grid-template-columns:88px 1fr auto;gap:10px;padding:3px 8px;border-bottom:1px solid var(--ke-line-soft)}
+.el .n{font-family:var(--ke-mono);font-size:12px;color:var(--ke-muted)}
+.el .id{font-family:var(--ke-mono);font-size:11px;color:var(--ke-faint)}
+.el.l1{font-weight:700;font-size:15px;background:var(--ke-band)}
+.el.l2{font-weight:700}
+.el.l3{font-weight:600}
+.el.l5 .t{color:var(--ke-ink2)}
+.foot{font-size:12px;color:var(--ke-muted);margin-top:16px}
+.hint{color:var(--ke-muted);padding:10px}
+@media (max-width:600px){dl{grid-template-columns:1fr}.el{grid-template-columns:70px 1fr}.el .id{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Reference · Process framework</div>
+  <h1>APQC Process Classification Framework 7.4</h1>
+  <p class="lede">The process framework the Commercial Operations domains are built on: Sales, Sales.Partner &amp; Channel, Marketing and Pricing on category 3.0, Customer Care on category 6.0. Each domain instantiates the activities (L4) it owns; their tasks (L5) are its steps (design decision D28).</p>
+  <div class="card"><dl>
+    <dt>Framework</dt><dd>APQC Process Classification Framework (PCF), Cross-Industry</dd>
+    <dt>Version in use</dt><dd><b>7.4</b>, published 21 August 2024 · <a href="https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-12" target="_blank" rel="noopener">PDF</a> · <a href="https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-excel-11" target="_blank" rel="noopener">Excel</a></dd>
+    <dt>Latest release</dt><dd>8.0, 27 February 2026 · <a href="https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-13" target="_blank" rel="noopener">PDF</a> · <a href="https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-excel-12" target="_blank" rel="noopener">Excel</a> · not adopted yet (open question 29)</dd>
+    <dt>About the PCF</dt><dd><a href="https://www.apqc.org/pcf" target="_blank" rel="noopener">www.apqc.org/pcf</a></dd>
+    <dt>In GraphDB</dt><dd>APQC PCF Taxonomy 0.2.0, <code>https://www.insperity.com/taxonomy/apqc-pcf/</code> (309 elements; master copy in <code>KE Domains/Reference/apqc-pcf/</code>)</dd>
+    <dt>Files here</dt><dd><a href="apqc-pcf-7.4-category-3.txt">category 3.0</a> · <a href="apqc-pcf-7.4-category-6.txt">category 6.0</a> · <a href="crosswalk-7.2.1-to-7.4.csv">crosswalk 7.2.1 → 7.4</a> · <a href="README.md">README</a></dd>
+  </dl></div>
+  <div class="bar">
+    <span class="seg" id="cat"><button data-c="3" class="on">3.0 Market and sell</button><button data-c="6">6.0 Customer service</button></span>
+    <span class="seg" id="lvl"><button data-l="3">to L3</button><button data-l="4" class="on">to L4</button><button data-l="5">to L5</button></span>
+    <input id="q" placeholder="Filter by name, number or element ID" aria-label="Filter">
+  </div>
+  <div class="card" style="padding:4px 0" id="out"><div class="hint">Loading…</div></div>
+  <p class="foot">The Process Classification Framework is an open standard developed by APQC, a nonprofit that advances the use of benchmarking and best practices. APQC licenses it for use, copies and derivative works provided APQC is credited; the full attribution statement is on the copyright page of the PCF and at www.apqc.org/pcf. Names are shown as APQC published them.</p>
+</div>
+<script>
+(function () {
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const st = { c: '3', l: 4, q: '' }, cache = {};
+  async function load(c) {
+    if (cache[c]) return cache[c];
+    const t = await (await fetch('apqc-pcf-7.4-category-' + c + '.txt', { cache: 'no-store' })).text();
+    return (cache[c] = t.split('\n').map((l) => l.trim()).filter(Boolean).map((l) => {
+      const m = l.match(/^(\d+(?:\.\d+)*)\s+(.*?)\s*\((\d+)\)$/); if (!m) return null;
+      const n = m[1].replace(/\.0$/, ''); return { n: m[1], name: m[2], id: m[3], lv: n.split('.').length };
+    }).filter(Boolean));
+  }
+  async function render() {
+    let els;
+    try { els = await load(st.c); } catch (e) { document.getElementById('out').innerHTML = '<div class="hint">Could not read the category file. Open this page through the workbench (http://localhost:3000/).</div>'; return; }
+    const q = st.q.toLowerCase();
+    const rows = els.filter((e) => e.lv <= st.l && (!q || e.name.toLowerCase().includes(q) || e.n.startsWith(q) || e.id === q));
+    document.getElementById('out').innerHTML = rows.length ? rows.map((e) => `<div class="el l${e.lv}" style="padding-left:${8 + (e.lv - 1) * 18}px"><span class="n">${esc(e.n)}</span><span class="t">${esc(e.name)}</span><span class="id">${esc(e.id)}</span></div>`).join('') : '<div class="hint">No element matches.</div>';
+  }
+  document.getElementById('cat').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; st.c = b.dataset.c; [...e.currentTarget.children].forEach((x) => x.classList.toggle('on', x === b)); render(); });
+  document.getElementById('lvl').addEventListener('click', (e) => { const b = e.target.closest('button'); if (!b) return; st.l = Number(b.dataset.l); [...e.currentTarget.children].forEach((x) => x.classList.toggle('on', x === b)); render(); });
+  document.getElementById('q').addEventListener('input', (e) => { st.q = e.target.value.trim(); render(); });
+  render();
+})();
+</script>
+</body>
+</html>

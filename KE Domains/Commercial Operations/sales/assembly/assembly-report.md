@@ -1,33 +1,33 @@
 # Sales assembly report
 
-Built 2026-10-20T17:07:55Z by `_build/build_assembly.py`.
+Built 2026-10-22T04:04:49Z by `_build/build_assembly.py`.
 
-- **Sales assembly 0.3.0** (`https://www.insperity.com/resource/domain-sales/manifest/0.3.0`): Service › Process › Process step (D24).
-- **Sales value map 0.1.0** (`https://www.insperity.com/resource/domain-sales/manifest/value-map-0.1.0`): a separate assembly that bridges the Sales assembly to the PEO buyer personas.
+- **Sales assembly 0.5.0** (`https://www.insperity.com/resource/domain-sales/manifest/0.5.0`): Service › Process › Process step (D24).
+- **Sales value map 0.3.0** (`https://www.insperity.com/resource/domain-sales/manifest/value-map-0.3.0`): a separate assembly that bridges the Sales assembly to the PEO buyer personas.
 
 ## Components
 
 | Graph | Kind | Release | Version | Resources | Triples |
 |---|---|---|---|---:|---:|
-| `persona-graph-domain-commercial-operations-peo-buyer-personas-0.1.0` | persona graph | Sales value map | 0.1.0 | 289 | 3552 |
-| `party-graph-domain-sales-sales-parties-0.1.0` | party graph | Sales assembly | 0.1.0 | 5 | 72 |
-| `step-graph-domain-sales-census-request-0.1.0` | step graph | Sales assembly | 0.1.0 | 3 | 60 |
-| `step-graph-domain-sales-census-validation-0.1.0` | step graph | Sales assembly | 0.1.0 | 4 | 73 |
-| `step-graph-domain-sales-current-cost-collection-0.2.0` | step graph | Sales assembly | 0.2.0 | 4 | 74 |
-| `step-graph-domain-sales-workforce-cost-forecasting-0.2.0` | step graph | Sales assembly | 0.2.0 | 3 | 61 |
-| `step-graph-domain-sales-employment-cost-comparison-0.2.0` | step graph | Sales assembly | 0.2.0 | 3 | 63 |
-| `step-graph-domain-sales-current-benefits-collection-0.1.0` | step graph | Sales assembly | 0.1.0 | 4 | 75 |
-| `step-graph-domain-sales-benefits-plan-comparison-0.2.0` | step graph | Sales assembly | 0.2.0 | 3 | 63 |
-| `process-graph-domain-sales-census-collection-0.1.0` | process graph | Sales assembly | 0.1.0 | 2 | 36 |
-| `process-graph-domain-sales-employment-cost-analysis-0.1.0` | process graph | Sales assembly | 0.1.0 | 3 | 38 |
-| `process-graph-domain-sales-benefits-plan-analysis-0.1.0` | process graph | Sales assembly | 0.1.0 | 2 | 36 |
-| `service-graph-domain-sales-total-cost-of-employment-analysis-0.2.0` | service graph | Sales assembly | 0.2.0 | 4 | 35 |
-| `service-graph-domain-sales-benefits-comparison-0.2.0` | service graph | Sales assembly | 0.2.0 | 4 | 35 |
-| `manifest-domain-sales-0.3.0` | manifest | Sales assembly | 0.3.0 | 1 | 51 |
-| `value-map-domain-sales-sales-buyer-value-0.1.0` | value map | Sales value map | 0.1.0 | 14 | 127 |
-| `manifest-domain-sales-value-map-0.1.0` | manifest | Sales value map | 0.1.0 | 1 | 42 |
+| `persona-graph-commercial-operations-peo-buyer-personas-0.2.0` | persona graph | Sales value map | 0.2.0 | 289 | 3552 |
+| `party-graph-domain-sales-sales-parties-0.2.0` | party graph | Sales assembly | 0.2.0 | 5 | 72 |
+| `step-graph-domain-sales-census-request-0.2.0` | step graph | Sales assembly | 0.2.0 | 3 | 60 |
+| `step-graph-domain-sales-census-validation-0.2.0` | step graph | Sales assembly | 0.2.0 | 4 | 73 |
+| `step-graph-domain-sales-current-cost-collection-0.3.0` | step graph | Sales assembly | 0.3.0 | 4 | 74 |
+| `step-graph-domain-sales-workforce-cost-forecasting-0.3.0` | step graph | Sales assembly | 0.3.0 | 3 | 61 |
+| `step-graph-domain-sales-employment-cost-comparison-0.3.0` | step graph | Sales assembly | 0.3.0 | 3 | 63 |
+| `step-graph-domain-sales-current-benefits-collection-0.2.0` | step graph | Sales assembly | 0.2.0 | 4 | 75 |
+| `step-graph-domain-sales-benefits-plan-comparison-0.3.0` | step graph | Sales assembly | 0.3.0 | 3 | 63 |
+| `process-graph-domain-sales-census-collection-0.2.0` | process graph | Sales assembly | 0.2.0 | 2 | 36 |
+| `process-graph-domain-sales-employment-cost-analysis-0.2.0` | process graph | Sales assembly | 0.2.0 | 3 | 38 |
+| `process-graph-domain-sales-benefits-plan-analysis-0.2.0` | process graph | Sales assembly | 0.2.0 | 2 | 36 |
+| `service-graph-domain-sales-total-cost-of-employment-analysis-0.3.0` | service graph | Sales assembly | 0.3.0 | 4 | 35 |
+| `service-graph-domain-sales-benefits-comparison-0.3.0` | service graph | Sales assembly | 0.3.0 | 4 | 35 |
+| `manifest-domain-sales-0.5.0` | manifest | Sales assembly | 0.5.0 | 1 | 79 |
+| `value-map-domain-sales-sales-buyer-value-0.2.0` | value map | Sales value map | 0.2.0 | 14 | 127 |
+| `manifest-domain-sales-value-map-0.3.0` | manifest | Sales value map | 0.3.0 | 1 | 42 |
 
-Superseded and moved to `archive/superseded-assembly-0.3.0/`: `manifest-domain-sales-0.2.0.ttl`, `process-graph-domain-sales-standard-selling-process-0.1.0.ttl`, `service-graph-domain-sales-benefits-comparison-0.1.0.ttl`, `service-graph-domain-sales-total-cost-of-employment-analysis-0.1.0.ttl`, `step-graph-domain-sales-benefits-plan-comparison-0.1.0.ttl`, `step-graph-domain-sales-census-collection-0.1.0.ttl`, `step-graph-domain-sales-current-cost-collection-0.1.0.ttl`, `step-graph-domain-sales-employment-cost-comparison-0.1.0.ttl`, `step-graph-domain-sales-workforce-cost-forecasting-0.1.0.ttl`, `manifest-domain-sales-0.2.0.trig`, `process-graph-domain-sales-standard-selling-process-0.1.0.trig`, `service-graph-domain-sales-benefits-comparison-0.1.0.trig`, `service-graph-domain-sales-total-cost-of-employment-analysis-0.1.0.trig`, `step-graph-domain-sales-benefits-plan-comparison-0.1.0.trig`, `step-graph-domain-sales-census-collection-0.1.0.trig`, `step-graph-domain-sales-current-cost-collection-0.1.0.trig`, `step-graph-domain-sales-employment-cost-comparison-0.1.0.trig`, `step-graph-domain-sales-workforce-cost-forecasting-0.1.0.trig`.
+Superseded and moved to `archive/superseded-assembly-0.5.0/`: `manifest-domain-sales-0.4.0.ttl`, `manifest-domain-sales-value-map-0.2.0.ttl`, `manifest-domain-sales-0.4.0.trig`, `manifest-domain-sales-value-map-0.2.0.trig`.
 
 ## How each service is assembled
 
@@ -58,23 +58,23 @@ Suppliers and customers marked *(outside)* are stated with has supplier and has 
 
 ## Checks
 
-- Errors: **0** · warnings: **42**.
+- Errors: **0** · warnings: **625**.
 - For each manifest: every instance is typed by a core or domain class and classified by an existing taxonomy concept; every graph refers only to the core, the Commercial Operations container and its own domain; every resource referred to is defined by a component in that manifest. The Sales assembly does not refer to the persona graph or the value map.
 - SHACL: 35 node shapes (core, Commercial Operations, Sales and the other domains) run over the Sales assembly, and again over the assembly with the value map, after the ontologies' owl:inverseOf pairs are applied.
 
-**Sales assembly:** 36 findings.
+**Sales assembly:** 360 findings.
 
 | Severity | Shape | Finding | Focus nodes |
 |---|---|---|---|
-| warn | `process-shape` (core) | A process should have at least one process step. | 7: step/census-request, step/census-validation, step/current-cost-collection, step/workforce-cost-forecasting, step/employment-cost-comparison, step/current-benefits-collection … |
-| warn | `asset-shape` (core) | An asset should have a lifecycle. | 28: sales-parties/, agent/sales-advisor, census-request/, record/census-template, census-validation/, record/census … |
-| warn | `census-shape` (domain-commercial-operations) | A census must be about the employees it lists. | 1: record/census |
+| warn | `process-shape` (core) | A process should have at least one process step. | 63: step/census-request, step/census-validation, step/current-cost-collection, step/workforce-cost-forecasting, step/employment-cost-comparison, step/current-benefits-collection … |
+| warn | `asset-shape` (core) | An asset should have a lifecycle. | 296: sales-parties/, agent/sales-advisor, census-request/, record/census-template, census-validation/, record/census … |
+| warn | `census-shape` (commercial-operations) | A census must be about the employees it lists. | 1: record/census |
 
 **Added by the value map:** 6 findings.
 
 | Severity | Shape | Finding | Focus nodes |
 |---|---|---|---|
-| warn | `asset-shape` (core) | An asset should have a lifecycle. | 6: peo-buyer-personas/, job-study/js-ca, job-study/js-hr, sales-buyer-value/, value-map-0.1.0/, manifest/value-map-0.1.0 |
+| warn | `asset-shape` (core) | An asset should have a lifecycle. | 6: peo-buyer-personas/, job-study/js-ca, job-study/js-hr, sales-buyer-value/, value-map-0.3.0/, manifest/value-map-0.3.0 |
 
 ## Assembly measures
 
@@ -108,7 +108,7 @@ Assembled together, the two services take **115** joins, against **142** built s
 
 All parts, with copy number and joins: `assembly-measures.csv`.
 
-## Value map (Sales value map 0.1.0)
+## Value map (Sales value map 0.3.0)
 
 A separate assembly (D24). For each job step a service's steps address (core:addresses, in the value-map graph), each desired outcome (persona graph) is compared with what the service delivers today (delivered outcome, value-map graph). Same job step, same metric card. These results will be shown on the Value Mapping page.
 

@@ -1,6 +1,6 @@
-# Marketing
+# Domain Marketing
 
-A domain of the Commercial Operations operational area. It refers only to the core (Baseline Core v1.0) and to the Commercial Operations container, never to a sibling domain, so it can change without affecting them.
+A domain of the Commercial Operations operational area. Its classes, relations and concepts refer only to the core (Baseline Core v1.0), the Commercial Operations ontology, never to a sibling domain, so it can change without affecting them. It may cite vocabulary primitives of any domain (D27).
 
 The marketing ontology. It extends the core domain ontology and the Commercial Operations ontology with marketing campaigns and with competitive intelligence and battlecards as sourced information assets about competitors and markets.
 
@@ -8,12 +8,12 @@ The marketing ontology. It extends the core domain ontology and the Commercial O
 
 | Asset | Named graph | Triples |
 |---|---|---:|
-| `ttl/vocabulary-domain-marketing-0.1.1.ttl` · `trig/vocabulary-domain-marketing-0.1.1.trig` | `https://www.insperity.com/vocabulary/domain-marketing/` | 451 |
-| `ttl/taxonomy-domain-marketing-0.1.1.ttl` · `trig/taxonomy-domain-marketing-0.1.1.trig` | `https://www.insperity.com/taxonomy/domain-marketing/` | 1051 |
-| `ttl/ontology-domain-marketing-0.1.1.ttl` · `trig/ontology-domain-marketing-0.1.1.trig` | `https://www.insperity.com/ontology/domain-marketing/` | 87 |
-| `ttl/shapes-domain-marketing-0.1.1.ttl` · `trig/shapes-domain-marketing-0.1.1.trig` | `https://www.insperity.com/shapes/domain-marketing/` | 82 |
+| `ttl/vocabulary-domain-marketing-0.2.0.ttl` · `trig/vocabulary-domain-marketing-0.2.0.trig` | `https://www.insperity.com/vocabulary/domain-marketing/` | 452 |
+| `ttl/taxonomy-domain-marketing-0.2.0.ttl` · `trig/taxonomy-domain-marketing-0.2.0.trig` | `https://www.insperity.com/taxonomy/domain-marketing/` | 1052 |
+| `ttl/ontology-domain-marketing-0.2.0.ttl` · `trig/ontology-domain-marketing-0.2.0.trig` | `https://www.insperity.com/ontology/domain-marketing/` | 88 |
+| `ttl/shapes-domain-marketing-0.2.0.ttl` · `trig/shapes-domain-marketing-0.2.0.trig` | `https://www.insperity.com/shapes/domain-marketing/` | 83 |
 
-Built from `../_build/spec_marketing.py` by `../_build/build_domains.py`. Edit the spec and rebuild, or edit the Turtle in the KE Workbench; a rebuild overwrites hand edits to these files.
+Built from `KE Domains/_build/spec_marketing.py` by `KE Domains/_build/build_domains.py`. Edit the spec and rebuild, or edit the Turtle in the KE Workbench; a rebuild overwrites hand edits to these files.
 
 ## Vocabulary (34 primitives)
 
@@ -29,13 +29,13 @@ campaign, audience, funnel, awareness, positioning, demand ⁺, generation ⁺, 
 | Marketing channel | `core:asset` | 8 |  |
 | Marketing content | `core:information-asset` | 3 |  |
 | Audience definition | `core:information-asset` | 2 |  |
-| Marketing signal | `core:information-asset` | 2 | `domain-commercial-operations/commercial-signal` |
+| Marketing signal | `core:information-asset` | 2 | `commercial-operations/commercial-signal` |
 | Buyer persona | `core:persona` | 0 | `core-persona/persona` |
 | Funnel stage | `core:lifecycle-status` | 5 |  |
 | Marketing measure | `core:measure` | 6 | `core-measure/key-performance-indicator` |
 | Competitive intelligence | `marketing:intelligence` | 5 | `core-services/competitive-analysis` |
 | Competitive intelligence activity | `core:process-step` | 5 | `core-services/competitive-analysis` |
-| Competitive alternative | `commercialops:competitor` | 6 | `domain-commercial-operations/competitor` |
+| Competitive alternative | `commercialops:competitor` | 6 | `commercial-operations/competitor` |
 | Competitive insight | `marketing:intelligence` | 4 |  |
 | Competitive outcome | `core:event` | 2 |  |
 

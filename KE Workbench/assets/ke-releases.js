@@ -2,6 +2,54 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '3.9.0', date: '2026-10-21', title: 'Commercial Operations on APQC PCF 7.4: every domain, down to the activity',
+    links: [
+      { label: 'APQC PCF reference (in the workbench)', href: '../reference/apqc-pcf/index.html', note: 'version 7.4 in use, categories 3.0 and 6.0 browsable to L5, the 7.2.1 \u2192 7.4 crosswalk and the attribution' },
+      { label: 'APQC Process Classification Framework, Cross-Industry, version 7.4 (PDF)', href: 'https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-pdf-12', note: 'published 21 August 2024 by APQC' },
+      { label: 'APQC Process Classification Framework, Cross-Industry, version 7.4 (Excel)', href: 'https://www.apqc.org/resource-library/resource-listing/apqc-process-classification-framework-pcf-cross-industry-excel-11' },
+      { label: 'About the APQC PCF', href: 'https://www.apqc.org/pcf', note: 'version 8.0 was released 27 February 2026 and is not adopted yet (open question 29)' }
+    ],
+    groups: [
+      { kind: 'new', items: [
+        'All five Commercial Operations domains have a service assembly, built on APQC PCF 7.4 (design decisions D28, D29): Sales 0.5.0 (16 services, 44 activities, 63 steps), Sales.Partner & Channel 0.1.0 (5, 26, 30), Marketing 0.1.0 (11, 54, 56), Pricing 0.1.0 (4, 15, 17) and Customer Care 0.1.0 (9, 39, 49), all on category 3.0 except Customer Care, which is on 6.0 Manage Customer Service. Load them with KE Domains/graphdb-load.command; \u201cAll service assemblies (5)\u201d is the default.',
+        'The topology shows each domain\u2019s processes on APQC\u2019s levels: process group (L2) \u203a process (L3) \u203a activity (L4), with the activity\u2019s tasks (L5) as its steps. L2 and L3 come from the APQC reference registry, so a process whose activities are owned by several domains is shown under each, with \u201cowned by\u201d for the domain that owns it. L2 / L3 / L4 buttons set how deep the tree opens. PEO extensions (activities APQC does not list, such as underwriting and quoting) sit under the element they extend.',
+        'Click an activity for its SIPOCM, one row per step, with the domain of each supplier and customer; click a process group or process for the SIPOCM of all its activities in the domain. Each domain also lists its services, and a service opens the SIPOCM of the activities that enable it.',
+        '\u201cShow not applicable\u201d adds the APQC elements a PEO does not perform (warranty, recall, packaging and the like), as recorded in the registry. \u201cSet aside known core warnings\u201d (on by default) keeps the two warnings the core shapes raise on every assembly (open question 16) out of the counts; the Validation tab still lists them.',
+        'APQC PCF reference page (Reference \u203a apqc-pcf in the workbench folder): the version in use and the official links, categories 3.0 and 6.0 as a searchable outline to L5, and the crosswalk from 7.2.1.',
+        'Release Notes can list references with each release, as below.'
+      ]}
+    ]
+  },
+  {
+    version: '3.8.0', date: '2026-10-21', title: 'Service topology across every domain, filtered by L1, L2 and L3',
+    groups: [
+      { kind: 'new', items: [
+        'The topology shows every operational area and all of its domains, read from the area taxonomies (the domain concepts under each area\u2019s top concept, nested L1 \u203a L2 \u203a L3). A domain with no service assembly is drawn as a dashed box marked \u201cno service model yet\u201d, with \u201contology x.y.z\u201d when its ontology is loaded or \u201cnot started\u201d when it is only listed in the area taxonomy. Domain names follow the naming standard (Domain Sales, Domain Sales.Partner & Channel).',
+        'Filter by operational area and by L1, L2 and L3 domain (each list offers the children of the level above), and tick \u201cOnly domains with services\u201d to hide the gaps. The filter also narrows the Services view, is remembered in the browser, and can be set in the address with ?domain=domain-sales.partner-and-channel.',
+        'When more than one service assembly is loaded, \u201cAll service assemblies\u201d at the top of the assembly list reads them all into one topology.'
+      ]}
+    ]
+  },
+  {
+    version: '3.7.0', date: '2026-10-21', title: 'Service Assembly: service topology with SIPOCM by process',
+    groups: [
+      { kind: 'new', items: [
+        'Topology view on Service Assembly (now the default): the assembly drawn as a tree, Operational area \u203a Domain (and nested domains) \u203a Service \u203a Process. The area is read from the domain ontology\u2019s dcterms:isPartOf and the names from the asset titles (naming standard, D26). Each box shows its counts and validation status; a process also shows its steps, whether it delivers the service, the APQC element its kind is anchored to (exact or broad match) and, with a dashed edge, that several services share it.',
+        'Click a process to see its SIPOCM below the tree, one row per step in order: supplier, input, process step (and who performs it), output, customer, measure, and a Check column with each step\u2019s validation status. Click a service for the SIPOCM of every process that enables it. Clicking a step opens its detail in the inspector; Validation and Used by work as on the Services view.',
+        'Expand all, Collapse all and Print (prints the tree and the SIPOCM table for sign-off). Open the other views directly with ?view=catalog or ?view=coverage.'
+      ]}
+    ]
+  },
+  {
+    version: '3.6.0', date: '2026-10-21', title: 'Operational areas and the naming standard',
+    groups: [
+      { kind: 'improved', items: [
+        'Standards checks (ke_ingest.py, used by Ingestion, Conformance Review and the KE Domains builds) accept the naming standard for nested domains: an IRI segment of lower-case hyphenated words with levels joined by dots, such as …/taxonomy/domain-sales.partner-and-channel/ (§3.2 as amended, D26).',
+        'Service Assembly reads the Commercial Operations ontology at its new IRI (…/ontology/commercial-operations/), and checks insulation by operational area: a domain may refer to the core, its own area (read from its ontology\u2019s dcterms:isPartOf), its parent domains and itself; vocabulary primitives may be cited from any domain (D27).'
+      ]}
+    ]
+  },
+  {
     version: '3.5.0', date: '2026-10-20', title: 'Service Assembly: Service › Process › Process step, with SIPOCM',
     groups: [
       { kind: 'new', items: [

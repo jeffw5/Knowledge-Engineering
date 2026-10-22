@@ -1,0 +1,950 @@
+@prefix agg: <http://jena.apache.org/ARQ/function/aggregate#> .
+@prefix : <http://vocabularies.verizon.com/vocabulary-application-business-taxonomy/> .
+@prefix logictax: <https://www.insperity.com/taxonomy/core-logic/> .
+@prefix customersuccesstax: <https://www.insperity.com/taxonomy/domain-customer-success/> .
+@prefix geof: <http://www.opengis.net/def/function/geosparql/> .
+@prefix personatax: <https://www.insperity.com/taxonomy/core-persona/> .
+@prefix productvoc: <https://www.insperity.com/vocabulary/core-product/> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix spif: <http://spinrdf.org/spif#> .
+@prefix path: <http://www.ontotext.com/path#> .
+@prefix productshp: <https://www.insperity.com/shapes/core-product/> .
+@prefix timetax: <https://www.insperity.com/taxonomy/core-time/> .
+@prefix customersuccessshp: <https://www.insperity.com/shapes/domain-customer-success/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix domainfacilities: <https://www.insperity.com/ontology/domain-facilities/> .
+@prefix apf: <http://jena.apache.org/ARQ/property#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix vzdatadomaintax: <https://www.insperity.com/taxonomy/vz-data-domain/> .
+@prefix locationvoc: <https://www.insperity.com/vocabulary/core-location/> .
+@prefix assetvoc: <https://www.insperity.com/vocabulary/core-asset/> .
+@prefix applicationbusinesstaxonomyvoc: <https://www.insperity.com/vocabulary/application-business-taxonomy/> .
+@prefix logicvoc: <https://www.insperity.com/vocabulary/core-logic/> .
+@prefix producttax: <https://www.insperity.com/taxonomy/core-product/> .
+@prefix pricingcontractstax: <https://www.insperity.com/taxonomy/domain-pricing-and-contracts/> .
+@prefix domainfacilitiesvoc: <https://www.insperity.com/vocabulary/domain-facilities/> .
+@prefix ag: <http://example.org/ontology/analytics-governance/> .
+@prefix technicalservicesvoc: <https://www.insperity.com/vocabulary/core-technicalservices/> .
+@prefix applicationdatadomainvoc: <https://www.insperity.com/vocabulary/application-data-domain/> .
+@prefix locationtax: <https://www.insperity.com/taxonomy/core-location/> .
+@prefix math: <http://www.w3.org/2005/xpath-functions/math> .
+@prefix domaincustomersupport: <https://www.insperity.com/ontology/domain-customer-support/> .
+@prefix aig: <http://example.org/ontology/ai-governance/> .
+@prefix legalshp: <https://www.insperity.com/shapes/domain-legal/> .
+@prefix decisiontax: <https://www.insperity.com/taxonomy/core-decision/> .
+@prefix domaincommercialoperationsvoc: <https://www.insperity.com/vocabulary/domain-commercial-operations/> .
+@prefix domainprocurement: <https://www.insperity.com/ontology/domain-procurement/> .
+@prefix eventtax: <https://www.insperity.com/taxonomy/core-event/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix domainsalesshp: <https://www.insperity.com/shapes/domain-sales/> .
+@prefix salesvoc: <https://www.insperity.com/vocabulary/domain-sales/> .
+@prefix valuevoc: <https://www.insperity.com/vocabulary/core-value/> .
+@prefix domainmarketing: <https://www.insperity.com/ontology/domain-marketing/> .
+@prefix partnerchannelshp: <https://www.insperity.com/shapes/domain-partner-and-channel/> .
+@prefix legalvoc: <https://www.insperity.com/vocabulary/domain-legal/> .
+@prefix pricingcontractsshp: <https://www.insperity.com/shapes/domain-pricing-and-contracts/> .
+@prefix capability: <https://www.insperity.com/ontology/core-capability/> .
+@prefix sg: <http://example.org/ontology/semantic-governance/> .
+@prefix coreshp: <https://www.insperity.com/shapes/core/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix domaingovernance: <https://www.insperity.com/ontology/domain-governance/> .
+@prefix vcc: <https://vocabularies.verizon.com/core-compliance/> .
+@prefix governancevoc: <https://www.insperity.com/vocabulary/core-governance/> .
+@prefix domainsalestax: <https://www.insperity.com/taxonomy/domain-sales/> .
+@prefix valuestreamtax: <https://www.insperity.com/taxonomy/core-valuestream/> .
+@prefix event: <https://www.insperity.com/ontology/core-event/> .
+@prefix map: <http://www.w3.org/2005/xpath-functions/map> .
+@prefix sp: <http://spinrdf.org/sp#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix vcl: <https://vocabularies.verizon.com/core-lifecycle/> .
+@prefix pricingcontractsvoc: <https://www.insperity.com/vocabulary/domain-pricing-and-contracts/> .
+@prefix sr: <http://www.openrdf.org/config/repository/sail#> .
+@prefix rdf4j: <http://rdf4j.org/schema/rdf4j#> .
+@prefix partnerchannelvoc: <https://www.insperity.com/vocabulary/domain-partner-and-channel/> .
+@prefix domainvoc: <https://www.insperity.com/vocabulary/core-domain/> .
+@prefix partnerchanneltax: <https://www.insperity.com/taxonomy/domain-partner-and-channel/> .
+@prefix vcp: <https://vocabularies.verizon.com/core-process/> .
+@prefix customersuccessvoc: <https://www.insperity.com/vocabulary/domain-customer-success/> .
+@prefix roletax: <https://www.insperity.com/taxonomy/core-role/> .
+@prefix eventvoc: <https://www.insperity.com/vocabulary/core-event/> .
+@prefix decisionvoc: <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix vcs: <https://vocabularies.verizon.com/core-services/> .
+@prefix valuetax: <https://www.insperity.com/taxonomy/core-value/> .
+@prefix services: <https://www.insperity.com/ontology/core-services/> .
+@prefix domaininformationtechnology: <https://www.insperity.com/ontology/domain-informationtechnology/> .
+@prefix standardtmforumdomains: <https://www.insperity.com/ontology/standard-tmforum-domains/> .
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix partnerchannel: <https://www.insperity.com/ontology/domain-partner-and-channel/> .
+@prefix timevoc: <https://www.insperity.com/vocabulary/core-time/> .
+@prefix legaltax: <https://www.insperity.com/taxonomy/domain-legal/> .
+@prefix ont: <https://www.insperity.com/ontology/core-asset/> .
+@prefix commercialops: <https://www.insperity.com/ontology/domain-commercial-operations/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ofn: <http://www.ontotext.com/sparql/functions/> .
+@prefix vdg: <https://vocabularies.verizon.com/domain-governance/> .
+@prefix valuestreamvoc: <https://www.insperity.com/vocabulary/core-valuestream/> .
+@prefix governancetax: <https://www.insperity.com/taxonomy/core-governance/> .
+@prefix assettax: <https://www.insperity.com/taxonomy/core-asset/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix domainsales: <https://www.insperity.com/ontology/domain-sales/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix dg: <http://example.org/ontology/data-governance/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rolevoc: <https://www.insperity.com/vocabulary/core-role/> .
+@prefix domainfinancevoc: <https://www.insperity.com/vocabulary/domain-finance/> .
+@prefix measurevoc: <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix servicestax: <https://www.insperity.com/taxonomy/core-services/> .
+@prefix domainhumanresource: <https://www.insperity.com/ontology/domain-humanresource/> .
+@prefix domainlegal: <https://www.insperity.com/ontology/domain-legal/> .
+@prefix issuetax: <https://www.insperity.com/taxonomy/core-issue/> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix customersuccess: <https://www.insperity.com/ontology/domain-customer-success/> .
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix vaem: <http://www.linkedmodel.org/schema/vaem#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix list: <http://jena.apache.org/ARQ/list#> .
+@prefix measuretax: <https://www.insperity.com/taxonomy/core-measure/> .
+@prefix core: <https://www.insperity.com/ontology/core/> .
+@prefix servicesvoc: <https://www.insperity.com/vocabulary/core-services/> .
+@prefix compliancetax: <https://www.insperity.com/taxonomy/core-compliance/> .
+@prefix businessoperationsvoc: <https://www.insperity.com/vocabulary/core-businessoperations/> .
+@prefix policytax: <https://www.insperity.com/taxonomy/core-policy/> .
+@prefix geoext: <http://rdf.useekm.com/ext#> .
+@prefix sesame: <http://www.openrdf.org/schema/sesame#> .
+@prefix shp: <https://www.insperity.com/shapes/core-asset/> .
+@prefix referencedomaintax: <https://www.insperity.com/taxonomy/reference-domain/> .
+@prefix domaingovernancevoc: <https://www.insperity.com/vocabulary/domain-governance/> .
+@prefix domaininformationtechnologyvoc: <https://www.insperity.com/vocabulary/domain-informationtechnology/> .
+@prefix domainsecurityvoc: <https://www.insperity.com/vocabulary/domain-security/> .
+@prefix jobvoc: <https://www.insperity.com/vocabulary/core-job/> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix partyvoc: <https://www.insperity.com/vocabulary/core-party/> .
+@prefix capabilitytax: <https://www.insperity.com/taxonomy/core-capability/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fn: <http://www.w3.org/2005/xpath-functions> .
+@prefix marketingvoc: <https://www.insperity.com/vocabulary/domain-marketing/> .
+@prefix domainsupplychain: <https://www.insperity.com/ontology/domain-supplychain/> .
+@prefix compliancevoc: <https://www.insperity.com/vocabulary/core-compliance/> .
+@prefix processvoc: <https://www.insperity.com/vocabulary/core-process/> .
+@prefix domainsecurity: <https://www.insperity.com/ontology/domain-security/> .
+@prefix caie: <https://ontologies.metaphacts.com/conversational-ai-evaluation/> .
+@prefix policyvoc: <https://www.insperity.com/vocabulary/core-policy/> .
+@prefix array: <http://www.w3.org/2005/xpath-functions/array> .
+@prefix tcc: <https://ontologies.verizon.com/taxonomy-core-compliance/> .
+@prefix applicationmarketplacebusinessdataassetsvoc: <https://www.insperity.com/vocabulary/application-marketplacebusiness-dataassets/> .
+@prefix lifecyclevoc: <https://www.insperity.com/vocabulary/core-lifecycle/> .
+@prefix requirementstax: <https://www.insperity.com/taxonomy/core-requirements/> .
+@prefix rulestax: <https://www.insperity.com/taxonomy/core-rules/> .
+@prefix tcl: <https://ontologies.verizon.com/taxonomy-core-lifecycle/> .
+@prefix pricingcontracts: <https://www.insperity.com/ontology/domain-pricing-and-contracts/> .
+@prefix tcp: <https://ontologies.verizon.com/taxonomy-core-process/> .
+@prefix jobtax: <https://www.insperity.com/taxonomy/core-job/> .
+@prefix commercialopstax: <https://www.insperity.com/taxonomy/domain-commercial-operations/> .
+@prefix tcs: <https://ontologies.verizon.com/taxonomy-core-services/> .
+@prefix oboInOwl: <http://www.geneontology.org/formats/oboInOwl#> .
+@prefix partytax: <https://www.insperity.com/taxonomy/core-party/> .
+@prefix capabilityvoc: <https://www.insperity.com/vocabulary/core-capability/> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+@prefix personavoc: <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix afn: <http://jena.apache.org/ARQ/function#> .
+@prefix marketingtax: <https://www.insperity.com/taxonomy/domain-marketing/> .
+@prefix issuevoc: <https://www.insperity.com/vocabulary/core-issue/> .
+@prefix commercialopsshp: <https://www.insperity.com/shapes/domain-commercial-operations/> .
+@prefix processtax: <https://www.insperity.com/taxonomy/core-process/> .
+@prefix domainfinance: <https://www.insperity.com/ontology/domain-finance/> .
+@prefix domainnetwork: <https://www.insperity.com/ontology/domain-network/> .
+@prefix lifecycletax: <https://www.insperity.com/taxonomy/core-lifecycle/> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix marketingshp: <https://www.insperity.com/shapes/domain-marketing/> .
+@prefix omgeo: <http://www.ontotext.com/owlim/geo#> .
+@prefix rulesvoc: <https://www.insperity.com/vocabulary/core-rules/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+
+<https://www.insperity.com/taxonomy/domain-customer-success/> {
+  <https://www.insperity.com/taxonomy/domain-customer-success/> a skos:ConceptScheme;
+    rdfs:label "Customer success domain taxonomy"@en;
+    skos:prefLabel "Customer success domain taxonomy"@en;
+    skos:hasTopConcept customersuccesstax:churn, customersuccesstax:client-health, customersuccesstax:client-status,
+      customersuccesstax:client-success-activity, customersuccesstax:client-success-measure,
+      customersuccesstax:client-success-playbook, customersuccesstax:client-success-role,
+      customersuccesstax:client-success-stage, customersuccesstax:expansion-type;
+    skos:editorialNote "Definitions were first drafted with the assistance of generative artificial intelligence tools, at the direction of the author, and are under review."@en;
+    terms:description "A classification of the client success stages and activities after the sale, client health scores and signals, client statuses, churn and its causes, expansion, client success measures and roles."@en;
+    terms:title "Customer success domain taxonomy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    skos:changeNote "0.1.0 (2026-10-20): first release. Built by build_domains.py from spec_customer_success.py against Baseline Core v1.0 (core 0.1.0)."@en,
+      "0.1.1 (2026-10-20): Domain ontologies and shapes now name the plain ontology IRIs in owl:imports, so the KE Workbench resolves them, and pin the version built against in dcterms:requires. Built by build_domains.py from spec_customer_success.py against Baseline Core v1.0 (core 0.1.0)."@en;
+    terms:created "2026-10-20"^^xsd:date;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:customer-support;
+    terms:isPartOf <https://www.insperity.com/domain/commercial-operations/>;
+    owl:versionIRI <https://www.insperity.com/taxonomy/domain-customer-success/0.1.1/>;
+    terms:source <https://www.insperity.com/vocabulary/core-asset/>, <https://www.insperity.com/vocabulary/core-domain/>,
+      <https://www.insperity.com/vocabulary/core-event/>, <https://www.insperity.com/vocabulary/core-issue/>,
+      <https://www.insperity.com/vocabulary/core-lifecycle/>, <https://www.insperity.com/vocabulary/core-location/>,
+      <https://www.insperity.com/vocabulary/core-process/>, <https://www.insperity.com/vocabulary/core-role/>,
+      <https://www.insperity.com/vocabulary/core-services/>, <https://www.insperity.com/vocabulary/core-decision/>,
+      <https://www.insperity.com/vocabulary/core-governance/>, <https://www.insperity.com/vocabulary/core-logic/>,
+      <https://www.insperity.com/vocabulary/core-measure/>, <https://www.insperity.com/vocabulary/core-policy/>,
+      <https://www.insperity.com/vocabulary/domain-commercial-operations/>, <https://www.insperity.com/vocabulary/domain-customer-success/>;
+    vaem:namespace "https://www.insperity.com/taxonomy/domain-customer-success/"^^xsd:anyURI;
+    terms:language "en";
+    core:hasLifecycleStatus core:Draft;
+    vann:preferredNamespacePrefix "customersuccesstax";
+    terms:publisher <https://www.insperity.com/resource/core/Organization/insperity>;
+    terms:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/>;
+    terms:identifier "taxonomy-domain-customer-success" .
+  
+  customersuccesstax:churn a skos:Concept;
+    rdfs:label "Churn"@en;
+    skos:prefLabel "Churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An event in which a client ends its relationship with the organization, or covers fewer workers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:altLabel "Attrition"@en;
+    skos:scopeNote "Classified by its cause; the agreement termination itself is core taxonomy-core-event \"Agreement termination\"."@en;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:client-churn, customersuccesstax:worksite-employee-churn;
+    core:hasPrimaryTerm customersuccessvoc:churn;
+    core:formalizedBy core:event;
+    skos:broadMatch eventtax:business-event .
+  
+  customersuccesstax:client-health a skos:Concept;
+    rdfs:label "Client health"@en;
+    skos:prefLabel "Client health"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A measure of the overall condition of a client relationship."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:client, customersuccessvoc:health;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:adoption-signal, customersuccesstax:client-health-score,
+      customersuccesstax:risk-signal, customersuccesstax:satisfaction-signal;
+    core:hasPrimaryTerm customersuccessvoc:health;
+    core:formalizedBy customersuccess:health-score .
+  
+  customersuccesstax:client-status a skos:Concept;
+    rdfs:label "Client status"@en;
+    skos:prefLabel "Client status"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A status of a client relationship that records its condition after the sale."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    owl:versionInfo "0.1.1";
+    terms:subject lifecyclevoc:status, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:at-risk-client, customersuccesstax:client-under-notice,
+      customersuccesstax:former-client, customersuccesstax:reference-client;
+    core:hasPrimaryTerm lifecyclevoc:status;
+    core:formalizedBy core:lifecycle-status .
+  
+  customersuccesstax:client-success-activity a skos:Concept;
+    rdfs:label "Client success activity"@en;
+    skos:prefLabel "Client success activity"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A process step that keeps, grows or recovers a client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:success, processvoc:activity, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:benefits-enrollment, customersuccesstax:business-review,
+      customersuccesstax:client-escalation, customersuccesstax:health-assessment, customersuccesstax:onboarding-milestone,
+      customersuccesstax:payroll-conversion, customersuccesstax:retention-save, customersuccesstax:win-back;
+    core:hasPrimaryTerm processvoc:activity;
+    core:formalizedBy core:process-step;
+    skos:broadMatch processtax:process-step .
+  
+  customersuccesstax:client-success-measure a skos:Concept;
+    rdfs:label "Client success measure"@en;
+    skos:prefLabel "Client success measure"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A measure of how well the organization keeps, grows and satisfies its clients."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:measure, measurevoc:success, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:adoption-rate, customersuccesstax:churn-rate, customersuccesstax:client-retention-rate,
+      customersuccesstax:client-satisfaction, customersuccesstax:net-promoter-score, customersuccesstax:worksite-employee-retention-rate;
+    core:hasPrimaryTerm measurevoc:measure;
+    core:formalizedBy core:measure;
+    skos:broadMatch measuretax:key-performance-indicator .
+  
+  customersuccesstax:client-success-playbook a skos:Concept;
+    rdfs:label "Client success playbook"@en;
+    skos:prefLabel "Client success playbook"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A directive that sets the steps a client success team follows in a recurring situation, such as onboarding, a renewal or a risk signal."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:success, rolevoc:client, customersuccessvoc:playbook;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:onboarding-playbook, customersuccesstax:renewal-playbook,
+      customersuccesstax:risk-playbook;
+    core:hasPrimaryTerm customersuccessvoc:playbook;
+    core:formalizedBy customersuccess:playbook .
+  
+  customersuccesstax:client-success-role a skos:Concept;
+    rdfs:label "Client success role"@en;
+    skos:prefLabel "Client success role"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A role borne by a person in the organization who is responsible for the success of clients after the sale."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:role, measurevoc:success, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:client-success-manager;
+    core:hasPrimaryTerm rolevoc:role;
+    core:formalizedBy core:role;
+    skos:broadMatch roletax:employment-role .
+  
+  customersuccesstax:client-success-stage a skos:Concept;
+    rdfs:label "Client success stage"@en;
+    skos:prefLabel "Client success stage"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A process step of the client success process: the provider's view of where a client stands after the sale."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:scopeNote "The provider's view (Baseline decision 21); the client persona's jobs and job steps are addressed by these steps, not equal to them. Specializes, through the steps, the core \"Client lifecycle\"."@en;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:success, rolevoc:client, domaincommercialoperationsvoc:stage;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:adoption, customersuccesstax:advocacy, customersuccesstax:client-onboarding,
+      customersuccesstax:client-renewal, customersuccesstax:expansion;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:stage;
+    core:formalizedBy customersuccess:client-success-step .
+  
+  customersuccesstax:expansion-type a skos:Concept;
+    rdfs:label "Expansion type"@en;
+    skos:prefLabel "Expansion type"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A kind of client opportunity that grows the services a client buys or the workers it covers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:altLabel "Expansion opportunity"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject domaincommercialoperationsvoc:opportunity, customersuccessvoc:expansion;
+    core:hasLifecycleStatus core:Draft;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:narrower customersuccesstax:cross-sell, customersuccesstax:upsell, customersuccesstax:worksite-employee-growth;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:opportunity;
+    core:formalizedBy commercialops:opportunity;
+    skos:broadMatch commercialopstax:client-opportunity .
+  
+  customersuccesstax:adoption a skos:Concept;
+    rdfs:label "Adoption"@en;
+    skos:prefLabel "Adoption"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success stage in which the client and its employees come to use the services and technology in their offering."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-stage;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:adoption;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:adoption .
+  
+  customersuccesstax:advocacy a skos:Concept;
+    rdfs:label "Advocacy"@en;
+    skos:prefLabel "Advocacy"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success stage in which the client recommends the organization to others."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-stage;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:advocacy;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:advocacy .
+  
+  customersuccesstax:client-onboarding a skos:Concept;
+    rdfs:label "Client onboarding"@en;
+    skos:prefLabel "Client onboarding"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success stage in which a new client is brought into active service: payroll converted, benefits enrolled, worksite employees set up."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-stage;
+    skos:altLabel "Implementation"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:onboarding, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:onboarding;
+    skos:broadMatch eventtax:party-onboarding .
+  
+  customersuccesstax:client-renewal a skos:Concept;
+    rdfs:label "Client renewal"@en;
+    skos:prefLabel "Client renewal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success stage in which the client's agreement, or its benefits, are renewed for a further term."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-stage;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:renewal, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:renewal;
+    skos:broadMatch eventtax:agreement-renewal .
+  
+  customersuccesstax:expansion a skos:Concept;
+    rdfs:label "Expansion"@en;
+    skos:prefLabel "Expansion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success stage in which the client buys more services or covers more workers."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-stage;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:expansion;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:expansion .
+  
+  customersuccesstax:benefits-enrollment a skos:Concept;
+    rdfs:label "Benefits enrollment"@en;
+    skos:prefLabel "Benefits enrollment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity in which worksite employees elect the benefits offered to them."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:enrollment, domaincommercialoperationsvoc:benefit;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:enrollment .
+  
+  customersuccesstax:business-review a skos:Concept;
+    rdfs:label "Business review"@en;
+    skos:prefLabel "Business review"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity in which the organization and the client review results, value delivered and plans."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    skos:altLabel "Quarterly business review"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:business, governancevoc:review;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm governancevoc:review .
+  
+  customersuccesstax:client-escalation a skos:Concept;
+    rdfs:label "Client escalation"@en;
+    skos:prefLabel "Client escalation"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity that refers a client's issue to a higher authority or a specialist."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:escalation, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm eventvoc:escalation;
+    skos:broadMatch eventtax:escalation-raised .
+  
+  customersuccesstax:health-assessment a skos:Concept;
+    rdfs:label "Health assessment"@en;
+    skos:prefLabel "Health assessment"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity that assesses the health of a client relationship."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject governancevoc:assessment, customersuccessvoc:health;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm governancevoc:assessment .
+  
+  customersuccesstax:onboarding-milestone a skos:Concept;
+    rdfs:label "Onboarding milestone"@en;
+    skos:prefLabel "Onboarding milestone"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity that marks the completion of a stage of client onboarding."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:onboarding, customersuccessvoc:milestone;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:milestone .
+  
+  customersuccesstax:payroll-conversion a skos:Concept;
+    rdfs:label "Payroll conversion"@en;
+    skos:prefLabel "Payroll conversion"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity that moves a new client's payroll records and balances into the organization's payroll."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject logicvoc:conversion, domaincommercialoperationsvoc:payroll;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm logicvoc:conversion .
+  
+  customersuccesstax:retention-save a skos:Concept;
+    rdfs:label "Retention save"@en;
+    skos:prefLabel "Retention save"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity that keeps a client that had given notice or was at risk of leaving."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject policyvoc:retention, customersuccessvoc:save;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:save .
+  
+  customersuccesstax:win-back a skos:Concept;
+    rdfs:label "Win-back"@en;
+    skos:prefLabel "Win-back"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success activity that recovers a former client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-activity;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:win-back;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:win-back .
+  
+  customersuccesstax:adoption-signal a skos:Concept;
+    rdfs:label "Adoption signal"@en;
+    skos:prefLabel "Adoption signal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client health measure that records how much the client and its employees use their services and technology."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-health;
+    owl:versionInfo "0.1.1";
+    terms:subject domaincommercialoperationsvoc:signal, customersuccessvoc:adoption;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:signal .
+  
+  customersuccesstax:client-health-score a skos:Concept;
+    rdfs:label "Client health score"@en;
+    skos:prefLabel "Client health score"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client health measure that combines weighted signals of use, satisfaction, risk and value into a single score."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-health;
+    owl:versionInfo "0.1.1";
+    terms:subject logicvoc:scoring, rolevoc:client, customersuccessvoc:health;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm logicvoc:scoring .
+  
+  customersuccesstax:risk-signal a skos:Concept;
+    rdfs:label "Risk signal"@en;
+    skos:prefLabel "Risk signal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client health measure that records a change suggesting the client may leave, such as a falling headcount or a benefits renewal increase."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-health;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:risk, domaincommercialoperationsvoc:signal;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:signal;
+    skos:broadMatch measuretax:key-risk-indicator .
+  
+  customersuccesstax:satisfaction-signal a skos:Concept;
+    rdfs:label "Satisfaction signal"@en;
+    skos:prefLabel "Satisfaction signal"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client health measure that records the client's expressed satisfaction, such as survey results or complaints."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-health;
+    owl:versionInfo "0.1.1";
+    terms:subject domaincommercialoperationsvoc:signal, customersuccessvoc:satisfaction;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm domaincommercialoperationsvoc:signal .
+  
+  customersuccesstax:at-risk-client a skos:Concept;
+    rdfs:label "At-risk client"@en;
+    skos:prefLabel "At-risk client"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client status of a client whose health or signals suggest it may leave."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-status;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:risk, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:client .
+  
+  customersuccesstax:client-under-notice a skos:Concept;
+    rdfs:label "Client under notice"@en;
+    skos:prefLabel "Client under notice"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client status of a client that has given notice of termination under its agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-status;
+    owl:versionInfo "0.1.1";
+    terms:subject assetvoc:notice, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:client .
+  
+  customersuccesstax:former-client a skos:Concept;
+    rdfs:label "Former client"@en;
+    skos:prefLabel "Former client"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client status of a party whose agreement has ended."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-status;
+    skos:altLabel "Churned client"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:client, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:client .
+  
+  customersuccesstax:reference-client a skos:Concept;
+    rdfs:label "Reference client"@en;
+    skos:prefLabel "Reference client"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client status of a client that has agreed to speak for the organization to prospects."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-status;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:client, customersuccessvoc:advocacy;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:client .
+  
+  customersuccesstax:client-churn a skos:Concept;
+    rdfs:label "Client churn"@en;
+    skos:prefLabel "Client churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Churn in which a client ends its agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:churn;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:client, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    skos:narrower customersuccesstax:acquisition-churn, customersuccesstax:benefits-renewal-churn,
+      customersuccesstax:competitive-churn, customersuccesstax:price-driven-churn, customersuccesstax:service-failure-churn;
+    core:hasPrimaryTerm customersuccessvoc:churn;
+    skos:broadMatch eventtax:agreement-termination .
+  
+  customersuccesstax:worksite-employee-churn a skos:Concept;
+    rdfs:label "Worksite employee churn"@en;
+    skos:prefLabel "Worksite employee churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Churn in which a client keeps its agreement but covers fewer worksite employees."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:churn;
+    owl:versionInfo "0.1.1";
+    terms:subject locationvoc:worksite, rolevoc:employee, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:churn .
+  
+  customersuccesstax:acquisition-churn a skos:Concept;
+    rdfs:label "Acquisition churn"@en;
+    skos:prefLabel "Acquisition churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Client churn caused by the client being acquired by, or merged into, another organization."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-churn;
+    owl:versionInfo "0.1.1";
+    terms:subject lifecyclevoc:acquire, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:churn .
+  
+  customersuccesstax:benefits-renewal-churn a skos:Concept;
+    rdfs:label "Benefits renewal churn"@en;
+    skos:prefLabel "Benefits renewal churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Client churn caused by an increase in benefit rates at renewal."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-churn;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:renewal, domaincommercialoperationsvoc:benefit, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:churn .
+  
+  customersuccesstax:competitive-churn a skos:Concept;
+    rdfs:label "Competitive churn"@en;
+    skos:prefLabel "Competitive churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Client churn in which the client moves to a competitor."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-churn;
+    owl:versionInfo "0.1.1";
+    terms:subject domaincommercialoperationsvoc:competitor, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:churn .
+  
+  customersuccesstax:price-driven-churn a skos:Concept;
+    rdfs:label "Price-driven churn"@en;
+    skos:prefLabel "Price-driven churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Client churn caused by the client's judgment that the price is too high for the value delivered."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-churn;
+    owl:versionInfo "0.1.1";
+    terms:subject decisionvoc:pricing, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:churn .
+  
+  customersuccesstax:service-failure-churn a skos:Concept;
+    rdfs:label "Service failure churn"@en;
+    skos:prefLabel "Service failure churn"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "Client churn caused by failures in the services delivered to the client."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-churn;
+    owl:versionInfo "0.1.1";
+    terms:subject servicesvoc:services, issuevoc:failure, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:churn .
+  
+  customersuccesstax:cross-sell a skos:Concept;
+    rdfs:label "Cross-sell"@en;
+    skos:prefLabel "Cross-sell"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An expansion type that sells a client an offering it does not yet have."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:expansion-type;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:cross-sell;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:cross-sell .
+  
+  customersuccesstax:upsell a skos:Concept;
+    rdfs:label "Upsell"@en;
+    skos:prefLabel "Upsell"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An expansion type that sells a client a higher level of an offering it already has."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:expansion-type;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:upsell;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:upsell .
+  
+  customersuccesstax:worksite-employee-growth a skos:Concept;
+    rdfs:label "Worksite employee growth"@en;
+    skos:prefLabel "Worksite employee growth"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "An expansion type in which the client adds worksite employees under its agreement."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:expansion-type;
+    owl:versionInfo "0.1.1";
+    terms:subject locationvoc:worksite, measurevoc:growth, rolevoc:employee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:growth .
+  
+  customersuccesstax:adoption-rate a skos:Concept;
+    rdfs:label "Adoption rate"@en;
+    skos:prefLabel "Adoption rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success measure of the share of clients or employees actively using a service or technology."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:rate, customersuccessvoc:adoption;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  customersuccesstax:churn-rate a skos:Concept;
+    rdfs:label "Churn rate"@en;
+    skos:prefLabel "Churn rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success measure of the share of clients or worksite employees lost in a period."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:rate, customersuccessvoc:churn;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  customersuccesstax:client-retention-rate a skos:Concept;
+    rdfs:label "Client retention rate"@en;
+    skos:prefLabel "Client retention rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success measure of the share of clients at the start of a period that remain at its end."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:rate, policyvoc:retention, rolevoc:client;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  customersuccesstax:client-satisfaction a skos:Concept;
+    rdfs:label "Client satisfaction"@en;
+    skos:prefLabel "Client satisfaction"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success measure of the degree to which clients' experience meets their expectations."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject rolevoc:client, customersuccessvoc:satisfaction;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:satisfaction .
+  
+  customersuccesstax:net-promoter-score a skos:Concept;
+    rdfs:label "Net promoter score"@en;
+    skos:prefLabel "Net promoter score"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success measure of advocacy: the share of promoters minus the share of detractors."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-measure;
+    skos:altLabel "NPS"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject customersuccessvoc:net-promoter-score;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:net-promoter-score .
+  
+  customersuccesstax:worksite-employee-retention-rate a skos:Concept;
+    rdfs:label "Worksite employee retention rate"@en;
+    skos:prefLabel "Worksite employee retention rate"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success measure of the share of worksite employees at the start of a period that remain covered at its end."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-measure;
+    owl:versionInfo "0.1.1";
+    terms:subject locationvoc:worksite, measurevoc:rate, policyvoc:retention, rolevoc:employee;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm measurevoc:rate .
+  
+  customersuccesstax:client-success-manager a skos:Concept;
+    rdfs:label "Client success manager"@en;
+    skos:prefLabel "Client success manager"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success role borne by a person who manages a portfolio of client relationships."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-role;
+    skos:altLabel "Customer success manager"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject measurevoc:success, rolevoc:client, rolevoc:manager;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm rolevoc:manager .
+  
+  customersuccesstax:onboarding-playbook a skos:Concept;
+    rdfs:label "Onboarding playbook"@en;
+    skos:prefLabel "Onboarding playbook"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success playbook for bringing a new client into active service."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-playbook;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:onboarding, customersuccessvoc:playbook;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:playbook .
+  
+  customersuccesstax:renewal-playbook a skos:Concept;
+    rdfs:label "Renewal playbook"@en;
+    skos:prefLabel "Renewal playbook"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success playbook for renewing a client's agreement or benefits."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-playbook;
+    owl:versionInfo "0.1.1";
+    terms:subject eventvoc:renewal, customersuccessvoc:playbook;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:playbook .
+  
+  customersuccesstax:risk-playbook a skos:Concept;
+    rdfs:label "Risk playbook"@en;
+    skos:prefLabel "Risk playbook"@en;
+    terms:creator "Jeffrey Wallk";
+    terms:modified "2026-10-20T04:19:14Z"^^xsd:dateTime;
+    terms:created "2026-10-20"^^xsd:date;
+    skos:definition "A client success playbook for responding to a risk signal or a notice of termination."@en;
+    skos:inScheme <https://www.insperity.com/taxonomy/domain-customer-success/>;
+    skos:broader customersuccesstax:client-success-playbook;
+    skos:altLabel "Save playbook"@en;
+    owl:versionInfo "0.1.1";
+    terms:subject domainvoc:risk, customersuccessvoc:playbook;
+    core:hasLifecycleStatus core:Draft;
+    core:hasPrimaryTerm customersuccessvoc:playbook .
+}

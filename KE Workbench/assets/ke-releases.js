@@ -2,6 +2,35 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '4.0.0', date: '2026-10-22', title: 'Customer 360: from persona interviews to demand planning and back',
+    links: [
+      { label: 'PEO Outcome Review (shared, opens in a browser tab)', href: 'https://claude.ai/artifact/TiVNKQw9Wwge5hF2BdDSyn', note: 'business and compliance sign-off; its Export CSV feeds the Demand Gateway' },
+      { label: 'PEO Outcome Playbook (shared, opens in a browser tab)', href: 'https://claude.ai/artifact/JVvu5CmTykxwE77BPVpBx7', note: 'battle cards, the Fix / Innovate / Protect / Simplify rule and the sales advisor agent' }
+    ],
+    groups: [
+      { kind: 'new', items: [
+        'Section 04 is now Customer 360 (it was Domain context): Appreciative Inquiry, Buyer Personas & Jobs, PEO Job Study, PEO Outcome Review \u2197, PEO Outcome Playbook \u2197 and Demand Gateway. Tools marked \u2197 are shared claude.ai artifacts with their own sign-in and open in a browser tab.',
+        'Buyer Personas & Jobs reads persona instances from GraphDB in the same layout as before (Explore, Graph, Job Study). The Job Study tab has a pull-down of every job: pick one to see its desired outcomes on the eight job map stages, the steps people described in interviews, study scores and the Playbook action, review status, interview evidence and demand. Copy a job as CSV.',
+        'Appreciative Inquiry: capture persona interviews through Discover, Dream, Design and Destiny with prompts tailored to a focus job; select a passage and code it as a functional, emotional or social job, a job step or a desired outcome (built from direction, metric, object and clarifier), either as a new candidate or as evidence for an existing item. Interviews save as drafts in the browser and publish to their own named graph.',
+        'PEO Job Study is in the workbench (tools/peo-benchmark/): opportunity landscape, job map and PEO vs non-PEO comparison. Load survey results there; every Customer 360 tool uses the same scores.',
+        'Demand Gateway, the requirements engineering semantic gateway: bundle under-served outcomes into demand requests, check them against six rules (traced, reviewed, evidenced, measurable, owned, unflagged), and admit them to demand planning. Requests are written back to the graph, so personas and jobs show what is in demand, and the portfolio exports to demand planning as CSV or Turtle.',
+        'Bundled Customer 360 data (data/c360/, 15 Turtle files with a manifest): the jobs-to-be-done, appreciative inquiry and demand planning ontologies, their vocabularies and the PEO benchmark instances. With GraphDB connected but empty, Buyer Personas & Jobs offers to load them into their named graphs; with GraphDB off, every tool reads them directly.'
+      ]},
+      { kind: 'breaking', items: [
+        'Customer 360 schema 0.3.0: classes and taxonomy concepts use lower-case hyphenated identifiers (jtbd:client-persona, theme:payroll) under Semantic Governance v1.9 \u00a73.2 as amended for Baseline Core v1.0. If you loaded the 0.1.0 or 0.2.0 Turtle into GraphDB, reload with Load benchmark into GraphDB (the same named graphs are replaced).',
+        'The eight universal stages are jtbd:job-map-stage (they were jtbd:JobStep), so they no longer collide with core:job-step, a step that belongs to one job. Steps captured in interviews are jtbd:job-map-step, a core:job-step.'
+      ]},
+      { kind: 'improved', items: [
+        'Aligned to Baseline Core v1.0: client persona \u2286 core:persona, job to be done \u2286 core:job, job map step \u2286 core:job-step, desired outcome \u2286 core:desired-outcome, demand request \u2286 core:requirement, outcome target \u2286 core:measure, interview notes and excerpts \u2286 core:information-asset; executesJob, hasJobMapStep and isStepOfJob specialize core:performsJob, core:hasStep and core:isStepOf. Sales selling steps reach these job steps through core:addresses.',
+        'Every Customer 360 ontology and scheme carries the \u00a73.11 header fields; the bundled files and the graphs the tools write pass Standards Conformance with no findings.',
+        'Triples loaded into the default graph instead of their named graphs are still read, with a note to move them.'
+      ]},
+      { kind: 'fixed', items: [
+        'The shell and the Overview open external tools in a browser tab instead of an empty workbench tab.'
+      ]}
+    ]
+  },
+  {
     version: '3.9.0', date: '2026-10-21', title: 'Commercial Operations on APQC PCF 7.4: every domain, down to the activity',
     links: [
       { label: 'APQC PCF reference (in the workbench)', href: '../reference/apqc-pcf/index.html', note: 'version 7.4 in use, categories 3.0 and 6.0 browsable to L5, the 7.2.1 \u2192 7.4 crosswalk and the attribution' },

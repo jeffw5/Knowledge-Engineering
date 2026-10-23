@@ -1,0 +1,83 @@
+# ==========================================================================
+#  Outcome metric type vocabulary
+#  Target named graph: <https://www.insperity.com/graph/outcome-benchmark/outcome-metric-types>
+#  Five metric types read from each outcome statement.
+#  Source: PEO Outcome Benchmark (Outcome-Driven Innovation study blueprint)
+#  Status: Draft 0.3.0, generated 2026-10-22, pending business and compliance SME review
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/vocabulary/outcome-metric-type/> a skos:ConceptScheme ;
+    rdfs:label "Outcome metric type vocabulary"@en ;
+    skos:prefLabel "Outcome metric type vocabulary"@en ;
+    skos:definition "A concept scheme of the kinds of measure a desired outcome statement uses."@en ;
+    skos:hasTopConcept metric:speed, metric:stability, metric:cost-and-exposure, metric:effort, metric:output ;
+    dcterms:title "Outcome metric type vocabulary"@en ;
+    dcterms:description "A concept scheme of the kinds of measure a desired outcome statement uses."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/vocabulary/outcome-metric-type/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "metric" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/vocabulary/outcome-metric-type/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+metric:speed a skos:Concept ;
+    rdfs:label "Speed"@en ;
+    skos:prefLabel "Speed"@en ;
+    skos:definition "An outcome metric type that measures the time required to complete part of a job."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+
+metric:stability a skos:Concept ;
+    rdfs:label "Stability"@en ;
+    skos:prefLabel "Stability"@en ;
+    skos:definition "An outcome metric type that measures the likelihood that part of a job goes wrong or goes right."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+
+metric:cost-and-exposure a skos:Concept ;
+    rdfs:label "Cost and exposure"@en ;
+    skos:prefLabel "Cost and exposure"@en ;
+    skos:definition "An outcome metric type that measures the money spent or the liability carried in getting a job done."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+    skos:altLabel "Cost & exposure"@en .
+
+metric:effort a skos:Concept ;
+    rdfs:label "Effort"@en ;
+    skos:prefLabel "Effort"@en ;
+    skos:definition "An outcome metric type that measures the work or administrative burden a job places on the executor."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+
+metric:output a skos:Concept ;
+    rdfs:label "Output"@en ;
+    skos:prefLabel "Output"@en ;
+    skos:definition "An outcome metric type that measures a count or rate produced while getting a job done."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> .

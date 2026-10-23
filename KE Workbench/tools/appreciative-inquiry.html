@@ -1,0 +1,682 @@
+<!doctype html><html lang="en"><head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Appreciative Inquiry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/c360.css">
+<style>
+.layout{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}}
+.ivlist{position:sticky;top:12px;display:grid;grid-template-rows:auto minmax(0,1fr);max-height:calc(100vh - 24px)}
+@media (max-width:980px){.ivlist{position:static;max-height:none}}
+.ivlist .pb{padding:10px 12px;gap:8px}
+.ivitems{overflow:auto;padding:4px 6px 8px}
+.ivitem{all:unset;box-sizing:border-box;display:grid;grid-template-columns:8px minmax(0,1fr) auto;gap:2px 10px;width:100%;padding:8px 10px;border-radius:4px;cursor:pointer;font-size:12.5px;align-items:start}
+.ivitem:hover{background:var(--surface-2)}
+.ivitem:focus-visible{outline:2px solid var(--machine)}
+.ivitem[aria-current="true"]{background:var(--machine-soft)}
+.ivitem .pd{width:8px;height:8px;border-radius:50%;margin-top:5px}
+.ivitem b{font-weight:600;color:var(--ink);display:block}
+.ivitem .meta{grid-column:2/-1;font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+.grp{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:10px 10px 4px}
+.editor{display:grid;gap:16px;min-width:0}
+.phase{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;padding:14px 16px;border-top:1px solid var(--line)}
+.phase:first-child{border-top:0}
+@media (max-width:1100px){.phase{grid-template-columns:minmax(0,1fr)}}
+.phase h4{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-size:20px;font-weight:700}
+.phase h4 .n{font-family:var(--f-mono);font-size:11px;width:22px;height:22px;border-radius:50%;background:var(--human);color:var(--surface);display:grid;place-items:center}
+.phase textarea{min-height:150px}
+.prompts{margin:0;padding-left:18px;display:grid;gap:6px;font-size:12.5px;color:var(--ink-soft)}
+.prompts li::marker{color:var(--human)}
+.codebar{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+.codebar .lab{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.codebar .btn{padding:3px 10px;font-size:11.5px}
+.coder{border:2px solid var(--machine);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.coder .ph{background:var(--machine-soft)}
+.preview{font-size:15px;font-weight:500;color:var(--ink);background:var(--surface-2);border:1px dashed var(--line-strong);padding:8px 12px;border-radius:var(--radius)}
+.preview .q{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:4px}
+.codes{display:grid;gap:14px}
+.ctype h4{display:flex;gap:8px;align-items:baseline;margin-bottom:6px}
+.ctype h4 .count{font-family:var(--f-mono);font-size:11px;color:var(--muted);font-weight:400}
+.code{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:10px 12px;border:1px solid var(--line);border-left:3px solid var(--ccol,var(--machine));border-radius:var(--radius);background:var(--surface)}
+.code + .code{margin-top:6px}
+.code .st{font-weight:500;color:var(--ink)}
+.code .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+.code .acts{display:flex;gap:6px;align-items:start}
+.code .quote{grid-column:1/-1}
+.warnline{font-size:12px;color:var(--warn)}
+.savebar{position:sticky;bottom:0;z-index:5;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 20px -14px rgba(0,0,0,.3);padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.savebar .msg{margin-right:auto;font-size:12.5px;color:var(--muted);overflow-wrap:anywhere}
+@media (max-width:640px){.savebar{position:static}}
+.cov{display:grid;gap:6px}
+.covrow{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr) 120px;gap:12px;align-items:center;font-size:13px}
+.covbar{height:12px;background:var(--surface-3);border-radius:0 6px 6px 0;position:relative;overflow:hidden}
+.covbar i{position:absolute;inset:0 auto 0 0;background:var(--human);border-radius:0 6px 6px 0}
+.covbar i.pub{background:var(--machine)}
+.covbar .tgt{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+@media (max-width:640px){.covrow{grid-template-columns:minmax(0,1fr) 90px}.covrow .covbar{grid-column:1/-1;grid-row:2}}
+.guide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:900px){.guide{grid-template-columns:minmax(0,1fr)}}
+.guide ol,.guide ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:13.5px;color:var(--ink-soft)}
+.loop{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px}
+.loop span{padding:4px 10px;border:1px solid var(--line-strong);border-radius:100px;background:var(--surface)}
+.loop span.here{background:var(--human);border-color:var(--human);color:var(--surface)}
+.loop i{color:var(--faint);font-style:normal}
+.newp{display:grid;gap:10px;padding:10px 12px;border:1px dashed var(--human);border-radius:var(--radius);background:var(--human-soft)}
+#dl-fallback textarea{width:100%;height:160px;font-family:var(--f-mono);font-size:11px}
+</style>
+</head><body>
+<header class="masthead"><div class="wrap">
+  <div class="id">
+    <div class="eyebrow">Customer 360 · qualitative analysis · appreciative inquiry (4-D)</div>
+    <h1>Persona interviews</h1>
+    <p class="lede">Interview people who fit a persona about their work at its best, then code what they say into functional, emotional and social jobs, the steps of those jobs and the outcomes they use to judge success. Codes become evidence for the persona model in Buyer Personas &amp; Jobs and candidates for the next Job Study wave.</p>
+  </div>
+  <div class="stat-rail" id="stats"></div>
+</div>
+<div class="wrap"><nav class="tabbar" role="tablist" aria-label="View">
+  <button class="tabbtn" role="tab" id="tab-capture" aria-selected="true">Interviews</button>
+  <button class="tabbtn" role="tab" id="tab-synth" aria-selected="false">Synthesis</button>
+  <button class="tabbtn" role="tab" id="tab-guide" aria-selected="false">Method &amp; guide</button>
+</nav></div></header>
+<div class="bar"><div class="wrap"><div class="sourcebar" id="sourcebar"><span class="dot"></span><span>Connecting…</span></div></div></div>
+
+<main class="wrap">
+  <section id="v-capture">
+    <div class="layout">
+      <aside class="panel ivlist" aria-label="Interviews">
+        <div class="pb">
+          <button class="btn primary" id="new-iv" type="button">+ New interview</button>
+          <input type="search" id="iv-q" placeholder="Search interviews…" aria-label="Search interviews">
+          <select id="iv-p" aria-label="Filter by persona"><option value="">All personas</option></select>
+        </div>
+        <div class="ivitems" id="ivitems" role="list"></div>
+      </aside>
+      <div class="editor" id="editor"></div>
+    </div>
+  </section>
+
+  <section id="v-synth" hidden></section>
+
+  <section id="v-guide" hidden>
+    <div class="section"><div class="section-head"><h2>Where this sits in the loop</h2></div>
+      <div class="loop"><span class="here">Appreciative Inquiry</span><i>→</i><span>Persona model (Buyer Personas &amp; Jobs)</span><i>→</i><span>Job Study survey</span><i>→</i><span>Outcome Review</span><i>→</i><span>Outcome Playbook</span><i>→</i><span>Requirements gateway</span><i>→</i><span>Demand planning</span><i>→</i><span>Re-measure</span><i>↺</i></div>
+    </div>
+    <div class="guide">
+      <div class="panel"><div class="ph"><h3>Method</h3></div><div class="pb">
+        <p class="small"><b>Appreciative inquiry</b> (Cooperrider and Whitney) asks people about the work when it goes well, rather than starting from problems. The 4-D cycle structures the conversation: <b>Discover</b> peak experiences and what made them possible, <b>Dream</b> what the work would be like if it always went that way, <b>Design</b> the steps and conditions that would make that real, and <b>Destiny</b> (deliver) what must be true, and how they would measure it, to sustain it.</p>
+        <p class="small"><b>Jobs to be done</b> (Clayton Christensen) treats a customer as hiring a product to make progress in a circumstance. Every job has a <b>functional</b> dimension, what they are trying to get done, and <b>emotional</b> and <b>social</b> dimensions, how they want to feel and be seen. Peak-experience stories surface all three naturally.</p>
+        <p class="small"><b>Job maps and desired outcomes</b> (Outcome-Driven Innovation) break a functional job into the universal steps Define, Locate, Prepare, Confirm, Execute, Monitor, Modify and Conclude, and state each success measure as direction + metric + object of control + clarifier, for example <i>Minimize the time required to confirm that pay calculations are correct before funds are released</i>. That format is what the Job Study survey rates.</p>
+        <p class="small"><b>How many interviews.</b> Two or three per persona (15–20 in all) before fielding the survey, as the benchmark design calls for. Stop adding interviews for a persona when new ones stop producing new codes.</p>
+      </div></div>
+      <div class="panel"><div class="ph"><h3>Coding rules</h3></div><div class="pb">
+        <ol>
+          <li>Code the participant's words, not your summary. Select the passage in the notes and pick what it evidences.</li>
+          <li>If the passage supports something already in the model, link it as <b>evidence for an existing</b> job, step or outcome. Only create a new candidate when nothing existing fits.</li>
+          <li>State jobs without naming a solution: <i>Pay employees accurately and on time</i>, not <i>Use the payroll portal</i>.</li>
+          <li>Write outcomes with the builder so they share the survey format; place each on the universal step where the executor judges it.</li>
+          <li>Emotional jobs start with <i>Feel</i> or <i>Avoid feeling</i>; social jobs with <i>Be seen as</i> or <i>Be perceived as</i>.</li>
+          <li>Never record a participant's name or anything that identifies them or their employer. Record consent before publishing.</li>
+          <li>Spell out acronyms in statements where you can; preferred labels must not contain them, so unknown ones are flagged.</li>
+        </ol>
+      </div></div>
+      <div class="panel" style="grid-column:1/-1"><div class="ph"><h3>Interview guide</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><select id="g-p" aria-label="Persona for the guide" style="width:auto"></select><select id="g-j" aria-label="Focus job for the guide" style="width:auto;max-width:420px"></select><button class="btn" id="g-copy" type="button">Copy guide</button></div></div>
+        <div class="pb" id="g-body"></div></div>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast" hidden></div>
+
+<script src="../assets/ke-turtle.js"></script>
+<script src="../assets/c360-data.js"></script>
+<script>
+(function(){
+  'use strict';
+  const C = window.C360, NS = C.NS, J = NS.jtbd, esc = C.esc;
+  const $ = id => document.getElementById(id);
+  const LS_IV = 'c360-ai-interviews', LS_DEC = 'c360-ai-decisions', LS_UI = 'c360-ai-ui';
+  const DEC_GRAPH = C.GRAPH_BASE + 'evidence-decisions';
+  const PHASES = [
+    { key:'discover', label:'Discover', n:1, prompt:'when the work goes at its best' },
+    { key:'dream',    label:'Dream',    n:2, prompt:'what it would be like if it always went that way' },
+    { key:'design',   label:'Design',   n:3, prompt:'the steps and support that would make it real' },
+    { key:'destiny',  label:'Destiny',  n:4, prompt:'what must be true, and how they would measure it' }
+  ];
+  const TYPES = {
+    functional:{ label:'Functional job', name:'Job', col:'var(--machine)', help:'What they are trying to get done, without naming a solution.' },
+    emotional: { label:'Emotional job',  name:'EmotionalJob', col:'var(--human)', help:'How they want to feel, or avoid feeling.' },
+    social:    { label:'Social job',     name:'SocialJob', col:'var(--human)', help:'How they want to be seen by others.' },
+    step:      { label:'Job step',       name:'Step', col:'var(--p7)', help:'One step of a specific job, in their words, placed on a universal step.' },
+    outcome:   { label:'Desired outcome',name:'Outcome', col:'var(--p3)', help:'How they judge success at a step: direction + metric + object + clarifier.' }
+  };
+  const METRICS = {
+    time:       { phrase:'the time required to', metric:'speed' },
+    likelihood: { phrase:'the likelihood', metric:'stability' },
+    cost:       { phrase:'the cost of', metric:'cost-and-exposure' },
+    effort:     { phrase:'the effort required to', metric:'effort' },
+    number:     { phrase:'the number of', metric:'output' }
+  };
+  const SIZES = ['5–19 employees','20–49 employees','50–149 employees','150–499 employees','500+ employees'];
+  const PCOLS = ['var(--p1)','var(--p2)','var(--p3)','var(--p4)','var(--p5)','var(--p6)','var(--p7)','var(--p8)'];
+  const inShell = (()=>{ try { return window.top !== window && !!window.top.KE_SHELL; } catch(e){ return false; } })();
+
+  let RES = null, M = null;
+  let store = C.lsJSON(LS_IV, {});           // id → interview (editable form)
+  let decisions = C.lsJSON(LS_DEC, {});      // element IRI → 'validated' | 'retired' | 'candidate'
+  const ui = Object.assign({ tab:'capture', sel:null, q:'', p:'' }, C.lsJSON(LS_UI, {}));
+  let coder = null;                          // the code being edited {ivId, code}
+  const qs = new URLSearchParams(location.search);
+  const want = { persona: qs.get('persona') || '', job: qs.get('job') || '' };
+
+  const toast = m => { const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2600); };
+  const saveUI = () => C.lsSet(LS_UI, JSON.stringify({ tab:ui.tab, sel:ui.sel, q:ui.q, p:ui.p }));
+  const saveStore = () => C.lsSet(LS_IV, JSON.stringify(store));
+  const lc = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+  const uc = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+  const today = () => new Date().toISOString().slice(0, 10);
+  const graphOf = iv => C.GRAPH_BASE + 'interviews/' + iv.id;
+  const personaList = () => M ? M.personas : [];
+  const personaLabel = iri => { const p = personaList().find(x => x.iri === iri); return p ? p.short : (iri ? C.humanize(iri) : ''); };
+  const pcol = iri => { const i = personaList().findIndex(x => x.iri === iri); return i < 0 ? 'var(--human)' : PCOLS[i % PCOLS.length]; };
+  const codeIri = (iv, c) => NS.air + iv.id + '-' + TYPES[c.type].name + '-' + c.n;
+  const shortId = iv => iv.id.replace(/^Interview-/, 'I');
+  function personaIri(iv){ return iv.persona === '__new' ? NS.air + iv.id + '-Persona' : iv.persona; }
+
+  // Resolve a code's referenced job: an existing IRI or "code:n" for a job coded in the same interview
+  function resolveRef(iv, ref){ if (!ref) return ''; if (ref.indexOf('code:') === 0) { const c = iv.codes.find(x => x.n === +ref.slice(5)); return c ? (c.mode === 'existing' ? c.target : codeIri(iv, c)) : ''; } return ref; }
+  function jobStatementFor(iv, ref){
+    if (!ref) return '';
+    if (ref.indexOf('code:') === 0) { const c = iv.codes.find(x => x.n === +ref.slice(5)); if (!c) return ''; return c.mode === 'existing' ? (M.jobs[c.target] ? M.jobs[c.target].stmt : '') : c.statement; }
+    return M.jobs[ref] ? M.jobs[ref].stmt : '';
+  }
+  function outcomeStatement(c){
+    if (c.custom && c.statement) return c.statement;
+    const m = METRICS[c.metric] || METRICS.time;
+    let obj = (c.object || '').trim();
+    if (c.metric === 'likelihood' && obj && !/^(that|of)\b/i.test(obj)) obj = 'of ' + obj;
+    return obj ? `${c.direction || 'Minimize'} ${m.phrase} ${obj}${c.clarifier ? ', ' + c.clarifier.trim() : ''}` : '';
+  }
+  function codeStatement(iv, c){
+    if (c.mode === 'existing') { const t = c.target; return (M.jobs[t] && M.jobs[t].stmt) || (M.outcomes[t] && M.outcomes[t].stmt) || (M.mapSteps[t] && M.mapSteps[t].stmt) || C.humanize(t); }
+    return c.type === 'outcome' ? outcomeStatement(c) : (c.statement || '');
+  }
+
+  // ── Turtle for one interview ────────────────────────────────────────
+  function interviewTTL(iv){
+    const T = C.tIri, L = C.tl, I = NS.air + iv.id, P = personaIri(iv), out = [];
+    const blk = (subj, types, props) => out.push(`${T(subj)} a ${types.join(', ')} ;\n    ${props.filter(Boolean).join(' ;\n    ')} .\n`);
+    const labels = text => { const pref = C.expand(text); const a = [`rdfs:label ${L(pref)}`, `skos:prefLabel ${L(pref)}`]; if (pref !== text) a.push(`skos:altLabel ${L(text)}`); return a; };
+    const created = `dcterms:created "${(iv.createdAt || today())}"^^xsd:date`;
+    const cand = 'jtbd:hasEvidenceStatus evid:candidate';
+    // new persona (candidate)
+    if (iv.persona === '__new' && iv.newPersona && iv.newPersona.name) {
+      blk(P, ['owl:NamedIndividual', 'jtbd:client-persona'], [...labels(iv.newPersona.name), iv.newPersona.short ? `jtbd:hasShortName ${L(iv.newPersona.short, null)}` : '',
+        iv.newPersona.def ? `skos:definition ${L(iv.newPersona.def)}` : '', `jtbd:hasIdentifier ${L(shortId(iv) + '-P', null)}`, cand, created]);
+    }
+    const pl = P ? personaLabel(P) || (iv.newPersona && iv.newPersona.name) || 'persona' : 'persona';
+    const notes = PHASES.filter(ph => (iv.notes[ph.key] || '').trim());
+    const excerpts = iv.codes.filter(c => (c.excerpt || '').trim());
+    blk(I, ['owl:NamedIndividual', 'ai:persona-interview', 'prov:Activity'], [...labels(`Interview with ${C.expand(pl)}, ${iv.date || today()}`),
+      `ai:hasInterviewIdentifier ${L(iv.id, null)}`, P ? `ai:interviewsPersona ${T(P)}` : '',
+      iv.date ? `ai:hasInterviewDate "${iv.date}"^^xsd:date` : '', iv.interviewer ? `ai:hasInterviewer ${L(iv.interviewer, null)}` : '',
+      iv.profile ? `ai:hasParticipantProfile ${L(iv.profile)}` : '', iv.size ? `ai:hasCompanySizeBand ${L(iv.size, null)}` : '',
+      iv.industry ? `ai:hasIndustry ${L(iv.industry)}` : '', iv.topic ? `ai:hasAffirmativeTopic ${L(iv.topic)}` : '',
+      `ai:isConsentRecorded "${iv.consent ? 'true' : 'false'}"^^xsd:boolean`,
+      notes.length ? 'ai:hasInterviewNote ' + notes.map(ph => T(I + '-' + uc(ph.key))).join(', ') : '',
+      excerpts.length ? 'ai:hasInterviewExcerpt ' + excerpts.map(c => T(I + '-Excerpt-' + c.n)).join(', ') : '', created]);
+    notes.forEach(ph => blk(I + '-' + uc(ph.key), ['owl:NamedIndividual', 'ai:interview-note'], [
+      `rdfs:label ${L(ph.label + ' notes, ' + iv.id)}`, `ai:hasInquiryPhase phase:${ph.key}`, `ai:hasNoteText ${L(iv.notes[ph.key])}`]));
+    excerpts.forEach(c => {
+      const tgt = c.mode === 'existing' ? c.target : codeIri(iv, c);
+      blk(I + '-Excerpt-' + c.n, ['owl:NamedIndividual', 'ai:interview-excerpt'], [`rdfs:label ${L('Excerpt ' + c.n + ', ' + iv.id)}`,
+        `ai:hasExcerptText ${L(c.excerpt)}`, c.phase ? `ai:hasInquiryPhase phase:${c.phase}` : '', tgt ? `ai:isEvidenceFor ${T(tgt)}` : '']);
+    });
+    // new candidates
+    iv.codes.filter(c => c.mode === 'new').forEach(c => {
+      const iri = codeIri(iv, c), stmt = codeStatement(iv, c); if (!stmt) return;
+      if (c.type === 'functional' || c.type === 'emotional' || c.type === 'social') {
+        const cls = c.type === 'functional' ? (c.kind === 'chain' ? 'jtbd:consumption-chain-job' : 'jtbd:core-functional-job') : c.type === 'emotional' ? 'jtbd:emotional-job' : 'jtbd:social-job';
+        blk(iri, ['owl:NamedIndividual', cls], [...labels(stmt), `jtbd:hasIdentifier ${L(shortId(iv) + '-J' + c.n, null)}`, `jtbd:hasJobStatement ${L(stmt)}`, P ? `jtbd:hasJobExecutor ${T(P)}` : '', cand, created]);
+      } else if (c.type === 'step') {
+        const job = resolveRef(iv, c.job);
+        blk(iri, ['owl:NamedIndividual', 'jtbd:job-map-step'], [...labels(stmt), `jtbd:hasStepStatement ${L(stmt)}`, job ? `jtbd:isStepOfJob ${T(job)}` : '',
+          c.step ? `jtbd:isPlacedAtJobStep ${T(c.step)}` : '', `jtbd:hasStepOrder "${+c.order || c.n}"^^xsd:positiveInteger`, cand, created]);
+      } else if (c.type === 'outcome') {
+        const job = resolveRef(iv, c.job), js = jobStatementFor(iv, c.job), ms = resolveRef(iv, c.mapStep);
+        const m = METRICS[c.metric] || METRICS.time;
+        blk(iri, ['owl:NamedIndividual', 'jtbd:desired-outcome'], [...labels(stmt), `jtbd:hasIdentifier ${L(shortId(iv) + '-O' + c.n, null)}`, `jtbd:hasOutcomeStatement ${L(stmt)}`,
+          job ? `jtbd:isOutcomeOfJob ${T(job)}` : '', c.step ? `jtbd:occursAtJobStep ${T(c.step)}` : '', ms ? `jtbd:relatesToJobMapStep ${T(ms)}` : '',
+          c.theme ? `jtbd:hasBenchmarkTheme ${T(c.theme)}` : '', `jtbd:hasOutcomeMetricType metric:${m.metric}`,
+          js ? `jtbd:hasImportanceQuestion ${L('When you ' + lc(js) + ', how important is it to ' + lc(stmt) + '?')}` : '',
+          `jtbd:hasSatisfactionQuestion ${L('How satisfied are you with your current ability to ' + lc(stmt) + '?')}`, cand, created]);
+      }
+    });
+    return `# Appreciative inquiry interview ${iv.id} — KE Workbench Customer 360\n# Named graph: <${graphOf(iv)}>\n` + C.prefixBlock() + '\n' + out.join('\n');
+  }
+  function decisionsTTL(){
+    const lines = Object.keys(decisions).filter(k => decisions[k]).map(k => `${C.tIri(k)} jtbd:hasEvidenceStatus evid:${decisions[k]} .`);
+    return `# Evidence status decisions recorded in Appreciative Inquiry synthesis\n# Named graph: <${DEC_GRAPH}>\n` + C.prefixBlock() + '\n' + lines.join('\n') + '\n';
+  }
+  function problems(iv){
+    const out = [];
+    if (!iv.persona) out.push('Choose the persona this participant represents.');
+    if (iv.persona === '__new' && !(iv.newPersona && iv.newPersona.name)) out.push('Name the new persona.');
+    if (!iv.date) out.push('Add the interview date.');
+    if (!iv.consent) out.push('Record the participant’s consent before publishing.');
+    iv.codes.forEach(c => {
+      const st = codeStatement(iv, c);
+      if (c.mode === 'existing' && !c.target) out.push(`Code ${c.n}: pick the existing item it is evidence for.`);
+      if (c.mode === 'new' && !st) out.push(`Code ${c.n}: the statement is empty.`);
+      if (c.mode === 'new' && (c.type === 'step' || c.type === 'outcome') && !c.job) out.push(`Code ${c.n}: link it to a job.`);
+      if (c.mode === 'new' && (c.type === 'step' || c.type === 'outcome') && !c.step) out.push(`Code ${c.n}: place it on a universal job step.`);
+      const acr = c.mode === 'new' ? C.acronymsLeft(C.expand(st)) : [];
+      if (acr.length) out.push(`Code ${c.n}: spell out ${acr.join(', ')} (preferred labels can't contain acronyms).`);
+    });
+    return out;
+  }
+
+  // ── persistence ─────────────────────────────────────────────────────
+  async function saveDraft(iv, quiet){
+    iv.savedAt = Date.now(); store[iv.id] = iv; saveStore();
+    C.saveLocalGraph(graphOf(iv), interviewTTL(iv), { kind:'interview', title: iv.id });
+    if (!quiet) toast('Saved draft ' + iv.id + ' in this browser');
+    await reload();
+  }
+  async function publish(iv){
+    const probs = problems(iv);
+    if (probs.length) { toast(probs[0]); renderEditor(); return; }
+    await saveDraft(iv, true);
+    if (!RES.online) { toast('GraphDB is not reachable; the interview is saved as a draft here. Publish again once proxy.py is running.'); return; }
+    try {
+      await C.putGraph(graphOf(iv), interviewTTL(iv));
+      iv.publishedAt = Date.now(); store[iv.id] = iv; saveStore(); C.markPublished(graphOf(iv));
+      toast('Published ' + iv.id + ' to GraphDB'); await reload();
+    } catch (e) { toast(e.message); }
+  }
+  async function removeInterview(iv){
+    if (!confirm(`Delete interview ${iv.id}?` + (iv.publishedAt ? '\n\nIt will also be removed from GraphDB.' : ''))) return;
+    if (iv.publishedAt && RES.online) { try { await C.deleteGraph(graphOf(iv)); } catch (e) { toast(e.message); return; } }
+    delete store[iv.id]; saveStore(); C.removeLocalGraph(graphOf(iv));
+    ui.sel = null; saveUI(); toast('Deleted ' + iv.id); await reload();
+  }
+  async function setDecision(iri, status){
+    decisions[iri] = status; C.lsSet(LS_DEC, JSON.stringify(decisions));
+    C.saveLocalGraph(DEC_GRAPH, decisionsTTL(), { kind:'decisions', title:'Evidence decisions' });
+    if (RES.online) { try { await C.putGraph(DEC_GRAPH, decisionsTTL()); C.markPublished(DEC_GRAPH); } catch (e) { toast(e.message); } }
+    await reload();
+  }
+  function download(name, text, type){
+    try {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: type || 'text/plain' })); a.download = name;
+      document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+      toast('Downloaded ' + name);
+    } catch (e) { showFallback(text); }
+  }
+  function showFallback(text){
+    let f = $('dl-fallback');
+    if (!f) { f = document.createElement('div'); f.id = 'dl-fallback'; f.className = 'panel'; f.style.padding = '12px'; document.querySelector('main').prepend(f); }
+    f.innerHTML = '<p class="note">Downloads are blocked here. Select the text and copy it.</p><textarea readonly></textarea>';
+    const t = f.querySelector('textarea'); t.value = text; t.focus(); t.select();
+  }
+
+  // Editable form from a published interview (when this browser has no local copy)
+  function fromModel(ivIri){
+    const v = M.interviews[ivIri]; if (!v) return null;
+    const id = v.id, graph = v.graph, inGraph = iri => M.S[iri] && M.S[iri].graphs.has(graph);
+    const iv = { id, persona: v.persona, date: v.date, interviewer: v.interviewer, profile: v.profile, size: v.size, industry: v.industry, topic: v.topic,
+      consent: v.consent, notes: {}, codes: [], publishedAt: Date.now(), createdAt: v.date };
+    v.notes.forEach(n => { const k = C.local(n.phase); if (k) iv.notes[k] = n.text; });
+    let n = 0; const made = {};
+    function newCode(iri){
+      if (made[iri]) return made[iri];
+      const c = { n: ++n, mode:'new', excerpt:'', phase:'' }; made[iri] = c;
+      if (M.jobs[iri]) { const j = M.jobs[iri]; c.type = j.kind === 'emotional' ? 'emotional' : j.kind === 'social' ? 'social' : 'functional'; c.kind = j.kind === 'chain' ? 'chain' : 'core'; c.statement = j.stmt; }
+      else if (M.mapSteps[iri]) { const m = M.mapSteps[iri]; c.type = 'step'; c.statement = m.stmt; c.step = m.step; c.order = m.order; c.job = m.job; }
+      else if (M.outcomes[iri]) { const o = M.outcomes[iri]; c.type = 'outcome'; c.custom = true; c.statement = o.stmt; c.step = o.step; c.job = o.job; c.theme = o.theme; c.mapStep = o.mapStep;
+        c.metric = ({ speed:'time', stability:'likelihood', 'cost-and-exposure':'cost', effort:'effort', output:'number' })[C.local(o.metric)] || 'time'; }
+      return c;
+    }
+    v.excerpts.forEach(x => {
+      const tgt = x.evidenceFor[0] || '', ph = C.local(x.phase);
+      if (tgt && inGraph(tgt)) { const c = newCode(tgt); c.excerpt = x.text; c.phase = ph; }
+      else { const type = M.jobs[tgt] ? 'functional' : M.mapSteps[tgt] ? 'step' : 'outcome'; iv.codes.push({ n: ++n, mode:'existing', type, target: tgt, excerpt: x.text, phase: ph }); }
+    });
+    Object.keys(made).forEach(k => iv.codes.push(made[k]));
+    // re-point job references to codes made in this interview
+    iv.codes.forEach(c => { ['job','mapStep'].forEach(f => { if (c[f] && made[c[f]]) c[f] = 'code:' + made[c[f]].n; }); });
+    iv.codes.sort((a, b) => a.n - b.n);
+    return iv;
+  }
+  function allInterviews(){
+    const list = Object.values(store).map(iv => ({ iv, local: true }));
+    Object.values(M ? M.interviews : {}).forEach(v => { if (!store[v.id]) list.push({ iv: { id: v.id, persona: v.persona, date: v.date, profile: v.profile, codes: v.excerpts, notes: {}, publishedAt: 1 }, local: false, iri: v.iri }); });
+    return list.sort((a, b) => (b.iv.date || '').localeCompare(a.iv.date || '') || b.iv.id.localeCompare(a.iv.id));
+  }
+
+  // ── rendering: list ─────────────────────────────────────────────────
+  function renderStats(){
+    const ivs = allInterviews(), codes = ivs.reduce((a, x) => a + (x.iv.codes ? x.iv.codes.length : 0), 0);
+    const covered = new Set(ivs.map(x => x.iv.persona).filter(Boolean)).size;
+    const cands = Object.values(M ? M.jobs : {}).filter(j => j.status).length + Object.values(M ? M.outcomes : {}).filter(o => o.status).length + Object.values(M ? M.mapSteps : {}).length;
+    $('stats').innerHTML = [['human', ivs.length, 'Interviews'], ['', `${covered}/${personaList().length}`, 'Personas covered'], ['machine', codes, 'Coded excerpts'], ['human', cands, 'Candidates & steps']]
+      .map(([c, n, l]) => `<div class="stat ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+  }
+  function renderList(){
+    const sel = $('iv-p'), cur = ui.p;
+    sel.innerHTML = '<option value="">All personas</option>' + personaList().map(p => `<option value="${esc(p.iri)}">${esc(p.id)} · ${esc(p.short)}</option>`).join('');
+    sel.value = cur;
+    const q = ui.q.toLowerCase();
+    const list = allInterviews().filter(x => (!ui.p || x.iv.persona === ui.p) && (!q || [x.iv.id, x.iv.profile, personaLabel(x.iv.persona), x.iv.topic].join(' ').toLowerCase().includes(q)));
+    const groups = {}; list.forEach(x => { const k = x.local ? (x.iv.publishedAt ? 'Published' : 'Drafts in this browser') : 'In GraphDB'; (groups[k] = groups[k] || []).push(x); });
+    $('ivitems').innerHTML = ['Drafts in this browser', 'Published', 'In GraphDB'].filter(k => groups[k]).map(k => `<div class="grp">${k} · ${groups[k].length}</div>` + groups[k].map(x => {
+      const iv = x.iv, n = (iv.codes || []).length;
+      return `<button class="ivitem" role="listitem" data-id="${esc(iv.id)}" data-iri="${esc(x.iri || '')}" aria-current="${ui.sel === iv.id}"><span class="pd" style="background:${pcol(iv.persona)}"></span>
+        <span><b>${esc(personaLabel(iv.persona) || (iv.newPersona && iv.newPersona.name) || 'No persona yet')}</b>${esc(iv.profile || iv.topic || 'Participant profile not recorded')}</span>
+        <span class="tag">${n} code${n === 1 ? '' : 's'}</span><span class="meta">${esc(iv.id)}${iv.date ? ' · ' + esc(iv.date) : ''}</span></button>`; }).join('')).join('')
+      || '<p class="empty" style="padding:10px">No interviews yet. Start one with <b>+ New interview</b>.</p>';
+    $('ivitems').querySelectorAll('.ivitem').forEach(b => b.onclick = () => {
+      if (!store[b.dataset.id] && b.dataset.iri) { const iv = fromModel(b.dataset.iri); if (iv) { store[iv.id] = iv; saveStore(); } }
+      ui.sel = b.dataset.id; coder = null; saveUI(); renderList(); renderEditor();
+    });
+  }
+
+  // ── rendering: editor ───────────────────────────────────────────────
+  function prompts(iv, ph){
+    const job = iv.focusJob && M.jobs[iv.focusJob] ? lc(M.jobs[iv.focusJob].stmt) : 'get your HR, payroll and benefits work done';
+    return ({
+      discover: [`Tell me about a time when you were able to ${job} and it went really well. What was happening?`, 'What made that possible: people, information, tools, timing?', 'How did you feel at the end of it, and how did others see you?'],
+      dream: ['Imagine it went that well every time. What would be different in your week?', 'What would you no longer have to check, chase or worry about?', 'What would your owners, managers or employees notice?'],
+      design: ['Walk me through the steps you would take in that ideal version, from deciding what is needed to wrapping up.', 'At which step would you most want help, and what would good help look like?', 'What has to be in place before each step can start?'],
+      destiny: ['How would you know it is working? What would you measure, and what would count as good?', 'What would make it slip back to how it is today?', 'What is the one thing you would want us to commit to?']
+    })[ph.key];
+  }
+  function newInterview(){
+    const id = 'Interview-' + new Date().toISOString().slice(2, 10).replace(/-/g, '') + '-' + Math.random().toString(36).slice(2, 6);
+    const iv = { id, persona: want.persona && personaList().find(p => p.iri === want.persona) ? want.persona : '', focusJob: want.job && M.jobs[want.job] ? want.job : '',
+      date: today(), createdAt: today(), interviewer: C.lsGet('c360-ai-interviewer', ''), profile:'', size:'', industry:'', topic:'', consent:false,
+      notes: { discover:'', dream:'', design:'', destiny:'' }, codes: [], newPersona: null };
+    if (iv.persona && !iv.topic) iv.topic = `When ${lc(personaLabel(iv.persona))} work goes at its best`;
+    store[id] = iv; saveStore(); ui.sel = id; saveUI(); coder = null; renderList(); renderEditor(); renderStats();
+  }
+  function jobOptions(iv, val){
+    const p = personaIri(iv), pp = personaList().find(x => x.iri === p);
+    const mine = pp ? pp.executes.concat(pp.participates).filter(k => M.jobs[k]) : [];
+    const rest = Object.keys(M.jobs).filter(k => !mine.includes(k)).sort((a, b) => M.jobs[a].id.localeCompare(M.jobs[b].id, undefined, { numeric: true }));
+    const coded = iv.codes.filter(c => c.mode === 'new' && c.type === 'functional' && c.statement);
+    const o = (v, l) => `<option value="${esc(v)}"${v === val ? ' selected' : ''}>${esc(l)}</option>`;
+    return '<option value="">Choose a job…</option>' +
+      (coded.length ? `<optgroup label="Coded in this interview">${coded.map(c => o('code:' + c.n, 'New · ' + c.statement)).join('')}</optgroup>` : '') +
+      (mine.length ? `<optgroup label="This persona's jobs">${mine.map(k => o(k, M.jobs[k].id + ' · ' + M.jobs[k].stmt)).join('')}</optgroup>` : '') +
+      `<optgroup label="Other jobs">${rest.map(k => o(k, M.jobs[k].id + ' · ' + M.jobs[k].stmt)).join('')}</optgroup>`;
+  }
+  function stepOptions(val){ return '<option value="">Choose a universal step…</option>' + M.steps.map((s, i) => `<option value="${esc(s.iri)}"${s.iri === val ? ' selected' : ''}>${i + 1} · ${esc(s.label)}</option>`).join(''); }
+  function themeOptions(val){ return '<option value="">Theme (service line)…</option>' + Object.values(M.themes).sort((a, b) => a.label.localeCompare(b.label)).map(t => `<option value="${esc(t.iri)}"${t.iri === val ? ' selected' : ''}>${esc(t.label)}</option>`).join(''); }
+  function existingOptions(iv, c){
+    const o = (v, l) => `<option value="${esc(v)}"${v === c.target ? ' selected' : ''}>${esc(l)}</option>`;
+    if (c.type === 'outcome') {
+      const job = resolveRef(iv, c.job) || iv.focusJob;
+      const list = Object.values(M.outcomes).filter(x => !job || x.job === job).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+      return '<option value="">Choose the existing outcome…</option>' + list.map(x => o(x.iri, x.id + ' · ' + x.stmt)).join('');
+    }
+    if (c.type === 'step') return '<option value="">Choose the existing job step…</option>' + Object.values(M.mapSteps).map(x => o(x.iri, x.stmt + ' (' + (M.jobs[x.job] ? M.jobs[x.job].id : '') + ')')).join('');
+    const kinds = c.type === 'functional' ? ['core', 'chain', 'job'] : [c.type];
+    return '<option value="">Choose the existing job…</option>' + Object.values(M.jobs).filter(j => kinds.includes(j.kind)).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true })).map(j => o(j.iri, j.id + ' · ' + j.stmt)).join('');
+  }
+  function coderHTML(iv, c){
+    const t = TYPES[c.type], isNew = c.mode === 'new';
+    let fields = '';
+    if (!isNew) {
+      fields = `${c.type === 'outcome' ? `<label class="f">Job (narrows the list)<select data-k="job">${jobOptions(iv, c.job || '')}</select></label>` : ''}
+        <label class="f spanall">Existing ${esc(t.label.toLowerCase())}<select data-k="target">${existingOptions(iv, c)}</select></label>`;
+    } else if (c.type === 'functional') {
+      fields = `<label class="f spanall">Job statement (verb + object + clarifier, no solution)<input type="text" data-k="statement" value="${esc(c.statement || '')}" placeholder="e.g., Pay employees accurately and on time"></label>
+        <div class="spanall radios">${[['core','Core functional job'],['chain','Consumption-chain job (buying, moving onto, getting help, renewing)']].map(([k, l]) => `<label><input type="radio" name="kind" value="${k}" ${(c.kind || 'core') === k ? 'checked' : ''}>${l}</label>`).join('')}</div>`;
+    } else if (c.type === 'emotional' || c.type === 'social') {
+      fields = `<label class="f spanall">${c.type === 'emotional' ? 'Emotional job (Feel… / Avoid feeling…)' : 'Social job (Be seen as… / Be perceived as…)'}<input type="text" data-k="statement" value="${esc(c.statement || '')}" placeholder="${c.type === 'emotional' ? 'e.g., Feel confident nothing will be missed at payroll cutoff' : 'e.g., Be seen by the owner as a trusted steward of company money'}"></label>`;
+    } else if (c.type === 'step') {
+      fields = `<label class="f span2">Job<select data-k="job">${jobOptions(iv, c.job || iv.focusJob || '')}</select></label>
+        <label class="f">Universal step<select data-k="step">${stepOptions(c.step || '')}</select></label>
+        <label class="f">Order in the job<input type="number" min="1" data-k="order" value="${esc(c.order || '')}"></label>
+        <label class="f spanall">Step in their words<input type="text" data-k="statement" value="${esc(c.statement || '')}" placeholder="e.g., Collect approved timesheets from every site"></label>`;
+    } else {
+      const st = outcomeStatement(c);
+      fields = `<label class="f span2">Job<select data-k="job">${jobOptions(iv, c.job || iv.focusJob || '')}</select></label>
+        <label class="f">Universal step<select data-k="step">${stepOptions(c.step || '')}</select></label>
+        <label class="f">Theme<select data-k="theme">${themeOptions(c.theme || '')}</select></label>
+        <label class="f">Direction<select data-k="direction">${['Minimize', 'Increase'].map(d => `<option${(c.direction || 'Minimize') === d ? ' selected' : ''}>${d}</option>`).join('')}</select></label>
+        <label class="f">Metric<select data-k="metric">${Object.keys(METRICS).map(k => `<option value="${k}"${(c.metric || 'time') === k ? ' selected' : ''}>${METRICS[k].phrase.replace('the ', '')}</option>`).join('')}</select></label>
+        <label class="f span2">Object of control<input type="text" data-k="object" value="${esc(c.object || '')}" placeholder="e.g., confirm that pay calculations are correct"></label>
+        <label class="f span2">Clarifier (optional)<input type="text" data-k="clarifier" value="${esc(c.clarifier || '')}" placeholder="e.g., before funds are released"></label>
+        <label class="f span2">Job map step it belongs to (optional)<select data-k="mapStep"><option value="">None</option>${iv.codes.filter(x => x.type === 'step' && x.mode === 'new' && x.statement).map(x => `<option value="code:${x.n}"${c.mapStep === 'code:' + x.n ? ' selected' : ''}>New · ${esc(x.statement)}</option>`).join('')}${Object.values(M.mapSteps).filter(x => x.job === resolveRef(iv, c.job)).map(x => `<option value="${esc(x.iri)}"${c.mapStep === x.iri ? ' selected' : ''}>${esc(x.stmt)}</option>`).join('')}</select></label>
+        <div class="spanall preview">${esc(st || 'The statement appears here as you fill in the parts.')}${st && jobStatementFor(iv, c.job) ? `<span class="q">Survey: When you ${esc(lc(jobStatementFor(iv, c.job)))}, how important is it to ${esc(lc(st))}?</span>` : ''}</div>
+        <label class="check spanall"><input type="checkbox" data-k="custom" ${c.custom ? 'checked' : ''}> Write the statement myself</label>
+        ${c.custom ? `<label class="f spanall">Statement<input type="text" data-k="statement" value="${esc(c.statement || st)}"></label>` : ''}`;
+    }
+    const acr = isNew ? C.acronymsLeft(C.expand(codeStatement(iv, c))) : [];
+    return `<div class="panel coder" id="coder"><div class="ph"><h3>${c.saved ? 'Edit code ' + c.n : 'Code an excerpt'} · ${esc(t.label)}</h3><span class="note">${esc(t.help)}</span></div>
+      <div class="pb">
+        <div class="radios">${Object.keys(TYPES).map(k => `<label><input type="radio" name="ctype" value="${k}" ${c.type === k ? 'checked' : ''}>${TYPES[k].label}</label>`).join('')}</div>
+        <label class="f">Excerpt (the participant's words)<textarea data-k="excerpt" rows="2">${esc(c.excerpt || '')}</textarea></label>
+        <div class="grid2">
+          <label class="f">Phase<select data-k="phase">${PHASES.map(p => `<option value="${p.key}"${c.phase === p.key ? ' selected' : ''}>${p.label}</option>`).join('')}</select></label>
+          <div class="radios" style="align-self:end">${[['existing', 'Evidence for an existing item'], ['new', 'New candidate']].map(([k, l]) => `<label><input type="radio" name="cmode" value="${k}" ${c.mode === k ? 'checked' : ''}>${l}</label>`).join('')}</div>
+        </div>
+        <div class="grid4">${fields}</div>
+        ${acr.length ? `<div class="warnline">Spell out ${esc(acr.join(', '))}: preferred labels can't contain acronyms.</div>` : ''}
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" id="c-save" type="button">${c.saved ? 'Update code' : 'Add code'}</button><button class="btn" id="c-cancel" type="button">Cancel</button></div>
+      </div></div>`;
+  }
+  function wireCoder(iv){
+    const box = $('coder'); if (!box) return;
+    const c = coder.code;
+    const rerender = () => { const y = window.scrollY; renderEditor(); window.scrollTo(0, y); const f = $('coder'); if (f && document.activeElement === document.body) {} };
+    box.querySelectorAll('input[name="ctype"]').forEach(r => r.onchange = () => { c.type = r.value; if (c.mode === 'existing') c.target = ''; rerender(); });
+    box.querySelectorAll('input[name="cmode"]').forEach(r => r.onchange = () => { c.mode = r.value; rerender(); });
+    box.querySelectorAll('input[name="kind"]').forEach(r => r.onchange = () => { c.kind = r.value; });
+    box.querySelectorAll('[data-k]').forEach(el => {
+      const k = el.dataset.k;
+      const live = ['statement', 'object', 'clarifier', 'excerpt', 'order'];
+      el.addEventListener(live.includes(k) && el.tagName !== 'SELECT' ? 'input' : 'change', () => {
+        c[k] = el.type === 'checkbox' ? el.checked : el.value;
+        if (k === 'custom' && el.checked && !c.statement) c.statement = outcomeStatement(Object.assign({}, c, { custom: false }));
+        if (k === 'job' && c.type === 'outcome' && !c.theme) { const j = M.jobs[resolveRef(iv, c.job)]; if (j) { const ts = j.outcomes.map(o => M.outcomes[o] && M.outcomes[o].theme).filter(Boolean); if (ts.length) c.theme = ts.sort((a, b) => ts.filter(x => x === b).length - ts.filter(x => x === a).length)[0]; } }
+        if (['job', 'custom', 'direction', 'metric', 'step', 'mapStep'].includes(k) || (c.type === 'outcome' && ['object', 'clarifier'].includes(k))) {
+          if (['object', 'clarifier'].includes(k)) { const pv = box.querySelector('.preview'); if (pv) { const st = outcomeStatement(c); pv.innerHTML = esc(st || 'The statement appears here as you fill in the parts.') + (st && jobStatementFor(iv, c.job) ? `<span class="q">Survey: When you ${esc(lc(jobStatementFor(iv, c.job)))}, how important is it to ${esc(lc(st))}?</span>` : ''); } }
+          else rerender();
+        }
+      });
+    });
+    $('c-cancel').onclick = () => { coder = null; renderEditor(); };
+    $('c-save').onclick = () => {
+      if (c.mode === 'existing' && !c.target) { toast('Pick the existing item this excerpt is evidence for.'); return; }
+      if (c.mode === 'new' && !codeStatement(iv, c)) { toast('Write the statement first.'); return; }
+      if (c.mode === 'new' && c.type === 'outcome' && !c.custom) c.statement = outcomeStatement(c);
+      if (!c.saved) { c.n = iv.codes.reduce((a, x) => Math.max(a, x.n), 0) + 1; c.saved = true; iv.codes.push(c); }
+      coder = null; store[iv.id] = iv; saveStore(); renderEditor(); renderStats(); renderList(); toast(`Code ${c.n} added — save or publish to keep it`);
+    };
+  }
+  function codesHTML(iv){
+    if (!iv.codes.length) return '<p class="empty">No codes yet. Select a passage in the notes and choose what it evidences.</p>';
+    return Object.keys(TYPES).map(type => {
+      const list = iv.codes.filter(c => c.type === type); if (!list.length) return '';
+      return `<div class="ctype"><h4>${esc(TYPES[type].label)}s <span class="count">${list.length}</span></h4>` + list.map(c => {
+        const st = codeStatement(iv, c), job = c.job ? jobStatementFor(iv, c.job) : '';
+        const step = c.step && M.stepByIri[c.step] ? M.stepByIri[c.step].label : '';
+        const tgtId = c.mode === 'existing' ? ((M.outcomes[c.target] && M.outcomes[c.target].id) || (M.jobs[c.target] && M.jobs[c.target].id) || '') : '';
+        return `<div class="code" style="--ccol:${TYPES[type].col}"><div style="display:grid;gap:4px;min-width:0"><span class="st">${esc(st || '(no statement)')}</span>
+          <div class="meta"><span class="tag">#${c.n}</span>${c.mode === 'existing' ? `<span class="badge machine">evidence for ${esc(tgtId || 'existing')}</span>` : '<span class="badge human">new candidate</span>'}
+          ${c.phase ? `<span class="tag">${esc(uc(c.phase))}</span>` : ''}${job && c.mode === 'new' ? `<span>job: ${esc(job)}</span>` : ''}${step ? `<span>step: ${esc(step)}</span>` : ''}${c.theme && M.themes[c.theme] ? `<span>theme: ${esc(M.themes[c.theme].label)}</span>` : ''}</div></div>
+          <div class="acts"><button class="btn sm" data-edit="${c.n}" type="button">Edit</button><button class="btn sm danger" data-del="${c.n}" type="button" aria-label="Remove code ${c.n}">✕</button></div>
+          ${c.excerpt ? `<div class="quote">“${esc(c.excerpt)}”</div>` : ''}</div>`; }).join('') + '</div>';
+    }).join('');
+  }
+  function renderEditor(){
+    const el = $('editor'), iv = store[ui.sel];
+    if (!iv) {
+      const p = want.persona && personaList().find(x => x.iri === want.persona);
+      el.innerHTML = `<div class="panel"><div class="pb"><h2>Start or open an interview</h2>
+        <p class="muted">Pick an interview on the left, or start a new one${p ? ` with <b>${esc(p.label)}</b> pre-selected` : ''}. Interviews are saved in this browser as drafts until you publish them to GraphDB, where Buyer Personas &amp; Jobs reads them as evidence.</p>
+        <div><button class="btn primary" id="start" type="button">+ New interview${p ? ' · ' + esc(p.short) : ''}</button></div></div></div>`;
+      $('start').onclick = newInterview; return;
+    }
+    const pOpts = personaList().map(p => `<option value="${esc(p.iri)}"${iv.persona === p.iri ? ' selected' : ''}>${esc(p.id)} · ${esc(p.label)}</option>`).join('');
+    const probs = problems(iv), status = iv.publishedAt ? (iv.savedAt && iv.savedAt > iv.publishedAt + 1000 ? 'Published · local changes not yet published' : 'Published to GraphDB') : 'Draft in this browser';
+    el.innerHTML = `
+      <div class="panel"><div class="ph"><h2>${esc(iv.id)}</h2><span class="badge ${iv.publishedAt ? 'machine' : 'human'}">${esc(status)}</span></div>
+        <div class="pb">
+          <div class="grid4">
+            <label class="f span2">Persona<select id="f-persona"><option value="">Choose…</option>${pOpts}<option value="__new"${iv.persona === '__new' ? ' selected' : ''}>New persona (candidate)…</option></select></label>
+            <label class="f">Date<input type="date" id="f-date" value="${esc(iv.date || '')}"></label>
+            <label class="f">Interviewer<input type="text" id="f-interviewer" value="${esc(iv.interviewer || '')}" placeholder="Your name or team"></label>
+            ${iv.persona === '__new' ? `<div class="spanall newp"><div class="grid3"><label class="f">Persona name<input type="text" id="f-np-name" value="${esc((iv.newPersona || {}).name || '')}" placeholder="e.g., Practice Manager"></label><label class="f">Short name<input type="text" id="f-np-short" value="${esc((iv.newPersona || {}).short || '')}" placeholder="e.g., Practice"></label><label class="f">One-line definition<input type="text" id="f-np-def" value="${esc((iv.newPersona || {}).def || '')}" placeholder="A client persona who…"></label></div></div>` : ''}
+            <label class="f span2">Participant profile (no names)<input type="text" id="f-profile" value="${esc(iv.profile || '')}" placeholder="e.g., Controller at a regional logistics company"></label>
+            <label class="f">Company size<select id="f-size"><option value="">—</option>${SIZES.map(s => `<option${iv.size === s ? ' selected' : ''}>${s}</option>`).join('')}</select></label>
+            <label class="f">Industry<input type="text" id="f-industry" value="${esc(iv.industry || '')}" placeholder="e.g., Transportation"></label>
+            <label class="f span2">Affirmative topic<input type="text" id="f-topic" value="${esc(iv.topic || '')}" placeholder="e.g., Payroll weeks that run smoothly"></label>
+            <label class="f span2">Focus job (tailors the prompts)<select id="f-job"><option value="">Any job</option>${Object.values(M.jobs).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true })).map(j => `<option value="${esc(j.iri)}"${iv.focusJob === j.iri ? ' selected' : ''}>${esc(j.id)} · ${esc(j.stmt)}</option>`).join('')}</select></label>
+            <label class="check spanall"><input type="checkbox" id="f-consent" ${iv.consent ? 'checked' : ''}> The participant agreed to be recorded and to have their words used, without attribution, in product research.</label>
+          </div>
+        </div></div>
+      <div class="panel"><div class="ph"><h3>Notes by phase</h3><span class="note">Select a passage, then code it.</span></div>
+        ${PHASES.map(ph => `<div class="phase"><div style="display:grid;gap:6px;min-width:0"><h4><span class="n">${ph.n}</span>${ph.label}</h4>
+          <textarea id="n-${ph.key}" data-phase="${ph.key}" aria-label="${ph.label} notes" placeholder="What they said about ${ph.prompt}…">${esc(iv.notes[ph.key] || '')}</textarea>
+          <div class="codebar"><span class="lab">Code selection as</span>${Object.keys(TYPES).map(k => `<button class="btn" type="button" data-code="${k}" data-phase="${ph.key}">${TYPES[k].label}</button>`).join('')}</div></div>
+          <div><div class="eyebrow" style="margin-bottom:6px">Ask</div><ol class="prompts">${prompts(iv, ph).map(q => `<li>${esc(q)}</li>`).join('')}</ol></div></div>`).join('')}
+      </div>
+      ${coder && coder.ivId === iv.id ? coderHTML(iv, coder.code) : ''}
+      <div class="panel"><div class="ph"><h3>Codes</h3><span class="note">${iv.codes.length} coded · ${iv.codes.filter(c => c.mode === 'new').length} new candidates · ${iv.codes.filter(c => c.mode === 'existing').length} evidence for existing items</span></div>
+        <div class="pb codes">${codesHTML(iv)}</div></div>
+      ${probs.length ? `<div class="callout warn"><b>Before publishing:</b> ${probs.map(esc).join(' ')}</div>` : ''}
+      <div class="savebar"><span class="msg" id="msg">${iv.savedAt ? 'Last saved ' + new Date(iv.savedAt).toLocaleString() : 'Not saved yet'} · graph ${esc(graphOf(iv))}</span>
+        <button class="btn" id="b-ttl" type="button">Export Turtle</button>
+        <button class="btn danger" id="b-del" type="button">Delete</button>
+        <button class="btn" id="b-save" type="button">Save draft</button>
+        <button class="btn primary" id="b-pub" type="button">Publish to GraphDB</button></div>`;
+    // wire setup fields
+    const bind = (id, key, ev) => { const f = $(id); if (!f) return; f.addEventListener(ev || 'input', () => { iv[key] = f.type === 'checkbox' ? f.checked : f.value; store[iv.id] = iv; saveStore(); if (key === 'persona' || key === 'focusJob') { renderEditor(); renderList(); } }); };
+    bind('f-persona', 'persona', 'change'); bind('f-date', 'date', 'change'); bind('f-interviewer', 'interviewer'); bind('f-profile', 'profile'); bind('f-size', 'size', 'change');
+    bind('f-industry', 'industry'); bind('f-topic', 'topic'); bind('f-job', 'focusJob', 'change'); bind('f-consent', 'consent', 'change');
+    $('f-interviewer').addEventListener('change', e => C.lsSet('c360-ai-interviewer', e.target.value));
+    ['name', 'short', 'def'].forEach(k => { const f = $('f-np-' + k); if (f) f.addEventListener('input', () => { iv.newPersona = Object.assign({}, iv.newPersona || {}, { [k]: f.value }); store[iv.id] = iv; saveStore(); }); });
+    PHASES.forEach(ph => { const t = $('n-' + ph.key); t.addEventListener('input', () => { iv.notes[ph.key] = t.value; store[iv.id] = iv; saveStore(); }); });
+    el.querySelectorAll('[data-code]').forEach(b => b.addEventListener('mousedown', e => e.preventDefault()));
+    el.querySelectorAll('[data-code]').forEach(b => b.onclick = () => {
+      const t = $('n-' + b.dataset.phase), sel = t.value.slice(t.selectionStart, t.selectionEnd).trim();
+      coder = { ivId: iv.id, code: { type: b.dataset.code, phase: b.dataset.phase, excerpt: sel, mode: 'new', job: (b.dataset.code === 'step' || b.dataset.code === 'outcome') ? (iv.focusJob || '') : '', direction: 'Minimize', metric: 'time' } };
+      renderEditor(); const f = $('coder'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    el.querySelectorAll('[data-edit]').forEach(b => b.onclick = () => { const c = iv.codes.find(x => x.n === +b.dataset.edit); coder = { ivId: iv.id, code: c }; renderEditor(); const f = $('coder'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+    el.querySelectorAll('[data-del]').forEach(b => b.onclick = () => {
+      const n = +b.dataset.del, used = iv.codes.filter(x => x.job === 'code:' + n || x.mapStep === 'code:' + n);
+      if (used.length && !confirm(`Code ${n} is referenced by ${used.length} other code${used.length === 1 ? '' : 's'}. Remove it anyway?`)) return;
+      iv.codes = iv.codes.filter(x => x.n !== n); used.forEach(x => { if (x.job === 'code:' + n) x.job = ''; if (x.mapStep === 'code:' + n) x.mapStep = ''; });
+      store[iv.id] = iv; saveStore(); renderEditor(); renderStats(); renderList();
+    });
+    $('b-save').onclick = () => saveDraft(iv);
+    $('b-pub').onclick = () => publish(iv);
+    $('b-del').onclick = () => removeInterview(iv);
+    $('b-ttl').onclick = () => download(iv.id + '.ttl', interviewTTL(iv), 'text/turtle');
+    if (coder) wireCoder(iv);
+  }
+
+  // ── synthesis ───────────────────────────────────────────────────────
+  function renderSynth(){
+    const el = $('v-synth'), ivs = allInterviews(), TARGET = 3;
+    const rows = personaList().map(p => { const mine = ivs.filter(x => x.iv.persona === p.iri); return { p, n: mine.length, pub: mine.filter(x => x.iv.publishedAt).length, codes: mine.reduce((a, x) => a + (x.iv.codes || []).length, 0) }; });
+    const max = Math.max(TARGET, ...rows.map(r => r.n));
+    // evidence for existing benchmark items
+    const evid = Object.keys(M.evidence).map(k => ({ iri: k, list: M.evidence[k], el: M.outcomes[k] || M.jobs[k] || M.mapSteps[k] })).filter(x => x.el && !x.el.status)
+      .sort((a, b) => b.list.length - a.list.length);
+    // candidates (any status) created in interviews
+    const cands = [].concat(
+      Object.values(M.jobs).filter(j => j.status).map(j => ({ kind: ({ core:'Functional job', chain:'Functional job', emotional:'Emotional job', social:'Social job' })[j.kind] || 'Job', el: j, stmt: j.stmt, job: '' })),
+      Object.values(M.mapSteps).map(m => ({ kind: 'Job step', el: m, stmt: m.stmt, job: m.job })),
+      Object.values(M.outcomes).filter(o => o.status).map(o => ({ kind: 'Desired outcome', el: o, stmt: o.stmt, job: o.job })));
+    const support = iri => new Set((M.evidence[iri] || []).map(x => x.interview)).size;
+    const stLabel = s => s ? C.local(s) : 'candidate';
+    el.innerHTML = `
+      <div class="section"><div class="section-head"><h2>Coverage by persona</h2><span class="count">${ivs.length} interviews</span><span class="def">Aim for ${TARGET} interviews per persona before fielding the survey. Teal is published, amber is draft.</span></div>
+        <div class="panel"><div class="pb cov">${rows.map(r => `<div class="covrow"><span><span class="tag" style="margin-right:6px">${esc(r.p.id)}</span>${esc(r.p.short)}</span>
+          <div class="covbar" role="img" aria-label="${r.n} of ${TARGET} interviews"><i style="width:${r.n / max * 100}%"></i><i class="pub" style="width:${r.pub / max * 100}%"></i><span class="tgt" style="left:${TARGET / max * 100}%"></span></div>
+          <span class="mono small">${r.n}/${TARGET} · ${r.codes} codes</span></div>`).join('')}</div></div></div>
+      <div class="section"><div class="section-head"><h2>Candidates from interviews</h2><span class="count">${cands.length}</span><span class="def">New jobs, steps and outcomes coded in interviews. Validate the ones subject-matter experts accept; retire duplicates. Validated outcomes go to the next survey wave.</span></div>
+        <div class="panel"><div class="ph"><span class="note">Status changes are written to <span class="mono">${esc(DEC_GRAPH)}</span>${RES.online ? '' : ' (saved here until GraphDB is reachable)'}.</span>
+          <button class="btn" id="exp-cands" type="button">Export validated outcomes for the survey</button></div>
+          <div class="scroll"><table class="t"><thead><tr><th>Type</th><th>Statement</th><th>Job</th><th class="num">Interviews</th><th>Status</th><th></th></tr></thead><tbody>
+          ${cands.length ? cands.map(x => { const s = stLabel(x.el.status);
+            return `<tr><td>${esc(x.kind)}</td><td style="min-width:260px;color:var(--ink)">${esc(x.stmt)}${x.el.local ? ' <span class="badge human">draft</span>' : ''}</td><td>${x.job && M.jobs[x.job] ? esc(M.jobs[x.job].id + ' · ' + M.jobs[x.job].stmt) : '—'}</td>
+              <td class="num">${support(x.el.iri)}</td><td><span class="badge ${s === 'validated' ? 'good' : s === 'retired' ? 'plain' : 'amber'}">${esc(s)}</span></td>
+              <td style="white-space:nowrap">${s !== 'validated' ? `<button class="btn sm" data-dec="validated" data-iri="${esc(x.el.iri)}" type="button">Validate</button>` : ''} ${s !== 'retired' ? `<button class="btn sm" data-dec="retired" data-iri="${esc(x.el.iri)}" type="button">Retire</button>` : ''} ${s !== 'candidate' ? `<button class="btn sm" data-dec="candidate" data-iri="${esc(x.el.iri)}" type="button">Reset</button>` : ''}</td></tr>`; }).join('')
+            : '<tr><td colspan="6" class="empty">No candidates yet. Code a passage as a new job, step or outcome.</td></tr>'}
+          </tbody></table></div></div></div>
+      <div class="section"><div class="section-head"><h2>Evidence for the benchmark</h2><span class="count">${evid.length} items</span><span class="def">Existing personas' jobs and outcomes that interviews support, most-quoted first. Outcomes with no evidence after a full round of interviews are candidates to drop.</span></div>
+        <div class="panel"><div class="scroll"><table class="t"><thead><tr><th>Item</th><th>Statement</th><th class="num">Quotes</th><th class="num">Interviews</th><th>Sample quote</th></tr></thead><tbody>
+          ${evid.length ? evid.slice(0, 60).map(x => `<tr><td class="mono">${esc(x.el.id || '')}</td><td style="min-width:240px;color:var(--ink)">${esc(x.el.stmt)}</td><td class="num">${x.list.length}</td><td class="num">${new Set(x.list.map(y => y.interview)).size}</td><td><div class="quote">“${esc(x.list[0].excerpt.text)}”</div></td></tr>`).join('')
+            : '<tr><td colspan="5" class="empty">No excerpts linked to existing items yet.</td></tr>'}
+        </tbody></table></div></div></div>`;
+    el.querySelectorAll('[data-dec]').forEach(b => b.onclick = () => setDecision(b.dataset.iri, b.dataset.dec));
+    $('exp-cands').onclick = () => {
+      const val = Object.values(M.outcomes).filter(o => C.local(o.status) === 'validated');
+      if (!val.length) { toast('No validated outcomes yet.'); return; }
+      const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+      const rows = [['Outcome ID','Desired outcome','Job ID','Job','Job-map step','Theme (service line)','Metric type','Importance item','Satisfaction item','Interviews','Outcome IRI']];
+      val.forEach(o => { const j = M.jobs[o.job] || {}; rows.push([o.id, o.stmt, j.id || '', j.stmt || '', M.lbl(o.step), o.theme ? M.lbl(o.theme) : '', o.metric ? M.lbl(o.metric) : '', o.imp, o.sat, support(o.iri), o.iri]); });
+      download('Validated_outcomes_' + today() + '.csv', rows.map(r => r.map(q).join(',')).join('\n'), 'text/csv');
+    };
+  }
+
+  // ── guide ───────────────────────────────────────────────────────────
+  function renderGuide(){
+    const gp = $('g-p'), gj = $('g-j'), cur = gp.value || want.persona || (personaList()[0] || {}).iri;
+    gp.innerHTML = personaList().map(p => `<option value="${esc(p.iri)}">${esc(p.id)} · ${esc(p.short)}</option>`).join(''); gp.value = cur;
+    const p = personaList().find(x => x.iri === gp.value); const jobs = p ? p.executes.filter(k => M.jobs[k]) : [];
+    const cj = gj.value; gj.innerHTML = '<option value="">Any job</option>' + jobs.map(k => `<option value="${esc(k)}">${esc(M.jobs[k].id)} · ${esc(M.jobs[k].stmt)}</option>`).join(''); if (jobs.includes(cj)) gj.value = cj;
+    const fake = { focusJob: gj.value };
+    const job = gj.value ? M.jobs[gj.value] : null;
+    const outs = job ? job.outcomes.map(o => M.outcomes[o]).filter(Boolean).slice(0, 6) : [];
+    $('g-body').innerHTML = `<div class="grid2">${PHASES.map(ph => `<div><h4 style="margin-bottom:6px">${ph.n} · ${ph.label}</h4><ol class="prompts">${prompts(fake, ph).map(q => `<li>${esc(q)}</li>`).join('')}</ol></div>`).join('')}</div>
+      ${outs.length ? `<div><h4 style="margin:6px 0">Listen for these outcomes (do not read them out)</h4><ul class="prompts">${outs.map(o => `<li><span class="tag">${esc(o.id)}</span> ${esc(o.stmt)}</li>`).join('')}</ul></div>` : ''}
+      <p class="note">Open with the affirmative topic, keep to stories, and ask "what made that possible?" before moving on. Close by thanking them and confirming consent.</p>`;
+    gp.onchange = renderGuide; gj.onchange = renderGuide;
+    $('g-copy').onclick = () => {
+      const txt = `Interview guide · ${p ? p.label : ''}${job ? ' · ' + job.stmt : ''}\n\n` + PHASES.map(ph => `${ph.n}. ${ph.label}\n` + prompts(fake, ph).map(q => '  - ' + q).join('\n')).join('\n\n');
+      try { navigator.clipboard.writeText(txt).then(() => toast('Guide copied'), () => showFallback(txt)); } catch (e) { showFallback(txt); }
+    };
+  }
+
+  // ── tabs, source bar, boot ──────────────────────────────────────────
+  function activate(tab){
+    ui.tab = tab; saveUI();
+    [['capture', 'v-capture'], ['synth', 'v-synth'], ['guide', 'v-guide']].forEach(([k, v]) => { $('tab-' + k).setAttribute('aria-selected', String(k === tab)); $(v).hidden = k !== tab; });
+    if (tab === 'synth') renderSynth(); if (tab === 'guide') renderGuide();
+  }
+  ['capture', 'synth', 'guide'].forEach(k => $('tab-' + k).onclick = () => activate(k));
+  $('new-iv').onclick = newInterview;
+  $('iv-q').oninput = e => { ui.q = e.target.value; saveUI(); renderList(); };
+  $('iv-p').onchange = e => { ui.p = e.target.value; saveUI(); renderList(); };
+  function renderStatus(){
+    const sb = $('sourcebar'); sb.className = 'sourcebar ' + (RES.source === 'graphdb' ? 'live' : 'off');
+    const unpub = Object.values(store).filter(iv => !iv.publishedAt || (iv.savedAt && iv.savedAt > iv.publishedAt + 1000)).length;
+    sb.innerHTML = `<span class="dot"></span><span>${C.statusHTML(RES)}${unpub ? ` · <b>${unpub}</b> interview${unpub === 1 ? '' : 's'} not yet published` : ''}</span><span class="acts">${RES.online && unpub ? '<button class="btn sm" id="pub-all" type="button">Publish all ready</button>' : ''}<button class="btn sm" id="reload" type="button">Reload</button></span>`;
+    $('reload').onclick = () => reload();
+    const pa = $('pub-all'); if (pa) pa.onclick = async () => { let n = 0; for (const iv of Object.values(store)) { if (!problems(iv).length && (!iv.publishedAt || iv.savedAt > iv.publishedAt + 1000)) { try { await C.putGraph(graphOf(iv), interviewTTL(iv)); iv.publishedAt = Date.now(); C.markPublished(graphOf(iv)); n++; } catch (e) { toast(e.message); break; } } } saveStore(); toast(`Published ${n} interview${n === 1 ? '' : 's'}`); reload(); };
+  }
+  async function reload(){
+    RES = await C.load(); M = RES.model;
+    renderStatus(); renderStats(); renderList();
+    if (ui.tab === 'capture') renderEditor(); else if (ui.tab === 'synth') renderSynth(); else renderGuide();
+  }
+  window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings') reload(); });
+  (async function boot(){
+    await reload();
+    if (ui.sel && !store[ui.sel]) ui.sel = null;
+    activate(['capture', 'synth', 'guide'].includes(ui.tab) ? ui.tab : 'capture');
+    renderEditor();
+  })();
+})();
+</script>
+</body></html>

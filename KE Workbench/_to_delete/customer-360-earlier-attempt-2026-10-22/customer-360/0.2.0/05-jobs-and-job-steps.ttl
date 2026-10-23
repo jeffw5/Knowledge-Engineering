@@ -1,0 +1,3713 @@
+# Functional jobs and their job steps
+# Named graph: https://www.insperity.com/graph/outcome-benchmark/jobs  ·  Customer 360 release 0.2.0  ·  Draft
+# 26 functional and consumption-chain jobs, each with its eight job steps.
+# Generated 2026-10-22T19:46:03Z by gen_customer360.py · Standards: Semantic Governance v1.9 (Draft), Part III
+
+@prefix rdf:             <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:            <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:             <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:             <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:            <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:             <http://purl.org/dc/terms/> .
+@prefix vaem:            <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:            <http://purl.org/vocab/vann/> .
+@prefix jtbd:            <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix rg:              <https://www.insperity.com/ontology/requirements-gateway/> .
+@prefix ob:              <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix core:            <https://www.insperity.com/ontology/core/> .
+@prefix jobvoc:          <https://www.insperity.com/vocabulary/core-job/> .
+@prefix personavoc:      <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix processvoc:      <https://www.insperity.com/vocabulary/core-process/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix measurevoc:      <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix decisionvoc:     <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix theme:           <https://www.insperity.com/vocabulary/benchmark-theme/> .
+@prefix metric:          <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix verdict:         <https://www.insperity.com/vocabulary/review-verdict/> .
+@prefix flag:            <https://www.insperity.com/vocabulary/review-flag/> .
+@prefix use:             <https://www.insperity.com/vocabulary/approved-use/> .
+@prefix result:          <https://www.insperity.com/vocabulary/review-decision-result/> .
+@prefix segment:         <https://www.insperity.com/vocabulary/survey-segment/> .
+@prefix action:          <https://www.insperity.com/vocabulary/outcome-action/> .
+@prefix phase:           <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix check:           <https://www.insperity.com/vocabulary/gateway-check/> .
+@prefix demand:          <https://www.insperity.com/vocabulary/demand-status/> .
+@prefix hr:              <http://example.org/hrservices/ddd#> .
+@prefix obo:             <http://purl.obolibrary.org/obo/> .
+@prefix prov:            <http://www.w3.org/ns/prov#> .
+
+
+ob:Job-J01
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Pay employees accurately and on time"@en ;
+  skos:prefLabel "Pay employees accurately and on time"@en ;
+  skos:definition "A core functional job in which the client persona needs to pay employees accurately and on time."@en ;
+  jtbd:hasIdentifier "J01" ;
+  jtbd:hasJobStatement "Pay employees accurately and on time"@en ;
+  jtbd:hasJobExecutor ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:BusinessOwner ;
+  core:hasStep ob:Job-J01-DefineStep, ob:Job-J01-LocateStep, ob:Job-J01-PrepareStep, ob:Job-J01-ConfirmStep, ob:Job-J01-ExecuteStep, ob:Job-J01-MonitorStep, ob:Job-J01-ModifyStep, ob:Job-J01-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O001,
+      ob:Outcome-O002,
+      ob:Outcome-O003,
+      ob:Outcome-O004,
+      ob:Outcome-O005,
+      ob:Outcome-O006,
+      ob:Outcome-O007,
+      ob:Outcome-O008,
+      ob:Outcome-O009,
+      ob:Outcome-O010 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: pay employees accurately and on time"@en ;
+  skos:prefLabel "Define: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J01-DEF" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-LocateStep ;
+  core:hasOutcome ob:Outcome-O001 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: pay employees accurately and on time"@en ;
+  skos:prefLabel "Locate: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J01-LOC" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-PrepareStep ;
+  core:hasOutcome ob:Outcome-O002 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: pay employees accurately and on time"@en ;
+  skos:prefLabel "Prepare: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J01-PRE" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O003 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: pay employees accurately and on time"@en ;
+  skos:prefLabel "Confirm: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J01-CON" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O004, ob:Outcome-O005 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: pay employees accurately and on time"@en ;
+  skos:prefLabel "Execute: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J01-EXE" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-MonitorStep ;
+  core:hasOutcome ob:Outcome-O006, ob:Outcome-O007 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: pay employees accurately and on time"@en ;
+  skos:prefLabel "Monitor: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J01-MON" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-ModifyStep ;
+  core:hasOutcome ob:Outcome-O008 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: pay employees accurately and on time"@en ;
+  skos:prefLabel "Modify: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J01-MOD" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J01-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O009 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J01-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: pay employees accurately and on time"@en ;
+  skos:prefLabel "Conclude: pay employees accurately and on time"@en ;
+  skos:definition "A job step in which the executor of the job to pay employees accurately and on time works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J01-CONC" ;
+  core:isStepOf ob:Job-J01 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O010 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A core functional job in which the client persona needs to meet payroll tax obligations in every jurisdiction where employees work."@en ;
+  jtbd:hasIdentifier "J02" ;
+  jtbd:hasJobStatement "Meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  jtbd:hasJobExecutor ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:BusinessOwner ;
+  core:hasStep ob:Job-J02-DefineStep, ob:Job-J02-LocateStep, ob:Job-J02-PrepareStep, ob:Job-J02-ConfirmStep, ob:Job-J02-ExecuteStep, ob:Job-J02-MonitorStep, ob:Job-J02-ModifyStep, ob:Job-J02-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O011,
+      ob:Outcome-O012,
+      ob:Outcome-O013,
+      ob:Outcome-O014,
+      ob:Outcome-O015,
+      ob:Outcome-O016,
+      ob:Outcome-O017,
+      ob:Outcome-O018,
+      ob:Outcome-O019 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Define: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J02-DEF" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-LocateStep ;
+  core:hasOutcome ob:Outcome-O011 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Locate: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J02-LOC" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Prepare: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J02-PRE" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O012 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Confirm: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J02-CON" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Execute: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J02-EXE" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-MonitorStep ;
+  core:hasOutcome ob:Outcome-O013, ob:Outcome-O014 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Monitor: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J02-MON" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-ModifyStep ;
+  core:hasOutcome ob:Outcome-O015, ob:Outcome-O016 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Modify: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J02-MOD" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J02-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O017 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J02-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:prefLabel "Conclude: meet payroll tax obligations in every jurisdiction where employees work"@en ;
+  skos:definition "A job step in which the executor of the job to meet payroll tax obligations in every jurisdiction where employees work works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J02-CONC" ;
+  core:isStepOf ob:Job-J02 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O018, ob:Outcome-O019 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Track time worked and manage time off"@en ;
+  skos:prefLabel "Track time worked and manage time off"@en ;
+  skos:definition "A core functional job in which the client persona needs to track time worked and manage time off."@en ;
+  jtbd:hasIdentifier "J03" ;
+  jtbd:hasJobStatement "Track time worked and manage time off"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:PeopleManager, ob:OperationsAndSafetyLeader ;
+  jtbd:hasJobParticipant ob:WorksiteEmployee, ob:FinanceLeader ;
+  core:hasStep ob:Job-J03-DefineStep, ob:Job-J03-LocateStep, ob:Job-J03-PrepareStep, ob:Job-J03-ConfirmStep, ob:Job-J03-ExecuteStep, ob:Job-J03-MonitorStep, ob:Job-J03-ModifyStep, ob:Job-J03-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O020,
+      ob:Outcome-O021,
+      ob:Outcome-O022,
+      ob:Outcome-O023,
+      ob:Outcome-O024,
+      ob:Outcome-O025,
+      ob:Outcome-O026,
+      ob:Outcome-O027,
+      ob:Outcome-O028 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: track time worked and manage time off"@en ;
+  skos:prefLabel "Define: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J03-DEF" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-LocateStep ;
+  core:hasOutcome ob:Outcome-O020 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: track time worked and manage time off"@en ;
+  skos:prefLabel "Locate: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J03-LOC" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-PrepareStep ;
+  core:hasOutcome ob:Outcome-O021 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: track time worked and manage time off"@en ;
+  skos:prefLabel "Prepare: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J03-PRE" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: track time worked and manage time off"@en ;
+  skos:prefLabel "Confirm: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J03-CON" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O022 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: track time worked and manage time off"@en ;
+  skos:prefLabel "Execute: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J03-EXE" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-MonitorStep ;
+  core:hasOutcome ob:Outcome-O023, ob:Outcome-O024 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: track time worked and manage time off"@en ;
+  skos:prefLabel "Monitor: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J03-MON" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-ModifyStep ;
+  core:hasOutcome ob:Outcome-O025, ob:Outcome-O026 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: track time worked and manage time off"@en ;
+  skos:prefLabel "Modify: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J03-MOD" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J03-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O027 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J03-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: track time worked and manage time off"@en ;
+  skos:prefLabel "Conclude: track time worked and manage time off"@en ;
+  skos:definition "A job step in which the executor of the job to track time worked and manage time off works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J03-CONC" ;
+  core:isStepOf ob:Job-J03 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O028 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A core functional job in which the client persona needs to understand and allocate labor cost by department, job or project."@en ;
+  jtbd:hasIdentifier "J04" ;
+  jtbd:hasJobStatement "Understand and allocate labor cost by department, job or project"@en ;
+  jtbd:hasJobExecutor ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:BusinessOwner, ob:OperationsAndSafetyLeader ;
+  core:hasStep ob:Job-J04-DefineStep, ob:Job-J04-LocateStep, ob:Job-J04-PrepareStep, ob:Job-J04-ConfirmStep, ob:Job-J04-ExecuteStep, ob:Job-J04-MonitorStep, ob:Job-J04-ModifyStep, ob:Job-J04-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O029,
+      ob:Outcome-O030,
+      ob:Outcome-O031,
+      ob:Outcome-O032,
+      ob:Outcome-O033,
+      ob:Outcome-O034,
+      ob:Outcome-O035 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Define: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J04-DEF" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-LocateStep ;
+  core:hasOutcome ob:Outcome-O029 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Locate: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J04-LOC" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Prepare: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J04-PRE" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Confirm: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J04-CON" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Execute: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J04-EXE" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-MonitorStep ;
+  core:hasOutcome ob:Outcome-O030, ob:Outcome-O031 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Monitor: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J04-MON" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-ModifyStep ;
+  core:hasOutcome ob:Outcome-O032, ob:Outcome-O033 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Modify: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J04-MOD" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J04-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O034 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J04-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: understand and allocate labor cost by department, job or project"@en ;
+  skos:prefLabel "Conclude: understand and allocate labor cost by department, job or project"@en ;
+  skos:definition "A job step in which the executor of the job to understand and allocate labor cost by department, job or project works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J04-CONC" ;
+  core:isStepOf ob:Job-J04 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O035 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Offer a competitive and affordable benefits package"@en ;
+  skos:definition "A core functional job in which the client persona needs to offer a competitive and affordable benefits package."@en ;
+  jtbd:hasIdentifier "J05" ;
+  jtbd:hasJobStatement "Offer a competitive and affordable benefits package"@en ;
+  jtbd:hasJobExecutor ob:BusinessOwner, ob:HumanResourcesLeader ;
+  jtbd:hasJobParticipant ob:FinanceLeader ;
+  core:hasStep ob:Job-J05-DefineStep, ob:Job-J05-LocateStep, ob:Job-J05-PrepareStep, ob:Job-J05-ConfirmStep, ob:Job-J05-ExecuteStep, ob:Job-J05-MonitorStep, ob:Job-J05-ModifyStep, ob:Job-J05-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O036,
+      ob:Outcome-O037,
+      ob:Outcome-O038,
+      ob:Outcome-O039,
+      ob:Outcome-O040,
+      ob:Outcome-O041,
+      ob:Outcome-O042,
+      ob:Outcome-O043,
+      ob:Outcome-O044 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Define: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J05-DEF" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-LocateStep ;
+  core:hasOutcome ob:Outcome-O036 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Locate: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J05-LOC" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-PrepareStep ;
+  core:hasOutcome ob:Outcome-O037 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Prepare: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J05-PRE" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O038 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Confirm: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J05-CON" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Execute: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J05-EXE" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-MonitorStep ;
+  core:hasOutcome ob:Outcome-O039, ob:Outcome-O040, ob:Outcome-O041 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Monitor: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J05-MON" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-ModifyStep ;
+  core:hasOutcome ob:Outcome-O042, ob:Outcome-O043 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Modify: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J05-MOD" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J05-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O044 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J05-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: offer a competitive and affordable benefits package"@en ;
+  skos:prefLabel "Conclude: offer a competitive and affordable benefits package"@en ;
+  skos:definition "A job step in which the executor of the job to offer a competitive and affordable benefits package works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J05-CONC" ;
+  core:isStepOf ob:Job-J05 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Administer benefit enrollment and changes"@en ;
+  skos:definition "A core functional job in which the client persona needs to administer benefit enrollment and changes."@en ;
+  jtbd:hasIdentifier "J06" ;
+  jtbd:hasJobStatement "Administer benefit enrollment and changes"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+  jtbd:hasJobParticipant ob:FinanceLeader, ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J06-DefineStep, ob:Job-J06-LocateStep, ob:Job-J06-PrepareStep, ob:Job-J06-ConfirmStep, ob:Job-J06-ExecuteStep, ob:Job-J06-MonitorStep, ob:Job-J06-ModifyStep, ob:Job-J06-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O045,
+      ob:Outcome-O046,
+      ob:Outcome-O047,
+      ob:Outcome-O048,
+      ob:Outcome-O049,
+      ob:Outcome-O050,
+      ob:Outcome-O051,
+      ob:Outcome-O052,
+      ob:Outcome-O053 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Define: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J06-DEF" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-LocateStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Locate: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J06-LOC" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Prepare: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J06-PRE" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O045 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Confirm: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J06-CON" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O046, ob:Outcome-O047 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Execute: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J06-EXE" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-MonitorStep ;
+  core:hasOutcome ob:Outcome-O048, ob:Outcome-O049 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Monitor: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J06-MON" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-ModifyStep ;
+  core:hasOutcome ob:Outcome-O050, ob:Outcome-O051 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Modify: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J06-MOD" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J06-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O052 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J06-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: administer benefit enrollment and changes"@en ;
+  skos:prefLabel "Conclude: administer benefit enrollment and changes"@en ;
+  skos:definition "A job step in which the executor of the job to administer benefit enrollment and changes works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J06-CONC" ;
+  core:isStepOf ob:Job-J06 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O053 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Provide a retirement savings plan"@en ;
+  skos:prefLabel "Provide a retirement savings plan"@en ;
+  skos:definition "A core functional job in which the client persona needs to provide a retirement savings plan."@en ;
+  jtbd:hasIdentifier "J07" ;
+  jtbd:hasJobStatement "Provide a retirement savings plan"@en ;
+  jtbd:hasJobExecutor ob:BusinessOwner, ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J07-DefineStep, ob:Job-J07-LocateStep, ob:Job-J07-PrepareStep, ob:Job-J07-ConfirmStep, ob:Job-J07-ExecuteStep, ob:Job-J07-MonitorStep, ob:Job-J07-ModifyStep, ob:Job-J07-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O054,
+      ob:Outcome-O055,
+      ob:Outcome-O056,
+      ob:Outcome-O057,
+      ob:Outcome-O058,
+      ob:Outcome-O059,
+      ob:Outcome-O060,
+      ob:Outcome-O061,
+      ob:Outcome-O062 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: provide a retirement savings plan"@en ;
+  skos:prefLabel "Define: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J07-DEF" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-LocateStep ;
+  core:hasOutcome ob:Outcome-O054 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: provide a retirement savings plan"@en ;
+  skos:prefLabel "Locate: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J07-LOC" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: provide a retirement savings plan"@en ;
+  skos:prefLabel "Prepare: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J07-PRE" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O055 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: provide a retirement savings plan"@en ;
+  skos:prefLabel "Confirm: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J07-CON" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: provide a retirement savings plan"@en ;
+  skos:prefLabel "Execute: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J07-EXE" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-MonitorStep ;
+  core:hasOutcome ob:Outcome-O056, ob:Outcome-O057 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: provide a retirement savings plan"@en ;
+  skos:prefLabel "Monitor: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J07-MON" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-ModifyStep ;
+  core:hasOutcome ob:Outcome-O058, ob:Outcome-O059, ob:Outcome-O060 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: provide a retirement savings plan"@en ;
+  skos:prefLabel "Modify: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J07-MOD" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J07-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O061 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J07-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: provide a retirement savings plan"@en ;
+  skos:prefLabel "Conclude: provide a retirement savings plan"@en ;
+  skos:definition "A job step in which the executor of the job to provide a retirement savings plan works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J07-CONC" ;
+  core:isStepOf ob:Job-J07 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O062 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Choose and use my benefits"@en ;
+  skos:prefLabel "Choose and use my benefits"@en ;
+  skos:definition "A core functional job in which the client persona needs to choose and use my benefits."@en ;
+  jtbd:hasIdentifier "J08" ;
+  jtbd:hasJobStatement "Choose and use my benefits"@en ;
+  jtbd:hasJobExecutor ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J08-DefineStep, ob:Job-J08-LocateStep, ob:Job-J08-PrepareStep, ob:Job-J08-ConfirmStep, ob:Job-J08-ExecuteStep, ob:Job-J08-MonitorStep, ob:Job-J08-ModifyStep, ob:Job-J08-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O063,
+      ob:Outcome-O064,
+      ob:Outcome-O065,
+      ob:Outcome-O066,
+      ob:Outcome-O067,
+      ob:Outcome-O068,
+      ob:Outcome-O069,
+      ob:Outcome-O070 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: choose and use my benefits"@en ;
+  skos:prefLabel "Define: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J08-DEF" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-LocateStep ;
+  core:hasOutcome ob:Outcome-O063 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: choose and use my benefits"@en ;
+  skos:prefLabel "Locate: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J08-LOC" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-PrepareStep ;
+  core:hasOutcome ob:Outcome-O064 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: choose and use my benefits"@en ;
+  skos:prefLabel "Prepare: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J08-PRE" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: choose and use my benefits"@en ;
+  skos:prefLabel "Confirm: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J08-CON" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: choose and use my benefits"@en ;
+  skos:prefLabel "Execute: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J08-EXE" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-MonitorStep ;
+  core:hasOutcome ob:Outcome-O065, ob:Outcome-O066, ob:Outcome-O067 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: choose and use my benefits"@en ;
+  skos:prefLabel "Monitor: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J08-MON" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-ModifyStep ;
+  core:hasOutcome ob:Outcome-O068 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: choose and use my benefits"@en ;
+  skos:prefLabel "Modify: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J08-MOD" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J08-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O069 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J08-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: choose and use my benefits"@en ;
+  skos:prefLabel "Conclude: choose and use my benefits"@en ;
+  skos:definition "A job step in which the executor of the job to choose and use my benefits works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J08-CONC" ;
+  core:isStepOf ob:Job-J08 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O070 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Keep the company compliant with employment laws"@en ;
+  skos:definition "A core functional job in which the client persona needs to keep the company compliant with employment laws."@en ;
+  jtbd:hasIdentifier "J09" ;
+  jtbd:hasJobStatement "Keep the company compliant with employment laws"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+  jtbd:hasJobParticipant ob:BusinessOwner ;
+  core:hasStep ob:Job-J09-DefineStep, ob:Job-J09-LocateStep, ob:Job-J09-PrepareStep, ob:Job-J09-ConfirmStep, ob:Job-J09-ExecuteStep, ob:Job-J09-MonitorStep, ob:Job-J09-ModifyStep, ob:Job-J09-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O071,
+      ob:Outcome-O072,
+      ob:Outcome-O073,
+      ob:Outcome-O074,
+      ob:Outcome-O075,
+      ob:Outcome-O076,
+      ob:Outcome-O077,
+      ob:Outcome-O078,
+      ob:Outcome-O079,
+      ob:Outcome-O080 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Define: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J09-DEF" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-LocateStep ;
+  core:hasOutcome ob:Outcome-O071 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Locate: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J09-LOC" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Prepare: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J09-PRE" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O072 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Confirm: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J09-CON" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O073 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Execute: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J09-EXE" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-MonitorStep ;
+  core:hasOutcome ob:Outcome-O074, ob:Outcome-O075, ob:Outcome-O076 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Monitor: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J09-MON" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-ModifyStep ;
+  core:hasOutcome ob:Outcome-O077, ob:Outcome-O078, ob:Outcome-O079 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Modify: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J09-MOD" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J09-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J09-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: keep the company compliant with employment laws"@en ;
+  skos:prefLabel "Conclude: keep the company compliant with employment laws"@en ;
+  skos:definition "A job step in which the executor of the job to keep the company compliant with employment laws works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J09-CONC" ;
+  core:isStepOf ob:Job-J09 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O080 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A core functional job in which the client persona needs to resolve employee relations issues and separations without legal exposure."@en ;
+  jtbd:hasIdentifier "J10" ;
+  jtbd:hasJobStatement "Resolve employee relations issues and separations without legal exposure"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:BusinessOwner ;
+  jtbd:hasJobParticipant ob:PeopleManager ;
+  core:hasStep ob:Job-J10-DefineStep, ob:Job-J10-LocateStep, ob:Job-J10-PrepareStep, ob:Job-J10-ConfirmStep, ob:Job-J10-ExecuteStep, ob:Job-J10-MonitorStep, ob:Job-J10-ModifyStep, ob:Job-J10-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O081,
+      ob:Outcome-O082,
+      ob:Outcome-O083,
+      ob:Outcome-O084,
+      ob:Outcome-O085,
+      ob:Outcome-O086,
+      ob:Outcome-O087,
+      ob:Outcome-O088,
+      ob:Outcome-O089 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Define: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J10-DEF" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-LocateStep ;
+  core:hasOutcome ob:Outcome-O081 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Locate: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J10-LOC" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-PrepareStep ;
+  core:hasOutcome ob:Outcome-O082 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Prepare: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J10-PRE" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O083 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Confirm: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J10-CON" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O084 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Execute: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J10-EXE" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-MonitorStep ;
+  core:hasOutcome ob:Outcome-O085, ob:Outcome-O086 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Monitor: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J10-MON" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-ModifyStep ;
+  core:hasOutcome ob:Outcome-O087 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Modify: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J10-MOD" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J10-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O088 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J10-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:prefLabel "Conclude: resolve employee relations issues and separations without legal exposure"@en ;
+  skos:definition "A job step in which the executor of the job to resolve employee relations issues and separations without legal exposure works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J10-CONC" ;
+  core:isStepOf ob:Job-J10 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O089 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Keep the workplace safe and manage injuries"@en ;
+  skos:definition "A core functional job in which the client persona needs to keep the workplace safe and manage injuries."@en ;
+  jtbd:hasIdentifier "J11" ;
+  jtbd:hasJobStatement "Keep the workplace safe and manage injuries"@en ;
+  jtbd:hasJobExecutor ob:OperationsAndSafetyLeader ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:FinanceLeader, ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J11-DefineStep, ob:Job-J11-LocateStep, ob:Job-J11-PrepareStep, ob:Job-J11-ConfirmStep, ob:Job-J11-ExecuteStep, ob:Job-J11-MonitorStep, ob:Job-J11-ModifyStep, ob:Job-J11-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O090,
+      ob:Outcome-O091,
+      ob:Outcome-O092,
+      ob:Outcome-O093,
+      ob:Outcome-O094,
+      ob:Outcome-O095,
+      ob:Outcome-O096,
+      ob:Outcome-O097,
+      ob:Outcome-O098,
+      ob:Outcome-O099 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Define: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J11-DEF" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-LocateStep ;
+  core:hasOutcome ob:Outcome-O090 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Locate: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J11-LOC" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Prepare: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J11-PRE" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O091 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Confirm: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J11-CON" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O092 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Execute: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J11-EXE" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-MonitorStep ;
+  core:hasOutcome ob:Outcome-O093, ob:Outcome-O094 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Monitor: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J11-MON" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-ModifyStep ;
+  core:hasOutcome ob:Outcome-O095, ob:Outcome-O096, ob:Outcome-O097 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Modify: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J11-MOD" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J11-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O098 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J11-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: keep the workplace safe and manage injuries"@en ;
+  skos:prefLabel "Conclude: keep the workplace safe and manage injuries"@en ;
+  skos:definition "A job step in which the executor of the job to keep the workplace safe and manage injuries works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J11-CONC" ;
+  core:isStepOf ob:Job-J11 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O099 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Hire the right people"@en ;
+  skos:prefLabel "Hire the right people"@en ;
+  skos:definition "A core functional job in which the client persona needs to hire the right people."@en ;
+  jtbd:hasIdentifier "J12" ;
+  jtbd:hasJobStatement "Hire the right people"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:PeopleManager ;
+  jtbd:hasJobParticipant ob:BusinessOwner, ob:OperationsAndSafetyLeader ;
+  core:hasStep ob:Job-J12-DefineStep, ob:Job-J12-LocateStep, ob:Job-J12-PrepareStep, ob:Job-J12-ConfirmStep, ob:Job-J12-ExecuteStep, ob:Job-J12-MonitorStep, ob:Job-J12-ModifyStep, ob:Job-J12-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O100,
+      ob:Outcome-O101,
+      ob:Outcome-O102,
+      ob:Outcome-O103,
+      ob:Outcome-O104,
+      ob:Outcome-O105,
+      ob:Outcome-O106,
+      ob:Outcome-O107,
+      ob:Outcome-O108 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: hire the right people"@en ;
+  skos:prefLabel "Define: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J12-DEF" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-LocateStep ;
+  core:hasOutcome ob:Outcome-O100 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: hire the right people"@en ;
+  skos:prefLabel "Locate: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J12-LOC" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-PrepareStep ;
+  core:hasOutcome ob:Outcome-O101, ob:Outcome-O102 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: hire the right people"@en ;
+  skos:prefLabel "Prepare: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J12-PRE" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: hire the right people"@en ;
+  skos:prefLabel "Confirm: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J12-CON" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O103, ob:Outcome-O104, ob:Outcome-O105 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: hire the right people"@en ;
+  skos:prefLabel "Execute: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J12-EXE" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-MonitorStep ;
+  core:hasOutcome ob:Outcome-O106 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: hire the right people"@en ;
+  skos:prefLabel "Monitor: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J12-MON" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-ModifyStep ;
+  core:hasOutcome ob:Outcome-O107 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: hire the right people"@en ;
+  skos:prefLabel "Modify: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J12-MOD" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J12-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J12-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: hire the right people"@en ;
+  skos:prefLabel "Conclude: hire the right people"@en ;
+  skos:definition "A job step in which the executor of the job to hire the right people works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J12-CONC" ;
+  core:isStepOf ob:Job-J12 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O108 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Get new hires productive quickly"@en ;
+  skos:prefLabel "Get new hires productive quickly"@en ;
+  skos:definition "A core functional job in which the client persona needs to get new hires productive quickly."@en ;
+  jtbd:hasIdentifier "J13" ;
+  jtbd:hasJobStatement "Get new hires productive quickly"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:PeopleManager ;
+  jtbd:hasJobParticipant ob:WorksiteEmployee, ob:SystemsAdministrator ;
+  core:hasStep ob:Job-J13-DefineStep, ob:Job-J13-LocateStep, ob:Job-J13-PrepareStep, ob:Job-J13-ConfirmStep, ob:Job-J13-ExecuteStep, ob:Job-J13-MonitorStep, ob:Job-J13-ModifyStep, ob:Job-J13-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O109,
+      ob:Outcome-O110,
+      ob:Outcome-O111,
+      ob:Outcome-O112,
+      ob:Outcome-O113,
+      ob:Outcome-O114,
+      ob:Outcome-O115,
+      ob:Outcome-O116 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: get new hires productive quickly"@en ;
+  skos:prefLabel "Define: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J13-DEF" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-LocateStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: get new hires productive quickly"@en ;
+  skos:prefLabel "Locate: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J13-LOC" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: get new hires productive quickly"@en ;
+  skos:prefLabel "Prepare: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J13-PRE" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O109, ob:Outcome-O110 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: get new hires productive quickly"@en ;
+  skos:prefLabel "Confirm: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J13-CON" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O111 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: get new hires productive quickly"@en ;
+  skos:prefLabel "Execute: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J13-EXE" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-MonitorStep ;
+  core:hasOutcome ob:Outcome-O112, ob:Outcome-O113, ob:Outcome-O114 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: get new hires productive quickly"@en ;
+  skos:prefLabel "Monitor: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J13-MON" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-ModifyStep ;
+  core:hasOutcome ob:Outcome-O115 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: get new hires productive quickly"@en ;
+  skos:prefLabel "Modify: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J13-MOD" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J13-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J13-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: get new hires productive quickly"@en ;
+  skos:prefLabel "Conclude: get new hires productive quickly"@en ;
+  skos:definition "A job step in which the executor of the job to get new hires productive quickly works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J13-CONC" ;
+  core:isStepOf ob:Job-J13 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O116 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A core functional job in which the client persona needs to set pay that is competitive, fair and affordable."@en ;
+  jtbd:hasIdentifier "J14" ;
+  jtbd:hasJobStatement "Set pay that is competitive, fair and affordable"@en ;
+  jtbd:hasJobExecutor ob:BusinessOwner, ob:HumanResourcesLeader ;
+  jtbd:hasJobParticipant ob:FinanceLeader, ob:PeopleManager ;
+  core:hasStep ob:Job-J14-DefineStep, ob:Job-J14-LocateStep, ob:Job-J14-PrepareStep, ob:Job-J14-ConfirmStep, ob:Job-J14-ExecuteStep, ob:Job-J14-MonitorStep, ob:Job-J14-ModifyStep, ob:Job-J14-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O117,
+      ob:Outcome-O118,
+      ob:Outcome-O119,
+      ob:Outcome-O120,
+      ob:Outcome-O121,
+      ob:Outcome-O122,
+      ob:Outcome-O123,
+      ob:Outcome-O124 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Define: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J14-DEF" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-LocateStep ;
+  core:hasOutcome ob:Outcome-O117 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Locate: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J14-LOC" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Prepare: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J14-PRE" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O118 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Confirm: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J14-CON" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O119 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Execute: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J14-EXE" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-MonitorStep ;
+  core:hasOutcome ob:Outcome-O120, ob:Outcome-O121 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Monitor: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J14-MON" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-ModifyStep ;
+  core:hasOutcome ob:Outcome-O122 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Modify: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J14-MOD" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J14-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O123 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J14-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: set pay that is competitive, fair and affordable"@en ;
+  skos:prefLabel "Conclude: set pay that is competitive, fair and affordable"@en ;
+  skos:definition "A job step in which the executor of the job to set pay that is competitive, fair and affordable works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J14-CONC" ;
+  core:isStepOf ob:Job-J14 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O124 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Manage and improve team performance"@en ;
+  skos:prefLabel "Manage and improve team performance"@en ;
+  skos:definition "A core functional job in which the client persona needs to manage and improve team performance."@en ;
+  jtbd:hasIdentifier "J15" ;
+  jtbd:hasJobStatement "Manage and improve team performance"@en ;
+  jtbd:hasJobExecutor ob:PeopleManager ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J15-DefineStep, ob:Job-J15-LocateStep, ob:Job-J15-PrepareStep, ob:Job-J15-ConfirmStep, ob:Job-J15-ExecuteStep, ob:Job-J15-MonitorStep, ob:Job-J15-ModifyStep, ob:Job-J15-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O125,
+      ob:Outcome-O126,
+      ob:Outcome-O127,
+      ob:Outcome-O128,
+      ob:Outcome-O129,
+      ob:Outcome-O130,
+      ob:Outcome-O131,
+      ob:Outcome-O132,
+      ob:Outcome-O133 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: manage and improve team performance"@en ;
+  skos:prefLabel "Define: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J15-DEF" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-LocateStep ;
+  core:hasOutcome ob:Outcome-O125 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: manage and improve team performance"@en ;
+  skos:prefLabel "Locate: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J15-LOC" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: manage and improve team performance"@en ;
+  skos:prefLabel "Prepare: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J15-PRE" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O126 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: manage and improve team performance"@en ;
+  skos:prefLabel "Confirm: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J15-CON" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O127 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: manage and improve team performance"@en ;
+  skos:prefLabel "Execute: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J15-EXE" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-MonitorStep ;
+  core:hasOutcome ob:Outcome-O128, ob:Outcome-O129, ob:Outcome-O130 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: manage and improve team performance"@en ;
+  skos:prefLabel "Monitor: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J15-MON" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-ModifyStep ;
+  core:hasOutcome ob:Outcome-O131, ob:Outcome-O132 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: manage and improve team performance"@en ;
+  skos:prefLabel "Modify: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J15-MOD" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J15-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J15-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: manage and improve team performance"@en ;
+  skos:prefLabel "Conclude: manage and improve team performance"@en ;
+  skos:definition "A job step in which the executor of the job to manage and improve team performance works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J15-CONC" ;
+  core:isStepOf ob:Job-J15 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O133 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Develop employees and retain the best ones"@en ;
+  skos:prefLabel "Develop employees and retain the best ones"@en ;
+  skos:definition "A core functional job in which the client persona needs to develop employees and retain the best ones."@en ;
+  jtbd:hasIdentifier "J16" ;
+  jtbd:hasJobStatement "Develop employees and retain the best ones"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+  jtbd:hasJobParticipant ob:BusinessOwner, ob:PeopleManager, ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J16-DefineStep, ob:Job-J16-LocateStep, ob:Job-J16-PrepareStep, ob:Job-J16-ConfirmStep, ob:Job-J16-ExecuteStep, ob:Job-J16-MonitorStep, ob:Job-J16-ModifyStep, ob:Job-J16-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O134,
+      ob:Outcome-O135,
+      ob:Outcome-O136,
+      ob:Outcome-O137,
+      ob:Outcome-O138,
+      ob:Outcome-O139,
+      ob:Outcome-O140,
+      ob:Outcome-O141,
+      ob:Outcome-O142 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Define: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J16-DEF" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-LocateStep ;
+  core:hasOutcome ob:Outcome-O134 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Locate: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J16-LOC" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-PrepareStep ;
+  core:hasOutcome ob:Outcome-O135 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Prepare: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J16-PRE" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O136 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Confirm: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J16-CON" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Execute: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J16-EXE" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-MonitorStep ;
+  core:hasOutcome ob:Outcome-O137, ob:Outcome-O138 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Monitor: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J16-MON" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-ModifyStep ;
+  core:hasOutcome ob:Outcome-O139, ob:Outcome-O140 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Modify: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J16-MOD" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J16-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O141 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J16-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: develop employees and retain the best ones"@en ;
+  skos:prefLabel "Conclude: develop employees and retain the best ones"@en ;
+  skos:definition "A job step in which the executor of the job to develop employees and retain the best ones works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J16-CONC" ;
+  core:isStepOf ob:Job-J16 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O142 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Become an effective people leader"@en ;
+  skos:prefLabel "Become an effective people leader"@en ;
+  skos:definition "A core functional job in which the client persona needs to become an effective people leader."@en ;
+  jtbd:hasIdentifier "J17" ;
+  jtbd:hasJobStatement "Become an effective people leader"@en ;
+  jtbd:hasJobExecutor ob:PeopleManager ;
+  core:hasStep ob:Job-J17-DefineStep, ob:Job-J17-LocateStep, ob:Job-J17-PrepareStep, ob:Job-J17-ConfirmStep, ob:Job-J17-ExecuteStep, ob:Job-J17-MonitorStep, ob:Job-J17-ModifyStep, ob:Job-J17-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O143,
+      ob:Outcome-O144,
+      ob:Outcome-O145,
+      ob:Outcome-O146,
+      ob:Outcome-O147,
+      ob:Outcome-O148,
+      ob:Outcome-O149,
+      ob:Outcome-O150 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: become an effective people leader"@en ;
+  skos:prefLabel "Define: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J17-DEF" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-LocateStep ;
+  core:hasOutcome ob:Outcome-O143 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: become an effective people leader"@en ;
+  skos:prefLabel "Locate: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J17-LOC" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-PrepareStep ;
+  core:hasOutcome ob:Outcome-O144 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: become an effective people leader"@en ;
+  skos:prefLabel "Prepare: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J17-PRE" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: become an effective people leader"@en ;
+  skos:prefLabel "Confirm: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J17-CON" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O145 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: become an effective people leader"@en ;
+  skos:prefLabel "Execute: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J17-EXE" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-MonitorStep ;
+  core:hasOutcome ob:Outcome-O146, ob:Outcome-O147 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: become an effective people leader"@en ;
+  skos:prefLabel "Monitor: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J17-MON" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-ModifyStep ;
+  core:hasOutcome ob:Outcome-O148 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: become an effective people leader"@en ;
+  skos:prefLabel "Modify: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J17-MOD" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J17-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O149 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J17-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: become an effective people leader"@en ;
+  skos:prefLabel "Conclude: become an effective people leader"@en ;
+  skos:definition "A job step in which the executor of the job to become an effective people leader works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J17-CONC" ;
+  core:isStepOf ob:Job-J17 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O150 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A core functional job in which the client persona needs to build and sustain a healthy, values-driven culture."@en ;
+  jtbd:hasIdentifier "J18" ;
+  jtbd:hasJobStatement "Build and sustain a healthy, values-driven culture"@en ;
+  jtbd:hasJobExecutor ob:BusinessOwner, ob:HumanResourcesLeader ;
+  jtbd:hasJobParticipant ob:PeopleManager, ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J18-DefineStep, ob:Job-J18-LocateStep, ob:Job-J18-PrepareStep, ob:Job-J18-ConfirmStep, ob:Job-J18-ExecuteStep, ob:Job-J18-MonitorStep, ob:Job-J18-ModifyStep, ob:Job-J18-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O151,
+      ob:Outcome-O152,
+      ob:Outcome-O153,
+      ob:Outcome-O154,
+      ob:Outcome-O155,
+      ob:Outcome-O156,
+      ob:Outcome-O157,
+      ob:Outcome-O158,
+      ob:Outcome-O159,
+      ob:Outcome-O160 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Define: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J18-DEF" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-LocateStep ;
+  core:hasOutcome ob:Outcome-O151 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Locate: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J18-LOC" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Prepare: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J18-PRE" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O152 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Confirm: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J18-CON" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-ExecuteStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Execute: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J18-EXE" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-MonitorStep ;
+  core:hasOutcome ob:Outcome-O153, ob:Outcome-O154, ob:Outcome-O155, ob:Outcome-O156 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Monitor: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J18-MON" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-ModifyStep ;
+  core:hasOutcome ob:Outcome-O157, ob:Outcome-O158, ob:Outcome-O159 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Modify: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J18-MOD" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J18-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O160 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J18-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: build and sustain a healthy, values-driven culture"@en ;
+  skos:prefLabel "Conclude: build and sustain a healthy, values-driven culture"@en ;
+  skos:definition "A job step in which the executor of the job to build and sustain a healthy, values-driven culture works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J18-CONC" ;
+  core:isStepOf ob:Job-J18 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A core functional job in which the client persona needs to measure the workforce while protecting employee privacy."@en ;
+  jtbd:hasIdentifier "J19" ;
+  jtbd:hasJobStatement "Measure the workforce while protecting employee privacy"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:SystemsAdministrator ;
+  jtbd:hasJobParticipant ob:BusinessOwner ;
+  core:hasStep ob:Job-J19-DefineStep, ob:Job-J19-LocateStep, ob:Job-J19-PrepareStep, ob:Job-J19-ConfirmStep, ob:Job-J19-ExecuteStep, ob:Job-J19-MonitorStep, ob:Job-J19-ModifyStep, ob:Job-J19-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O161,
+      ob:Outcome-O162,
+      ob:Outcome-O163,
+      ob:Outcome-O164,
+      ob:Outcome-O165,
+      ob:Outcome-O166,
+      ob:Outcome-O167,
+      ob:Outcome-O168,
+      ob:Outcome-O169 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Define: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J19-DEF" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-LocateStep ;
+  core:hasOutcome ob:Outcome-O161, ob:Outcome-O162 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Locate: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J19-LOC" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Prepare: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J19-PRE" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O163 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Confirm: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J19-CON" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O164 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Execute: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J19-EXE" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-MonitorStep ;
+  core:hasOutcome ob:Outcome-O165, ob:Outcome-O166 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Monitor: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J19-MON" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-ModifyStep ;
+  core:hasOutcome ob:Outcome-O167 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Modify: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J19-MOD" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J19-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O168 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J19-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: measure the workforce while protecting employee privacy"@en ;
+  skos:prefLabel "Conclude: measure the workforce while protecting employee privacy"@en ;
+  skos:definition "A job step in which the executor of the job to measure the workforce while protecting employee privacy works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J19-CONC" ;
+  core:isStepOf ob:Job-J19 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O169 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Use workforce data to make business decisions"@en ;
+  skos:prefLabel "Use workforce data to make business decisions"@en ;
+  skos:definition "A core functional job in which the client persona needs to use workforce data to make business decisions."@en ;
+  jtbd:hasIdentifier "J20" ;
+  jtbd:hasJobStatement "Use workforce data to make business decisions"@en ;
+  jtbd:hasJobExecutor ob:BusinessOwner, ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader ;
+  core:hasStep ob:Job-J20-DefineStep, ob:Job-J20-LocateStep, ob:Job-J20-PrepareStep, ob:Job-J20-ConfirmStep, ob:Job-J20-ExecuteStep, ob:Job-J20-MonitorStep, ob:Job-J20-ModifyStep, ob:Job-J20-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O170,
+      ob:Outcome-O171,
+      ob:Outcome-O172,
+      ob:Outcome-O173,
+      ob:Outcome-O174,
+      ob:Outcome-O175,
+      ob:Outcome-O176,
+      ob:Outcome-O177 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Define: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J20-DEF" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-LocateStep ;
+  core:hasOutcome ob:Outcome-O170 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Locate: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J20-LOC" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-PrepareStep ;
+  core:hasOutcome ob:Outcome-O171 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Prepare: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J20-PRE" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Confirm: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J20-CON" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O172 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Execute: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J20-EXE" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-MonitorStep ;
+  core:hasOutcome ob:Outcome-O173 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Monitor: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J20-MON" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-ModifyStep ;
+  core:hasOutcome ob:Outcome-O174, ob:Outcome-O175 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Modify: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J20-MOD" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J20-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O176 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J20-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: use workforce data to make business decisions"@en ;
+  skos:prefLabel "Conclude: use workforce data to make business decisions"@en ;
+  skos:definition "A job step in which the executor of the job to use workforce data to make business decisions works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J20-CONC" ;
+  core:isStepOf ob:Job-J20 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O177 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Connect employee data to other business systems securely"@en ;
+  skos:definition "A core functional job in which the client persona needs to connect employee data to other business systems securely."@en ;
+  jtbd:hasIdentifier "J21" ;
+  jtbd:hasJobStatement "Connect employee data to other business systems securely"@en ;
+  jtbd:hasJobExecutor ob:SystemsAdministrator ;
+  jtbd:hasJobParticipant ob:FinanceLeader, ob:HumanResourcesLeader ;
+  core:hasStep ob:Job-J21-DefineStep, ob:Job-J21-LocateStep, ob:Job-J21-PrepareStep, ob:Job-J21-ConfirmStep, ob:Job-J21-ExecuteStep, ob:Job-J21-MonitorStep, ob:Job-J21-ModifyStep, ob:Job-J21-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O178,
+      ob:Outcome-O179,
+      ob:Outcome-O180,
+      ob:Outcome-O181,
+      ob:Outcome-O182,
+      ob:Outcome-O183,
+      ob:Outcome-O184,
+      ob:Outcome-O185,
+      ob:Outcome-O186 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Define: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J21-DEF" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-LocateStep ;
+  core:hasOutcome ob:Outcome-O178 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Locate: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J21-LOC" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Prepare: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J21-PRE" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O179 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Confirm: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J21-CON" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O180 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Execute: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J21-EXE" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-MonitorStep ;
+  core:hasOutcome ob:Outcome-O181, ob:Outcome-O182 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Monitor: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J21-MON" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-ModifyStep ;
+  core:hasOutcome ob:Outcome-O183, ob:Outcome-O184 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Modify: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J21-MOD" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J21-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O185 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J21-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: connect employee data to other business systems securely"@en ;
+  skos:prefLabel "Conclude: connect employee data to other business systems securely"@en ;
+  skos:definition "A job step in which the executor of the job to connect employee data to other business systems securely works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J21-CONC" ;
+  core:isStepOf ob:Job-J21 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O186 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22
+  a owl:NamedIndividual, jtbd:core-functional-job ;
+  rdfs:label "Get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A core functional job in which the client persona needs to get human resources answers and complete human resources tasks myself."@en ;
+  jtbd:hasIdentifier "J22" ;
+  jtbd:hasJobStatement "Get HR answers and complete HR tasks myself"@en ;
+  jtbd:hasJobExecutor ob:WorksiteEmployee ;
+  core:hasStep ob:Job-J22-DefineStep, ob:Job-J22-LocateStep, ob:Job-J22-PrepareStep, ob:Job-J22-ConfirmStep, ob:Job-J22-ExecuteStep, ob:Job-J22-MonitorStep, ob:Job-J22-ModifyStep, ob:Job-J22-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O187,
+      ob:Outcome-O188,
+      ob:Outcome-O189,
+      ob:Outcome-O190,
+      ob:Outcome-O191,
+      ob:Outcome-O192,
+      ob:Outcome-O193,
+      ob:Outcome-O194 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Define: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Define: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "J22-DEF" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-LocateStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Locate: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Locate: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "J22-LOC" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-PrepareStep ;
+  core:hasOutcome ob:Outcome-O187 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Prepare: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Prepare: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "J22-PRE" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Confirm: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Confirm: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "J22-CON" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O188 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Execute: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Execute: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to carry out the core task."@en ;
+  jtbd:hasIdentifier "J22-EXE" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-MonitorStep ;
+  core:hasOutcome ob:Outcome-O189, ob:Outcome-O190, ob:Outcome-O191 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Monitor: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Monitor: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "J22-MON" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-ModifyStep ;
+  core:hasOutcome ob:Outcome-O192, ob:Outcome-O193 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Modify: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Modify: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "J22-MOD" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-J22-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-J22-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: get human resources answers and complete human resources tasks myself"@en ;
+  skos:prefLabel "Conclude: get human resources answers and complete human resources tasks myself"@en ;
+  skos:altLabel "Conclude: get HR answers and complete HR tasks myself"@en ;
+  skos:definition "A job step in which the executor of the job to get human resources answers and complete human resources tasks myself works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "J22-CONC" ;
+  core:isStepOf ob:Job-J22 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O194 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1
+  a owl:NamedIndividual, jtbd:consumption-chain-job ;
+  rdfs:label "Evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A consumption chain job in which the client persona needs to evaluate and choose an human resources outsourcing partner."@en ;
+  jtbd:hasIdentifier "C1" ;
+  jtbd:hasJobStatement "Evaluate and choose an HR outsourcing partner"@en ;
+  jtbd:hasJobExecutor ob:BusinessOwner, ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:SystemsAdministrator ;
+  core:hasStep ob:Job-C1-DefineStep, ob:Job-C1-LocateStep, ob:Job-C1-PrepareStep, ob:Job-C1-ConfirmStep, ob:Job-C1-ExecuteStep, ob:Job-C1-MonitorStep, ob:Job-C1-ModifyStep, ob:Job-C1-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O195,
+      ob:Outcome-O196,
+      ob:Outcome-O197,
+      ob:Outcome-O198,
+      ob:Outcome-O199,
+      ob:Outcome-O200,
+      ob:Outcome-O201,
+      ob:Outcome-O202 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Define: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Define: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "C1-DEF" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-LocateStep ;
+  core:hasOutcome ob:Outcome-O195 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Locate: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Locate: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "C1-LOC" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-PrepareStep ;
+  core:hasOutcome ob:Outcome-O196 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Prepare: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Prepare: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "C1-PRE" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Confirm: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Confirm: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "C1-CON" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O197, ob:Outcome-O198, ob:Outcome-O199 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Execute: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Execute: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to carry out the core task."@en ;
+  jtbd:hasIdentifier "C1-EXE" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-MonitorStep ;
+  core:hasOutcome ob:Outcome-O200, ob:Outcome-O201 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Monitor: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Monitor: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "C1-MON" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-ModifyStep ;
+  core:hasOutcome ob:Outcome-O202 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Modify: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Modify: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "C1-MOD" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C1-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C1-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:prefLabel "Conclude: evaluate and choose an human resources outsourcing partner"@en ;
+  skos:altLabel "Conclude: evaluate and choose an HR outsourcing partner"@en ;
+  skos:definition "A job step in which the executor of the job to evaluate and choose an human resources outsourcing partner works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "C1-CONC" ;
+  core:isStepOf ob:Job-C1 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2
+  a owl:NamedIndividual, jtbd:consumption-chain-job ;
+  rdfs:label "Move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Move the company onto a new human resources provider"@en ;
+  skos:altLabel "Move the company onto a new HR provider"@en ;
+  skos:definition "A consumption chain job in which the client persona needs to move the company onto a new human resources provider."@en ;
+  jtbd:hasIdentifier "C2" ;
+  jtbd:hasJobStatement "Move the company onto a new HR provider"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:FinanceLeader ;
+  jtbd:hasJobParticipant ob:SystemsAdministrator, ob:BusinessOwner ;
+  core:hasStep ob:Job-C2-DefineStep, ob:Job-C2-LocateStep, ob:Job-C2-PrepareStep, ob:Job-C2-ConfirmStep, ob:Job-C2-ExecuteStep, ob:Job-C2-MonitorStep, ob:Job-C2-ModifyStep, ob:Job-C2-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O203,
+      ob:Outcome-O204,
+      ob:Outcome-O205,
+      ob:Outcome-O206,
+      ob:Outcome-O207,
+      ob:Outcome-O208,
+      ob:Outcome-O209,
+      ob:Outcome-O210 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Define: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Define: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "C2-DEF" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-LocateStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Locate: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Locate: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "C2-LOC" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Prepare: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Prepare: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "C2-PRE" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-ConfirmStep ;
+  core:hasOutcome ob:Outcome-O203, ob:Outcome-O204 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Confirm: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Confirm: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "C2-CON" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O205 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Execute: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Execute: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to carry out the core task."@en ;
+  jtbd:hasIdentifier "C2-EXE" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-MonitorStep ;
+  core:hasOutcome ob:Outcome-O206, ob:Outcome-O207, ob:Outcome-O208 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Monitor: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Monitor: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "C2-MON" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-ModifyStep ;
+  core:hasOutcome ob:Outcome-O209 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Modify: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Modify: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "C2-MOD" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C2-ConcludeStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C2-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: move the company onto a new human resources provider"@en ;
+  skos:prefLabel "Conclude: move the company onto a new human resources provider"@en ;
+  skos:altLabel "Conclude: move the company onto a new HR provider"@en ;
+  skos:definition "A job step in which the executor of the job to move the company onto a new human resources provider works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "C2-CONC" ;
+  core:isStepOf ob:Job-C2 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O210 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3
+  a owl:NamedIndividual, jtbd:consumption-chain-job ;
+  rdfs:label "Get help when an human resources issue arises"@en ;
+  skos:prefLabel "Get help when an human resources issue arises"@en ;
+  skos:altLabel "Get help when an HR issue arises"@en ;
+  skos:definition "A consumption chain job in which the client persona needs to get help when an human resources issue arises."@en ;
+  jtbd:hasIdentifier "C3" ;
+  jtbd:hasJobStatement "Get help when an HR issue arises"@en ;
+  jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:BusinessOwner ;
+  jtbd:hasJobParticipant ob:PeopleManager, ob:FinanceLeader ;
+  core:hasStep ob:Job-C3-DefineStep, ob:Job-C3-LocateStep, ob:Job-C3-PrepareStep, ob:Job-C3-ConfirmStep, ob:Job-C3-ExecuteStep, ob:Job-C3-MonitorStep, ob:Job-C3-ModifyStep, ob:Job-C3-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O211,
+      ob:Outcome-O212,
+      ob:Outcome-O213,
+      ob:Outcome-O214,
+      ob:Outcome-O215,
+      ob:Outcome-O216,
+      ob:Outcome-O217 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Define: get help when an human resources issue arises"@en ;
+  skos:altLabel "Define: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "C3-DEF" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-LocateStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Locate: get help when an human resources issue arises"@en ;
+  skos:altLabel "Locate: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "C3-LOC" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-PrepareStep ;
+  core:hasOutcome ob:Outcome-O211 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Prepare: get help when an human resources issue arises"@en ;
+  skos:altLabel "Prepare: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "C3-PRE" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Confirm: get help when an human resources issue arises"@en ;
+  skos:altLabel "Confirm: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "C3-CON" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O212 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Execute: get help when an human resources issue arises"@en ;
+  skos:altLabel "Execute: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to carry out the core task."@en ;
+  jtbd:hasIdentifier "C3-EXE" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-MonitorStep ;
+  core:hasOutcome ob:Outcome-O213, ob:Outcome-O214 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Monitor: get help when an human resources issue arises"@en ;
+  skos:altLabel "Monitor: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "C3-MON" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-ModifyStep ;
+  core:hasOutcome ob:Outcome-O215, ob:Outcome-O216 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Modify: get help when an human resources issue arises"@en ;
+  skos:altLabel "Modify: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "C3-MOD" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C3-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O217 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C3-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: get help when an human resources issue arises"@en ;
+  skos:prefLabel "Conclude: get help when an human resources issue arises"@en ;
+  skos:altLabel "Conclude: get help when an HR issue arises"@en ;
+  skos:definition "A job step in which the executor of the job to get help when an human resources issue arises works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "C3-CONC" ;
+  core:isStepOf ob:Job-C3 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4
+  a owl:NamedIndividual, jtbd:consumption-chain-job ;
+  rdfs:label "Manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A consumption chain job in which the client persona needs to manage the cost and value of the human resources outsourcing relationship."@en ;
+  jtbd:hasIdentifier "C4" ;
+  jtbd:hasJobStatement "Manage the cost and value of the HR outsourcing relationship"@en ;
+  jtbd:hasJobExecutor ob:FinanceLeader, ob:BusinessOwner ;
+  jtbd:hasJobParticipant ob:HumanResourcesLeader ;
+  core:hasStep ob:Job-C4-DefineStep, ob:Job-C4-LocateStep, ob:Job-C4-PrepareStep, ob:Job-C4-ConfirmStep, ob:Job-C4-ExecuteStep, ob:Job-C4-MonitorStep, ob:Job-C4-ModifyStep, ob:Job-C4-ConcludeStep ;
+  jtbd:hasDesiredOutcome ob:Outcome-O218,
+      ob:Outcome-O219,
+      ob:Outcome-O220,
+      ob:Outcome-O221,
+      ob:Outcome-O222,
+      ob:Outcome-O223,
+      ob:Outcome-O224 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-DefineStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Define: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Define: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Define: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to determine objectives and plan the approach."@en ;
+  jtbd:hasIdentifier "C4-DEF" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:DefineStage ;
+  jtbd:hasStageOrder "1"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-LocateStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-LocateStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Locate: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Locate: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Locate: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to gather the inputs and information needed."@en ;
+  jtbd:hasIdentifier "C4-LOC" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:LocateStage ;
+  jtbd:hasStageOrder "2"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-PrepareStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-PrepareStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Prepare: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Prepare: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Prepare: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to set up the environment and inputs."@en ;
+  jtbd:hasIdentifier "C4-PRE" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:PrepareStage ;
+  jtbd:hasStageOrder "3"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-ConfirmStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-ConfirmStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Confirm: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Confirm: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Confirm: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to verify readiness before acting."@en ;
+  jtbd:hasIdentifier "C4-CON" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:ConfirmStage ;
+  jtbd:hasStageOrder "4"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-ExecuteStep ;
+  core:hasOutcome ob:Outcome-O218, ob:Outcome-O219 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-ExecuteStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Execute: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Execute: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Execute: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to carry out the core task."@en ;
+  jtbd:hasIdentifier "C4-EXE" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:ExecuteStage ;
+  jtbd:hasStageOrder "5"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-MonitorStep ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-MonitorStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Monitor: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Monitor: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Monitor: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to check that the task is going as intended."@en ;
+  jtbd:hasIdentifier "C4-MON" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:MonitorStage ;
+  jtbd:hasStageOrder "6"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-ModifyStep ;
+  core:hasOutcome ob:Outcome-O220, ob:Outcome-O221 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-ModifyStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Modify: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Modify: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Modify: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to make adjustments and corrections."@en ;
+  jtbd:hasIdentifier "C4-MOD" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:ModifyStage ;
+  jtbd:hasStageOrder "7"^^xsd:positiveInteger ;
+  core:precedes ob:Job-C4-ConcludeStep ;
+  core:hasOutcome ob:Outcome-O222, ob:Outcome-O223 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+ob:Job-C4-ConcludeStep
+  a owl:NamedIndividual, jtbd:job-step ;
+  rdfs:label "Conclude: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:prefLabel "Conclude: manage the cost and value of the human resources outsourcing relationship"@en ;
+  skos:altLabel "Conclude: manage the cost and value of the HR outsourcing relationship"@en ;
+  skos:definition "A job step in which the executor of the job to manage the cost and value of the human resources outsourcing relationship works to finish, close out and prepare for next time."@en ;
+  jtbd:hasIdentifier "C4-CONC" ;
+  core:isStepOf ob:Job-C4 ;
+  jtbd:atJobMapStage ob:ConcludeStage ;
+  jtbd:hasStageOrder "8"^^xsd:positiveInteger ;
+  core:hasOutcome ob:Outcome-O224 ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .

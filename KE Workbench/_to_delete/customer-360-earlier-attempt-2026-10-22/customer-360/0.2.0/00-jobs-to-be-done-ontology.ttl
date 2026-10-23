@@ -1,0 +1,966 @@
+# Jobs-to-be-done ontology
+# Named graph: https://www.insperity.com/graph/outcome-benchmark/ontology  ·  Customer 360 release 0.2.0  ·  Draft
+# Load first. Domain extension of the core ontology for the Customer 360 tools.
+# Generated 2026-10-22T19:46:03Z by gen_customer360.py · Standards: Semantic Governance v1.9 (Draft), Part III
+
+@prefix rdf:             <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:            <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:             <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:             <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:            <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:             <http://purl.org/dc/terms/> .
+@prefix vaem:            <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:            <http://purl.org/vocab/vann/> .
+@prefix jtbd:            <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix rg:              <https://www.insperity.com/ontology/requirements-gateway/> .
+@prefix ob:              <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix core:            <https://www.insperity.com/ontology/core/> .
+@prefix jobvoc:          <https://www.insperity.com/vocabulary/core-job/> .
+@prefix personavoc:      <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix processvoc:      <https://www.insperity.com/vocabulary/core-process/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix measurevoc:      <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix decisionvoc:     <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix theme:           <https://www.insperity.com/vocabulary/benchmark-theme/> .
+@prefix metric:          <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix verdict:         <https://www.insperity.com/vocabulary/review-verdict/> .
+@prefix flag:            <https://www.insperity.com/vocabulary/review-flag/> .
+@prefix use:             <https://www.insperity.com/vocabulary/approved-use/> .
+@prefix result:          <https://www.insperity.com/vocabulary/review-decision-result/> .
+@prefix segment:         <https://www.insperity.com/vocabulary/survey-segment/> .
+@prefix action:          <https://www.insperity.com/vocabulary/outcome-action/> .
+@prefix phase:           <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix check:           <https://www.insperity.com/vocabulary/gateway-check/> .
+@prefix demand:          <https://www.insperity.com/vocabulary/demand-status/> .
+@prefix hr:              <http://example.org/hrservices/ddd#> .
+@prefix obo:             <http://purl.obolibrary.org/obo/> .
+@prefix prov:            <http://www.w3.org/ns/prov#> .
+
+
+<https://www.insperity.com/ontology/jobs-to-be-done/>
+  a owl:Ontology ;
+  rdfs:label "Jobs-to-be-done ontology"@en ;
+  skos:prefLabel "Jobs-to-be-done ontology"@en ;
+  dct:title "Jobs-to-be-done ontology"@en ;
+  dct:description "A domain ontology that extends the core persona, job, job step and desired outcome classes for outcome-driven research: client personas and their functional, consumption-chain, emotional and social jobs, the universal job map, appreciative inquiry interviews that discover them, subject-matter expert reviews and decisions, and the survey waves that score each desired outcome."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/ontology/jobs-to-be-done/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "jtbd" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  dct:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> ;
+  skos:changeNote "0.2.0 (2026-10-22): realigned as an extension of the core ontology (persona, job, job step, desired outcome, measure, decision); lower-case hyphenated class names; job steps are per job, the eight universal steps become job map stages; adds interviews, reviews, decisions, survey waves and scores."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/ontology/jobs-to-be-done/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  owl:imports <https://www.insperity.com/ontology/core/> .
+
+# ---- Classes ----------------------------------------------------------
+
+jtbd:client-persona
+  a owl:Class ;
+  rdfs:label "Client persona"@en ;
+  skos:prefLabel "Client persona"@en ;
+  skos:definition "A persona that describes a role at or within a client company that executes, or takes part in, jobs a human resources partner helps get done."@en ;
+  rdfs:subClassOf core:persona ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm personavoc:persona ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:job-to-be-done
+  a owl:Class ;
+  rdfs:label "Job to be done"@en ;
+  skos:prefLabel "Job to be done"@en ;
+  skos:definition "A job that a client persona is trying to get done, stated without naming the product or service that might help."@en ;
+  rdfs:subClassOf core:job ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm jobvoc:job ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:core-functional-job
+  a owl:Class ;
+  rdfs:label "Core functional job"@en ;
+  skos:prefLabel "Core functional job"@en ;
+  skos:definition "A job to be done that is a main functional task the client hires a human resources partner to help with."@en ;
+  rdfs:subClassOf jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:consumption-chain-job
+  a owl:Class ;
+  rdfs:label "Consumption chain job"@en ;
+  skos:prefLabel "Consumption chain job"@en ;
+  skos:definition "A job to be done that the client carries out to choose, adopt, use or renew the provider relationship itself."@en ;
+  rdfs:subClassOf jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:emotional-job
+  a owl:Class ;
+  rdfs:label "Emotional job"@en ;
+  skos:prefLabel "Emotional job"@en ;
+  skos:definition "A job to be done that states how the job executor wants to feel while getting functional jobs done."@en ;
+  rdfs:subClassOf jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm jobvoc:emotional ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:social-job
+  a owl:Class ;
+  rdfs:label "Social job"@en ;
+  skos:prefLabel "Social job"@en ;
+  skos:definition "A job to be done that states how the job executor wants to be seen by others while getting functional jobs done."@en ;
+  rdfs:subClassOf jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:job-step
+  a owl:Class ;
+  rdfs:label "Job step"@en ;
+  skos:prefLabel "Job step"@en ;
+  skos:definition "A job step that is one stage of one job to be done, placed on the universal job map."@en ;
+  rdfs:subClassOf core:job-step ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm processvoc:step ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:job-map-stage
+  a owl:Class ;
+  rdfs:label "Job map stage"@en ;
+  skos:prefLabel "Job map stage"@en ;
+  skos:definition "A generically dependent continuant that names one of the eight universal stages every job passes through, from define to conclude."@en ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:desired-outcome
+  a owl:Class ;
+  rdfs:label "Desired outcome"@en ;
+  skos:prefLabel "Desired outcome"@en ;
+  skos:definition "A desired outcome that a client persona uses to judge success at a job step, written as direction, metric, object of control and contextual clarifier."@en ;
+  rdfs:subClassOf core:desired-outcome ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm jobvoc:desired-outcome ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:appreciative-inquiry-interview
+  a owl:Class ;
+  rdfs:label "Appreciative inquiry interview"@en ;
+  skos:prefLabel "Appreciative inquiry interview"@en ;
+  skos:definition "A process in which an interviewer asks a client persona what works at its best, what it hopes for and what it needs, to discover jobs, job steps and desired outcomes."@en ;
+  rdfs:subClassOf obo:BFO_0000015 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:interview-note
+  a owl:Class ;
+  rdfs:label "Interview note"@en ;
+  skos:prefLabel "Interview note"@en ;
+  skos:definition "A generically dependent continuant that records one observation or quote from an appreciative inquiry interview, tagged with its inquiry phase."@en ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:subject-matter-review
+  a owl:Class ;
+  rdfs:label "Subject-matter review"@en ;
+  skos:prefLabel "Subject-matter review"@en ;
+  skos:definition "A process in which one business or compliance subject-matter expert judges the wording, placement and permitted uses of a persona, job or desired outcome."@en ;
+  rdfs:subClassOf obo:BFO_0000015 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:review-decision
+  a owl:Class ;
+  rdfs:label "Review decision"@en ;
+  skos:prefLabel "Review decision"@en ;
+  skos:definition "A decision that accepts or drops a persona, job or desired outcome after its subject-matter reviews, with its final wording and approved uses."@en ;
+  rdfs:subClassOf core:decision ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm decisionvoc:decision ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:survey-wave
+  a owl:Class ;
+  rdfs:label "Survey wave"@en ;
+  skos:prefLabel "Survey wave"@en ;
+  skos:definition "A process in which the outcome benchmark survey is fielded once and its importance and satisfaction ratings are collected."@en ;
+  rdfs:subClassOf obo:BFO_0000015 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:outcome-score
+  a owl:Class ;
+  rdfs:label "Outcome score"@en ;
+  skos:prefLabel "Outcome score"@en ;
+  skos:definition "A measure that states the importance and satisfaction one survey segment gave a desired outcome in one survey wave."@en ;
+  rdfs:subClassOf core:measure ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasPrimaryTerm measurevoc:measure ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+[] a owl:AllDisjointClasses ;
+  owl:members ( jtbd:core-functional-job jtbd:consumption-chain-job jtbd:emotional-job jtbd:social-job ) .
+
+# ---- Object properties --------------------------------------------------
+
+jtbd:executesJob
+  a owl:ObjectProperty ;
+  rdfs:label "executes job"@en ;
+  skos:prefLabel "executes job"@en ;
+  skos:definition "A relation between a client persona and a job its typical executor is responsible for getting done."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  rdfs:subPropertyOf core:performsJob ;
+  owl:inverseOf jtbd:hasJobExecutor ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasJobExecutor
+  a owl:ObjectProperty ;
+  rdfs:label "has job executor"@en ;
+  skos:prefLabel "has job executor"@en ;
+  skos:definition "A relation between a job and a client persona responsible for getting it done."@en ;
+  rdfs:domain jtbd:job-to-be-done ;
+  rdfs:range jtbd:client-persona ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:participatesInJob
+  a owl:ObjectProperty ;
+  rdfs:label "participates in job"@en ;
+  skos:prefLabel "participates in job"@en ;
+  skos:definition "A relation between a client persona and a job it takes part in without being responsible for it."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  owl:inverseOf jtbd:hasJobParticipant ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasJobParticipant
+  a owl:ObjectProperty ;
+  rdfs:label "has job participant"@en ;
+  skos:prefLabel "has job participant"@en ;
+  skos:definition "A relation between a job and a client persona that takes part in it without being responsible for it."@en ;
+  rdfs:domain jtbd:job-to-be-done ;
+  rdfs:range jtbd:client-persona ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:atJobMapStage
+  a owl:ObjectProperty ;
+  rdfs:label "at job map stage"@en ;
+  skos:prefLabel "at job map stage"@en ;
+  skos:definition "A relation between a job step or desired outcome and the universal job map stage it belongs to."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range jtbd:job-map-stage ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:isOutcomeOfJob
+  a owl:ObjectProperty ;
+  rdfs:label "is outcome of job"@en ;
+  skos:prefLabel "is outcome of job"@en ;
+  skos:definition "A relation between a desired outcome and the job whose success it measures, through its job step."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range jtbd:job-to-be-done ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  owl:inverseOf jtbd:hasDesiredOutcome ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasDesiredOutcome
+  a owl:ObjectProperty ;
+  rdfs:label "has desired outcome"@en ;
+  skos:prefLabel "has desired outcome"@en ;
+  skos:definition "A relation between a job and a desired outcome mapped to one of its job steps."@en ;
+  rdfs:domain jtbd:job-to-be-done ;
+  rdfs:range jtbd:desired-outcome ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasOutcomeMetricType
+  a owl:ObjectProperty ;
+  rdfs:label "has outcome metric type"@en ;
+  skos:prefLabel "has outcome metric type"@en ;
+  skos:definition "A relation between a desired outcome and the kind of measure it uses, such as speed or stability."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasBenchmarkTheme
+  a owl:ObjectProperty ;
+  rdfs:label "has benchmark theme"@en ;
+  skos:prefLabel "has benchmark theme"@en ;
+  skos:definition "A relation between a desired outcome and the service-line theme under which its results are reported and acted on."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:isAddressedByService
+  a owl:ObjectProperty ;
+  rdfs:label "is addressed by service"@en ;
+  skos:prefLabel "is addressed by service"@en ;
+  skos:definition "A relation between a desired outcome and a domain service of the business model that helps the client achieve it."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range owl:Thing ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:appliesToBusinessDomain
+  a owl:ObjectProperty ;
+  rdfs:label "applies to business domain"@en ;
+  skos:prefLabel "applies to business domain"@en ;
+  skos:definition "A relation between a job and a business domain of the business model whose services support it."@en ;
+  rdfs:domain jtbd:job-to-be-done ;
+  rdfs:range owl:Thing ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:interviewsPersona
+  a owl:ObjectProperty ;
+  rdfs:label "interviews persona"@en ;
+  skos:prefLabel "interviews persona"@en ;
+  skos:definition "A relation between an appreciative inquiry interview and the client persona the interviewee represents."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range jtbd:client-persona ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:isNoteOf
+  a owl:ObjectProperty ;
+  rdfs:label "is note of"@en ;
+  skos:prefLabel "is note of"@en ;
+  skos:definition "A relation between an interview note and the appreciative inquiry interview it was taken in."@en ;
+  rdfs:domain jtbd:interview-note ;
+  rdfs:range jtbd:appreciative-inquiry-interview ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:inInquiryPhase
+  a owl:ObjectProperty ;
+  rdfs:label "in inquiry phase"@en ;
+  skos:prefLabel "in inquiry phase"@en ;
+  skos:definition "A relation between an interview note and the phase of the appreciative inquiry cycle it belongs to."@en ;
+  rdfs:domain jtbd:interview-note ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:isEvidencedBy
+  a owl:ObjectProperty ;
+  rdfs:label "is evidenced by"@en ;
+  skos:prefLabel "is evidenced by"@en ;
+  skos:definition "A relation between a job, job step or desired outcome and the interview or interview note it was discovered in."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range obo:BFO_0000001 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  rdfs:subPropertyOf prov:wasDerivedFrom ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:reviewsElement
+  a owl:ObjectProperty ;
+  rdfs:label "reviews element"@en ;
+  skos:prefLabel "reviews element"@en ;
+  skos:definition "A relation between a subject-matter review and the persona, job or desired outcome it judges."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range obo:BFO_0000001 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasReviewVerdict
+  a owl:ObjectProperty ;
+  rdfs:label "has review verdict"@en ;
+  skos:prefLabel "has review verdict"@en ;
+  skos:definition "A relation between a subject-matter review and the verdict the reviewer gave."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:raisesFlag
+  a owl:ObjectProperty ;
+  rdfs:label "raises flag"@en ;
+  skos:prefLabel "raises flag"@en ;
+  skos:definition "A relation between a subject-matter review and a compliance risk the reviewer flagged."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:approvesUse
+  a owl:ObjectProperty ;
+  rdfs:label "approves use"@en ;
+  skos:prefLabel "approves use"@en ;
+  skos:definition "A relation between a review or decision and a purpose for which the statement may be used."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSuggestedStage
+  a owl:ObjectProperty ;
+  rdfs:label "has suggested stage"@en ;
+  skos:prefLabel "has suggested stage"@en ;
+  skos:definition "A relation between a business review and the job map stage the reviewer would move the outcome to."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range jtbd:job-map-stage ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSuggestedTheme
+  a owl:ObjectProperty ;
+  rdfs:label "has suggested theme"@en ;
+  skos:prefLabel "has suggested theme"@en ;
+  skos:definition "A relation between a business review and the benchmark theme the reviewer would report the outcome under."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:decidesElement
+  a owl:ObjectProperty ;
+  rdfs:label "decides element"@en ;
+  skos:prefLabel "decides element"@en ;
+  skos:definition "A relation between a review decision and the persona, job or desired outcome it accepts or drops."@en ;
+  rdfs:domain jtbd:review-decision ;
+  rdfs:range obo:BFO_0000001 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasDecisionResult
+  a owl:ObjectProperty ;
+  rdfs:label "has decision result"@en ;
+  skos:prefLabel "has decision result"@en ;
+  skos:definition "A relation between a review decision and its result, accepted or dropped."@en ;
+  rdfs:domain jtbd:review-decision ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:inSurveyWave
+  a owl:ObjectProperty ;
+  rdfs:label "in survey wave"@en ;
+  skos:prefLabel "in survey wave"@en ;
+  skos:definition "A relation between an outcome score and the survey wave whose ratings it summarizes."@en ;
+  rdfs:domain jtbd:outcome-score ;
+  rdfs:range jtbd:survey-wave ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSurveySegment
+  a owl:ObjectProperty ;
+  rdfs:label "has survey segment"@en ;
+  skos:prefLabel "has survey segment"@en ;
+  skos:definition "A relation between an outcome score and the group of respondents it summarizes."@en ;
+  rdfs:domain jtbd:outcome-score ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+# ---- Data properties ----------------------------------------------------
+
+jtbd:hasIdentifier
+  a owl:DatatypeProperty ;
+  rdfs:label "has identifier"@en ;
+  skos:prefLabel "has identifier"@en ;
+  skos:definition "A data property that gives the stable benchmark identifier of an element, such as J01 or O001."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasShortName
+  a owl:DatatypeProperty ;
+  rdfs:label "has short name"@en ;
+  skos:prefLabel "has short name"@en ;
+  skos:definition "A data property that gives the short name used for an element in charts and survey module names."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasJobStatement
+  a owl:DatatypeProperty ;
+  rdfs:label "has job statement"@en ;
+  skos:prefLabel "has job statement"@en ;
+  skos:definition "A data property that gives the solution-agnostic wording of a job as used in the survey."@en ;
+  rdfs:domain jtbd:job-to-be-done ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasOutcomeStatement
+  a owl:DatatypeProperty ;
+  rdfs:label "has outcome statement"@en ;
+  skos:prefLabel "has outcome statement"@en ;
+  skos:definition "A data property that gives the exact survey wording of a desired outcome, acronyms included."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasImportanceQuestion
+  a owl:DatatypeProperty ;
+  rdfs:label "has importance question"@en ;
+  skos:prefLabel "has importance question"@en ;
+  skos:definition "A data property that gives the survey question asking how important a desired outcome is to the respondent."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSatisfactionQuestion
+  a owl:DatatypeProperty ;
+  rdfs:label "has satisfaction question"@en ;
+  skos:prefLabel "has satisfaction question"@en ;
+  skos:definition "A data property that gives the survey question asking how satisfied the respondent is with achieving a desired outcome today."@en ;
+  rdfs:domain jtbd:desired-outcome ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasStageOrder
+  a owl:DatatypeProperty ;
+  rdfs:label "has stage order"@en ;
+  skos:prefLabel "has stage order"@en ;
+  skos:definition "A data property that gives the position of a job map stage or job step on the job map, starting at one."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasTypicalTitles
+  a owl:DatatypeProperty ;
+  rdfs:label "has typical titles"@en ;
+  skos:prefLabel "has typical titles"@en ;
+  skos:definition "A data property that lists job titles commonly held by people who fit a client persona."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasPersonaContext
+  a owl:DatatypeProperty ;
+  rdfs:label "has persona context"@en ;
+  skos:prefLabel "has persona context"@en ;
+  skos:definition "A data property that describes the working situation a client persona is in."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasBuyingRole
+  a owl:DatatypeProperty ;
+  rdfs:label "has buying role"@en ;
+  skos:prefLabel "has buying role"@en ;
+  skos:definition "A data property that describes the part a client persona plays in choosing and keeping the provider."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasPersonaGoal
+  a owl:DatatypeProperty ;
+  rdfs:label "has persona goal"@en ;
+  skos:prefLabel "has persona goal"@en ;
+  skos:definition "A data property that states the overall goal a client persona is pursuing at work."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSurveyTarget
+  a owl:DatatypeProperty ;
+  rdfs:label "has survey target"@en ;
+  skos:prefLabel "has survey target"@en ;
+  skos:definition "A data property that gives the number of respondents the benchmark survey aims to reach for a client persona."@en ;
+  rdfs:domain jtbd:client-persona ;
+  rdfs:range xsd:integer ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasInterviewDate
+  a owl:DatatypeProperty ;
+  rdfs:label "has interview date"@en ;
+  skos:prefLabel "has interview date"@en ;
+  skos:definition "A data property that gives the date an appreciative inquiry interview took place."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:date ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasInterviewerName
+  a owl:DatatypeProperty ;
+  rdfs:label "has interviewer name"@en ;
+  skos:prefLabel "has interviewer name"@en ;
+  skos:definition "A data property that names the person who conducted an appreciative inquiry interview."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasIntervieweeRole
+  a owl:DatatypeProperty ;
+  rdfs:label "has interviewee role"@en ;
+  skos:prefLabel "has interviewee role"@en ;
+  skos:definition "A data property that gives the job title of the interviewee, never the interviewee's name."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasCompanySizeBand
+  a owl:DatatypeProperty ;
+  rdfs:label "has company size band"@en ;
+  skos:prefLabel "has company size band"@en ;
+  skos:definition "A data property that gives the employee-count band of the interviewee's company."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasIndustry
+  a owl:DatatypeProperty ;
+  rdfs:label "has industry"@en ;
+  skos:prefLabel "has industry"@en ;
+  skos:definition "A data property that gives the industry of the interviewee's company."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasCurrentServiceModel
+  a owl:DatatypeProperty ;
+  rdfs:label "has current service model"@en ;
+  skos:prefLabel "has current service model"@en ;
+  skos:definition "A data property that describes how the interviewee's company handles human resources today."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasInterviewSummary
+  a owl:DatatypeProperty ;
+  rdfs:label "has interview summary"@en ;
+  skos:prefLabel "has interview summary"@en ;
+  skos:definition "A data property that gives the interviewer's short summary of what the interview revealed."@en ;
+  rdfs:domain jtbd:appreciative-inquiry-interview ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasNoteText
+  a owl:DatatypeProperty ;
+  rdfs:label "has note text"@en ;
+  skos:prefLabel "has note text"@en ;
+  skos:definition "A data property that gives the text of an interview note."@en ;
+  rdfs:domain jtbd:interview-note ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:isQuote
+  a owl:DatatypeProperty ;
+  rdfs:label "is quote"@en ;
+  skos:prefLabel "is quote"@en ;
+  skos:definition "A data property that is true when an interview note records the interviewee's own words."@en ;
+  rdfs:domain jtbd:interview-note ;
+  rdfs:range xsd:boolean ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasReviewerName
+  a owl:DatatypeProperty ;
+  rdfs:label "has reviewer name"@en ;
+  skos:prefLabel "has reviewer name"@en ;
+  skos:definition "A data property that names the person who carried out a review or recorded a decision."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasReviewerRole
+  a owl:DatatypeProperty ;
+  rdfs:label "has reviewer role"@en ;
+  skos:prefLabel "has reviewer role"@en ;
+  skos:definition "A data property that gives the role a reviewer acted in, business or compliance."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSuggestedWording
+  a owl:DatatypeProperty ;
+  rdfs:label "has suggested wording"@en ;
+  skos:prefLabel "has suggested wording"@en ;
+  skos:definition "A data property that gives the wording a reviewer or decision proposes for the statement."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasStudyRecommendation
+  a owl:DatatypeProperty ;
+  rdfs:label "has study recommendation"@en ;
+  skos:prefLabel "has study recommendation"@en ;
+  skos:definition "A data property that records whether a business reviewer would keep, merge or drop an outcome from the study."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasDuplicateOf
+  a owl:DatatypeProperty ;
+  rdfs:label "has duplicate of"@en ;
+  skos:prefLabel "has duplicate of"@en ;
+  skos:definition "A data property that lists the identifiers of outcomes a reviewer considers duplicates of this one."@en ;
+  rdfs:domain jtbd:subject-matter-review ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasReviewComment
+  a owl:DatatypeProperty ;
+  rdfs:label "has review comment"@en ;
+  skos:prefLabel "has review comment"@en ;
+  skos:definition "A data property that gives a reviewer's or decision maker's explanation."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasRecordedAt
+  a owl:DatatypeProperty ;
+  rdfs:label "has recorded at"@en ;
+  skos:prefLabel "has recorded at"@en ;
+  skos:definition "A data property that gives the moment a review, decision or evaluation was recorded."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:dateTime ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasWaveLabel
+  a owl:DatatypeProperty ;
+  rdfs:label "has wave label"@en ;
+  skos:prefLabel "has wave label"@en ;
+  skos:definition "A data property that gives the name of a survey wave as shown in the tools."@en ;
+  rdfs:domain jtbd:survey-wave ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasFieldedDate
+  a owl:DatatypeProperty ;
+  rdfs:label "has fielded date"@en ;
+  skos:prefLabel "has fielded date"@en ;
+  skos:definition "A data property that gives the date a survey wave closed."@en ;
+  rdfs:domain jtbd:survey-wave ;
+  rdfs:range xsd:date ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSourceFileName
+  a owl:DatatypeProperty ;
+  rdfs:label "has source file name"@en ;
+  skos:prefLabel "has source file name"@en ;
+  skos:definition "A data property that names the results file a survey wave was loaded from."@en ;
+  rdfs:domain jtbd:survey-wave ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:isExampleData
+  a owl:DatatypeProperty ;
+  rdfs:label "is example data"@en ;
+  skos:prefLabel "is example data"@en ;
+  skos:definition "A data property that is true when a survey wave holds generated example scores rather than survey results."@en ;
+  rdfs:domain jtbd:survey-wave ;
+  rdfs:range xsd:boolean ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasImportanceScore
+  a owl:DatatypeProperty ;
+  rdfs:label "has importance score"@en ;
+  skos:prefLabel "has importance score"@en ;
+  skos:definition "A data property that gives the share of respondents rating an outcome important (4 or 5 of 5), divided by ten."@en ;
+  rdfs:domain jtbd:outcome-score ;
+  rdfs:range xsd:decimal ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasSatisfactionScore
+  a owl:DatatypeProperty ;
+  rdfs:label "has satisfaction score"@en ;
+  skos:prefLabel "has satisfaction score"@en ;
+  skos:definition "A data property that gives the share of respondents satisfied (4 or 5 of 5) with an outcome, divided by ten."@en ;
+  rdfs:domain jtbd:outcome-score ;
+  rdfs:range xsd:decimal ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+jtbd:hasRespondentCount
+  a owl:DatatypeProperty ;
+  rdfs:label "has respondent count"@en ;
+  skos:prefLabel "has respondent count"@en ;
+  skos:definition "A data property that gives the number of respondents behind an outcome score."@en ;
+  rdfs:domain jtbd:outcome-score ;
+  rdfs:range xsd:integer ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .

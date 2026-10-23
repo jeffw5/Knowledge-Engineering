@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KE Workbench — Overview</title>
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<script src="../assets/ke-registry.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ke-sans);background:var(--ke-bg);color:var(--ke-ink);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--ke-accent)}
+code,.mono{font-family:var(--ke-mono);font-size:.88em}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:36px 32px 64px}
+.eyebrow{font:700 11px/1.5 var(--ke-sans);letter-spacing:.09em;text-transform:uppercase;color:var(--ke-accent)}
+.eyebrow .sep{margin:0 6px}
+.eyebrow .sep{color:var(--ke-faint)}
+h1{font-size:34px;line-height:1.12;letter-spacing:-.015em;font-weight:700;margin:10px 0 6px;text-wrap:balance}
+.subtitle{font-size:17px;color:var(--ke-accent);margin-bottom:14px}
+.lede{font-size:15px;color:var(--ke-ink2);max-width:760px}
+.meta{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--ke-line);font-size:12.5px;color:var(--ke-muted)}
+.meta b{color:var(--ke-ink)}
+.draft{color:var(--ke-draft);font-weight:700;letter-spacing:.08em}
+
+/* status band */
+.band{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:0;margin-top:28px;background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);overflow:hidden}
+.cellx{padding:14px 18px;border-left:1px solid var(--ke-line-soft);min-width:0}
+.cellx:first-child{border-left:0}
+.cellx .k{font:700 10px/1.2 var(--ke-sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ke-muted)}
+.cellx .v{font-size:24px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.cellx .s{font-size:11.5px;color:var(--ke-muted);margin-top:2px}
+.conn{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;margin-top:6px}
+.conn .dot{width:8px;height:8px;border-radius:50%;background:var(--ke-warn)}
+.conn.ok .dot{background:var(--ke-ok);box-shadow:0 0 0 3px var(--ke-ok-soft)}
+.kind-voc{color:var(--ke-kind-voc)} .kind-tax{color:var(--ke-kind-tax)} .kind-ont{color:var(--ke-kind-ont)} .kind-oth{color:var(--ke-warn)}
+
+section{margin-top:48px}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+h2{font-size:22px;letter-spacing:-.01em;margin-top:6px}
+h3{font-size:15px;color:var(--ke-accent);margin:22px 0 8px}
+.sec-lede{color:var(--ke-ink2);max-width:760px;margin-top:4px}
+
+/* tool groups */
+.groups{display:grid;gap:18px}
+.group{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);padding:18px 18px 8px}
+.group-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid var(--ke-line-soft)}
+.group-h .t{font-size:16px;font-weight:700}
+.group-h .b{font-size:12.5px;color:var(--ke-muted)}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0 22px}
+.tool{display:grid;grid-template-columns:34px 1fr;gap:4px 12px;padding:14px 0;border-bottom:1px solid var(--ke-line-soft);text-align:left;background:none;border-left:0;border-right:0;border-top:0;width:100%}
+.tool:hover .tn{color:var(--ke-accent)}
+.tool .code{grid-row:span 3;width:34px;height:26px;border-radius:5px;border:1px solid var(--ke-line);display:grid;place-items:center;font:700 10.5px/1 var(--ke-mono);color:var(--ke-muted);background:var(--ke-sunk)}
+.tool .tn{font-weight:700;font-size:14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tool .td{font-size:12.5px;color:var(--ke-ink2);line-height:1.5}
+.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.chip{font:600 10px/1 var(--ke-sans);padding:3px 6px;border-radius:3px;background:var(--ke-band);color:var(--ke-ink2);letter-spacing:.02em}
+.chip.live{background:var(--ke-ok-soft);color:var(--ke-ok)}
+.chip.new{background:var(--ke-accent-soft);color:var(--ke-accent)}
+.chip.std{background:transparent;border:1px solid var(--ke-line);color:var(--ke-muted);font-family:var(--ke-mono);font-weight:400}
+
+/* document tables (matches the guide) */
+.doc{background:var(--ke-surface);border:1px solid var(--ke-line);border-radius:var(--ke-radius-lg);padding:6px 22px 22px}
+.tw{overflow-x:auto;margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{background:var(--ke-band);text-align:left;font-weight:700;padding:8px 10px;border-bottom:1px solid var(--ke-line);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--ke-line-soft);vertical-align:top}
+td code{color:var(--ke-ink2);word-break:break-all}
+td .lnk{background:none;border:0;color:var(--ke-accent);font-weight:600;padding:0;text-align:left}
+td .lnk:hover{text-decoration:underline}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.states{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:8px 0 4px}
+.state{padding:5px 10px;border:1px solid var(--ke-line);border-radius:4px;font-size:12px;font-weight:600;background:var(--ke-sunk)}
+.arrow{color:var(--ke-faint)}
+ul.tight{padding-left:18px;font-size:13px;color:var(--ke-ink2)}
+ul.tight li{margin:4px 0}
+ul.tight b{color:var(--ke-ink)}
+.callout{margin-top:14px;padding:12px 14px;border-left:3px solid var(--ke-accent);background:var(--ke-accent-soft);font-size:13px;color:var(--ke-ink2);border-radius:0 6px 6px 0}
+.pre{font-family:var(--ke-mono);font-size:11.5px;background:var(--ke-sunk);border:1px solid var(--ke-line-soft);border-radius:6px;padding:12px 14px;white-space:pre;overflow-x:auto;color:var(--ke-ink2);margin-top:10px;line-height:1.5}
+.tabsx{display:flex;gap:2px;border-bottom:1px solid var(--ke-line);margin:12px 0 4px;overflow-x:auto}
+.tabsx button{background:none;border:0;padding:9px 12px;font-size:12.5px;font-weight:600;color:var(--ke-muted);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabsx button.on{color:var(--ke-accent);border-bottom-color:var(--ke-accent)}
+.pane{display:none}.pane.on{display:block}
+footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--ke-line);font-size:11.5px;color:var(--ke-muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .wrap{padding:24px 16px 48px}
+  h1{font-size:27px}
+  .band{grid-template-columns:repeat(2,1fr)}
+  .cellx:first-child{grid-column:span 2;border-bottom:1px solid var(--ke-line-soft)}
+  .cellx:nth-child(2n+2){border-left:0}
+  .cellx:nth-child(n+2){border-top:1px solid var(--ke-line-soft)}
+  .two{grid-template-columns:1fr}
+  .tools{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Knowledge engineering <span class="sep">•</span> <a href="release-notes.html" target="_blank" title="Release notes" style="color:inherit;text-decoration:none;border-bottom:1px dotted currentColor">Workbench release <span id="ver">1.3.0</span></a></div>
+    <h1>Knowledge Engineering Workbench</h1>
+    <div class="subtitle">Model, check, govern and operate the knowledge fabric in one place</div>
+    <p class="lede">The workbench brings the modeling tools, the single source of truth for rules and logic, and the agent operations dashboards together. It applies the Part III knowledge engineering standards of <i>Semantic Governance: Services, Architecture &amp; Integration</i>: design principles, naming and URI conventions, term definitions, versioning and lifecycle.</p>
+    <div class="meta">
+      <span>Standards source <b>Semantic Governance v1.9</b> · <span class="draft">DRAFT</span> · October 15, 2026</span>
+      <span>Base URL <b class="mono">https://www.insperity.com</b></span>
+      <span><a href="#" data-tool="guide">Open the guide</a></span>
+    </div>
+  </header>
+
+  <div class="band" id="band" aria-live="polite">
+    <div class="cellx">
+      <div class="k">Graph store</div>
+      <div class="conn" id="conn"><span class="dot"></span><span id="connT">Checking GraphDB…</span></div>
+      <div class="s" id="connS">&nbsp;</div>
+    </div>
+    <div class="cellx"><div class="k">Vocabularies</div><div class="v kind-voc" id="nVoc">—</div><div class="s">SKOS concept schemes</div></div>
+    <div class="cellx"><div class="k">Taxonomies</div><div class="v kind-tax" id="nTax">—</div><div class="s">SKOS concept schemes</div></div>
+    <div class="cellx"><div class="k">Ontologies</div><div class="v kind-ont" id="nOnt">—</div><div class="s">OWL ontologies</div></div>
+    <div class="cellx"><div class="k">Off-standard</div><div class="v kind-oth" id="nOth">—</div><div class="s">Wrong host or no kind in URI</div></div>
+  </div>
+
+  <section id="tools">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Workbench map</div>
+        <h2>Tools by job</h2>
+        <p class="sec-lede">Each tool opens in its own tab and keeps its state while you switch. Tools marked <span class="chip live">GraphDB</span> read and write the graph store through <code>proxy.py</code>; the rest run entirely in the browser.</p>
+      </div>
+    </div>
+    <div class="groups" id="groups"></div>
+  </section>
+
+  <section id="functions">
+    <div class="eyebrow">Part I <span class="sep">•</span> Section 1.3</div>
+    <h2>Operations Workbench functions</h2>
+    <p class="sec-lede">The guide's example workbench configuration, and where each function lives here.</p>
+    <div class="doc" style="margin-top:14px">
+      <div class="tw"><table>
+        <thead><tr><th style="width:22%">Function</th><th>Implementation in the guide</th><th style="width:30%">In this workbench</th></tr></thead>
+        <tbody id="fnRows"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <section id="standards">
+    <div class="eyebrow">Part III <span class="sep">•</span> Knowledge engineering</div>
+    <h2>Standards at a glance</h2>
+    <p class="sec-lede">A working summary of the rules the workbench applies. The guide is authoritative; section numbers point back to it.</p>
+    <div class="doc" style="margin-top:14px">
+      <div class="tabsx" role="tablist">
+        <button class="on" data-pane="p-naming">Naming · 3.2</button>
+        <button data-pane="p-uri">URI patterns · 3.2</button>
+        <button data-pane="p-terms">Term definition · 3.7</button>
+        <button data-pane="p-version">Versions &amp; lifecycle · 3.3</button>
+        <button data-pane="p-design">Design · 3.1</button>
+      </div>
+
+      <div class="pane on" id="p-naming">
+        <h3>Naming conventions</h3>
+        <div class="tw"><table>
+          <thead><tr><th>Artifact</th><th>Element</th><th>Convention</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Vocabulary</td><td>Term</td><td>Preferred label in sentence case; synonyms as alternative labels</td><td>"Pay period" (alternative: "Payroll cycle")</td></tr>
+            <tr><td>Taxonomy</td><td>Concept</td><td>UpperCamelCase identifier; preferred label in sentence case; codes in <code>skos:notation</code></td><td><code>WagesAndHours</code>, label "Wages and hours"</td></tr>
+            <tr><td>Ontology</td><td>Class</td><td>UpperCamelCase singular noun</td><td><code>PayrollRun</code>, <code>WorksiteEmployee</code></td></tr>
+            <tr><td>Ontology</td><td>Object property</td><td>lowerCamelCase verb phrase</td><td><code>performedBy</code>, <code>governedBy</code></td></tr>
+            <tr><td>Ontology</td><td>Data property</td><td>lowerCamelCase noun phrase with <code>has</code>- or <code>is</code>- prefix</td><td><code>hasEffectiveDate</code>, <code>isExempt</code></td></tr>
+            <tr><td>Ontology</td><td>Individual</td><td>UpperCamelCase name, or class name plus stable identifier</td><td><code>TexasMinimumWageAct</code></td></tr>
+            <tr><td>Shapes</td><td>Shape</td><td>Target class name plus <code>Shape</code></td><td><code>PayrollRunShape</code></td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout"><b>No acronyms in identifiers or preferred labels.</b> Write <code>ProfessionalEmployerOrganization</code>, not PEO. Acronyms are recorded only as <code>skos:altLabel</code> so search still finds them, and a new acronym is added to Appendix F before it appears in any label.</div>
+      </div>
+
+      <div class="pane" id="p-uri">
+        <h3>URI conventions</h3>
+        <p style="font-size:13px;color:var(--ke-ink2)">URIs are persistent, readable and never reused. Namespaces are slash-based so each term resolves on its own; multi-word domain names are lower case and hyphenated (<code>service-model</code>).</p>
+        <div class="tw"><table>
+          <thead><tr><th>Element</th><th>Pattern</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td>Core ontology</td><td><code>https://www.insperity.com/ontology/core/{Term}</code></td><td><code>…/ontology/core/ProcessStep</code></td></tr>
+            <tr><td>Domain ontology</td><td><code>https://www.insperity.com/ontology/{domain}/{Term}</code></td><td><code>…/ontology/payroll/PayrollRun</code></td></tr>
+            <tr><td>Operational module</td><td><code>https://www.insperity.com/ontology/operational/{term}</code></td><td><code>…/ontology/operational/determinesDeduction</code></td></tr>
+            <tr><td>Vocabulary</td><td><code>https://www.insperity.com/vocabulary/{domain}/{term}</code></td><td><code>…/vocabulary/payroll/pay-period</code></td></tr>
+            <tr><td>Taxonomy</td><td><code>https://www.insperity.com/taxonomy/{domain}/{Concept}</code></td><td><code>…/taxonomy/compliance/WagesAndHours</code></td></tr>
+            <tr><td>Mapping (bridge)</td><td><code>https://www.insperity.com/mapping/{domain}/{term}</code></td><td><code>…/mapping/benefits/enrollment</code></td></tr>
+            <tr><td>Shapes</td><td><code>https://www.insperity.com/shapes/{domain}/{Shape}</code></td><td><code>…/shapes/payroll/PayrollRunShape</code></td></tr>
+            <tr><td>Instance data</td><td><code>https://www.insperity.com/resource/{domain}/{Class}/{id}</code></td><td><code>…/resource/payroll/PayrollRun/2026-10-15</code></td></tr>
+            <tr><td>Version</td><td><code>https://www.insperity.com/ontology/{domain}/{version}/</code></td><td><code>…/ontology/payroll/2.1.0/</code></td></tr>
+          </tbody>
+        </table></div>
+        <div class="callout">Model Manager classifies graphs by these rules: a compliant base URL plus a kind in the path (<code>vocabulary</code>, <code>taxonomy</code>, <code>ontology</code>). Anything else lands under <b>Other</b> as a clean-up list. Compliant base URLs are a workbench setting, so the legacy <code>enablingvalue.com</code> host keeps working while assets migrate.</div>
+      </div>
+
+      <div class="pane" id="p-terms">
+        <div class="two">
+          <div>
+            <h3>Required before Draft → Candidate</h3>
+            <ul class="tight">
+              <li><b>IRI</b> under the base URL; UpperCamelCase, no acronyms, no hierarchy in the path</li>
+              <li><b>Label</b> — <code>rdfs:label</code> and <code>skos:prefLabel</code>, one per language, <code>@en</code>, sentence case, full words</li>
+              <li><b>Is defined by</b> — <code>rdfs:isDefinedBy</code> the owning ontology</li>
+              <li><b>Definition</b> — <code>skos:definition</code>, one sentence, genus plus differentia (ISO 704): "A [parent] that [distinguishing feature]"</li>
+              <li><b>Sub-class of</b> — at least one named parent; the hierarchy carries the meaning</li>
+              <li><b>Governance</b> — lifecycle status, <code>owl:versionInfo</code>, created, modified, creator</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Recommended and restricted</h3>
+            <ul class="tight">
+              <li><b>Recommended:</b> <code>skos:scopeNote</code> (what is in and out), <code>skos:example</code></li>
+              <li><b>As needed:</b> <code>skos:altLabel</code> for synonyms, acronyms, legacy and persona terms (3.8)</li>
+              <li><b>Codes:</b> <code>skos:notation</code> is the only place a code or acronym may stand alone</li>
+              <li><b>Restrictions:</b> existential (<code>someValuesFrom</code>) only</li>
+              <li><b>Avoid:</b> <code>owl:equivalentClass</code> without Architecture approval; <code>owl:disjointUnionOf</code></li>
+              <li><b>Closed sets only:</b> <code>owl:oneOf</code>, for example a lifecycle status</li>
+            </ul>
+          </div>
+        </div>
+        <div class="pre">sm:DocumentationStandards a owl:Class ;
+    rdfs:label        "Documentation standards"@en ;
+    skos:prefLabel    "Documentation standards"@en ;
+    skos:altLabel     "Documentation guidelines"@en ;
+    skos:definition   "A software engineering artifact that specifies the required
+                       content, structure, format, review, and retention of the
+                       documentation produced during development."@en ;
+    rdfs:isDefinedBy  &lt;https://www.insperity.com/ontology/service-model/&gt; ;
+    rdfs:subClassOf   sm:SoftwareEngineeringArtifact ;
+    core:hasLifecycleStatus core:Draft ;
+    owl:versionInfo   "0.1.0" .</div>
+      </div>
+
+      <div class="pane" id="p-version">
+        <h3>Lifecycle</h3>
+        <div class="states"><span class="state">Draft</span><span class="arrow">→</span><span class="state">Candidate</span><span class="arrow">→</span><span class="state">Released</span><span class="arrow">→</span><span class="state">Deprecated</span><span class="arrow">→</span><span class="state">Retired</span></div>
+        <p style="font-size:13px;color:var(--ke-ink2)">Released versions are immutable. Deprecated versions carry a sunset date; terms are deprecated, never deleted.</p>
+        <h3>Semantic versioning</h3>
+        <div class="tw"><table>
+          <thead><tr><th>Bump</th><th>When</th><th>In the workbench</th></tr></thead>
+          <tbody>
+            <tr><td><b>MAJOR</b></td><td>Breaks consumers — removes or redefines a class or property</td><td>Declared in the change record</td></tr>
+            <tr><td><b>MINOR</b></td><td>Additions</td><td>Declared in the change record</td></tr>
+            <tr><td><b>PATCH</b></td><td>Label and documentation fixes</td><td>Metadata editors bump PATCH on save; a new asset starts at <code>0.1.0</code></td></tr>
+          </tbody>
+        </table></div>
+        <ul class="tight" style="margin-top:12px">
+          <li>Only ontology and vocabulary <b>releases</b> get versioned IRIs (<code>owl:versionIRI</code>, <code>owl:priorVersion</code>).</li>
+          <li>Class, property and concept IRIs <b>never</b> contain a version; a changed meaning means deprecate and replace.</li>
+          <li>Change records live in the append-only graph <code>https://www.insperity.com/graph/change-log</code>, one record per change set, linked by PROV-O.</li>
+        </ul>
+      </div>
+
+      <div class="pane" id="p-design">
+        <div class="two">
+          <div>
+            <h3>Four design principles</h3>
+            <ul class="tight">
+              <li><b>Small core ontology</b> owned by Architecture, aligned to BFO (ISO/IEC 21838-2). Domains extend the core, never the reverse.</li>
+              <li><b>Process step as anchor.</b> Every fact attaches to the step that creates, uses or governs it: <code>performedBy</code>, <code>consumes</code>/<code>produces</code>, <code>triggers</code>, <code>governedBy</code>, <code>measuredBy</code>, <code>precedes</code>.</li>
+              <li><b>Domain ontologies</b> specialize core classes; intra-domain properties stay inside the domain.</li>
+              <li><b>Operational modules</b> hold inter-domain edges, so no domain imports another; domains align through reviewed SKOS bridges to the core.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>OWL 2: maximize subclasses, minimize inference</h3>
+            <div class="tw"><table>
+              <thead><tr><th>Prefer</th><th>Avoid</th></tr></thead>
+              <tbody>
+                <tr><td>Asserted <code>rdfs:subClassOf</code> hierarchies</td><td>Defined classes with complex restrictions</td></tr>
+                <tr><td>Simple domain and range</td><td>Long property chains</td></tr>
+                <tr><td>SHACL shapes for data constraints</td><td>OWL restrictions as validation</td></tr>
+                <tr><td>OWL 2 RL / EL constructs</td><td>Full OWL 2 DL and SWRL</td></tr>
+                <tr><td>Materialized hierarchy at publish</td><td>Run-time inference per query</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="eyebrow">Appendix E <span class="sep">•</span> Section E.3</div>
+    <h2>Standards checklist</h2>
+    <p class="sec-lede">The guide's proof for each standard, and where the workbench checks it.</p>
+    <div class="doc" style="margin-top:14px">
+      <div class="tw"><table>
+        <thead><tr><th style="width:26%">Standard</th><th>Proof</th><th style="width:28%">Checked in</th></tr></thead>
+        <tbody id="ckRows"></tbody>
+      </table></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>KE Workbench · Standards: Semantic Governance — Services, Architecture &amp; Integration, v1.9 Draft, Part III and Appendix E</span>
+    <span>The Value Enablement Group</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const R = window.KE_REGISTRY, T = window.KE_TOOLS;
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const inShell = (() => { try { return window.top !== window && !!window.top.KE_SHELL; } catch(e) { return false; } })();
+  $('#ver').textContent = R.version;
+
+  function open(id){
+    if (inShell) { window.top.postMessage({ type:'ke-open', tool:id }, '*'); return; }
+    const t = T[id]; if (t) location.href = '../' + t.file;
+  }
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-tool]'); if (!b) return;
+    e.preventDefault(); open(b.dataset.tool);
+  });
+
+  // Tool groups
+  $('#groups').innerHTML = R.groups.map((g, i) => `
+    <div class="group">
+      <div class="group-h"><div><div class="eyebrow" style="margin-bottom:4px">${String(i+1).padStart(2,'0')} <span class="sep">•</span> ${esc(g.eyebrow)}</div><div class="t">${esc(g.label)}</div></div><div class="b">${esc(g.blurb)}</div></div>
+      <div class="tools">${g.tools.filter(t => !t.hidden || t.id === 'model-visualize').map(t => `
+        <button class="tool" data-tool="${t.hidden ? 'model-manager' : t.id}" title="${t.hidden ? 'Opens from Model Manager with an asset selected' : 'Open ' + esc(t.title)}">
+          <span class="code">${t.code}</span>
+          <span class="tn">${esc(t.title)}</span>
+          <span class="td">${esc(t.desc || '')}</span>
+          <span class="chips">${t.live ? '<span class="chip live">GraphDB</span>' : ''}${t.isNew ? '<span class="chip new">New</span>' : ''}${(t.std||[]).map(s => `<span class="chip std">§${esc(s)}</span>`).join('')}</span>
+        </button>`).join('')}</div>
+    </div>`).join('');
+
+  // §1.3 functions
+  const FN = [
+    ['Change monitoring', 'Link version metadata to nodes and edges; visual cues for modifications or pending approvals', ['model-manager','mapping-agent-dashboard','standards-conformance']],
+    ['Impact visualization', 'Pathfinding to show dependency propagation when a concept or class changes', ['model-visualize','ssot-rules-map','agent-service-map']],
+    ['Artifact versioning', 'Panels to compare ontology versions and highlight added and removed entities', ['model-manager','ssot-editor','plm-lifecycle-dashboard']],
+    ['Governance workflow view', 'Schema state, change history and steward assignments in one dashboard', ['ssot-editor','plm-lifecycle-dashboard','mapping-agent-dashboard']],
+    ['Integration with graph databases', 'Real-time API integration to any SPARQL endpoint', ['model-manager','model-editor','standards-conformance']],
+    ['Role-based access control', 'Who can modify or approve ontology changes', null],
+  ];
+  $('#fnRows').innerHTML = FN.map(([f, impl, tools]) => `<tr><td><b>${esc(f)}</b></td><td>${esc(impl)}</td><td>${tools ? tools.map(id => `<button class="lnk" data-tool="${id === 'model-visualize' ? 'model-manager' : id}">${esc(T[id].title)}</button>`).join(', ') : '<span style="color:var(--ke-muted)">Not in this release — enforced by GraphDB security and the approval steps in change control (3.3)</span>'}</td></tr>`).join('');
+
+  // E.3 checklist
+  const CK = [
+    ['Base URL and URI patterns (3.2)', 'All IRIs start with the Company base URL and follow the patterns', [['standards-conformance','Standards Conformance · base URL, URI pattern'],['model-manager','Model Manager · Other tab']]],
+    ['No acronyms in identifiers or preferred labels (3.2)', 'Acronym query returns no rows; acronyms are alternate labels', [['standards-conformance','Standards Conformance · acronyms']]],
+    ['Term definition fields (3.7)', 'Definition and parent queries return no rows', [['standards-conformance','Standards Conformance · definition, parent, is defined by']]],
+    ['Alternate and persona labels (3.8)', 'Labels carry language tags and sources', [['standards-conformance','Standards Conformance · language tags'],['peo-buyer-personas','Buyer Personas']]],
+    ['Taxonomy attributes, ISO 25964 (3.9)', 'One scheme per file; every concept in scheme with one preferred label', [['standards-conformance','Standards Conformance · taxonomy rules']]],
+    ['Taxonomy of relations and attributes (3.10)', 'Every property has a parent family, domain and range', [['relation-taxonomy','Relation Taxonomy'],['standards-conformance','Standards Conformance · domain and range']]],
+    ['Process step as anchor (3.1)', 'Domain process classes are subclasses of core Process Step', [['model-editor','Model Editor'],['model-manager','Visualizer (from Model Manager)']]],
+    ['R2RML and stable identifiers', 'Subject IRIs built from stable keys; literals typed', [['mapping-agent-dashboard','Mapping Agent Dashboard']]],
+    ['Change control and release (3.3)', 'Pull request with change record; release through the pipeline', [['standards-conformance','Standards Conformance · version format'],['ssot-editor','SSOT Editor · change records']]],
+  ];
+  $('#ckRows').innerHTML = CK.map(([s, p, w]) => `<tr><td><b>${esc(s)}</b></td><td>${esc(p)}</td><td>${w.map(([id, l]) => `<button class="lnk" data-tool="${id}">${esc(l)}</button>`).join('<br>')}</td></tr>`).join('');
+
+  // Standards tabs
+  document.querySelectorAll('.tabsx button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.tabsx button').forEach(x => x.classList.toggle('on', x === b));
+    document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === b.dataset.pane));
+  }));
+
+  // ── Live counts (same classification rule as Model Manager) ──
+  function setting(k, d){ try { const v = localStorage.getItem(k); return v === null ? d : v; } catch(e) { return d; } }
+  function bases(){ try { const v = JSON.parse(setting('ke-base-urls','null')); if (Array.isArray(v) && v.length) return v.map(s => s.toLowerCase()); } catch(e){} return ['https://www.insperity.com/','https://www.enablingvalue.com/']; }
+  function classify(uri){
+    const u = (uri||'').toLowerCase(), ok = bases().some(h => u.startsWith(h));
+    if (ok && u.includes('vocabular')) return 'voc';
+    if (ok && u.includes('taxonom')) return 'tax';
+    if (ok && u.includes('ontolog')) return 'ont';
+    return 'oth';
+  }
+  async function counts(){
+    const repo = setting('ke-repo','value-kb') || 'value-kb';
+    const q = `PREFIX skos:<http://www.w3.org/2004/02/skos/core#> PREFIX owl:<http://www.w3.org/2002/07/owl#>
+      SELECT DISTINCT ?a WHERE { { { ?a a skos:ConceptScheme } UNION { ?a a owl:Ontology } } UNION { GRAPH ?g { { ?a a skos:ConceptScheme } UNION { ?a a owl:Ontology } } } }`;
+    try {
+      const r = await fetch(`/graphdb/repositories/${encodeURIComponent(repo)}`, { method:'POST',
+        headers:{ 'Content-Type':'application/x-www-form-urlencoded', Accept:'application/sparql-results+json' }, body:new URLSearchParams({ query:q }) });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const d = await r.json();
+      const n = { voc:0, tax:0, ont:0, oth:0 };
+      d.results.bindings.forEach(b => { n[classify(b.a.value)]++; });
+      $('#nVoc').textContent = n.voc; $('#nTax').textContent = n.tax; $('#nOnt').textContent = n.ont; $('#nOth').textContent = n.oth;
+      $('#conn').classList.add('ok'); $('#connT').textContent = 'Connected';
+      $('#connS').innerHTML = `Repository <b class="mono">${esc(repo)}</b> · ${d.results.bindings.length} assets`;
+    } catch(e) {
+      ['#nVoc','#nTax','#nOnt','#nOth'].forEach(s => $(s).textContent = '—');
+      $('#conn').classList.remove('ok'); $('#connT').textContent = 'GraphDB not connected';
+      $('#connS').innerHTML = 'Run <code>python3 proxy.py</code> with GraphDB on :7200, then open <code>localhost:3000</code>';
+    }
+  }
+  counts();
+  window.addEventListener('message', e => { if (e.data && (e.data.type === 'ke-settings' || e.data.type === 'ke-graphdb')) counts(); });
+})();
+</script>
+</body>
+</html>

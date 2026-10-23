@@ -1,0 +1,451 @@
+<!doctype html><html lang="en"><head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Demand Gateway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="../assets/c360.css">
+<style>
+.flow{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;counter-reset:f;margin-top:4px}
+.flow div{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:9px 11px;display:grid;gap:3px;align-content:start}
+.flow div::before{counter-increment:f;content:counter(f);font:600 11px var(--f-mono);color:var(--machine)}
+.flow b{font-family:var(--f-display);font-size:16px}
+.flow span{font-size:12px;color:var(--muted)}
+.flow div.here{border-color:var(--machine);background:var(--machine-soft)}
+@media (max-width:900px){.flow{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.filters{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.filters select,.filters input{width:auto;min-width:150px}
+.filters input[type=search]{flex:1 1 200px}
+table.t tr.sel td{background:var(--machine-soft)}
+table.t td.st{min-width:280px;color:var(--ink)}
+.opp-hi{color:var(--warn);font-weight:600}
+.rq{display:grid;grid-template-columns:300px minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:980px){.rq{grid-template-columns:minmax(0,1fr)}}
+.rqlist{display:grid;gap:4px;padding:6px;max-height:70vh;overflow:auto}
+.rqitem{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;padding:8px 10px;border-radius:4px;cursor:pointer;font-size:12.5px}
+.rqitem:hover{background:var(--surface-2)}
+.rqitem[aria-current="true"]{background:var(--machine-soft)}
+.rqitem b{color:var(--ink);font-weight:600}
+.rqitem .meta{grid-column:1/-1;font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+.checks{display:grid;gap:6px}
+.chk{display:grid;grid-template-columns:22px 130px minmax(0,1fr);gap:8px;align-items:baseline;font-size:13px;padding:6px 10px;border-radius:var(--radius);background:var(--surface-2)}
+.chk .ic{font:700 13px var(--f-mono)}
+.chk.pass .ic{color:var(--good)} .chk.fail .ic{color:var(--warn)} .chk.note .ic{color:var(--amber)}
+.chk b{font-weight:600}
+.gstat{font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;border-radius:100px}
+.gstat.admitted{background:var(--good-soft);color:var(--good)} .gstat.held{background:var(--warn-soft);color:var(--warn)} .gstat.draft{background:var(--surface-3);color:var(--muted)} .gstat.delivered{background:var(--machine-soft);color:var(--machine)}
+.tgt input{width:72px;padding:4px 6px}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--machine);border-radius:var(--radius);padding:12px 14px;display:grid;gap:6px;box-shadow:var(--shadow)}
+.card h4{font-family:var(--f-display);font-size:18px}
+.card .meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+.loopst{font-family:var(--f-mono);font-size:10.5px;padding:2px 7px;border-radius:100px;white-space:nowrap}
+.loopst.met{background:var(--good-soft);color:var(--good)} .loopst.open{background:var(--amber-soft);color:var(--amber)} .loopst.worse{background:var(--warn-soft);color:var(--warn)}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 12px;font-size:13px}
+.kv dt{font-family:var(--f-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding-top:2px}
+.kv dd{margin:0}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:640px){#rq-ed .savebar{position:static!important}}
+#dl-fallback textarea{width:100%;height:160px;font-family:var(--f-mono);font-size:11px}
+</style>
+</head><body>
+<header class="masthead"><div class="wrap">
+  <div class="id">
+    <div class="eyebrow">Customer 360 · requirements engineering semantic gateway → demand planning</div>
+    <h1>Demand gateway</h1>
+    <p class="lede">Turn under-served outcomes into demand requests that product and service owners can plan. Each request bundles desired outcomes, inherits the Outcome Playbook's Fix / Innovate / Protect / Simplify signal, and must pass the gateway's rules (traced, reviewed, evidenced, measurable, owned and unflagged) before it enters demand planning. Admitted requests are written back to the graph, so personas, jobs and the next study wave can see what is being done about each outcome.</p>
+  </div>
+  <div class="stat-rail" id="stats"></div>
+</div>
+<div class="wrap">
+  <div class="flow" aria-label="Round trip">
+    <div><b>Interview</b><span>Appreciative Inquiry codes jobs and outcomes</span></div>
+    <div><b>Measure</b><span>Job Study scores importance and satisfaction</span></div>
+    <div><b>Review</b><span>Business and compliance SMEs accept outcomes</span></div>
+    <div><b>Classify</b><span>Playbook rule: Fix, Innovate, Protect, Simplify</span></div>
+    <div class="here"><b>Gateway</b><span>Requests checked and admitted to demand planning</span></div>
+    <div><b>Re-measure</b><span>Next wave shows whether the outcome moved</span></div>
+  </div>
+  <nav class="tabbar" role="tablist" aria-label="View">
+    <button class="tabbtn" role="tab" id="tab-cands" aria-selected="true">Candidates</button>
+    <button class="tabbtn" role="tab" id="tab-reqs" aria-selected="false">Requests &amp; gateway</button>
+    <button class="tabbtn" role="tab" id="tab-port" aria-selected="false">Demand portfolio</button>
+    <button class="tabbtn" role="tab" id="tab-inputs" aria-selected="false">Inputs</button>
+  </nav>
+</div></header>
+<div class="bar"><div class="wrap"><div class="sourcebar" id="sourcebar"><span class="dot"></span><span>Connecting…</span></div></div></div>
+
+<main class="wrap">
+  <section id="v-cands"></section>
+  <section id="v-reqs" hidden></section>
+  <section id="v-port" hidden></section>
+  <section id="v-inputs" hidden></section>
+</main>
+<div class="toast" id="toast" hidden></div>
+
+<script src="../assets/ke-turtle.js"></script>
+<script src="../assets/c360-data.js"></script>
+<script src="peo-benchmark/data.js"></script>
+<script>
+(function(){
+  'use strict';
+  const C = window.C360, NS = C.NS, esc = C.esc, $ = id => document.getElementById(id);
+  const LS_RQ = 'c360-dg-requests', LS_UI = 'c360-dg-ui';
+  const REVIEW_URL = 'https://claude.ai/artifact/TiVNKQw9Wwge5hF2BdDSyn', PLAYBOOK_URL = 'https://claude.ai/artifact/JVvu5CmTykxwE77BPVpBx7';
+  const ACT = { fix:'Fix', innovate:'Innovate', protect:'Protect', simplify:'Simplify', keep:'Maintain' };
+  const EFFORT = { S:1, M:2, L:3, XL:5 };
+  const RULES = [
+    ['traceable', 'Traceable', 'Every outcome traces to a job with an executor, and to a service.'],
+    ['reviewed', 'Reviewed', 'Every outcome has a final Accept decision in the PEO Outcome Review.'],
+    ['evidenced', 'Evidenced', 'Every outcome shows unmet need: opportunity of 10 or more, or a significant gap.'],
+    ['measurable', 'Measurable', 'Acceptance criteria are written and every outcome has a target below its baseline.'],
+    ['owned', 'Owned', 'A service-line theme is accountable for delivery.'],
+    ['unflagged', 'Unflagged', 'No compliance risk flag is open on a targeted outcome.']
+  ];
+  let RES = null, M = null, RESULTS = null, REVIEW = null;
+  let store = C.lsJSON(LS_RQ, {});
+  const ui = Object.assign({ tab:'cands', act:'fixinn', theme:'', persona:'', q:'', sel:null, picked:[] }, C.lsJSON(LS_UI, {}));
+  const saveUI = () => C.lsSet(LS_UI, JSON.stringify(ui));
+  const saveStore = () => C.lsSet(LS_RQ, JSON.stringify(store));
+  const toast = m => { const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2800); };
+  const lc = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+  const today = () => new Date().toISOString().slice(0, 10);
+  const graphOf = r => C.GRAPH_BASE + 'demand/' + r.id;
+  const sc = o => RESULTS ? C.score(RESULTS, o.id) : null;
+  const rv = o => REVIEW && REVIEW.items ? REVIEW.items[o.id] : null;
+  const inShell = (()=>{ try { return window.top !== window && !!window.top.KE_SHELL; } catch(e){ return false; } })();
+  const openExt = url => window.open(url, '_blank', 'noopener');
+
+  function download(name, text, type){
+    try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: type || 'text/plain' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); toast('Downloaded ' + name); }
+    catch (e) { let f = $('dl-fallback'); if (!f) { f = document.createElement('div'); f.id = 'dl-fallback'; f.className = 'panel'; f.style.padding = '12px'; document.querySelector('main').prepend(f); }
+      f.innerHTML = '<p class="note">Downloads are blocked here. Select the text and copy it.</p><textarea readonly></textarea>'; const t = f.querySelector('textarea'); t.value = text; t.focus(); t.select(); }
+  }
+
+  // ── review status helpers ───────────────────────────────────────────
+  function reviewText(o){
+    const it = rv(o); if (!REVIEW) return '<span class="faint">no review imported</span>';
+    if (!it) return '<span class="faint">not in export</span>';
+    const fl = it.flags.length ? ` <span class="badge warn" title="${esc(it.flags.join(', '))}">⚑ ${it.flags.length}</span>` : '';
+    if (it.decision === 'accepted') return '<span class="badge good">accepted</span>' + fl;
+    if (it.decision === 'dropped') return '<span class="badge plain">dropped</span>' + fl;
+    return `<span class="badge amber">${esc((it.status || 'in review').toLowerCase())}</span>` + fl;
+  }
+  const outcomesList = () => Object.values(M.outcomes);
+  const executorsOf = o => (M.jobs[o.job] ? M.jobs[o.job].executors : []);
+
+  // ── requests: model, defaults, gateway ──────────────────────────────
+  function newId(){ return 'Request-' + new Date().toISOString().slice(2, 10).replace(/-/g, '') + '-' + Math.random().toString(36).slice(2, 6); }
+  function draftFrom(outcomeIris){
+    const os = outcomeIris.map(i => M.outcomes[i]).filter(Boolean);
+    const acts = os.map(o => (sc(o) || {}).act).filter(a => a && a !== 'keep');
+    const type = acts.length ? acts.sort((a, b) => acts.filter(x => x === b).length - acts.filter(x => x === a).length)[0] : 'fix';
+    const themes = os.map(o => o.theme).filter(Boolean);
+    const theme = themes.length ? themes.sort((a, b) => themes.filter(x => x === b).length - themes.filter(x => x === a).length)[0] : '';
+    const personas = [...new Set(os.flatMap(executorsOf))];
+    const services = [...new Set(os.flatMap(o => o.services))];
+    const r = { id: newId(), createdAt: today(), title: '', type, theme, personas, services, effort:'M', wave:'Next Job Study wave', closure: 0.5,
+      targets: os.map(o => ({ outcome: o.iri, closure: 0.5 })), statement:'', criteria:'', status:'draft' };
+    const tl = theme ? M.lbl(theme) : 'service line';
+    r.title = `${ACT[type]} · ${tl}: ${os.length === 1 ? lc(os[0].stmt).replace(/^(minimize|increase) /, '').slice(0, 70) : os.length + ' outcomes'}`;
+    r.statement = autoStatement(r); r.criteria = autoCriteria(r);
+    return r;
+  }
+  function targetCalc(t){
+    const o = M.outcomes[t.outcome], s = o && sc(o); if (!s) return { base: null, sat: null, target: null, value: 0 };
+    const above = Math.max(s.oPeo - 10, 0), closure = +t.closure || 0;
+    return { base: s.oPeo, sat: s.peo[1], target: +(s.oPeo - above * closure).toFixed(1), value: +(above * closure).toFixed(2) };
+  }
+  function totals(r){ const value = r.targets.reduce((a, t) => a + targetCalc(t).value, 0); return { value: +value.toFixed(2), priority: +(value / (EFFORT[r.effort] || 2)).toFixed(2) }; }
+  function autoStatement(r){
+    const ps = r.personas.map(p => (M.personas.find(x => x.iri === p) || {}).short).filter(Boolean);
+    const os = r.targets.map(t => M.outcomes[t.outcome]).filter(Boolean);
+    const verb = { fix:'close the gap that leaves PEO clients worse served', innovate:'create a new capability', protect:'sustain the advantage PEO clients have', simplify:'remove effort and cost' }[r.type] || 'improve';
+    return `The ${r.theme ? M.lbl(r.theme) : ''} service line shall ${verb} so that ${ps.length ? ps.join(', ') : 'clients'} can ${os.length === 1 ? lc(os[0].stmt) : 'achieve ' + os.length + ' desired outcomes (' + os.map(o => o.id).join(', ') + ')'}.`.replace(/\s+/g, ' ');
+  }
+  function autoCriteria(r){
+    return r.targets.map(t => { const o = M.outcomes[t.outcome], c = targetCalc(t); if (!o) return '';
+      return c.base !== null ? `${o.id}: opportunity for PEO clients falls from ${c.base.toFixed(1)} to ${c.target.toFixed(1)} or lower in ${r.wave || 'the next wave'}` : `${o.id}: measured and improved in ${r.wave || 'the next wave'}`; }).filter(Boolean).join('\n');
+  }
+  function gateway(r){
+    const os = r.targets.map(t => M.outcomes[t.outcome]).filter(Boolean), res = {};
+    const miss = (list, f) => list.filter(f).map(o => o.id);
+    let m;
+    m = os.length ? miss(os, o => !o.job || !executorsOf(o).length || !o.services.length) : ['no outcomes'];
+    res.traceable = [!m.length, m.length ? `Missing job, executor or service: ${m.join(', ')}.` : `${os.length} outcome${os.length === 1 ? '' : 's'} trace to jobs, executors and services.`];
+    if (!REVIEW) res.reviewed = [false, 'Import the PEO Outcome Review export on the Inputs tab.'];
+    else { m = miss(os, o => !(rv(o) && rv(o).decision === 'accepted')); res.reviewed = [!m.length, m.length ? `Not accepted in review: ${m.join(', ')}.` : 'Every outcome is accepted in the review.']; }
+    if (!RESULTS) res.evidenced = [false, 'No study scores loaded.'];
+    else { m = miss(os, o => { const s = sc(o); return !s || !(s.oPeo >= 10 || s.sig); }); res.evidenced = [!m.length, (m.length ? `No unmet need shown for ${m.join(', ')}.` : 'Every outcome shows unmet need.') + (RESULTS.kind === 'example' ? ' Based on Job Study example data — re-run when survey results land.' : ''), RESULTS.kind === 'example'];
+    }
+    const bad = r.targets.filter(t => { const c = targetCalc(t); return c.base === null || !(c.target < c.base); }).map(t => (M.outcomes[t.outcome] || {}).id);
+    res.measurable = [!!(r.criteria || '').trim() && !bad.length, !(r.criteria || '').trim() ? 'Write acceptance criteria.' : bad.length ? `Set a gap closure above zero for ${bad.join(', ')}.` : 'Criteria written and every outcome has a target.'];
+    res.owned = [!!r.theme, r.theme ? `Owned by ${M.lbl(r.theme)}.` : 'Choose the accountable service-line theme.'];
+    if (!REVIEW) res.unflagged = [false, 'Needs the review export to check compliance flags.'];
+    else { m = miss(os, o => { const it = rv(o); return it && it.flags.length && it.decision !== 'accepted'; }); res.unflagged = [!m.length, m.length ? `Open compliance flags on ${m.join(', ')}.` : 'No open compliance flags.']; }
+    const passed = RULES.every(([k]) => res[k][0]);
+    return { checks: res, passed };
+  }
+
+  // ── Turtle ──────────────────────────────────────────────────────────
+  function requestTTL(r, status){
+    const T = C.tIri, L = C.tl, R = NS.dpr + r.id, g = gateway(r), tot = totals(r), out = [];
+    const blk = (s, types, props) => out.push(`${T(s)} a ${types.join(', ')} ;\n    ${props.filter(Boolean).join(' ;\n    ')} .\n`);
+    const title = C.expand(r.title || r.id);
+    blk(R, ['owl:NamedIndividual', 'dp:demand-request'], [`rdfs:label ${L(title)}`, `skos:prefLabel ${L(title)}`, title !== r.title ? `skos:altLabel ${L(r.title)}` : '',
+      `dp:hasRequestIdentifier ${L(r.id, null)}`, `dp:hasDemandType dtype:${r.type}`, r.theme ? `dp:isOwnedByTheme ${T(r.theme)}` : '',
+      `dp:hasGatewayStatus gstat:${status}`, r.statement ? `dp:hasRequirementStatement ${L(r.statement)}` : '',
+      ...(r.criteria || '').split('\n').map(x => x.trim()).filter(Boolean).map(x => `dp:hasAcceptanceCriterion ${L(x)}`),
+      `dp:hasValueScore "${tot.value}"^^xsd:decimal`, `dp:hasPriorityScore "${tot.priority}"^^xsd:decimal`, `dp:hasEffortEstimate ${L(r.effort, null)}`,
+      r.wave ? `dp:hasRemeasureWave ${L(r.wave)}` : '', RESULTS ? `dp:hasEvidenceSource ${L(RESULTS.kind === 'example' ? 'Job Study example data' : RESULTS.name)}` : '',
+      r.personas.length ? 'dp:servesPersona ' + r.personas.map(T).join(', ') : '', r.services.length ? 'dp:changesService ' + r.services.map(T).join(', ') : '',
+      r.targets.length ? 'dp:hasOutcomeTarget ' + r.targets.map((t, i) => T(R + '-Target-' + (i + 1))).join(', ') : '',
+      'dp:hasGatewayCheck ' + RULES.map(([k]) => T(R + '-Check-' + k.charAt(0).toUpperCase() + k.slice(1))).join(', '),
+      `dcterms:created "${r.createdAt || today()}"^^xsd:date`]);
+    r.targets.forEach((t, i) => { const c = targetCalc(t), o = M.outcomes[t.outcome];
+      blk(R + '-Target-' + (i + 1), ['owl:NamedIndividual', 'dp:outcome-target'], [`rdfs:label ${L('Target for ' + (o ? o.id : 'outcome') + ', ' + r.id)}`, `dp:targetsOutcome ${T(t.outcome)}`,
+        c.base !== null ? `dp:hasBaselineOpportunity "${c.base}"^^xsd:decimal` : '', c.sat !== null ? `dp:hasBaselineSatisfaction "${c.sat}"^^xsd:decimal` : '',
+        c.target !== null ? `dp:hasTargetOpportunity "${c.target}"^^xsd:decimal` : '', `dp:hasExpectedGapClosure "${(+t.closure || 0).toFixed(2)}"^^xsd:decimal`]); });
+    RULES.forEach(([k, label]) => { const [ok, finding] = g.checks[k];
+      blk(R + '-Check-' + k.charAt(0).toUpperCase() + k.slice(1), ['owl:NamedIndividual', 'dp:gateway-check'], [`rdfs:label ${L(label + ' check, ' + r.id)}`, `dp:appliesGatewayRule grule:${k}`,
+        `dp:isCheckPassed "${ok ? 'true' : 'false'}"^^xsd:boolean`, `dp:hasCheckFinding ${L(finding)}`]); });
+    return `# Demand request ${r.id} — KE Workbench requirements gateway\n# Named graph: <${graphOf(r)}>\n` + C.prefixBlock() + '\n' + out.join('\n');
+  }
+  async function submit(r){
+    const g = gateway(r), status = g.passed ? 'admitted' : 'held';
+    r.status = status; r.checkedAt = Date.now(); store[r.id] = r; saveStore();
+    const ttl = requestTTL(r, status);
+    C.saveLocalGraph(graphOf(r), ttl, { kind:'demand', title:r.id });
+    if (RES.online) {
+      try { await C.putGraph(graphOf(r), ttl); r.publishedAt = Date.now(); store[r.id] = r; saveStore(); C.markPublished(graphOf(r));
+        toast(g.passed ? `${r.id} admitted to demand planning` : `${r.id} held at the gateway — see the failed checks`); }
+      catch (e) { toast(e.message); }
+    } else toast((g.passed ? 'Admitted' : 'Held') + ' — saved in this browser; publish once GraphDB is reachable.');
+    await reload();
+  }
+  async function markDelivered(r){
+    r.status = 'delivered'; store[r.id] = r; saveStore();
+    const ttl = requestTTL(r, 'delivered'); C.saveLocalGraph(graphOf(r), ttl, { kind:'demand', title:r.id });
+    if (RES.online) { try { await C.putGraph(graphOf(r), ttl); C.markPublished(graphOf(r)); } catch (e) { toast(e.message); } }
+    toast(`${r.id} marked delivered — awaiting re-measurement`); await reload();
+  }
+  async function removeReq(r){
+    if (!confirm(`Delete ${r.id}?` + (r.publishedAt ? '\n\nIt will also be removed from GraphDB.' : ''))) return;
+    if (r.publishedAt && RES.online) { try { await C.deleteGraph(graphOf(r)); } catch (e) { toast(e.message); return; } }
+    delete store[r.id]; saveStore(); C.removeLocalGraph(graphOf(r)); ui.sel = null; saveUI(); await reload();
+  }
+  function fromModel(d){
+    const status = C.local(d.status) || 'draft';
+    return { id: d.id, createdAt: today(), title: d.label, type: C.local(d.type) || 'fix', theme: d.theme, personas: d.personas, services: d.services, effort: d.effort || 'M',
+      wave: d.wave, targets: d.targets.map(t => ({ outcome: t.outcome, closure: t.closure || 0.5 })), statement: d.statement, criteria: d.criteria.join('\n'), status, publishedAt: 1 };
+  }
+  function allRequests(){
+    const list = Object.values(store);
+    Object.values(M.demand).forEach(d => { if (!store[d.id]) list.push(Object.assign(fromModel(d), { _remote: true })); });
+    return list;
+  }
+
+  // ── stats & status ──────────────────────────────────────────────────
+  function renderStats(){
+    const os = outcomesList(), cls = {}; os.forEach(o => { const s = sc(o); if (s) cls[s.act] = (cls[s.act] || 0) + 1; });
+    const reqs = allRequests(), adm = reqs.filter(r => r.status === 'admitted' || r.status === 'delivered').length;
+    const covered = new Set(reqs.filter(r => r.status !== 'draft').flatMap(r => r.targets.map(t => t.outcome))).size;
+    $('stats').innerHTML = [['warn', cls.fix || 0, 'Fix'], ['machine', cls.innovate || 0, 'Innovate'], ['', reqs.length, 'Requests'], ['good', adm, 'Admitted'], ['', covered, 'Outcomes in demand']]
+      .map(([c, n, l]) => `<div class="stat ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+  }
+  function renderStatus(){
+    const sb = $('sourcebar'); sb.className = 'sourcebar ' + (RES.source === 'graphdb' ? 'live' : 'off');
+    sb.innerHTML = `<span class="dot"></span><span>${C.statusHTML(RES)} · scores: ${RESULTS ? (RESULTS.kind === 'example' ? '<b>Job Study example data</b>' : esc(RESULTS.name)) : 'none'} · review: ${REVIEW ? esc(REVIEW.name) : '<b>not imported</b>'}</span><span class="acts"><button class="btn sm" id="reload" type="button">Reload</button></span>`;
+    $('reload').onclick = () => reload();
+  }
+
+  // ── Candidates tab ──────────────────────────────────────────────────
+  function renderCands(){
+    const el = $('v-cands');
+    const themes = Object.values(M.themes).sort((a, b) => a.label.localeCompare(b.label));
+    const q = ui.q.toLowerCase(), picked = new Set(ui.picked);
+    const inDemand = new Set(allRequests().filter(r => r.status !== 'draft').flatMap(r => r.targets.map(t => t.outcome)));
+    const rows = outcomesList().map(o => ({ o, s: sc(o) })).filter(({ o, s }) => {
+      if (!s) return ui.act === 'all';
+      if (ui.act === 'fixinn' && !['fix', 'innovate'].includes(s.act)) return false;
+      if (!['all', 'fixinn'].includes(ui.act) && s.act !== ui.act) return false;
+      if (ui.theme && o.theme !== ui.theme) return false;
+      if (ui.persona && !executorsOf(o).includes(ui.persona)) return false;
+      if (q && ![o.id, o.stmt, M.lbl(o.theme)].join(' ').toLowerCase().includes(q)) return false;
+      return true;
+    }).sort((a, b) => (b.s ? b.s.oPeo : 0) - (a.s ? a.s.oPeo : 0));
+    el.innerHTML = `
+      ${RESULTS && RESULTS.kind === 'example' ? '<div class="callout" style="margin-bottom:14px"><b>Example scores.</b> Classification uses the Job Study’s generated example data. Requests built now test the process; their evidence check is marked accordingly and should be re-run when survey results are loaded in the Job Study.</div>' : ''}
+      <div class="panel">
+        <div class="filters">
+          <select id="c-act" aria-label="Action">${[['fixinn','Fix and Innovate'],['fix','Fix'],['innovate','Innovate'],['protect','Protect'],['simplify','Simplify'],['keep','Maintain'],['all','All outcomes']].map(([k, l]) => `<option value="${k}"${ui.act === k ? ' selected' : ''}>${l}</option>`).join('')}</select>
+          <select id="c-theme" aria-label="Theme"><option value="">All themes</option>${themes.map(t => `<option value="${esc(t.iri)}"${ui.theme === t.iri ? ' selected' : ''}>${esc(t.label)}</option>`).join('')}</select>
+          <select id="c-persona" aria-label="Persona"><option value="">All personas</option>${M.personas.map(p => `<option value="${esc(p.iri)}"${ui.persona === p.iri ? ' selected' : ''}>${esc(p.id)} · ${esc(p.short)}</option>`).join('')}</select>
+          <input type="search" id="c-q" placeholder="Search outcomes…" value="${esc(ui.q)}" aria-label="Search outcomes">
+          <span class="note mono">${rows.length} outcomes · ${picked.size} selected</span>
+          <span style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="c-bytheme" type="button" title="One request per theme for the Fix outcomes shown">One request per theme</button><button class="btn primary" id="c-make" type="button" ${picked.size ? '' : 'disabled'}>Create request from ${picked.size || ''} selected</button></span>
+        </div>
+        <div class="scroll"><table class="t"><thead><tr><th><input type="checkbox" id="c-all" aria-label="Select all shown"></th><th>Outcome</th><th>Desired outcome</th><th>Theme</th><th>Job</th><th class="num">Opp PEO</th><th class="num">Opp non-PEO</th><th class="num">Gap ± 95%</th><th>Action</th><th>Review</th><th>Demand</th></tr></thead><tbody>
+        ${rows.slice(0, 400).map(({ o, s }) => `<tr class="${picked.has(o.iri) ? 'sel' : ''}"><td><input type="checkbox" data-pick="${esc(o.iri)}" ${picked.has(o.iri) ? 'checked' : ''} aria-label="Select ${esc(o.id)}"></td>
+          <td class="mono">${esc(o.id)}</td><td class="st">${esc(o.stmt)}</td><td>${esc(o.theme ? M.lbl(o.theme) : '—')}</td><td class="mono small">${esc(M.jobs[o.job] ? M.jobs[o.job].id : '—')}</td>
+          <td class="num ${s && s.oPeo >= 12 ? 'opp-hi' : ''}">${s ? s.oPeo.toFixed(1) : '—'}</td><td class="num">${s ? s.oNon.toFixed(1) : '—'}</td>
+          <td class="num">${s ? `${s.gap > 0 ? '+' : ''}${s.gap.toFixed(1)} <span class="faint">± ${s.ci.toFixed(1)}</span>` : '—'}</td>
+          <td>${s ? `<span class="act act-${s.act}">${ACT[s.act]}</span>` : '—'}</td><td>${reviewText(o)}</td><td>${inDemand.has(o.iri) ? '<span class="badge machine">in demand</span>' : ''}</td></tr>`).join('') || '<tr><td colspan="11" class="empty">No outcomes match.</td></tr>'}
+        </tbody></table></div></div>
+      <p class="note" style="margin-top:10px">Action follows the PEO Outcome Playbook: Fix when PEO clients are under-served (≥ 12) and significantly worse off than non-PEO employers; Innovate when both are under-served; Protect when only non-PEO employers are under-served and the gap is significant; Simplify when PEO satisfaction exceeds importance. <a href="${PLAYBOOK_URL}" target="_blank" rel="noopener">Open the Playbook ↗</a></p>`;
+    $('c-act').onchange = e => { ui.act = e.target.value; saveUI(); renderCands(); };
+    $('c-theme').onchange = e => { ui.theme = e.target.value; saveUI(); renderCands(); };
+    $('c-persona').onchange = e => { ui.persona = e.target.value; saveUI(); renderCands(); };
+    $('c-q').oninput = e => { ui.q = e.target.value; saveUI(); const p = e.target.selectionStart; renderCands(); const n = $('c-q'); n.focus(); n.setSelectionRange(p, p); };
+    el.querySelectorAll('[data-pick]').forEach(cb => cb.onchange = () => { const s = new Set(ui.picked); cb.checked ? s.add(cb.dataset.pick) : s.delete(cb.dataset.pick); ui.picked = [...s]; saveUI(); renderCands(); });
+    $('c-all').onchange = e => { const s = new Set(ui.picked); rows.forEach(({ o }) => e.target.checked ? s.add(o.iri) : s.delete(o.iri)); ui.picked = [...s]; saveUI(); renderCands(); };
+    $('c-make').onclick = () => { const r = draftFrom(ui.picked); store[r.id] = r; saveStore(); ui.picked = []; ui.sel = r.id; saveUI(); activate('reqs'); toast(`Drafted ${r.id}`); };
+    $('c-bytheme').onclick = () => {
+      const fix = rows.filter(({ s }) => s && s.act === 'fix'), by = {};
+      fix.forEach(({ o }) => { (by[o.theme] = by[o.theme] || []).push(o.iri); });
+      const keys = Object.keys(by); if (!keys.length) { toast('No Fix outcomes in the current view.'); return; }
+      keys.forEach(k => { const r = draftFrom(by[k]); store[r.id] = r; ui.sel = r.id; }); saveStore(); saveUI(); activate('reqs'); toast(`Drafted ${keys.length} request${keys.length === 1 ? '' : 's'}`);
+    };
+  }
+
+  // ── Requests tab ────────────────────────────────────────────────────
+  function renderReqs(){
+    const el = $('v-reqs'), list = allRequests().sort((a, b) => totals(b).priority - totals(a).priority);
+    if (ui.sel && !store[ui.sel]) { const rm = list.find(x => x.id === ui.sel && x._remote); if (rm) { delete rm._remote; store[rm.id] = rm; saveStore(); } }
+    const r = store[ui.sel];
+    el.innerHTML = `<div class="rq">
+      <aside class="panel"><div class="ph"><h3>Requests</h3><span class="note">${list.length}</span></div>
+        <div class="rqlist">${list.map(x => `<button class="rqitem" data-id="${esc(x.id)}" aria-current="${x.id === ui.sel}"><b>${esc(x.title || x.id)}</b><span class="gstat ${x.status}">${esc(x.status)}</span><span class="meta">${esc(x.id)} · ${x.targets.length} outcome${x.targets.length === 1 ? '' : 's'} · priority ${totals(x).priority}</span></button>`).join('') || '<p class="empty" style="padding:10px">No requests yet. Select outcomes on the Candidates tab.</p>'}</div></aside>
+      <div id="rq-ed">${r ? editorHTML(r) : '<div class="panel"><div class="pb"><h2>No request selected</h2><p class="muted">Pick a request, or select outcomes on the Candidates tab and create one.</p></div></div>'}</div></div>`;
+    el.querySelectorAll('.rqitem').forEach(b => b.onclick = () => { ui.sel = b.dataset.id; saveUI(); renderReqs(); });
+    if (r) wireEditor(r);
+  }
+  function editorHTML(r){
+    const g = gateway(r), tot = totals(r);
+    const themes = Object.values(M.themes).sort((a, b) => a.label.localeCompare(b.label));
+    return `<div class="panel"><div class="ph"><h2>${esc(r.id)}</h2><span class="gstat ${r.status}">${esc(r.status)}</span></div>
+      <div class="pb">
+        <div class="grid4">
+          <label class="f spanall">Title<input type="text" id="r-title" value="${esc(r.title)}"></label>
+          <label class="f">Demand type<select id="r-type">${['fix','innovate','protect','simplify'].map(k => `<option value="${k}"${r.type === k ? ' selected' : ''}>${ACT[k]}</option>`).join('')}</select></label>
+          <label class="f">Owner (theme)<select id="r-theme"><option value="">Choose…</option>${themes.map(t => `<option value="${esc(t.iri)}"${r.theme === t.iri ? ' selected' : ''}>${esc(t.label)}</option>`).join('')}</select></label>
+          <label class="f">Effort<select id="r-effort">${Object.keys(EFFORT).map(k => `<option${r.effort === k ? ' selected' : ''}>${k}</option>`).join('')}</select></label>
+          <label class="f">Re-measure in<input type="text" id="r-wave" value="${esc(r.wave || '')}"></label>
+          <label class="f spanall">Requirement statement<textarea id="r-stmt" rows="2">${esc(r.statement || '')}</textarea></label>
+          <label class="f spanall">Acceptance criteria (one per line)<textarea id="r-crit" rows="${Math.max(2, r.targets.length)}">${esc(r.criteria || '')}</textarea></label>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn sm" id="r-autos" type="button">Redraft statement</button><button class="btn sm" id="r-autoc" type="button">Redraft criteria from targets</button></div>
+        <dl class="kv"><dt>Serves</dt><dd>${r.personas.map(p => { const pp = M.personas.find(x => x.iri === p); return `<span class="tag">${esc(pp ? pp.id + ' · ' + pp.short : C.local(p))}</span>`; }).join(' ') || '—'}</dd>
+          <dt>Changes services</dt><dd class="small">${r.services.map(s => esc(M.lbl(s))).join(' · ') || '—'}</dd>
+          <dt>Value · priority</dt><dd><b>${tot.value}</b> opportunity points closed · priority <b>${tot.priority}</b> <span class="note">(value ÷ effort weight ${EFFORT[r.effort]})</span></dd></dl>
+      </div></div>
+      <div class="panel" style="margin-top:14px"><div class="ph"><h3>Outcome targets</h3><span class="note">Target = baseline − (opportunity above 10 × share of the gap closed)</span></div>
+        <div class="scroll"><table class="t"><thead><tr><th>Outcome</th><th>Desired outcome</th><th class="num">Baseline opp</th><th class="num">Sat</th><th>Gap closed</th><th class="num">Target opp</th><th class="num">Value</th><th>Review</th><th></th></tr></thead><tbody>
+        ${r.targets.map((t, i) => { const o = M.outcomes[t.outcome], c = targetCalc(t); return `<tr><td class="mono">${esc(o ? o.id : '?')}</td><td class="st">${esc(o ? o.stmt : C.local(t.outcome))}</td>
+          <td class="num">${c.base !== null ? c.base.toFixed(1) : '—'}</td><td class="num">${c.sat !== null ? c.sat.toFixed(1) : '—'}</td>
+          <td class="tgt"><select data-cl="${i}" aria-label="Share of the gap closed for ${esc(o ? o.id : '')}">${[0.25, 0.5, 0.75, 1].map(v => `<option value="${v}"${+t.closure === v ? ' selected' : ''}>${v * 100}%</option>`).join('')}</select></td>
+          <td class="num">${c.target !== null ? c.target.toFixed(1) : '—'}</td><td class="num">${c.value}</td><td>${o ? reviewText(o) : ''}</td>
+          <td><button class="btn sm danger" data-rm="${i}" type="button" aria-label="Remove ${esc(o ? o.id : '')}">✕</button></td></tr>`; }).join('')}
+        </tbody></table></div></div>
+      <div class="panel" style="margin-top:14px"><div class="ph"><h3>Gateway checks</h3><span class="gstat ${g.passed ? 'admitted' : 'held'}">${g.passed ? 'would be admitted' : 'would be held'}</span></div>
+        <div class="pb checks">${RULES.map(([k, l, d]) => { const [ok, f, note] = g.checks[k]; return `<div class="chk ${ok ? (note ? 'note' : 'pass') : 'fail'}" title="${esc(d)}"><span class="ic">${ok ? (note ? '!' : '✓') : '✕'}</span><b>${l}</b><span>${esc(f)}</span></div>`; }).join('')}
+          ${!REVIEW ? `<div class="callout machine">Reviewed and Unflagged need the latest export from the <a href="${REVIEW_URL}" target="_blank" rel="noopener">PEO Outcome Review ↗</a>. Use its <b>Export CSV</b> button, then import the file on the Inputs tab.</div>` : ''}
+        </div></div>
+      <div class="savebar" style="position:sticky;bottom:0;margin-top:14px;background:var(--surface);border:1px solid var(--line);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <span class="note" style="margin-right:auto">Graph ${esc(graphOf(r))}${r.publishedAt ? ' · published' : ''}</span>
+        <button class="btn" id="r-ttl" type="button">Export Turtle</button>
+        <button class="btn danger" id="r-del" type="button">Delete</button>
+        ${r.status === 'admitted' ? '<button class="btn" id="r-done" type="button">Mark delivered</button>' : ''}
+        <button class="btn primary" id="r-submit" type="button">Run gateway &amp; ${RES.online ? 'publish' : 'save'}</button></div>`;
+  }
+  function wireEditor(r){
+    const upd = (id, key, ev, after) => { const f = $(id); if (!f) return; f.addEventListener(ev || 'input', () => { r[key] = f.value; if (r.status !== 'draft') r.status = 'draft'; store[r.id] = r; saveStore(); if (after) after(); }); };
+    const refresh = () => { const y = window.scrollY; renderReqs(); window.scrollTo(0, y); };
+    upd('r-title', 'title'); upd('r-stmt', 'statement'); upd('r-crit', 'criteria', 'change', refresh); upd('r-wave', 'wave');
+    upd('r-type', 'type', 'change', refresh); upd('r-theme', 'theme', 'change', refresh); upd('r-effort', 'effort', 'change', refresh);
+    $('r-autos').onclick = () => { r.statement = autoStatement(r); store[r.id] = r; saveStore(); refresh(); };
+    $('r-autoc').onclick = () => { r.criteria = autoCriteria(r); store[r.id] = r; saveStore(); refresh(); };
+    document.querySelectorAll('[data-cl]').forEach(s => s.onchange = () => { r.targets[+s.dataset.cl].closure = +s.value; r.status = 'draft'; store[r.id] = r; saveStore(); refresh(); });
+    document.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { r.targets.splice(+b.dataset.rm, 1); r.status = 'draft'; store[r.id] = r; saveStore(); refresh(); });
+    $('r-ttl').onclick = () => download(r.id + '.ttl', requestTTL(r, gateway(r).passed ? 'admitted' : 'held'), 'text/turtle');
+    $('r-del').onclick = () => removeReq(r);
+    $('r-submit').onclick = () => submit(r);
+    const d = $('r-done'); if (d) d.onclick = () => markDelivered(r);
+  }
+
+  // ── Portfolio tab (the round trip back) ─────────────────────────────
+  function renderPort(){
+    const el = $('v-port'), reqs = allRequests().filter(r => r.status === 'admitted' || r.status === 'delivered').sort((a, b) => totals(b).priority - totals(a).priority);
+    const byTheme = {}; reqs.forEach(r => { (byTheme[r.theme] = byTheme[r.theme] || []).push(r); });
+    const loop = (r, t) => { // compare the request's baseline with the scores loaded now
+      const d = M.demand[NS.dpr + r.id], rec = d && d.targets.find(x => x.outcome === t.outcome), o = M.outcomes[t.outcome], s = o && sc(o);
+      const base = rec ? rec.base : targetCalc(t).base, target = rec ? rec.target : targetCalc(t).target;
+      if (!s || base === null) return ['open', 'not re-measured'];
+      if (s.oPeo <= target) return ['met', `now ${s.oPeo.toFixed(1)} ≤ ${target.toFixed(1)}`];
+      if (s.oPeo > base) return ['worse', `now ${s.oPeo.toFixed(1)} > ${base.toFixed(1)}`];
+      return ['open', `now ${s.oPeo.toFixed(1)}, target ${target.toFixed(1)}`];
+    };
+    el.innerHTML = `
+      <div class="section"><div class="section-head"><h2>Demand portfolio</h2><span class="count">${reqs.length} admitted or delivered</span><span class="def">Ranked by priority. Each target compares the baseline recorded at the gateway with the scores loaded in the Job Study now, so a new survey wave shows which outcomes moved.</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"><button class="btn primary" id="p-csv" type="button">Export to demand planning (CSV)</button><button class="btn" id="p-ttl" type="button">Export portfolio Turtle</button></div>
+        ${reqs.length ? Object.keys(byTheme).map(k => `<h3 style="margin:14px 0 8px">${esc(k ? M.lbl(k) : 'No owner')}</h3><div class="board">${byTheme[k].map(r => { const tot = totals(r);
+          return `<div class="card"><div class="meta"><span class="gstat ${r.status}">${esc(r.status)}</span><span class="act act-${r.type}">${ACT[r.type]}</span><span class="tag">priority ${tot.priority}</span><span class="tag">effort ${esc(r.effort)}</span></div>
+            <h4>${esc(r.title)}</h4><p class="small muted">${esc(r.statement || '')}</p>
+            <div style="display:grid;gap:4px">${r.targets.map(t => { const o = M.outcomes[t.outcome], [st, txt] = loop(r, t); return `<div class="small" style="display:flex;gap:6px;align-items:baseline;flex-wrap:wrap"><span class="mono">${esc(o ? o.id : '?')}</span><span class="loopst ${st}">${st}</span><span class="faint">${esc(txt)}</span></div>`; }).join('')}</div>
+            <div class="links"><button class="btn sm" data-open="${esc(r.id)}" type="button">Open</button></div></div>`; }).join('')}</div>`).join('')
+          : '<p class="empty">Nothing admitted yet. Requests that pass every gateway check appear here.</p>'}
+      </div>`;
+    el.querySelectorAll('[data-open]').forEach(b => b.onclick = () => { ui.sel = b.dataset.open; saveUI(); activate('reqs'); });
+    $('p-csv').onclick = () => {
+      if (!reqs.length) { toast('Nothing admitted yet.'); return; }
+      const q = v => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+      const rows = [['Request ID','Summary','Demand type','Owner theme','Gateway status','Priority score','Value score','Effort','Requirement statement','Acceptance criteria','Outcome IDs','Personas','Services','Re-measure','Evidence source','Graph IRI']];
+      reqs.forEach(r => { const t = totals(r); rows.push([r.id, r.title, ACT[r.type], r.theme ? M.lbl(r.theme) : '', r.status, t.priority, t.value, r.effort, r.statement, (r.criteria || '').replace(/\n/g, ' | '),
+        r.targets.map(x => (M.outcomes[x.outcome] || {}).id).join('; '), r.personas.map(p => (M.personas.find(x => x.iri === p) || {}).short || C.local(p)).join('; '),
+        r.services.map(s => M.lbl(s)).join('; '), r.wave, RESULTS ? (RESULTS.kind === 'example' ? 'Job Study example data' : RESULTS.name) : '', graphOf(r)]); });
+      download('Demand_portfolio_' + today() + '.csv', rows.map(x => x.map(q).join(',')).join('\n'), 'text/csv');
+    };
+    $('p-ttl').onclick = () => download('Demand_portfolio_' + today() + '.ttl', reqs.map(r => requestTTL(r, r.status)).join('\n'), 'text/turtle');
+  }
+
+  // ── Inputs tab ──────────────────────────────────────────────────────
+  function renderInputs(){
+    const el = $('v-inputs'), items = REVIEW ? Object.values(REVIEW.items) : [];
+    const cnt = k => items.filter(i => i.decision === k).length;
+    el.innerHTML = `<div class="grid2" style="align-items:start">
+      <div class="panel"><div class="ph"><h3>Business &amp; compliance review</h3></div><div class="pb">
+        <p class="small">Reviews happen in the shared <a href="${REVIEW_URL}" target="_blank" rel="noopener">PEO Outcome Review ↗</a>, where SMEs sign in. Export its CSV and import it here; the gateway uses each outcome's final decision and compliance flags.</p>
+        ${REVIEW ? `<dl class="kv"><dt>File</dt><dd>${esc(REVIEW.name)}</dd><dt>Imported</dt><dd>${new Date(REVIEW.at).toLocaleString()}</dd><dt>Items</dt><dd>${items.length} · ${cnt('accepted')} accepted · ${cnt('dropped')} dropped · ${items.filter(i => !i.decision).length} without a final decision · ${items.filter(i => i.flags.length).length} flagged</dd></dl>` : '<p class="empty">No review export imported yet.</p>'}
+        <div class="links"><label class="btn primary filebtn">Import review CSV<input type="file" id="rv-file" accept=".csv,text/csv"></label>${REVIEW ? '<button class="btn danger" id="rv-clear" type="button">Clear</button>' : ''}<a class="btn" href="${REVIEW_URL}" target="_blank" rel="noopener">Open review ↗</a></div>
+      </div></div>
+      <div class="panel"><div class="ph"><h3>Study scores</h3></div><div class="pb">
+        <p class="small">Scores come from the Job Study. Load a survey results file there (columns <span class="mono">outcome_id, segment, n, importance, satisfaction</span>) and the gateway, Buyer Personas &amp; Jobs and the portfolio's re-measure check all use it.</p>
+        <dl class="kv"><dt>Source</dt><dd>${RESULTS ? (RESULTS.kind === 'example' ? 'Job Study example data (not survey results)' : esc(RESULTS.name)) : 'none'}</dd>${RESULTS && RESULTS.at ? `<dt>Loaded</dt><dd>${new Date(RESULTS.at).toLocaleString()}</dd>` : ''}</dl>
+        <div class="links"><button class="btn" id="go-study" type="button">Open the Job Study</button><a class="btn" href="${PLAYBOOK_URL}" target="_blank" rel="noopener">Open the Playbook ↗</a></div>
+      </div></div>
+      <div class="panel" style="grid-column:1/-1"><div class="ph"><h3>What the gateway writes</h3></div><div class="pb">
+        <p class="small">Each request is one named graph, <span class="mono">${esc(C.GRAPH_BASE)}demand/{request}</span>, holding a <span class="mono">dp:demand-request</span>, its <span class="mono">dp:outcome-target</span>s (baseline, target, gap closed) and one <span class="mono">dp:gateway-check</span> per rule, typed against the demand-planning ontology and vocabularies loaded with the Customer 360 schema. Buyer Personas &amp; Jobs reads them back: outcomes show the requests that target them, and personas list the requests that serve them. The CSV export carries the same fields for a demand-planning or backlog system.</p>
+      </div></div></div>`;
+    $('rv-file').onchange = e => { const f = e.target.files[0]; if (!f) return; const rd = new FileReader();
+      rd.onload = () => { try { REVIEW = C.importReviewCSV(rd.result, f.name); toast(`Imported ${Object.keys(REVIEW.items).length} review items`); refreshAll(); } catch (err) { toast(err.message); } }; rd.readAsText(f); };
+    const c = $('rv-clear'); if (c) c.onclick = () => { C.clearReview(); REVIEW = null; refreshAll(); };
+    $('go-study').onclick = () => { if (inShell) window.top.postMessage({ type:'ke-open', url: new URL('peo-benchmark/study.html', location.href).pathname }, '*'); else window.open('peo-benchmark/study.html', '_blank'); };
+  }
+
+  // ── tabs & boot ─────────────────────────────────────────────────────
+  const VIEWS = { cands: renderCands, reqs: renderReqs, port: renderPort, inputs: renderInputs };
+  function activate(tab){ ui.tab = tab; saveUI(); Object.keys(VIEWS).forEach(k => { $('tab-' + k).setAttribute('aria-selected', String(k === tab)); $('v-' + k).hidden = k !== tab; }); VIEWS[tab](); }
+  Object.keys(VIEWS).forEach(k => $('tab-' + k).onclick = () => activate(k));
+  function refreshAll(){ renderStatus(); renderStats(); activate(ui.tab); }
+  async function reload(){ RESULTS = C.studyResults(); REVIEW = C.reviewState(); RES = await C.load(); M = RES.model; refreshAll(); }
+  window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings') reload(); });
+  window.addEventListener('storage', e => { if ([C.LS.study, C.LS.review].includes(e.key)) reload(); });
+  reload();
+})();
+</script>
+</body></html>

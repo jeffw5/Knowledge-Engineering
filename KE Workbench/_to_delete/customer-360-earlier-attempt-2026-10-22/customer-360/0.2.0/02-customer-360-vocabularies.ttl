@@ -1,0 +1,1033 @@
+# Customer 360 vocabularies
+# Named graph: https://www.insperity.com/graph/outcome-benchmark/vocabularies  ·  Customer 360 release 0.2.0  ·  Draft
+# Controlled vocabularies used by the Customer 360 tools.
+# Generated 2026-10-22T19:46:03Z by gen_customer360.py · Standards: Semantic Governance v1.9 (Draft), Part III
+
+@prefix rdf:             <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:            <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:             <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:             <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:            <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:             <http://purl.org/dc/terms/> .
+@prefix vaem:            <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:            <http://purl.org/vocab/vann/> .
+@prefix jtbd:            <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix rg:              <https://www.insperity.com/ontology/requirements-gateway/> .
+@prefix ob:              <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix core:            <https://www.insperity.com/ontology/core/> .
+@prefix jobvoc:          <https://www.insperity.com/vocabulary/core-job/> .
+@prefix personavoc:      <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix processvoc:      <https://www.insperity.com/vocabulary/core-process/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix measurevoc:      <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix decisionvoc:     <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix theme:           <https://www.insperity.com/vocabulary/benchmark-theme/> .
+@prefix metric:          <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix verdict:         <https://www.insperity.com/vocabulary/review-verdict/> .
+@prefix flag:            <https://www.insperity.com/vocabulary/review-flag/> .
+@prefix use:             <https://www.insperity.com/vocabulary/approved-use/> .
+@prefix result:          <https://www.insperity.com/vocabulary/review-decision-result/> .
+@prefix segment:         <https://www.insperity.com/vocabulary/survey-segment/> .
+@prefix action:          <https://www.insperity.com/vocabulary/outcome-action/> .
+@prefix phase:           <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix check:           <https://www.insperity.com/vocabulary/gateway-check/> .
+@prefix demand:          <https://www.insperity.com/vocabulary/demand-status/> .
+@prefix hr:              <http://example.org/hrservices/ddd#> .
+@prefix obo:             <http://purl.obolibrary.org/obo/> .
+@prefix prov:            <http://www.w3.org/ns/prov#> .
+
+
+<https://www.insperity.com/vocabulary/benchmark-theme/>
+  a skos:ConceptScheme ;
+  rdfs:label "Benchmark theme vocabulary"@en ;
+  skos:prefLabel "Benchmark theme vocabulary"@en ;
+  dct:title "Benchmark theme vocabulary"@en ;
+  dct:description "A controlled vocabulary of the service-line themes under which outcome benchmark results are reported and acted on: the business model's nine core service lines plus two themes the benchmark adds."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/benchmark-theme/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "themevoc" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/benchmark-theme/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept theme:payroll, theme:benefits, theme:human-resources-compliance, theme:talent-management, theme:training, theme:coaching, theme:monitoring, theme:measurement, theme:values-stewardship, theme:professional-employer-organization-relationship, theme:human-resources-technology-and-data .
+
+theme:payroll
+  a skos:Concept ;
+  rdfs:label "Payroll"@en ;
+  skos:prefLabel "Payroll"@en ;
+  skos:definition "A benchmark theme covering paying people correctly and on time, meeting payroll tax obligations, and tracking time and leave."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:benefits
+  a skos:Concept ;
+  rdfs:label "Benefits"@en ;
+  skos:prefLabel "Benefits"@en ;
+  skos:definition "A benchmark theme covering health, welfare and retirement plans: offering them, enrolling people, and keeping plans compliant."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:human-resources-compliance
+  a skos:Concept ;
+  rdfs:label "Human resources compliance"@en ;
+  skos:prefLabel "Human resources compliance"@en ;
+  skos:altLabel "HR compliance"@en ;
+  skos:altLabel "HR Compliance"@en ;
+  skos:definition "A benchmark theme covering employment law, employee relations risk, workers' compensation and worksite safety."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:talent-management
+  a skos:Concept ;
+  rdfs:label "Talent management"@en ;
+  skos:prefLabel "Talent management"@en ;
+  skos:altLabel "Talent Management"@en ;
+  skos:definition "A benchmark theme covering hiring, onboarding, pay decisions, performance management and succession."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:training
+  a skos:Concept ;
+  rdfs:label "Training"@en ;
+  skos:prefLabel "Training"@en ;
+  skos:definition "A benchmark theme covering skills-gap analysis and delivery of e-learning and instructor-led training."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:coaching
+  a skos:Concept ;
+  rdfs:label "Coaching"@en ;
+  skos:prefLabel "Coaching"@en ;
+  skos:definition "A benchmark theme covering confidential manager coaching and peer mentoring."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:monitoring
+  a skos:Concept ;
+  rdfs:label "Monitoring"@en ;
+  skos:prefLabel "Monitoring"@en ;
+  skos:definition "A benchmark theme covering continuous check-ins and progress tracking against goals."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:measurement
+  a skos:Concept ;
+  rdfs:label "Measurement"@en ;
+  skos:prefLabel "Measurement"@en ;
+  skos:definition "A benchmark theme covering workforce analytics, scorecards and evidence that development works."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:values-stewardship
+  a skos:Concept ;
+  rdfs:label "Values stewardship"@en ;
+  skos:prefLabel "Values stewardship"@en ;
+  skos:altLabel "Values Stewardship"@en ;
+  skos:definition "A benchmark theme covering promoting, monitoring and measuring culture and values without violating employee privacy."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:professional-employer-organization-relationship
+  a skos:Concept ;
+  rdfs:label "Professional employer organization relationship"@en ;
+  skos:prefLabel "Professional employer organization relationship"@en ;
+  skos:altLabel "PEO relationship"@en ;
+  skos:altLabel "PEO Relationship"@en ;
+  skos:definition "A benchmark theme covering choosing, moving onto, getting help from and renewing the human resources outsourcing partner; added for the benchmark."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:scopeNote "Added by the outcome benchmark: the business model's service-line layer does not cover these services."@en ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+theme:human-resources-technology-and-data
+  a skos:Concept ;
+  rdfs:label "Human resources technology and data"@en ;
+  skos:prefLabel "Human resources technology and data"@en ;
+  skos:altLabel "HR technology and data"@en ;
+  skos:altLabel "HR Technology & Data"@en ;
+  skos:definition "A benchmark theme covering self-service, administrator tools, identity, integration and data security; added for the benchmark."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/benchmark-theme/> ;
+  skos:scopeNote "Added by the outcome benchmark: the business model's service-line layer does not cover these services."@en ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/outcome-metric-type/>
+  a skos:ConceptScheme ;
+  rdfs:label "Outcome metric type vocabulary"@en ;
+  skos:prefLabel "Outcome metric type vocabulary"@en ;
+  dct:title "Outcome metric type vocabulary"@en ;
+  dct:description "A controlled vocabulary of the kinds of measure a desired outcome statement uses."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/outcome-metric-type/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "metricvoc" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/outcome-metric-type/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept metric:speed, metric:stability, metric:cost-and-exposure, metric:effort, metric:output .
+
+metric:speed
+  a skos:Concept ;
+  rdfs:label "Speed"@en ;
+  skos:prefLabel "Speed"@en ;
+  skos:definition "An outcome metric type that measures the time required to complete part of a job."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+metric:stability
+  a skos:Concept ;
+  rdfs:label "Stability"@en ;
+  skos:prefLabel "Stability"@en ;
+  skos:definition "An outcome metric type that measures the likelihood that part of a job goes wrong or goes right."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+metric:cost-and-exposure
+  a skos:Concept ;
+  rdfs:label "Cost and exposure"@en ;
+  skos:prefLabel "Cost and exposure"@en ;
+  skos:altLabel "Cost & exposure"@en ;
+  skos:definition "An outcome metric type that measures the money spent or the liability carried in getting a job done."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+metric:effort
+  a skos:Concept ;
+  rdfs:label "Effort"@en ;
+  skos:prefLabel "Effort"@en ;
+  skos:definition "An outcome metric type that measures the work or administrative burden a job places on its executor."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+metric:output
+  a skos:Concept ;
+  rdfs:label "Output"@en ;
+  skos:prefLabel "Output"@en ;
+  skos:definition "An outcome metric type that measures a count or rate produced while getting a job done."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-metric-type/> ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/review-verdict/>
+  a skos:ConceptScheme ;
+  rdfs:label "Review verdict vocabulary"@en ;
+  skos:prefLabel "Review verdict vocabulary"@en ;
+  dct:title "Review verdict vocabulary"@en ;
+  dct:description "A controlled vocabulary of the verdicts a subject-matter expert gives a persona, job or desired outcome in review."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/review-verdict/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "verdict" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/review-verdict/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept verdict:approve, verdict:approve-with-edits, verdict:needs-discussion, verdict:reject .
+
+verdict:approve
+  a skos:Concept ;
+  rdfs:label "Approve"@en ;
+  skos:prefLabel "Approve"@en ;
+  skos:definition "A review verdict that accepts the statement as written."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:notation "approve" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+verdict:approve-with-edits
+  a skos:Concept ;
+  rdfs:label "Approve with edits"@en ;
+  skos:prefLabel "Approve with edits"@en ;
+  skos:definition "A review verdict that accepts the statement once the suggested wording is applied."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:notation "edits" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+verdict:needs-discussion
+  a skos:Concept ;
+  rdfs:label "Needs discussion"@en ;
+  skos:prefLabel "Needs discussion"@en ;
+  skos:definition "A review verdict that holds the statement until the reviewers resolve a question together."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:notation "discuss" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+verdict:reject
+  a skos:Concept ;
+  rdfs:label "Reject"@en ;
+  skos:prefLabel "Reject"@en ;
+  skos:definition "A review verdict that recommends the statement is not used."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-verdict/> ;
+  skos:notation "reject" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/review-flag/>
+  a skos:ConceptScheme ;
+  rdfs:label "Review flag vocabulary"@en ;
+  skos:prefLabel "Review flag vocabulary"@en ;
+  dct:title "Review flag vocabulary"@en ;
+  dct:description "A controlled vocabulary of the compliance risks a reviewer can flag on a statement."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/review-flag/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "flag" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/review-flag/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept flag:regulated-topic, flag:legal-advice, flag:tax-advice, flag:privacy-sensitivity, flag:needs-substantiation, flag:bias-risk, flag:co-employment-unclear .
+
+flag:regulated-topic
+  a skos:Concept ;
+  rdfs:label "Regulated topic"@en ;
+  skos:prefLabel "Regulated topic"@en ;
+  skos:definition "A review flag that marks a statement touching insurance, benefits or other licensed advice."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "regulated" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+flag:legal-advice
+  a skos:Concept ;
+  rdfs:label "Could read as legal advice"@en ;
+  skos:prefLabel "Could read as legal advice"@en ;
+  skos:definition "A review flag that marks a statement a reader could take as legal advice."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "legal" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+flag:tax-advice
+  a skos:Concept ;
+  rdfs:label "Could read as tax advice"@en ;
+  skos:prefLabel "Could read as tax advice"@en ;
+  skos:definition "A review flag that marks a statement a reader could take as tax advice."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "tax" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+flag:privacy-sensitivity
+  a skos:Concept ;
+  rdfs:label "Privacy or employee-data sensitivity"@en ;
+  skos:prefLabel "Privacy or employee-data sensitivity"@en ;
+  skos:definition "A review flag that marks a statement involving employee personal data or monitoring."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "privacy" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+flag:needs-substantiation
+  a skos:Concept ;
+  rdfs:label "Claim needs substantiation"@en ;
+  skos:prefLabel "Claim needs substantiation"@en ;
+  skos:definition "A review flag that marks a statement implying a claim that needs evidence before use."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "substantiate" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+flag:bias-risk
+  a skos:Concept ;
+  rdfs:label "Bias or discrimination risk"@en ;
+  skos:prefLabel "Bias or discrimination risk"@en ;
+  skos:definition "A review flag that marks a statement that could encourage biased or discriminatory practice."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "bias" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+flag:co-employment-unclear
+  a skos:Concept ;
+  rdfs:label "Co-employment responsibility unclear"@en ;
+  skos:prefLabel "Co-employment responsibility unclear"@en ;
+  skos:definition "A review flag that marks a statement where it is unclear whether the client or the provider is responsible."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-flag/> ;
+  skos:notation "coemploy" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/approved-use/>
+  a skos:ConceptScheme ;
+  rdfs:label "Approved use vocabulary"@en ;
+  skos:prefLabel "Approved use vocabulary"@en ;
+  dct:title "Approved use vocabulary"@en ;
+  dct:description "A controlled vocabulary of the purposes compliance can approve a statement for."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/approved-use/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "use" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/approved-use/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept use:survey-instrument, use:internal-sales-guidance, use:external-marketing-claims .
+
+use:survey-instrument
+  a skos:Concept ;
+  rdfs:label "Survey instrument"@en ;
+  skos:prefLabel "Survey instrument"@en ;
+  skos:definition "An approved use that allows the statement in the benchmark survey."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/approved-use/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/approved-use/> ;
+  skos:notation "survey" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+use:internal-sales-guidance
+  a skos:Concept ;
+  rdfs:label "Internal sales guidance and agent"@en ;
+  skos:prefLabel "Internal sales guidance and agent"@en ;
+  skos:definition "An approved use that allows the statement in internal sales guidance and the sales advisory agent."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/approved-use/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/approved-use/> ;
+  skos:notation "sales" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+use:external-marketing-claims
+  a skos:Concept ;
+  rdfs:label "External marketing claims"@en ;
+  skos:prefLabel "External marketing claims"@en ;
+  skos:definition "An approved use that allows the statement in material that leaves the company."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/approved-use/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/approved-use/> ;
+  skos:notation "marketing" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/review-decision-result/>
+  a skos:ConceptScheme ;
+  rdfs:label "Review decision result vocabulary"@en ;
+  skos:prefLabel "Review decision result vocabulary"@en ;
+  dct:title "Review decision result vocabulary"@en ;
+  dct:description "A controlled vocabulary of the results a review decision can record."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/review-decision-result/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "result" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/review-decision-result/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept result:accepted, result:dropped .
+
+result:accepted
+  a skos:Concept ;
+  rdfs:label "Accepted"@en ;
+  skos:prefLabel "Accepted"@en ;
+  skos:definition "A review decision result that admits the statement into the governed model."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-decision-result/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-decision-result/> ;
+  skos:notation "accepted" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+result:dropped
+  a skos:Concept ;
+  rdfs:label "Dropped"@en ;
+  skos:prefLabel "Dropped"@en ;
+  skos:definition "A review decision result that removes the statement from the study and the tools."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/review-decision-result/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/review-decision-result/> ;
+  skos:notation "dropped" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/survey-segment/>
+  a skos:ConceptScheme ;
+  rdfs:label "Survey segment vocabulary"@en ;
+  skos:prefLabel "Survey segment vocabulary"@en ;
+  dct:title "Survey segment vocabulary"@en ;
+  dct:description "A controlled vocabulary of the respondent groups the benchmark survey reports separately."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/survey-segment/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "segment" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/survey-segment/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept segment:provider-clients, segment:non-clients, segment:total-market .
+
+segment:provider-clients
+  a skos:Concept ;
+  rdfs:label "Clients of a professional employer organization"@en ;
+  skos:prefLabel "Clients of a professional employer organization"@en ;
+  skos:altLabel "PEO clients"@en ;
+  skos:definition "A survey segment of employers that use a professional employer organization today."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/survey-segment/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/survey-segment/> ;
+  skos:notation "A" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+segment:non-clients
+  a skos:Concept ;
+  rdfs:label "Employers without a professional employer organization"@en ;
+  skos:prefLabel "Employers without a professional employer organization"@en ;
+  skos:altLabel "Non-PEO employers"@en ;
+  skos:definition "A survey segment of employers that run human resources without a professional employer organization."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/survey-segment/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/survey-segment/> ;
+  skos:notation "P" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+segment:total-market
+  a skos:Concept ;
+  rdfs:label "Total market"@en ;
+  skos:prefLabel "Total market"@en ;
+  skos:definition "A survey segment of every respondent, clients and non-clients together."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/survey-segment/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/survey-segment/> ;
+  skos:notation "T" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/outcome-action/>
+  a skos:ConceptScheme ;
+  rdfs:label "Outcome action vocabulary"@en ;
+  skos:prefLabel "Outcome action vocabulary"@en ;
+  dct:title "Outcome action vocabulary"@en ;
+  dct:description "A controlled vocabulary of the kinds of work a measured outcome gap calls for."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/outcome-action/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "action" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/outcome-action/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept action:fix, action:innovate, action:protect, action:simplify, action:maintain .
+
+action:fix
+  a skos:Concept ;
+  rdfs:label "Fix"@en ;
+  skos:prefLabel "Fix"@en ;
+  skos:definition "An outcome action for an outcome on which clients are under-served and significantly worse off than employers without a provider."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:notation "fix" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+action:innovate
+  a skos:Concept ;
+  rdfs:label "Innovate"@en ;
+  skos:prefLabel "Innovate"@en ;
+  skos:definition "An outcome action for an outcome on which both clients and non-clients are under-served."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:notation "inn" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+action:protect
+  a skos:Concept ;
+  rdfs:label "Protect and market"@en ;
+  skos:prefLabel "Protect and market"@en ;
+  skos:definition "An outcome action for an outcome on which non-clients are under-served and clients are significantly better served."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:notation "pro" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+action:simplify
+  a skos:Concept ;
+  rdfs:label "Simplify"@en ;
+  skos:prefLabel "Simplify"@en ;
+  skos:definition "An outcome action for an outcome on which clients are more satisfied than they rate it important."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:notation "sim" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+action:maintain
+  a skos:Concept ;
+  rdfs:label "Maintain"@en ;
+  skos:prefLabel "Maintain"@en ;
+  skos:definition "An outcome action for an outcome that needs no change."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-action/> ;
+  skos:notation "keep" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/inquiry-phase/>
+  a skos:ConceptScheme ;
+  rdfs:label "Inquiry phase vocabulary"@en ;
+  skos:prefLabel "Inquiry phase vocabulary"@en ;
+  dct:title "Inquiry phase vocabulary"@en ;
+  dct:description "A controlled vocabulary of the four phases of the appreciative inquiry cycle used to structure persona interviews."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/inquiry-phase/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "phase" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/inquiry-phase/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept phase:discover, phase:dream, phase:design, phase:destiny .
+
+phase:discover
+  a skos:Concept ;
+  rdfs:label "Discover"@en ;
+  skos:prefLabel "Discover"@en ;
+  skos:definition "An inquiry phase in which the interviewee describes what works at its best and the moments it is proud of."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:notation "1" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+phase:dream
+  a skos:Concept ;
+  rdfs:label "Dream"@en ;
+  skos:prefLabel "Dream"@en ;
+  skos:definition "An inquiry phase in which the interviewee describes what the job would look like if it went perfectly."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:notation "2" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+phase:design
+  a skos:Concept ;
+  rdfs:label "Design"@en ;
+  skos:prefLabel "Design"@en ;
+  skos:definition "An inquiry phase in which the interviewee describes what would need to be true, step by step, to get there."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:notation "3" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+phase:destiny
+  a skos:Concept ;
+  rdfs:label "Destiny"@en ;
+  skos:prefLabel "Destiny"@en ;
+  skos:definition "An inquiry phase in which the interviewee describes how they would know it worked and what they would measure."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+  skos:notation "4" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/gateway-check/>
+  a skos:ConceptScheme ;
+  rdfs:label "Gateway check vocabulary"@en ;
+  skos:prefLabel "Gateway check vocabulary"@en ;
+  dct:title "Gateway check vocabulary"@en ;
+  dct:description "A controlled vocabulary of the admission checks the requirements gateway applies before a requirement reaches demand planning."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/gateway-check/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "check" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/gateway-check/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept check:review-accepted, check:use-approved, check:measured, check:privacy-threshold, check:material-opportunity, check:owner-assigned, check:flags-resolved, check:not-duplicate .
+
+check:review-accepted
+  a skos:Concept ;
+  rdfs:label "Review accepted"@en ;
+  skos:prefLabel "Review accepted"@en ;
+  skos:definition "A gateway check that the desired outcome was accepted in subject-matter review."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "accepted" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:use-approved
+  a skos:Concept ;
+  rdfs:label "Use approved"@en ;
+  skos:prefLabel "Use approved"@en ;
+  skos:definition "A gateway check that compliance approved the outcome for at least internal sales guidance."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "use" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:measured
+  a skos:Concept ;
+  rdfs:label "Measured"@en ;
+  skos:prefLabel "Measured"@en ;
+  skos:definition "A gateway check that the outcome has scores for both survey segments in the chosen wave."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "measured" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:privacy-threshold
+  a skos:Concept ;
+  rdfs:label "Privacy threshold"@en ;
+  skos:prefLabel "Privacy threshold"@en ;
+  skos:definition "A gateway check that every reported segment has at least five respondents."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "k5" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:material-opportunity
+  a skos:Concept ;
+  rdfs:label "Material opportunity"@en ;
+  skos:prefLabel "Material opportunity"@en ;
+  skos:definition "A gateway check that the opportunity for the targeted segment is at least twelve, or the gap is statistically significant."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "material" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:owner-assigned
+  a skos:Concept ;
+  rdfs:label "Owner assigned"@en ;
+  skos:prefLabel "Owner assigned"@en ;
+  skos:definition "A gateway check that the outcome has a theme and at least one service accountable for it."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "owner" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:flags-resolved
+  a skos:Concept ;
+  rdfs:label "Compliance flags resolved"@en ;
+  skos:prefLabel "Compliance flags resolved"@en ;
+  skos:definition "A gateway check that every compliance flag raised in review is answered in the decision note."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "flags" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+check:not-duplicate
+  a skos:Concept ;
+  rdfs:label "Not a duplicate"@en ;
+  skos:prefLabel "Not a duplicate"@en ;
+  skos:definition "A gateway check that no open demand item already traces to the same outcome."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-check/> ;
+  skos:notation "dup" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+<https://www.insperity.com/vocabulary/demand-status/>
+  a skos:ConceptScheme ;
+  rdfs:label "Demand status vocabulary"@en ;
+  skos:prefLabel "Demand status vocabulary"@en ;
+  dct:title "Demand status vocabulary"@en ;
+  dct:description "A controlled vocabulary of the statuses a demand item moves through in demand planning, ending with re-measurement in a later survey wave."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/vocabulary/demand-status/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "demand" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  skos:changeNote "0.2.0 (2026-10-22): created for the Customer 360 tools."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/vocabulary/demand-status/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  skos:hasTopConcept demand:submitted, demand:triaged, demand:planned, demand:in-delivery, demand:delivered, demand:remeasured, demand:declined .
+
+demand:submitted
+  a skos:Concept ;
+  rdfs:label "Submitted"@en ;
+  skos:prefLabel "Submitted"@en ;
+  skos:definition "A demand status for an item the gateway has handed to demand planning."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "1" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+demand:triaged
+  a skos:Concept ;
+  rdfs:label "Triaged"@en ;
+  skos:prefLabel "Triaged"@en ;
+  skos:definition "A demand status for an item demand planning has sized and prioritized."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "2" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+demand:planned
+  a skos:Concept ;
+  rdfs:label "Planned"@en ;
+  skos:prefLabel "Planned"@en ;
+  skos:definition "A demand status for an item funded in a planning increment."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "3" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+demand:in-delivery
+  a skos:Concept ;
+  rdfs:label "In delivery"@en ;
+  skos:prefLabel "In delivery"@en ;
+  skos:definition "A demand status for an item a delivery team is working on."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "4" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+demand:delivered
+  a skos:Concept ;
+  rdfs:label "Delivered"@en ;
+  skos:prefLabel "Delivered"@en ;
+  skos:definition "A demand status for an item whose change is live for clients."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "5" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+demand:remeasured
+  a skos:Concept ;
+  rdfs:label "Remeasured"@en ;
+  skos:prefLabel "Remeasured"@en ;
+  skos:definition "A demand status for an item whose outcome a later survey wave has scored again."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "6" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+demand:declined
+  a skos:Concept ;
+  rdfs:label "Declined"@en ;
+  skos:prefLabel "Declined"@en ;
+  skos:definition "A demand status for an item demand planning chose not to fund."@en ;
+  skos:inScheme <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:topConceptOf <https://www.insperity.com/vocabulary/demand-status/> ;
+  skos:notation "0" ;
+  owl:versionInfo "0.2.0" ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .

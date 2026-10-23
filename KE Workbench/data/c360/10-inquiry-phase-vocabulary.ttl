@@ -1,0 +1,88 @@
+# ==========================================================================
+#  Inquiry phase vocabulary
+#  Target named graph: <https://www.insperity.com/graph/customer-360/inquiry-phases>
+#  4 terms in one concept scheme.
+#  Part of the KE Workbench Customer 360 loop: persona interviews -> jobs and outcomes ->
+#  job study -> SME review -> playbook -> requirements gateway -> demand planning.
+#  Status: Draft 0.3.0, generated 2026-10-22
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix ai:      <https://www.insperity.com/ontology/appreciative-inquiry/> .
+@prefix dp:      <https://www.insperity.com/ontology/demand-planning/> .
+@prefix phase:   <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix evid:    <https://www.insperity.com/vocabulary/evidence-status/> .
+@prefix dtype:   <https://www.insperity.com/vocabulary/demand-type/> .
+@prefix gstat:   <https://www.insperity.com/vocabulary/gateway-status/> .
+@prefix grule:   <https://www.insperity.com/vocabulary/gateway-rule/> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/vocabulary/inquiry-phase/> a skos:ConceptScheme ;
+    rdfs:label "Inquiry phase vocabulary"@en ;
+    skos:prefLabel "Inquiry phase vocabulary"@en ;
+    skos:definition "A concept scheme of the four phases of the appreciative inquiry cycle used in persona interviews."@en ;
+    skos:hasTopConcept phase:discover, phase:dream, phase:design, phase:destiny ;
+    dcterms:title "Inquiry phase vocabulary"@en ;
+    dcterms:description "A concept scheme of the four phases of the appreciative inquiry cycle used in persona interviews."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/vocabulary/inquiry-phase/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "phase" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/vocabulary/inquiry-phase/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+phase:discover a skos:Concept ;
+    rdfs:label "Discover"@en ;
+    skos:prefLabel "Discover"@en ;
+    skos:definition "An inquiry phase in which the participant describes when the work goes at its best and what made it so."@en ;
+    skos:notation "1" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> .
+
+phase:dream a skos:Concept ;
+    rdfs:label "Dream"@en ;
+    skos:prefLabel "Dream"@en ;
+    skos:definition "An inquiry phase in which the participant imagines what the work would look like if it always went that well."@en ;
+    skos:notation "2" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> .
+
+phase:design a skos:Concept ;
+    rdfs:label "Design"@en ;
+    skos:prefLabel "Design"@en ;
+    skos:definition "An inquiry phase in which the participant describes the steps, support and conditions that would make the dream real."@en ;
+    skos:notation "3" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> .
+
+phase:destiny a skos:Concept ;
+    rdfs:label "Destiny"@en ;
+    skos:prefLabel "Destiny"@en ;
+    skos:definition "An inquiry phase in which the participant names what must be true, and how they would measure it, to sustain the change."@en ;
+    skos:notation "4" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/inquiry-phase/> ;
+    skos:altLabel "Deliver"@en .

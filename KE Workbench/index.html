@@ -49,6 +49,8 @@ input,select,textarea{font:inherit;color:inherit}
 .item .nm{flex:1;overflow:hidden;text-overflow:ellipsis}
 .live{width:6px;height:6px;border-radius:50%;background:var(--ke-faint);flex:none}
 .live.ok{background:var(--ke-ok)} .live.off{background:var(--ke-faint)}
+.item .ext{font-size:11px;color:var(--ke-faint);flex:none}
+.collapsed .item .ext{display:none}
 .newtag{font:700 8.5px/1 var(--ke-sans);letter-spacing:.06em;color:var(--ke-accent);border:1px solid var(--ke-accent);
   border-radius:3px;padding:2px 3px;flex:none}
 .sb-foot{border-top:1px solid var(--ke-line-soft);padding:10px 14px;font-size:10.5px;color:var(--ke-muted);line-height:1.5}
@@ -244,7 +246,8 @@ input,select,textarea{font:inherit;color:inherit}
       g.tools.filter(t => !t.hidden).forEach(t => {
         h += `<button class="item" data-open="${t.id}" title="${esc(t.title)}"><span class="code">${t.code}</span><span class="nm">${esc(t.title)}</span>`
           + (t.isNew ? `<span class="newtag">NEW</span>` : '')
-          + (t.live ? `<span class="live ${live}" title="Reads GraphDB"></span>` : '') + `</button>`;
+          + (t.live ? `<span class="live ${live}" title="Reads GraphDB"></span>` : '')
+          + (t.external ? `<span class="ext" title="Opens in a browser tab" aria-label="opens in a browser tab">↗</span>` : '') + `</button>`;
       });
       h += `</div>`;
     });
@@ -268,7 +271,7 @@ input,select,textarea{font:inherit;color:inherit}
 
   function toolForPath(path){
     const file = path.replace(/^\//,'').split(/[?#]/)[0];
-    return Object.values(T).find(t => file.endsWith(t.file));
+    return Object.values(T).find(t => t.file && file.endsWith(t.file));
   }
   function keyFor(url){ return url; }
   function labelFor(tool, url){
@@ -290,6 +293,9 @@ input,select,textarea{font:inherit;color:inherit}
 
   function openTool(id){
     const t = T[id]; if (!t) return;
+    // External tools (shared claude.ai artifacts such as PEO Outcome Review) keep their own
+    // sign-in and shared state, so they open in a browser tab instead of a workbench tab.
+    if (t.external && t.url) { window.open(t.url, '_blank', 'noopener'); return; }
     openUrl(t.file, t, false);
   }
 

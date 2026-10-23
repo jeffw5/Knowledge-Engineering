@@ -1,0 +1,103 @@
+# ==========================================================================
+#  Gateway rule vocabulary
+#  Target named graph: <https://www.insperity.com/graph/customer-360/gateway-rules>
+#  6 terms in one concept scheme.
+#  Part of the KE Workbench Customer 360 loop: persona interviews -> jobs and outcomes ->
+#  job study -> SME review -> playbook -> requirements gateway -> demand planning.
+#  Status: Draft 0.3.0, generated 2026-10-22
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix ai:      <https://www.insperity.com/ontology/appreciative-inquiry/> .
+@prefix dp:      <https://www.insperity.com/ontology/demand-planning/> .
+@prefix phase:   <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix evid:    <https://www.insperity.com/vocabulary/evidence-status/> .
+@prefix dtype:   <https://www.insperity.com/vocabulary/demand-type/> .
+@prefix gstat:   <https://www.insperity.com/vocabulary/gateway-status/> .
+@prefix grule:   <https://www.insperity.com/vocabulary/gateway-rule/> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/vocabulary/gateway-rule/> a skos:ConceptScheme ;
+    rdfs:label "Gateway rule vocabulary"@en ;
+    skos:prefLabel "Gateway rule vocabulary"@en ;
+    skos:definition "A concept scheme of the rules the requirements engineering semantic gateway applies before a demand request enters demand planning."@en ;
+    skos:hasTopConcept grule:traceable, grule:reviewed, grule:evidenced, grule:measurable, grule:owned, grule:unflagged ;
+    dcterms:title "Gateway rule vocabulary"@en ;
+    dcterms:description "A concept scheme of the rules the requirements engineering semantic gateway applies before a demand request enters demand planning."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/vocabulary/gateway-rule/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "grule" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/vocabulary/gateway-rule/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+grule:traceable a skos:Concept ;
+    rdfs:label "Traceable"@en ;
+    skos:prefLabel "Traceable"@en ;
+    skos:definition "A gateway rule requiring the request to trace to at least one desired outcome, its job, a persona and a service."@en ;
+    skos:notation "1" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/gateway-rule/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-rule/> .
+
+grule:reviewed a skos:Concept ;
+    rdfs:label "Reviewed"@en ;
+    skos:prefLabel "Reviewed"@en ;
+    skos:definition "A gateway rule requiring every targeted outcome to be accepted in the business and compliance review."@en ;
+    skos:notation "2" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/gateway-rule/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-rule/> .
+
+grule:evidenced a skos:Concept ;
+    rdfs:label "Evidenced"@en ;
+    skos:prefLabel "Evidenced"@en ;
+    skos:definition "A gateway rule requiring each targeted outcome to show real unmet need, an opportunity of at least ten or a significant gap."@en ;
+    skos:notation "3" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/gateway-rule/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-rule/> .
+
+grule:measurable a skos:Concept ;
+    rdfs:label "Measurable"@en ;
+    skos:prefLabel "Measurable"@en ;
+    skos:definition "A gateway rule requiring an acceptance criterion and a target score for every targeted outcome."@en ;
+    skos:notation "4" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/gateway-rule/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-rule/> .
+
+grule:owned a skos:Concept ;
+    rdfs:label "Owned"@en ;
+    skos:prefLabel "Owned"@en ;
+    skos:definition "A gateway rule requiring a service-line theme accountable for delivering the request."@en ;
+    skos:notation "5" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/gateway-rule/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-rule/> .
+
+grule:unflagged a skos:Concept ;
+    rdfs:label "Unflagged"@en ;
+    skos:prefLabel "Unflagged"@en ;
+    skos:definition "A gateway rule requiring that no compliance risk flag on a targeted outcome is left unresolved."@en ;
+    skos:notation "6" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/gateway-rule/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/gateway-rule/> .

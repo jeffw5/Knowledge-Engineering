@@ -1,0 +1,87 @@
+# ==========================================================================
+#  Demand type vocabulary
+#  Target named graph: <https://www.insperity.com/graph/customer-360/demand-types>
+#  4 terms in one concept scheme.
+#  Part of the KE Workbench Customer 360 loop: persona interviews -> jobs and outcomes ->
+#  job study -> SME review -> playbook -> requirements gateway -> demand planning.
+#  Status: Draft 0.3.0, generated 2026-10-22
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix ai:      <https://www.insperity.com/ontology/appreciative-inquiry/> .
+@prefix dp:      <https://www.insperity.com/ontology/demand-planning/> .
+@prefix phase:   <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix evid:    <https://www.insperity.com/vocabulary/evidence-status/> .
+@prefix dtype:   <https://www.insperity.com/vocabulary/demand-type/> .
+@prefix gstat:   <https://www.insperity.com/vocabulary/gateway-status/> .
+@prefix grule:   <https://www.insperity.com/vocabulary/gateway-rule/> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/vocabulary/demand-type/> a skos:ConceptScheme ;
+    rdfs:label "Demand type vocabulary"@en ;
+    skos:prefLabel "Demand type vocabulary"@en ;
+    skos:definition "A concept scheme of the kinds of work a demand request asks for, taken from the outcome playbook's action rule."@en ;
+    skos:hasTopConcept dtype:fix, dtype:innovate, dtype:protect, dtype:simplify ;
+    dcterms:title "Demand type vocabulary"@en ;
+    dcterms:description "A concept scheme of the kinds of work a demand request asks for, taken from the outcome playbook's action rule."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/vocabulary/demand-type/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "dtype" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/vocabulary/demand-type/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+dtype:fix a skos:Concept ;
+    rdfs:label "Fix"@en ;
+    skos:prefLabel "Fix"@en ;
+    skos:definition "A demand type for outcomes where clients of the company are under-served and worse off than the alternative."@en ;
+    skos:notation "1" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/demand-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/demand-type/> .
+
+dtype:innovate a skos:Concept ;
+    rdfs:label "Innovate"@en ;
+    skos:prefLabel "Innovate"@en ;
+    skos:definition "A demand type for outcomes that every segment finds under-served, calling for a new capability or offering."@en ;
+    skos:notation "2" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/demand-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/demand-type/> .
+
+dtype:protect a skos:Concept ;
+    rdfs:label "Protect"@en ;
+    skos:prefLabel "Protect"@en ;
+    skos:definition "A demand type for outcomes where the company's clients are measurably better served, to be sustained and marketed."@en ;
+    skos:notation "3" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/demand-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/demand-type/> .
+
+dtype:simplify a skos:Concept ;
+    rdfs:label "Simplify"@en ;
+    skos:prefLabel "Simplify"@en ;
+    skos:definition "A demand type for outcomes that clients rate as over-served, where effort or cost can be taken out."@en ;
+    skos:notation "4" ;
+    skos:inScheme <https://www.insperity.com/vocabulary/demand-type/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/demand-type/> .

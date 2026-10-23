@@ -1,0 +1,262 @@
+# ==========================================================================
+#  Demand planning ontology
+#  Target named graph: <https://www.insperity.com/graph/customer-360/demand-planning-ontology>
+#  Demand requests raised through the requirements engineering semantic gateway, each committed to moving named desired outcomes.
+#  Part of the KE Workbench Customer 360 loop: persona interviews -> jobs and outcomes ->
+#  job study -> SME review -> playbook -> requirements gateway -> demand planning.
+#  Status: Draft 0.3.0, generated 2026-10-22
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix ai:      <https://www.insperity.com/ontology/appreciative-inquiry/> .
+@prefix dp:      <https://www.insperity.com/ontology/demand-planning/> .
+@prefix phase:   <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix evid:    <https://www.insperity.com/vocabulary/evidence-status/> .
+@prefix dtype:   <https://www.insperity.com/vocabulary/demand-type/> .
+@prefix gstat:   <https://www.insperity.com/vocabulary/gateway-status/> .
+@prefix grule:   <https://www.insperity.com/vocabulary/gateway-rule/> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/ontology/demand-planning/> a owl:Ontology ;
+    rdfs:label "Demand planning ontology"@en ;
+    skos:prefLabel "Demand planning ontology"@en ;
+    dcterms:description "Demand requests for product and service investment, the outcome targets they commit to, and the gateway checks that admit them to demand planning."@en ;
+    owl:imports <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    dcterms:title "Demand planning ontology"@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/ontology/demand-planning/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "dp" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/ontology/demand-planning/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+dp:demand-request a owl:Class ;
+    rdfs:label "Demand request"@en ;
+    skos:prefLabel "Demand request"@en ;
+    skos:definition "A requirement for product or service investment that commits to improving named desired outcomes and has passed through the requirements gateway."@en ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:outcome-target a owl:Class ;
+    rdfs:label "Outcome target"@en ;
+    skos:prefLabel "Outcome target"@en ;
+    skos:definition "A commitment within a demand request to move one desired outcome from its measured baseline to a target score."@en ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:gateway-check a owl:Class ;
+    rdfs:label "Gateway check"@en ;
+    skos:prefLabel "Gateway check"@en ;
+    skos:definition "A recorded result of applying one requirements gateway rule to a demand request."@en ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( dp:demand-request dp:outcome-target dp:gateway-check ) .
+
+dp:hasOutcomeTarget a owl:ObjectProperty ;
+    rdfs:label "has outcome target"@en ;
+    skos:prefLabel "has outcome target"@en ;
+    skos:definition "An object property that relates a demand request to one of the outcome targets it commits to."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range dp:outcome-target ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:targetsOutcome a owl:ObjectProperty ;
+    rdfs:label "targets outcome"@en ;
+    skos:prefLabel "targets outcome"@en ;
+    skos:definition "An object property that relates an outcome target to the desired outcome it commits to improving."@en ;
+    rdfs:domain dp:outcome-target ;
+    rdfs:range jtbd:desired-outcome ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasDemandType a owl:ObjectProperty ;
+    rdfs:label "has demand type"@en ;
+    skos:prefLabel "has demand type"@en ;
+    skos:definition "An object property that relates a demand request to the kind of work it asks for, such as fix or innovate."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:isOwnedByTheme a owl:ObjectProperty ;
+    rdfs:label "is owned by theme"@en ;
+    skos:prefLabel "is owned by theme"@en ;
+    skos:definition "An object property that relates a demand request to the service-line theme accountable for delivering it."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:changesService a owl:ObjectProperty ;
+    rdfs:label "changes service"@en ;
+    skos:prefLabel "changes service"@en ;
+    skos:definition "An object property that relates a demand request to a domain service in the business model it would change."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range owl:Thing ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:servesPersona a owl:ObjectProperty ;
+    rdfs:label "serves persona"@en ;
+    skos:prefLabel "serves persona"@en ;
+    skos:definition "An object property that relates a demand request to a client persona whose outcomes it improves."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range jtbd:client-persona ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasGatewayStatus a owl:ObjectProperty ;
+    rdfs:label "has gateway status"@en ;
+    skos:prefLabel "has gateway status"@en ;
+    skos:definition "An object property that relates a demand request to its standing at the requirements gateway."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasGatewayCheck a owl:ObjectProperty ;
+    rdfs:label "has gateway check"@en ;
+    skos:prefLabel "has gateway check"@en ;
+    skos:definition "An object property that relates a demand request to the result of one gateway rule applied to it."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range dp:gateway-check ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:appliesGatewayRule a owl:ObjectProperty ;
+    rdfs:label "applies gateway rule"@en ;
+    skos:prefLabel "applies gateway rule"@en ;
+    skos:definition "An object property that relates a gateway check to the gateway rule it applied."@en ;
+    rdfs:domain dp:gateway-check ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasRequestIdentifier a owl:DatatypeProperty ;
+    rdfs:label "has request identifier"@en ;
+    skos:prefLabel "has request identifier"@en ;
+    skos:definition "A data property that gives the stable identifier of a demand request, such as DR-0003."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasRequirementStatement a owl:DatatypeProperty ;
+    rdfs:label "has requirement statement"@en ;
+    skos:prefLabel "has requirement statement"@en ;
+    skos:definition "A data property that states the requirement in shall form, naming who benefits and the outcome it improves."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasAcceptanceCriterion a owl:DatatypeProperty ;
+    rdfs:label "has acceptance criterion"@en ;
+    skos:prefLabel "has acceptance criterion"@en ;
+    skos:definition "A data property that states a measurable condition the delivered change must meet."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasValueScore a owl:DatatypeProperty ;
+    rdfs:label "has value score"@en ;
+    skos:prefLabel "has value score"@en ;
+    skos:definition "A data property that gives the opportunity the request is expected to close, summed over its outcome targets."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasEffortEstimate a owl:DatatypeProperty ;
+    rdfs:label "has effort estimate"@en ;
+    skos:prefLabel "has effort estimate"@en ;
+    skos:definition "A data property that gives the relative size of a demand request as small, medium, large or extra large."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasPriorityScore a owl:DatatypeProperty ;
+    rdfs:label "has priority score"@en ;
+    skos:prefLabel "has priority score"@en ;
+    skos:definition "A data property that gives the value score divided by the effort weight, used to rank requests."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasRemeasureWave a owl:DatatypeProperty ;
+    rdfs:label "has remeasure wave"@en ;
+    skos:prefLabel "has remeasure wave"@en ;
+    skos:definition "A data property that names the survey wave or pulse that will re-measure the targeted outcomes."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasEvidenceSource a owl:DatatypeProperty ;
+    rdfs:label "has evidence source"@en ;
+    skos:prefLabel "has evidence source"@en ;
+    skos:definition "A data property that names the study results the baseline scores came from, such as example data or a survey wave."@en ;
+    rdfs:domain dp:demand-request ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasBaselineOpportunity a owl:DatatypeProperty ;
+    rdfs:label "has baseline opportunity"@en ;
+    skos:prefLabel "has baseline opportunity"@en ;
+    skos:definition "A data property that gives the opportunity score of the targeted outcome when the request was raised."@en ;
+    rdfs:domain dp:outcome-target ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasBaselineSatisfaction a owl:DatatypeProperty ;
+    rdfs:label "has baseline satisfaction"@en ;
+    skos:prefLabel "has baseline satisfaction"@en ;
+    skos:definition "A data property that gives the satisfaction score of the targeted outcome when the request was raised."@en ;
+    rdfs:domain dp:outcome-target ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasTargetOpportunity a owl:DatatypeProperty ;
+    rdfs:label "has target opportunity"@en ;
+    skos:prefLabel "has target opportunity"@en ;
+    skos:definition "A data property that gives the opportunity score the request commits to reaching for the targeted outcome."@en ;
+    rdfs:domain dp:outcome-target ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasExpectedGapClosure a owl:DatatypeProperty ;
+    rdfs:label "has expected gap closure"@en ;
+    skos:prefLabel "has expected gap closure"@en ;
+    skos:definition "A data property that gives the share of the outcome's unmet need the request expects to close, from zero to one."@en ;
+    rdfs:domain dp:outcome-target ;
+    rdfs:range xsd:decimal ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:isCheckPassed a owl:DatatypeProperty ;
+    rdfs:label "is check passed"@en ;
+    skos:prefLabel "is check passed"@en ;
+    skos:definition "A data property that states whether a gateway check passed."@en ;
+    rdfs:domain dp:gateway-check ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .
+
+dp:hasCheckFinding a owl:DatatypeProperty ;
+    rdfs:label "has check finding"@en ;
+    skos:prefLabel "has check finding"@en ;
+    skos:definition "A data property that explains the result of a gateway check in one sentence."@en ;
+    rdfs:domain dp:gateway-check ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/demand-planning/> .

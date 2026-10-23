@@ -1,0 +1,1289 @@
+<!doctype html><html lang="en"><head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Buyer Personas &amp; Jobs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+
+  :root{
+    --bg:#eef1f1;
+    --surface:#ffffff;
+    --surface-2:#f4f7f7;
+    --surface-3:#e7ecec;
+    --ink:#111a20;
+    --ink-soft:#2b383f;
+    --muted:#55666d;
+    --faint:#8b989d;
+    --line:#d3dbdd;
+    --line-strong:#b7c2c5;
+    --accent-human:#a4590d;
+    --accent-human-soft:#f1e2cd;
+    --accent-machine:#0d7379;
+    --accent-machine-soft:#d9edee;
+    --warn:#a13a32;
+    --warn-soft:#f4e0dd;
+    --good:#2e7a4f;
+    --good-soft:#dcefe2;
+    --shadow: 0 1px 2px rgba(17,26,32,.06), 0 8px 24px -12px rgba(17,26,32,.18);
+    --radius: 3px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0b1215;
+      --surface:#121a1e;
+      --surface-2:#172023;
+      --surface-3:#1d272b;
+      --ink:#e9eff1;
+      --ink-soft:#c7d3d7;
+      --muted:#93a4aa;
+      --faint:#66787e;
+      --line:#263136;
+      --line-strong:#344247;
+      --accent-human:#e5a750;
+      --accent-human-soft:#3a2c17;
+      --accent-machine:#4bc7cd;
+      --accent-machine-soft:#123236;
+      --warn:#e37a72;
+      --warn-soft:#3a1e1c;
+      --good:#69c290;
+      --good-soft:#173428;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0b1215;
+    --surface:#121a1e;
+    --surface-2:#172023;
+    --surface-3:#1d272b;
+    --ink:#e9eff1;
+    --ink-soft:#c7d3d7;
+    --muted:#93a4aa;
+    --faint:#66787e;
+    --line:#263136;
+    --line-strong:#344247;
+    --accent-human:#e5a750;
+    --accent-human-soft:#3a2c17;
+    --accent-machine:#4bc7cd;
+    --accent-machine-soft:#123236;
+    --warn:#e37a72;
+    --warn-soft:#3a1e1c;
+    --good:#69c290;
+    --good-soft:#173428;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+    color-scheme: dark;
+  }
+
+  *{ box-sizing:border-box; }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+  }
+
+  html, body{ background:var(--bg); }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', -apple-system, Segoe UI, sans-serif;
+    font-size:15px;
+    line-height:1.5;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:.09em;
+    font-size:11px;
+    color:var(--muted);
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- Header ---------- */
+  .masthead{
+    border-bottom:1px solid var(--line);
+    background:var(--surface);
+  }
+  .masthead-inner{
+    max-width:1180px;
+    margin:0 auto;
+    padding:28px 24px 22px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    align-items:flex-end;
+    justify-content:space-between;
+  }
+  .id-plate h1{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:800;
+    font-size:56px;
+    line-height:.9;
+    letter-spacing:.005em;
+    margin:6px 0 8px;
+    text-wrap:balance;
+    color:var(--ink);
+  }
+  .id-plate .role{
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:58ch;
+    font-weight:500;
+  }
+  .stat-rail{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .stat{
+    background:var(--surface-2);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:8px 14px;
+    min-width:96px;
+  }
+  .stat .n{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-weight:700;
+    font-size:26px;
+    line-height:1;
+    color:var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .l{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .stat.human{ border-color: color-mix(in srgb, var(--accent-human) 40%, var(--line)); }
+  .stat.human .n{ color:var(--accent-human); }
+  .stat.machine{ border-color: color-mix(in srgb, var(--accent-machine) 40%, var(--line)); }
+  .stat.machine .n{ color:var(--accent-machine); }
+
+  /* ---------- Control panel ---------- */
+  .controls{
+    position:sticky;
+    top:0;
+    z-index:30;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .controls-inner{
+    max-width:1180px;
+    margin:0 auto;
+    padding:14px 24px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .row1{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px 18px;
+    align-items:center;
+  }
+  .search-box{
+    position:relative;
+    flex:1 1 220px;
+    min-width:180px;
+  }
+  .search-box input{
+    width:100%;
+    padding:9px 12px 9px 30px;
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    background:var(--surface);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:13.5px;
+  }
+  .search-box input:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:1px; }
+  .search-box svg{
+    position:absolute; left:9px; top:50%; transform:translateY(-50%);
+    width:14px; height:14px; color:var(--faint); pointer-events:none;
+  }
+  .chipset{ display:flex; flex-wrap:wrap; gap:6px; }
+  .chip{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.02em;
+    padding:6px 11px;
+    border-radius:100px;
+    border:1px solid var(--line-strong);
+    background:var(--surface);
+    color:var(--muted);
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background .12s, color .12s, border-color .12s;
+  }
+  .chip:hover{ border-color:var(--accent-machine); color:var(--ink); }
+  .chip:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:1px; }
+  .chip[aria-pressed="true"]{
+    background:var(--ink);
+    color:var(--surface);
+    border-color:var(--ink);
+  }
+  .toggles{ display:flex; gap:16px; flex-wrap:wrap; margin-left:auto; }
+  .toggle{
+    display:flex; align-items:center; gap:7px;
+    font-size:12.5px; color:var(--ink-soft); cursor:pointer; user-select:none;
+  }
+  .toggle input{ accent-color:var(--accent-machine); width:14px; height:14px; }
+
+  .row2{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    gap:14px 22px;
+    padding-top:2px;
+  }
+  .gauge{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:10px 14px 12px;
+  }
+  .gauge-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:8px; margin-bottom:6px;
+  }
+  .gauge-head .name{ font-size:12px; font-weight:600; color:var(--ink); }
+  .gauge-head .val{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; font-variant-numeric: tabular-nums;
+  }
+  .gauge input[type=range]{
+    -webkit-appearance:none; appearance:none;
+    width:100%; height:5px; border-radius:4px;
+    background:var(--line-strong);
+    margin:6px 0 7px;
+  }
+  .gauge input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none;
+    width:15px; height:15px; border-radius:50%;
+    background:var(--surface); border:2.5px solid var(--gauge-color, var(--accent-machine));
+    cursor:pointer; margin-top:-5px;
+    box-shadow:0 1px 3px rgba(0,0,0,.3);
+  }
+  .gauge input[type=range]::-moz-range-thumb{
+    width:15px; height:15px; border-radius:50%;
+    background:var(--surface); border:2.5px solid var(--gauge-color, var(--accent-machine));
+    cursor:pointer;
+  }
+  .gauge input[type=range]:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:3px; }
+  .gauge-foot{ display:flex; justify-content:space-between; font-size:11px; color:var(--faint); }
+  .verdict{
+    margin-top:7px; font-size:11.5px; font-weight:600; padding:4px 8px; border-radius:var(--radius);
+    display:inline-flex; align-items:center; gap:5px;
+  }
+  .verdict.pass{ background:var(--good-soft); color:var(--good); }
+  .verdict.warn{ background:var(--warn-soft); color:var(--warn); }
+
+  /* ---------- Main ---------- */
+  main{ max-width:1180px; margin:0 auto; padding:30px 24px 80px; }
+
+  .section{ margin-bottom:36px; }
+  .section-head{
+    display:flex; align-items:baseline; gap:12px; margin-bottom:14px;
+    padding-bottom:8px; border-bottom:2px solid var(--line-strong);
+  }
+  .section-head h2{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-size:26px; font-weight:700; margin:0; letter-spacing:.01em;
+    color:var(--ink);
+  }
+  .section-head .count{
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted);
+  }
+  .section-head .def{
+    font-size:12.5px; color:var(--muted); margin-left:auto; max-width:42ch; text-align:right;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
+    gap:14px;
+  }
+
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-left:3px solid var(--card-accent, var(--line-strong));
+    border-radius:var(--radius);
+    padding:14px 16px 13px;
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    display:flex; flex-direction:column; gap:7px;
+  }
+  .card:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:2px; }
+  .breadcrumb{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--faint);
+    line-height:1.4;
+  }
+  .breadcrumb b{ color:var(--muted); }
+  .card h3{
+    font-family:'Big Shoulders Display', sans-serif;
+    font-size:21px; font-weight:700; margin:0; color:var(--ink); line-height:1.05;
+  }
+  .card .value{
+    font-size:13px; color:var(--ink-soft);
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card.expanded .value{ -webkit-line-clamp:unset; }
+  .card .extra{ display:none; font-size:12px; color:var(--muted); border-top:1px dashed var(--line); padding-top:8px; margin-top:2px; }
+  .card.expanded .extra{ display:block; }
+  .extra .def-label{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--faint); margin-bottom:3px; }
+  .card-foot{ display:flex; align-items:center; justify-content:space-between; margin-top:2px; }
+  .badge{
+    font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.03em;
+    padding:3px 8px; border-radius:100px; text-transform:uppercase;
+  }
+  .badge.grounded{ background:var(--good-soft); color:var(--good); }
+  .badge.illustrative{ background:var(--accent-human-soft); color:var(--accent-human); }
+  .expand-hint{ font-size:11px; color:var(--faint); }
+
+  .card.dim-human{ --card-accent: var(--accent-human); }
+  .card.dim-machine{ --card-accent: var(--accent-machine); }
+
+  /* Ghost (unpopulated) cards */
+  .ghost{
+    background:transparent;
+    border:1px dashed var(--line-strong);
+    box-shadow:none;
+    opacity:.72;
+  }
+  .ghost h3{ color:var(--muted); }
+  .ghost .value{ color:var(--faint); font-style:italic; -webkit-line-clamp:4; }
+  .ghost .badge{ background:var(--surface-3); color:var(--faint); }
+  .ghost.closematch{ border-style:solid; opacity:1; border-left:3px solid var(--accent-machine); }
+  .ghost.closematch h3{ color:var(--ink); }
+
+  .no-results{
+    grid-column:1/-1; padding:34px 10px; text-align:center; color:var(--muted);
+    border:1px dashed var(--line-strong); border-radius:var(--radius);
+  }
+
+  footer{
+    max-width:1180px; margin:0 auto; padding:0 24px 60px;
+    color:var(--muted); font-size:12px; line-height:1.7;
+    border-top:1px solid var(--line); padding-top:20px;
+  }
+  footer code{ font-family:'IBM Plex Mono', monospace; background:var(--surface-2); padding:1px 5px; border-radius:3px; }
+
+  [hidden]{ display:none !important; }
+
+  @media (max-width:640px){
+    .id-plate h1{ font-size:38px; }
+    .stat-rail{ width:100%; }
+    .section-head{ flex-wrap:wrap; }
+    .section-head .def{ text-align:left; margin-left:0; }
+  }
+
+  /* ---------- Tabs ---------- */
+  .tabbar{
+    max-width:1180px; margin:0 auto; padding:14px 24px 0;
+    display:flex; gap:6px;
+  }
+  .tabbtn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px; letter-spacing:.05em; text-transform:uppercase;
+    padding:9px 18px; border:1px solid var(--line); border-bottom:none;
+    background:var(--surface-2); color:var(--muted); cursor:pointer;
+    border-radius:4px 4px 0 0; position:relative; top:1px;
+  }
+  .tabbtn:hover{ color:var(--ink); }
+  .tabbtn:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:2px; }
+  .tabbtn[aria-selected="true"]{
+    background:var(--surface); color:var(--ink); font-weight:600;
+    border-color:var(--line); border-bottom:1px solid var(--surface);
+  }
+
+  /* ---------- Graph view ---------- */
+  #view-graph{ max-width:1180px; margin:0 auto; padding:22px 24px 70px; }
+  .graph-frame{
+    position:relative; border:1px solid var(--line); border-radius:var(--radius);
+    background:var(--surface); box-shadow:var(--shadow); overflow:hidden;
+  }
+  .graph-toolbar{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between;
+    padding:10px 16px; border-bottom:1px solid var(--line);
+  }
+  .graph-legend{ display:flex; gap:16px; flex-wrap:wrap; font-size:11.5px; color:var(--muted); align-items:center; }
+  .legend-dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:-1px; }
+  .legend-ring{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:-1px; border:1.5px dashed var(--line-strong); }
+  .reset-btn{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; padding:6px 13px;
+    border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft);
+    border-radius:100px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--accent-machine); color:var(--ink); }
+  .reset-btn:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:1px; }
+  .graph-frame svg{ display:block; width:100%; height:640px; cursor:grab; background:var(--bg); }
+  .graph-frame svg:active{ cursor:grabbing; }
+  .graph-hint{ padding:9px 16px; font-size:11.5px; color:var(--faint); border-top:1px dashed var(--line); }
+
+  .node-circle{ stroke-width:2px; cursor:pointer; }
+  .node-circle.faded, .node-label.faded, .link.faded{ opacity:.08; pointer-events:none; }
+  .link{ stroke:var(--line-strong); stroke-opacity:.8; fill:none; transition:opacity .15s; }
+  .link.dim-human{ stroke:var(--accent-human); stroke-opacity:.4; }
+  .link.dim-machine{ stroke:var(--accent-machine); stroke-opacity:.4; }
+  .node-label{
+    font-family:'IBM Plex Mono', monospace; font-size:9.5px; fill:var(--ink-soft);
+    paint-order:stroke; stroke:var(--bg); stroke-width:3px; pointer-events:none;
+    transition:opacity .15s;
+  }
+  .node-label.root{
+    font-family:'Big Shoulders Display', sans-serif; font-size:16px; font-weight:700; fill:var(--ink);
+    stroke-width:5px;
+  }
+  .node-label.category{ font-weight:600; font-size:10.5px; }
+
+  .graph-detail{
+    position:absolute; top:14px; right:14px; width:280px; max-height:calc(100% - 28px);
+    overflow:auto; background:var(--surface); border:1px solid var(--line-strong);
+    border-radius:var(--radius); box-shadow:var(--shadow); padding:14px 16px 16px;
+  }
+  .graph-detail[hidden]{ display:none; }
+  .graph-detail .gd-close{
+    float:right; cursor:pointer; color:var(--faint); font-size:18px; line-height:1;
+    background:none; border:none; padding:0 0 0 8px;
+  }
+  .graph-detail .gd-close:hover{ color:var(--ink); }
+  .graph-detail h4{
+    font-family:'Big Shoulders Display', sans-serif; font-size:20px; margin:6px 0 6px; color:var(--ink);
+  }
+  .graph-detail .gd-value{ font-size:12.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .graph-detail .gd-def{ font-size:11.5px; color:var(--muted); border-top:1px dashed var(--line); padding-top:8px; }
+
+  /* ---------- PEO buyer persona additions ---------- */
+  :root{ --p-admin:#1f5fa8; --p-admin-soft:#dde8f5; --p-hr:#7b3fa0; --p-hr-soft:#ece0f3; --proposed:#5a6a1d; --proposed-soft:#e9eed3; }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --p-admin:#7fb0ec; --p-admin-soft:#16263a; --p-hr:#c79be2; --p-hr-soft:#2c1d38; --proposed:#c4d27a; --proposed-soft:#283015; }
+  }
+  :root[data-theme="dark"]{ --p-admin:#7fb0ec; --p-admin-soft:#16263a; --p-hr:#c79be2; --p-hr-soft:#2c1d38; --proposed:#c4d27a; --proposed-soft:#283015; }
+
+  .persona-switch{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .pbtn{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.04em; text-transform:uppercase;
+    padding:7px 13px; border-radius:100px; border:1px solid var(--line-strong); background:var(--surface-2);
+    color:var(--muted); cursor:pointer;
+  }
+  .pbtn:hover{ color:var(--ink); }
+  .pbtn:focus-visible{ outline:2px solid var(--accent-machine); outline-offset:1px; }
+  .pbtn[aria-pressed="true"][data-p="admin"]{ background:var(--p-admin); border-color:var(--p-admin); color:var(--surface); }
+  .pbtn[aria-pressed="true"][data-p="hr"]{ background:var(--p-hr); border-color:var(--p-hr); color:var(--surface); }
+  .id-plate .eyebrow b{ color:var(--pcol); font-weight:600; }
+  .id-plate h1{ border-left:5px solid var(--pcol); padding-left:12px; margin-left:-17px; }
+  @media (max-width:640px){ .id-plate h1{ margin-left:0; } }
+  .badge.proposed{ background:var(--proposed-soft); color:var(--proposed); }
+  .card.proposed-card{ --card-accent: var(--proposed); border-style:solid; }
+  .jobs{ margin:6px 0 0; padding:0; list-style:none; display:grid; gap:3px; font-size:12.5px; }
+  .jobs li{ display:grid; grid-template-columns:76px minmax(0,1fr); gap:8px; }
+  .jobs li span{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); padding-top:1px; }
+  .card.expanded .jobs{ display:grid; }
+  .masthead-inner, .controls-inner, main, .tabbar, #view-graph, footer{ padding-left:max(16px, 24px); padding-right:max(16px, 24px); }
+  @media (max-width:480px){
+    .masthead-inner, .controls-inner, main, .tabbar, #view-graph, footer{ padding-left:16px; padding-right:16px; }
+    .graph-detail{ position:static; width:auto; margin:10px; }
+    .graph-frame svg{ height:480px; }
+    .tabbtn{ padding:9px 12px; }
+  }
+  .gauge .target-note{ font-size:11px; color:var(--muted); margin-top:4px; }
+
+  /* ---------- Job study view ---------- */
+  .jobs-view{ max-width:1180px; margin:0 auto; padding-block:26px 70px; }
+  .js-head{ display:grid; gap:6px; margin-bottom:16px; }
+  .js-title{ font-family:'Big Shoulders Display', sans-serif; font-size:30px; line-height:1.05; margin:2px 0 0; text-wrap:balance; border-left:5px solid var(--pcol); padding-left:10px; }
+  .js-scope{ margin:0; color:var(--ink-soft); max-width:80ch; font-size:14px; }
+  .js-id, .js-jid, .js-sid{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted); background:var(--surface-3); padding:2px 7px; border-radius:3px; }
+  .js-stats{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .js-stats .stat{ min-width:88px; }
+  .stat.warnstat .n{ color:var(--warn); } .stat.goodstat .n{ color:var(--good); }
+  .js-tools{ display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; padding:12px 0 16px; border-bottom:2px solid var(--line-strong); margin-bottom:20px; }
+  .js-tools .search-box{ flex:1 1 240px; }
+  .js-tools .chip[aria-pressed="true"]{ background:var(--ink); color:var(--surface); border-color:var(--ink); }
+  #js-copy-fallback textarea{ width:100%; height:140px; font-family:'IBM Plex Mono', monospace; font-size:11px; background:var(--surface); color:var(--ink); border:1px solid var(--line-strong); }
+  .js-note{ font-size:12px; color:var(--muted); margin:0 0 6px; }
+  .js-job{ margin-bottom:34px; }
+  .js-job-head{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; margin-bottom:12px; }
+  .js-job-head h3{ flex-basis:100%; font-family:'Big Shoulders Display', sans-serif; font-size:24px; margin:0; line-height:1.1; text-wrap:balance; }
+  .js-job-head p{ flex-basis:100%; margin:0; color:var(--muted); font-size:13.5px; max-width:80ch; }
+  .js-step{ background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--pcol); border-radius:var(--radius); margin-bottom:12px; box-shadow:var(--shadow); min-width:0; }
+  .js-step-head{ display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; padding:12px 14px 8px; }
+  .js-step-head h4{ margin:0; font-size:16px; font-weight:600; color:var(--ink); }
+  .js-stage{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--pcol); border:1px solid var(--pcol); border-radius:100px; padding:1px 8px; }
+  .js-svc{ flex-basis:100%; font-size:12px; color:var(--muted); }
+  .js-tablewrap{ overflow-x:auto; border-top:1px dashed var(--line); }
+  .js-table{ width:100%; border-collapse:collapse; font-size:12.5px; min-width:860px; }
+  .js-table th{ text-align:left; font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); font-weight:500; padding:7px 10px; background:var(--surface-2); border-bottom:1px solid var(--line); white-space:nowrap; }
+  .js-table td{ padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; color:var(--ink-soft); }
+  .js-table tr:last-child td{ border-bottom:none; }
+  .js-table .num{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .js-table .mono{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; }
+  .js-table td:first-child{ white-space:nowrap; }
+  .js-table .small{ font-size:10.5px; }
+  .js-table .faint{ color:var(--faint); }
+  .js-table .stmt{ min-width:280px; color:var(--ink); }
+  .js-table .stmt b{ color:var(--pcol); font-weight:600; }
+  .st{ font-family:'IBM Plex Mono', monospace; font-size:10px; text-transform:uppercase; letter-spacing:.04em; padding:2px 7px; border-radius:100px; white-space:nowrap; }
+  .st-gap{ background:var(--warn-soft); color:var(--warn); }
+  .st-met{ background:var(--good-soft); color:var(--good); }
+  .st-pending{ background:var(--surface-3); color:var(--muted); }
+  .js-model{ margin-top:10px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:12px 16px; }
+  .js-model summary{ cursor:pointer; font-weight:600; color:var(--ink); }
+  .js-model p{ font-size:13px; color:var(--ink-soft); max-width:85ch; }
+  .js-model pre{ font-family:'IBM Plex Mono', monospace; font-size:11.5px; background:var(--surface-2); border:1px solid var(--line); padding:12px; overflow-x:auto; color:var(--ink-soft); margin:0; }
+  .jobs-view{ padding-left:24px; padding-right:24px; }
+  @media (max-width:480px){ .jobs-view{ padding-left:16px; padding-right:16px; } .js-title{ font-size:24px; } }
+  @media (max-width:640px){ .controls{ position:static; } }
+
+  /* ---------- Customer 360 additions (GraphDB-backed personas, Jobs, Appreciative Inquiry) ---------- */
+  .pbtn .pid{ font-family:'IBM Plex Mono', monospace; font-size:10px; opacity:.7; margin-right:5px; }
+  .card.dim-human{ --card-accent:var(--accent-human); }
+  .card.dim-machine{ --card-accent:var(--accent-machine); }
+  .card .open-link{ font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--accent-machine); text-decoration:none; margin-top:6px; display:inline-block; }
+  .card .open-link:hover{ text-decoration:underline; }
+  .badge.captured{ background:var(--accent-human-soft); color:var(--accent-human); border-color:transparent; }
+  .badge.model{ background:var(--accent-machine-soft); color:var(--accent-machine); border-color:transparent; }
+  .badge.st-acc{ background:var(--good-soft); color:var(--good); border-color:transparent; }
+  .badge.st-drop{ background:var(--surface-3); color:var(--muted); border-color:transparent; }
+  .badge.st-rev{ background:var(--warn-soft); color:var(--warn); border-color:transparent; }
+  .oppbar{ display:grid; grid-template-columns:62px 1fr 34px; gap:4px 8px; align-items:center; font-size:11px; color:var(--muted); margin-top:4px; }
+  .oppbar .tr{ height:6px; background:var(--surface-3); border-radius:0 3px 3px 0; overflow:hidden; }
+  .oppbar .tr i{ display:block; height:100%; }
+  .oppbar b{ font-family:'IBM Plex Mono', monospace; font-weight:500; color:var(--ink); text-align:right; }
+  .gauge .stmt{ font-size:12.5px; color:var(--ink-soft); line-height:1.35; margin:2px 0 6px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+  .row2-head{ grid-column:1/-1; display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+  .row2-head b{ font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:.06em; font-size:10.5px; color:var(--ink-soft); }
+  .wavepick{ font:12px 'IBM Plex Sans', sans-serif; padding:4px 6px; border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--surface); color:var(--ink); }
+  .linkbtn{ font:500 12px 'IBM Plex Sans', sans-serif; color:var(--accent-machine); background:none; border:0; padding:0; cursor:pointer; text-decoration:underline; }
+
+  /* Jobs view */
+  .jobs-view, .ai-view{ max-width:1180px; margin:0 auto; padding:24px 24px 80px; }
+  .jx-bar{ display:flex; flex-wrap:wrap; gap:10px 16px; align-items:end; margin-bottom:18px; }
+  .jx-bar label{ display:grid; gap:4px; font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .jx-bar select, .jx-bar input[type=search]{ font:14px 'IBM Plex Sans', sans-serif; padding:8px 10px; border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--surface); color:var(--ink); min-width:0; }
+  .jx-bar .jobsel{ min-width:min(560px, 100%); }
+  .jx-bar .grow{ flex:1 1 200px; }
+  .jx-meta{ display:flex; flex-wrap:wrap; gap:6px 10px; align-items:center; font-size:12.5px; color:var(--ink-soft); margin:8px 0; }
+  .jx-meta .lbl{ font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); }
+  .tag{ display:inline-flex; align-items:center; gap:5px; font-family:'IBM Plex Mono', monospace; font-size:11px; padding:2px 8px; border-radius:100px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); white-space:nowrap; }
+  .tag .dot{ width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .tag.hollow .dot{ background:transparent !important; border:2px solid currentColor; }
+  .jobmap{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:18px 12px; margin-top:16px; }
+  .stage{ display:grid; grid-template-rows:auto 1fr; gap:8px; min-width:0; }
+  .stage-h{ border-top:3px solid var(--accent-machine); padding-top:7px; }
+  .stage-h b{ font-family:'Big Shoulders Display', sans-serif; font-size:18px; font-weight:700; display:block; }
+  .stage-h span{ font-size:11.5px; color:var(--muted); line-height:1.3; display:block; }
+  .stepcard{ border:1px dashed var(--accent-human); background:var(--accent-human-soft); border-radius:var(--radius); padding:6px 8px; font-size:12px; color:var(--ink-soft); }
+  .stepcard b{ font-weight:600; color:var(--ink); }
+  .oc{ background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--accent-machine); border-radius:var(--radius); padding:8px 9px; font-size:12.5px; line-height:1.4; display:grid; gap:5px; box-shadow:var(--shadow); }
+  .oc.captured{ border-left-color:var(--accent-human); }
+  .oc.dropped{ opacity:.45; }
+  .oc .oid{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--faint); display:flex; justify-content:space-between; gap:6px; }
+  .oc .tags{ display:flex; flex-wrap:wrap; gap:4px; }
+  .oc .tags .tag{ font-size:10px; padding:1px 6px; }
+  .empty-step{ font-size:12px; color:var(--faint); font-style:italic; }
+  .js-table td .act{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; padding:1px 6px; border-radius:3px; }
+  .act-fix{ background:var(--warn-soft); color:var(--warn); } .act-inn{ background:#ecebfb; color:#5845c9; } .act-pro{ background:var(--accent-machine-soft); color:var(--accent-machine); }
+  .act-sim{ background:var(--accent-human-soft); color:var(--accent-human); } .act-keep{ background:var(--surface-3); color:var(--muted); }
+  [data-theme="dark"] .act-inn{ background:#25213f; color:#9085e9; }
+  .note-box{ border:1px solid var(--line); background:var(--surface); border-radius:var(--radius); padding:14px 16px; font-size:13px; color:var(--ink-soft); }
+
+  /* Appreciative Inquiry view */
+  .ai-grid{ display:grid; grid-template-columns:290px minmax(0,1fr); gap:20px; align-items:start; }
+  .ai-list{ position:sticky; top:12px; display:grid; gap:8px; }
+  .ai-list .it{ all:unset; box-sizing:border-box; display:grid; gap:3px; padding:10px 12px; border:1px solid var(--line); border-left:3px solid var(--accent-human); border-radius:var(--radius); background:var(--surface); cursor:pointer; font-size:12.5px; }
+  .ai-list .it:hover{ border-color:var(--accent-human); }
+  .ai-list .it[aria-current="true"]{ background:var(--accent-human-soft); }
+  .ai-list .it:focus-visible{ outline:2px solid var(--accent-human); }
+  .ai-list .it b{ font-weight:600; color:var(--ink); }
+  .ai-list .it span{ color:var(--muted); font-size:11.5px; }
+  .ai-panel{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px 20px; display:grid; gap:14px; margin-bottom:18px; }
+  .ai-panel h3{ font-family:'Big Shoulders Display', sans-serif; font-size:22px; font-weight:700; margin:0; }
+  .ai-panel .sub{ font-size:12.5px; color:var(--muted); margin:-8px 0 0; max-width:90ch; }
+  .fgrid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:10px 14px; }
+  .fld{ display:grid; gap:4px; }
+  .fld > span{ font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); }
+  .fld input, .fld select, .fld textarea, .row-ed input, .row-ed select, .row-ed textarea{ font:13.5px 'IBM Plex Sans', sans-serif; padding:7px 9px; border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--surface); color:var(--ink); min-width:0; width:100%; }
+  .fld textarea, .row-ed textarea{ resize:vertical; line-height:1.45; }
+  .hint{ font-size:11.5px; color:var(--faint); }
+  .phases{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px; }
+  .phase{ border:1px solid var(--line); border-top:3px solid var(--accent-human); border-radius:var(--radius); padding:10px; display:grid; gap:8px; align-content:start; background:var(--surface-2); min-width:0; }
+  .phase h4{ margin:0; font-family:'Big Shoulders Display', sans-serif; font-size:19px; }
+  .phase .q{ font-size:11.5px; color:var(--muted); line-height:1.35; }
+  .phase ul.qs{ margin:0; padding-left:16px; display:grid; gap:4px; font-size:11.5px; color:var(--ink-soft); }
+  .note{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:7px 8px; display:grid; gap:6px; }
+  .note textarea{ font:13px 'IBM Plex Sans', sans-serif; border:0; background:transparent; color:var(--ink); resize:vertical; min-height:52px; padding:0; width:100%; }
+  .note textarea:focus{ outline:none; }
+  .note .acts{ display:flex; flex-wrap:wrap; gap:4px; align-items:center; }
+  .mini{ font:500 11px 'IBM Plex Mono', monospace; padding:3px 7px; border-radius:3px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink-soft); cursor:pointer; }
+  .mini:hover{ border-color:var(--accent-machine); color:var(--ink); }
+  .mini.danger:hover{ border-color:var(--warn); color:var(--warn); }
+  .mini.on{ background:var(--accent-human-soft); color:var(--accent-human); border-color:var(--accent-human); }
+  .row-ed{ display:grid; gap:8px; padding:10px 12px; border:1px solid var(--line); border-radius:var(--radius); background:var(--surface-2); }
+  .row-ed .r{ display:grid; gap:8px; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); align-items:end; }
+  .row-ed .r.wide{ grid-template-columns:150px minmax(0,1fr) auto; }
+  .row-ed .preview{ font-size:13.5px; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:7px 9px; }
+  .row-ed .preview em{ color:var(--faint); }
+  .ev{ display:flex; flex-wrap:wrap; gap:4px; align-items:center; font-size:11.5px; color:var(--muted); }
+  .warnline{ font-size:12px; color:var(--warn); }
+  .savebar{ position:sticky; bottom:0; z-index:20; display:flex; flex-wrap:wrap; gap:10px; align-items:center; padding:12px 16px; background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); }
+  .savebar .msg{ font-size:12.5px; color:var(--muted); margin-right:auto; }
+  .btn{ font:600 13px 'IBM Plex Sans', sans-serif; padding:8px 14px; border-radius:var(--radius); border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); cursor:pointer; text-decoration:none; display:inline-flex; gap:6px; align-items:center; }
+  .btn:hover{ border-color:var(--accent-machine); }
+  .btn.pri{ background:var(--accent-machine); border-color:var(--accent-machine); color:var(--surface); }
+  .btn.danger{ color:var(--warn); }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  details.guide summary{ cursor:pointer; font-weight:600; font-size:13px; }
+  details.guide p{ font-size:12.5px; color:var(--ink-soft); max-width:95ch; margin:6px 0; }
+  @media (max-width:1000px){ .jobmap{ grid-template-columns:repeat(2,minmax(0,1fr)); } .phases{ grid-template-columns:repeat(2,minmax(0,1fr)); } .ai-grid{ grid-template-columns:minmax(0,1fr); } .ai-list{ position:static; } }
+  @media (max-width:640px){ .jobmap, .phases{ grid-template-columns:minmax(0,1fr); } .jobs-view, .ai-view{ padding-left:16px; padding-right:16px; } .row-ed .r.wide{ grid-template-columns:minmax(0,1fr); } }
+
+  [hidden]{ display:none !important; }
+
+</style></head><body>
+<header class="masthead" id="masthead">
+  <div class="masthead-inner">
+    <div class="id-plate">
+      <div class="persona-switch" role="group" aria-label="Choose persona" id="pswitch"></div>
+      <div class="eyebrow" id="eyebrow">Customer 360 · client persona</div>
+      <h1 id="pname">Loading personas…</h1>
+      <div class="role" id="prole"></div>
+    </div>
+    <div class="stat-rail" id="stat-rail"></div>
+  </div>
+</header>
+
+<nav class="tabbar" role="tablist" aria-label="View">
+  <button class="tabbtn" id="tab-explore" role="tab" aria-selected="true" aria-controls="view-explore" data-tab="explore">Explore</button>
+  <button class="tabbtn" id="tab-graph" role="tab" aria-selected="false" aria-controls="view-graph" data-tab="graph">Graph</button>
+  <button class="tabbtn" id="tab-jobs" role="tab" aria-selected="false" aria-controls="view-jobs" data-tab="jobs">Jobs</button>
+  <button class="tabbtn" id="tab-ai" role="tab" aria-selected="false" aria-controls="view-ai" data-tab="ai">Appreciative Inquiry</button>
+</nav>
+
+<div class="controls" id="controls">
+  <div class="controls-inner">
+    <div class="row1">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search" type="text" placeholder="Search labels, values, definitions&hellip;" autocomplete="off" aria-label="Search the persona">
+      </div>
+      <div class="chipset" id="category-chips" role="group" aria-label="Filter by category"></div>
+      <div class="toggles">
+        <label class="toggle"><input type="checkbox" id="toggle-ghosts" checked> Show empty fields</label>
+        <label class="toggle"><input type="checkbox" id="toggle-captured"> From interviews only</label>
+      </div>
+    </div>
+    <div class="row2" id="gauges"></div>
+  </div>
+</div>
+
+<main id="view-explore"></main>
+<main id="view-jobs" class="jobs-view" hidden></main>
+<main id="view-ai" class="ai-view" hidden></main>
+
+<div id="view-graph" hidden>
+  <div class="graph-frame">
+    <div class="graph-toolbar">
+      <div class="graph-legend">
+        <span><span class="legend-dot" style="background:var(--ink)"></span>Persona</span>
+        <span><span class="legend-dot" style="background:var(--surface);border:2px solid var(--accent-human)"></span>Human-side category</span>
+        <span><span class="legend-dot" style="background:var(--surface);border:2px solid var(--accent-machine)"></span>Model-side category</span>
+        <span><span class="legend-dot" style="background:var(--accent-human)"></span>From interviews</span>
+        <span><span class="legend-dot" style="background:var(--accent-machine)"></span>In the model</span>
+        <span><span class="legend-ring"></span>Empty field</span>
+      </div>
+      <button class="reset-btn" id="graph-reset" type="button">Reset view</button>
+    </div>
+    <svg id="graph-svg" role="img" aria-label="Node-link diagram of the selected client persona, its categories and the jobs, outcomes and interviews linked to it"></svg>
+    <div class="graph-detail" id="graph-detail" hidden>
+      <button class="gd-close" id="graph-detail-close" aria-label="Close">&times;</button>
+      <div class="breadcrumb" id="gd-breadcrumb"></div>
+      <h4 id="gd-label"></h4>
+      <div class="gd-value" id="gd-value"></div>
+      <div class="gd-def" id="gd-def"></div>
+    </div>
+  </div>
+  <div class="graph-hint">Drag nodes to rearrange, scroll or pinch to zoom, click a node for its definition and value. The search, category and toggle controls above filter this graph too.</div>
+</div>
+
+<footer>
+  Client personas, their jobs, job steps and desired outcomes are read live from GraphDB (repository shown in the workbench pill): the Customer 360 graph, release <span id="rel"></span>, where <code>jobs-to-be-done:client-persona</code> extends <code>core:persona</code>, functional, consumption-chain, emotional and social jobs extend <code>core:job</code>, job steps extend <code>core:job-step</code> and desired outcomes extend <code>core:desired-outcome</code>. Badges show where each item comes from: <span class="badge model" style="vertical-align:1px;">in model</span> for the released model, <span class="badge captured" style="vertical-align:1px;">from interview</span> for jobs, steps and outcomes captured in Appreciative Inquiry interviews (Draft until accepted in Outcome Review). Opportunity scores come from the survey wave chosen at the top; the example wave holds generated scores, not survey results. The <b>Appreciative Inquiry</b> tab is the qualitative side of the persona model: interview notes by Discover, Dream, Design and Destiny, and the functional, emotional and social jobs, job steps and desired outcomes they reveal, saved to their own named graph per interview. Prepared by Jeffrey Wallk, The Value Enablement Group, LLC.
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="../assets/ke-sparql.js"></script>
+<script src="../assets/ke-c360.js"></script>
+<script>
+(function(){
+'use strict';
+const C = window.KE_C360;
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const PCOL = {P1:'#2a78d6',P2:'#eb6834',P3:'#1baf7a',P4:'#eda100',P5:'#e87ba4',P6:'#008300',P7:'#6250d6'};
+const KINDLBL = {core:'Core functional job', chain:'Consumption chain job', emotional:'Emotional job', social:'Social job'};
+const ACTLBL = {fix:'Fix', inn:'Innovate', pro:'Protect', sim:'Simplify', keep:'Maintain'};
+const lsGet = (k,d) => { try{ const v = localStorage.getItem(k); return v === null ? d : v; }catch(e){ return d; } };
+const lsSet = (k,v) => { try{ localStorage.setItem(k, v); }catch(e){} };
+
+let M = null, WAVE = null, R = {PEO:{},NONPEO:{},TOTAL:{}}, AN = {}, REV = {}, DEC = {}, IV = [];
+const st = { p:null, tab:'explore', search:'', cats:null, ghosts:true, captured:false, job:null, jq:'', jall:false, ai:null };
+
+/* ---------- loading ---------- */
+async function refresh(keepModel){
+  if(!keepModel) M = await C.model();
+  WAVE = C.pickWave(M);
+  const [r, rv, dc, iv] = await Promise.all([C.scores(WAVE && WAVE.iri), C.reviews(M), C.decisions(), C.interviews()]);
+  R = r; REV = rv; DEC = dc; IV = iv;
+  AN = {}; C.analyze(M, R).forEach(o => AN[o.id] = o);
+}
+function statusOf(id){
+  const d = DEC[id]; if(d) return d.status === 'accepted' ? 'acc' : 'drop';
+  return REV[id] && Object.keys(REV[id]).length ? 'rev' : 'none';
+}
+const ST_BADGE = { acc:'<span class="badge st-acc">accepted</span>', drop:'<span class="badge st-drop">dropped</span>', rev:'<span class="badge st-rev">in review</span>', none:'' };
+const P = () => M.P[st.p];
+const jobsOf = p => ({
+  ex: M.jobs.filter(j => (j.type==='core'||j.type==='chain') && j.ex.includes(p.id)),
+  part: M.jobs.filter(j => (j.type==='core'||j.type==='chain') && j.part.includes(p.id)),
+  emo: M.jobs.filter(j => (j.type==='emotional'||j.type==='social') && j.ex.includes(p.id))
+});
+const outcomesOf = p => { const ex = new Set(jobsOf(p).ex.map(j => j.id)); return M.outcomes.filter(o => ex.has(o.job)); };
+const interviewsOf = p => IV.filter(i => i.persona === p.id);
+const stripStage = s => String(s||'').replace(/^[A-Z][a-z]+: /, '');
+
+/* ---------- masthead ---------- */
+function renderSwitch(){
+  $('#pswitch').innerHTML = M.personas.map(p => `<button class="pbtn" type="button" data-p="${p.id}" aria-pressed="${p.id===st.p}" title="${esc(p.name)}"><span class="pid">${p.id}</span>${esc(p.short)}</button>`).join('');
+  $('#pswitch').querySelectorAll('.pbtn').forEach(b => b.onclick = () => setPersona(b.dataset.p));
+}
+function renderMast(){
+  const p = P(), J = jobsOf(p), outs = outcomesOf(p), ivs = interviewsOf(p);
+  document.documentElement.style.setProperty('--pcol', PCOL[p.id] || 'var(--ink)');
+  $('#eyebrow').innerHTML = `Customer 360 · client persona ${p.id} · <b>${esc(p.status)}</b>`;
+  $('#pname').textContent = p.name;
+  $('#prole').innerHTML = esc(p.titles) + (p.buying ? ` &middot; <span style="opacity:.8">${esc(p.buying)}</span>` : '');
+  const acc = outs.filter(o => statusOf(o.id)==='acc').length;
+  $('#stat-rail').innerHTML = [
+    ['machine', J.ex.length, 'Jobs it executes'], ['machine', outs.length, 'Desired outcomes'],
+    ['human', J.emo.length, 'Emotional & social jobs'], ['human', ivs.length, 'Interviews'],
+    ['', acc + '/' + outs.length, 'Accepted in review']
+  ].map(([c,n,l]) => `<div class="stat ${c}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+  $('#pswitch').querySelectorAll('.pbtn').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p===st.p)));
+  document.title = p.short + ' — Buyer Personas & Jobs';
+  $('#rel').textContent = M.release;
+}
+
+/* ---------- categories (Explore and Graph) ---------- */
+function oppLine(o){
+  const a = AN[o.id]; if(!a) return '';
+  const mx = 20;
+  return `<div class="oppbar"><span>Clients</span><span class="tr"><i style="width:${a.oP/mx*100}%;background:var(--accent-machine)"></i></span><b>${a.oP}</b>
+    <span>Non-clients</span><span class="tr"><i style="width:${a.oN/mx*100}%;background:var(--accent-human)"></i></span><b>${a.oN}</b></div>`;
+}
+function categories(p){
+  const J = jobsOf(p), outs = outcomesOf(p), ivs = interviewsOf(p);
+  const item = (o) => Object.assign({ badge:'model', status:'none', note:'' }, o);
+  const jobItem = (j, crumbRel) => item({ key:j.id, label:`${j.id} · ${j.stmt}`, short:j.stmt, breadcrumb:['Persona', crumbRel, KINDLBL[j.type]],
+    value:`${j.out.length} desired outcomes · ${j.steps.length} job steps${j.ex.length>1?' · shared with '+j.ex.filter(x=>x!==p.id).map(x=>M.P[x]?M.P[x].short:x).join(', '):''}`,
+    def:j.def || '', badge:j.captured?'captured':'model', status:statusOf(j.id), job:j.id });
+  const cats = [
+    { key:'identity', label:'Identity', dim:'human', def:'Who this persona is, how it is identified in the graph and its lifecycle status.', items:[
+      item({ label:'Persona', value:esc(p.name), def:p.def, breadcrumb:['Persona','skos:prefLabel'], note: p.alts.length ? 'Also known as: '+p.alts.map(esc).join(' · ') : '' }),
+      item({ label:'Typical titles', value:esc(p.titles), def:'Job titles commonly held by people who fit this persona.', breadcrumb:['Persona','jtbd:hasTypicalTitles'] }),
+      item({ label:'Identifier', value:`${esc(p.id)} · <code style="font-size:11px">${esc(p.iri.replace('https://www.insperity.com/',''))}</code>`, def:'Stable benchmark identifier and IRI of the persona individual.', breadcrumb:['Persona','jtbd:hasIdentifier'] }),
+      item({ label:'Lifecycle status', value:esc(p.status), def:'core:hasLifecycleStatus — Draft until the persona model is released.', breadcrumb:['Persona','core:hasLifecycleStatus'], status:statusOf(p.id) })
+    ], ghosts:[] },
+    { key:'context', label:'Context and goal', dim:'human', def:'The situation the persona works in, its part in buying, and what it is trying to achieve.', items:[
+      p.context && item({ label:'Working context', value:esc(p.context), def:'jtbd:hasPersonaContext', breadcrumb:['Persona','Context'] }),
+      p.buying && item({ label:'Buying role', value:esc(p.buying), def:'jtbd:hasBuyingRole — the part this persona plays in choosing and keeping the provider.', breadcrumb:['Persona','Buying role'] }),
+      p.goal && item({ label:'Goal', value:esc(p.goal), def:'jtbd:hasPersonaGoal — the overall goal the persona pursues at work.', breadcrumb:['Persona','Goal'] }),
+      p.target && item({ label:'Survey target', value:`${p.target} respondents`, def:'jtbd:hasSurveyTarget — respondents the benchmark survey aims to reach for this persona.', breadcrumb:['Persona','Survey design'] })
+    ].filter(Boolean), ghosts:[] },
+    { key:'emotional', label:'Emotional and social jobs', dim:'human', def:'How the persona wants to feel, and be seen, while getting functional jobs done.',
+      items: J.emo.map(j => item({ key:j.id, label:j.type==='social'?'Social job':'Emotional job', short:j.stmt, value:esc(j.stmt), def:j.def, breadcrumb:['Persona','executesJob',KINDLBL[j.type]], badge:j.captured?'captured':'model', status:statusOf(j.id), job:j.id })), ghosts:[] },
+    { key:'functional', label:'Functional jobs it executes', dim:'machine', def:'Core functional jobs this persona is responsible for; it rates their desired outcomes in the survey.',
+      items: J.ex.filter(j => j.type==='core').map(j => jobItem(j,'executesJob')), ghosts:[] },
+    { key:'chain', label:'Consumption-chain jobs', dim:'machine', def:'Jobs to choose, move onto, get help from and renew the provider relationship itself.',
+      items: J.ex.filter(j => j.type==='chain').map(j => jobItem(j,'executesJob')), ghosts:[] },
+    { key:'part', label:'Jobs it takes part in', dim:'machine', def:'Jobs other personas execute where this persona contributes.',
+      items: J.part.map(j => jobItem(j,'participatesInJob')), ghosts:[] },
+    { key:'outcomes', label:'Desired outcomes by theme', dim:'machine', def:'The outcomes of its jobs, grouped by the service-line theme that owns them, with the top opportunity in the chosen wave.',
+      items: M.themes.map(t => { const os = outs.filter(o => o.theme===t.name); if(!os.length) return null;
+        const top = os.filter(o => AN[o.id]).sort((a,b) => AN[b.id].oN - AN[a.id].oN)[0];
+        return item({ label:t.name, short:t.name, value:`${os.length} outcomes${top?` · top for non-clients: <b>${esc(top.id)}</b> ${esc(top.t)}`:''}${top?oppLine(top):''}`,
+          def:'A benchmark theme covering ' + C.lcFirst(t.desc||''), breadcrumb:['Persona','executesJob','hasDesiredOutcome','hasBenchmarkTheme'], badge: os.some(o=>o.captured)?'captured':'model' }); }).filter(Boolean), ghosts:[] },
+    { key:'evidence', label:'Interview evidence', dim:'human', def:'Appreciative inquiry interviews with someone in this role, and what they captured.',
+      items: ivs.map(i => item({ key:i.key, label:`${i.id} · ${i.role || 'Interview'}`, short:i.id, value:`${esc(i.date)}${i.interviewer?' · by '+esc(i.interviewer):''}${i.industry?' · '+esc(i.industry):''}<br>${i.counts.notes} notes · ${i.counts.jobs} jobs · ${i.counts.steps} steps · ${i.counts.outcomes} outcomes`,
+        def:i.summary || 'jtbd:appreciative-inquiry-interview', breadcrumb:['Persona','interviewsPersona⁻¹','Interview'], badge:'captured', interview:i.key })), ghosts:[] },
+    { key:'review', label:'Review and decisions', dim:'machine', def:'Where this persona’s outcomes stand in business and compliance review.',
+      items: [['acc','Accepted'],['rev','In review'],['drop','Dropped'],['none','Not reviewed yet']].map(([k,l]) => { const n = outs.filter(o => statusOf(o.id)===k).length; return n ? item({ label:l, value:`${n} of ${outs.length} desired outcomes`, def:'From PEO Outcome Review: reviews in graph …/reviews and decisions in …/review-decisions.', breadcrumb:['Outcome review', l] }) : null; }).filter(Boolean), ghosts:[] }
+  ];
+  // empty fields
+  const g = (cat, label, reason, def) => cat.ghosts.push({ label, reason, def, breadcrumb:[cat.label] });
+  const by = Object.fromEntries(cats.map(c => [c.key, c]));
+  if(!p.context) g(by.context,'Working context','Not recorded for this persona.','jtbd:hasPersonaContext');
+  if(!p.goal) g(by.context,'Goal','Not recorded for this persona.','jtbd:hasPersonaGoal');
+  if(!J.emo.length) g(by.emotional,'Emotional or social job','No emotional or social job yet. Capture one in an Appreciative Inquiry interview (Dream phase).','jtbd:emotional-job, jtbd:social-job');
+  if(!J.ex.some(j=>j.type==='chain')) g(by.chain,'Consumption-chain job','This persona executes none of the jobs about the provider relationship.','jtbd:consumption-chain-job');
+  if(!J.part.length) g(by.part,'Jobs it takes part in','This persona takes part in no other persona’s jobs.','jtbd:participatesInJob');
+  if(!ivs.length) g(by.evidence,'Appreciative inquiry interview','No interviews yet. Start one in the Appreciative Inquiry tab to ground this persona in what people actually say.','jtbd:appreciative-inquiry-interview');
+  if(!WAVE) g(by.outcomes,'Opportunity scores','No survey wave with scores is loaded.','jtbd:outcome-score');
+  return cats;
+}
+function matches(text){ return !st.search || String(text).replace(/<[^>]+>/g,' ').toLowerCase().includes(st.search); }
+const visibleItem = it => matches([it.label,it.value,it.def,it.note].join(' ')) && (!st.captured || it.badge==='captured');
+const visibleGhost = g => !st.captured && matches([g.label,g.def,g.reason].join(' '));
+
+/* ---------- Explore ---------- */
+function renderChips(){
+  const cats = categories(P());
+  if(!st.cats) st.cats = new Set(cats.map(c => c.key));
+  $('#category-chips').innerHTML = cats.map(c => `<button class="chip" type="button" data-c="${c.key}" aria-pressed="${st.cats.has(c.key)}">${esc(c.label)}</button>`).join('');
+  $('#category-chips').querySelectorAll('.chip').forEach(b => b.onclick = () => { const k = b.dataset.c; st.cats.has(k) ? st.cats.delete(k) : st.cats.add(k); b.setAttribute('aria-pressed', st.cats.has(k)); renderTab(); });
+}
+function badge(it){ return (it.badge==='captured' ? '<span class="badge captured">from interview</span>' : '<span class="badge model">in model</span>') + (ST_BADGE[it.status]||''); }
+function crumb(bc){ return bc.map((b,i) => i===bc.length-1 ? '<b>'+esc(b)+'</b>' : esc(b)).join(' &rsaquo; '); }
+function renderExplore(){
+  const main = $('#view-explore'); main.innerHTML = '';
+  let any = false;
+  categories(P()).forEach(cat => {
+    if(!st.cats.has(cat.key)) return;
+    const items = cat.items.filter(visibleItem), ghosts = st.ghosts ? cat.ghosts.filter(visibleGhost) : [];
+    if(!cat.items.length && !(st.ghosts && cat.ghosts.length)) return;
+    const sec = document.createElement('section'); sec.className = 'section';
+    sec.innerHTML = `<div class="section-head"><h2>${esc(cat.label)}</h2><span class="count">${cat.items.length} populated${cat.ghosts.length?' &middot; '+cat.ghosts.length+' empty':''}</span><span class="def">${esc(cat.def)}</span></div>`;
+    const grid = document.createElement('div'); grid.className = 'grid';
+    items.forEach(it => {
+      const card = document.createElement('article');
+      card.className = 'card dim-' + cat.dim; card.tabIndex = 0; card.setAttribute('role','button'); card.setAttribute('aria-expanded','false');
+      card.innerHTML = `<div class="breadcrumb">${crumb(it.breadcrumb||[cat.label])}</div><h3>${esc(it.label)}</h3><div class="value">${it.value}</div>
+        <div class="extra"><div class="def-label">Definition</div><div>${esc(it.def||'—')}</div>${it.note?'<div class="def-label" style="margin-top:8px;">Note</div><div>'+it.note+'</div>':''}
+        ${it.job?`<a class="open-link" href="#" data-job="${esc(it.job)}">Open job steps and desired outcomes →</a>`:''}${it.interview?`<a class="open-link" href="#" data-iv="${esc(it.interview)}">Open interview →</a>`:''}</div>
+        <div class="card-foot">${badge(it)}<span class="expand-hint">click to expand</span></div>`;
+      const toggle = () => { const o = card.classList.toggle('expanded'); card.setAttribute('aria-expanded', String(o)); card.querySelector('.expand-hint').textContent = o ? 'click to collapse' : 'click to expand'; };
+      card.addEventListener('click', e => { const a = e.target.closest('[data-job],[data-iv]'); if(a){ e.preventDefault(); e.stopPropagation(); a.dataset.job ? openJob(a.dataset.job) : openInterview(a.dataset.iv); return; } toggle(); });
+      card.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(); } });
+      grid.appendChild(card);
+    });
+    ghosts.forEach(gh => {
+      const card = document.createElement('article'); card.className = 'ghost';
+      card.innerHTML = `<div class="breadcrumb">${crumb(gh.breadcrumb)}</div><h3>${esc(gh.label)}</h3><div class="value">${esc(gh.def)}</div><div class="card-foot"><span class="badge">empty</span></div><div class="value" style="margin-top:2px;"><em>${esc(gh.reason)}</em></div>`;
+      grid.appendChild(card);
+    });
+    if(!grid.children.length){ const e = document.createElement('div'); e.className='no-results'; e.textContent = 'No matches in ' + cat.label + '.'; grid.appendChild(e); } else any = true;
+    sec.appendChild(grid); main.appendChild(sec);
+  });
+  if(!any){ const e = document.createElement('div'); e.className='no-results'; e.style.margin='0'; e.textContent='Nothing matches the current filters. Clear the search or turn categories back on.'; main.appendChild(e); }
+}
+
+/* ---------- row 2: wave + top opportunities ---------- */
+function renderGauges(){
+  const p = P(), outs = outcomesOf(p).filter(o => AN[o.id]);
+  const waves = M.waves.filter(w => w.n);
+  const top = [...outs].sort((a,b) => AN[b.id].oN - AN[a.id].oN).slice(0,3);
+  $('#gauges').innerHTML = `<div class="row2-head"><b>Top unmet needs for employers without a provider</b>
+      <label>Survey wave <select class="wavepick" id="wavepick" aria-label="Survey wave">${waves.map(w => `<option value="${esc(w.iri)}" ${WAVE&&w.iri===WAVE.iri?'selected':''}>${esc(w.label)}${w.example?' · example':''}</option>`).join('')||'<option>No survey wave loaded</option>'}</select></label>
+      ${WAVE&&WAVE.example?'<span>Example scores, not survey results.</span>':''}</div>` +
+    (top.length ? top.map(o => { const a = AN[o.id];
+      return `<div class="gauge"><div class="gauge-head"><span class="name">${esc(o.id)} · ${esc(o.theme)}</span><span class="val">${a.oN}</span></div><div class="stmt">${esc(o.t)}</div>${oppLine(o)}
+        <button class="linkbtn" data-job="${esc(o.job)}">${esc(o.job)} job map →</button></div>`; }).join('') : '<div class="gauge"><div class="stmt">No scored outcomes for this persona in the chosen wave.</div></div>');
+  const wp = $('#wavepick'); if(wp) wp.onchange = async () => { C.setWave(wp.value); await refresh(true); renderAll(); };
+  $('#gauges').querySelectorAll('[data-job]').forEach(b => b.onclick = () => openJob(b.dataset.job));
+}
+
+/* ---------- Graph ---------- */
+let sim = null, zoomer = null;
+function renderGraph(){
+  const svg = d3.select('#graph-svg'); svg.selectAll('*').remove();
+  const p = P(), cats = categories(p).filter(c => st.cats.has(c.key));
+  const nodes = [{ id:'root', label:p.short, kind:'root' }], links = [];
+  cats.forEach(c => {
+    const items = c.items.filter(visibleItem).slice(0,24), ghosts = st.ghosts ? c.ghosts.filter(visibleGhost) : [];
+    if(!items.length && !ghosts.length) return;
+    nodes.push({ id:'c-'+c.key, label:c.label, kind:'category', dim:c.dim, def:c.def }); links.push({ source:'root', target:'c-'+c.key, dim:c.dim });
+    items.forEach((it,i) => { const id = 'i-'+c.key+'-'+i; nodes.push({ id, label:(it.short||it.label).slice(0,38)+((it.short||it.label).length>38?'…':''), kind:'leaf', dim:c.dim, it, captured:it.badge==='captured', cat:c.label }); links.push({ source:'c-'+c.key, target:id, dim:c.dim }); });
+    ghosts.forEach((gh,i) => { const id = 'g-'+c.key+'-'+i; nodes.push({ id, label:gh.label, kind:'ghost', dim:c.dim, gh, cat:c.label }); links.push({ source:'c-'+c.key, target:id, dim:c.dim }); });
+  });
+  const el = document.getElementById('graph-svg'), W = el.clientWidth || 1000, H = el.clientHeight || 640;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+  const g = svg.append('g');
+  zoomer = d3.zoom().scaleExtent([.3,3]).on('zoom', e => g.attr('transform', e.transform)); svg.call(zoomer);
+  const link = g.append('g').selectAll('line').data(links).join('line').attr('class', d => 'link dim-' + d.dim);
+  const node = g.append('g').selectAll('g').data(nodes).join('g').style('cursor','pointer');
+  node.append('circle').attr('class','node-circle').attr('r', d => d.kind==='root'?22:d.kind==='category'?13:7)
+    .attr('fill', d => d.kind==='root' ? (PCOL[p.id]||'var(--ink)') : d.kind==='category' ? 'var(--surface)' : d.kind==='ghost' ? 'var(--surface)' : d.captured ? 'var(--accent-human)' : 'var(--accent-machine)')
+    .attr('stroke', d => d.kind==='category' ? (d.dim==='human'?'var(--accent-human)':'var(--accent-machine)') : d.kind==='ghost' ? 'var(--faint)' : 'var(--surface)')
+    .attr('stroke-width', d => d.kind==='category'?2.5:1.5).attr('stroke-dasharray', d => d.kind==='ghost'?'3 2':null);
+  node.append('text').attr('class', d => 'node-label' + (d.kind==='root'?' root':d.kind==='category'?' category':'')).attr('dy', d => d.kind==='root'?36:d.kind==='category'?26:18).attr('text-anchor','middle').text(d => d.label);
+  node.on('click', (e,d) => showDetail(d));
+  node.call(d3.drag().on('start', (e,d) => { if(!e.active) sim.alphaTarget(.3).restart(); d.fx=d.x; d.fy=d.y; }).on('drag', (e,d) => { d.fx=e.x; d.fy=e.y; }).on('end', (e,d) => { if(!e.active) sim.alphaTarget(0); }));
+  if(sim) sim.stop();
+  sim = d3.forceSimulation(nodes).force('link', d3.forceLink(links).id(d => d.id).distance(l => l.source.kind==='root'?120:58).strength(.9))
+    .force('charge', d3.forceManyBody().strength(d => d.kind==='root'?-900:d.kind==='category'?-420:-90)).force('center', d3.forceCenter(W/2, H/2)).force('collide', d3.forceCollide(d => d.kind==='leaf'?20:34))
+    .on('tick', () => { link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y); node.attr('transform', d => `translate(${d.x},${d.y})`); });
+}
+function showDetail(d){
+  const box = $('#graph-detail'); box.hidden = false;
+  if(d.kind==='root'){ const p = P(); $('#gd-breadcrumb').textContent='Client persona'; $('#gd-label').textContent=p.name; $('#gd-value').innerHTML=esc(p.titles); $('#gd-def').textContent=p.def; return; }
+  if(d.kind==='category'){ $('#gd-breadcrumb').textContent='Category'; $('#gd-label').textContent=d.label; $('#gd-value').innerHTML=''; $('#gd-def').textContent=d.def; return; }
+  if(d.kind==='ghost'){ $('#gd-breadcrumb').textContent=d.cat+' › empty'; $('#gd-label').textContent=d.gh.label; $('#gd-value').innerHTML='<em>'+esc(d.gh.reason)+'</em>'; $('#gd-def').textContent=d.gh.def; return; }
+  const it = d.it; $('#gd-breadcrumb').innerHTML = crumb(it.breadcrumb||[d.cat]); $('#gd-label').textContent = it.label;
+  $('#gd-value').innerHTML = it.value + `<div style="margin-top:6px">${badge(it)}</div>` + (it.job?`<div><button class="linkbtn" data-job="${esc(it.job)}">Open job steps and desired outcomes →</button></div>`:'') + (it.interview?`<div><button class="linkbtn" data-iv="${esc(it.interview)}">Open interview →</button></div>`:'');
+  $('#gd-def').textContent = it.def || '';
+  box.querySelectorAll('[data-job]').forEach(b => b.onclick = () => openJob(b.dataset.job));
+  box.querySelectorAll('[data-iv]').forEach(b => b.onclick = () => openInterview(b.dataset.iv));
+}
+$('#graph-detail-close').onclick = () => $('#graph-detail').hidden = true;
+$('#graph-reset').onclick = () => { if(zoomer) d3.select('#graph-svg').transition().call(zoomer.transform, d3.zoomIdentity); renderGraph(); };
+
+/* ---------- Jobs ---------- */
+function jobOptions(){
+  const p = P(), J = jobsOf(p), seen = new Set(), grp = [];
+  const add = (label, list) => { const l = list.filter(j => !seen.has(j.id)); l.forEach(j => seen.add(j.id)); if(l.length) grp.push([label, l]); };
+  add('Executes', J.ex.filter(j => !j.captured)); add('Takes part in', J.part.filter(j => !j.captured)); add('Emotional and social', J.emo.filter(j => !j.captured));
+  add('Captured in interviews', M.jobs.filter(j => j.captured && (j.ex.includes(p.id) || j.part.includes(p.id))));
+  if(st.jall) add('Other personas’ jobs', M.jobs);
+  return grp;
+}
+function openJob(id){ st.job = id; if(M.J[id] && !jobsOf(P()).ex.concat(jobsOf(P()).part, jobsOf(P()).emo).some(j => j.id===id) && !M.J[id].ex.includes(st.p)) st.jall = true; setTab('jobs'); }
+function renderJobs(){
+  const root = $('#view-jobs'), p = P(), groups = jobOptions(), flat = groups.flatMap(g => g[1]);
+  if(!st.job || !flat.some(j => j.id===st.job)) st.job = flat.length ? flat[0].id : null;
+  const j = M.J[st.job];
+  let h = `<div class="jx-bar">
+    <label class="grow">Job (${flat.length} for ${esc(p.short)})<select class="jobsel" id="jx-job">${groups.map(([g,l]) => `<optgroup label="${esc(g)}">${l.map(x => `<option value="${esc(x.id)}" ${x.id===st.job?'selected':''}>${esc(x.id)} · ${esc(x.stmt)}</option>`).join('')}</optgroup>`).join('')}</select></label>
+    <label>Search outcomes<input type="search" id="jx-q" value="${esc(st.jq)}" placeholder="e.g. overtime"></label>
+    <label class="toggle" style="text-transform:none;letter-spacing:0;font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;color:var(--ink-soft);display:flex;gap:6px;align-items:center"><input type="checkbox" id="jx-all" ${st.jall?'checked':''}> Show every persona’s jobs</label>
+  </div>`;
+  if(!j){ root.innerHTML = h + '<div class="note-box">This persona has no jobs yet. Capture them in the Appreciative Inquiry tab.</div>'; bindJobBar(); return; }
+  const outs = M.outcomes.filter(o => o.job===j.id), q = st.jq.toLowerCase();
+  const shown = outs.filter(o => !q || (o.t+' '+o.id+' '+o.theme).toLowerCase().includes(q));
+  const scored = outs.filter(o => AN[o.id]);
+  const avg = k => scored.length ? (scored.reduce((s,o) => s + AN[o.id][k], 0) / scored.length).toFixed(1) : '—';
+  const dec = DEC[j.id];
+  h += `<div class="js-head">
+    <div class="breadcrumb">Persona &rsaquo; ${j.ex.includes(p.id)?'executesJob':j.part.includes(p.id)?'participatesInJob':'job'} &rsaquo; <b>${esc(KINDLBL[j.type])}</b> &rsaquo; core:hasStep &rsaquo; core:hasOutcome</div>
+    <h2 class="js-title">${esc(j.stmt)}</h2>
+    <p class="js-scope">${esc(j.def || '')} <span class="js-id">${esc(j.id)}</span></p>
+    <div class="jx-meta"><span class="lbl">Executed by</span>${j.ex.map(x => `<span class="tag"><span class="dot" style="background:${PCOL[x]||'var(--ink)'}"></span>${esc(M.P[x]?M.P[x].name:x)}</span>`).join('')}
+      ${j.part.length?`<span class="lbl">With</span>${j.part.map(x => `<span class="tag hollow" style="color:${PCOL[x]||'var(--ink)'}"><span class="dot"></span><span style="color:var(--ink-soft)">${esc(M.P[x]?M.P[x].short:x)}</span></span>`).join('')}`:''}</div>
+    <div class="jx-meta">${j.dom.length?`<span class="lbl">Domains</span>${j.dom.map(d => `<span class="tag">D${M.DOM[d]?M.DOM[d].n:''} · ${esc(M.DOM[d]?M.DOM[d].label:d)}</span>`).join('')}`:''}
+      <span class="lbl">Status</span><span class="tag">${esc(j.status)}</span>${j.captured?'<span class="badge captured">from interview</span>':''}${dec?`<span class="badge ${dec.status==='accepted'?'st-acc':'st-drop'}">${esc(dec.status)} in review</span>`:''}</div>
+    ${j.svc.length?`<div class="jx-meta"><span class="lbl">Services</span>${j.svc.map(s => `<span class="tag" title="hr:${esc(s)}">${esc(M.SVC[s]?M.SVC[s].label:s)}</span>`).join('')}</div>`:''}
+    <div class="js-stats">
+      <div class="stat"><div class="n">${j.steps.length}</div><div class="l">Job steps</div></div>
+      <div class="stat"><div class="n">${outs.length}</div><div class="l">Desired outcomes</div></div>
+      <div class="stat"><div class="n">${outs.filter(o=>o.captured).length + j.steps.filter(s=>s.captured).length}</div><div class="l">From interviews</div></div>
+      <div class="stat goodstat"><div class="n">${outs.filter(o=>statusOf(o.id)==='acc').length}</div><div class="l">Accepted</div></div>
+      <div class="stat"><div class="n">${avg('oP')}</div><div class="l">Avg opportunity · clients</div></div>
+      <div class="stat warnstat"><div class="n">${avg('oN')}</div><div class="l">Avg opportunity · non-clients</div></div>
+    </div></div>`;
+  if(j.type==='emotional' || j.type==='social'){
+    h += `<div class="note-box" style="margin-top:16px">${j.type==='social'?'A social job':'An emotional job'} has no job map of its own: it describes how the persona wants to ${j.type==='social'?'be seen':'feel'} while getting its functional jobs done. Use it to frame interviews, messaging and the Dream phase of an appreciative inquiry, not as survey items.${j.evidence.length?'<br><br>Evidence: '+j.evidence.map(e => esc(C.local(e))).join(', '):''}</div>`;
+    root.innerHTML = h; bindJobBar(); return;
+  }
+  h += `<div class="jobmap">${M.stages.map(s => {
+    const named = j.steps.filter(x => x.stage===s.id && x.captured);
+    const os = shown.filter(o => o.step===s.id);
+    return `<div class="stage"><div class="stage-h"><b>${s.n} · ${esc(s.name)}</b><span>${esc(s.desc)}</span></div><div style="display:grid;gap:7px;align-content:start">
+      ${named.map(x => `<div class="stepcard"><b>Step</b> ${esc(stripStage(x.name))} <span class="badge captured" style="margin-left:4px">${esc(x.id)}</span></div>`).join('')}
+      ${os.length ? os.map(o => { const a = AN[o.id], stt = statusOf(o.id);
+        return `<div class="oc ${o.captured?'captured':''} ${stt==='drop'?'dropped':''}"><div class="oid"><span>${esc(o.id)}</span>${a?`<span>opp ${a.oP} / ${a.oN}</span>`:''}</div>${esc(o.t)}
+          <div class="tags">${o.theme?`<span class="tag">${esc(o.theme)}</span>`:''}${o.m?`<span class="tag">${esc(o.m)}</span>`:''}${a&&a.act!=='keep'?`<span class="tag act-${a.act}">${ACTLBL[a.act]}</span>`:''}${ST_BADGE[stt]}${o.captured?'<span class="badge captured">interview</span>':''}</div></div>`; }).join('')
+        : `<div class="empty-step">${q?'No match at this step':'No outcome at this step'}</div>`}
+    </div></div>`; }).join('')}</div>`;
+  h += `<div class="js-tools" style="margin-top:26px"><h3 style="margin:0;font-family:'Big Shoulders Display',sans-serif;font-size:22px">Outcome table</h3><span class="js-note">${WAVE?esc(WAVE.label):'No wave'} · opportunity = importance + max(importance − satisfaction, 0)</span><button class="reset-btn" type="button" id="jx-csv">Copy as CSV</button></div>
+    <div class="js-tablewrap"><table class="js-table"><thead><tr><th>ID</th><th>Step</th><th>Desired outcome</th><th>Theme</th><th>Metric</th><th class="num">Opp · clients</th><th class="num">Opp · non-clients</th><th>Action</th><th>Review</th></tr></thead><tbody>
+    ${shown.map(o => { const a = AN[o.id]; return `<tr><td class="mono">${esc(o.id)}</td><td class="small">${M.STAGE[o.step]?M.STAGE[o.step].n+' · '+esc(M.STAGE[o.step].name):''}</td><td class="stmt">${esc(o.t)}</td><td class="small">${esc(o.theme)}</td><td class="small">${esc(o.m)}</td>
+      <td class="num">${a?a.oP:'—'}</td><td class="num">${a?a.oN:'—'}</td><td>${a?`<span class="act act-${a.act}">${ACTLBL[a.act]}</span>`:''}</td><td class="small">${{acc:'Accepted',drop:'Dropped',rev:'In review',none:'—'}[statusOf(o.id)]}</td></tr>`; }).join('')}
+    </tbody></table></div>`;
+  root.innerHTML = h; bindJobBar();
+  $('#jx-csv').onclick = () => {
+    const qv = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; };
+    const lines = [['persona','job_id','job','outcome_id','stage','desired_outcome','theme','metric','opp_clients','opp_non_clients','action','review'].join(',')]
+      .concat(shown.map(o => { const a = AN[o.id]; return [p.id, j.id, j.stmt, o.id, M.STAGE[o.step]?M.STAGE[o.step].name:'', o.t, o.theme, o.m, a?a.oP:'', a?a.oN:'', a?ACTLBL[a.act]:'', statusOf(o.id)].map(qv).join(','); }));
+    copy(lines.join('\n'), 'Copied ' + shown.length + ' rows');
+  };
+}
+function bindJobBar(){
+  const s = $('#jx-job'); if(s) s.onchange = () => { st.job = s.value; hashSet(); renderJobs(); };
+  const q = $('#jx-q'); if(q) q.oninput = () => { st.jq = q.value.trim(); clearTimeout(q._t); q._t = setTimeout(() => { renderJobs(); const n = $('#jx-q'); n.focus(); n.setSelectionRange(n.value.length, n.value.length); }, 200); };
+  const a = $('#jx-all'); if(a) a.onchange = () => { st.jall = a.checked; renderJobs(); };
+}
+function copy(txt, msg){ try{ navigator.clipboard.writeText(txt).then(() => toast(msg||'Copied'), () => toast('Copy was blocked by the browser.')); }catch(e){ toast('Copy was blocked by the browser.'); } }
+function toast(m){ let t = $('#c360-toast'); if(!t){ t = document.createElement('div'); t.id='c360-toast'; t.style.cssText='position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:8px 14px;border-radius:4px;font-size:13px;z-index:99'; document.body.appendChild(t); } t.textContent = m; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2600); }
+
+/* ---------- Appreciative Inquiry ---------- */
+const PHASES = [
+  { k:'discover', name:'Discover', lead:'What works at its best', capture:'Functional jobs and what already goes well',
+    qs: j => [`Tell me about a time when you ${j} and it went really well. What made it work?`, `What do you value most about how you ${j} today?`, 'Who else is involved, and what do they do?'] },
+  { k:'dream', name:'Dream', lead:'What it could be', capture:'Emotional and social jobs',
+    qs: j => [`Imagine it is a year from now and you ${j} without a hitch. What is different?`, 'How do you want to feel while you do it? How do you want others to see you?', 'What would you stop having to do?'] },
+  { k:'design', name:'Design', lead:'What would need to be true', capture:'Job steps, from define to conclude',
+    qs: j => [`Walk me through the steps you take to ${j}, from deciding what is needed to wrapping up.`, 'Where does each step slow down, go wrong or cost more than it should?', 'What do you need to have in hand before each step?'] },
+  { k:'destiny', name:'Destiny', lead:'How you would know', capture:'Desired outcomes: direction, metric, object, clarifier',
+    qs: j => [`How would you know you had done a great job to ${j}? What would you measure?`, 'What is the one number you most want to move? Up or down?', 'What would make you trust that it stays that way?'] }
+];
+const SIZES = ['1–4 employees','5–19 employees','20–49 employees','50–149 employees','150–499 employees','500+ employees'];
+const INDUSTRIES = ['Office and professional services','Field and industrial','Healthcare and social services','Hospitality and retail','Technology','Financial services','Nonprofit','Other'];
+const MODELS = ['In-house HR only','Payroll provider plus a benefits broker','Another professional employer organization','Administrative services organization','Human resources outsourcing (partial)','Not sure'];
+const METRICS = [['speed','the time required to (speed)'],['stability','the likelihood that / of (stability)'],['cost-and-exposure','the cost of (cost and exposure)'],['effort','the effort required to (effort)'],['output','the number of (output)']];
+let draft = null, dirty = false;
+
+function blankInterview(){
+  const rv = C.reviewer();
+  return { key:null, persona:st.p, date:C.today(), interviewer:rv.name||'', role:'', size:'', industry:'', model:'', summary:'', notes:[], jobs:[], steps:[], outcomes:[] };
+}
+function draftKey(k){ return 'ke-c360-ai-draft-' + (k || 'new-' + st.p); }
+function saveDraftLocal(){ dirty = true; try{ localStorage.setItem(draftKey(draft.key), JSON.stringify(draft)); }catch(e){} setMsg('Unsaved changes · kept in this browser until you save to GraphDB'); }
+function setMsg(m, tone){ const el = $('#ai-msg'); if(el){ el.textContent = m; el.style.color = tone==='bad'?'var(--warn)':tone==='ok'?'var(--good)':''; } }
+async function openInterview(key){
+  st.ai = key; setTab('ai', true);
+  try{
+    const it = key ? await C.interview(M, key) : blankInterview();
+    let local = null; try{ local = JSON.parse(localStorage.getItem(draftKey(key)) || 'null'); }catch(e){}
+    draft = local || it; dirty = !!local;
+    if(!draft.persona) draft.persona = st.p;
+    draft.outcomes.forEach(o => { if(!o.direction){ o.custom = o.stmt || ''; } });
+    renderAI();
+    if(local) setMsg('Restored unsaved changes from this browser.');
+  }catch(e){ $('#view-ai').innerHTML = `<div class="note-box">Could not open the interview: ${esc(e.message||e)}</div>`; }
+}
+function personaJobs(){ // functional and chain jobs to attach steps and outcomes to
+  const p = M.P[draft.persona] || P(), J = jobsOf(p);
+  const model = J.ex.concat(J.part).filter((j,i,a) => a.indexOf(j)===i).map(j => [j.id, `${j.id} · ${j.stmt}`]);
+  const cap = draft.jobs.filter(j => (j.kind==='core'||j.kind==='chain') && String(j.stmt||'').trim()).map(j => [j.ref, `New · ${j.stmt}`]);
+  return cap.concat(model);
+}
+function jobStmt(ref){ const c = draft.jobs.find(j => j.ref===ref); return c ? c.stmt : M.J[ref] ? M.J[ref].stmt : ''; }
+function evidenceChips(row){
+  const notes = draft.notes.filter(n => String(n.text||'').trim());
+  if(!notes.length) return '<span class="hint">Add notes above to link evidence.</span>';
+  return notes.map((n,i) => `<button type="button" class="mini ${row.evidence&&row.evidence.includes(n.ref)?'on':''}" data-ev="${esc(n.ref)}" title="${esc(n.text)}">${n.quote?'“':''}${PHASES.find(p=>p.k===n.phase).name} ${i+1}${n.quote?'”':''}</button>`).join('');
+}
+function jobWarn(j){
+  const s = String(j.stmt||'').trim(); if(!s) return '';
+  if(/\b(insperity|portal|app|software|platform|system|tool|dashboard|using|with our)\b/i.test(s)) return 'Jobs are solution-agnostic: describe what the persona is trying to get done, not the product or service.';
+  if(j.kind==='emotional' && !/^(feel|avoid feeling|not feel)\b/i.test(s)) return 'Emotional jobs usually start with “Feel …”.';
+  if(j.kind==='social' && !/^(be seen|be regarded|be known|be viewed|be perceived)\b/i.test(s)) return 'Social jobs usually start with “Be seen as …”.';
+  if((j.kind==='core'||j.kind==='chain') && /^(feel|be seen|be regarded)\b/i.test(s)) return 'That reads as an emotional or social job; change the type or start with a verb.';
+  return '';
+}
+function outcomeStmt(o){ return String(o.custom||'').trim() || C.composeOutcome(o.direction||'Minimize', o.metric||'speed', o.object, o.clarifier); }
+function outcomeWarn(o){
+  const s = outcomeStmt(o); if(!s) return '';
+  if(!/^(Minimize|Increase|Maximize)\b/.test(s)) return 'Desired outcomes start with a direction: Minimize or Increase.';
+  if(/\b(insperity|portal|app|software|platform)\b/i.test(s)) return 'Keep outcomes solution-free: measure the result, not the feature that delivers it.';
+  return '';
+}
+function guessMetric(t){ t = String(t).toLowerCase();
+  if(/\b(cost|expensive|\$|price|premium|penalt|liabil)/.test(t)) return 'cost-and-exposure';
+  if(/\b(effort|hassle|manual|paperwork|work to|burden)/.test(t)) return 'effort';
+  if(/\b(how many|number of|count|calls|tickets|questions)/.test(t)) return 'output';
+  if(/\b(error|wrong|miss|late|fail|mistake|risk|chance|likel|forget)/.test(t)) return 'stability';
+  return 'speed'; }
+
+function renderAI(){
+  const root = $('#view-ai'), p = P(), list = IV.filter(i => st.jall || i.persona===st.p);
+  const listHtml = `<div class="ai-list"><button class="btn pri" id="ai-new" type="button">+ New interview with ${esc(p.short)}</button>
+    ${list.length ? list.map(i => `<button class="it" data-key="${esc(i.key)}" aria-current="${draft&&draft.key===i.key}"><b>${esc(i.id)} · ${esc(i.role||'Interview')}</b><span>${esc(i.date)} · ${esc(M.P[i.persona]?M.P[i.persona].short:i.persona)}${i.industry?' · '+esc(i.industry):''}</span><span>${i.counts.notes} notes · ${i.counts.jobs} jobs · ${i.counts.steps} steps · ${i.counts.outcomes} outcomes</span></button>`).join('')
+      : `<div class="note-box">No interviews with the ${esc(p.short)} persona yet.</div>`}
+    <label class="toggle"><input type="checkbox" id="ai-all" ${st.jall?'checked':''}> Show every persona’s interviews</label>
+    <details class="guide note-box"><summary>About this method</summary>
+      <p><b>Jobs to be done</b> (Clayton Christensen): people “hire” a product or service to make progress on a job. Functional jobs say what they are trying to get done, emotional and social jobs say how they want to feel and be seen. Jobs never name a solution.</p>
+      <p><b>Desired outcomes</b> (outcome-driven innovation): the measures people use to judge a job step, written as direction + metric + object of control + clarifier, e.g. “Minimize the time required to reconcile payroll to the general ledger after each run”.</p>
+      <p><b>Appreciative inquiry</b> (Cooperrider’s 4-D cycle) structures the interview around what works: Discover, Dream, Design, Destiny. It surfaces jobs and outcomes in the interviewee’s own words before the survey measures them.</p></details></div>`;
+  if(!draft){ root.innerHTML = `<div class="ai-grid">${listHtml}<div class="ai-panel"><h3>Appreciative inquiry</h3><p class="sub" style="margin:0">Pick an interview on the left or start a new one. Each interview is saved to its own named graph, and the jobs, steps and outcomes it captures appear in Explore and Jobs as Draft until they are accepted in Outcome Review.</p></div></div>`; bindAIList(); return; }
+  const d = draft, dp = M.P[d.persona] || p, J = jobsOf(dp);
+  const topJobs = J.ex.filter(j => j.type==='core').map(j => ({ j, s: j.out.reduce((m,o) => Math.max(m, AN[o] ? AN[o].oN : 0), 0) })).sort((a,b) => b.s - a.s).slice(0,1);
+  const jText = topJobs.length ? C.lcFirst(topJobs[0].j.stmt) : 'get this job done';
+  const jobsSel = personaJobs();
+  const opt = (v, cur, l) => `<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l||v)}</option>`;
+  const notesByPhase = k => d.notes.map((n,i) => [n,i]).filter(([n]) => n.phase===k);
+  root.innerHTML = `<div class="ai-grid">${listHtml}<div>
+    <div class="ai-panel"><h3>${d.key ? 'Interview ' + esc(d.id || d.key) : 'New interview'}</h3>
+      <p class="sub">Record the interviewee’s role and company profile, never their name or contact details. Everything here is saved to <code>${esc(C.G.interview(d.key || '…'))}</code>.</p>
+      <div class="fgrid">
+        <label class="fld"><span>Persona</span><select data-f="persona">${M.personas.map(x => opt(x.id, d.persona, x.id + ' · ' + x.short)).join('')}</select></label>
+        <label class="fld"><span>Date</span><input type="date" data-f="date" value="${esc(d.date)}"></label>
+        <label class="fld"><span>Interviewer</span><input type="text" data-f="interviewer" value="${esc(d.interviewer)}" placeholder="Your name"></label>
+        <label class="fld"><span>Interviewee role (title)</span><input type="text" data-f="role" value="${esc(d.role)}" placeholder="e.g. Controller"></label>
+        <label class="fld"><span>Company size</span><select data-f="size"><option value="">—</option>${SIZES.map(s => opt(s, d.size)).join('')}</select></label>
+        <label class="fld"><span>Industry</span><select data-f="industry"><option value="">—</option>${INDUSTRIES.map(s => opt(s, d.industry)).join('')}</select></label>
+        <label class="fld"><span>How they handle HR today</span><select data-f="model"><option value="">—</option>${MODELS.map(s => opt(s, d.model)).join('')}</select></label>
+      </div>
+      <label class="fld"><span>Summary</span><textarea data-f="summary" rows="2" placeholder="What did this interview reveal?">${esc(d.summary)}</textarea></label>
+    </div>
+
+    <div class="ai-panel"><h3>Notes by phase</h3><p class="sub">Questions are drafted from ${esc(dp.short)}’s top job${topJobs.length?' (“'+esc(topJobs[0].j.stmt)+'”)':''}. Turn any note into a job, a job step or a desired outcome; the note stays linked as evidence.</p>
+      <div class="phases">${PHASES.map(ph => `<div class="phase"><h4>${ph.name}</h4><div class="q"><b>${ph.lead}.</b> Captures: ${ph.capture}.</div>
+        <ul class="qs">${ph.qs(jText).map(q => `<li>${esc(q)}</li>`).join('')}</ul>
+        ${notesByPhase(ph.k).map(([n,i]) => `<div class="note" data-n="${i}"><textarea data-nf="text" rows="3" placeholder="What did they say?">${esc(n.text)}</textarea>
+          <div class="acts"><button type="button" class="mini ${n.quote?'on':''}" data-na="quote" title="Their own words">“ ”</button><button type="button" class="mini" data-na="job">→ Job</button><button type="button" class="mini" data-na="step">→ Step</button><button type="button" class="mini" data-na="outcome">→ Outcome</button><button type="button" class="mini danger" data-na="del" aria-label="Delete note">✕</button></div></div>`).join('')}
+        <button type="button" class="mini" data-addnote="${ph.k}">+ Note</button></div>`).join('')}</div>
+    </div>
+
+    <div class="ai-panel"><h3>Jobs to be done</h3><p class="sub">Functional jobs: a verb, an object and a context (“Pay employees accurately and on time”). Emotional jobs: “Feel …”. Social jobs: “Be seen as …”. Never name a solution.</p>
+      ${d.jobs.map((j,i) => `<div class="row-ed" data-j="${i}"><div class="r wide">
+        <label class="fld"><span>Type</span><select data-jf="kind">${[['core','Core functional'],['chain','Consumption chain'],['emotional','Emotional'],['social','Social']].map(([v,l]) => opt(v, j.kind, l)).join('')}</select></label>
+        <label class="fld"><span>Job statement</span><input type="text" data-jf="stmt" value="${esc(j.stmt)}" placeholder="${j.kind==='emotional'?'Feel confident that…':j.kind==='social'?'Be seen as…':'Verb + object + context'}"></label>
+        <button type="button" class="mini danger" data-ja="del" aria-label="Remove job">✕</button></div>
+        <div class="ev"><span>Evidence</span>${evidenceChips(j)}</div>${jobWarn(j)?`<div class="warnline">${esc(jobWarn(j))}</div>`:''}</div>`).join('')}
+      <div><button type="button" class="btn" id="ai-addjob">+ Job</button></div>
+    </div>
+
+    <div class="ai-panel"><h3>Job steps</h3><p class="sub">Steps the interviewee takes, placed on the eight-stage job map. Attach them to an existing job or one captured above.</p>
+      ${d.steps.map((s,i) => `<div class="row-ed" data-s="${i}"><div class="r">
+        <label class="fld"><span>Job</span><select data-sf="job">${jobsSel.map(([v,l]) => opt(v, s.job, l)).join('')}</select></label>
+        <label class="fld"><span>Stage</span><select data-sf="stage">${M.stages.map(x => opt(x.id, s.stage, x.n + ' · ' + x.name)).join('')}</select></label>
+        <label class="fld" style="grid-column:span 2"><span>Step</span><input type="text" data-sf="name" value="${esc(s.name)}" placeholder="e.g. Check the register against last month"></label>
+        <button type="button" class="mini danger" data-sa="del" aria-label="Remove step" style="justify-self:start">✕</button></div>
+        <div class="ev"><span>Evidence</span>${evidenceChips(s)}</div></div>`).join('')}
+      <div><button type="button" class="btn" id="ai-addstep">+ Job step</button></div>
+    </div>
+
+    <div class="ai-panel"><h3>Desired outcomes</h3><p class="sub">Direction + metric + object of control + contextual clarifier. The survey will rate each one for importance and satisfaction.</p>
+      ${d.outcomes.map((o,i) => { const steps = d.steps.filter(s => s.job===o.job && String(s.name||'').trim());
+        return `<div class="row-ed" data-o="${i}"><div class="r">
+        <label class="fld"><span>Job</span><select data-of="job">${jobsSel.map(([v,l]) => opt(v, o.job, l)).join('')}</select></label>
+        <label class="fld"><span>Step</span><select data-of="step"><option value="">The job’s ${esc((M.STAGE[o.stage]||{}).name||'')} step</option>${steps.map(s => opt(s.ref, o.step, 'Captured · ' + s.name)).join('')}</select></label>
+        <label class="fld"><span>Stage</span><select data-of="stage">${M.stages.map(x => opt(x.id, o.stage, x.n + ' · ' + x.name)).join('')}</select></label>
+        <label class="fld"><span>Theme</span><select data-of="theme"><option value="">—</option>${M.themes.map(t => opt(t.name, o.theme)).join('')}</select></label></div>
+        <div class="r"><label class="fld"><span>Direction</span><select data-of="direction">${['Minimize','Increase'].map(v => opt(v, o.direction||'Minimize')).join('')}</select></label>
+        <label class="fld"><span>Metric</span><select data-of="metric">${METRICS.map(([v,l]) => opt(v, o.metric||'speed', l)).join('')}</select></label>
+        <label class="fld" style="grid-column:span 2"><span>Object of control</span><input type="text" data-of="object" value="${esc(o.object||'')}" placeholder="e.g. reconcile payroll to the general ledger"></label>
+        <label class="fld" style="grid-column:span 2"><span>Clarifier</span><input type="text" data-of="clarifier" value="${esc(o.clarifier||'')}" placeholder="e.g. after each run"></label></div>
+        <label class="fld"><span>Or write the statement yourself</span><input type="text" data-of="custom" value="${esc(o.custom||'')}" placeholder="Leave empty to use the builder"></label>
+        <div class="preview">${outcomeStmt(o) ? esc(outcomeStmt(o)) : '<em>The statement appears here as you fill in the builder.</em>'}</div>
+        <div class="ev"><span>Evidence</span>${evidenceChips(o)}<button type="button" class="mini danger" data-oa="del" style="margin-left:auto">Remove outcome</button></div>
+        ${outcomeWarn(o)?`<div class="warnline">${esc(outcomeWarn(o))}</div>`:''}</div>`; }).join('')}
+      <div><button type="button" class="btn" id="ai-addout">+ Desired outcome</button></div>
+    </div>
+
+    <div class="savebar"><span class="msg" id="ai-msg">${dirty?'Unsaved changes':'Saved in GraphDB'}</span>
+      ${d.key?'<button type="button" class="btn danger" id="ai-del">Delete interview</button>':''}
+      <a class="btn" href="c360-outcome-review.html" target="_blank" rel="noopener">Open Outcome Review</a>
+      <button type="button" class="btn pri" id="ai-save">Save to GraphDB</button></div>
+  </div></div>`;
+  bindAIList(); bindAIEditor();
+}
+function bindAIList(){
+  const n = $('#ai-new'); if(n) n.onclick = () => { if(dirty && draft && !confirm('Discard unsaved changes to this interview?')) return; draft = blankInterview(); dirty = false; st.ai = null; hashSet(); renderAI(); };
+  document.querySelectorAll('.ai-list .it').forEach(b => b.onclick = () => { if(dirty && !confirm('Discard unsaved changes to this interview?')) return; openInterview(b.dataset.key); });
+  const a = $('#ai-all'); if(a) a.onchange = () => { st.jall = a.checked; renderAI(); };
+}
+function bindAIEditor(){
+  const root = $('#view-ai'), d = draft;
+  root.querySelectorAll('[data-f]').forEach(el => el.oninput = el.onchange = () => { d[el.dataset.f] = el.value; saveDraftLocal(); if(el.dataset.f==='persona') renderAI(); });
+  root.querySelectorAll('[data-addnote]').forEach(b => b.onclick = () => { d.notes.push({ ref:'n'+C.uid(5), phase:b.dataset.addnote, text:'', quote:false }); saveDraftLocal(); renderAI(); const ts = root.querySelectorAll(`.phase textarea`); const last = [...ts].filter(t => t.closest('.phase').querySelector(`[data-addnote="${b.dataset.addnote}"]`)).pop(); if(last) last.focus(); });
+  root.querySelectorAll('.note').forEach(box => {
+    const i = +box.dataset.n, n = d.notes[i];
+    box.querySelector('textarea').oninput = e => { n.text = e.target.value; saveDraftLocal(); };
+    box.querySelectorAll('[data-na]').forEach(b => b.onclick = () => {
+      const a = b.dataset.na, txt = String(n.text||'').trim();
+      if(a==='quote'){ n.quote = !n.quote; }
+      else if(a==='del'){ if(txt && !confirm('Delete this note?')) return; d.notes.splice(i,1); [d.jobs,d.steps,d.outcomes].forEach(arr => arr.forEach(r => r.evidence = (r.evidence||[]).filter(x => x!==n.ref))); }
+      else if(!txt){ toast('Write the note first.'); return; }
+      else if(a==='job'){ d.jobs.push({ ref:'j'+C.uid(5), kind: n.phase==='dream' ? (/\b(seen|look|regard|think of me)\b/i.test(txt)?'social':'emotional') : 'core', stmt: txt.replace(/^["“]|["”]$/g,''), evidence:[n.ref] }); }
+      else if(a==='step'){ const js = personaJobs(); d.steps.push({ ref:'s'+C.uid(5), job: js.length?js[0][0]:'', stage: n.phase==='design'?'EXE':'DEF', name: txt.replace(/^["“]|["”]$/g,''), evidence:[n.ref] }); }
+      else if(a==='outcome'){ const js = personaJobs(); d.outcomes.push({ ref:'o'+C.uid(5), job: js.length?js[0][0]:'', step:'', stage:'EXE', theme:'', direction:'Minimize', metric:guessMetric(txt), object:'', clarifier:'', custom:'', evidence:[n.ref], hintText:txt }); }
+      saveDraftLocal(); renderAI();
+      if(a==='outcome'){ const rows = root.querySelectorAll('[data-o]'); const last = rows[rows.length-1]; if(last){ last.scrollIntoView({block:'center'}); const ob = last.querySelector('[data-of="object"]'); if(ob){ ob.placeholder = 'From the note: ' + txt.slice(0,80); ob.focus(); } } }
+    });
+  });
+  const rowBind = (attr, arr, fattr, aattr) => root.querySelectorAll(`[data-${attr}]`).forEach(box => {
+    const i = +box.dataset[attr], r = arr[i];
+    box.querySelectorAll(`[data-${fattr}]`).forEach(el => {
+      el.oninput = () => { r[el.dataset[fattr.replace(/-(\w)/g,(m,c)=>c.toUpperCase())]] = el.value; saveDraftLocal();
+        const pv = box.querySelector('.preview'); if(pv) pv.innerHTML = outcomeStmt(r) ? esc(outcomeStmt(r)) : '<em>The statement appears here as you fill in the builder.</em>'; };
+      el.onchange = () => { const f = el.dataset[fattr.replace(/-(\w)/g,(m,c)=>c.toUpperCase())]; r[f] = el.value;
+        if(attr==='o' && f==='step' && el.value){ const cs = d.steps.find(x => x.ref===el.value); if(cs) r.stage = cs.stage; }
+        if(attr==='o' && f==='job'){ r.step = ''; }
+        saveDraftLocal(); if(el.tagName==='SELECT') renderAI(); };
+    });
+    box.querySelectorAll('[data-ev]').forEach(b => b.onclick = () => { const k = b.dataset.ev; r.evidence = r.evidence || []; const at = r.evidence.indexOf(k); at<0 ? r.evidence.push(k) : r.evidence.splice(at,1); saveDraftLocal(); renderAI(); });
+    const del = box.querySelector(`[data-${aattr}="del"]`); if(del) del.onclick = () => { arr.splice(i,1); saveDraftLocal(); renderAI(); };
+  });
+  rowBind('j', d.jobs, 'jf', 'ja'); rowBind('s', d.steps, 'sf', 'sa'); rowBind('o', d.outcomes, 'of', 'oa');
+  $('#ai-addjob').onclick = () => { d.jobs.push({ ref:'j'+C.uid(5), kind:'core', stmt:'', evidence:[] }); saveDraftLocal(); renderAI(); };
+  $('#ai-addstep').onclick = () => { const js = personaJobs(); d.steps.push({ ref:'s'+C.uid(5), job: js.length?js[0][0]:'', stage:'DEF', name:'', evidence:[] }); saveDraftLocal(); renderAI(); };
+  $('#ai-addout').onclick = () => { const js = personaJobs(); d.outcomes.push({ ref:'o'+C.uid(5), job: js.length?js[0][0]:'', step:'', stage:'EXE', theme:'', direction:'Minimize', metric:'speed', object:'', clarifier:'', custom:'', evidence:[] }); saveDraftLocal(); renderAI(); };
+  $('#ai-save').onclick = saveInterview;
+  const del = $('#ai-del'); if(del) del.onclick = async () => {
+    if(!confirm('Delete this interview and everything captured in it from GraphDB? Reviews of its jobs and outcomes stay in the review graph.')) return;
+    try{ await C.deleteInterview(d.key); try{ localStorage.removeItem(draftKey(d.key)); }catch(e){} draft = null; dirty = false; st.ai = null; await refresh(); renderAll(); toast('Interview deleted'); }
+    catch(e){ setMsg(String(e.message||e), 'bad'); }
+  };
+}
+async function saveInterview(){
+  const d = draft;
+  if(!d.role.trim()){ setMsg('Add the interviewee’s role (title) before saving.', 'bad'); return; }
+  const bad = d.jobs.filter(j => !String(j.stmt||'').trim()).length + d.steps.filter(s => !String(s.name||'').trim()).length + d.outcomes.filter(o => !outcomeStmt(o)).length;
+  const payload = Object.assign({}, d, { outcomes: d.outcomes.map(o => Object.assign({}, o, { stmt: outcomeStmt(o) })) });
+  $('#ai-save').disabled = true; setMsg('Saving to GraphDB…');
+  try{
+    const r = await C.saveInterview(M, payload);
+    try{ localStorage.removeItem(draftKey(d.key)); localStorage.removeItem(draftKey(null)); }catch(e){}
+    st.ai = r.key; dirty = false;
+    await refresh();
+    draft = await C.interview(M, r.key); draft.outcomes.forEach(o => { if(!o.direction) o.custom = o.stmt || ''; });
+    hashSet(); renderAI(); renderMast();
+    setMsg(`Saved ${r.id}: ${r.triples} statements in ${r.graph.replace('https://www.insperity.com/graph/','…/')}${bad?' · '+bad+' empty rows were skipped':''}. Captured items are Draft until accepted in Outcome Review.`, 'ok');
+  }catch(e){ setMsg(String(e.message||e), 'bad'); $('#ai-save').disabled = false; }
+}
+
+/* ---------- tabs, persona, hash ---------- */
+function setTab(t, quiet){
+  st.tab = t;
+  document.querySelectorAll('.tabbtn').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab===t)));
+  $('#view-explore').hidden = t!=='explore'; $('#view-graph').hidden = t!=='graph'; $('#view-jobs').hidden = t!=='jobs'; $('#view-ai').hidden = t!=='ai';
+  $('#controls').hidden = !(t==='explore' || t==='graph');
+  $('#gauges').hidden = t!=='explore';
+  hashSet();
+  if(!quiet) renderTab();
+}
+function renderTab(){
+  if(st.tab==='explore') renderExplore();
+  else if(st.tab==='graph') renderGraph();
+  else if(st.tab==='jobs') renderJobs();
+  else if(st.tab==='ai'){ if(!draft && st.ai) openInterview(st.ai); else renderAI(); }
+}
+function setPersona(id){
+  if(st.tab==='ai' && dirty && !confirm('Discard unsaved changes to this interview?')) return;
+  st.p = id; lsSet('ke-c360-persona', id); st.job = null; st.cats = null;
+  if(st.tab==='ai'){ draft = null; dirty = false; st.ai = null; }
+  renderAll();
+}
+function renderAll(){ renderSwitch(); renderMast(); renderChips(); renderGauges(); setTab(st.tab); }
+function hashSet(){ try{ history.replaceState(null, '', '#' + [st.p, st.tab, st.tab==='jobs' ? (st.job||'') : st.tab==='ai' ? (st.ai||'') : ''].filter(Boolean).join('/')); }catch(e){} }
+function hashGet(){ try{ const [p,t,x] = decodeURIComponent(location.hash.slice(1)).split('/'); return {p,t,x}; }catch(e){ return {}; } }
+
+document.querySelectorAll('.tabbtn').forEach(b => b.onclick = () => { if(st.tab==='ai' && b.dataset.tab!=='ai' && dirty && !confirm('Leave with unsaved interview changes? They stay in this browser as a draft.')) return; setTab(b.dataset.tab); });
+$('#search').oninput = e => { st.search = e.target.value.trim().toLowerCase(); renderTab(); };
+$('#toggle-ghosts').onchange = e => { st.ghosts = e.target.checked; renderTab(); };
+$('#toggle-captured').onchange = e => { st.captured = e.target.checked; renderTab(); };
+window.addEventListener('beforeunload', e => { if(dirty){ e.preventDefault(); e.returnValue = ''; } });
+document.addEventListener('ke-theme', () => { if(st.tab==='graph') renderGraph(); });
+
+C.boot(async M0 => {
+  M = M0; await refresh(true);
+  const h = hashGet();
+  st.p = M.P[h.p] ? h.p : (M.P[lsGet('ke-c360-persona','')] ? lsGet('ke-c360-persona','') : M.personas[0].id);
+  st.tab = ['explore','graph','jobs','ai'].includes(h.t) ? h.t : 'explore';
+  if(st.tab==='jobs' && h.x) st.job = h.x;
+  if(st.tab==='ai' && h.x) st.ai = h.x;
+  renderAll();
+});
+})();
+</script>
+
+</body></html>

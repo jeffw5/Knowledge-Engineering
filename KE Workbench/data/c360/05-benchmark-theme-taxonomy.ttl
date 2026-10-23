@@ -1,0 +1,146 @@
+# ==========================================================================
+#  Benchmark theme taxonomy
+#  Target named graph: <https://www.insperity.com/graph/outcome-benchmark/benchmark-themes>
+#  One skos:ConceptScheme; the nine core service lines plus two added themes, all top concepts.
+#  Source: PEO Outcome Benchmark (Outcome-Driven Innovation study blueprint)
+#  Status: Draft 0.3.0, generated 2026-10-22, pending business and compliance SME review
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/taxonomy/benchmark-theme/> a skos:ConceptScheme ;
+    rdfs:label "Benchmark theme taxonomy"@en ;
+    skos:prefLabel "Benchmark theme taxonomy"@en ;
+    skos:definition "A concept scheme of the service-line themes under which outcome benchmark results are reported."@en ;
+    skos:hasTopConcept theme:payroll, theme:benefits, theme:human-resources-compliance, theme:talent-management, theme:training, theme:coaching, theme:monitoring, theme:measurement, theme:values-stewardship, theme:professional-employer-organization-relationship, theme:human-resources-technology-and-data ;
+    dcterms:title "Benchmark theme taxonomy"@en ;
+    dcterms:description "A concept scheme of the service-line themes under which outcome benchmark results are reported."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/taxonomy/benchmark-theme/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "theme" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    dcterms:source <http://example.org/hrservices/ddd#> , <https://www.insperity.com/resource/outcome-benchmark/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/taxonomy/benchmark-theme/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+theme:payroll a skos:Concept ;
+    rdfs:label "Payroll"@en ;
+    skos:prefLabel "Payroll"@en ;
+    skos:definition "A benchmark theme covering paying people correctly and on time, meeting payroll tax obligations, and tracking time and leave."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLinePayroll .
+
+theme:benefits a skos:Concept ;
+    rdfs:label "Benefits"@en ;
+    skos:prefLabel "Benefits"@en ;
+    skos:definition "A benchmark theme covering health, welfare and retirement plans: offering them, enrolling people, and keeping plans compliant."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineBenefits .
+
+theme:human-resources-compliance a skos:Concept ;
+    rdfs:label "Human resources compliance"@en ;
+    skos:prefLabel "Human resources compliance"@en ;
+    skos:altLabel "HR compliance"@en ;
+    skos:altLabel "HR Compliance"@en ;
+    skos:definition "A benchmark theme covering employment law, employee relations risk, workers' compensation and worksite safety."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineHRCompliance .
+
+theme:talent-management a skos:Concept ;
+    rdfs:label "Talent management"@en ;
+    skos:prefLabel "Talent management"@en ;
+    skos:altLabel "Talent Management"@en ;
+    skos:definition "A benchmark theme covering hiring, onboarding, pay decisions, performance management and succession."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineTalentManagement .
+
+theme:training a skos:Concept ;
+    rdfs:label "Training"@en ;
+    skos:prefLabel "Training"@en ;
+    skos:definition "A benchmark theme covering skills-gap analysis and delivery of e-learning and instructor-led training."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineTraining .
+
+theme:coaching a skos:Concept ;
+    rdfs:label "Coaching"@en ;
+    skos:prefLabel "Coaching"@en ;
+    skos:definition "A benchmark theme covering confidential manager coaching and peer mentoring."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineCoaching .
+
+theme:monitoring a skos:Concept ;
+    rdfs:label "Monitoring"@en ;
+    skos:prefLabel "Monitoring"@en ;
+    skos:definition "A benchmark theme covering continuous check-ins and progress tracking against goals."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineMonitoring .
+
+theme:measurement a skos:Concept ;
+    rdfs:label "Measurement"@en ;
+    skos:prefLabel "Measurement"@en ;
+    skos:definition "A benchmark theme covering workforce analytics, scorecards and evidence that development works."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineMeasurement .
+
+theme:values-stewardship a skos:Concept ;
+    rdfs:label "Values stewardship"@en ;
+    skos:prefLabel "Values stewardship"@en ;
+    skos:altLabel "Values Stewardship"@en ;
+    skos:definition "A benchmark theme covering promoting, monitoring and measuring culture and values without violating employee privacy."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineValuesStewardship .
+
+theme:professional-employer-organization-relationship a skos:Concept ;
+    rdfs:label "Professional employer organization relationship"@en ;
+    skos:prefLabel "Professional employer organization relationship"@en ;
+    skos:altLabel "PEO relationship"@en ;
+    skos:altLabel "PEO Relationship"@en ;
+    skos:definition "A benchmark theme covering choosing, moving onto, getting help from and renewing the human resources outsourcing partner; added for the benchmark."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLinePEORelationship ;
+    skos:scopeNote "Added for the benchmark: the business model's service-line layer does not cover these services."@en .
+
+theme:human-resources-technology-and-data a skos:Concept ;
+    rdfs:label "Human resources technology and data"@en ;
+    skos:prefLabel "Human resources technology and data"@en ;
+    skos:altLabel "HR technology and data"@en ;
+    skos:altLabel "HR Technology & Data"@en ;
+    skos:definition "A benchmark theme covering self-service, administrator tools, identity, integration and data security; added for the benchmark."@en ;
+    skos:inScheme <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:topConceptOf <https://www.insperity.com/taxonomy/benchmark-theme/> ;
+    skos:closeMatch hr:ServiceLineHRTechnologyData ;
+    skos:scopeNote "Added for the benchmark: the business model's service-line layer does not cover these services."@en .

@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '3.9.0',
+  version: '4.0.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -78,12 +78,29 @@ window.KE_REGISTRY = {
       ]
     },
     {
-      id: 'context', label: 'Domain context', eyebrow: 'Labels & personas · §3.8',
-      blurb: 'Who uses which words, and what each group needs.',
+      id: 'c360', label: 'Customer 360', eyebrow: 'Personas · jobs · outcomes · demand · §3.8',
+      blurb: 'From persona interviews to demand planning and back: the jobs-to-be-done model in the graph, the job study, SME review and playbook, and the requirements gateway.',
       tools: [
-        { id: 'peo-buyer-personas', code: 'BP', file: 'tools/peo-buyer-personas.html', title: 'Buyer Personas & Jobs',
-          desc: 'Professional employer organization buyer personas with jobs to be done — the persona layer behind persona labels.',
-          functions: [], std: ['3.8'] }
+        { id: 'appreciative-inquiry', code: 'AI', file: 'tools/appreciative-inquiry.html', title: 'Appreciative Inquiry', live: true, isNew: true,
+          desc: 'Qualitative persona research: capture interviews through the 4-D cycle, code what people say into functional, emotional and social jobs, job steps and desired outcomes, and publish them to the graph.',
+          functions: ['Unified modeling', 'Governance workflow'], std: ['3.8'] },
+        { id: 'peo-buyer-personas', code: 'BP', file: 'tools/peo-buyer-personas.html', title: 'Buyer Personas & Jobs', live: true,
+          desc: 'Persona instances read from GraphDB, with a job pull-down showing each job\u2019s steps and desired outcomes, study scores, review status, interview evidence and demand.',
+          functions: ['Impact visualization'], std: ['3.8'] },
+        { id: 'job-study', code: 'JS', file: 'tools/peo-benchmark/study.html', title: 'PEO Job Study',
+          desc: 'The outcome-driven benchmark: opportunity landscape, job map and PEO vs non-PEO comparison. Load survey results here; the other Customer 360 tools use the same scores.',
+          functions: ['Impact visualization'], std: ['3.8'] },
+        { id: 'job-study-overview', code: 'JO', file: 'tools/peo-benchmark/index.html', title: 'PEO Outcome Benchmark', hidden: true },
+        { id: 'outcome-review', code: 'OR', url: 'https://claude.ai/artifact/TiVNKQw9Wwge5hF2BdDSyn', title: 'PEO Outcome Review', external: true,
+          desc: 'Shared review where business and compliance SMEs approve, edit or reject every persona, job and outcome. Opens in a browser tab; export its CSV into the Demand Gateway.',
+          functions: ['Governance workflow'], std: [] },
+        { id: 'outcome-playbook', code: 'OP', url: 'https://claude.ai/artifact/JVvu5CmTykxwE77BPVpBx7', title: 'PEO Outcome Playbook', external: true,
+          desc: 'Battle cards, the Fix / Innovate / Protect / Simplify action matrix and the AI sales advisor, built on the same outcomes. Opens in a browser tab.',
+          functions: ['Impact visualization'], std: [] },
+        { id: 'demand-gateway', code: 'DG', file: 'tools/demand-gateway.html', title: 'Demand Gateway', live: true, isNew: true,
+          desc: 'Requirements engineering semantic gateway: bundle under-served outcomes into demand requests, check them (traced, reviewed, evidenced, measurable, owned, unflagged) and admit them to demand planning, written back to the graph.',
+          functions: ['Governance workflow', 'Artifact versioning'], std: ['3.5'] },
+        { id: 'peo-buyer-personas-legacy', code: 'BL', file: 'tools/peo-buyer-personas-legacy.html', title: 'Sales Advisor Personas (legacy)', hidden: true }
       ]
     },
     {

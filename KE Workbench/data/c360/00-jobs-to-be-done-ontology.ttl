@@ -1,0 +1,372 @@
+# ==========================================================================
+#  Jobs-to-be-done ontology (classes and properties for the instance files)
+#  Target named graph: <https://www.insperity.com/graph/outcome-benchmark/ontology>
+#  Load first: the instance files type their individuals with these classes.
+#  Source: PEO Outcome Benchmark (Outcome-Driven Innovation study blueprint)
+#  Status: Draft 0.3.0, generated 2026-10-22, pending business and compliance SME review
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/ontology/jobs-to-be-done/> a owl:Ontology ;
+    rdfs:label "Jobs-to-be-done ontology"@en ;
+    skos:prefLabel "Jobs-to-be-done ontology"@en ;
+    dcterms:description "Customer-needs layer for outcome-driven benchmarks: client personas, the jobs they are trying to get done, the universal job map stages and the desired outcomes used to measure success."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    dcterms:title "Jobs-to-be-done ontology"@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/ontology/jobs-to-be-done/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "jtbd" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    owl:imports <https://www.insperity.com/ontology/core/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/ontology/jobs-to-be-done/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+# ---- Classes (aligned to Baseline Core v1.0) --------------------------------
+
+jtbd:client-persona a owl:Class ;
+    rdfs:label "Client persona"@en ;
+    skos:prefLabel "Client persona"@en ;
+    skos:definition "A persona that represents a role at or within a client company that executes, or takes part in, jobs a human resources partner can help with."@en ;
+    skos:scopeNote "Persona instances realize the persona model from qualitative research (Appreciative Inquiry interviews) and the jobs model (decisions 16, 18, 22)."@en ;
+    rdfs:subClassOf core:persona ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:job-to-be-done a owl:Class ;
+    rdfs:label "Job to be done"@en ;
+    skos:prefLabel "Job to be done"@en ;
+    skos:definition "A job that a client persona is trying to get done, stated without naming a solution, as captured in the jobs-to-be-done research."@en ;
+    rdfs:subClassOf core:job ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:core-functional-job a owl:Class ;
+    rdfs:label "Core functional job"@en ;
+    skos:prefLabel "Core functional job"@en ;
+    skos:definition "A job to be done that is the main functional task the client hires a human resources partner to help with."@en ;
+    rdfs:subClassOf jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:consumption-chain-job a owl:Class ;
+    rdfs:label "Consumption chain job"@en ;
+    skos:prefLabel "Consumption chain job"@en ;
+    skos:definition "A job to be done that the client must carry out to choose, adopt, use or renew the provider relationship itself."@en ;
+    rdfs:subClassOf jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:emotional-job a owl:Class ;
+    rdfs:label "Emotional job"@en ;
+    skos:prefLabel "Emotional job"@en ;
+    skos:definition "A job to be done that states how the client persona wants to feel, or avoid feeling, while getting functional jobs done."@en ;
+    rdfs:subClassOf jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:social-job a owl:Class ;
+    rdfs:label "Social job"@en ;
+    skos:prefLabel "Social job"@en ;
+    skos:definition "A job to be done that states how the client persona wants to be perceived by others while getting functional jobs done."@en ;
+    rdfs:subClassOf jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:job-map-step a owl:Class ;
+    rdfs:label "Job map step"@en ;
+    skos:prefLabel "Job map step"@en ;
+    skos:definition "A job step of one specific job, stated in the job executor's own words and placed on one of the universal job map stages."@en ;
+    skos:scopeNote "Unique to its job (decision 17); a provider process step reaches it through core:addresses."@en ;
+    rdfs:subClassOf core:job-step ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:job-map-stage a owl:Class ;
+    rdfs:label "Job map stage"@en ;
+    skos:prefLabel "Job map stage"@en ;
+    skos:definition "A generically dependent continuant that is one of the eight universal stages of the job map (define, locate, prepare, confirm, execute, monitor, modify, conclude) on which the steps and desired outcomes of every job are placed."@en ;
+    skos:scopeNote "Called the universal job steps in outcome-driven innovation. Not a core:job-step: a job step belongs to one job, a stage is shared by all of them."@en ;
+    rdfs:subClassOf obo:BFO_0000031 ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:desired-outcome a owl:Class ;
+    rdfs:label "Desired outcome"@en ;
+    skos:prefLabel "Desired outcome"@en ;
+    skos:definition "A desired outcome that a client persona uses to judge success at a stage of a job, stated as direction, metric, object of control and clarifier so that it can be rated for importance and satisfaction."@en ;
+    rdfs:subClassOf core:desired-outcome ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( jtbd:client-persona jtbd:job-map-stage jtbd:desired-outcome ) .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( jtbd:core-functional-job jtbd:consumption-chain-job ) .
+
+# ---- Object properties --------------------------------------------------
+
+jtbd:hasJobExecutor a owl:ObjectProperty ;
+    rdfs:label "has job executor"@en ;
+    skos:prefLabel "has job executor"@en ;
+    skos:definition "An object property that relates a job to a client persona who is responsible for carrying it out."@en ;
+    rdfs:domain jtbd:job-to-be-done ;
+    rdfs:range jtbd:client-persona ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:executesJob a owl:ObjectProperty ;
+    rdfs:subPropertyOf core:performsJob ;
+    rdfs:label "executes job"@en ;
+    skos:prefLabel "executes job"@en ;
+    skos:definition "An object property that relates a client persona to a job the persona is responsible for carrying out."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    owl:inverseOf jtbd:hasJobExecutor .
+
+jtbd:hasJobParticipant a owl:ObjectProperty ;
+    rdfs:label "has job participant"@en ;
+    skos:prefLabel "has job participant"@en ;
+    skos:definition "An object property that relates a job to a client persona who takes part in it without being responsible for it."@en ;
+    rdfs:domain jtbd:job-to-be-done ;
+    rdfs:range jtbd:client-persona ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:participatesInJob a owl:ObjectProperty ;
+    rdfs:label "participates in job"@en ;
+    skos:prefLabel "participates in job"@en ;
+    skos:definition "An object property that relates a client persona to a job the persona takes part in without being responsible for it."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    owl:inverseOf jtbd:hasJobParticipant .
+
+jtbd:hasDesiredOutcome a owl:ObjectProperty ;
+    rdfs:label "has desired outcome"@en ;
+    skos:prefLabel "has desired outcome"@en ;
+    skos:definition "An object property that relates a job to a desired outcome the job executor uses to judge success."@en ;
+    rdfs:domain jtbd:job-to-be-done ;
+    rdfs:range jtbd:desired-outcome ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:isOutcomeOfJob a owl:ObjectProperty ;
+    rdfs:label "is outcome of job"@en ;
+    skos:prefLabel "is outcome of job"@en ;
+    skos:definition "An object property that relates a desired outcome to the job whose success it measures."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    owl:inverseOf jtbd:hasDesiredOutcome .
+
+jtbd:occursAtJobStep a owl:ObjectProperty ;
+    rdfs:label "occurs at job step"@en ;
+    skos:prefLabel "occurs at job step"@en ;
+    skos:definition "An object property that relates a desired outcome to the job-map step in which it is measured."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range jtbd:job-map-stage ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:precedesJobStep a owl:ObjectProperty ;
+    rdfs:label "precedes job step"@en ;
+    skos:prefLabel "precedes job step"@en ;
+    skos:definition "An object property that relates a job step to the job step that immediately follows it on the job map."@en ;
+    rdfs:domain jtbd:job-map-stage ;
+    rdfs:range jtbd:job-map-stage ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasOutcomeMetricType a owl:ObjectProperty ;
+    rdfs:label "has outcome metric type"@en ;
+    skos:prefLabel "has outcome metric type"@en ;
+    skos:definition "An object property that relates a desired outcome to the kind of measure it uses, such as speed or stability."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasBenchmarkTheme a owl:ObjectProperty ;
+    rdfs:label "has benchmark theme"@en ;
+    skos:prefLabel "has benchmark theme"@en ;
+    skos:definition "An object property that relates a desired outcome to the service-line theme under which benchmark results are reported."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:isAddressedByService a owl:ObjectProperty ;
+    rdfs:label "is addressed by service"@en ;
+    skos:prefLabel "is addressed by service"@en ;
+    skos:definition "An object property that relates a desired outcome to a domain service in the business model that helps the client achieve it."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range owl:Thing ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:appliesToBusinessDomain a owl:ObjectProperty ;
+    rdfs:label "applies to business domain"@en ;
+    skos:prefLabel "applies to business domain"@en ;
+    skos:definition "An object property that relates a job to a business domain of the business model whose services support it."@en ;
+    rdfs:domain jtbd:job-to-be-done ;
+    rdfs:range owl:Thing ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+# ---- Data properties ----------------------------------------------------
+
+jtbd:hasIdentifier a owl:DatatypeProperty ;
+    rdfs:label "has identifier"@en ;
+    skos:prefLabel "has identifier"@en ;
+    skos:definition "A data property that gives the stable benchmark identifier of an element, such as J01 or O001."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( jtbd:client-persona jtbd:job-to-be-done jtbd:job-map-step jtbd:job-map-stage jtbd:desired-outcome ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasJobStatement a owl:DatatypeProperty ;
+    rdfs:label "has job statement"@en ;
+    skos:prefLabel "has job statement"@en ;
+    skos:definition "A data property that gives the solution-agnostic wording of a job as used in the survey."@en ;
+    rdfs:domain jtbd:job-to-be-done ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasOutcomeStatement a owl:DatatypeProperty ;
+    rdfs:label "has outcome statement"@en ;
+    skos:prefLabel "has outcome statement"@en ;
+    skos:definition "A data property that gives the exact survey wording of a desired outcome, acronyms included."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasImportanceQuestion a owl:DatatypeProperty ;
+    rdfs:label "has importance question"@en ;
+    skos:prefLabel "has importance question"@en ;
+    skos:definition "A data property that gives the survey question asking how important a desired outcome is to the respondent."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasSatisfactionQuestion a owl:DatatypeProperty ;
+    rdfs:label "has satisfaction question"@en ;
+    skos:prefLabel "has satisfaction question"@en ;
+    skos:definition "A data property that gives the survey question asking how satisfied the respondent is with achieving a desired outcome today."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasStepOrder a owl:DatatypeProperty ;
+    rdfs:label "has step order"@en ;
+    skos:prefLabel "has step order"@en ;
+    skos:definition "A data property that gives the position of a step on the universal job map or within its job, starting at one."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( jtbd:client-persona jtbd:job-to-be-done jtbd:job-map-step jtbd:job-map-stage jtbd:desired-outcome ) ] ;
+    rdfs:range xsd:positiveInteger ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasTypicalTitles a owl:DatatypeProperty ;
+    rdfs:label "has typical titles"@en ;
+    skos:prefLabel "has typical titles"@en ;
+    skos:definition "A data property that lists job titles commonly held by people who fit a client persona."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasPersonaContext a owl:DatatypeProperty ;
+    rdfs:label "has persona context"@en ;
+    skos:prefLabel "has persona context"@en ;
+    skos:definition "A data property that describes the working situation a client persona is in."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasBuyingRole a owl:DatatypeProperty ;
+    rdfs:label "has buying role"@en ;
+    skos:prefLabel "has buying role"@en ;
+    skos:definition "A data property that describes the part a client persona plays in choosing and keeping the provider."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasPersonaGoal a owl:DatatypeProperty ;
+    rdfs:label "has persona goal"@en ;
+    skos:prefLabel "has persona goal"@en ;
+    skos:definition "A data property that states the overall goal a client persona is pursuing at work."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasEmotionalJob a owl:DatatypeProperty ;
+    rdfs:label "has emotional job"@en ;
+    skos:prefLabel "has emotional job"@en ;
+    skos:definition "A data property that states how a client persona wants to feel or be seen while getting jobs done."@en ;
+    rdfs:domain jtbd:client-persona ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:isStepOfJob a owl:ObjectProperty ;
+    rdfs:subPropertyOf core:isStepOf ;
+    rdfs:label "is step of job"@en ;
+    skos:prefLabel "is step of job"@en ;
+    skos:definition "An object property that relates a job map step to the specific job it is part of."@en ;
+    rdfs:domain jtbd:job-map-step ;
+    rdfs:range jtbd:job-to-be-done ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasJobMapStep a owl:ObjectProperty ;
+    rdfs:subPropertyOf core:hasStep ;
+    rdfs:label "has job map step"@en ;
+    skos:prefLabel "has job map step"@en ;
+    skos:definition "An object property that relates a job to one of its job map steps."@en ;
+    rdfs:domain jtbd:job-to-be-done ;
+    rdfs:range jtbd:job-map-step ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    owl:inverseOf jtbd:isStepOfJob .
+
+jtbd:isPlacedAtJobStep a owl:ObjectProperty ;
+    rdfs:label "is placed at job step"@en ;
+    skos:prefLabel "is placed at job step"@en ;
+    skos:definition "An object property that relates a job map step to the universal job step it belongs to."@en ;
+    rdfs:domain jtbd:job-map-step ;
+    rdfs:range jtbd:job-map-stage ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:relatesToJobMapStep a owl:ObjectProperty ;
+    rdfs:label "relates to job map step"@en ;
+    skos:prefLabel "relates to job map step"@en ;
+    skos:definition "An object property that relates a desired outcome to the job map step in which the executor judges it."@en ;
+    rdfs:domain jtbd:desired-outcome ;
+    rdfs:range jtbd:job-map-step ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasEvidenceStatus a owl:ObjectProperty ;
+    rdfs:label "has evidence status"@en ;
+    skos:prefLabel "has evidence status"@en ;
+    skos:definition "An object property that relates a jobs-to-be-done element to how far it has been validated, from interview candidate to benchmarked."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( jtbd:client-persona jtbd:job-to-be-done jtbd:job-map-step jtbd:job-map-stage jtbd:desired-outcome ) ] ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasStepStatement a owl:DatatypeProperty ;
+    rdfs:label "has step statement"@en ;
+    skos:prefLabel "has step statement"@en ;
+    skos:definition "A data property that gives the wording of a job map step as the executor describes it."@en ;
+    rdfs:domain jtbd:job-map-step ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+jtbd:hasShortName a owl:DatatypeProperty ;
+    rdfs:label "has short name"@en ;
+    skos:prefLabel "has short name"@en ;
+    skos:definition "A data property that gives the short name used for an element in charts and survey module names."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( jtbd:client-persona jtbd:job-to-be-done jtbd:job-map-step jtbd:job-map-stage jtbd:desired-outcome ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/jobs-to-be-done/> .

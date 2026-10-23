@@ -1,0 +1,323 @@
+# Requirements gateway ontology
+# Named graph: https://www.insperity.com/graph/outcome-benchmark/requirements-gateway-ontology  ·  Customer 360 release 0.2.0  ·  Draft
+# The hand-off from measured outcomes into demand planning.
+# Generated 2026-10-22T19:46:03Z by gen_customer360.py · Standards: Semantic Governance v1.9 (Draft), Part III
+
+@prefix rdf:             <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:            <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:             <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:             <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:            <http://www.w3.org/2004/02/skos/core#> .
+@prefix dct:             <http://purl.org/dc/terms/> .
+@prefix vaem:            <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:            <http://purl.org/vocab/vann/> .
+@prefix jtbd:            <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix rg:              <https://www.insperity.com/ontology/requirements-gateway/> .
+@prefix ob:              <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix core:            <https://www.insperity.com/ontology/core/> .
+@prefix jobvoc:          <https://www.insperity.com/vocabulary/core-job/> .
+@prefix personavoc:      <https://www.insperity.com/vocabulary/core-persona/> .
+@prefix processvoc:      <https://www.insperity.com/vocabulary/core-process/> .
+@prefix requirementsvoc: <https://www.insperity.com/vocabulary/core-requirements/> .
+@prefix measurevoc:      <https://www.insperity.com/vocabulary/core-measure/> .
+@prefix decisionvoc:     <https://www.insperity.com/vocabulary/core-decision/> .
+@prefix theme:           <https://www.insperity.com/vocabulary/benchmark-theme/> .
+@prefix metric:          <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix verdict:         <https://www.insperity.com/vocabulary/review-verdict/> .
+@prefix flag:            <https://www.insperity.com/vocabulary/review-flag/> .
+@prefix use:             <https://www.insperity.com/vocabulary/approved-use/> .
+@prefix result:          <https://www.insperity.com/vocabulary/review-decision-result/> .
+@prefix segment:         <https://www.insperity.com/vocabulary/survey-segment/> .
+@prefix action:          <https://www.insperity.com/vocabulary/outcome-action/> .
+@prefix phase:           <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix check:           <https://www.insperity.com/vocabulary/gateway-check/> .
+@prefix demand:          <https://www.insperity.com/vocabulary/demand-status/> .
+@prefix hr:              <http://example.org/hrservices/ddd#> .
+@prefix obo:             <http://purl.obolibrary.org/obo/> .
+@prefix prov:            <http://www.w3.org/ns/prov#> .
+
+
+<https://www.insperity.com/ontology/requirements-gateway/>
+  a owl:Ontology ;
+  rdfs:label "Requirements gateway ontology"@en ;
+  skos:prefLabel "Requirements gateway ontology"@en ;
+  dct:title "Requirements gateway ontology"@en ;
+  dct:description "A domain ontology for the requirements engineering semantic gateway: requirements derived from the measured gap on a desired outcome, the gateway evaluation that admits or holds each requirement against its admission checks, and the demand items it hands to demand planning, traced back to persona, job, job step, desired outcome and survey wave and forward to the wave that re-measures them."@en ;
+  dct:subject <https://www.insperity.com/taxonomy/core-domain/EnterpriseArchitecture> ;
+  vaem:namespace "https://www.insperity.com/ontology/requirements-gateway/"^^xsd:anyURI ;
+  vann:preferredNamespacePrefix "rg" ;
+  dct:language "en" ;
+  dct:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+  dct:conformsTo <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+  dct:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> ;
+  skos:changeNote "0.2.0 (2026-10-22): first release, for the Customer 360 Requirements Gateway tool."@en ;
+  owl:versionInfo "0.2.0" ;
+  owl:versionIRI <https://www.insperity.com/ontology/requirements-gateway/0.2.0/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:creator "Jeffrey Wallk" ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime ;
+  owl:imports <https://www.insperity.com/ontology/core/>, <https://www.insperity.com/ontology/jobs-to-be-done/> .
+
+rg:outcome-requirement
+  a owl:Class ;
+  rdfs:label "Outcome requirement"@en ;
+  skos:prefLabel "Outcome requirement"@en ;
+  skos:definition "A requirement that states the change a product or service must make so that clients better achieve one desired outcome."@en ;
+  rdfs:subClassOf core:requirement ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasPrimaryTerm requirementsvoc:requirement ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:gateway-evaluation
+  a owl:Class ;
+  rdfs:label "Gateway evaluation"@en ;
+  skos:prefLabel "Gateway evaluation"@en ;
+  skos:definition "A decision in which the requirements gateway checks an outcome requirement against its admission checks before it reaches demand planning."@en ;
+  rdfs:subClassOf core:decision ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasPrimaryTerm decisionvoc:decision ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:demand-item
+  a owl:Class ;
+  rdfs:label "Demand item"@en ;
+  skos:prefLabel "Demand item"@en ;
+  skos:definition "A generically dependent continuant that records a requested investment in demand planning, with its priority, status and the opportunity it is expected to close."@en ;
+  rdfs:subClassOf obo:BFO_0000031 ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:tracesToOutcome
+  a owl:ObjectProperty ;
+  rdfs:label "traces to outcome"@en ;
+  skos:prefLabel "traces to outcome"@en ;
+  skos:definition "A relation between an outcome requirement and the desired outcome whose gap it addresses."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range jtbd:desired-outcome ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasRecommendedAction
+  a owl:ObjectProperty ;
+  rdfs:label "has recommended action"@en ;
+  skos:prefLabel "has recommended action"@en ;
+  skos:definition "A relation between an outcome requirement and the kind of work the measured gap calls for: fix, innovate, protect or simplify."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:basedOnSurveyWave
+  a owl:ObjectProperty ;
+  rdfs:label "based on survey wave"@en ;
+  skos:prefLabel "based on survey wave"@en ;
+  skos:definition "A relation between an outcome requirement and the survey wave whose scores justify it."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range jtbd:survey-wave ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:isOwnedByTheme
+  a owl:ObjectProperty ;
+  rdfs:label "is owned by theme"@en ;
+  skos:prefLabel "is owned by theme"@en ;
+  skos:definition "A relation between an outcome requirement and the service-line theme accountable for it."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:isAllocatedToService
+  a owl:ObjectProperty ;
+  rdfs:label "is allocated to service"@en ;
+  skos:prefLabel "is allocated to service"@en ;
+  skos:definition "A relation between an outcome requirement and a domain service expected to deliver the change."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range owl:Thing ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:evaluatesRequirement
+  a owl:ObjectProperty ;
+  rdfs:label "evaluates requirement"@en ;
+  skos:prefLabel "evaluates requirement"@en ;
+  skos:definition "A relation between a gateway evaluation and the outcome requirement it checks."@en ;
+  rdfs:domain rg:gateway-evaluation ;
+  rdfs:range rg:outcome-requirement ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:passesCheck
+  a owl:ObjectProperty ;
+  rdfs:label "passes check"@en ;
+  skos:prefLabel "passes check"@en ;
+  skos:definition "A relation between a gateway evaluation and an admission check the requirement met."@en ;
+  rdfs:domain rg:gateway-evaluation ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:failsCheck
+  a owl:ObjectProperty ;
+  rdfs:label "fails check"@en ;
+  skos:prefLabel "fails check"@en ;
+  skos:definition "A relation between a gateway evaluation and an admission check the requirement did not meet."@en ;
+  rdfs:domain rg:gateway-evaluation ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:realizesRequirement
+  a owl:ObjectProperty ;
+  rdfs:label "realizes requirement"@en ;
+  skos:prefLabel "realizes requirement"@en ;
+  skos:definition "A relation between a demand item and the admitted outcome requirement it asks demand planning to fund."@en ;
+  rdfs:domain rg:demand-item ;
+  rdfs:range rg:outcome-requirement ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasDemandStatus
+  a owl:ObjectProperty ;
+  rdfs:label "has demand status"@en ;
+  skos:prefLabel "has demand status"@en ;
+  skos:definition "A relation between a demand item and its current status in demand planning."@en ;
+  rdfs:domain rg:demand-item ;
+  rdfs:range skos:Concept ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:isRemeasuredIn
+  a owl:ObjectProperty ;
+  rdfs:label "is remeasured in"@en ;
+  skos:prefLabel "is remeasured in"@en ;
+  skos:definition "A relation between a demand item and the later survey wave that measures whether the gap closed."@en ;
+  rdfs:domain rg:demand-item ;
+  rdfs:range jtbd:survey-wave ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasRequirementStatement
+  a owl:DatatypeProperty ;
+  rdfs:label "has requirement statement"@en ;
+  skos:prefLabel "has requirement statement"@en ;
+  skos:definition "A data property that gives the wording of an outcome requirement."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasAcceptanceCriterion
+  a owl:DatatypeProperty ;
+  rdfs:label "has acceptance criterion"@en ;
+  skos:prefLabel "has acceptance criterion"@en ;
+  skos:definition "A data property that states how the next survey wave will show the requirement was met."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasOpportunityScore
+  a owl:DatatypeProperty ;
+  rdfs:label "has opportunity score"@en ;
+  skos:prefLabel "has opportunity score"@en ;
+  skos:definition "A data property that gives the opportunity score, from zero to twenty, that justified a requirement or demand item."@en ;
+  rdfs:domain obo:BFO_0000001 ;
+  rdfs:range xsd:decimal ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasGapToNonClients
+  a owl:DatatypeProperty ;
+  rdfs:label "has gap to non-clients"@en ;
+  skos:prefLabel "has gap to non-clients"@en ;
+  skos:definition "A data property that gives the opportunity for clients minus the opportunity for employers without a provider, with its sign."@en ;
+  rdfs:domain rg:outcome-requirement ;
+  rdfs:range xsd:decimal ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:isAdmitted
+  a owl:DatatypeProperty ;
+  rdfs:label "is admitted"@en ;
+  skos:prefLabel "is admitted"@en ;
+  skos:definition "A data property that is true when a gateway evaluation admits the requirement to demand planning."@en ;
+  rdfs:domain rg:gateway-evaluation ;
+  rdfs:range xsd:boolean ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasPriorityRank
+  a owl:DatatypeProperty ;
+  rdfs:label "has priority rank"@en ;
+  skos:prefLabel "has priority rank"@en ;
+  skos:definition "A data property that gives the rank of a demand item in the demand planning queue, one being highest."@en ;
+  rdfs:domain rg:demand-item ;
+  rdfs:range xsd:integer ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasExpectedOpportunityClosed
+  a owl:DatatypeProperty ;
+  rdfs:label "has expected opportunity closed"@en ;
+  skos:prefLabel "has expected opportunity closed"@en ;
+  skos:definition "A data property that gives the opportunity a demand item is expected to remove if it is delivered."@en ;
+  rdfs:domain rg:demand-item ;
+  rdfs:range xsd:decimal ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .
+
+rg:hasDemandNote
+  a owl:DatatypeProperty ;
+  rdfs:label "has demand note"@en ;
+  skos:prefLabel "has demand note"@en ;
+  skos:definition "A data property that records a demand planner's note on a demand item."@en ;
+  rdfs:domain rg:demand-item ;
+  rdfs:range xsd:string ;
+  rdfs:isDefinedBy <https://www.insperity.com/ontology/requirements-gateway/> ;
+  core:hasLifecycleStatus core:Draft ;
+  dct:created "2026-10-22"^^xsd:date ;
+  dct:modified "2026-10-22T19:46:03Z"^^xsd:dateTime .

@@ -310,8 +310,10 @@ footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--ke-line);font
   $('#ver').textContent = R.version;
 
   function open(id){
+    const t = T[id];
+    if (t && t.external && t.url) { window.open(t.url, '_blank', 'noopener'); return; }
     if (inShell) { window.top.postMessage({ type:'ke-open', tool:id }, '*'); return; }
-    const t = T[id]; if (t) location.href = '../' + t.file;
+    if (t) location.href = '../' + t.file;
   }
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-tool]'); if (!b) return;
@@ -327,7 +329,7 @@ footer{margin-top:56px;padding-top:14px;border-top:1px solid var(--ke-line);font
           <span class="code">${t.code}</span>
           <span class="tn">${esc(t.title)}</span>
           <span class="td">${esc(t.desc || '')}</span>
-          <span class="chips">${t.live ? '<span class="chip live">GraphDB</span>' : ''}${t.isNew ? '<span class="chip new">New</span>' : ''}${(t.std||[]).map(s => `<span class="chip std">§${esc(s)}</span>`).join('')}</span>
+          <span class="chips">${t.live ? '<span class="chip live">GraphDB</span>' : ''}${t.isNew ? '<span class="chip new">New</span>' : ''}${t.external ? '<span class="chip">Opens in a browser tab ↗</span>' : ''}${(t.std||[]).map(s => `<span class="chip std">§${esc(s)}</span>`).join('')}</span>
         </button>`).join('')}</div>
     </div>`).join('');
 

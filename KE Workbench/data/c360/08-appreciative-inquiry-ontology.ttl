@@ -1,0 +1,198 @@
+# ==========================================================================
+#  Appreciative Inquiry ontology
+#  Target named graph: <https://www.insperity.com/graph/customer-360/appreciative-inquiry-ontology>
+#  Persona interviews run through the 4-D cycle, the notes they produce, and the excerpts coded to jobs, steps and outcomes.
+#  Part of the KE Workbench Customer 360 loop: persona interviews -> jobs and outcomes ->
+#  job study -> SME review -> playbook -> requirements gateway -> demand planning.
+#  Status: Draft 0.3.0, generated 2026-10-22
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+@prefix ai:      <https://www.insperity.com/ontology/appreciative-inquiry/> .
+@prefix dp:      <https://www.insperity.com/ontology/demand-planning/> .
+@prefix phase:   <https://www.insperity.com/vocabulary/inquiry-phase/> .
+@prefix evid:    <https://www.insperity.com/vocabulary/evidence-status/> .
+@prefix dtype:   <https://www.insperity.com/vocabulary/demand-type/> .
+@prefix gstat:   <https://www.insperity.com/vocabulary/gateway-status/> .
+@prefix grule:   <https://www.insperity.com/vocabulary/gateway-rule/> .
+@prefix vaem:    <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix obo:     <http://purl.obolibrary.org/obo/> .
+@prefix domaintax:<https://www.insperity.com/taxonomy/core-domain/> .
+
+
+<https://www.insperity.com/ontology/appreciative-inquiry/> a owl:Ontology ;
+    rdfs:label "Appreciative inquiry ontology"@en ;
+    skos:prefLabel "Appreciative inquiry ontology"@en ;
+    dcterms:description "Qualitative persona research: interviews held through the discover, dream, design and destiny phases, and the excerpts that evidence jobs to be done, job map steps and desired outcomes."@en ;
+    owl:imports <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    dcterms:title "Appreciative inquiry ontology"@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/ontology/appreciative-inquiry/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "ai" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:changeNote "0.3.0 (2026-10-22): classes and taxonomy concepts renamed to lower-case hyphenated identifiers (Semantic Governance v1.9 §3.2 as amended for Baseline Core v1.0); classes aligned to Baseline Core v1.0; header fields added (§3.11)."@en ;
+    owl:versionInfo "0.3.0" ;
+    owl:versionIRI <https://www.insperity.com/ontology/appreciative-inquiry/0.3.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    dcterms:modified "2026-10-22T22:00:23Z"^^xsd:dateTime .
+
+ai:persona-interview a owl:Class ;
+    rdfs:label "Persona interview"@en ;
+    skos:prefLabel "Persona interview"@en ;
+    skos:definition "An activity in which a researcher interviews someone who fits a client persona using appreciative inquiry questions."@en ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:interview-note a owl:Class ;
+    rdfs:label "Interview note"@en ;
+    skos:prefLabel "Interview note"@en ;
+    skos:definition "A record of what was said during one inquiry phase of a persona interview."@en ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:interview-excerpt a owl:Class ;
+    rdfs:label "Interview excerpt"@en ;
+    skos:prefLabel "Interview excerpt"@en ;
+    skos:definition "A record of a passage from interview notes that has been coded as evidence for a jobs-to-be-done element."@en ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( ai:interview-note ai:interview-excerpt ) .
+
+ai:interviewsPersona a owl:ObjectProperty ;
+    rdfs:label "interviews persona"@en ;
+    skos:prefLabel "interviews persona"@en ;
+    skos:definition "An object property that relates a persona interview to the client persona the participant represents."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range jtbd:client-persona ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasInterviewNote a owl:ObjectProperty ;
+    rdfs:label "has interview note"@en ;
+    skos:prefLabel "has interview note"@en ;
+    skos:definition "An object property that relates a persona interview to a note taken during one of its inquiry phases."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range ai:interview-note ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasInterviewExcerpt a owl:ObjectProperty ;
+    rdfs:label "has interview excerpt"@en ;
+    skos:prefLabel "has interview excerpt"@en ;
+    skos:definition "An object property that relates a persona interview to an excerpt coded from its notes."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range ai:interview-excerpt ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasInquiryPhase a owl:ObjectProperty ;
+    rdfs:label "has inquiry phase"@en ;
+    skos:prefLabel "has inquiry phase"@en ;
+    skos:definition "An object property that relates a note or excerpt to the appreciative inquiry phase it came from."@en ;
+    rdfs:domain prov:Entity ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:isEvidenceFor a owl:ObjectProperty ;
+    rdfs:label "is evidence for"@en ;
+    skos:prefLabel "is evidence for"@en ;
+    skos:definition "An object property that relates an interview excerpt to the jobs-to-be-done element it supports."@en ;
+    rdfs:domain ai:interview-excerpt ;
+    rdfs:range [ a owl:Class ; owl:unionOf ( jtbd:client-persona jtbd:job-to-be-done jtbd:job-map-step jtbd:job-map-stage jtbd:desired-outcome ) ] ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasInterviewDate a owl:DatatypeProperty ;
+    rdfs:label "has interview date"@en ;
+    skos:prefLabel "has interview date"@en ;
+    skos:definition "A data property that gives the date a persona interview took place."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:date ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasInterviewer a owl:DatatypeProperty ;
+    rdfs:label "has interviewer"@en ;
+    skos:prefLabel "has interviewer"@en ;
+    skos:definition "A data property that names the researcher who led a persona interview."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasParticipantProfile a owl:DatatypeProperty ;
+    rdfs:label "has participant profile"@en ;
+    skos:prefLabel "has participant profile"@en ;
+    skos:definition "A data property that describes the interview participant without identifying them, such as role and company type."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasCompanySizeBand a owl:DatatypeProperty ;
+    rdfs:label "has company size band"@en ;
+    skos:prefLabel "has company size band"@en ;
+    skos:definition "A data property that gives the employee-count band of the participant's company."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasIndustry a owl:DatatypeProperty ;
+    rdfs:label "has industry"@en ;
+    skos:prefLabel "has industry"@en ;
+    skos:definition "A data property that names the industry of the participant's company."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasAffirmativeTopic a owl:DatatypeProperty ;
+    rdfs:label "has affirmative topic"@en ;
+    skos:prefLabel "has affirmative topic"@en ;
+    skos:definition "A data property that states the positive topic the interview was framed around."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:isConsentRecorded a owl:DatatypeProperty ;
+    rdfs:label "is consent recorded"@en ;
+    skos:prefLabel "is consent recorded"@en ;
+    skos:definition "A data property that states whether the participant's consent to record and use their words was captured."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasNoteText a owl:DatatypeProperty ;
+    rdfs:label "has note text"@en ;
+    skos:prefLabel "has note text"@en ;
+    skos:definition "A data property that gives the text of an interview note."@en ;
+    rdfs:domain ai:interview-note ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasExcerptText a owl:DatatypeProperty ;
+    rdfs:label "has excerpt text"@en ;
+    skos:prefLabel "has excerpt text"@en ;
+    skos:definition "A data property that gives the quoted passage of an interview excerpt."@en ;
+    rdfs:domain ai:interview-excerpt ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .
+
+ai:hasInterviewIdentifier a owl:DatatypeProperty ;
+    rdfs:label "has interview identifier"@en ;
+    skos:prefLabel "has interview identifier"@en ;
+    skos:definition "A data property that gives the stable identifier of a persona interview, such as AI-0007."@en ;
+    rdfs:domain ai:persona-interview ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/appreciative-inquiry/> .

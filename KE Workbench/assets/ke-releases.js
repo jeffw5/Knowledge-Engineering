@@ -2,6 +2,21 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '4.5.0', date: '2026-10-24', title: 'Semantic Governance v2.0 in force',
+    groups: [
+      { kind: 'new', items: [
+        'The workbench applies the latest edition of the standards guide it finds: ingest/guide_sync.py (run when the shell opens, through POST /api/ingest/guide-sync) picks the newest Semantic_Governance_v*.pdf in docs/ or ../Semantic Governance/, copies it into docs/ if needed, and writes assets/ke-guide.js. Semantic Governance v2.0 (Draft) is now in force.',
+        'When the edition changes, the ingestion configuration moves to it (conformsTo …/standard/semantic-governance/2.0/ and standardsRef), so everything ingested or built from now on declares v2.0, and the Operations Dashboard reports are rebuilt.',
+        'Operations Dashboard: if the guide in force differs from the edition its reports were built against, the page rebuilds them and reloads. The Standards guide tab shows the edition in force and where it resolves each of the 21 retrofit items (resolved, decision pending, or resolved in the guide with tool work open).'
+      ] },
+      { kind: 'improved', items: [
+        'The sidebar, the Overview, the guide link (Reference) and Model Editor (Ontology) take the edition from assets/ke-guide.js instead of naming v1.9.',
+        'Actions: the 15 retrofit items v2.0 resolves leave the list; the three it writes as proposals (G02 instance identifiers, G12 Candidate criteria, G20 measured agent assurance) become decisions; tool work is tracked by policies P03–P05 and P07. Open actions went from 74 to 56.',
+        'Policy P07 now checks assets against the edition in force: all 107 model assets still declare v1.9 (or none) until they are rebuilt.'
+      ] }
+    ]
+  },
+  {
     version: '4.4.0', date: '2026-10-23', title: 'Operations Dashboard: the change log as evidence',
     groups: [
       { kind: 'new', items: [

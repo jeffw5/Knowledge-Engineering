@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **4.4.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **4.5.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -284,4 +284,11 @@ Section 04 of the sidebar. It realizes the persona model from qualitative resear
 - **GraphDB**: when it is on, the page also reads `https://www.insperity.com/graph/change-log` and merges the records by IRI, so saves made in the editors (which go to GraphDB only) are included; the source bar shows how many records are only on disk or only in the graph.
 - **Policies and the guide retrofit** are defined in `ingest/ops_spec.py` (P01–P09, G01–G21). Edit them there and rebuild.
 - Action statuses are kept in the browser (localStorage, `ops-actions`); export them with *Copy CSV*.
+
+## Semantic Governance v2.0 in force (4.5.0)
+
+- **Which edition applies**: `assets/ke-guide.js`, written by `python3 ingest/guide_sync.py` (also run when the shell opens, through `POST /api/ingest/guide-sync`). It takes the newest `Semantic_Governance_v<major>.<minor>[_DRAFT].pdf` in `docs/` or `../Semantic Governance/` and copies it into `docs/` when needed. To move to a new edition, save its PDF in either folder and open the workbench.
+- **On a new edition**: the ingestion configuration's `conformsTo` and `standardsRef` move to it, and the Operations Dashboard snapshot is rebuilt. The dashboard also checks on load and rebuilds its reports if they were built against another edition.
+- **Retrofit status**: `RESOLUTION` in `ingest/ops_spec.py` records where each edition resolves the guide retrofit items (v2.0 Appendix E.4).
+- **Still to do**: rebuild the core and domains (`build_core.py`, `KE Domains/_build/build_domains.py`, or re-ingest) so every asset declares v2.0 (policy P07). Restart `proxy.py` so the new route is served.
 

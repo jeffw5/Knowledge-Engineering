@@ -1,13 +1,15 @@
 '''Operations Dashboard: authored policy and standards content (read by build_ops_snapshot.py).
 
-GUIDE     where Semantic Governance v1.9 (Draft) no longer matches how the core and domains are built, with the
-          decision or release that changed it and the proposed change for the next edition;
+GUIDE     where Semantic Governance v1.9 (Draft) no longer matched how the core and domains are built, with the
+          decision or release that changed it and the change made in the next edition;
+RESOLUTION, per edition, where each GUIDE item is resolved (Appendix E.4 of that edition) and its status;
 POLICIES  the process policies the change log is checked against (Part III §3.3, §3.4);
 CATEGORIES and PRIORITIES for the action list.
 '''
 
-GUIDE_EDITION = '1.9'          # the edition the assets declare (dcterms:conformsTo) and the tools cite
-GUIDE_NEXT = '2.0'             # MAJOR: the naming and URI changes break consumers of 1.x examples (§3.3)
+# The current edition is read from assets/ke-guide.js (written by ingest/guide_sync.py); these are fallbacks.
+GUIDE_EDITION = '2.0'
+GUIDE_NEXT = '2.1'
 
 
 def G(id, section, topic, v19, practice, sources, change, priority='high', kind='update'):
@@ -127,6 +129,33 @@ GUIDE = [
 def P(id, title, check, standard, priority):
     return dict(id=id, title=title, check=check, standard=standard, priority=priority)
 
+
+# status: resolved | decide (written as a proposal, decision pending) | tools (resolved in the guide; tool work open)
+RESOLUTION = {
+    '2.0': {
+        'G01': ('resolved', '§3.2 Naming Conventions; examples throughout'),
+        'G02': ('decide', '§3.2 Instance Identifiers (proposed)'),
+        'G03': ('resolved', '§3.2 URI Conventions'),
+        'G04': ('resolved', '§3.2 Named Graphs; §3.11'),
+        'G05': ('resolved', '§3.2 Asset Titles'),
+        'G06': ('resolved', '§3.1 Operational Areas, Containers, and Insulation; §1.3; §3.3 Human in the Loop'),
+        'G07': ('resolved', '§3.7 Primitives and Polymorphic Terms'),
+        'G08': ('resolved', '§3.10 Reference Ontology Stack and Load Order'),
+        'G09': ('tools', '§3.3 Change Record Profile (approver and requirement: policies P03, P04)'),
+        'G10': ('tools', '§3.3 Current Practice (deployment records: policy P05)'),
+        'G11': ('resolved', '§3.3 Versioning'),
+        'G12': ('decide', '§3.3 Candidate Entry Criteria (proposed)'),
+        'G13': ('resolved', '§3.4 Implemented Quality Gates; §3.6 Recursive Learning'),
+        'G14': ('resolved', '§3.8 The Persona Model; §3.13'),
+        'G15': ('resolved', '§3.12 Services, Processes, and the Reference Registry'),
+        'G16': ('resolved', '§1.3; §3.1'),
+        'G17': ('resolved', 'Appendix E (KE Workbench)'),
+        'G18': ('resolved', 'Appendix A (identifiers and URIs re-keyed)'),
+        'G19': ('resolved', 'Appendix F'),
+        'G20': ('decide', '§3.6 Measured Agent Assurance (proposed)'),
+        'G21': ('tools', 'Front matter; §3.11 Edition Conformance (rebuild assets: policy P07)'),
+    },
+}
 
 POLICIES = [
     P('P01', 'Every change set has a change record', 'Assets in the inventory that no change record generated, revised or used.', '§3.3 Change Log Structure', 'high'),

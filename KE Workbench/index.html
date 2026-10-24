@@ -12,6 +12,7 @@
     document.documentElement.setAttribute('data-theme',t);})();
   window.KE_SHELL = true;
 </script>
+<script src="assets/ke-guide.js"></script>
 <script src="assets/ke-registry.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -149,7 +150,7 @@ input,select,textarea{font:inherit;color:inherit}
     </div>
     <nav class="nav" id="nav"></nav>
     <div class="sb-foot">
-      Standards: <a data-open="guide">Semantic Governance v1.9</a> <span class="draft">DRAFT</span><br>
+      Standards: <a data-open="guide" id="guideName">Semantic Governance v2.0</a> <span class="draft" id="guideStatus">DRAFT</span><br>
       Part III · Knowledge Engineering
     </div>
   </aside>
@@ -211,6 +212,28 @@ input,select,textarea{font:inherit;color:inherit}
 <script>
 (function(){
   const R = window.KE_REGISTRY, T = window.KE_TOOLS;
+  // ── Standards guide edition (assets/ke-guide.js) ─────
+  (function(){
+    const g = window.KE_GUIDE; if (!g) return;
+    const n = document.getElementById('guideName'), st = document.getElementById('guideStatus');
+    if (n) n.textContent = 'Semantic Governance v' + g.edition;
+    if (st) { st.textContent = String(g.status || '').toUpperCase(); st.style.display = g.status === 'Draft' ? '' : 'none'; }
+  })();
+  // Pick up a newer guide dropped into docs/ or ../Semantic Governance/: the server rewrites assets/ke-guide.js,
+  // moves the ingestion configuration to that edition and rebuilds the Operations Dashboard reports; then reload.
+  (function(){
+    const was = window.KE_GUIDE && window.KE_GUIDE.edition;
+    try {
+      fetch('api/ingest/guide-sync', { method:'POST', headers:{'Content-Type':'application/json'}, body:'{}', cache:'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(j => {
+          if (!j || !j.ok || !j.changed || j.edition === was) return;
+          let k = 'ke-guide-reloaded-' + j.edition;
+          try { if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1'); } catch(e) {}
+          location.reload();
+        }).catch(() => {});
+    } catch(e) {}
+  })();
   const OVERVIEW = { id:'overview', code:'OV', file:'tools/workbench-overview.html', title:'Overview', pinned:true };
   T.overview = OVERVIEW;
   const DEFAULT_BASES = ['https://www.insperity.com/','https://www.enablingvalue.com/'];

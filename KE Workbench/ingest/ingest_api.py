@@ -682,3 +682,15 @@ def ops_snapshot(_, __):
 
 
 ROUTES[('POST', 'ops-snapshot')] = ops_snapshot
+
+
+def guide_sync(_, __):
+    """Pick up the latest Semantic Governance guide in docs/ (or ../Semantic Governance/), write assets/ke-guide.js,
+    point the ingestion configuration at that edition and, when the edition changed, rebuild the Operations snapshot."""
+    import importlib
+    mod = importlib.import_module('guide_sync')
+    mod = importlib.reload(mod)
+    return mod.sync()
+
+
+ROUTES[('POST', 'guide-sync')] = guide_sync

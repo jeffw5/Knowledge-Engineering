@@ -5,6 +5,7 @@
 <!-- /ke-workbench:head -->
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Operations Dashboard</title>
+<script src="../assets/ke-guide.js"></script>
 <script src="../data/ops/ops-snapshot.js"></script>
 <script src="../data/ops/history.js"></script>
 <style>
@@ -73,11 +74,13 @@ tr.rowc{cursor:pointer} tr.rowc:hover td{background:var(--sunk)} tr.sel td{backg
 .meter{height:8px;border-radius:4px;background:var(--line2);overflow:hidden;min-width:80px}.meter i{display:block;height:100%;background:var(--ok)}
 .heat td.c{text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
 .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:5px;font-size:13px;z-index:9}
+.notice{background:var(--warn-soft);border:1px solid var(--warn);color:var(--ink);border-radius:var(--r);padding:10px 14px;font-size:13px}
 .missing{padding:30px;border:1px dashed var(--line);border-radius:var(--r);background:var(--surface)}
 </style></head>
 <body><div class="wrap">
 <header><span class="eyebrow">Agents &amp; operations · change log · §3.3 §3.4</span><h1>Operations Dashboard</h1>
 <p class="lede">What changed in the workbench and the models (core and domains), why, and with what effect. Change records are read as PROV-O triples from the change log, joined to the current asset inventory and its conformance, so a finding can be traced to the activity that introduced it and the actions needed to close each gap are listed in one place.</p></header>
+<div class="notice" id="notice" hidden></div>
 <div class="srcbar" id="src"></div>
 <div class="tabs" role="tablist" id="tabs"></div>
 <main id="view"></main>
@@ -89,6 +92,17 @@ if(!O){V.innerHTML='<div class="missing"><h2>No snapshot</h2><p>data/ops/ops-sna
 const H=window.KE_OPS_HISTORY||[];
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const LS={get(k,d){try{const v=localStorage.getItem('ops-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ops-'+k,JSON.stringify(v))}catch(e){}}};
+/* ---- guide edition: rebuild the reports when the workbench moves to another edition of the guide ---- */
+const KG=window.KE_GUIDE;
+function notice(html){const n=document.getElementById('notice');n.innerHTML=html;n.hidden=!html}
+async function rebuildFor(edition){
+  const k='ops-rebuilt-for-'+edition;
+  try{if(sessionStorage.getItem(k)){notice(`Semantic Governance <b>v${esc(edition)}</b> is in force, but the rebuilt reports still name v${esc(O.guide.edition)}. Check that assets/ke-guide.js and ingest/build_ops_snapshot.py agree, then use Rebuild snapshot.`);return false}sessionStorage.setItem(k,'1')}catch(e){}
+  notice(`Semantic Governance <b>v${esc(edition)}</b> is now the edition in force (the reports were built against v${esc(O.guide.edition)}). Rebuilding the reports…`);
+  try{const r=await fetch('/api/ingest/ops-snapshot',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!j.ok)throw new Error(j.error||'failed');location.reload();return true}
+  catch(e){notice(`Semantic Governance <b>v${esc(edition)}</b> is now the edition in force, but these reports were built against v${esc(O.guide.edition)} and could not be rebuilt here (${esc(e.message)}). Run <span class="mono">python3 ingest/build_ops_snapshot.py</span> in the KE Workbench folder, then reload.`);return false}
+}
+if(KG&&KG.edition&&O.guide&&KG.edition!==O.guide.edition){rebuildFor(KG.edition)}
 let state=Object.assign({tab:'overview',rec:'',pick:'',tool:'',scope:'',q:'',ac:'',ap:'',as:'',ast:'open'},LS.get('state',{}));
 const save=()=>LS.set('state',{tab:state.tab,rec:state.rec,pick:state.pick});
 let actStatus=LS.get('actions',{});
@@ -193,6 +207,7 @@ function srcbar(){
   const n=RECS.length;
   document.getElementById('src').innerHTML=`<span>Snapshot <b>${esc(O.generated.replace('T',' ').replace('Z',' UTC'))}</b></span>
    <span><span class="dot ${live.status==='on'?'on':live.status==='off'?'off':''}"></span>GraphDB ${live.status==='on'?'connected ('+esc(live.repo)+'): '+live.both+' records in both, '+live.onlyGraph+' only in GraphDB, '+live.onlyFile+' only on disk':live.status==='off'?'not used ('+esc(live.error)+'); change records from files':'checking…'}</span>
+   <span>Standards <b>Semantic Governance v${esc(O.guide.edition)}</b>${O.guide.status==='Draft'?' (Draft)':''}</span>
    <span>${n} change records · ${MODELS.length} model assets · ${O.assets.length-MODELS.length} other graphs</span>
    <button class="btn" id="rebuild" title="Rebuild the snapshot from the files on disk (needs the workbench server)">Rebuild snapshot</button>`;
   document.getElementById('rebuild').onclick=async()=>{toast('Rebuilding…');try{const r=await fetch('/api/ingest/ops-snapshot',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!j.ok)throw new Error(j.error||'failed');location.reload()}catch(e){toast('Rebuild failed: '+e.message+'. Run python3 ingest/build_ops_snapshot.py')}};
@@ -240,7 +255,7 @@ function overview(){
   const tools=[...new Set(RECS.map(r=>r.tool))],days={};RECS.forEach(r=>{const d=day(r.started);if(!d)return;const x=days[d]=days[d]||{};x[r.tool]=(x[r.tool]||0)+1});
   const rows=Object.keys(days).sort().map(k=>({k,v:days[k]}));
   V.innerHTML=`<div class="grid">
-   <div class="kpis">${kpi(RECS.length,'change records',null,wk+' in the last 7 days')}${kpi(MODELS.length,'model assets',null,tm.toLocaleString()+' classes and concepts')}${kpi(errs,'conformance errors',errs?'bad':'ok',warns+' warnings')}${kpi(pass+' / '+pol.length,'process policies met',pass===pol.length?'ok':'warn')}${kpi(open.length,'open actions',hi.length?'bad':'',hi.length+' high priority')}${kpi(O.guide.items.length,'guide items to retrofit','warn','v'+esc(O.guide.edition)+' → v'+esc(O.guide.next))}${kpi(O.decisions.length,'decisions recorded',null,O.questions.length+' open questions')}</div>
+   <div class="kpis">${kpi(RECS.length,'change records',null,wk+' in the last 7 days')}${kpi(MODELS.length,'model assets',null,tm.toLocaleString()+' classes and concepts')}${kpi(errs,'conformance errors',errs?'bad':'ok',warns+' warnings')}${kpi(pass+' / '+pol.length,'process policies met',pass===pol.length?'ok':'warn')}${kpi(open.length,'open actions',hi.length?'bad':'',hi.length+' high priority')}${(()=>{const c=O.guide.counts||{},t=O.guide.items.length,open=t-(c.resolved||0);return kpi('v'+esc(O.guide.edition),'Semantic Governance in force',open?'warn':'ok',`${c.resolved||0} of ${t} retrofit items resolved; ${c.decide||0} decisions pending`)})()}${kpi(O.decisions.length,'decisions recorded',null,O.questions.length+' open questions')}</div>
    <div class="grid g2"><div class="panel pad"><h2>Activity by day and tool</h2>${stackedBars(rows,tools,{label:k=>k.slice(5)})}</div>
      <div class="panel pad"><h2>Latest change sets</h2><table><tbody>${RECS.slice(-6).reverse().map(r=>`<tr class="rowc" data-rec="${esc(r.id)}"><td class="mono">${esc(day(r.started))}</td><td><b>${esc(r.tool)}</b><div class="sub">${esc((r.description||r.label).slice(0,140))}${(r.description||'').length>140?'…':''}</div></td><td class="num">${r.generated.length+r.parts.length}</td></tr>`).join('')}</tbody></table></div></div>
    <div class="grid g2e"><div class="panel pad"><h2>Highest-priority actions</h2><ol class="list">${hi.slice(0,8).map(a=>`<li><span class="tag ${a.priority}">${esc(a.category)}</span> ${esc(a.title)}</li>`).join('')||'<li>None.</li>'}</ol><p><button class="btn" data-goto="actions">All ${open.length} open actions</button></p></div>
@@ -371,14 +386,17 @@ function complianceView(){
 }
 
 /* ---- Standards guide ---- */
+const GST={resolved:['Resolved','pass'],decide:['Decision pending','warn'],tools:['Resolved in the guide; tool work open','medium'],open:['Open','fail']};
 function guideView(){
-  const G=O.guide.items,bp={};G.forEach(g=>bp[g.priority]=(bp[g.priority]||0)+1);
-  V.innerHTML=`<div class="grid"><div class="panel pad"><h2>Semantic Governance v${esc(O.guide.edition)} retrofit</h2>
-   <p>The guide is still v${esc(O.guide.edition)} (Draft, 2026-10-15). Since then the core and domains have changed how identifiers, URIs, graphs, change records, areas and services work. ${G.length} items below say where the guide and practice now differ, what decided the change, and what the next edition should say. Because the identifier and URI rules change, the next edition is a MAJOR release: <b>v${esc(O.guide.next)}</b>.</p>
-   <div class="kpis">${kpi(bp.high||0,'high priority','bad')}${kpi(bp.medium||0,'medium priority','warn')}${kpi(bp.low||0,'low priority')}${kpi(G.filter(g=>g.kind==='decide').length,'need a decision first','warn')}</div>
-   <p><button class="btn" id="gmd">Copy as Markdown (retrofit plan)</button></p></div>
-   <div class="panel tbl" style="max-height:none"><table><thead><tr><th>Item</th><th>Section</th><th>Topic</th><th>v${esc(O.guide.edition)} says</th><th>Practice now</th><th>Decided by</th><th>Proposed change</th><th>Priority</th></tr></thead><tbody>${G.map(g=>`<tr><td class="mono">${esc(g.id)}</td><td class="mono">§${esc(g.section)}</td><td><b>${esc(g.topic)}</b>${g.kind!=='update'?` <span class="tag warn">${esc(g.kind)}</span>`:''}</td><td style="min-width:220px">${esc(g.v19)}</td><td style="min-width:260px">${esc(g.practice)}</td><td class="sub" style="min-width:120px">${esc(g.sources.join('; '))}</td><td style="min-width:240px">${esc(g.change)}</td><td><span class="tag ${g.priority}">${esc(g.priority)}</span></td></tr>`).join('')}</tbody></table></div></div>`;
-  V.querySelector('#gmd').onclick=()=>copy(`# Semantic Governance v${O.guide.next}: retrofit plan from v${O.guide.edition}\n\n`+G.map(g=>`## ${g.id} · §${g.section} ${g.topic} (${g.priority}${g.kind!=='update'?', '+g.kind:''})\n\n- **v${O.guide.edition} says:** ${g.v19}\n- **Practice now:** ${g.practice}\n- **Decided by:** ${g.sources.join('; ')}\n- **Change:** ${g.change}\n`).join('\n'),'Markdown');
+  const g=O.guide,G=g.items,c=g.counts||{},prev=g.previous||'1.9';
+  const pct=G.length?Math.round(100*(c.resolved||0)/G.length):0;
+  const stale=(O.policies.find(p=>p.id==='P07')||{});
+  V.innerHTML=`<div class="grid"><div class="panel pad"><h2>Semantic Governance v${esc(g.edition)} is in force</h2>
+   <p>The workbench applies <b>Semantic Governance: Services, Architecture &amp; Integration v${esc(g.edition)}</b>${g.status==='Draft'?' (Draft)':''}${g.date?', '+esc(g.date):''}${g.file?` · <a href="../${esc(g.file)}" target="_blank" rel="noopener">open the guide</a>`:''}. Editions on disk: ${(g.editionsOnDisk||[]).map(e=>'v'+esc(e)).join(', ')}. The ${G.length} places where v${esc(prev)} no longer matched practice are tracked below with where v${esc(g.edition)} resolves each one (its Appendix E.4).</p>
+   <div class="kpis">${kpi((c.resolved||0)+' / '+G.length,'resolved in the guide',pct===100?'ok':'')}${kpi(c.decide||0,'written as proposals: decision pending',c.decide?'warn':'ok')}${kpi(c.tools||0,'resolved in the guide; tool work open',c.tools?'warn':'ok')}${kpi(c.open||0,'still open',c.open?'bad':'ok')}${kpi((stale.failing||0)+' / '+(stale.total||0),'assets not yet declaring v'+esc(g.edition),stale.failing?'warn':'ok','policy P07: rebuild them')}</div>
+   <p><button class="btn" id="gmd">Copy as Markdown</button></p></div>
+   <div class="panel tbl" style="max-height:none"><table><thead><tr><th>Item</th><th>Section</th><th>Topic</th><th>Status</th><th>Resolved in v${esc(g.edition)}</th><th>v${esc(prev)} said</th><th>Practice</th><th>Decided by</th><th>Priority</th></tr></thead><tbody>${G.map(x=>{const st=GST[x.status]||GST.open;return `<tr><td class="mono">${esc(x.id)}</td><td class="mono">§${esc(x.section)}</td><td><b>${esc(x.topic)}</b></td><td><span class="tag ${st[1]}">${esc(st[0])}</span></td><td style="min-width:200px">${esc(x.resolvedIn||'—')}</td><td style="min-width:200px" class="sub">${esc(x.v19)}</td><td style="min-width:220px" class="sub">${esc(x.practice)}</td><td class="sub" style="min-width:110px">${esc(x.sources.join('; '))}</td><td><span class="tag ${x.priority}">${esc(x.priority)}</span></td></tr>`}).join('')}</tbody></table></div></div>`;
+  V.querySelector('#gmd').onclick=()=>copy(`# Semantic Governance v${g.edition}: retrofit status from v${prev}\n\n| Item | Topic | Status | Resolved in |\n|---|---|---|---|\n`+G.map(x=>`| ${x.id} | ${x.topic} | ${(GST[x.status]||GST.open)[0]} | ${x.resolvedIn||''} |`).join('\n')+'\n','Markdown');
 }
 
 /* ---- Actions ---- */

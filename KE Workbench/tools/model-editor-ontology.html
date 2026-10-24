@@ -8,6 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Model Editor · Ontology</title>
+<script src="../assets/ke-guide.js"></script>
 <script src="../assets/ke-sparql.js"></script>
 <style>
   *{box-sizing:border-box}
@@ -1548,7 +1549,7 @@
       imps.length ? `  owl:imports ${imps.map(S.iri).join(' , ')} ;` : '',
       `  <http://www.linkedmodel.org/schema/vaem#namespace> "${iri}"^^<${XSD}anyURI> ; <http://purl.org/vocab/vann/preferredNamespacePrefix> ${S.lit(pfx)} ;`,
       `  dct:language "en" ; dct:publisher <${base}resource/core/Organization/insperity> ;`,
-      `  dct:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <${base}standard/semantic-governance/1.9/> ;`,
+      `  dct:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <${(window.KE_GUIDE && window.KE_GUIDE.conformsTo) || base + 'standard/semantic-governance/2.0/'}> ;`,
       `  owl:versionInfo "0.1.0" ; owl:versionIRI <${iri}0.1.0/> ; dct:identifier ${S.lit('ontology-' + s)} ; <${core}hasLifecycleStatus> <${core}Draft> ;`,
       policyJ.author ? `  dct:creator ${S.lit(policyJ.author)} ;` : '',
       `  skos:changeNote ${S.lit(`0.1.0 (${stamp.slice(0, 10)}): created in the Model Editor (Ontology)` + (imps.length ? ', importing ' + imps.map(mLabel).join(', ') : '') + '.', 'en')} ;`,

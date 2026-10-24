@@ -9,7 +9,8 @@ Reads   ../**/change-record-*.ttl              PROV-O change records written by 
         data/c360/*.ttl                         Customer 360 schema and instances
         ../KE Domains/review/*.md, ../KE Baseline/Baseline Core v1.0/review/design-decisions.md
         assets/ke-releases.js, ingest/feedback/dispositions.jsonl, git history of the repository
-        ingest/ops_spec.py                      guide retrofit items and process policies
+        ingest/ops_spec.py                      guide retrofit items, where each edition resolves them, process policies
+        assets/ke-guide.js                      the guide edition the workbench applies (ingest/guide_sync.py)
 Writes  data/ops/ops-snapshot.js                read by tools/operations-dashboard.html
         data/ops/history.jsonl                  one summary line per build, for trends
 The dashboard merges change records it finds in GraphDB (…/graph/change-log) with the ones in the snapshot.
@@ -334,8 +335,38 @@ def guide_editions():
     return sorted(eds, key=lambda v: tuple(int(x) for x in v.split('.')))
 
 
+def _ver(v):
+    return tuple(int(x) for x in str(v).split('.'))
+
+
+def guide_current(eds):
+    """The edition the workbench applies (assets/ke-guide.js), with each retrofit item's status in that edition."""
+    g = None
+    p = WB / 'assets/ke-guide.js'
+    if p.exists():
+        m = re.search(r'window\.KE_GUIDE\s*=\s*(\{.*\});', p.read_text(encoding='utf-8'), re.S)
+        if m:
+            try: g = json.loads(m.group(1))
+            except Exception: g = None
+    if not g:
+        g = {'edition': SPEC.GUIDE_EDITION, 'status': 'Draft', 'file': f'docs/Semantic_Governance_v{SPEC.GUIDE_EDITION}_DRAFT.pdf'}
+    ed = g['edition']
+    res = getattr(SPEC, 'RESOLUTION', {})
+    applicable = sorted((e for e in res if _ver(e) <= _ver(ed)), key=_ver)
+    items = []
+    for it in SPEC.GUIDE:
+        st, where, by = 'open', '', ''
+        for e in applicable:
+            if it['id'] in res[e]:
+                st, where = res[e][it['id']]; by = e
+        items.append(dict(it, status=st, resolvedIn=where, resolvedBy=by))
+    g = dict(g, editionsOnDisk=eds, items=items, next=SPEC.GUIDE_NEXT,
+             counts={k: sum(1 for i in items if i['status'] == k) for k in ('resolved', 'decide', 'tools', 'open')})
+    return g
+
+
 # ---- actions ----------------------------------------------------------------------------------------------
-def actions(recs, assets, qs, policy, expansion):
+def actions(recs, assets, qs, policy, expansion, guide):
     A = []
     def add(id, cat, title, detail, prio, scope='', source='', count=1, link=''):
         A.append({'id': id, 'category': cat, 'title': title, 'detail': detail, 'priority': prio, 'scope': scope, 'source': source, 'count': count, 'link': link})
@@ -354,8 +385,14 @@ def actions(recs, assets, qs, policy, expansion):
     for p in policy:
         if p['status'] != 'pass':
             add('P-' + p['id'], 'Process policy', p['title'], p['finding'], p['priority'], 'All', p['standard'], p.get('failing', 1))
-    for g in SPEC.GUIDE:
-        add('G-' + g['id'], 'Standards guide', f'§{g["section"]} {g["topic"]}', g['change'], g['priority'], 'Guide', ', '.join(g['sources']), 1)
+    ed = guide['edition']
+    for g in guide['items']:
+        if g['status'] == 'open':
+            add('G-' + g['id'], 'Standards guide', f'§{g["section"]} {g["topic"]}', g['change'], g['priority'], 'Guide', ', '.join(g['sources']), 1)
+        elif g['status'] == 'decide':
+            add('G-' + g['id'], 'Decision', f'Decide {g["topic"].lower()} (guide {g["id"]}, proposed in v{ed})',
+                f'Semantic Governance v{ed} writes this as a proposal: {g["resolvedIn"]}. Decide it, then the next edition states it as a rule.',
+                g['priority'], 'Guide', f'Semantic Governance v{ed}', 1)
     for q in qs:
         add(q['id'], 'Decision', q['title'], q['detail'], 'medium', q['section'], 'KE Domains/review/open-questions.md')
     drafts = [a for a in assets if a['status'] in ('Draft', '') and a['kind'] in ('vocabulary', 'taxonomy', 'ontology', 'shapes')]
@@ -368,14 +405,14 @@ def actions(recs, assets, qs, policy, expansion):
     return A
 
 
-def policies(recs, assets, editions):
+def policies(recs, assets, editions, guide):
     touched = set()
     for r in recs:
         touched.update(r['generated']); touched.update(r['used']); touched.update(r['invalidated'])
         touched.update(p['subject'] for p in r['parts'])
     models = [a for a in assets if a['kind'] in ('vocabulary', 'taxonomy', 'ontology', 'shapes') and a['iri']]
     untracked = [a['name'] for a in models if a['iri'] not in touched]
-    latest = editions[-1] if editions else SPEC.GUIDE_EDITION
+    latest = guide['edition']
     stale = [a['name'] for a in models if a['conformsTo'] and not any(latest in c for c in a['conformsTo'])]
     nocl = [a['name'] for a in models if not a['conformsTo']]
     by_iri = collections.defaultdict(set)
@@ -393,7 +430,7 @@ def policies(recs, assets, editions):
         res('P04', sum(1 for r in recs if not r['feature']), n, f'{sum(1 for r in recs if not r["feature"])} of {n} records trace to no requirement or demand request.'),
         res('P05', 1, 1, 'No deployment record is written when graphs are loaded (graphdb-load.command, graphdb-rebuild.command, Load into GraphDB).'),
         res('P06', sum(1 for r in recs if not r['ended']), n, f'{sum(1 for r in recs if not r["ended"])} of {n} records have no prov:endedAtTime.'),
-        res('P07', len(stale) + len(nocl), len(models), f'Latest guide edition on disk is v{latest}. {len(stale)} assets claim an older edition and {len(nocl)} claim none. After v{SPEC.GUIDE_NEXT} is published every asset will need rebuilding.'),
+        res('P07', len(stale) + len(nocl), len(models), f'The workbench applies Semantic Governance v{latest}. {len(stale)} assets declare an older edition and {len(nocl)} declare none. Rebuild them (build_core.py, build_domains.py, re-ingestion) so dcterms:conformsTo names …/standard/semantic-governance/{latest}/.'),
         res('P08', len(dups), len(by_iri), f'{len(dups)} asset IRIs have current copies at different versions: ' + '; '.join(f'{i.rsplit("/", 2)[-2]} ({", ".join(sorted(v for v, _ in vs))})' for i, vs in list(dups.items())[:6])),
         res('P09', len(models) - len(beyond), len(models), f'{len(models) - len(beyond)} of {len(models)} model assets are Draft.'),
     ], untracked, dups
@@ -409,20 +446,21 @@ def main():
         r['scopes'] = sorted({' › '.join(x for x in scopes.of(i)[1:3] if x) for i in r['generated'] + r['invalidated'] + [p['subject'] for p in r['parts']] if scopes.of(i)[1]})
     dec, qs = decisions()
     eds = guide_editions()
-    pol, untracked, dups = policies(recs, assets, eds)
+    guide = guide_current(eds)
+    pol, untracked, dups = policies(recs, assets, eds, guide)
     exp = 0
     sm = KE / 'KE Domains/HR Service Operations/peo-service-map/peo-service-map.json'
     if sm.exists():
         try: exp = len(json.loads(sm.read_text(encoding='utf-8')).get('expansion', {}).get('proposals', []))
         except Exception: pass
-    acts = actions(recs, assets, qs, pol, exp)
+    acts = actions(recs, assets, qs, pol, exp, guide)
     disp = k.load_feedback()
     scope_iri = {}
     for r in recs:
         for i in set(r['generated'] + r['used'] + r['invalidated'] + [p['subject'] for p in r['parts']]):
             if i and i not in scope_iri: scope_iri[i] = scopes.of(i)
     data = {
-        'generated': now, 'workbench': WB.name, 'guide': {'edition': SPEC.GUIDE_EDITION, 'next': SPEC.GUIDE_NEXT, 'editionsOnDisk': eds, 'items': SPEC.GUIDE},
+        'generated': now, 'workbench': WB.name, 'guide': guide,
         'changeLog': {'records': recs, 'files': nfiles, 'graph': cfg.get('baseUrl', 'https://www.insperity.com/') + 'graph/change-log'},
         'scopeOf': {i: list(v) for i, v in scope_iri.items()},
         'domainMap': dict({s: [scopes.domain_area.get(s), scopes.domain_label.get(s)] for s in scopes.domain_area},
@@ -443,13 +481,14 @@ def main():
         b = by[a['domain']]; b['assets'] += 1; b['terms'] += a['counts'].get('concepts', 0) + a['counts'].get('classes', 0)
         b['errors'] += a['errors']; b['warnings'] += a['warnings']
     line = {'at': now, 'records': len(recs), 'assets': len(models), 'errors': sum(a['errors'] for a in models),
-            'warnings': sum(a['warnings'] for a in models), 'actions': len(acts), 'byDomain': by}
+            'warnings': sum(a['warnings'] for a in models), 'actions': len(acts), 'guide': guide['edition'],
+            'policiesFailing': sum(1 for p in pol if p['status'] != 'pass'), 'byDomain': by}
     with open(out / 'history.jsonl', 'a', encoding='utf-8') as fh:
         fh.write(json.dumps(line, ensure_ascii=False) + '\n')
     hist = [json.loads(x) for x in (out / 'history.jsonl').read_text(encoding='utf-8').splitlines() if x.strip()]
     (out / 'history.js').write_text('window.KE_OPS_HISTORY = ' + json.dumps(hist[-200:], ensure_ascii=False, separators=(',', ':')) + ';\n', encoding='utf-8')
     summary = {'records': len(recs), 'recordFiles': nfiles, 'assets': len(assets), 'models': len(models),
-               'errors': line['errors'], 'warnings': line['warnings'], 'actions': len(acts), 'policiesFailing': sum(1 for p in pol if p['status'] != 'pass')}
+               'errors': line['errors'], 'warnings': line['warnings'], 'actions': len(acts), 'policiesFailing': sum(1 for p in pol if p['status'] != 'pass'), 'guide': guide['edition']}
     print(json.dumps(summary))
     return summary
 

@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '4.4.0',
+  version: '4.5.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -67,7 +67,7 @@ window.KE_REGISTRY = {
       blurb: 'Run, monitor and review the agentic fabric and the lifecycle of governed artifacts.',
       tools: [
         { id: 'operations-dashboard', code: 'OD', file: 'tools/operations-dashboard.html', title: 'Operations Dashboard', isNew: true,
-          desc: 'Change log as PROV-O triples joined to the model inventory: activity, causality and root cause, domain expansion and improvement, conformance and policy compliance, the Semantic Governance v1.9 → v2.0 retrofit, and the actions to close each gap.',
+          desc: 'Change log as PROV-O triples joined to the model inventory: activity, causality and root cause, domain expansion and improvement, conformance and policy compliance against the guide edition in force, where each guide retrofit item stands, and the actions to close each gap.',
           functions: ['Change monitoring', 'Impact visualization', 'Governance workflow'], std: ['3.3', '3.4', '3.11'] },
         { id: 'mapping-agent-dashboard', code: 'MA', file: 'tools/mapping-agent-dashboard.html', title: 'Mapping Agent Dashboard',
           desc: 'Simulates the domain-sovereign mapping agents: routing, SHACL → SWRL → PEP validation gate, circuit breakers, human-in-the-loop review and KGCL commits.',
@@ -131,12 +131,20 @@ window.KE_REGISTRY = {
         { id: 'apqc-pcf', code: 'PC', file: 'reference/apqc-pcf/index.html', title: 'APQC PCF 7.4', isNew: true,
           desc: 'The APQC Process Classification Framework the Commercial Operations domains are built on: the version in use and APQC\u2019s links, categories 3.0 and 6.0 as a searchable outline to L5, and the 7.2.1 \u2192 7.4 crosswalk.',
           functions: ['Impact visualization'], std: ['3.9'] },
-        { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v1.9_DRAFT.pdf', title: 'Semantic Governance v1.9',
-          desc: 'The standards guide: services, architecture and integration, and Part III knowledge engineering standards.',
+        { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v2.0_DRAFT.pdf', title: 'Semantic Governance v2.0',
+          desc: 'The standards guide: services, architecture and integration, and Part III knowledge engineering standards. The edition shown is the latest one in docs/ (assets/ke-guide.js).',
           functions: [], std: [] }
       ]
     }
   ]
 };
+/* The guide edition comes from assets/ke-guide.js (written by ingest/guide_sync.py) when the page loads it first. */
+(function () {
+  var g = window.KE_GUIDE;
+  if (!g || !g.edition) return;
+  window.KE_REGISTRY.groups.forEach(function (gr) { gr.tools.forEach(function (t) {
+    if (t.id === 'guide') { t.file = g.file; t.title = 'Semantic Governance v' + g.edition; }
+  }); });
+})();
 window.KE_TOOLS = {};
 window.KE_REGISTRY.groups.forEach(function (g) { g.tools.forEach(function (t) { t.group = g.id; window.KE_TOOLS[t.id] = t; }); });

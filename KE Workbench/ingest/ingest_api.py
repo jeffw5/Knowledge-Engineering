@@ -671,3 +671,14 @@ ROUTES = {
     ('GET', 'define-status'): define_status,
     ('POST', 'define'): define,
 }
+
+
+def ops_snapshot(_, __):
+    """Rebuild the Operations Dashboard snapshot (data/ops/ops-snapshot.js) from the files on disk."""
+    import importlib
+    mod = importlib.import_module('build_ops_snapshot')
+    mod = importlib.reload(mod)
+    return {'ok': True, 'summary': mod.main()}
+
+
+ROUTES[('POST', 'ops-snapshot')] = ops_snapshot

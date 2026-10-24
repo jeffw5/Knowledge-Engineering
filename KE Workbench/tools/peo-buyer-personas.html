@@ -945,7 +945,7 @@
   }
   function reviewCell(o){
     if (!REVIEW || !REVIEW.items) return '<span class="faint">—</span>';
-    const it = REVIEW.items[o.id]; if (!it) return '<span class="rv rv-open">not in export</span>';
+    const it = REVIEW.items[o.id]; if (!it) return '<span class="rv rv-open">not reviewed</span>';
     const flag = it.flags && it.flags.length ? ` <span class="rv rv-flag" title="${esc(it.flags.join(', '))}">⚑${it.flags.length}</span>` : '';
     if (it.decision === 'accepted') return `<span class="rv rv-acc" title="Approved uses: ${esc(it.uses.join(', ') || 'none')}">accepted</span>` + flag;
     if (it.decision === 'dropped') return '<span class="rv rv-drop">dropped</span>' + flag;
@@ -1183,8 +1183,8 @@
   }
   async function boot(again){
     if (!again) $('loading').hidden = false;
-    RESULTS = C.studyResults(); REVIEW = C.reviewState();
-    RES = await C.load(); M = RES.model;
+    RESULTS = C.studyResults();
+    RES = await C.load(); M = RES.model; REVIEW = C.currentReview(M);
     renderStatus();
     if (!M.personas.length) { renderEmpty(); return; }
     $('loading').hidden = true;

@@ -1,0 +1,256 @@
+# ==========================================================================
+#  Outcome review vocabulary
+#  Target named graph: <https://www.insperity.com/graph/customer-360/outcome-review-vocabulary>
+#  Roles, verdicts, risk flags, approved uses, study dispositions and decision statuses.
+#  skos:notation holds the short code the review page uses.
+# ==========================================================================
+
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix vaem:     <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:     <http://purl.org/vocab/vann/> .
+@prefix core:     <https://www.insperity.com/ontology/core/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix jtbd:     <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix orv:      <https://www.insperity.com/ontology/outcome-review/> .
+@prefix orvv:     <https://www.insperity.com/vocabulary/outcome-review/> .
+
+<https://www.insperity.com/vocabulary/outcome-review/> a skos:ConceptScheme ;
+    rdfs:label "Outcome review vocabulary"@en ;
+    skos:prefLabel "Outcome review vocabulary"@en ;
+    dcterms:title "Outcome review vocabulary"@en ;
+    dcterms:description "The terms used to review jobs-to-be-done statements: roles, verdicts, risk flags, approved uses, study dispositions and decision statuses."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/vocabulary/outcome-review/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "orvv" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    skos:definition "A concept scheme of the terms used to review personas, jobs and desired outcomes before they are fielded or used."@en ;
+    skos:hasTopConcept orvv:review-role , orvv:verdict , orvv:risk-flag , orvv:approved-use , orvv:study-disposition , orvv:decision-status ;
+    owl:versionInfo "0.1.0" ;
+    owl:versionIRI <https://www.insperity.com/vocabulary/outcome-review/0.1.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-23"^^xsd:date ;
+    dcterms:modified "2026-10-23T17:00:29Z"^^xsd:dateTime .
+
+orvv:review-role a skos:Concept ;
+    skos:prefLabel "Review role"@en ;
+    rdfs:label "Review role"@en ;
+    skos:definition "A concept that groups the roles in which people review jobs-to-be-done statements."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:narrower orvv:business-reviewer , orvv:compliance-reviewer .
+
+orvv:business-reviewer a skos:Concept ;
+    skos:prefLabel "Business reviewer"@en ;
+    rdfs:label "Business reviewer"@en ;
+    skos:definition "A review role that judges whether a statement is accurate, in the customer's words, placed on the right stage and theme, and worth keeping."@en ;
+    skos:notation "business" ;
+    skos:broader orvv:review-role ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:compliance-reviewer a skos:Concept ;
+    skos:prefLabel "Compliance reviewer"@en ;
+    rdfs:label "Compliance reviewer"@en ;
+    skos:definition "A review role that judges a statement's regulatory, legal and privacy risk and where it may be used."@en ;
+    skos:notation "compliance" ;
+    skos:broader orvv:review-role ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:verdict a skos:Concept ;
+    skos:prefLabel "Verdict"@en ;
+    rdfs:label "Verdict"@en ;
+    skos:definition "A concept that groups the verdicts a reviewer gives a statement."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:narrower orvv:approve , orvv:approve-with-edits , orvv:needs-discussion , orvv:reject .
+
+orvv:approve a skos:Concept ;
+    skos:prefLabel "Approve"@en ;
+    rdfs:label "Approve"@en ;
+    skos:definition "A verdict that accepts the statement as written."@en ;
+    skos:notation "approve" ;
+    skos:broader orvv:verdict ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:approve-with-edits a skos:Concept ;
+    skos:prefLabel "Approve with edits"@en ;
+    rdfs:label "Approve with edits"@en ;
+    skos:definition "A verdict that accepts the statement once the suggested wording is applied."@en ;
+    skos:notation "edits" ;
+    skos:broader orvv:verdict ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:needs-discussion a skos:Concept ;
+    skos:prefLabel "Needs discussion"@en ;
+    rdfs:label "Needs discussion"@en ;
+    skos:definition "A verdict that holds the statement until the reviewers discuss it."@en ;
+    skos:notation "discuss" ;
+    skos:broader orvv:verdict ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:reject a skos:Concept ;
+    skos:prefLabel "Reject"@en ;
+    rdfs:label "Reject"@en ;
+    skos:definition "A verdict that the statement should not be used."@en ;
+    skos:notation "reject" ;
+    skos:broader orvv:verdict ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:risk-flag a skos:Concept ;
+    skos:prefLabel "Risk flag"@en ;
+    rdfs:label "Risk flag"@en ;
+    skos:definition "A concept that groups the compliance risks a reviewer can raise on a statement."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:narrower orvv:regulated-topic , orvv:legal-advice , orvv:tax-advice , orvv:privacy-sensitivity , orvv:needs-substantiation , orvv:bias-risk , orvv:co-employment-unclear .
+
+orvv:regulated-topic a skos:Concept ;
+    skos:prefLabel "Regulated topic"@en ;
+    rdfs:label "Regulated topic"@en ;
+    skos:definition "A risk flag for statements about insurance, benefits or other licensed advice."@en ;
+    skos:notation "regulated" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:legal-advice a skos:Concept ;
+    skos:prefLabel "Could read as legal advice"@en ;
+    rdfs:label "Could read as legal advice"@en ;
+    skos:definition "A risk flag for statements a client could take as legal advice."@en ;
+    skos:notation "legal" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:tax-advice a skos:Concept ;
+    skos:prefLabel "Could read as tax advice"@en ;
+    rdfs:label "Could read as tax advice"@en ;
+    skos:definition "A risk flag for statements a client could take as tax advice."@en ;
+    skos:notation "tax" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:privacy-sensitivity a skos:Concept ;
+    skos:prefLabel "Privacy or employee-data sensitivity"@en ;
+    rdfs:label "Privacy or employee-data sensitivity"@en ;
+    skos:definition "A risk flag for statements that touch personal or employee data."@en ;
+    skos:notation "privacy" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:needs-substantiation a skos:Concept ;
+    skos:prefLabel "Claim needs substantiation"@en ;
+    rdfs:label "Claim needs substantiation"@en ;
+    skos:definition "A risk flag for statements that imply a claim needing evidence before use."@en ;
+    skos:notation "substantiate" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:bias-risk a skos:Concept ;
+    skos:prefLabel "Bias or discrimination risk"@en ;
+    rdfs:label "Bias or discrimination risk"@en ;
+    skos:definition "A risk flag for statements that could encourage biased or discriminatory practice."@en ;
+    skos:notation "bias" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:co-employment-unclear a skos:Concept ;
+    skos:prefLabel "Co-employment responsibility unclear"@en ;
+    rdfs:label "Co-employment responsibility unclear"@en ;
+    skos:definition "A risk flag for statements that blur which employer is responsible under co-employment."@en ;
+    skos:notation "coemploy" ;
+    skos:broader orvv:risk-flag ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:approved-use a skos:Concept ;
+    skos:prefLabel "Approved use"@en ;
+    rdfs:label "Approved use"@en ;
+    skos:definition "A concept that groups the uses a statement can be cleared for."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:narrower orvv:survey-instrument , orvv:internal-sales-guidance , orvv:external-marketing-claims .
+
+orvv:survey-instrument a skos:Concept ;
+    skos:prefLabel "Survey instrument"@en ;
+    rdfs:label "Survey instrument"@en ;
+    skos:definition "An approved use in the benchmark survey questionnaire."@en ;
+    skos:notation "survey" ;
+    skos:broader orvv:approved-use ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:internal-sales-guidance a skos:Concept ;
+    skos:prefLabel "Internal sales guidance and sales advisor agent"@en ;
+    rdfs:label "Internal sales guidance and sales advisor agent"@en ;
+    skos:definition "An approved use in internal sales guidance and as grounding for the sales advisor agent."@en ;
+    skos:notation "sales" ;
+    skos:broader orvv:approved-use ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:external-marketing-claims a skos:Concept ;
+    skos:prefLabel "External marketing claims"@en ;
+    rdfs:label "External marketing claims"@en ;
+    skos:definition "An approved use in marketing material seen outside the company."@en ;
+    skos:notation "marketing" ;
+    skos:broader orvv:approved-use ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:study-disposition a skos:Concept ;
+    skos:prefLabel "Study disposition"@en ;
+    rdfs:label "Study disposition"@en ;
+    skos:definition "A concept that groups whether a reviewer would keep an item in the study."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:narrower orvv:keep-in-study , orvv:merge-with-another , orvv:drop-from-study .
+
+orvv:keep-in-study a skos:Concept ;
+    skos:prefLabel "Keep in the study"@en ;
+    rdfs:label "Keep in the study"@en ;
+    skos:definition "A study disposition that keeps the item as a separate statement."@en ;
+    skos:notation "keep" ;
+    skos:broader orvv:study-disposition ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:merge-with-another a skos:Concept ;
+    skos:prefLabel "Merge with another item"@en ;
+    rdfs:label "Merge with another item"@en ;
+    skos:definition "A study disposition that merges the item with a near-duplicate."@en ;
+    skos:notation "merge" ;
+    skos:broader orvv:study-disposition ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:drop-from-study a skos:Concept ;
+    skos:prefLabel "Drop from the study"@en ;
+    rdfs:label "Drop from the study"@en ;
+    skos:definition "A study disposition that removes the item from the survey."@en ;
+    skos:notation "drop" ;
+    skos:broader orvv:study-disposition ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:decision-status a skos:Concept ;
+    skos:prefLabel "Decision status"@en ;
+    rdfs:label "Decision status"@en ;
+    skos:definition "A concept that groups the outcomes of a final review decision."@en ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:topConceptOf <https://www.insperity.com/vocabulary/outcome-review/> ;
+    skos:narrower orvv:accepted , orvv:dropped .
+
+orvv:accepted a skos:Concept ;
+    skos:prefLabel "Accepted"@en ;
+    rdfs:label "Accepted"@en ;
+    skos:definition "A decision status that admits the item with its approved uses."@en ;
+    skos:notation "accepted" ;
+    skos:broader orvv:decision-status ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .
+
+orvv:dropped a skos:Concept ;
+    skos:prefLabel "Dropped"@en ;
+    rdfs:label "Dropped"@en ;
+    skos:definition "A decision status that removes the item from the model."@en ;
+    skos:notation "dropped" ;
+    skos:broader orvv:decision-status ;
+    skos:inScheme <https://www.insperity.com/vocabulary/outcome-review/> .

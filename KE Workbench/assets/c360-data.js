@@ -23,12 +23,14 @@
     theme: BASE + 'taxonomy/benchmark-theme/', metric: BASE + 'vocabulary/outcome-metric-type/',
     phase: BASE + 'vocabulary/inquiry-phase/', evid: BASE + 'vocabulary/evidence-status/', dtype: BASE + 'vocabulary/demand-type/',
     gstat: BASE + 'vocabulary/gateway-status/', grule: BASE + 'vocabulary/gateway-rule/',
-    hr: 'http://example.org/hrservices/ddd#', core: BASE + 'ontology/core/'
+    hr: 'http://example.org/hrservices/ddd#', core: BASE + 'ontology/core/',
+    orv: BASE + 'ontology/outcome-review/', orvv: BASE + 'vocabulary/outcome-review/', orvr: BASE + 'resource/outcome-review/'
   };
   var GRAPH_BASE = BASE + 'graph/customer-360/';
   var DEFAULT_GRAPH = 'urn:x-graphdb:default-graph';
   var LS = { localGraphs: 'c360-local-graphs', study: 'c360-study-results', review: 'c360-review' };
-  var READ_NS = ['jtbd', 'ai', 'dp', 'ob', 'air', 'dpr', 'theme', 'metric', 'phase', 'evid', 'dtype', 'gstat', 'grule'];
+  var READ_NS = ['jtbd', 'ai', 'dp', 'ob', 'air', 'dpr', 'theme', 'metric', 'phase', 'evid', 'dtype', 'gstat', 'grule', 'orv', 'orvv', 'orvr'];
+  var LS_REVIEW_LOCAL = 'c360-review-local';   // written by assets/c360-review-store.js when GraphDB is off
 
   // ── small utilities ──────────────────────────────────────────────────
   function lsGet(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
@@ -284,8 +286,47 @@
     M.demandByOutcome = {};
     Object.keys(M.demand).forEach(function (k) { M.demand[k].targets.forEach(function (t) { (M.demandByOutcome[t.outcome] = M.demandByOutcome[t.outcome] || []).push(k); }); });
     M.outcomeById = {}; Object.keys(M.outcomes).forEach(function (k) { M.outcomeById[M.outcomes[k].id] = M.outcomes[k]; });
+
+    // review records written by PEO Outcome Review (tools/peo-outcome-review.html)
+    var O = NS.orv, RV = {}, USE = { 'survey-instrument': 'survey', 'internal-sales-guidance': 'sales', 'external-marketing-claims': 'marketing' };
+    var FLAG = { 'regulated-topic': 'regulated', 'legal-advice': 'legal', 'tax-advice': 'tax', 'privacy-sensitivity': 'privacy', 'needs-substantiation': 'substantiate', 'bias-risk': 'bias', 'co-employment-unclear': 'coemploy' };
+    var VERD = { 'approve': 'approve', 'approve-with-edits': 'edits', 'needs-discussion': 'discuss', 'reject': 'reject' };
+    function rvItem(id) { return RV[id] || (RV[id] = { id: id, flags: [], verdicts: [], reviewers: 0, decision: '', wording: '', uses: [], status: '' }); }
+    ofType(O + 'item-review').forEach(function (e) {
+      var id = v1(e, O + 'hasItemIdentifier'); if (!id) return; var it = rvItem(id); it.reviewers++;
+      var v = vs(e, O + 'hasVerdict')[0], r = vs(e, O + 'hasReviewRole')[0];
+      if (v) it.verdicts.push({ role: local(r || '') === 'compliance-reviewer' ? 'Compliance SME' : 'Business SME', verdict: VERD[local(v)] || local(v) });
+      vs(e, O + 'hasRiskFlag').forEach(function (f) { var c = FLAG[local(f)] || local(f); if (it.flags.indexOf(c) < 0) it.flags.push(c); });
+    });
+    ofType(O + 'review-decision').forEach(function (e) {
+      var id = v1(e, O + 'hasItemIdentifier'); if (!id) return; var it = rvItem(id);
+      it.decision = local(vs(e, O + 'hasDecisionStatus')[0] || ''); it.wording = v1(e, O + 'hasFinalWording');
+      it.uses = vs(e, O + 'hasApprovedUse').map(function (u) { return USE[local(u)] || local(u); });
+    });
+    M.review = reviewSummary(RV, 'PEO Outcome Review · GraphDB', 'graph');
     return M;
   }
+
+  function reviewSummary(items, name, source) {
+    var ids = Object.keys(items); if (!ids.length) return null;
+    ids.forEach(function (id) { var it = items[id];
+      it.status = it.decision === 'accepted' ? 'Accepted' : it.decision === 'dropped' ? 'Dropped' : it.reviewers ? 'In review' : 'Not reviewed'; });
+    return { name: name, at: Date.now(), items: items, source: source };
+  }
+  // Reviews saved in this browser while GraphDB was off (same shape the review page keeps).
+  function reviewFromLocal() {
+    var l = lsJSON(LS_REVIEW_LOCAL, null); if (!l || !l.items) return null;
+    var RV = {};
+    function it(id) { return RV[id] || (RV[id] = { id: id, flags: [], verdicts: [], reviewers: 0, decision: '', wording: '', uses: [], status: '' }); }
+    Object.keys(l.items).forEach(function (uid) { var m = l.items[uid] || {};
+      Object.keys(m).forEach(function (id) { var b = m[id], x = it(id); x.reviewers++;
+        if (b.verdict) x.verdicts.push({ role: b.role === 'compliance' ? 'Compliance SME' : 'Business SME', verdict: b.verdict });
+        (b.flags || []).forEach(function (f) { if (x.flags.indexOf(f) < 0) x.flags.push(f); }); }); });
+    Object.keys(l.decisions || {}).forEach(function (id) { var d = l.decisions[id], x = it(id); x.decision = d.status || ''; x.wording = d.wording || ''; x.uses = d.uses || []; });
+    return reviewSummary(RV, 'PEO Outcome Review · this browser', 'browser');
+  }
+  // Review state for the gateway and personas: decisions saved in PEO Outcome Review win; a CSV import is the fallback.
+  function currentReview(model) { return (model && model.review) || reviewFromLocal() || reviewState(); }
 
   // ── study scores and the playbook rule ───────────────────────────────
   // Scores: {PEO:{O001:[I,S,n]}, NONPEO:{…}, TOTAL?:{…}} on the 0–10 scale.
@@ -390,7 +431,7 @@
     manifest: manifest, loadBundledIntoGraphDB: loadBundledIntoGraphDB, dataRoot: function () { return DATA_ROOT; },
     localGraphs: localGraphs, saveLocalGraph: saveLocalGraph, removeLocalGraph: removeLocalGraph, markPublished: markPublished,
     studyResults: studyResults, saveStudyResults: saveStudyResults, clearStudyResults: clearStudyResults, score: score, opp: opp, ACTIONS: ACTIONS,
-    parseCSV: parseCSV, csvObjects: csvObjects, importReviewCSV: importReviewCSV, reviewState: reviewState, clearReview: clearReview,
+    parseCSV: parseCSV, csvObjects: csvObjects, importReviewCSV: importReviewCSV, reviewState: reviewState, clearReview: clearReview, currentReview: currentReview,
     tl: tl, tIri: tIri, prefixBlock: prefixBlock, camel: camel, expand: expand, acronymsLeft: acronymsLeft, slugId: slugId, statusHTML: statusHTML, lsGet: lsGet, lsSet: lsSet, lsJSON: lsJSON
   };
 })(typeof window !== 'undefined' ? window : globalThis);

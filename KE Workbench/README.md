@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **3.9.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **4.4.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -231,6 +231,15 @@ Rolled-up status on areas and domains counts each finding once, even when a shar
 - **Filters:** Area, then L1, L2 and L3 (each shows the children of the level above), and *Only domains with services*. The filter also applies to the Services view and is remembered; `?domain=<domain slug>` sets it from a link.
 - **All service assemblies** appears at the top of the assembly list once more than one is loaded, and reads them all into one topology.
 
+## Customer 360 in the workbench (4.1.0)
+
+- **PEO Outcome Review** and **PEO Outcome Playbook** are local pages in `tools/`; nothing in Customer 360 links to claude.ai.
+- **Reviewers**: enter your name once in the Review's header (tick *I record final decisions* if you sign off). The name is kept in your browser; reviews carry it into the graph. It is an honour system: GraphDB security decides who can write to the repository.
+- **Shared reviews**: everyone pointed at the same GraphDB repository sees the same reviews; the page refreshes every 15 seconds. `assets/c360-review-store.js` reads and writes them (schema: `data/c360/15-outcome-review-ontology.ttl`, `16-outcome-review-vocabulary.ttl`).
+- **GraphDB off**: reviews are saved in the browser (the header shows *Saved in this browser only*) and published automatically when GraphDB is back.
+- **Gateway**: reads the decisions directly; *Import review CSV* is only for reviews recorded elsewhere.
+- **Playbook scores**: the Job Study's loaded survey results when present, otherwise the example data. Its sales advisor copies a grounded prompt for Claude instead of calling Claude itself.
+
 ## Customer 360 (4.0.0)
 
 Section 04 of the sidebar. It realizes the persona model from qualitative research and closes the loop to demand planning:
@@ -240,9 +249,9 @@ Section 04 of the sidebar. It realizes the persona model from qualitative resear
 | Interview | Appreciative Inquiry (`tools/appreciative-inquiry.html`) | personas, jobs, stages, outcomes | one named graph per interview: `…/graph/customer-360/interviews/{id}` |
 | Model | Buyer Personas & Jobs (`tools/peo-buyer-personas.html`) | persona instances and everything linked to them | — |
 | Measure | PEO Job Study (`tools/peo-benchmark/`) | bundled benchmark; survey CSV you upload | study scores in the browser, shared by the other tools |
-| Review | PEO Outcome Review ↗ (shared artifact) | — | Export CSV, imported on the Demand Gateway's Inputs tab |
-| Classify | PEO Outcome Playbook ↗ (shared artifact) | — | Fix / Innovate / Protect / Simplify, also applied in the workbench |
-| Gateway | Demand Gateway (`tools/demand-gateway.html`) | outcomes, scores, review, interviews | one named graph per request: `…/graph/customer-360/demand/{id}`; portfolio CSV / Turtle for demand planning |
+| Review | PEO Outcome Review (`tools/peo-outcome-review.html`) | personas, jobs, outcomes | one named graph per reviewer `…/graph/customer-360/review/reviewer/{id}` and per final decision `…/review/decision/{item}`; Export CSV |
+| Classify | PEO Outcome Playbook (`tools/peo-outcome-playbook.html`) | Job Study scores | battle cards, Fix / Innovate / Protect / Simplify, sales advisor prompt |
+| Gateway | Demand Gateway (`tools/demand-gateway.html`) | outcomes, scores, review decisions, interviews | one named graph per request: `…/graph/customer-360/demand/{id}`; portfolio CSV / Turtle for demand planning |
 
 - **Data**: `data/c360/` holds the schema and the PEO benchmark instances (`manifest.json` lists each file's named graph). `assets/c360-data.js` is the shared data layer: GraphDB first, the bundled Turtle when GraphDB is off, local drafts merged in.
 - **Load**: with GraphDB on and empty, Buyer Personas & Jobs › *Load benchmark into GraphDB* PUTs every file into its named graph. Reloading replaces the same graphs.
@@ -255,3 +264,24 @@ Section 04 of the sidebar. It realizes the persona model from qualitative resear
 - **Topology on APQC's levels**: Area › Domain › process group (L2) › process (L3) › activity (L4); the L2 / L3 / L4 buttons set the depth. Click an activity for its SIPOCM, one row per step (the L5 tasks). Each domain also lists its services.
 - **Reference**: `reference/apqc-pcf/index.html` holds the version in use (7.4, August 2024), the links to APQC's PDF and Excel, categories 3.0 and 6.0 as an outline, and the 7.2.1 → 7.4 crosswalk. The master copy is `KE Domains/Reference/apqc-pcf/`. APQC may ask you to sign in to download, so to keep the PDF or Excel itself, save it in both folders.
 - Release Notes entries can carry `links` (label, href, note), shown under *Reference*.
+
+## Products & Services (4.2.0)
+
+- **PEO Service Map** (`tools/peo-service-map.html`): the external services of HR Service Operations, broken down as L1 domain › L2 bounded context › L3 domain service and filed under the service line a client buys, joined to the Customer 360 personas, jobs and desired outcomes. Each desired outcome becomes the question a persona asks while doing a job, traced to the services that answer it. Views: Service breakdown, By persona, Questions (filter, copy CSV) and Coverage (gaps and thin spots).
+- Rebuild the map after changing the business model extract, the HR Service Operations taxonomy or `data/c360/`: `python3 _build/build_service_map.py` from `KE Domains`. It writes `KE Domains/HR Service Operations/peo-service-map/` and `data/peo-service-map/peo-service-map.js`.
+- **PEO Service Landscape** (`tools/peo-service-landscape.html`): competitive capability matrix of Insperity and six U.S. PEOs, with evidence notes and sources.
+
+## PEO Service Map: market crosswalk and expansion (4.3.0)
+
+- **Market crosswalk**: every PEO Service Landscape row mapped to the L3 services that deliver it (direct, partial, none), with the seven providers' ratings and the proposals that fill each gap; offer and delivery models listed separately.
+- **Expansion**: proposed L1 domains, L2 contexts, service lines and L3 services from Insperity's catalog, competitors and the semantic knowledge layer, each with a recommendation, evidence and the customer questions it would strengthen. *Show proposed services* adds them to the Service breakdown tree.
+- Edit proposals and the crosswalk in `KE Domains/_build/service_map_expansion.py`, then run `python3 _build/build_service_map.py`. The landscape ratings are read from `tools/peo-service-landscape.html`, so edits there flow into the map on the next build. The report is `KE Domains/HR Service Operations/peo-service-map/market-and-expansion-report.md`.
+
+## Operations Dashboard (4.4.0)
+
+- **Page**: `tools/operations-dashboard.html` (Agents & operations). Tabs: Overview, Change log, Causality & root cause, Domains, Compliance, Standards guide, Actions, Workbench.
+- **Data**: `python3 ingest/build_ops_snapshot.py` (or *Rebuild snapshot* on the page, which calls `POST /api/ingest/ops-snapshot`) reads every `change-record-*.ttl`, the model files under `KE Baseline/Baseline Core v1.0/ttl`, `KE Domains/**/ttl` and `data/c360/`, the decisions, open questions, release notes and git history, and writes `data/ops/ops-snapshot.js`. Each rebuild appends a line to `data/ops/history.jsonl`, which the trend columns use.
+- **GraphDB**: when it is on, the page also reads `https://www.insperity.com/graph/change-log` and merges the records by IRI, so saves made in the editors (which go to GraphDB only) are included; the source bar shows how many records are only on disk or only in the graph.
+- **Policies and the guide retrofit** are defined in `ingest/ops_spec.py` (P01–P09, G01–G21). Edit them there and rebuild.
+- Action statuses are kept in the browser (localStorage, `ops-actions`); export them with *Copy CSV*.
+

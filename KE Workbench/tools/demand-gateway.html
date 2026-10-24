@@ -96,7 +96,7 @@ table.t td.st{min-width:280px;color:var(--ink)}
   'use strict';
   const C = window.C360, NS = C.NS, esc = C.esc, $ = id => document.getElementById(id);
   const LS_RQ = 'c360-dg-requests', LS_UI = 'c360-dg-ui';
-  const REVIEW_URL = 'https://claude.ai/artifact/TiVNKQw9Wwge5hF2BdDSyn', PLAYBOOK_URL = 'https://claude.ai/artifact/JVvu5CmTykxwE77BPVpBx7';
+  const REVIEW_URL = 'peo-outcome-review.html', PLAYBOOK_URL = 'peo-outcome-playbook.html';
   const ACT = { fix:'Fix', innovate:'Innovate', protect:'Protect', simplify:'Simplify', keep:'Maintain' };
   const EFFORT = { S:1, M:2, L:3, XL:5 };
   const RULES = [
@@ -354,7 +354,7 @@ table.t td.st{min-width:280px;color:var(--ink)}
         </tbody></table></div></div>
       <div class="panel" style="margin-top:14px"><div class="ph"><h3>Gateway checks</h3><span class="gstat ${g.passed ? 'admitted' : 'held'}">${g.passed ? 'would be admitted' : 'would be held'}</span></div>
         <div class="pb checks">${RULES.map(([k, l, d]) => { const [ok, f, note] = g.checks[k]; return `<div class="chk ${ok ? (note ? 'note' : 'pass') : 'fail'}" title="${esc(d)}"><span class="ic">${ok ? (note ? '!' : '✓') : '✕'}</span><b>${l}</b><span>${esc(f)}</span></div>`; }).join('')}
-          ${!REVIEW ? `<div class="callout machine">Reviewed and Unflagged need the latest export from the <a href="${REVIEW_URL}" target="_blank" rel="noopener">PEO Outcome Review ↗</a>. Use its <b>Export CSV</b> button, then import the file on the Inputs tab.</div>` : ''}
+          ${!REVIEW ? `<div class="callout machine">Reviewed and Unflagged need final decisions from the <a href="${REVIEW_URL}" target="_blank" rel="noopener">PEO Outcome Review</a>. Decisions saved there are read here automatically.</div>` : ''}
         </div></div>
       <div class="savebar" style="position:sticky;bottom:0;margin-top:14px;background:var(--surface);border:1px solid var(--line);padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
         <span class="note" style="margin-right:auto">Graph ${esc(graphOf(r))}${r.publishedAt ? ' · published' : ''}</span>
@@ -419,21 +419,21 @@ table.t td.st{min-width:280px;color:var(--ink)}
     const cnt = k => items.filter(i => i.decision === k).length;
     el.innerHTML = `<div class="grid2" style="align-items:start">
       <div class="panel"><div class="ph"><h3>Business &amp; compliance review</h3></div><div class="pb">
-        <p class="small">Reviews happen in the shared <a href="${REVIEW_URL}" target="_blank" rel="noopener">PEO Outcome Review ↗</a>, where SMEs sign in. Export its CSV and import it here; the gateway uses each outcome's final decision and compliance flags.</p>
-        ${REVIEW ? `<dl class="kv"><dt>File</dt><dd>${esc(REVIEW.name)}</dd><dt>Imported</dt><dd>${new Date(REVIEW.at).toLocaleString()}</dd><dt>Items</dt><dd>${items.length} · ${cnt('accepted')} accepted · ${cnt('dropped')} dropped · ${items.filter(i => !i.decision).length} without a final decision · ${items.filter(i => i.flags.length).length} flagged</dd></dl>` : '<p class="empty">No review export imported yet.</p>'}
-        <div class="links"><label class="btn primary filebtn">Import review CSV<input type="file" id="rv-file" accept=".csv,text/csv"></label>${REVIEW ? '<button class="btn danger" id="rv-clear" type="button">Clear</button>' : ''}<a class="btn" href="${REVIEW_URL}" target="_blank" rel="noopener">Open review ↗</a></div>
+        <p class="small">Reviews happen in the <a href="${REVIEW_URL}" target="_blank" rel="noopener">PEO Outcome Review</a>. The gateway reads each outcome's final decision and compliance flags straight from GraphDB (or from this browser when GraphDB is off). Import a review CSV only for reviews recorded somewhere else; decisions in the graph take precedence.</p>
+        ${REVIEW ? `<dl class="kv"><dt>Source</dt><dd>${esc(REVIEW.name)}</dd><dt>${REVIEW.source ? 'Read' : 'Imported'}</dt><dd>${new Date(REVIEW.at).toLocaleString()}</dd><dt>Items</dt><dd>${items.length} · ${cnt('accepted')} accepted · ${cnt('dropped')} dropped · ${items.filter(i => !i.decision).length} without a final decision · ${items.filter(i => i.flags.length).length} flagged</dd></dl>` : '<p class="empty">No review decisions yet.</p>'}
+        <div class="links"><label class="btn primary filebtn">Import review CSV<input type="file" id="rv-file" accept=".csv,text/csv"></label>${C.reviewState() ? '<button class="btn danger" id="rv-clear" type="button">Clear imported CSV</button>' : ''}<a class="btn" href="${REVIEW_URL}" target="_blank" rel="noopener">Open the review</a></div>
       </div></div>
       <div class="panel"><div class="ph"><h3>Study scores</h3></div><div class="pb">
         <p class="small">Scores come from the Job Study. Load a survey results file there (columns <span class="mono">outcome_id, segment, n, importance, satisfaction</span>) and the gateway, Buyer Personas &amp; Jobs and the portfolio's re-measure check all use it.</p>
         <dl class="kv"><dt>Source</dt><dd>${RESULTS ? (RESULTS.kind === 'example' ? 'Job Study example data (not survey results)' : esc(RESULTS.name)) : 'none'}</dd>${RESULTS && RESULTS.at ? `<dt>Loaded</dt><dd>${new Date(RESULTS.at).toLocaleString()}</dd>` : ''}</dl>
-        <div class="links"><button class="btn" id="go-study" type="button">Open the Job Study</button><a class="btn" href="${PLAYBOOK_URL}" target="_blank" rel="noopener">Open the Playbook ↗</a></div>
+        <div class="links"><button class="btn" id="go-study" type="button">Open the Job Study</button><a class="btn" href="${PLAYBOOK_URL}" target="_blank" rel="noopener">Open the Playbook</a></div>
       </div></div>
       <div class="panel" style="grid-column:1/-1"><div class="ph"><h3>What the gateway writes</h3></div><div class="pb">
         <p class="small">Each request is one named graph, <span class="mono">${esc(C.GRAPH_BASE)}demand/{request}</span>, holding a <span class="mono">dp:demand-request</span>, its <span class="mono">dp:outcome-target</span>s (baseline, target, gap closed) and one <span class="mono">dp:gateway-check</span> per rule, typed against the demand-planning ontology and vocabularies loaded with the Customer 360 schema. Buyer Personas &amp; Jobs reads them back: outcomes show the requests that target them, and personas list the requests that serve them. The CSV export carries the same fields for a demand-planning or backlog system.</p>
       </div></div></div>`;
     $('rv-file').onchange = e => { const f = e.target.files[0]; if (!f) return; const rd = new FileReader();
-      rd.onload = () => { try { REVIEW = C.importReviewCSV(rd.result, f.name); toast(`Imported ${Object.keys(REVIEW.items).length} review items`); refreshAll(); } catch (err) { toast(err.message); } }; rd.readAsText(f); };
-    const c = $('rv-clear'); if (c) c.onclick = () => { C.clearReview(); REVIEW = null; refreshAll(); };
+      rd.onload = () => { try { C.importReviewCSV(rd.result, f.name); REVIEW = C.currentReview(M); toast(`Imported ${Object.keys(REVIEW.items).length} review items`); refreshAll(); } catch (err) { toast(err.message); } }; rd.readAsText(f); };
+    const c = $('rv-clear'); if (c) c.onclick = () => { C.clearReview(); REVIEW = C.currentReview(M); refreshAll(); };
     $('go-study').onclick = () => { if (inShell) window.top.postMessage({ type:'ke-open', url: new URL('peo-benchmark/study.html', location.href).pathname }, '*'); else window.open('peo-benchmark/study.html', '_blank'); };
   }
 
@@ -442,9 +442,9 @@ table.t td.st{min-width:280px;color:var(--ink)}
   function activate(tab){ ui.tab = tab; saveUI(); Object.keys(VIEWS).forEach(k => { $('tab-' + k).setAttribute('aria-selected', String(k === tab)); $('v-' + k).hidden = k !== tab; }); VIEWS[tab](); }
   Object.keys(VIEWS).forEach(k => $('tab-' + k).onclick = () => activate(k));
   function refreshAll(){ renderStatus(); renderStats(); activate(ui.tab); }
-  async function reload(){ RESULTS = C.studyResults(); REVIEW = C.reviewState(); RES = await C.load(); M = RES.model; refreshAll(); }
+  async function reload(){ RESULTS = C.studyResults(); RES = await C.load(); M = RES.model; REVIEW = C.currentReview(M); refreshAll(); }
   window.addEventListener('message', e => { if (e.data && e.data.type === 'ke-settings') reload(); });
-  window.addEventListener('storage', e => { if ([C.LS.study, C.LS.review].includes(e.key)) reload(); });
+  window.addEventListener('storage', e => { if ([C.LS.study, C.LS.review, 'c360-review-local'].includes(e.key)) reload(); });
   reload();
 })();
 </script>

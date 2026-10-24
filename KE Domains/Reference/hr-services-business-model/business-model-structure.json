@@ -1,0 +1,709 @@
+{
+ "source": "HR Services & PEO Enterprise Business Model (HR_Services_Business_Model.rdf, namespace http://example.org/hrservices/ddd#), as extracted for the PEO Outcome Benchmark on 2026-10-22",
+ "note": "Extract of the model structure only: service lines, L1 domains, L2 bounded contexts and L3 domain services with their business-model identifiers. Replace with the full model when it is ingested into HR Service Operations (open question 27).",
+ "namespace": "http://example.org/hrservices/ddd#",
+ "serviceLines": [
+  {
+   "id": "ServiceLinePayroll",
+   "label": "Payroll",
+   "description": "Paying people correctly and on time, meeting payroll tax obligations, and tracking time and leave.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineBenefits",
+   "label": "Benefits",
+   "description": "Health, welfare and retirement plans: offering them, enrolling people, and keeping plans compliant.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineHRCompliance",
+   "label": "HR Compliance",
+   "description": "Employment law, employee relations risk, workers' compensation and worksite safety.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineTalentManagement",
+   "label": "Talent Management",
+   "description": "Hiring, onboarding, pay decisions, performance management and succession.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineTraining",
+   "label": "Training",
+   "description": "Skills-gap analysis and delivery of e-learning and instructor-led training.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineCoaching",
+   "label": "Coaching",
+   "description": "Confidential manager coaching and peer mentoring.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineMonitoring",
+   "label": "Monitoring",
+   "description": "Continuous check-ins and progress tracking against goals.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineMeasurement",
+   "label": "Measurement",
+   "description": "Workforce analytics, scorecards and evidence that development works.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLineValuesStewardship",
+   "label": "Values Stewardship",
+   "description": "Promoting, monitoring and measuring culture and values without violating employee privacy.",
+   "inModel": true
+  },
+  {
+   "id": "ServiceLinePEORelationship",
+   "label": "PEO Relationship",
+   "description": "Choosing, moving onto, getting help from and renewing the HR outsourcing partner. Added for the benchmark.",
+   "inModel": false
+  },
+  {
+   "id": "ServiceLineHRTechnologyData",
+   "label": "HR Technology & Data",
+   "description": "Self-service, administrator tools, identity, integration and data security. Added for the benchmark.",
+   "inModel": false
+  }
+ ],
+ "domains": [
+  {
+   "id": "WorkforceAdminDomain",
+   "label": "Workforce Administration & Payroll",
+   "number": 1
+  },
+  {
+   "id": "BenefitsRetirementDomain",
+   "label": "Employee Benefits & Retirement Sponsorship",
+   "number": 2
+  },
+  {
+   "id": "ComplianceRiskDomain",
+   "label": "Government Compliance & Employer Risk Management",
+   "number": 3
+  },
+  {
+   "id": "TalentManagementDomain",
+   "label": "Talent Management & Organizational Development",
+   "number": 4
+  },
+  {
+   "id": "WorkforceDevelopmentDomain",
+   "label": "Workforce Development, Coaching & Performance Measurement",
+   "number": 7
+  },
+  {
+   "id": "ValuesCultureStewardshipDomain",
+   "label": "Organizational Values, Culture & Ethics Stewardship",
+   "number": 8
+  },
+  {
+   "id": "HRTechnologyPlatformDomain",
+   "label": "HR Technology Platform & Employee Experience",
+   "number": 6
+  },
+  {
+   "id": "ClientRelationshipDomain",
+   "label": "Client Relationship & Business Development",
+   "number": 5
+  }
+ ],
+ "services": [
+  {
+   "id": "GrossToNetPayrollService",
+   "label": "Gross-to-Net Payroll Calculation Service",
+   "boundedContext": "PayrollTaxSubDomain",
+   "boundedContextLabel": "Payroll Processing & Multi-State Tax",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "MultiStateTaxFilingService",
+   "label": "Multi-Jurisdiction Payroll Tax Filing Service",
+   "boundedContext": "PayrollTaxSubDomain",
+   "boundedContextLabel": "Payroll Processing & Multi-State Tax",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "WageGarnishmentService",
+   "label": "Wage Garnishment & Deduction Administration Service",
+   "boundedContext": "PayrollTaxSubDomain",
+   "boundedContextLabel": "Payroll Processing & Multi-State Tax",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "DirectDepositOffCycleService",
+   "label": "Direct Deposit & Off-Cycle Payment Service",
+   "boundedContext": "PayrollTaxSubDomain",
+   "boundedContextLabel": "Payroll Processing & Multi-State Tax",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "YearEndTaxDocService",
+   "label": "Year-End Tax Document (W-2 / 1099) Service",
+   "boundedContext": "PayrollTaxSubDomain",
+   "boundedContextLabel": "Payroll Processing & Multi-State Tax",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "TimeCapturePunchService",
+   "label": "Time Capture & Punch Ingestion Service",
+   "boundedContext": "TimeAttendanceLeaveSubDomain",
+   "boundedContextLabel": "Time, Attendance & Leave Management",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "TimesheetApprovalStagingService",
+   "label": "Timesheet Approval & Payroll Staging Service",
+   "boundedContext": "TimeAttendanceLeaveSubDomain",
+   "boundedContextLabel": "Time, Attendance & Leave Management",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "CustomPTOAccrualService",
+   "label": "Custom PTO Accrual & Balance Ledger Service",
+   "boundedContext": "TimeAttendanceLeaveSubDomain",
+   "boundedContextLabel": "Time, Attendance & Leave Management",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "StatutoryLeaveFMLAService",
+   "label": "Statutory Leave & FMLA Administration Service",
+   "boundedContext": "TimeAttendanceLeaveSubDomain",
+   "boundedContextLabel": "Time, Attendance & Leave Management",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "LaborAllocationCostingService",
+   "label": "Labor Allocation & Job Costing Service",
+   "boundedContext": "TimeAttendanceLeaveSubDomain",
+   "boundedContextLabel": "Time, Attendance & Leave Management",
+   "domain": "WorkforceAdminDomain",
+   "serviceLine": "Payroll"
+  },
+  {
+   "id": "PEOMasterHealthPlanService",
+   "label": "PEO Master Health Plan Administration Service",
+   "boundedContext": "HealthWelfareSponsorshipSubDomain",
+   "boundedContextLabel": "Group Health & Welfare Plan Sponsorship",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "OpenEnrollmentLifeEventService",
+   "label": "Open Enrollment & Life Event Election Service",
+   "boundedContext": "HealthWelfareSponsorshipSubDomain",
+   "boundedContextLabel": "Group Health & Welfare Plan Sponsorship",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "PretaxDeductionReconService",
+   "label": "Pre-Tax Premium Payroll Deduction Reconciliation Service",
+   "boundedContext": "HealthWelfareSponsorshipSubDomain",
+   "boundedContextLabel": "Group Health & Welfare Plan Sponsorship",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "COBRAAdministrationService",
+   "label": "COBRA Qualifying Event & Continuation Service",
+   "boundedContext": "HealthWelfareSponsorshipSubDomain",
+   "boundedContextLabel": "Group Health & Welfare Plan Sponsorship",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "FlexibleSpendingAccountsService",
+   "label": "Flexible Spending & Account Integration (FSA/HSA/HRA) Service",
+   "boundedContext": "HealthWelfareSponsorshipSubDomain",
+   "boundedContextLabel": "Group Health & Welfare Plan Sponsorship",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "VoluntaryAncillaryBenefitsService",
+   "label": "Voluntary Ancillary Benefits Service",
+   "boundedContext": "HealthWelfareSponsorshipSubDomain",
+   "boundedContextLabel": "Group Health & Welfare Plan Sponsorship",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "MultipleEmployerPlan401kService",
+   "label": "Insperity 401(k) Multiple Employer Plan (MEP) Service",
+   "boundedContext": "RetirementMEP401kSubDomain",
+   "boundedContextLabel": "Retirement & 401(k) Multiple Employer Plan (MEP)",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "SafeHarborEmployerMatchService",
+   "label": "Safe Harbor & Discretionary Employer Match Service",
+   "boundedContext": "RetirementMEP401kSubDomain",
+   "boundedContextLabel": "Retirement & 401(k) Multiple Employer Plan (MEP)",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "ConsolidatedForm5500AuditService",
+   "label": "Consolidated Form 5500 & ERISA Plan Audit Service",
+   "boundedContext": "RetirementMEP401kSubDomain",
+   "boundedContextLabel": "Retirement & 401(k) Multiple Employer Plan (MEP)",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "NondiscriminationComplianceTestingService",
+   "label": "Nondiscrimination (ADP/ACP) & Compliance Testing Service",
+   "boundedContext": "RetirementMEP401kSubDomain",
+   "boundedContextLabel": "Retirement & 401(k) Multiple Employer Plan (MEP)",
+   "domain": "BenefitsRetirementDomain",
+   "serviceLine": "Benefits"
+  },
+  {
+   "id": "EPLIDefenseService",
+   "label": "Employment Practices Liability Insurance (EPLI) Defense Service",
+   "boundedContext": "EmployerLiabilityPracticesSubDomain",
+   "boundedContextLabel": "Co-Employment Liability & Employment Practices",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "MultiStateHandbookPolicyService",
+   "label": "Multi-State Employee Policy & Handbook Service",
+   "boundedContext": "EmployerLiabilityPracticesSubDomain",
+   "boundedContextLabel": "Co-Employment Liability & Employment Practices",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "HarassmentPreventionTrainingService",
+   "label": "Harassment Prevention & Mandatory Training Service",
+   "boundedContext": "EmployerLiabilityPracticesSubDomain",
+   "boundedContextLabel": "Co-Employment Liability & Employment Practices",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "EEOC_DOL_DefenseConsultService",
+   "label": "EEOC & Department of Labor Defense Consultation Service",
+   "boundedContext": "EmployerLiabilityPracticesSubDomain",
+   "boundedContextLabel": "Co-Employment Liability & Employment Practices",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "CPEOComplianceMonitoringService",
+   "label": "IRS Certified PEO (CPEO) Compliance Monitoring Service",
+   "boundedContext": "EmployerLiabilityPracticesSubDomain",
+   "boundedContextLabel": "Co-Employment Liability & Employment Practices",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "WorkersCompMasterPolicyService",
+   "label": "Workers' Compensation Master Policy Administration Service",
+   "boundedContext": "WorkersCompWorksiteSafetySubDomain",
+   "boundedContextLabel": "Workers' Compensation & Worksite Safety",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "FNOIClaimsTriageService",
+   "label": "First Notice of Injury (FNOI) & Claims Triage Service",
+   "boundedContext": "WorkersCompWorksiteSafetySubDomain",
+   "boundedContextLabel": "Workers' Compensation & Worksite Safety",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "ModifiedDutyReturnToWorkService",
+   "label": "Modified-Duty Return-to-Work Program Service",
+   "boundedContext": "WorkersCompWorksiteSafetySubDomain",
+   "boundedContextLabel": "Workers' Compensation & Worksite Safety",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "WorksiteSafetyHazardService",
+   "label": "Worksite Safety Survey & Hazard Mitigation Service",
+   "boundedContext": "WorkersCompWorksiteSafetySubDomain",
+   "boundedContextLabel": "Workers' Compensation & Worksite Safety",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "OSHA300ComplianceReportingService",
+   "label": "OSHA Form 300 / 300A Compliance & Reporting Service",
+   "boundedContext": "WorkersCompWorksiteSafetySubDomain",
+   "boundedContextLabel": "Workers' Compensation & Worksite Safety",
+   "domain": "ComplianceRiskDomain",
+   "serviceLine": "HR Compliance"
+  },
+  {
+   "id": "RecruitingProcessOutsourcingService",
+   "label": "Recruiting Process Outsourcing (RPO) & Sourcing Service",
+   "boundedContext": "TalentAcquisitionOnboardingSubDomain",
+   "boundedContextLabel": "Talent Acquisition & Digital Onboarding",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "MarketWageBenchmarkingService",
+   "label": "Market Compensation & Wage Benchmarking Service",
+   "boundedContext": "TalentAcquisitionOnboardingSubDomain",
+   "boundedContextLabel": "Talent Acquisition & Digital Onboarding",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "PreEmploymentScreeningService",
+   "label": "Pre-Employment Background & Drug Screening Service",
+   "boundedContext": "TalentAcquisitionOnboardingSubDomain",
+   "boundedContextLabel": "Talent Acquisition & Digital Onboarding",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "FormI9EVerifyService",
+   "label": "Form I-9 & Automated E-Verify Service",
+   "boundedContext": "TalentAcquisitionOnboardingSubDomain",
+   "boundedContextLabel": "Talent Acquisition & Digital Onboarding",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "DigitalNewHireOnboardingService",
+   "label": "Self-Service Digital New Hire Onboarding Service",
+   "boundedContext": "TalentAcquisitionOnboardingSubDomain",
+   "boundedContextLabel": "Talent Acquisition & Digital Onboarding",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "CorporateLMSDeliveryService",
+   "label": "Corporate Learning Management (LMS) Delivery Service",
+   "boundedContext": "LearningPerformanceSuccessionSubDomain",
+   "boundedContextLabel": "Learning, Performance & Succession",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Training"
+  },
+  {
+   "id": "Feedback360AppraisalCycleService",
+   "label": "360-Degree Feedback & Appraisal Cycle Service",
+   "boundedContext": "LearningPerformanceSuccessionSubDomain",
+   "boundedContextLabel": "Learning, Performance & Succession",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "StrategicGoalAlignmentOKRService",
+   "label": "Strategic Goal Alignment (OKR) & Tracking Service",
+   "boundedContext": "LearningPerformanceSuccessionSubDomain",
+   "boundedContextLabel": "Learning, Performance & Succession",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "MeritMatrixCompensationPlanningService",
+   "label": "Merit Matrix & Compensation Planning Service",
+   "boundedContext": "LearningPerformanceSuccessionSubDomain",
+   "boundedContextLabel": "Learning, Performance & Succession",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "LeadershipSuccessionPlanningService",
+   "label": "Leadership Development & Succession Planning Service",
+   "boundedContext": "LearningPerformanceSuccessionSubDomain",
+   "boundedContextLabel": "Learning, Performance & Succession",
+   "domain": "TalentManagementDomain",
+   "serviceLine": "Talent Management"
+  },
+  {
+   "id": "ProspectQualificationRFPService",
+   "label": "Prospect Qualification & RFP Response Service",
+   "boundedContext": "SalesClientOnboardingSubDomain",
+   "boundedContextLabel": "Sales & Client Onboarding",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "MasterServiceAgreementContractingService",
+   "label": "Master Service Agreement & Co-Employment Contracting Service",
+   "boundedContext": "SalesClientOnboardingSubDomain",
+   "boundedContextLabel": "Sales & Client Onboarding",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "ClientImplementationDataMigrationService",
+   "label": "Client Implementation & Legacy Data Migration Service",
+   "boundedContext": "SalesClientOnboardingSubDomain",
+   "boundedContextLabel": "Sales & Client Onboarding",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "ClientOnboardingKickoffService",
+   "label": "Client Onboarding Kickoff & Census Intake Service",
+   "boundedContext": "SalesClientOnboardingSubDomain",
+   "boundedContextLabel": "Sales & Client Onboarding",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "ClientHealthScoringRetentionService",
+   "label": "Client Health Scoring & Retention Service",
+   "boundedContext": "ClientSuccessAccountMgmtSubDomain",
+   "boundedContextLabel": "Client Success & Account Management",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "ClientRenewalRenegotiationService",
+   "label": "Client Renewal & Service Level Renegotiation Service",
+   "boundedContext": "ClientSuccessAccountMgmtSubDomain",
+   "boundedContextLabel": "Client Success & Account Management",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "ClientEscalationResolutionService",
+   "label": "Client Escalation & Issue Resolution Service",
+   "boundedContext": "ClientSuccessAccountMgmtSubDomain",
+   "boundedContextLabel": "Client Success & Account Management",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "ClientInvoicingBillingService",
+   "label": "Client Service Fee Invoicing & Billing Service",
+   "boundedContext": "ClientSuccessAccountMgmtSubDomain",
+   "boundedContextLabel": "Client Success & Account Management",
+   "domain": "ClientRelationshipDomain",
+   "serviceLine": "PEO Relationship"
+  },
+  {
+   "id": "EmployeeSelfServicePortalService",
+   "label": "Employee Self-Service Portal Service",
+   "boundedContext": "DigitalSelfServiceExperienceSubDomain",
+   "boundedContextLabel": "Digital Self-Service & Platform Experience",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "HR Technology & Data"
+  },
+  {
+   "id": "ClientAdminPortalReportingService",
+   "label": "Client Admin Portal & Reporting Service",
+   "boundedContext": "DigitalSelfServiceExperienceSubDomain",
+   "boundedContextLabel": "Digital Self-Service & Platform Experience",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "HR Technology & Data"
+  },
+  {
+   "id": "SingleSignOnIdentityManagementService",
+   "label": "Single Sign-On & Identity Management Service",
+   "boundedContext": "DigitalSelfServiceExperienceSubDomain",
+   "boundedContextLabel": "Digital Self-Service & Platform Experience",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "HR Technology & Data"
+  },
+  {
+   "id": "MobileWorkforceAppService",
+   "label": "Mobile Workforce Application Service",
+   "boundedContext": "DigitalSelfServiceExperienceSubDomain",
+   "boundedContextLabel": "Digital Self-Service & Platform Experience",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "HR Technology & Data"
+  },
+  {
+   "id": "HRISDataIntegrationConnectorService",
+   "label": "HRIS Data Integration & API Connector Service",
+   "boundedContext": "DataIntegrationAnalyticsSubDomain",
+   "boundedContextLabel": "Data Integration & Workforce Analytics",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "HR Technology & Data"
+  },
+  {
+   "id": "WorkforceAnalyticsReportingService",
+   "label": "Workforce Analytics & Predictive Reporting Service",
+   "boundedContext": "DataIntegrationAnalyticsSubDomain",
+   "boundedContextLabel": "Data Integration & Workforce Analytics",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "Measurement"
+  },
+  {
+   "id": "DataPrivacySecurityGovernanceService",
+   "label": "Data Privacy & Security Governance Service",
+   "boundedContext": "DataIntegrationAnalyticsSubDomain",
+   "boundedContextLabel": "Data Integration & Workforce Analytics",
+   "domain": "HRTechnologyPlatformDomain",
+   "serviceLine": "HR Technology & Data"
+  },
+  {
+   "id": "SkillsGapTrainingPlanService",
+   "label": "Role-Based Skills Gap Analysis & Development Plan Service",
+   "boundedContext": "TrainingCoachingSubDomain",
+   "boundedContextLabel": "Training & Coaching Delivery",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Training"
+  },
+  {
+   "id": "InstructorLedVirtualTrainingService",
+   "label": "Instructor-Led & Virtual Classroom Training Service",
+   "boundedContext": "TrainingCoachingSubDomain",
+   "boundedContextLabel": "Training & Coaching Delivery",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Training"
+  },
+  {
+   "id": "ManagerCoachingService",
+   "label": "Manager & Frontline Leader Coaching Service",
+   "boundedContext": "TrainingCoachingSubDomain",
+   "boundedContextLabel": "Training & Coaching Delivery",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Coaching"
+  },
+  {
+   "id": "PeerMentoringService",
+   "label": "Peer Mentoring & Knowledge Transfer Service",
+   "boundedContext": "TrainingCoachingSubDomain",
+   "boundedContextLabel": "Training & Coaching Delivery",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Coaching"
+  },
+  {
+   "id": "ContinuousPerformanceCheckInService",
+   "label": "Continuous Performance Check-In & Progress Monitoring Service",
+   "boundedContext": "PerformanceMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Performance Monitoring & Measurement",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Monitoring"
+  },
+  {
+   "id": "LearningImpactMeasurementService",
+   "label": "Learning & Coaching Impact Measurement Service",
+   "boundedContext": "PerformanceMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Performance Monitoring & Measurement",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Measurement"
+  },
+  {
+   "id": "OrganizationalScorecardService",
+   "label": "Organizational Health & Objectives Scorecard Service",
+   "boundedContext": "PerformanceMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Performance Monitoring & Measurement",
+   "domain": "WorkforceDevelopmentDomain",
+   "serviceLine": "Measurement"
+  },
+  {
+   "id": "ValuesCommunicationEmbeddingService",
+   "label": "Values Communication & Employee Lifecycle Embedding Service",
+   "boundedContext": "ValuesPromotionCultureSubDomain",
+   "boundedContextLabel": "Values Promotion & Culture Enablement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "ValuesRecognitionService",
+   "label": "Values-Based Peer Recognition Service",
+   "boundedContext": "ValuesPromotionCultureSubDomain",
+   "boundedContextLabel": "Values Promotion & Culture Enablement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "CommunityEngagementService",
+   "label": "Community Volunteering & Giving Program Service",
+   "boundedContext": "ValuesPromotionCultureSubDomain",
+   "boundedContextLabel": "Values Promotion & Culture Enablement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "InnovationChangeEnablementService",
+   "label": "Idea Program & Change Readiness Enablement Service",
+   "boundedContext": "ValuesPromotionCultureSubDomain",
+   "boundedContextLabel": "Values Promotion & Culture Enablement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "CulturePulseSurveyService",
+   "label": "Anonymous Culture & Values Pulse Survey Service",
+   "boundedContext": "ValuesMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Values Monitoring & Measurement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "SpeakUpEthicsChannelService",
+   "label": "Speak-Up & Ethics Concern Channel Service",
+   "boundedContext": "ValuesMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Values Monitoring & Measurement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "ValuesInPerformanceDialogueService",
+   "label": "Values-in-Performance Dialogue Service",
+   "boundedContext": "ValuesMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Values Monitoring & Measurement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "ValuesIndexAnalyticsService",
+   "label": "Values & Culture Index Analytics Service",
+   "boundedContext": "ValuesMonitoringMeasurementSubDomain",
+   "boundedContextLabel": "Values Monitoring & Measurement",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "PeopleAnalyticsPrivacyImpactService",
+   "label": "Privacy Impact & Monitoring Proportionality Assessment Service",
+   "boundedContext": "PrivacyPreservingPeopleAnalyticsSubDomain",
+   "boundedContextLabel": "Privacy-Preserving People Analytics",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "NoticeConsentPurposeService",
+   "label": "Employee Notice, Consent & Purpose Limitation Service",
+   "boundedContext": "PrivacyPreservingPeopleAnalyticsSubDomain",
+   "boundedContextLabel": "Privacy-Preserving People Analytics",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "DeIdentificationAggregationService",
+   "label": "De-Identification & Aggregation Enforcement Service",
+   "boundedContext": "PrivacyPreservingPeopleAnalyticsSubDomain",
+   "boundedContextLabel": "Privacy-Preserving People Analytics",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  },
+  {
+   "id": "PeopleDataRetentionRightsService",
+   "label": "People-Data Retention & Employee Data Rights Service",
+   "boundedContext": "PrivacyPreservingPeopleAnalyticsSubDomain",
+   "boundedContextLabel": "Privacy-Preserving People Analytics",
+   "domain": "ValuesCultureStewardshipDomain",
+   "serviceLine": "Values Stewardship"
+  }
+ ]
+}

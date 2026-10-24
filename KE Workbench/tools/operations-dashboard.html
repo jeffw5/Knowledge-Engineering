@@ -1,0 +1,424 @@
+<!doctype html><html lang="en"><head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Operations Dashboard</title>
+<script src="../data/ops/ops-snapshot.js"></script>
+<script src="../data/ops/history.js"></script>
+<style>
+/* Layout: header + source bar → tabs. Overview (KPIs, activity, latest, top actions) · Change log (table | record) ·
+   Causality (pick → causal graph + why-chain + impact) · Domains · Compliance · Standards guide · Actions · Workbench */
+:root{--bg:var(--ke-bg,#F4F6F9);--surface:var(--ke-surface,#fff);--sunk:var(--ke-sunk,#F7F9FB);--band:var(--ke-band,#EEF3F9);--line:var(--ke-line,#D5DBE1);--line2:var(--ke-line-soft,#E6EAEE);
+  --ink:var(--ke-ink,#1F2933);--muted:var(--ke-muted,#5F6B76);--faint:var(--ke-faint,#8B949D);--accent:var(--ke-accent,#2F6DB5);--accent-soft:var(--ke-accent-soft,#E3EDF8);--accent-ink:var(--ke-accent-ink,#fff);
+  --ok:var(--ke-ok,#2E7D4F);--ok-soft:var(--ke-ok-soft,#E5F3EA);--warn:var(--ke-warn,#9A6A00);--warn-soft:var(--ke-warn-soft,#FBF1D9);--bad:var(--ke-bad,#B03A2E);--bad-soft:var(--ke-bad-soft,#FBEAE8);
+  --c1:#2F6DB5;--c2:#2E7D4F;--c3:#9A6A00;--c4:#7A4FB0;--c5:#B03A2E;--c6:#1F8A8A;
+  --sans:var(--ke-sans,"Liberation Sans",Arial,system-ui,sans-serif);--mono:var(--ke-mono,"Liberation Mono",Menlo,monospace);--r:6px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F141A;--surface:#161D25;--sunk:#121820;--band:#1C2632;--line:#2B3642;--line2:#222C37;--ink:#E4EAF0;--muted:#95A2AE;--faint:#6C7884;--accent:#6FA3E0;--accent-soft:#1A2B40;--accent-ink:#0B1520;--ok:#4FC283;--ok-soft:#14301F;--warn:#E2B04A;--warn-soft:#352A10;--bad:#EE7B70;--bad-soft:#3A1C1A;--c1:#6FA3E0;--c2:#4FC283;--c3:#E2B04A;--c4:#B596EA;--c5:#EE7B70;--c6:#5CC6C6;color-scheme:dark}}
+:root[data-theme="dark"]{--c1:#6FA3E0;--c2:#4FC283;--c3:#E2B04A;--c4:#B596EA;--c5:#EE7B70;--c6:#5CC6C6}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans)}
+.wrap{max-width:1400px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-left,0px)) 48px;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{margin:0;text-wrap:balance} h1{font-size:25px} h2{font-size:16.5px;color:var(--accent)} h3{font-size:14px}
+.eyebrow{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.lede{color:var(--muted);max-width:100ch;margin:6px 0 0}
+.srcbar{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12.5px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 12px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--faint);margin-right:5px}.dot.on{background:var(--ok)}.dot.off{background:var(--warn)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{all:unset;cursor:pointer;padding:9px 13px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--accent);border-color:var(--accent)}
+.tab:focus-visible,.btn:focus-visible,.lnk:focus-visible,tr.rowc:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.pad{padding:14px 16px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)} .g2e{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+@media (max-width:980px){.g2,.g2e{grid-template-columns:minmax(0,1fr)}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:grid;gap:2px}
+.kpi b{font-size:22px;font-variant-numeric:tabular-nums}.kpi span{font-size:12px;color:var(--muted)}.kpi small{font-size:11.5px;color:var(--faint)}
+.kpi.bad b{color:var(--bad)}.kpi.ok b{color:var(--ok)}.kpi.warn b{color:var(--warn)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--band);border-radius:var(--r) var(--r) 0 0}
+.bar label{font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center}
+select,input[type=search]{font:inherit;font-size:13px;color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:5px 8px}
+input[type=search]{flex:1 1 220px;min-width:160px}
+.btn{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer}
+.btn:hover{border-color:var(--accent)} .btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tbl{overflow:auto;max-height:70vh}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:var(--band);text-align:left;font-size:12px;padding:7px 9px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+td{padding:6px 9px;border-bottom:1px solid var(--line2);vertical-align:top}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.rowc{cursor:pointer} tr.rowc:hover td{background:var(--sunk)} tr.sel td{background:var(--accent-soft)}
+.mono{font-family:var(--mono);font-size:12px}.sub{font-size:12px;color:var(--muted)}.faint{color:var(--faint)}
+.chips{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:11.5px;border:1px solid var(--line);background:var(--sunk);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.tag{font:600 10.5px var(--mono);padding:1px 6px;border-radius:3px;white-space:nowrap;background:var(--band);color:var(--muted)}
+.tag.high,.tag.fail,.tag.error{background:var(--bad-soft);color:var(--bad)} .tag.medium,.tag.warn{background:var(--warn-soft);color:var(--warn)} .tag.low{background:var(--sunk);color:var(--muted)}
+.tag.pass,.tag.done{background:var(--ok-soft);color:var(--ok)} .tag.graphdb{background:var(--accent-soft);color:var(--accent)}
+.lnk{all:unset;cursor:pointer;color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.kv{display:grid;grid-template-columns:130px minmax(0,1fr);gap:4px 12px;font-size:13px;margin:0}
+.kv dt{color:var(--muted)} .kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.list{margin:0;padding-left:18px;display:grid;gap:3px;font-size:12.5px} .list li{overflow-wrap:anywhere}
+.note{font-size:12.5px;color:var(--muted);max-width:100ch}
+.empty{padding:22px;text-align:center;color:var(--muted)}
+.split{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:1000px){.split{grid-template-columns:minmax(0,1fr)}}
+.detail{padding:14px 16px;display:grid;gap:12px;max-height:80vh;overflow:auto}
+.svgbox{width:100%;overflow-x:auto} svg text{font-family:var(--sans)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)} .legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.why{display:grid;gap:6px}
+.why .step{border-left:3px solid var(--accent);padding:4px 0 4px 10px}
+.why .step.l1{margin-left:16px;border-color:var(--c4)} .why .step.l2{margin-left:32px;border-color:var(--c3)} .why .step.l3{margin-left:48px;border-color:var(--faint)}
+.meter{height:8px;border-radius:4px;background:var(--line2);overflow:hidden;min-width:80px}.meter i{display:block;height:100%;background:var(--ok)}
+.heat td.c{text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:5px;font-size:13px;z-index:9}
+.missing{padding:30px;border:1px dashed var(--line);border-radius:var(--r);background:var(--surface)}
+</style></head>
+<body><div class="wrap">
+<header><span class="eyebrow">Agents &amp; operations · change log · §3.3 §3.4</span><h1>Operations Dashboard</h1>
+<p class="lede">What changed in the workbench and the models (core and domains), why, and with what effect. Change records are read as PROV-O triples from the change log, joined to the current asset inventory and its conformance, so a finding can be traced to the activity that introduced it and the actions needed to close each gap are listed in one place.</p></header>
+<div class="srcbar" id="src"></div>
+<div class="tabs" role="tablist" id="tabs"></div>
+<main id="view"></main>
+</div>
+<script>
+(function(){
+const O=window.KE_OPS, V=document.getElementById('view');
+if(!O){V.innerHTML='<div class="missing"><h2>No snapshot</h2><p>data/ops/ops-snapshot.js is missing. Run <span class="mono">python3 ingest/build_ops_snapshot.py</span> in the KE Workbench folder, then reload.</p></div>';return;}
+const H=window.KE_OPS_HISTORY||[];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LS={get(k,d){try{const v=localStorage.getItem('ops-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ops-'+k,JSON.stringify(v))}catch(e){}}};
+let state=Object.assign({tab:'overview',rec:'',pick:'',tool:'',scope:'',q:'',ac:'',ap:'',as:'',ast:'open'},LS.get('state',{}));
+const save=()=>LS.set('state',{tab:state.tab,rec:state.rec,pick:state.pick});
+let actStatus=LS.get('actions',{});
+const short=i=>{if(!i)return '';const s=String(i).replace(/\/$/,'');return '…/'+s.split('/').slice(-2).join('/')};
+const day=t=>(t||'').slice(0,10);
+const PROV='http://www.w3.org/ns/prov#',DCT='http://purl.org/dc/terms/',RDFS='http://www.w3.org/2000/01/rdf-schema#',RDF='http://www.w3.org/1999/02/22-rdf-syntax-ns#',CORE='https://www.insperity.com/ontology/core/';
+const TOOLS={ingestion:'Ingestion',review:'Conformance review',editor:'Model editor (vocabulary)','ontology-editor':'Model editor (ontology)','taxonomy-editor':'Model editor (taxonomy)'};
+
+/* ---- scope of an IRI (same rules as the builder) ---- */
+function scopeOf(iri){
+  if(!iri)return ['other',null,null];
+  if(O.scopeOf[iri])return O.scopeOf[iri];
+  if(iri.startsWith('http://purl.obolibrary.org/obo/'))return ['reference','Reference','BFO and RO'];
+  const m=String(iri).match(/^https:\/\/www\.insperity\.com\/(?:vocabulary|taxonomy|ontology|shapes|resource|record-graph|party-graph)\/([^/#]+)/);
+  if(!m)return ['other',null,null];
+  const s=m[1];
+  if(s==='core'||s.startsWith('core-'))return ['core','Core','Core'];
+  if(s==='apqc-pcf')return ['reference','Reference','APQC PCF'];
+  if(O.areas[s])return ['area',O.areas[s],O.areas[s]+' (container)'];
+  if(O.domainMap[s]){const [a,d]=O.domainMap[s];return ['domain',a||'Unassigned',d||a+' (container)'];}
+  if(/jobs-to-be-done|outcome|benchmark|appreciative|demand|gateway|inquiry|evidence|review/.test(s))return ['c360','Customer 360','Customer 360'];
+  return ['other',null,null];
+}
+const scopeLabel=i=>{const s=scopeOf(i);return s[1]?(s[2]&&s[2]!==s[1]?s[1]+' › '+s[2]:s[1]):''};
+
+/* ---- change log: snapshot records, then GraphDB merged in ---- */
+let RECS=O.changeLog.records.map(r=>Object.assign({},r));
+const live={status:'checking',onlyGraph:0,onlyFile:0,both:0,error:''};
+function normalize(bindings){
+  const S={};bindings.forEach(b=>{const s=b.s.value,p=b.p.value,o=b.o;(S[s]=S[s]||{})[p]=(S[s][p]||[]).concat([o])});
+  const v=(e,p)=>((e||{})[p]||[]).map(x=>x.value), v1=(e,p)=>v(e,p)[0]||'';
+  const out=[];
+  Object.keys(S).forEach(iri=>{const e=S[iri];if(!v(e,RDF+'type').includes(PROV+'Activity'))return;
+    const local=iri.replace(/\/$/,'').split('/').pop();const m=local.match(/^(\d{4}-?\d{2}-?\d{2}T?\d{0,6}Z?)-?(.*)$/);const suf=(m?m[2]:local)||'ingestion';
+    const sources=v(e,DCT+'source');
+    const tool=TOOLS[suf]||(sources.some(s=>/m1_|m2_|migrat/.test(s))?'Migration':'Build');
+    const parts=v(e,DCT+'hasPart').map(p=>({label:v1(S[p],RDFS+'label'),comment:v1(S[p],RDFS+'comment'),subject:v1(S[p],DCT+'subject'),type:v1(S[p],DCT+'type')}));
+    const gen=v(e,PROV+'generated');
+    const der={};gen.forEach(g=>{const d=v(S[g],PROV+'wasDerivedFrom');if(d.length)der[g]=d});
+    out.push({iri,id:local,tool,kind:suf,label:v1(e,RDFS+'label'),description:v1(e,DCT+'description'),creator:v(e,DCT+'creator'),contributor:v(e,DCT+'contributor'),
+      approvedBy:v(e,CORE+'approvedBy'),feature:v(e,CORE+'implementsFeature'),started:v1(e,PROV+'startedAtTime')||v1(e,DCT+'date'),ended:v1(e,PROV+'endedAtTime'),
+      sources,used:v(e,PROV+'used'),generated:gen,invalidated:v(e,PROV+'invalidated'),parts,files:[],from:'graphdb',derivations:der});
+  });
+  return out;
+}
+async function loadLive(){
+  const repo=(()=>{try{return localStorage.getItem('ke-repo')||'value-kb'}catch(e){return 'value-kb'}})();
+  try{
+    const ping=await fetch('/graphdb/rest/repositories',{headers:{Accept:'application/json'},cache:'no-store'});
+    if(!ping.ok)throw new Error('GraphDB not reachable');
+    const q=`SELECT ?s ?p ?o WHERE { GRAPH <${O.changeLog.graph}> { ?s ?p ?o } }`;
+    const r=await fetch('/graphdb/repositories/'+encodeURIComponent(repo),{method:'POST',cache:'no-store',headers:{'Content-Type':'application/x-www-form-urlencoded',Accept:'application/sparql-results+json'},body:new URLSearchParams({query:q})});
+    if(!r.ok)throw new Error('query failed (HTTP '+r.status+')');
+    const g=normalize((await r.json()).results.bindings), byIri={};RECS.forEach(x=>byIri[x.iri]=x);
+    g.forEach(x=>{if(byIri[x.iri]){byIri[x.iri].from='both';live.both++}else{RECS.push(x);live.onlyGraph++}});
+    live.onlyFile=RECS.filter(x=>x.from==='file').length;live.status='on';live.repo=repo;
+    RECS.sort((a,b)=>(a.started||a.id).localeCompare(b.started||b.id));
+    index();render();
+  }catch(e){live.status='off';live.error=e.message;live.repo=repo;srcbar();}
+}
+
+/* ---- indexes: who generated, used, invalidated or edited what ---- */
+let IX={};
+function index(){
+  IX={gen:{},use:{},inv:{},part:{},rec:{},label:{}};
+  RECS.forEach(r=>{IX.rec[r.id]=r;r.scopes=r.scopes&&r.scopes.length?r.scopes:[...new Set([...r.generated,...r.invalidated,...r.parts.map(p=>p.subject)].map(scopeLabel).filter(Boolean))];
+    r.generated.forEach(i=>(IX.gen[i]=IX.gen[i]||[]).push(r.id));r.used.forEach(i=>(IX.use[i]=IX.use[i]||[]).push(r.id));
+    r.invalidated.forEach(i=>(IX.inv[i]=IX.inv[i]||[]).push(r.id));r.parts.forEach(p=>{if(p.subject){(IX.part[p.subject]=IX.part[p.subject]||[]).push(r.id);if(p.label)IX.label[p.subject]=IX.label[p.subject]||p.label}})});
+  O.assets.forEach(a=>{if(a.iri)IX.label[a.iri]=a.title});
+}
+index();
+const recT=id=>IX.rec[id]?Date.parse(IX.rec[id].started)||0:0;
+// records that produced what r used (its direct causes)
+function causes(r){const out=new Set();r.used.forEach(i=>(IX.gen[i]||[]).forEach(id=>{if(id!==r.id&&recT(id)<=recT(r.id))out.add(id)}));
+  Object.values(r.derivations||{}).flat().forEach(i=>(IX.gen[i]||[]).forEach(id=>{if(id!==r.id&&recT(id)<=recT(r.id))out.add(id)}));return [...out]}
+// records that consumed or retired what r produced (its effects)
+function effects(r){const out=new Set();r.generated.forEach(i=>{[...(IX.use[i]||[]),...(IX.inv[i]||[])].forEach(id=>{if(id!==r.id&&recT(id)>=recT(r.id))out.add(id)})});return [...out]}
+function touching(iri){const rows=[];RECS.forEach(r=>{const roles=[];if(r.generated.includes(iri))roles.push('generated');if(r.used.includes(iri))roles.push('used');if(r.invalidated.includes(iri))roles.push('invalidated');
+  const ps=r.parts.filter(p=>p.subject===iri);if(ps.length)roles.push(ps.map(p=>p.type||'edited').join(', '));if(Object.values(r.derivations||{}).some(d=>d.includes(iri)))roles.push('derived from');if(roles.length)rows.push({r,roles})});return rows}
+
+/* ---- metrics ---- */
+const MODELS=O.assets.filter(a=>['vocabulary','taxonomy','ontology','shapes'].includes(a.kind));
+const terms=a=>(a.counts.concepts||0)+(a.counts.classes||0);
+function domainRows(){
+  const by={};
+  MODELS.forEach(a=>{const k=a.scopeArea+'|'+a.domain;const d=by[k]=by[k]||{area:a.scopeArea,domain:a.domain,assets:0,kinds:{},terms:0,shapes:0,errors:0,warnings:0,versions:new Set(),status:new Set(),iris:new Set()};
+    d.assets++;d.kinds[a.kind]=(d.kinds[a.kind]||0)+1;d.terms+=terms(a);d.shapes+=a.counts.shapes||0;d.errors+=a.errors;d.warnings+=a.warnings;if(a.version)d.versions.add(a.version);d.status.add(a.status||'—');d.iris.add(a.iri)});
+  Object.values(by).forEach(d=>{const lab=d.area+' › '+d.domain, rs=RECS.filter(r=>r.scopes.some(s=>s===lab||s===d.area&&d.domain===d.area||s.startsWith(d.area+' › '+d.domain)));
+    d.records=rs.length;d.reviews=rs.filter(r=>r.tool==='Conformance review').length;d.edits=rs.reduce((n,r)=>n+r.parts.filter(p=>scopeLabel(p.subject)===lab).length,0);
+    d.last=rs.length?day(rs[rs.length-1].started):'';d.first=rs.length?day(rs[0].started):'';
+    d.density=d.terms?Math.round(1000*d.errors/d.terms)/10:0;d.week=rs.filter(r=>Date.now()-Date.parse(r.started)<7*864e5).length;
+    const h=H.map(x=>(x.byDomain||{})[d.domain]).filter(Boolean);d.trend=h.map(x=>x.errors);});
+  return Object.values(by).sort((a,b)=>a.area.localeCompare(b.area)||a.domain.localeCompare(b.domain));
+}
+const ACTIONS=()=>{const extra=[];
+  if(live.status==='on'&&live.onlyFile)extra.push({id:'S-load',category:'Process policy',title:`${live.onlyFile} change records on disk are not in GraphDB`,detail:'Load the change-record TriG files into …/graph/change-log (Ingestion › Load into GraphDB, or the graphdb-load scripts) so lineage queries see them.',priority:'medium',scope:'All',source:'Change log sync',count:live.onlyFile});
+  if(live.status==='on'&&live.onlyGraph)extra.push({id:'S-disk',category:'Process policy',title:`${live.onlyGraph} change records exist only in GraphDB`,detail:'Editors that save straight to GraphDB (Model Editor (Ontology), Conformance Review applied to GraphDB) write records that are not on disk; export them with the next release package so source control holds the full history (§3.3).',priority:'low',scope:'All',source:'Change log sync',count:live.onlyGraph});
+  return [...O.actions,...extra]};
+
+/* ---- shell ---- */
+function srcbar(){
+  const n=RECS.length;
+  document.getElementById('src').innerHTML=`<span>Snapshot <b>${esc(O.generated.replace('T',' ').replace('Z',' UTC'))}</b></span>
+   <span><span class="dot ${live.status==='on'?'on':live.status==='off'?'off':''}"></span>GraphDB ${live.status==='on'?'connected ('+esc(live.repo)+'): '+live.both+' records in both, '+live.onlyGraph+' only in GraphDB, '+live.onlyFile+' only on disk':live.status==='off'?'not used ('+esc(live.error)+'); change records from files':'checking…'}</span>
+   <span>${n} change records · ${MODELS.length} model assets · ${O.assets.length-MODELS.length} other graphs</span>
+   <button class="btn" id="rebuild" title="Rebuild the snapshot from the files on disk (needs the workbench server)">Rebuild snapshot</button>`;
+  document.getElementById('rebuild').onclick=async()=>{toast('Rebuilding…');try{const r=await fetch('/api/ingest/ops-snapshot',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!j.ok)throw new Error(j.error||'failed');location.reload()}catch(e){toast('Rebuild failed: '+e.message+'. Run python3 ingest/build_ops_snapshot.py')}};
+}
+const TABS=[['overview','Overview'],['log','Change log'],['cause','Causality & root cause'],['domains','Domains'],['compliance','Compliance'],['guide','Standards guide'],['actions','Actions'],['workbench','Workbench']];
+function tabs(){document.getElementById('tabs').innerHTML=TABS.map(([k,l])=>`<button class="tab" role="tab" data-k="${k}" aria-selected="${state.tab===k}">${l}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.k;save();render()})}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+function go(tab,patch){Object.assign(state,patch||{},{tab});save();render();window.scrollTo(0,0)}
+function wire(root){root.querySelectorAll('[data-rec]').forEach(b=>b.onclick=e=>{e.stopPropagation();go('log',{rec:b.dataset.rec})});
+  root.querySelectorAll('[data-why]').forEach(b=>b.onclick=e=>{e.stopPropagation();go('cause',{pick:b.dataset.why})});}
+const recLink=id=>{const r=IX.rec[id];return r?`<button class="lnk" data-rec="${esc(id)}" title="${esc(r.label)}">${esc(day(r.started))} ${esc(r.tool)}</button>`:esc(id)};
+const iriLink=i=>`<button class="lnk mono" data-why="${esc(i)}" title="${esc(i)}">${esc(IX.label[i]||short(i))}</button>`;
+const kpi=(b,s,cls,small)=>`<div class="kpi ${cls||''}"><b>${b}</b><span>${s}</span>${small?`<small>${small}</small>`:''}</div>`;
+
+/* ---- charts ---- */
+const COL=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)'];
+function stackedBars(rows,keys,{h=170,label=x=>x}={}){
+  if(!rows.length)return '<p class="empty">No activity.</p>';
+  const W=Math.max(520,rows.length*18+60),max=Math.max(1,...rows.map(r=>keys.reduce((s,k)=>s+(r.v[k]||0),0))),bw=Math.max(6,Math.min(26,(W-60)/rows.length-4));
+  let s=`<svg viewBox="0 0 ${W} ${h+34}" width="100%" height="${h+34}" role="img" aria-label="Activity by day">`;
+  [0,.5,1].forEach(f=>{const y=10+h-f*h;s+=`<line x1="40" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line2)"/><text x="34" y="${y+4}" font-size="10" text-anchor="end" fill="var(--faint)">${Math.round(max*f)}</text>`});
+  rows.forEach((r,i)=>{let y=10+h;const x=46+i*((W-60)/rows.length);keys.forEach((k,j)=>{const v=r.v[k]||0;if(!v)return;const hh=v/max*h;y-=hh;s+=`<rect x="${x}" y="${y}" width="${bw}" height="${hh}" fill="${COL[j%COL.length]}"><title>${esc(r.k)} · ${esc(k)}: ${v}</title></rect>`});
+    if(rows.length<=40||i%Math.ceil(rows.length/20)===0)s+=`<text x="${x+bw/2}" y="${h+26}" font-size="9.5" text-anchor="middle" fill="var(--muted)">${esc(label(r.k))}</text>`});
+  return `<div class="svgbox">${s}</svg></div><div class="legend">${keys.map((k,j)=>`<span><i style="background:${COL[j%COL.length]}"></i>${esc(k)}</span>`).join('')}</div>`;
+}
+function lines(series,{h=180}={}){
+  const xs=[...new Set(series.flatMap(s=>s.pts.map(p=>p[0])))].sort();if(!xs.length)return '<p class="empty">No data.</p>';
+  const W=Math.max(520,xs.length*30+80),max=Math.max(1,...series.flatMap(s=>s.pts.map(p=>p[1]))),X=x=>50+xs.indexOf(x)*((W-80)/Math.max(1,xs.length-1)),Y=v=>10+h-v/max*h;
+  let s=`<svg viewBox="0 0 ${W} ${h+34}" width="100%" height="${h+34}" role="img" aria-label="Cumulative assets by area">`;
+  [0,.5,1].forEach(f=>{const y=Y(max*f);s+=`<line x1="44" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line2)"/><text x="38" y="${y+4}" font-size="10" text-anchor="end" fill="var(--faint)">${Math.round(max*f)}</text>`});
+  series.forEach((se,j)=>{let last=0;const pts=xs.map(x=>{const p=se.pts.find(q=>q[0]===x);if(p)last=p[1];return [X(x),Y(last)]});
+    s+=`<polyline fill="none" stroke="${COL[j%COL.length]}" stroke-width="2" points="${pts.map(p=>p.join(',')).join(' ')}"/>`;
+    s+=`<circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="3" fill="${COL[j%COL.length]}"><title>${esc(se.name)}: ${last}</title></circle>`});
+  xs.forEach((x,i)=>{if(xs.length<=16||i%Math.ceil(xs.length/14)===0)s+=`<text x="${X(x)}" y="${h+26}" font-size="9.5" text-anchor="middle" fill="var(--muted)">${esc(x.slice(5))}</text>`});
+  return `<div class="svgbox">${s}</svg></div><div class="legend">${series.map((se,j)=>`<span><i style="background:${COL[j%COL.length]}"></i>${esc(se.name)}</span>`).join('')}</div>`;
+}
+const spark=v=>{if(!v||v.length<2)return '<span class="faint">—</span>';const m=Math.max(1,...v),W=70,h=18;return `<svg width="${W}" height="${h}" aria-label="trend"><polyline fill="none" stroke="var(--accent)" stroke-width="1.5" points="${v.map((x,i)=>`${i*(W/(v.length-1))},${h-2-x/m*(h-4)}`).join(' ')}"/></svg>`};
+
+/* ---- Overview ---- */
+function overview(){
+  const now=Date.now(),wk=RECS.filter(r=>now-Date.parse(r.started)<7*864e5).length;
+  const errs=MODELS.reduce((s,a)=>s+a.errors,0),warns=MODELS.reduce((s,a)=>s+a.warnings,0),tm=MODELS.reduce((s,a)=>s+terms(a),0);
+  const pol=O.policies,pass=pol.filter(p=>p.status==='pass').length,acts=ACTIONS(),open=acts.filter(a=>(actStatus[a.id]||'open')!=='done'),hi=open.filter(a=>a.priority==='high');
+  const tools=[...new Set(RECS.map(r=>r.tool))],days={};RECS.forEach(r=>{const d=day(r.started);if(!d)return;const x=days[d]=days[d]||{};x[r.tool]=(x[r.tool]||0)+1});
+  const rows=Object.keys(days).sort().map(k=>({k,v:days[k]}));
+  V.innerHTML=`<div class="grid">
+   <div class="kpis">${kpi(RECS.length,'change records',null,wk+' in the last 7 days')}${kpi(MODELS.length,'model assets',null,tm.toLocaleString()+' classes and concepts')}${kpi(errs,'conformance errors',errs?'bad':'ok',warns+' warnings')}${kpi(pass+' / '+pol.length,'process policies met',pass===pol.length?'ok':'warn')}${kpi(open.length,'open actions',hi.length?'bad':'',hi.length+' high priority')}${kpi(O.guide.items.length,'guide items to retrofit','warn','v'+esc(O.guide.edition)+' → v'+esc(O.guide.next))}${kpi(O.decisions.length,'decisions recorded',null,O.questions.length+' open questions')}</div>
+   <div class="grid g2"><div class="panel pad"><h2>Activity by day and tool</h2>${stackedBars(rows,tools,{label:k=>k.slice(5)})}</div>
+     <div class="panel pad"><h2>Latest change sets</h2><table><tbody>${RECS.slice(-6).reverse().map(r=>`<tr class="rowc" data-rec="${esc(r.id)}"><td class="mono">${esc(day(r.started))}</td><td><b>${esc(r.tool)}</b><div class="sub">${esc((r.description||r.label).slice(0,140))}${(r.description||'').length>140?'…':''}</div></td><td class="num">${r.generated.length+r.parts.length}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="grid g2e"><div class="panel pad"><h2>Highest-priority actions</h2><ol class="list">${hi.slice(0,8).map(a=>`<li><span class="tag ${a.priority}">${esc(a.category)}</span> ${esc(a.title)}</li>`).join('')||'<li>None.</li>'}</ol><p><button class="btn" data-goto="actions">All ${open.length} open actions</button></p></div>
+     <div class="panel pad"><h2>Process policies</h2><table><tbody>${pol.map(p=>`<tr><td><span class="tag ${p.status}">${p.status}</span></td><td>${esc(p.title)}<div class="sub">${esc(p.finding)}</div></td><td><div class="meter" title="${p.passing} of ${p.total}"><i style="width:${p.total?Math.round(100*p.passing/p.total):0}%"></i></div></td></tr>`).join('')}</tbody></table></div></div>
+  </div>`;
+  V.querySelectorAll('tr[data-rec]').forEach(t=>t.onclick=()=>go('log',{rec:t.dataset.rec}));
+  V.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>go(b.dataset.goto));
+}
+
+/* ---- Change log ---- */
+function recordHTML(r){
+  const li=(arr,f)=>arr.length?`<ul class="list">${arr.map(f).join('')}</ul>`:'<span class="faint">none</span>';
+  return `<span class="eyebrow">${esc(r.tool)} · ${esc(r.id)}${r.from!=='file'?` <span class="tag graphdb">${r.from==='both'?'disk + GraphDB':'GraphDB only'}</span>`:''}</span><h2>${esc(r.label||r.id)}</h2>
+   <p>${esc(r.description)}</p>
+   <dl class="kv"><dt>Started</dt><dd>${esc(r.started)}</dd><dt>Ended</dt><dd>${esc(r.ended)||'<span class="tag warn">not recorded</span>'}</dd>
+   <dt>Creator</dt><dd>${esc(r.creator.join(', '))||'<span class="tag warn">none</span>'}${r.contributor.length?' · '+esc(r.contributor.join(', ')):''}</dd>
+   <dt>Approved by</dt><dd>${esc(r.approvedBy.join(', '))||'<span class="tag fail">none (P03)</span>'}</dd><dt>Requirement</dt><dd>${esc(r.feature.join(', '))||'<span class="tag fail">none (P04)</span>'}</dd>
+   <dt>Scopes</dt><dd><div class="chips">${r.scopes.map(s=>`<span class="chip">${esc(s)}</span>`).join('')}</div></dd>
+   <dt>Built by</dt><dd>${esc(r.sources.join(', '))||'—'}</dd><dt>Files</dt><dd class="mono">${esc(r.files.join(', '))||'—'}</dd></dl>
+   <div><h3>Caused by (records that produced its inputs)</h3>${li(causes(r),id=>`<li>${recLink(id)} · ${esc(IX.rec[id].label)}</li>`)}</div>
+   <div><h3>Led to (records that used or retired its outputs)</h3>${li(effects(r),id=>`<li>${recLink(id)} · ${esc(IX.rec[id].label)}</li>`)}</div>
+   <div><h3>Used (${r.used.length})</h3>${li(r.used.slice(0,40),i=>`<li>${iriLink(i)}</li>`)}</div>
+   <div><h3>Generated (${r.generated.length})</h3>${li(r.generated.slice(0,60),i=>`<li>${iriLink(i)}${r.derivations&&r.derivations[i]?` <span class="sub">from ${r.derivations[i].map(d=>esc(short(d))).join(', ')}</span>`:''}</li>`)}</div>
+   ${r.invalidated.length?`<div><h3>Invalidated (${r.invalidated.length})</h3>${li(r.invalidated,i=>`<li>${iriLink(i)}</li>`)}</div>`:''}
+   ${r.parts.length?`<div><h3>Changes (${r.parts.length})</h3><div class="tbl" style="max-height:340px"><table><thead><tr><th>Type</th><th>Change</th><th>Term</th></tr></thead><tbody>${r.parts.slice(0,300).map(p=>`<tr><td class="mono">${esc(p.type)}</td><td>${esc(p.label)}${p.comment?`<div class="sub">${esc(p.comment)}</div>`:''}</td><td>${p.subject?iriLink(p.subject):''}</td></tr>`).join('')}</tbody></table></div></div>`:''}
+   <p><button class="btn pri" data-why="rec:${esc(r.id)}">Trace causes and effects</button></p>`;
+}
+function logView(){
+  const tools=[...new Set(RECS.map(r=>r.tool))].sort(),scopes=[...new Set(RECS.flatMap(r=>r.scopes))].sort();
+  const t=state.q.toLowerCase();
+  const rows=RECS.filter(r=>(!state.tool||r.tool===state.tool)&&(!state.scope||r.scopes.includes(state.scope))&&(!t||(r.label+' '+r.description+' '+r.id+' '+r.parts.map(p=>p.label).join(' ')).toLowerCase().includes(t))).slice().reverse();
+  const sel=IX.rec[state.rec]||rows[0];
+  V.innerHTML=`<div class="split"><div class="panel"><div class="bar"><input type="search" id="q" placeholder="Search descriptions, changes, terms" value="${esc(state.q)}">
+   <select id="tool"><option value="">All tools</option>${tools.map(x=>`<option ${state.tool===x?'selected':''}>${esc(x)}</option>`).join('')}</select>
+   <select id="scope"><option value="">All scopes</option>${scopes.map(x=>`<option ${state.scope===x?'selected':''}>${esc(x)}</option>`).join('')}</select>
+   <button class="btn" id="csv">Copy CSV</button><span class="sub">${rows.length} of ${RECS.length}</span></div>
+   <div class="tbl"><table><thead><tr><th>Started</th><th>Tool</th><th>Change set</th><th class="num">Out</th><th class="num">Parts</th></tr></thead><tbody>${rows.map(r=>`<tr class="rowc${sel&&sel.id===r.id?' sel':''}" tabindex="0" data-id="${esc(r.id)}"><td class="mono">${esc((r.started||'').replace('T',' ').slice(0,16))}</td><td>${esc(r.tool)}${r.from==='graphdb'?' <span class="tag graphdb">GraphDB</span>':''}</td><td>${esc((r.description||r.label).slice(0,130))}${(r.description||'').length>130?'…':''}<div class="chips">${r.scopes.slice(0,4).map(s=>`<span class="chip">${esc(s)}</span>`).join('')}${r.scopes.length>4?`<span class="chip">+${r.scopes.length-4}</span>`:''}</div></td><td class="num">${r.generated.length}</td><td class="num">${r.parts.length}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">No change records match.</td></tr>'}</tbody></table></div></div>
+   <div class="panel detail">${sel?recordHTML(sel):'<p class="empty">Pick a change record.</p>'}</div></div>`;
+  const on=(id,k)=>{const el=V.querySelector('#'+id);el.oninput=el.onchange=()=>{state[k]=el.value;logView()}};on('tool','tool');on('scope','scope');
+  const q=V.querySelector('#q');q.oninput=()=>{state.q=q.value;clearTimeout(q._t);q._t=setTimeout(()=>{logView();const n=V.querySelector('#q');n.focus();n.setSelectionRange(n.value.length,n.value.length)},250)};
+  V.querySelectorAll('tr[data-id]').forEach(tr=>{tr.onclick=tr.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;state.rec=tr.dataset.id;save();logView()}});
+  V.querySelector('#csv').onclick=()=>copy(csvOf(['started','ended','tool','id','label','description','creator','approved_by','requirement','scopes','used','generated','invalidated','parts','source'],rows.map(r=>[r.started,r.ended,r.tool,r.id,r.label,r.description,r.creator.join('; '),r.approvedBy.join('; '),r.feature.join('; '),r.scopes.join('; '),r.used.length,r.generated.length,r.invalidated.length,r.parts.length,r.from])));
+  wire(V);
+}
+
+/* ---- Causality & root cause ---- */
+function causalSVG(r){
+  const upAll=causes(r).sort((a,b)=>recT(b)-recT(a)),dnAll=effects(r),up=upAll.slice(0,10),dn=dnAll.slice(0,10),ins=r.used.slice(0,10),outs=[...r.generated,...r.invalidated].slice(0,10);
+  const colX=[0,240,480,720,960],W=1150,rowH=34,n=Math.max(up.length,ins.length,outs.length,dn.length,1),Hh=n*rowH+40;
+  const node=(x,y,t,sub,kind,attr)=>`<g ${attr||''} style="cursor:${attr?'pointer':'default'}"><rect x="${x}" y="${y}" width="190" height="28" rx="5" fill="${kind==='rec'?'var(--accent-soft)':'var(--sunk)'}" stroke="${kind==='rec'?'var(--accent)':'var(--line)'}"/><text x="${x+8}" y="${y+12}" font-size="10.5" fill="var(--ink)">${esc(t.slice(0,30))}</text><text x="${x+8}" y="${y+23}" font-size="9" fill="var(--muted)">${esc((sub||'').slice(0,34))}</text></g>`;
+  const cy=i=>24+i*rowH, mid=24+(n-1)*rowH/2;
+  let s=`<svg viewBox="0 0 ${W} ${Hh}" width="100%" height="${Hh}" role="img" aria-label="Causal graph">`;
+  ['Upstream change sets','Inputs (used)','This change set','Outputs','Downstream change sets'].forEach((t,i)=>s+=`<text x="${colX[i]}" y="12" font-size="10.5" font-weight="700" fill="var(--muted)">${t}</text>`);
+  const edge=(x1,y1,x2,y2)=>`<path d="M${x1},${y1+14} C${(x1+x2)/2},${y1+14} ${(x1+x2)/2},${y2+14} ${x2},${y2+14}" fill="none" stroke="var(--faint)" stroke-width="1.2"/>`;
+  ins.forEach((i,k)=>{s+=edge(colX[1]+190,cy(k),colX[2],mid);(IX.gen[i]||[]).forEach(id=>{const u=up.indexOf(id);if(u>=0)s+=edge(colX[0]+190,cy(u),colX[1],cy(k))})});
+  outs.forEach((o,k)=>{s+=edge(colX[2]+190,mid,colX[3],cy(k));dn.forEach((id,d)=>{if(IX.rec[id].used.includes(o)||IX.rec[id].invalidated.includes(o))s+=edge(colX[3]+190,cy(k),colX[4],cy(d))})});
+  up.forEach((id,k)=>s+=node(colX[0],cy(k),IX.rec[id].tool,day(IX.rec[id].started),'rec',`data-crec="${esc(id)}"`));
+  ins.forEach((i,k)=>s+=node(colX[1],cy(k),IX.label[i]||short(i),short(i),'iri',`data-ciri="${esc(i)}"`));
+  s+=node(colX[2],mid,r.tool,day(r.started),'rec');
+  outs.forEach((o,k)=>s+=node(colX[3],cy(k),(r.invalidated.includes(o)?'✕ ':'')+(IX.label[o]||short(o)),short(o),'iri',`data-ciri="${esc(o)}"`));
+  dn.forEach((id,k)=>s+=node(colX[4],cy(k),IX.rec[id].tool,day(IX.rec[id].started),'rec',`data-crec="${esc(id)}"`));
+  return `<div class="svgbox">${s}</svg></div><p class="note">Up to ten inputs and outputs are drawn; the record lists them all. Click a box to follow it.${upAll.length>10?` ${upAll.length-10} older upstream change sets are not drawn (most recent first).`:''}${dnAll.length>10?` ${dnAll.length-10} more downstream change sets are not drawn.`:''}</p>`;
+}
+function whyChain(ids,depth=0,seen=new Set()){
+  return ids.filter(id=>!seen.has(id)).slice(0,6).map(id=>{seen.add(id);const r=IX.rec[id];
+    return `<div class="step l${Math.min(depth,3)}"><b>${recLink(id)}</b> ${esc(r.label)}<div class="sub">${esc((r.description||'').slice(0,260))}${(r.description||'').length>260?'…':''}</div></div>`+(depth<3?whyChain(causes(r),depth+1,seen):'')}).join('');
+}
+function findingsFor(iri){const out=[];O.assets.forEach(a=>a.sample.forEach(f=>{if(f.iri===iri||a.iri===iri)out.push(Object.assign({asset:a.name},f))}));return out}
+function originTable(){
+  // which activity last produced each asset with findings: where defects enter
+  const by={};MODELS.filter(a=>a.errors||a.warnings).forEach(a=>{const g=(IX.gen[a.iri]||[]).map(id=>IX.rec[id]).sort((x,y)=>recT(y.id)-recT(x.id))[0];const k=g?g.tool:'No change record';const b=by[k]=by[k]||{tool:k,assets:0,errors:0,warnings:0,list:[]};b.assets++;b.errors+=a.errors;b.warnings+=a.warnings;b.list.push(a)});
+  return Object.values(by).sort((a,b)=>b.errors-a.errors);
+}
+function causeView(){
+  const p=state.pick||'';
+  let body='';
+  if(p.startsWith('rec:')&&IX.rec[p.slice(4)]){const r=IX.rec[p.slice(4)];
+    body=`<div class="panel pad"><h2>${esc(r.label)}</h2><p class="sub">${esc(r.description)}</p>${causalSVG(r)}</div>
+      <div class="grid g2e"><div class="panel pad"><h2>Why: chain of causes</h2><p class="note">Each level is the change set that produced an input of the one above it (prov:used ← prov:generated, and prov:wasDerivedFrom).</p><div class="why">${whyChain(causes(r))||'<p class="faint">No upstream change set: this one started from source files or from scratch.</p>'}</div></div>
+      <div class="panel pad"><h2>Impact: what it led to</h2><div class="why">${effects(r).map(id=>`<div class="step"><b>${recLink(id)}</b> ${esc(IX.rec[id].label)}</div>`).join('')||'<p class="faint">Nothing downstream has used its outputs yet.</p>'}</div></div></div>`;
+  }else if(p){
+    const rows=touching(p),f=findingsFor(p),last=rows.filter(x=>x.roles.some(r=>r!=='used')).slice(-1)[0];
+    const a=MODELS.find(x=>x.iri===p);
+    body=`<div class="panel pad"><span class="eyebrow">${esc(scopeLabel(p)||'IRI')}</span><h2>${esc(IX.label[p]||short(p))}</h2><p class="mono sub">${esc(p)}</p>
+      ${a?`<dl class="kv"><dt>Asset</dt><dd>${esc(a.title)} · ${esc(a.version)} · ${esc(a.status||'—')}</dd><dt>Findings</dt><dd>${a.errors} errors, ${a.warnings} warnings</dd><dt>File</dt><dd class="mono">${esc(a.file)}</dd></dl>`:''}</div>
+      <div class="grid g2e"><div class="panel pad"><h2>History (${rows.length} change sets)</h2><table><tbody>${rows.map(x=>`<tr><td>${recLink(x.r.id)}</td><td class="sub">${esc(x.roles.join(', '))}</td><td><button class="btn" data-why="rec:${esc(x.r.id)}">Trace</button></td></tr>`).join('')||'<tr><td class="empty">No change record mentions this IRI. That is itself a finding (policy P01).</td></tr>'}</tbody></table></div>
+      <div class="panel pad"><h2>Root cause candidates</h2>${f.length?`<p class="note">Current findings on this ${a?'asset':'term'}, and the change set that last produced it.</p><ul class="list">${f.slice(0,12).map(x=>`<li><span class="tag ${x.sev}">${esc(x.sev)}</span> ${esc(x.rule)}: ${esc(x.msg)}</li>`).join('')}</ul>`:'<p class="faint">No current findings recorded for it.</p>'}
+        ${last?`<h3 style="margin-top:10px">Introduced or last changed by</h3><div class="why"><div class="step"><b>${recLink(last.r.id)}</b> ${esc(last.r.label)}<div class="sub">${esc(last.roles.join(', '))}</div></div>${whyChain(causes(last.r),1)}</div>`:''}</div></div>`;
+  }
+  const org=originTable();
+  V.innerHTML=`<div class="grid"><div class="panel"><div class="bar"><input type="search" id="pk" list="pklist" placeholder="Find an asset, term or change set (label or IRI)" value="${esc(p.startsWith('rec:')?'':p)}"><datalist id="pklist">${MODELS.map(a=>`<option value="${esc(a.iri)}">${esc(a.title)}</option>`).join('')}${RECS.slice(-80).map(r=>`<option value="rec:${esc(r.id)}">${esc(r.label)}</option>`).join('')}</datalist><button class="btn" id="pkgo">Trace</button>${p?'<button class="btn" id="pkclr">Clear</button>':''}</div>
+    <div class="pad"><h2>Where defects enter</h2><p class="note">Assets with conformance findings, grouped by the kind of change set that last produced them. A tool that keeps producing findings is where a fix in the tool (or its configuration) removes the cause rather than the symptom.</p>
+    <table><thead><tr><th>Last produced by</th><th class="num">Assets</th><th class="num">Errors</th><th class="num">Warnings</th><th>Examples</th></tr></thead><tbody>${org.map(o=>`<tr><td><b>${esc(o.tool)}</b></td><td class="num">${o.assets}</td><td class="num">${o.errors}</td><td class="num">${o.warnings}</td><td>${o.list.slice(0,4).map(a=>iriLink(a.iri)).join(', ')}</td></tr>`).join('')||'<tr><td class="empty" colspan="5">No findings.</td></tr>'}</tbody></table></div></div>
+    ${body||'<p class="note">Pick an asset or term to see its history, current findings and the change set that introduced them; or open a change set and press Trace to see its causes and effects.</p>'}</div>`;
+  const pk=V.querySelector('#pk'),goP=()=>{let v=pk.value.trim();const a=MODELS.find(x=>x.title.toLowerCase()===v.toLowerCase());if(a)v=a.iri;const r=RECS.find(x=>x.label===v);if(r)v='rec:'+r.id;state.pick=v;save();causeView()};
+  V.querySelector('#pkgo').onclick=goP;pk.onkeydown=e=>{if(e.key==='Enter')goP()};const c=V.querySelector('#pkclr');if(c)c.onclick=()=>{state.pick='';save();causeView()};
+  V.querySelectorAll('[data-crec]').forEach(g=>g.onclick=()=>{state.pick='rec:'+g.dataset.crec;save();causeView()});
+  V.querySelectorAll('[data-ciri]').forEach(g=>g.onclick=()=>{state.pick=g.dataset.ciri;save();causeView()});
+  wire(V);
+}
+
+/* ---- Domains ---- */
+function domainsView(){
+  const rows=domainRows(),areas=[...new Set(rows.map(r=>r.area))];
+  const first={};RECS.forEach(r=>r.generated.forEach(i=>{const s=scopeOf(i);if(!s[1]||['other','log'].includes(s[0]))return;if(!first[i])first[i]={d:day(r.started),a:s[1]}}));
+  const series=[...new Set(Object.values(first).map(x=>x.a))].map(a=>{const ds=Object.values(first).filter(x=>x.a===a).map(x=>x.d).sort();let n=0;const pts=[];ds.forEach(d=>{n++;const l=pts[pts.length-1];if(l&&l[0]===d)l[1]=n;else pts.push([d,n])});return {name:a,pts}});
+  V.innerHTML=`<div class="grid"><div class="grid g2"><div class="panel pad"><h2>Domain expansion</h2><p class="note">Cumulative distinct assets (and component graphs) generated per area, from prov:generated in the change log. Renamed domains keep their old IRIs in the history.</p>${lines(series)}</div>
+   <div class="panel pad"><h2>Current inventory by area</h2><table><thead><tr><th>Area</th><th class="num">Assets</th><th class="num">Classes + concepts</th><th class="num">Errors</th></tr></thead><tbody>${areas.map(a=>{const rs=rows.filter(r=>r.area===a);return `<tr><td>${esc(a)}</td><td class="num">${rs.reduce((s,r)=>s+r.assets,0)}</td><td class="num">${rs.reduce((s,r)=>s+r.terms,0).toLocaleString()}</td><td class="num">${rs.reduce((s,r)=>s+r.errors,0)}</td></tr>`}).join('')}</tbody></table>
+   <p class="note">${O.assets.length-MODELS.length} more graphs are assembly components or Customer 360 instance data.</p></div></div>
+   <div class="panel"><div class="bar"><b>Continuous improvement by domain</b><span class="sub">change sets touching the domain, edits recorded in parts, review cycles, findings now and their trend across snapshots</span><button class="btn" id="dcsv">Copy CSV</button></div>
+   <div class="tbl"><table><thead><tr><th>Area › domain</th><th class="num">Assets</th><th>Kinds</th><th class="num">Classes + concepts</th><th>Versions</th><th>Status</th><th class="num">Change sets</th><th class="num">Last 7 days</th><th class="num">Edits</th><th class="num">Reviews</th><th>Last change</th><th class="num">Errors</th><th class="num">Warnings</th><th class="num">Errors / 100 terms</th><th>Trend</th></tr></thead><tbody>${rows.map(d=>`<tr><td><b>${esc(d.domain)}</b><div class="sub">${esc(d.area)}</div></td><td class="num">${d.assets}</td><td class="sub">${Object.entries(d.kinds).map(([k,v])=>v+' '+k).join(', ')}</td><td class="num">${d.terms.toLocaleString()}</td><td class="mono">${[...d.versions].join(', ')}</td><td>${[...d.status].join(', ')}</td><td class="num">${d.records}</td><td class="num">${d.week}</td><td class="num">${d.edits}</td><td class="num">${d.reviews}</td><td class="mono">${esc(d.last)||'—'}</td><td class="num">${d.errors?`<span class="tag error">${d.errors}</span>`:0}</td><td class="num">${d.warnings}</td><td class="num">${d.density}</td><td>${spark(d.trend)}</td></tr>`).join('')}</tbody></table></div>
+   <p class="note pad">Trend needs two or more snapshots; each Rebuild adds one (data/ops/history.jsonl). Error density compares domains of different size.</p></div></div>`;
+  V.querySelector('#dcsv').onclick=()=>copy(csvOf(['area','domain','assets','terms','versions','status','change_sets','last_7_days','edits','reviews','last_change','errors','warnings','errors_per_100_terms'],rows.map(d=>[d.area,d.domain,d.assets,d.terms,[...d.versions].join(' '),[...d.status].join(' '),d.records,d.week,d.edits,d.reviews,d.last,d.errors,d.warnings,d.density])));
+}
+
+/* ---- Compliance ---- */
+function complianceView(){
+  const rules=[...new Set(MODELS.flatMap(a=>Object.keys(a.rules)))].sort(),doms=[...new Set(MODELS.map(a=>a.domain))].sort();
+  const cell=(r,d)=>MODELS.filter(a=>a.domain===d).reduce((s,a)=>{const x=a.rules[r];if(x){s.e+=x.error;s.w+=x.warn}return s},{e:0,w:0});
+  const conf={};MODELS.forEach(a=>{const k=(a.conformsTo||[]).map(c=>c.replace(/^.*?(v?\d+\.\d+).*$/,'$1')).join(', ')||'none';conf[k]=(conf[k]||0)+1});
+  V.innerHTML=`<div class="grid"><div class="panel"><div class="bar"><b>Standards conformance by rule and domain</b><span class="sub">ke_ingest checks (the Part III rules the Ingestion and Conformance Review pages apply) run on every current model file; cells show errors / warnings</span></div>
+   <div class="tbl"><table class="heat"><thead><tr><th>Rule</th>${doms.map(d=>`<th>${esc(d)}</th>`).join('')}</tr></thead><tbody>${rules.map(r=>`<tr><td>${esc(r)}</td>${doms.map(d=>{const c=cell(r,d);return `<td class="c" style="${c.e?'background:var(--bad-soft);color:var(--bad)':c.w?'background:var(--warn-soft);color:var(--warn)':''}">${c.e||c.w?c.e+' / '+c.w:'·'}</td>`}).join('')}</tr>`).join('')||'<tr><td class="empty">No findings.</td></tr>'}</tbody></table></div></div>
+   <div class="grid g2e"><div class="panel pad"><h2>Process policies</h2><table><tbody>${O.policies.map(p=>`<tr><td><span class="tag ${p.status}">${p.status}</span></td><td><b>${esc(p.id)} ${esc(p.title)}</b><div class="sub">${esc(p.check)} · ${esc(p.standard)}</div><div>${esc(p.finding)}</div></td><td class="num">${p.passing}/${p.total}</td></tr>`).join('')}</tbody></table></div>
+   <div class="panel pad"><h2>Guide edition declared by assets</h2><table><tbody>${Object.entries(conf).map(([k,v])=>`<tr><td class="mono">${esc(k)}</td><td class="num">${v}</td></tr>`).join('')}</tbody></table>
+   <p class="note">Editions on disk: ${O.guide.editionsOnDisk.map(e=>'v'+esc(e)).join(', ')}. The guide no longer describes ${O.guide.items.length} practices the assets follow (Standards guide tab), so a claim of conformance to v${esc(O.guide.edition)} is partly a claim to rules that were amended.</p>
+   <h2 style="margin-top:12px">Findings to look at first</h2><ul class="list">${MODELS.filter(a=>a.errors).sort((a,b)=>b.errors-a.errors).slice(0,10).map(a=>`<li>${iriLink(a.iri)} · ${a.errors} errors${a.sample[0]?`: <span class="sub">${esc(a.sample[0].rule)}: ${esc(a.sample[0].msg)}</span>`:''}</li>`).join('')}</ul></div></div></div>`;
+  wire(V);
+}
+
+/* ---- Standards guide ---- */
+function guideView(){
+  const G=O.guide.items,bp={};G.forEach(g=>bp[g.priority]=(bp[g.priority]||0)+1);
+  V.innerHTML=`<div class="grid"><div class="panel pad"><h2>Semantic Governance v${esc(O.guide.edition)} retrofit</h2>
+   <p>The guide is still v${esc(O.guide.edition)} (Draft, 2026-10-15). Since then the core and domains have changed how identifiers, URIs, graphs, change records, areas and services work. ${G.length} items below say where the guide and practice now differ, what decided the change, and what the next edition should say. Because the identifier and URI rules change, the next edition is a MAJOR release: <b>v${esc(O.guide.next)}</b>.</p>
+   <div class="kpis">${kpi(bp.high||0,'high priority','bad')}${kpi(bp.medium||0,'medium priority','warn')}${kpi(bp.low||0,'low priority')}${kpi(G.filter(g=>g.kind==='decide').length,'need a decision first','warn')}</div>
+   <p><button class="btn" id="gmd">Copy as Markdown (retrofit plan)</button></p></div>
+   <div class="panel tbl" style="max-height:none"><table><thead><tr><th>Item</th><th>Section</th><th>Topic</th><th>v${esc(O.guide.edition)} says</th><th>Practice now</th><th>Decided by</th><th>Proposed change</th><th>Priority</th></tr></thead><tbody>${G.map(g=>`<tr><td class="mono">${esc(g.id)}</td><td class="mono">§${esc(g.section)}</td><td><b>${esc(g.topic)}</b>${g.kind!=='update'?` <span class="tag warn">${esc(g.kind)}</span>`:''}</td><td style="min-width:220px">${esc(g.v19)}</td><td style="min-width:260px">${esc(g.practice)}</td><td class="sub" style="min-width:120px">${esc(g.sources.join('; '))}</td><td style="min-width:240px">${esc(g.change)}</td><td><span class="tag ${g.priority}">${esc(g.priority)}</span></td></tr>`).join('')}</tbody></table></div></div>`;
+  V.querySelector('#gmd').onclick=()=>copy(`# Semantic Governance v${O.guide.next}: retrofit plan from v${O.guide.edition}\n\n`+G.map(g=>`## ${g.id} · §${g.section} ${g.topic} (${g.priority}${g.kind!=='update'?', '+g.kind:''})\n\n- **v${O.guide.edition} says:** ${g.v19}\n- **Practice now:** ${g.practice}\n- **Decided by:** ${g.sources.join('; ')}\n- **Change:** ${g.change}\n`).join('\n'),'Markdown');
+}
+
+/* ---- Actions ---- */
+function actionsView(){
+  const all=ACTIONS(),cats=[...new Set(all.map(a=>a.category))],scopes=[...new Set(all.map(a=>a.scope).filter(Boolean))].sort();
+  const st=a=>actStatus[a.id]||'open';
+  const rows=all.filter(a=>(!state.ac||a.category===state.ac)&&(!state.ap||a.priority===state.ap)&&(!state.as||a.scope===state.as)&&(!state.ast||(state.ast==='open'?st(a)!=='done'&&st(a)!=='wontdo':st(a)===state.ast)))
+    .sort((a,b)=>['high','medium','low'].indexOf(a.priority)-['high','medium','low'].indexOf(b.priority)||cats.indexOf(a.category)-cats.indexOf(b.category));
+  const by=c=>all.filter(a=>a.category===c&&st(a)!=='done'&&st(a)!=='wontdo').length;
+  V.innerHTML=`<div class="grid"><div class="kpis">${cats.map(c=>kpi(by(c),esc(c))).join('')}</div>
+   <div class="panel"><div class="bar"><select id="ac"><option value="">All categories</option>${cats.map(c=>`<option ${state.ac===c?'selected':''}>${esc(c)}</option>`).join('')}</select>
+   <select id="ap"><option value="">All priorities</option>${['high','medium','low'].map(c=>`<option ${state.ap===c?'selected':''}>${c}</option>`).join('')}</select>
+   <select id="as"><option value="">All scopes</option>${scopes.map(c=>`<option ${state.as===c?'selected':''}>${esc(c)}</option>`).join('')}</select>
+   <select id="ast">${[['open','Open (not done)'],['','Any status'],['in-progress','In progress'],['done','Done'],['wontdo','Won’t do']].map(([v,l])=>`<option value="${v}" ${state.ast===v?'selected':''}>${l}</option>`).join('')}</select>
+   <button class="btn" id="acsv">Copy CSV</button><span class="sub">${rows.length} of ${all.length} · statuses are kept in this browser</span></div>
+   <div class="tbl"><table><thead><tr><th>Priority</th><th>Category</th><th>Action</th><th>Scope</th><th>Source</th><th class="num">Items</th><th>Status</th></tr></thead><tbody>${rows.map(a=>`<tr><td><span class="tag ${a.priority}">${a.priority}</span></td><td>${esc(a.category)}</td><td style="min-width:320px"><b>${esc(a.title)}</b><div class="sub">${esc(a.detail)}</div></td><td class="sub">${esc(a.scope)}</td><td class="sub">${esc(a.source)}</td><td class="num">${a.count||1}</td><td><select data-act="${esc(a.id)}">${[['open','Open'],['in-progress','In progress'],['done','Done'],['wontdo','Won’t do']].map(([v,l])=>`<option value="${v}" ${st(a)===v?'selected':''}>${l}</option>`).join('')}</select></td></tr>`).join('')||'<tr><td colspan="7" class="empty">No actions match.</td></tr>'}</tbody></table></div></div></div>`;
+  ['ac','ap','as','ast'].forEach(k=>V.querySelector('#'+k).onchange=e=>{state[k]=e.target.value;actionsView()});
+  V.querySelectorAll('[data-act]').forEach(s=>s.onchange=()=>{actStatus[s.dataset.act]=s.value;LS.set('actions',actStatus);toast('Status saved in this browser')});
+  V.querySelector('#acsv').onclick=()=>copy(csvOf(['id','priority','category','action','detail','scope','source','items','status'],rows.map(a=>[a.id,a.priority,a.category,a.title,a.detail,a.scope,a.source,a.count||1,st(a)])));
+}
+
+/* ---- Workbench ---- */
+function workbenchView(){
+  const recDays=new Set(RECS.map(r=>day(r.started)));
+  const near=d=>[-1,0,1].some(k=>recDays.has(new Date(Date.parse(d)+k*864e5).toISOString().slice(0,10)));
+  const untracked=O.git.filter(c=>c.modelFiles>0&&!near(c.date));
+  V.innerHTML=`<div class="grid"><div class="grid g2e"><div class="panel pad"><h2>Workbench releases</h2><div class="tbl" style="max-height:520px"><table><thead><tr><th>Version</th><th>Date</th><th>Release</th><th class="num">New</th><th class="num">Improved</th><th class="num">Fixed</th><th class="num">Breaking</th></tr></thead><tbody>${O.releases.map(r=>`<tr><td class="mono">${esc(r.version)}</td><td class="mono">${esc(r.date)}</td><td>${esc(r.title)}</td><td class="num">${r.counts.new||0}</td><td class="num">${r.counts.improved||0}</td><td class="num">${r.counts.fixed||0}</td><td class="num">${r.counts.breaking||0}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="panel pad"><h2>Repository commits</h2>${O.git.length?`<div class="tbl" style="max-height:520px"><table><thead><tr><th>Date</th><th>Commit</th><th class="num">Files</th><th>Areas</th></tr></thead><tbody>${O.git.map(c=>`<tr><td class="mono">${esc(day(c.date))}</td><td>${esc(c.message)} <span class="faint mono">${esc(c.hash)}</span>${untracked.includes(c)?' <span class="tag warn">no change record that week</span>':''}</td><td class="num">${c.files||'—'}</td><td class="sub">${Object.entries(c.areas||{}).map(([k,v])=>esc(k)+' '+v).join(', ')}</td></tr>`).join('')}</tbody></table></div>`:'<p class="faint">Git history was not readable when the snapshot was built.</p>'}
+   <p class="note">Commits that change model files with no change record within a day are possible untracked changes (policy P01). Files per commit are listed when git can read the file list.</p></div></div>
+   <div class="grid g2e"><div class="panel pad"><h2>Decisions recorded (${O.decisions.length})</h2><div class="tbl" style="max-height:420px"><table><tbody>${O.decisions.map(d=>`<tr><td class="mono">${esc(d.id)}</td><td>${esc(d.title)}</td><td class="mono sub">${esc(d.date)}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="panel pad"><h2>Open questions (${O.questions.length})</h2><div class="tbl" style="max-height:420px"><table><tbody>${O.questions.map(q=>`<tr><td class="mono">${esc(q.id)}</td><td><b>${esc(q.title)}</b><div class="sub">${esc(q.section)}</div></td></tr>`).join('')}</tbody></table></div><p class="note">Each open question is also an action (category Decision).</p></div></div></div>`;
+}
+
+/* ---- export ---- */
+const qc=s=>`"${String(s==null?'':s).replace(/"/g,'""')}"`;
+const csvOf=(head,rows)=>[head.map(qc).join(','),...rows.map(r=>r.map(qc).join(','))].join('\n');
+function copy(text,label='CSV'){const fb=()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(label+' copied')}catch(e){toast('Copy failed')}ta.remove()};
+  try{navigator.clipboard.writeText(text).then(()=>toast(label+' copied'),fb)}catch(e){fb()}}
+
+function render(){srcbar();tabs();({overview,log:logView,cause:causeView,domains:domainsView,compliance:complianceView,guide:guideView,actions:actionsView,workbench:workbenchView}[state.tab]||overview)()}
+render();loadLive();
+})();
+</script></body></html>

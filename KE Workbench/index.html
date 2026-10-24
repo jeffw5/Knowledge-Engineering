@@ -293,7 +293,7 @@ input,select,textarea{font:inherit;color:inherit}
 
   function openTool(id){
     const t = T[id]; if (!t) return;
-    // External tools (shared claude.ai artifacts such as PEO Outcome Review) keep their own
+    // A registry entry with external:true and a url (a page outside the workbench) keeps its own
     // sign-in and shared state, so they open in a browser tab instead of a workbench tab.
     if (t.external && t.url) { window.open(t.url, '_blank', 'noopener'); return; }
     openUrl(t.file, t, false);

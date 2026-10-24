@@ -2,14 +2,69 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '4.4.0', date: '2026-10-23', title: 'Operations Dashboard: the change log as evidence',
+    groups: [
+      { kind: 'new', items: [
+        'Operations Dashboard (Agents & operations): every change record (PROV-O activities in the change-log graph and the change-record files) joined to the current inventory of core and domain models and their conformance.',
+        'Causality & root cause: for a change set, its upstream causes and downstream effects through prov:used, prov:generated and prov:wasDerivedFrom; for an asset or term, its history, current findings and the change set that introduced them; and which tools the defects enter through.',
+        'Domains: expansion over time by area, and continuous improvement by domain (change sets, edits, review cycles, findings and error density, with a trend across snapshots).',
+        'Compliance: conformance by rule and domain, nine process policies on the change log (creator, approver, requirement, deployment records, one current copy, lifecycle), and the guide edition each asset declares.',
+        'Standards guide: 21 places where Semantic Governance v1.9 no longer matches practice (identifiers, URIs, named graphs, change records, operational areas, primitives, service assembly), with the proposed v2.0 text; copy as Markdown.',
+        'Actions: one list of what closes each gap (conformance, policy, guide, decisions, lifecycle, portfolio), with status kept in the browser and CSV export.'
+      ] },
+      { kind: 'improved', items: [
+        'Rebuild snapshot: POST /api/ingest/ops-snapshot (or python3 ingest/build_ops_snapshot.py) rebuilds data/ops/ and adds a line to the history used for trends. With GraphDB on, change records in the graph are merged with those on disk and the gaps between them are listed.'
+      ] }
+    ]
+  },
+  {
+    version: '4.3.0', date: '2026-10-23', title: 'PEO Service Map: market crosswalk and expansion',
+    groups: [
+      { kind: 'new', items: [
+        'Market crosswalk tab: each of the 44 PEO Service Landscape rows is mapped to the L3 services that deliver it (21 direct, 10 partial, 13 with no service), with Insperity and the six competitors side by side and the proposals that fill each gap. Rows Insperity sells but the business model lacks: expense management, business insurance and outplacement. Offer and delivery models (co-employment, HRCore, HRScale, ASO, EOR, published pricing) are shown as a dimension of the offer, not as services. Copy as CSV.',
+        'Expansion tab: 41 proposed L3 services, each with origin (4 from Insperity\u2019s catalog, 17 from competitors, 20 from the semantic knowledge layer), recommendation (pursue, partner, monitor, decline), the competitors that offer it, the knowledge-layer capabilities it builds on, evidence links and the customer questions it would strengthen. Two proposed L1 domains (Workforce Intelligence, Risk & Agentic Assurance; Global Employment & Contingent Workforce), eleven L2 bounded contexts and six service lines (Global Workforce, Business Insurance, Compliance Intelligence, Risk Intelligence, Decision Intelligence, Agentic Assurance). Copy as CSV.',
+        'Service breakdown: Show proposed services adds the proposals to the tree as dashed entries; each L3 service shows how the market delivers it.',
+        'Authored in KE Domains/_build/service_map_expansion.py; the builder reads the landscape matrix straight from tools/peo-service-landscape.html and writes KE Domains/HR Service Operations/peo-service-map/market-and-expansion-report.md.'
+      ]}
+    ]
+  },
+  {
+    version: '4.2.0', date: '2026-10-23', title: 'Products & Services: the PEO Service Map and the PEO Service Landscape',
+    groups: [
+      { kind: 'new', items: [
+        'Section 05 is Products & Services, after Customer 360. It holds two pages.',
+        'PEO Service Map (tools/peo-service-map.html): the external services of HR Service Operations broken down as L1 domain \u203a L2 bounded context \u203a L3 domain service (8, 17, 74), also organized by the 11 service lines clients buy, and joined to the Customer 360 personas, jobs and desired outcomes. Every desired outcome becomes the question a persona asks (224, plus a headline question per job, 250 in all) and is traced to the services that answer it. Four views: Service breakdown, By persona (each job\u2019s questions by job map stage), Questions (search and filter by persona, domain, service line, stage; copy CSV) and Coverage (persona by domain and by service line, gaps, thinly covered services).',
+        'The map is built by KE Domains/_build/build_service_map.py from the HR Service Operations taxonomy (L1), the business model extract in KE Domains/Reference/hr-services-business-model/ (L2, L3, service lines) and data/c360/. It writes KE Domains/HR Service Operations/peo-service-map/ (the map, a coverage report and a README) and data/peo-service-map/peo-service-map.js. L2 and L3 IRIs follow D26 and are marked planned until the business model is ingested (open question 27).',
+        'PEO Service Landscape (tools/peo-service-landscape.html): the competitive capability matrix of Insperity and six U.S. PEOs (core, add-on, partner, none, verify), with evidence notes and sources. Formerly titled PEO Service Map.'
+      ]}
+    ]
+  },
+  {
+    version: '4.1.0', date: '2026-10-23', title: 'Customer 360 runs entirely inside the workbench',
+    groups: [
+      { kind: 'new', items: [
+        'PEO Outcome Review is a workbench page (tools/peo-outcome-review.html). Reviewers enter their name once (and whether they record final decisions); reviews are shared through GraphDB, one named graph per reviewer (\u2026/graph/customer-360/review/reviewer/{id}) and one per final decision (\u2026/review/decision/{item}), and the page re-reads them every 15 seconds. With GraphDB off, reviews are kept in the browser and published the next time GraphDB is reachable. Export CSV still works.',
+        'Outcome review ontology and vocabulary (data/c360/15-, 16-): reviewer, item review and review decision, aligned to Baseline Core (core:person, core:information-asset, core:decision), with roles, verdicts, risk flags, approved uses, study dispositions and decision statuses as concepts. Load benchmark into GraphDB adds them.',
+        'PEO Outcome Playbook is a workbench page (tools/peo-outcome-playbook.html). It uses the survey results loaded in the Job Study when there are any, instead of always showing the example scores.'
+      ]},
+      { kind: 'improved', items: [
+        'The Demand Gateway and Buyer Personas & Jobs read review decisions and compliance flags straight from the graph; the review CSV import is now only for reviews recorded elsewhere, and decisions in the graph take precedence.',
+        'The sales advisor in the Playbook has no live Claude connection in the workbench, so \u201cCopy prompt for Claude\u201d copies the rules, the prospect and the retrieved outcomes as one prompt to paste into Claude.'
+      ]},
+      { kind: 'removed', items: [
+        'No Customer 360 tool links to claude.ai any more: the registry, the Gateway, the Playbook and the release history point at the pages in tools/.'
+      ]}
+    ]
+  },
+  {
     version: '4.0.0', date: '2026-10-22', title: 'Customer 360: from persona interviews to demand planning and back',
     links: [
-      { label: 'PEO Outcome Review (shared, opens in a browser tab)', href: 'https://claude.ai/artifact/TiVNKQw9Wwge5hF2BdDSyn', note: 'business and compliance sign-off; its Export CSV feeds the Demand Gateway' },
-      { label: 'PEO Outcome Playbook (shared, opens in a browser tab)', href: 'https://claude.ai/artifact/JVvu5CmTykxwE77BPVpBx7', note: 'battle cards, the Fix / Innovate / Protect / Simplify rule and the sales advisor agent' }
+      { label: 'PEO Outcome Review', href: 'peo-outcome-review.html', note: 'business and compliance sign-off (in the workbench since 4.1.0)' },
+      { label: 'PEO Outcome Playbook', href: 'peo-outcome-playbook.html', note: 'battle cards, the Fix / Innovate / Protect / Simplify rule and the sales advisor agent (in the workbench since 4.1.0)' }
     ],
     groups: [
       { kind: 'new', items: [
-        'Section 04 is now Customer 360 (it was Domain context): Appreciative Inquiry, Buyer Personas & Jobs, PEO Job Study, PEO Outcome Review \u2197, PEO Outcome Playbook \u2197 and Demand Gateway. Tools marked \u2197 are shared claude.ai artifacts with their own sign-in and open in a browser tab.',
+        'Section 04 is now Customer 360 (it was Domain context): Appreciative Inquiry, Buyer Personas & Jobs, PEO Job Study, PEO Outcome Review \u2197, PEO Outcome Playbook \u2197 and Demand Gateway. In 4.0.0 the two tools marked \u2197 opened outside the workbench; 4.1.0 brings them in.',
         'Buyer Personas & Jobs reads persona instances from GraphDB in the same layout as before (Explore, Graph, Job Study). The Job Study tab has a pull-down of every job: pick one to see its desired outcomes on the eight job map stages, the steps people described in interviews, study scores and the Playbook action, review status, interview evidence and demand. Copy a job as CSV.',
         'Appreciative Inquiry: capture persona interviews through Discover, Dream, Design and Destiny with prompts tailored to a focus job; select a passage and code it as a functional, emotional or social job, a job step or a desired outcome (built from direction, metric, object and clarifier), either as a new candidate or as evidence for an existing item. Interviews save as drafts in the browser and publish to their own named graph.',
         'PEO Job Study is in the workbench (tools/peo-benchmark/): opportunity landscape, job map and PEO vs non-PEO comparison. Load survey results there; every Customer 360 tool uses the same scores.',

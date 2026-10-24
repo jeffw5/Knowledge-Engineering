@@ -1,0 +1,238 @@
+# ==========================================================================
+#  Outcome review ontology
+#  Target named graph: <https://www.insperity.com/graph/customer-360/outcome-review-ontology>
+#  Business and compliance sign-off on personas, jobs and desired outcomes.
+#  Records are written by tools/peo-outcome-review.html, one named graph per reviewer
+#  (…/graph/customer-360/review/reviewer/{id}) and per final decision (…/review/decision/{item}).
+# ==========================================================================
+
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix vaem:     <http://www.linkedmodel.org/schema/vaem#> .
+@prefix vann:     <http://purl.org/vocab/vann/> .
+@prefix core:     <https://www.insperity.com/ontology/core/> .
+@prefix domaintax: <https://www.insperity.com/taxonomy/core-domain/> .
+@prefix jtbd:     <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix orv:      <https://www.insperity.com/ontology/outcome-review/> .
+@prefix orvv:     <https://www.insperity.com/vocabulary/outcome-review/> .
+
+<https://www.insperity.com/ontology/outcome-review/> a owl:Ontology ;
+    rdfs:label "Outcome review ontology"@en ;
+    skos:prefLabel "Outcome review ontology"@en ;
+    dcterms:title "Outcome review ontology"@en ;
+    dcterms:description "Review records for the jobs-to-be-done model: each reviewer's verdict, suggested wording, risk flags and approved uses for a persona, job or desired outcome, and the final decision that admits it to the survey, sales guidance and marketing."@en ;
+    dcterms:subject domaintax:EnterpriseArchitecture ;
+    vaem:namespace "https://www.insperity.com/ontology/outcome-review/"^^xsd:anyURI ;
+    vann:preferredNamespacePrefix "orv" ;
+    dcterms:language "en" ;
+    dcterms:creator "Jeffrey Wallk" ;
+    dcterms:publisher <https://www.insperity.com/resource/core/Organization/insperity> ;
+    dcterms:conformsTo <http://purl.obolibrary.org/obo/bfo/2020/bfo.owl> , <https://www.insperity.com/standard/semantic-governance/1.9/> ;
+    owl:imports <https://www.insperity.com/ontology/core/> , <https://www.insperity.com/ontology/jobs-to-be-done/> ;
+    owl:versionInfo "0.1.0" ;
+    owl:versionIRI <https://www.insperity.com/ontology/outcome-review/0.1.0/> ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-23"^^xsd:date ;
+    dcterms:modified "2026-10-23T17:00:29Z"^^xsd:dateTime .
+
+# ---- Classes ------------------------------------------------------------
+
+orv:reviewer a owl:Class ;
+    rdfs:label "Reviewer"@en ;
+    skos:prefLabel "Reviewer"@en ;
+    skos:definition "A person who reviews jobs-to-be-done statements in a business or compliance review role."@en ;
+    rdfs:subClassOf core:person ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:item-review a owl:Class ;
+    rdfs:label "Item review"@en ;
+    skos:prefLabel "Item review"@en ;
+    skos:definition "An information asset that records one reviewer's verdict, suggested changes, risk flags and approved uses for one persona, job or desired outcome."@en ;
+    rdfs:subClassOf core:information-asset ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:review-decision a owl:Class ;
+    rdfs:label "Review decision"@en ;
+    skos:prefLabel "Review decision"@en ;
+    skos:definition "A decision that records whether a persona, job or desired outcome is accepted or dropped after review, with its final wording and approved uses."@en ;
+    rdfs:subClassOf core:decision ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( orv:reviewer orv:item-review orv:review-decision ) .
+
+# ---- Object properties --------------------------------------------------
+
+orv:concernsItem a owl:ObjectProperty ;
+    rdfs:label "concerns item"@en ;
+    skos:prefLabel "concerns item"@en ;
+    skos:definition "A relation between a review record and the persona, job or desired outcome it is about."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( orv:item-review orv:review-decision ) ] ;
+    rdfs:range [ a owl:Class ; owl:unionOf ( jtbd:client-persona jtbd:job-to-be-done jtbd:desired-outcome ) ] ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:isReviewedBy a owl:ObjectProperty ;
+    rdfs:label "is reviewed by"@en ;
+    skos:prefLabel "is reviewed by"@en ;
+    skos:definition "A relation between an item review and the reviewer who wrote it."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range orv:reviewer ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:isDecidedBy a owl:ObjectProperty ;
+    rdfs:label "is decided by"@en ;
+    skos:prefLabel "is decided by"@en ;
+    skos:definition "A relation between a review decision and the reviewer who recorded it."@en ;
+    rdfs:domain orv:review-decision ;
+    rdfs:range orv:reviewer ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasReviewRole a owl:ObjectProperty ;
+    rdfs:label "has review role"@en ;
+    skos:prefLabel "has review role"@en ;
+    skos:definition "A relation between a reviewer or item review and the review role it was made in."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( orv:reviewer orv:item-review ) ] ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasVerdict a owl:ObjectProperty ;
+    rdfs:label "has verdict"@en ;
+    skos:prefLabel "has verdict"@en ;
+    skos:definition "A relation between an item review and the reviewer's verdict."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasRiskFlag a owl:ObjectProperty ;
+    rdfs:label "has risk flag"@en ;
+    skos:prefLabel "has risk flag"@en ;
+    skos:definition "A relation between an item review and a compliance risk the reviewer raised."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasApprovedUse a owl:ObjectProperty ;
+    rdfs:label "has approved use"@en ;
+    skos:prefLabel "has approved use"@en ;
+    skos:definition "A relation between a review record and a use the statement is cleared for."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( orv:item-review orv:review-decision ) ] ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasStudyDisposition a owl:ObjectProperty ;
+    rdfs:label "has study disposition"@en ;
+    skos:prefLabel "has study disposition"@en ;
+    skos:definition "A relation between an item review and whether the reviewer would keep, merge or drop the item in the study."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasSuggestedJobMapStage a owl:ObjectProperty ;
+    rdfs:label "has suggested job map stage"@en ;
+    skos:prefLabel "has suggested job map stage"@en ;
+    skos:definition "A relation between an item review and the job map stage the reviewer would place the outcome on."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range jtbd:job-map-stage ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasSuggestedTheme a owl:ObjectProperty ;
+    rdfs:label "has suggested theme"@en ;
+    skos:prefLabel "has suggested theme"@en ;
+    skos:definition "A relation between an item review and the benchmark theme the reviewer would assign the outcome to."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasDecisionStatus a owl:ObjectProperty ;
+    rdfs:label "has decision status"@en ;
+    skos:prefLabel "has decision status"@en ;
+    skos:definition "A relation between a review decision and its outcome, accepted or dropped."@en ;
+    rdfs:domain orv:review-decision ;
+    rdfs:range skos:Concept ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+# ---- Data properties ----------------------------------------------------
+
+orv:hasItemIdentifier a owl:DatatypeProperty ;
+    rdfs:label "has item identifier"@en ;
+    skos:prefLabel "has item identifier"@en ;
+    skos:definition "A data property that gives the benchmark identifier of the reviewed item, such as P1, J01 or O001."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( orv:item-review orv:review-decision ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasReviewerIdentifier a owl:DatatypeProperty ;
+    rdfs:label "has reviewer identifier"@en ;
+    skos:prefLabel "has reviewer identifier"@en ;
+    skos:definition "A data property that gives the stable identifier a reviewer signs reviews with."@en ;
+    rdfs:domain orv:reviewer ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasReviewerName a owl:DatatypeProperty ;
+    rdfs:label "has reviewer name"@en ;
+    skos:prefLabel "has reviewer name"@en ;
+    skos:definition "A data property that gives the name a reviewer is shown under."@en ;
+    rdfs:domain orv:reviewer ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:isDecisionMaker a owl:DatatypeProperty ;
+    rdfs:label "is decision maker"@en ;
+    skos:prefLabel "is decision maker"@en ;
+    skos:definition "A data property that states whether a reviewer records final decisions."@en ;
+    rdfs:domain orv:reviewer ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasSuggestedWording a owl:DatatypeProperty ;
+    rdfs:label "has suggested wording"@en ;
+    skos:prefLabel "has suggested wording"@en ;
+    skos:definition "A data property that gives the wording a reviewer proposes for the statement."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasDuplicateOf a owl:DatatypeProperty ;
+    rdfs:label "has duplicate of"@en ;
+    skos:prefLabel "has duplicate of"@en ;
+    skos:definition "A data property that names the item a reviewer would merge this one with."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasReviewComment a owl:DatatypeProperty ;
+    rdfs:label "has review comment"@en ;
+    skos:prefLabel "has review comment"@en ;
+    skos:definition "A data property that gives a reviewer's reasons and notes for other reviewers."@en ;
+    rdfs:domain orv:item-review ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasFinalWording a owl:DatatypeProperty ;
+    rdfs:label "has final wording"@en ;
+    skos:prefLabel "has final wording"@en ;
+    skos:definition "A data property that gives the wording accepted in the final decision, when it differs from the original."@en ;
+    rdfs:domain orv:review-decision ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasDecisionNote a owl:DatatypeProperty ;
+    rdfs:label "has decision note"@en ;
+    skos:prefLabel "has decision note"@en ;
+    skos:definition "A data property that records why the final decision was made."@en ;
+    rdfs:domain orv:review-decision ;
+    rdfs:range xsd:string ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .
+
+orv:hasRecordedTime a owl:DatatypeProperty ;
+    rdfs:label "has recorded time"@en ;
+    skos:prefLabel "has recorded time"@en ;
+    skos:definition "A data property that gives when a review record was last saved."@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( orv:reviewer orv:item-review orv:review-decision ) ] ;
+    rdfs:range xsd:dateTime ;
+    rdfs:isDefinedBy <https://www.insperity.com/ontology/outcome-review/> .

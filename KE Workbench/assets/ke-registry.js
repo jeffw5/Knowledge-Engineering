@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '4.0.0',
+  version: '4.4.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -66,6 +66,9 @@ window.KE_REGISTRY = {
       id: 'ops', label: 'Agents & operations', eyebrow: 'Operations Workbench · §1.3',
       blurb: 'Run, monitor and review the agentic fabric and the lifecycle of governed artifacts.',
       tools: [
+        { id: 'operations-dashboard', code: 'OD', file: 'tools/operations-dashboard.html', title: 'Operations Dashboard', isNew: true,
+          desc: 'Change log as PROV-O triples joined to the model inventory: activity, causality and root cause, domain expansion and improvement, conformance and policy compliance, the Semantic Governance v1.9 → v2.0 retrofit, and the actions to close each gap.',
+          functions: ['Change monitoring', 'Impact visualization', 'Governance workflow'], std: ['3.3', '3.4', '3.11'] },
         { id: 'mapping-agent-dashboard', code: 'MA', file: 'tools/mapping-agent-dashboard.html', title: 'Mapping Agent Dashboard',
           desc: 'Simulates the domain-sovereign mapping agents: routing, SHACL → SWRL → PEP validation gate, circuit breakers, human-in-the-loop review and KGCL commits.',
           functions: ['Change monitoring', 'Governance workflow'], std: ['1.5', '2.6'] },
@@ -91,16 +94,28 @@ window.KE_REGISTRY = {
           desc: 'The outcome-driven benchmark: opportunity landscape, job map and PEO vs non-PEO comparison. Load survey results here; the other Customer 360 tools use the same scores.',
           functions: ['Impact visualization'], std: ['3.8'] },
         { id: 'job-study-overview', code: 'JO', file: 'tools/peo-benchmark/index.html', title: 'PEO Outcome Benchmark', hidden: true },
-        { id: 'outcome-review', code: 'OR', url: 'https://claude.ai/artifact/TiVNKQw9Wwge5hF2BdDSyn', title: 'PEO Outcome Review', external: true,
-          desc: 'Shared review where business and compliance SMEs approve, edit or reject every persona, job and outcome. Opens in a browser tab; export its CSV into the Demand Gateway.',
-          functions: ['Governance workflow'], std: [] },
-        { id: 'outcome-playbook', code: 'OP', url: 'https://claude.ai/artifact/JVvu5CmTykxwE77BPVpBx7', title: 'PEO Outcome Playbook', external: true,
-          desc: 'Battle cards, the Fix / Innovate / Protect / Simplify action matrix and the AI sales advisor, built on the same outcomes. Opens in a browser tab.',
+        { id: 'outcome-review', code: 'OR', file: 'tools/peo-outcome-review.html', title: 'PEO Outcome Review', live: true, isNew: true,
+          desc: 'Business and compliance SMEs review every persona, job and outcome: verdict, suggested wording, risk flags and approved uses, then a final decision. Reviews are shared through GraphDB (one named graph per reviewer and per decision) and the Demand Gateway reads the decisions directly.',
+          functions: ['Governance workflow'], std: ['3.3'] },
+        { id: 'outcome-playbook', code: 'OP', file: 'tools/peo-outcome-playbook.html', title: 'PEO Outcome Playbook', isNew: true,
+          desc: 'Battle cards, the Fix / Innovate / Protect / Simplify action matrix, the concept scorer and the sales advisor agent, built on the same outcomes and the scores loaded in the Job Study.',
           functions: ['Impact visualization'], std: [] },
         { id: 'demand-gateway', code: 'DG', file: 'tools/demand-gateway.html', title: 'Demand Gateway', live: true, isNew: true,
           desc: 'Requirements engineering semantic gateway: bundle under-served outcomes into demand requests, check them (traced, reviewed, evidenced, measurable, owned, unflagged) and admit them to demand planning, written back to the graph.',
           functions: ['Governance workflow', 'Artifact versioning'], std: ['3.5'] },
         { id: 'peo-buyer-personas-legacy', code: 'BL', file: 'tools/peo-buyer-personas-legacy.html', title: 'Sales Advisor Personas (legacy)', hidden: true }
+      ]
+    },
+    {
+      id: 'products', label: 'Products & Services', eyebrow: 'PEO services · personas · competitors',
+      blurb: 'What the PEO delivers and how it compares: the external services of HR Service Operations mapped to the questions each persona asks, and the competitive landscape.',
+      tools: [
+        { id: 'peo-service-map', code: 'SM', file: 'tools/peo-service-map.html', title: 'PEO Service Map', live: true, isNew: true,
+          desc: 'The external services of HR Service Operations (service line \u203a L1 domain \u203a L2 bounded context \u203a L3 domain service) joined to the Customer 360 personas, jobs and desired outcomes: every question a persona asks while getting a job done, the service that answers it, and the gaps where no service does. The market crosswalk maps every PEO Service Landscape row to the services that deliver it; Expansion proposes the domains, service lines and services to add, from Insperity\u2019s catalog, from competitors and from the semantic knowledge layer.',
+          functions: ['Impact visualization'], std: ['3.8'] },
+        { id: 'peo-service-landscape', code: 'SL', file: 'tools/peo-service-landscape.html', title: 'PEO Service Landscape', isNew: true,
+          desc: 'Competitive intelligence: which services the major U.S. PEOs deliver (core, add-on, partner), with Insperity as the baseline column, evidence notes and sources. Copy as CSV or SKOS.',
+          functions: ['Impact visualization'], std: [] }
       ]
     },
     {

@@ -1,0 +1,447 @@
+<!doctype html><html lang="en"><head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<!-- /ke-workbench:head -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PEO Service Map</title>
+<script src="../data/peo-service-map/peo-service-map.js"></script>
+<style>
+/* Layout: header + stat strip → tabs (Service breakdown · By persona · Questions · Coverage). Breakdown = tree | detail. */
+:root{--bg:var(--ke-bg,#F4F6F9);--surface:var(--ke-surface,#fff);--sunk:var(--ke-sunk,#F7F9FB);--band:var(--ke-band,#EEF3F9);--line:var(--ke-line,#D5DBE1);--line2:var(--ke-line-soft,#E6EAEE);
+  --ink:var(--ke-ink,#1F2933);--muted:var(--ke-muted,#5F6B76);--faint:var(--ke-faint,#8B949D);--accent:var(--ke-accent,#2F6DB5);--accent-soft:var(--ke-accent-soft,#E3EDF8);--accent-ink:var(--ke-accent-ink,#fff);
+  --ok:var(--ke-ok,#2E7D4F);--ok-soft:var(--ke-ok-soft,#E5F3EA);--warn:var(--ke-warn,#9A6A00);--warn-soft:var(--ke-warn-soft,#FBF1D9);--draft:var(--ke-draft,#B03A2E);
+  --sans:var(--ke-sans,"Liberation Sans",Arial,system-ui,sans-serif);--mono:var(--ke-mono,"Liberation Mono",Menlo,monospace);--r:6px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F141A;--surface:#161D25;--sunk:#121820;--band:#1C2632;--line:#2B3642;--line2:#222C37;--ink:#E4EAF0;--muted:#95A2AE;--faint:#6C7884;--accent:#6FA3E0;--accent-soft:#1A2B40;--accent-ink:#0B1520;--ok:#4FC283;--ok-soft:#14301F;--warn:#E2B04A;--warn-soft:#352A10;--draft:#E07A6E;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans)}
+.wrap{max-width:1360px;margin:0 auto;padding:22px max(16px,env(safe-area-inset-left,0px)) 48px;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-size:26px;font-weight:700;letter-spacing:-.01em}
+h2{font-size:17px;font-weight:700;color:var(--accent)}
+h3{font-size:14.5px;font-weight:700}
+.eyebrow{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.draft{font:700 10.5px var(--mono);letter-spacing:.08em;color:var(--draft);border:1px solid var(--draft);border-radius:3px;padding:1px 6px;margin-left:8px;vertical-align:3px}
+.lede{color:var(--muted);max-width:92ch;margin:6px 0 0}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:8px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:9px 12px}
+.stat b{display:block;font-size:20px;font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{all:unset;cursor:pointer;padding:9px 14px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected="true"]{color:var(--accent);border-color:var(--accent)}
+.tab:focus-visible,.btn:focus-visible,.node:focus-visible,.pcard:focus-visible,.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--band);border-radius:var(--r) var(--r) 0 0}
+.bar label{font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center}
+select,input[type=search]{font:inherit;font-size:13px;color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:5px 8px}
+input[type=search]{flex:1 1 220px;min-width:160px}
+.btn{font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:5px 10px;cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{all:unset;cursor:pointer;padding:4px 10px;font-size:12.5px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+/* breakdown */
+.split{display:grid;grid-template-columns:minmax(300px,420px) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.split{grid-template-columns:minmax(0,1fr)}}
+.tree{padding:8px;max-height:74vh;overflow:auto}
+.node{all:unset;box-sizing:border-box;display:grid;grid-template-columns:16px minmax(0,1fr) auto;gap:6px;align-items:baseline;width:100%;padding:5px 8px;border-radius:4px;cursor:pointer;font-size:13px}
+.node:hover{background:var(--sunk)}
+.node[aria-current="true"]{background:var(--accent-soft)}
+.node .tw{font:11px var(--mono);color:var(--faint);text-align:center}
+.node .n{font:11px var(--mono);color:var(--muted)}
+.node.l0{font-weight:700}.node.l1{font-weight:700}.node.l2{font-weight:600;color:var(--ink)}
+.kids{margin-left:14px;border-left:1px solid var(--line2);padding-left:4px}
+.lvl{font:600 10px var(--mono);letter-spacing:.05em;color:var(--accent);margin-right:6px}
+.detail{padding:16px 18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 12px;font-size:13px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.mono{font-family:var(--mono);font-size:12px}
+.planned{font:600 10px var(--mono);color:var(--warn);background:var(--warn-soft);border-radius:3px;padding:1px 5px;margin-left:6px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--sunk);color:var(--ink);border-radius:999px;padding:2px 9px;cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--accent)}
+.chip.svc{border-radius:4px;background:var(--accent-soft);border-color:transparent}
+.chip.line{cursor:default;background:var(--band)}
+.chip.ex{font-weight:700}
+.qgroup{border-top:1px solid var(--line2);padding-top:10px}
+.qgroup>h3{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.jid{font:600 11px var(--mono);color:var(--muted)}
+ol.q{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+ol.q li{display:grid;grid-template-columns:62px minmax(0,1fr);gap:4px 10px;font-size:13px;align-items:baseline}
+.stage{font:600 10.5px var(--mono);color:var(--muted);letter-spacing:.03em}
+.qt{min-width:0}
+.qt .src{display:block;font-size:11.5px;color:var(--faint);margin-top:1px}
+.qt .chips{margin-top:4px}
+/* persona */
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:8px}
+.pcard{all:unset;box-sizing:border-box;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;display:grid;gap:2px}
+.pcard[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.pcard b{font-size:13.5px} .pcard span{font-size:12px;color:var(--muted)}
+.prof{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px;padding:16px 18px;border-bottom:1px solid var(--line)}
+@media (max-width:820px){.prof{grid-template-columns:minmax(0,1fr)}}
+.prof ul{margin:4px 0 0;padding-left:18px}
+.jobs{padding:6px 18px 18px;display:grid;gap:4px}
+details.job{border:1px solid var(--line2);border-radius:var(--r);background:var(--surface)}
+details.job>summary{position:relative;cursor:pointer;padding:10px 12px 10px 28px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;list-style:none}
+details.job>summary::-webkit-details-marker{display:none}
+details.job>summary::before{content:"\25B8";position:absolute;left:11px;top:10px;color:var(--faint)}
+details.job[open]>summary::before{content:"\25BE"}
+details.job[open]>summary{border-bottom:1px solid var(--line2)}
+.role{font:600 10.5px var(--mono);padding:1px 6px;border-radius:3px}
+.role.ex{background:var(--accent-soft);color:var(--accent)} .role.pa{background:var(--band);color:var(--muted)}
+.hq{font-weight:700}
+.jbody{padding:10px 14px 14px;display:grid;gap:10px}
+.stagehd{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:4px 0 -2px}
+.sub{font-size:12px;color:var(--muted)}
+/* questions table */
+.tbl{overflow:auto;max-height:72vh}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{position:sticky;top:0;background:var(--band);text-align:left;font-size:12px;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+td{padding:7px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+td.qcol{min-width:320px}
+.empty{padding:24px;text-align:center;color:var(--muted)}
+/* coverage */
+.cov{padding:16px 18px;display:grid;gap:20px}
+.heat td,.heat th{text-align:center;font-variant-numeric:tabular-nums}
+.heat th.rowh,.heat td.rowh{text-align:left;white-space:normal;min-width:180px}
+.heat td.c{font-weight:600}
+.note{font-size:12.5px;color:var(--muted);max-width:90ch}
+.ok{color:var(--ok);font-weight:700}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:5px;font-size:13px;z-index:9}
+.missing{padding:30px;border:1px dashed var(--line);border-radius:var(--r);background:var(--surface)}
+/* market and expansion */
+.lv{display:inline-flex;align-items:center;justify-content:center;min-width:52px;padding:1px 6px;border-radius:3px;font:600 10.5px var(--mono)}
+.lv.C{color:var(--ok);background:var(--ok-soft)} .lv.A{color:var(--warn);background:var(--warn-soft)} .lv.P{color:var(--accent);background:var(--accent-soft)}
+.lv.N{color:var(--faint);background:var(--sunk)} .lv.V{color:var(--draft);background:color-mix(in srgb,var(--draft) 12%,transparent)}
+.fit{font:700 10.5px var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.fit.direct{color:var(--ok);background:var(--ok-soft)} .fit.partial{color:var(--warn);background:var(--warn-soft)} .fit.none{color:var(--draft);background:color-mix(in srgb,var(--draft) 12%,transparent)}
+.badge{font:600 10.5px var(--mono);letter-spacing:.03em;padding:2px 7px;border-radius:3px;background:var(--band);color:var(--muted);white-space:nowrap}
+.badge.catalog{background:var(--ok-soft);color:var(--ok)} .badge.competitor{background:var(--warn-soft);color:var(--warn)} .badge.semantic{background:var(--accent-soft);color:var(--accent)}
+.badge.pursue{background:var(--accent);color:var(--accent-ink)} .badge.partner{border:1px solid var(--accent);color:var(--accent);background:transparent} .badge.monitor{border:1px solid var(--line);background:transparent} .badge.decline{text-decoration:line-through}
+.node.prop{font-style:italic;color:var(--muted);border:1px dashed var(--line);margin:2px 0}
+.node.prop[aria-current="true"]{border-color:var(--accent)}
+.chip.prop{border-style:dashed;background:transparent}
+table.mk td,table.mk th{white-space:nowrap} table.mk td.cellw{white-space:normal;min-width:220px}
+.pgrid{display:grid;gap:10px;padding:14px 16px}
+.pcardx{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:8px;background:var(--surface)}
+.pcardx.sel{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.pcardx header{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:baseline}
+.pcardx h3{font-size:14.5px}
+.pid{font:600 11px var(--mono);color:var(--muted)}
+.grouphd{font:700 11.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:10px 0 0}
+.ev a{color:var(--accent)}
+.mini{display:flex;gap:2px;flex-wrap:nowrap}
+.mini .lv{min-width:0;width:22px;padding:1px 0}
+</style></head>
+<body><div class="cellw">
+<header>
+  <span class="eyebrow">Products &amp; Services · HR Service Operations · Customer 360</span>
+  <h1>PEO Service Map <span class="draft" id="ver">DRAFT</span></h1>
+  <p class="lede">Every external service the PEO delivers, broken down the way HR Service Operations is organized (L1 domain › L2 bounded context › L3 domain service) and filed under the service line a client buys it in, then joined to the questions each persona asks while getting a job done. Each question comes from a Customer 360 desired outcome and is answered by the services that address it. The market crosswalk compares every service with Insperity’s six main competitors, and Expansion proposes the domains, service lines and services to add.</p>
+</header>
+<div class="stats" id="stats"></div>
+<div class="tabs" role="tablist" id="tabs"></div>
+<main id="view"></main>
+<p class="note" id="foot"></p>
+</div>
+<script>
+(function(){
+const D=window.PEO_SERVICE_MAP;
+const V=document.getElementById('view');
+if(!D){V.innerHTML='<div class="missing"><h2>No map data</h2><p>data/peo-service-map/peo-service-map.js is missing. Run <span class="mono">python3 _build/build_service_map.py</span> in KE Domains, then reload.</p></div>';return;}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const by=(a,k='id')=>Object.fromEntries(a.map(x=>[x[k],x]));
+const S=by(D.services),C=by(D.contexts),DM=by(D.domains),P=by(D.personas),JB=by(D.jobs),Q=by(D.questions),ST=by(D.stages),LN=by(D.serviceLines,'label');
+const stageOrder=id=>(ST[id]||{order:99}).order;
+const LS={get(k,d){try{const v=localStorage.getItem('psm-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('psm-'+k,JSON.stringify(v))}catch(e){}}};
+let state=Object.assign({tab:'breakdown',org:'domain',sel:'area',persona:D.personas[0].id,open:{},proposed:false,q:'',fp:'',fd:'',fl:'',fs:'',fk:'',xf:'',xg:'',eo:'',er:'',el:'',psel:''},LS.get('state',{}));
+const save=()=>LS.set('state',{tab:state.tab,org:state.org,sel:state.sel,persona:state.persona,open:state.open,proposed:state.proposed});
+const MK=D.market||null, XP=D.expansion||null;
+const CO=MK?MK.companies:[], XW=MK?by(MK.crosswalk):{}, LVL=MK?MK.levels:{};
+const PR=XP?by(XP.proposals):{}, NC=XP?by(XP.contexts):{}, ND=XP?by(XP.domains):{}, NL=XP?by(XP.lines,'label'):{};
+const lineOf=name=>LN[name]||NL[name]||{label:name,description:'',services:[]};
+const domOf=id=>DM[id]||ND[id], ctxOf=id=>C[id]||NC[id];
+const lv=r=>`<span class="lv ${esc(r.l)}" title="${esc(r.n||LVL[r.l]||'')}">${esc(LVL[r.l]||r.l)}</span>`;
+const ORIGIN={catalog:'Insperity catalog',competitor:'Competitors',semantic:'Semantic knowledge layer'};
+const pctx=s=>C[s.context], pdom=s=>DM[s.domain];
+const jobPersonas=j=>[...j.executors,...j.participants];
+const qPersonas=q=>q.job&&JB[q.job]?jobPersonas(JB[q.job]):[];
+
+document.getElementById('ver').textContent='DRAFT '+D.version;
+const nQ=D.questions.length, ans=D.questions.filter(q=>q.services.length).length;
+document.getElementById('stats').innerHTML=[[D.domains.length,'L1 domains'],[D.contexts.length,'L2 bounded contexts'],[D.services.length,'L3 domain services'],[D.serviceLines.length,'service lines'],[D.personas.length,'personas'],[D.jobs.length,'jobs to be done'],[nQ+D.jobs.length,'customer questions'],[Math.round(100*ans/nQ)+'%','questions answered']]
+  .map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join('');
+document.getElementById('foot').innerHTML=`Generated ${esc(D.generated)} by <span class="mono">KE Domains/_build/build_service_map.py</span> from ${esc(D.sources.area)}, ${esc(D.sources.structure)} and ${esc(D.sources.demand)}. L2 and L3 IRIs are <span class="planned">planned</span> under D26 until the business model is ingested. Questions are generated from the outcome statements; review wording before external use.`;
+
+const TABS=[['breakdown','Service breakdown'],['persona','By persona'],['questions','Questions'],['coverage','Coverage'],...(MK?[['market','Market crosswalk']]:[]),...(XP?[['expansion','Expansion']]:[])];
+function goProposal(id){state.tab='expansion';state.psel=id;save();render();const el=document.getElementById('pc-'+id);el&&el.scrollIntoView({block:'center'})}
+const propChips=ids=>`<div class="chips">${ids.map(i=>PR[i]?`<button class="chip prop" data-prop="${i}" title="${esc(ORIGIN[PR[i].origin])} · ${esc(PR[i].rec)}">${esc(i)} ${esc(PR[i].label.replace(/ Service$/,''))}</button>`:'').join('')}</div>`;
+function tabs(){document.getElementById('tabs').innerHTML=TABS.map(([k,l])=>`<button class="tab" role="tab" data-k="${k}" aria-selected="${state.tab===k}">${l}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.k;save();render()});}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function goService(id){state.tab='breakdown';state.sel='s:'+id;const s=S[id];state.open['d:'+s.domain]=true;state.open['c:'+s.context]=true;state.open['l:'+s.line]=true;save();render();const el=document.querySelector(`.node[data-k="s:${id}"]`);el&&el.scrollIntoView({block:'center'})}
+function goPersona(id){state.tab='persona';state.persona=id;save();render();window.scrollTo(0,0)}
+window.__psm={goService,goPersona};
+const svcChips=ids=>`<div class="chips">${ids.map(i=>S[i]?`<button class="chip svc" data-svc="${i}" title="${esc(pctx(S[i]).label)} · ${esc(pdom(S[i]).label)}">${esc(S[i].label.replace(/ Service$/,''))}</button>`:'').join('')}</div>`;
+const personaChips=(ids,ex)=>`<div class="chips">${ids.map(i=>P[i]?`<button class="chip${ex&&ex.includes(i)?' ex':''}" data-per="${i}" title="${ex&&ex.includes(i)?'Executes the job':'Takes part'}">${esc(P[i].short||P[i].label)}</button>`:'').join('')}</div>`;
+function wire(root){root.querySelectorAll('[data-svc]').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();goService(b.dataset.svc)});
+  root.querySelectorAll('[data-per]').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();goPersona(b.dataset.per)});
+  root.querySelectorAll('[data-prop]').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();goProposal(b.dataset.prop)});}
+
+/* questions list grouped by job, ordered by stage */
+function questionBlock(qids,opts={}){
+  const groups={};qids.forEach(id=>{const q=Q[id];if(q)(groups[q.job]=groups[q.job]||[]).push(q)});
+  return Object.keys(groups).sort().map(jid=>{const j=JB[jid]||{statement:'(no job)',question:'',executors:[],participants:[]};
+    const qs=groups[jid].sort((a,b)=>stageOrder(a.stage)-stageOrder(b.stage)||a.id.localeCompare(b.id));
+    return `<div class="qgroup"><h3><span class="jid">${esc(jid)}</span>${esc(j.question||j.statement)}</h3>${opts.persons!==false?personaChips(jobPersonas(j),j.executors):''}
+      <ol class="q">${qs.map(q=>`<li><span class="stage">${esc((ST[q.stage]||{}).label||q.stage)}</span><span class="qt">${esc(q.question)}<span class="src">${esc(q.id)} · ${esc(q.outcome)}</span>${opts.svc?svcChips(q.services):''}</span></li>`).join('')}</ol></div>`}).join('');
+}
+
+/* ---- Service breakdown ---- */
+function treeHTML(){
+  const node=(k,lvl,label,n,hasKids,tag)=>`<button class="node l${lvl}" data-k="${k}" aria-current="${state.sel===k}" ${hasKids?`aria-expanded="${!!state.open[k]}"`:''}><span class="tw">${hasKids?(state.open[k]?'▾':'▸'):''}</span><span>${tag?`<span class="lvl">${tag}</span>`:''}${esc(label)}</span><span class="n">${n}</span></button>`;
+  const svcNode=s=>node('s:'+s.id,3,s.label,s.questions.length+' q',false,'L3');
+  const pnode=(k,lvl,label,n,hasKids,tag)=>node(k,lvl,label,n,hasKids,tag).replace('class="node','class="node prop');
+  const show=state.proposed&&XP;
+  const props=XP?XP.proposals.filter(p=>!p.extends):[];
+  const propNode=p=>pnode('p:'+p.id,3,p.label,p.id,false,'L3');
+  const propsIn=ctx=>show?props.filter(p=>p.context===ctx):[];
+  let h=node('area',0,D.area.name,D.services.length+(show?' + '+props.length:''),false,'');
+  if(state.org==='domain'){
+    const ctxNode=(c,isNew)=>{const kc=(isNew?'nc:':'c:')+c.id,ps=propsIn(c.id),n=(isNew?0:c.services.length);
+      h+=(isNew?pnode:node)(kc,2,c.label,n+(ps.length?(n?' + ':'')+ps.length:''),true,'L2');
+      if(state.open[kc])h+='<div class="kids">'+(isNew?'':c.services.map(i=>svcNode(S[i])).join(''))+ps.map(propNode).join('')+'</div>'};
+    D.domains.forEach(d=>{const k='d:'+d.id,n=d.contexts.reduce((a,c)=>a+C[c].services.length,0);
+      const nctx=show?XP.contexts.filter(c=>c.domain===d.id):[];const np=show?props.filter(p=>p.domain===d.id).length:0;
+      h+=node(k,1,d.label,n+(np?' + '+np:''),true,'L1');
+      if(state.open[k]){h+='<div class="kids">';d.contexts.forEach(ci=>ctxNode(C[ci],false));nctx.forEach(c=>ctxNode(c,true));h+='</div>'}});
+    if(show)XP.domains.forEach(d=>{const k='nd:'+d.id;h+=pnode(k,1,d.label,props.filter(p=>p.domain===d.id).length,true,'L1');
+      if(state.open[k]){h+='<div class="kids">';d.contexts.forEach(ci=>ctxNode(NC[ci],true));h+='</div>'}});
+  }else{
+    const lineNode=(l,isNew)=>{const k='l:'+l.label,ps=show?props.filter(p=>p.line===l.label):[],n=isNew?0:l.services.length;
+      h+=(isNew?pnode:node)(k,1,l.label+(isNew||l.inModel?'':' *'),n+(ps.length?(n?' + ':'')+ps.length:''),true,'SL');
+      if(state.open[k])h+='<div class="kids">'+(isNew?'':l.services.map(i=>svcNode(S[i])).join(''))+ps.map(propNode).join('')+'</div>'};
+    D.serviceLines.forEach(l=>lineNode(l,false));
+    if(show)XP.lines.forEach(l=>lineNode(l,true));
+  }
+  return h;
+}
+function detailHTML(){
+  const k=state.sel||'area';
+  const kv=rows=>`<dl class="kv">${rows.filter(Boolean).map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>`;
+  const qOf=ids=>[...new Set(ids.flatMap(i=>S[i].questions))];
+  const persOf=ids=>[...new Set(ids.flatMap(i=>S[i].personas))].sort();
+  if(k==='area'){
+    return `<span class="eyebrow">Operational area</span><h2>${esc(D.area.name)}</h2>${kv([['Taxonomy',`<span class="mono">${esc(D.area.iri)}</span>`],['Alternative label',esc(D.area.alt)],['Source file',`<span class="mono">${esc(D.area.taxonomy)}</span>`]])}
+      <p class="note">The area that delivers the external services of the HR Services &amp; PEO Enterprise Business Model to clients and their worksite employees (D25, D26). Pick a domain, bounded context or service on the left. Switch <b>Organize by</b> to see the same 74 services under the service lines clients buy.</p>
+      <div><h3>L1 domains</h3><div class="chips" style="margin-top:6px">${D.domains.map(d=>`<button class="chip" data-go="d:${d.id}">${d.n}. ${esc(d.label)}</button>`).join('')}</div></div>`;
+  }
+  if(k.startsWith('nd:')){const d=ND[k.slice(3)];const ps=XP.proposals.filter(p=>p.domain===d.id);
+    return `<span class="eyebrow">Proposed L1 domain ${d.n}</span><h2>${esc(d.label)}</h2><p class="note">${esc(d.definition)}</p>
+      <div><h3>Proposed bounded contexts</h3><div class="chips" style="margin-top:6px">${d.contexts.map(c=>`<button class="chip prop" data-go="nc:${c}">${esc(NC[c].label)} · ${NC[c].proposals.length}</button>`).join('')}</div></div>
+      <div><h3>Proposed services</h3>${propChips(ps.map(p=>p.id))}</div>`;}
+  if(k.startsWith('nc:')){const c=NC[k.slice(3)],d=domOf(c.domain);
+    return `<span class="eyebrow">Proposed L2 bounded context · ${esc(d.label)}</span><h2>${esc(c.label)}</h2><div><h3>Proposed services</h3>${propChips(c.proposals)}</div>`;}
+  if(k.startsWith('p:')){return proposalHTML(PR[k.slice(2)],true);}
+  const [t,id]=[k.slice(0,1),k.slice(2)];
+  if(t==='l'&&!LN[id]&&NL[id]){const l=NL[id];const ps=XP.proposals.filter(p=>p.line===id);
+    return `<span class="eyebrow">Proposed service line</span><h2>${esc(l.label)}</h2><p class="note">${esc(l.description)}</p><div><h3>Proposed services</h3>${propChips(ps.map(p=>p.id))}</div>`;}
+  if(t==='d'){const d=DM[id];const sv=d.contexts.flatMap(c=>C[c].services);const qs=qOf(sv);
+    return `<span class="eyebrow">L1 domain ${d.n}</span><h2>${esc(d.label)}</h2>${kv([['Taxonomy concept',`<span class="mono">${esc(d.iri)}</span>`],['Preferred label',esc(d.prefLabel)],['Definition',esc(d.definition)],['Domain assets',`<span class="mono">${esc(d.plannedTaxonomy)}</span><span class="planned">PLANNED</span>`],['Bounded contexts',d.contexts.length],['Domain services',sv.length],['Questions answered',qs.length]])}
+      <div><h3>Personas served</h3>${personaChips(persOf(sv))}</div>
+      <div><h3>Bounded contexts</h3><div class="chips" style="margin-top:6px">${d.contexts.map(c=>`<button class="chip" data-go="c:${c}">${esc(C[c].label)} · ${C[c].services.length}</button>`).join('')}</div></div>
+      <div><h3>Questions this domain answers</h3>${questionBlock(qs,{svc:true})}</div>`;}
+  if(t==='c'){const c=C[id],d=DM[c.domain];const qs=qOf(c.services);
+    return `<span class="eyebrow">L2 bounded context · ${esc(d.label)}</span><h2>${esc(c.label)}</h2>${kv([['Business model',`<span class="mono">${esc(id)}</span>`],['Domain assets',`<span class="mono">${esc(c.plannedTaxonomy)}</span><span class="planned">PLANNED</span>`],['Domain services',c.services.length],['Questions answered',qs.length]])}
+      <div><h3>Personas served</h3>${personaChips(persOf(c.services))}</div>
+      <div><h3>Domain services</h3>${svcChips(c.services)}</div>
+      <div><h3>Questions this context answers</h3>${questionBlock(qs,{svc:true})}</div>`;}
+  if(t==='l'){const l=LN[id];const qs=qOf(l.services);
+    return `<span class="eyebrow">Service line${l.inModel?'':' · added for the benchmark'}</span><h2>${esc(l.label)}</h2><p class="note">${esc(l.description)}</p>${kv([['Business model',`<span class="mono">${esc(l.id)}</span>${l.inModel?'':'<span class="planned">NOT IN MODEL</span>'}`],['Domain services',l.services.length],['L1 domains',[...new Set(l.services.map(i=>pdom(S[i]).label))].map(esc).join('; ')],['Questions answered',qs.length]])}
+      <div><h3>Personas served</h3>${personaChips(persOf(l.services))}</div>
+      <div><h3>Domain services</h3>${svcChips(l.services)}</div>
+      <div><h3>Questions this service line answers</h3>${questionBlock(qs,{svc:true})}</div>`;}
+  if(t==='s'){const s=S[id],c=pctx(s),d=pdom(s);
+    return `<span class="eyebrow">L3 domain service · ${esc(d.label)} › ${esc(c.label)}</span><h2>${esc(s.label)}</h2>${kv([['Service line',`<span class="chip line">${esc(s.line)}</span>`],['L1 domain',`<button class="chip" data-go="d:${d.id}">${esc(d.label)}</button>`],['L2 bounded context',`<button class="chip" data-go="c:${c.id}">${esc(c.label)}</button>`],['Business model',`<span class="mono">${esc(s.bm)}</span>`],['Domain assets',`<span class="mono">${esc(s.plannedTaxonomy)}</span><span class="planned">PLANNED</span>`],['Jobs supported',s.jobs.map(j=>esc(j)).join(', ')||'none'],['Questions answered',s.questions.length]])}
+      <div><h3>Who asks</h3>${personaChips(s.personas)}</div>
+      ${MK?marketHTML(s):''}
+      ${XP&&XP.proposals.some(p=>p.extends===s.id)?`<div><h3>Proposed extensions</h3>${propChips(XP.proposals.filter(p=>p.extends===s.id).map(p=>p.id))}</div>`:''}
+      <div><h3>Questions this service answers</h3>${s.questions.length?questionBlock(s.questions,{svc:false}):'<p class="note">No customer question reaches this service yet.</p>'}</div>`;}
+  return '';
+}
+function ratingsHead(){return CO.map(c=>`<th title="${esc(c.tag)}">${esc(c.name.replace(/ (TotalSource|PEO)$/,''))}</th>`).join('')}
+function marketHTML(s){
+  const rows=(s.market||[]).map(id=>XW[id]).filter(Boolean);
+  if(!rows.length)return `<div><h3>In the market</h3><p class="note">No PEO Service Landscape row maps to this service.</p></div>`;
+  return `<div><h3>In the market</h3><p class="note">How Insperity and six competitors deliver the landscape capabilities this service covers (PEO Service Landscape, public sources).</p>
+    <div class="tbl" style="max-height:none"><table class="mk"><thead><tr><th>Row</th><th>Capability</th><th>Fit</th>${ratingsHead()}</tr></thead><tbody>${rows.map(x=>`<tr><td class="mono">${esc(x.id)}</td><td class="cellw">${esc(x.label)}${x.gap?`<span class="src sub" style="display:block">${esc(x.gap)}</span>`:''}</td><td><span class="fit ${x.fit}">${x.fit}</span></td>${CO.map(c=>`<td>${lv(x.ratings[c.key])}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+}
+function proposalHTML(p,full){
+  const d=domOf(p.domain)||{label:p.domain},c=ctxOf(p.context)||{label:p.context};
+  const qs=p.addresses.filter(o=>Q[o]);
+  const name=Object.fromEntries(CO.map(c=>[c.key,c.name]));
+  const isNewD=!DM[p.domain],isNewC=!C[p.context],isNewL=!LN[p.line];
+  return `<span class="eyebrow">Proposed L3 service · ${esc(d.label)}${isNewD?' (new)':''} › ${esc(c.label)}${isNewC?' (new)':''}</span>
+    <h2>${esc(p.label)}</h2>
+    <div class="chips"><span class="badge ${p.origin}">${esc(ORIGIN[p.origin])}</span><span class="badge ${p.rec}">${esc(p.rec)}</span><span class="badge">${esc(p.line)}${isNewL?' (new line)':''}</span>${p.extends?`<span class="badge">extends ${esc(S[p.extends].label)}</span>`:''}</div>
+    <p>${esc(p.why)}</p>
+    <dl class="kv">
+      <dt>Offered by</dt><dd>${p.offeredBy.map(k=>esc(name[k])).join(', ')||'No competitor in the landscape'}</dd>
+      ${p.rows.length?`<dt>Landscape rows</dt><dd>${p.rows.map(r=>XW[r]?`<span class="mono">${esc(r)}</span> ${esc(XW[r].label)} · Insperity ${lv(XW[r].ratings.nsp)}`:esc(r)).join('<br>')}</dd>`:''}
+      ${p.enablers.length?`<dt>Builds on</dt><dd>${p.enablers.map(e=>`<span class="chip line" title="${esc(XP.enablers[e].description)}">${esc(XP.enablers[e].label)}</span>`).join(' ')}</dd>`:''}
+      ${p.evidence.length?`<dt>Evidence</dt><dd class="ev">${p.evidence.map(e=>`<a href="${esc(XP.evidence[e].url)}" target="_blank" rel="noopener">${esc(XP.evidence[e].title)}</a>`).join('<br>')}</dd>`:''}
+    </dl>
+    ${p.personas.length?`<div><h3>Who would ask</h3>${personaChips(p.personas)}</div>`:''}
+    ${qs.length?`<div><h3>Customer questions it would strengthen</h3>${full?questionBlock(qs,{svc:true}):`<ol class="q">${qs.map(o=>`<li><span class="stage">${esc(o)}</span><span class="qt">${esc(Q[o].question)}${svcChips(Q[o].services)}</span></li>`).join('')}</ol>`}</div>`:'<p class="note">No Customer 360 outcome addresses this yet; add one before deciding.</p>'}`;
+}
+function breakdown(){
+  V.innerHTML=`<div class="split"><div class="panel"><div class="bar"><label>Organize by <span class="seg"><button data-org="domain" aria-pressed="${state.org==='domain'}">Domain</button><button data-org="line" aria-pressed="${state.org==='line'}">Service line</button></span></label><button class="btn" id="expand">Expand all</button>${XP?`<label><input type="checkbox" id="showprop" ${state.proposed?'checked':''}> Show proposed services</label>`:''}</div><div class="tree" id="tree">${treeHTML()}</div>${state.org==='line'?'<p class="note" style="padding:0 14px 10px">* added for the benchmark; not a service line in the business model</p>':''}${state.proposed&&XP?'<p class="note" style="padding:0 14px 10px">Dashed, italic entries are proposals (Expansion tab), not part of the business model.</p>':''}</div><div class="panel detail" id="detail">${detailHTML()}</div></div>`;
+  V.querySelectorAll('[data-org]').forEach(b=>b.onclick=()=>{state.org=b.dataset.org;save();render()});
+  const sp=V.querySelector('#showprop');if(sp)sp.onchange=()=>{state.proposed=sp.checked;save();render()};
+  V.querySelector('#expand').onclick=()=>{const all=state.org==='domain'?[...D.domains.map(d=>'d:'+d.id),...D.contexts.map(c=>'c:'+c.id),...(XP?[...XP.domains.map(d=>'nd:'+d.id),...XP.contexts.map(c=>'nc:'+c.id)]:[])]:[...D.serviceLines.map(l=>'l:'+l.label),...(XP?XP.lines.map(l=>'l:'+l.label):[])];const any=all.some(k=>!state.open[k]);all.forEach(k=>state.open[k]=any);save();render()};
+  V.querySelectorAll('.node').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(b.hasAttribute('aria-expanded')&&(state.sel===k||!state.open[k]))state.open[k]=!state.open[k];state.sel=k;save();render()});
+  V.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{const k=b.dataset.go;state.sel=k;state.open[k]=true;if(k.startsWith('c:'))state.open['d:'+C[k.slice(2)].domain]=true;if(k.startsWith('nc:')){const c=NC[k.slice(3)];state.proposed=true;state.open[(DM[c.domain]?'d:':'nd:')+c.domain]=true;}save();render()});
+  wire(V);
+}
+
+/* ---- By persona ---- */
+function persona(){
+  const p=P[state.persona]||D.personas[0];
+  const jobs=[...p.executes.map(j=>[j,'ex']),...p.participates.map(j=>[j,'pa'])].filter(([j])=>JB[j]);
+  const qn=jobs.reduce((a,[j])=>a+JB[j].outcomes.length,0);
+  const svc=[...new Set(jobs.flatMap(([j])=>JB[j].services))];
+  const doms=[...new Set(svc.map(i=>S[i].domain))];
+  V.innerHTML=`<div class="pcards">${D.personas.map(x=>`<button class="pcard" data-p="${x.id}" aria-pressed="${x.id===p.id}"><b>${esc(x.label)}</b><span>${esc(x.id)} · ${x.executes.length+x.participates.length} jobs</span></button>`).join('')}</div>
+  <div class="panel" style="margin-top:12px"><div class="prof"><div><span class="eyebrow">${esc(p.id)} · ${esc(p.short)}</span><h2>${esc(p.label)}</h2><p>${esc(p.definition)}</p>
+    <dl class="kv">${p.titles?`<dt>Typical titles</dt><dd>${esc(p.titles)}</dd>`:''}${p.context?`<dt>Context</dt><dd>${esc(p.context)}</dd>`:''}${p.buying?`<dt>Buying role</dt><dd>${esc(p.buying)}</dd>`:''}${p.goal?`<dt>Goal</dt><dd>${esc(p.goal)}</dd>`:''}</dl></div>
+    <div>${p.emotional.length?`<h3>Emotional jobs</h3><ul>${p.emotional.map(e=>`<li>${esc(e)}</li>`).join('')}</ul>`:''}
+    <h3 style="margin-top:10px">What this persona asks about</h3><p class="sub">${jobs.length} jobs · ${jobs.length+qn} questions · answered by ${svc.length} services in ${doms.length} of ${D.domains.length} L1 domains</p>
+    <div class="chips">${doms.map(d=>`<span class="chip line">${esc(DM[d].label)}</span>`).join('')}</div>
+    <p style="margin-top:10px"><button class="btn" id="pexp">Copy this persona's questions (CSV)</button> <button class="btn" id="popen">Open all jobs</button></p></div></div>
+  <div class="jobs">${jobs.map(([jid,role])=>{const j=JB[jid];const qs=j.outcomes.map(o=>Q[o]).filter(Boolean).sort((a,b)=>stageOrder(a.stage)-stageOrder(b.stage)||a.id.localeCompare(b.id));
+    const byStage={};qs.forEach(q=>(byStage[q.stage]=byStage[q.stage]||[]).push(q));
+    return `<details class="job" data-j="${jid}" ${state.open['j:'+p.id+':'+jid]?'open':''}><summary><span><span class="jid">${esc(jid)}${j.kind==='chain'?' · PEO relationship':''}</span> <span class="hq">${esc(j.question)}</span></span><span><span class="role ${role}">${role==='ex'?'EXECUTES':'TAKES PART'}</span> <span class="sub">${qs.length} q · ${j.services.length} services</span></span></summary>
+      <div class="jbody">${D.stages.filter(s=>byStage[s.id]).map(s=>`<div><div class="stagehd">${esc(s.label)}</div><ol class="q">${byStage[s.id].map(q=>`<li><span class="stage">${esc(q.id)}</span><span class="qt">${esc(q.question)}${svcChips(q.services)}</span></li>`).join('')}</ol></div>`).join('')}</div></details>`}).join('')}</div></div>`;
+  V.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{state.persona=b.dataset.p;save();render()});
+  V.querySelectorAll('details.job').forEach(d=>d.ontoggle=()=>{state.open['j:'+p.id+':'+d.dataset.j]=d.open;save()});
+  V.querySelector('#popen').onclick=()=>{const all=[...V.querySelectorAll('details.job')];const o=all.some(d=>!d.open);all.forEach(d=>d.open=o)};
+  V.querySelector('#pexp').onclick=()=>copy(csv(D.questions.filter(q=>jobs.some(([j])=>j===q.job))),'CSV');
+  wire(V);
+}
+
+/* ---- Questions ---- */
+function filtered(){
+  const t=state.q.trim().toLowerCase();
+  return D.questions.filter(q=>{const j=JB[q.job]||{};const sv=q.services.map(i=>S[i]);
+    if(state.fp&&!qPersonas(q).includes(state.fp))return false;
+    if(state.fd&&!sv.some(s=>s.domain===state.fd))return false;
+    if(state.fl&&!sv.some(s=>s.line===state.fl))return false;
+    if(state.fs&&q.stage!==state.fs)return false;
+    if(state.fk&&j.kind!==state.fk)return false;
+    if(t&&!(q.question+' '+q.outcome+' '+q.id+' '+(j.statement||'')+' '+sv.map(s=>s.label).join(' ')).toLowerCase().includes(t))return false;
+    return true});
+}
+function questions(){
+  const opt=(v,l,cur)=>`<option value="${esc(v)}" ${v===cur?'selected':''}>${esc(l)}</option>`;
+  V.innerHTML=`<div class="panel"><div class="bar"><input type="search" id="qs" placeholder="Search questions, outcomes, jobs, services" value="${esc(state.q)}">
+   <select id="fp">${opt('','All personas',state.fp)}${D.personas.map(p=>opt(p.id,p.label,state.fp)).join('')}</select>
+   <select id="fd">${opt('','All L1 domains',state.fd)}${D.domains.map(d=>opt(d.id,d.label,state.fd)).join('')}</select>
+   <select id="fl">${opt('','All service lines',state.fl)}${D.serviceLines.map(l=>opt(l.label,l.label,state.fl)).join('')}</select>
+   <select id="fs">${opt('','All job stages',state.fs)}${D.stages.map(s=>opt(s.id,s.label,state.fs)).join('')}</select>
+   <select id="fk">${opt('','All jobs',state.fk)}${opt('core','Core functional jobs',state.fk)}${opt('chain','PEO relationship jobs',state.fk)}</select>
+   <button class="btn" id="clr">Clear</button><button class="btn" id="exp">Copy CSV</button><span class="sub" id="cnt"></span></div><div class="tbl" id="tb"></div></div>`;
+  const draw=()=>{const rows=filtered();document.getElementById('cnt').textContent=rows.length+' of '+D.questions.length;
+    document.getElementById('tb').innerHTML=rows.length?`<table><thead><tr><th>ID</th><th>Question</th><th>Job</th><th>Stage</th><th>Who asks</th><th>Answered by</th></tr></thead><tbody>${rows.map(q=>{const j=JB[q.job]||{executors:[],participants:[]};return `<tr><td class="mono">${esc(q.id)}</td><td class="qcol">${esc(q.question)}<span class="src sub" style="display:block">${esc(q.outcome)}</span></td><td><span class="jid">${esc(q.job)}</span> ${esc(j.statement||'')}</td><td>${esc((ST[q.stage]||{}).label||'')}</td><td>${personaChips(jobPersonas(j),j.executors)}</td><td>${svcChips(q.services)}</td></tr>`}).join('')}</tbody></table>`:'<div class="empty">No questions match. Clear the filters to see all.</div>';wire(V)};
+  const on=(id,k)=>{const el=document.getElementById(id);el.oninput=el.onchange=()=>{state[k]=el.value;draw()}};
+  on('qs','q');on('fp','fp');on('fd','fd');on('fl','fl');on('fs','fs');on('fk','fk');
+  document.getElementById('clr').onclick=()=>{Object.assign(state,{q:'',fp:'',fd:'',fl:'',fs:'',fk:''});questions()};
+  document.getElementById('exp').onclick=()=>copy(csv(filtered()),'CSV');
+  draw();
+}
+
+/* ---- Coverage ---- */
+function coverage(){
+  const qsFor=(pid)=>D.questions.filter(q=>qPersonas(q).includes(pid));
+  const heat=(rows,cols,cell,rowLabel,colLabel)=>{const vals=rows.flatMap(r=>cols.map(c=>cell(r,c)));const mx=Math.max(1,...vals);
+    return `<div class="tbl" style="max-height:none"><table class="heat"><thead><tr><th class="rowh"></th>${cols.map(c=>`<th>${esc(colLabel(c))}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr><td class="rowh">${esc(rowLabel(r))}</td>${cols.map(c=>{const v=cell(r,c);const a=v?0.12+0.68*v/mx:0;return `<td class="c" style="background:${v?`color-mix(in srgb, var(--accent) ${Math.round(a*100)}%, transparent)`:'transparent'};color:${a>0.5?'var(--accent-ink)':'var(--ink)'}">${v||'·'}</td>`}).join('')}</tr>`).join('')}</tbody></table></div>`};
+  const noQ=D.questions.filter(q=>!q.services.length), idle=D.services.filter(s=>!s.questions.length), thin=D.services.filter(s=>s.questions.length&&s.questions.length<=2);
+  const single=D.questions.filter(q=>q.services.length===1);
+  V.innerHTML=`<div class="panel cov">
+   <div><h2>Questions by persona and L1 domain</h2><p class="note">How many of each persona's questions are answered by services in each domain. A question answered by services in two domains counts in both. Empty cells are domains a persona never asks about.</p>
+   ${heat(D.personas,D.domains,(p,d)=>qsFor(p.id).filter(q=>q.services.some(i=>S[i].domain===d.id)).length,p=>p.label,d=>d.n+'. '+d.label.split(/ & |, /)[0])}</div>
+   <div><h2>Questions by persona and service line</h2>
+   ${heat(D.personas,D.serviceLines,(p,l)=>qsFor(p.id).filter(q=>q.services.some(i=>S[i].line===l.label)).length,p=>p.label,l=>l.label+(l.inModel?'':' *'))}<p class="note">* added for the benchmark; not a service line in the business model.</p></div>
+   <div><h2>Gaps</h2>
+    <p>${noQ.length?`<b>${noQ.length}</b> question${noQ.length>1?'s have':' has'} no service:`:'<span class="ok">Every customer question is answered by at least one service.</span>'}</p>${noQ.length?`<ol class="q">${noQ.map(q=>`<li><span class="stage">${esc(q.id)}</span><span class="qt">${esc(q.question)}</span></li>`).join('')}</ol>`:''}
+    <p>${idle.length?`<b>${idle.length}</b> service${idle.length>1?'s answer':' answers'} no customer question yet:`:'<span class="ok">Every domain service answers at least one customer question.</span>'}</p>${idle.length?svcChips(idle.map(s=>s.id)):''}
+    <h3 style="margin-top:12px">Thinly covered services (one or two questions)</h3><p class="note">Candidates for more interviews or outcomes, or for a narrower service definition.</p>${svcChips(thin.map(s=>s.id))}
+    <h3 style="margin-top:12px">Questions with a single answering service: ${single.length} of ${D.questions.length}</h3><p class="note">These depend on one service; a gap in that service leaves the question unanswered.</p></div>
+  </div>`;
+  wire(V);
+}
+
+/* ---- Market crosswalk ---- */
+function market(){
+  const groups=Object.entries(MK.groups), xw=MK.crosswalk;
+  const cnt=f=>xw.filter(x=>x.fit===f).length;
+  const catalogGaps=xw.filter(x=>x.fit==='none'&&'CA'.includes(x.ratings.nsp.l)&&x.group!=='MOD');
+  const rows=xw.filter(x=>(!state.xf||x.fit===state.xf)&&(!state.xg||x.group===state.xg));
+  const name=Object.fromEntries(CO.map(c=>[c.key,c.name]));
+  V.innerHTML=`<div class="panel"><div class="cov" style="gap:12px">
+    <div><h2>PEO Service Landscape › L3 domain services</h2><p class="note">Each capability row of the competitive landscape is mapped to the L3 services that deliver it. <b>Direct</b>: the services cover it. <b>Partial</b>: part of it has no service. <b>None</b>: no service; the proposals that would fill it are listed.</p></div>
+    <div class="stats"><div class="stat"><b>${xw.length}</b><span>landscape rows</span></div><div class="stat"><b>${cnt('direct')}</b><span>direct</span></div><div class="stat"><b>${cnt('partial')}</b><span>partial</span></div><div class="stat"><b>${cnt('none')}</b><span>no L3 service</span></div><div class="stat"><b>${catalogGaps.length}</b><span>Insperity sells, model lacks</span></div></div>
+    ${catalogGaps.length?`<p class="note"><b>Insperity sells these but the business model has no service for them:</b> ${catalogGaps.map(x=>esc(x.id+' '+x.label)).join('; ')}.</p>`:''}
+  </div>
+  <div class="bar" style="border-radius:0;border-top:1px solid var(--line)"><label>Fit <select id="xf"><option value="">All</option>${['direct','partial','none'].map(f=>`<option ${state.xf===f?'selected':''}>${f}</option>`).join('')}</select></label>
+    <label>Group <select id="xg"><option value="">All</option>${groups.map(([k,v])=>`<option value="${k}" ${state.xg===k?'selected':''}>${esc(v)}</option>`).join('')}</select></label>
+    <button class="btn" id="xcsv">Copy crosswalk (CSV)</button><span class="sub">${rows.length} rows</span></div>
+  <div class="tbl"><table class="mk"><thead><tr><th>Row</th><th>Capability</th>${ratingsHead()}<th>Fit</th><th>L3 domain services</th><th>Gap and proposals</th></tr></thead><tbody>${rows.map(x=>`<tr><td class="mono">${esc(x.id)}</td><td class="cellw">${esc(x.label)}<span class="sub" style="display:block">${esc(x.groupLabel)}</span></td>${CO.map(c=>`<td>${lv(x.ratings[c.key])}</td>`).join('')}<td><span class="fit ${x.fit}">${x.fit}</span></td><td class="cellw">${svcChips(x.services)}</td><td class="cellw">${x.gap?`<span class="sub">${esc(x.gap)}</span>`:''}${propChips(x.proposals)}</td></tr>`).join('')}</tbody></table></div>
+  <div class="cov"><div><h2>Offer and delivery models</h2><p class="note">How the services are packaged and contracted. These are a dimension of the offer, not L3 services.</p>
+    <div class="tbl" style="max-height:none"><table class="mk"><thead><tr><th>Model</th>${ratingsHead()}<th>Insperity offer</th><th>Note</th></tr></thead><tbody>${MK.delivery.map(m=>`<tr><td class="cellw"><b>${esc(m.label)}</b></td>${CO.map(c=>`<td>${lv(m.ratings[c.key])}</td>`).join('')}<td>${esc(m.insperityOffer||'-')}</td><td class="cellw">${esc(m.note)}</td></tr>`).join('')}</tbody></table></div></div>
+    <p class="note">Ratings: ${Object.entries(LVL).map(([k,v])=>lv({l:k,n:''})).join(' ')}. Source: ${esc(MK.source)}. Open the PEO Service Landscape page for evidence notes and sources.</p></div></div>`;
+  V.querySelector('#xf').onchange=e=>{state.xf=e.target.value;market()};V.querySelector('#xg').onchange=e=>{state.xg=e.target.value;market()};
+  V.querySelector('#xcsv').onclick=()=>copy([['row','group','capability',...CO.map(c=>c.name),'fit','l3_services','gap','proposals'].map(qc).join(','),...xw.map(x=>[x.id,x.groupLabel,x.label,...CO.map(c=>LVL[x.ratings[c.key].l]),x.fit,x.services.map(i=>S[i].label).join('; '),x.gap,x.proposals.map(i=>i+' '+PR[i].label).join('; ')].map(qc).join(','))].join('\n'),'CSV');
+  wire(V);
+}
+
+/* ---- Expansion ---- */
+function expansion(){
+  const ps=XP.proposals, name=Object.fromEntries(CO.map(c=>[c.key,c.name]));
+  const by_=(k)=>ps.reduce((a,p)=>(a[p[k]]=(a[p[k]]||0)+1,a),{});
+  const bo=by_('origin'),br=by_('rec');
+  const f=ps.filter(p=>(!state.eo||p.origin===state.eo)&&(!state.er||p.rec===state.er)&&(!state.el||p.line===state.el));
+  const allLines=[...D.serviceLines.map(l=>l.label),...XP.lines.map(l=>l.label)].filter(l=>ps.some(p=>p.line===l));
+  const domOrder=[...D.domains.map(d=>d.id),...XP.domains.map(d=>d.id)];
+  const groups={};f.forEach(p=>{(groups[p.domain]=groups[p.domain]||{})[p.context]=(groups[p.domain][p.context]||[]).concat(p)});
+  V.innerHTML=`<div class="panel"><div class="cov" style="gap:14px">
+    <div><h2>Proposed domains, service lines and L3 services</h2><p class="note">Three sources: services Insperity already sells that the business model lacks, services competitors deliver that the model lacks, and services the semantic knowledge layer and semantic governance make possible (compliance, risk profiling, decision support, and metrology and assurance for agents). All are Draft and need a business and compliance decision before they enter the model.</p></div>
+    <div class="stats"><div class="stat"><b>${ps.length}</b><span>proposed services</span></div>${Object.keys(ORIGIN).map(k=>`<div class="stat"><b>${bo[k]||0}</b><span>${ORIGIN[k]}</span></div>`).join('')}<div class="stat"><b>${XP.domains.length}</b><span>new L1 domains</span></div><div class="stat"><b>${XP.contexts.length}</b><span>new L2 contexts</span></div><div class="stat"><b>${XP.lines.length}</b><span>new service lines</span></div></div>
+    <div class="chips">${['pursue','partner','monitor','decline'].map(r=>`<span class="badge ${r}">${br[r]||0} ${r}</span>`).join('')}</div>
+    <div><h3>New L1 domains</h3>${XP.domains.map(d=>`<p><b>${d.n}. ${esc(d.label)}.</b> ${esc(d.definition)} <span class="sub">L2: ${d.contexts.map(c=>esc(NC[c].label)).join('; ')}</span></p>`).join('')}</div>
+    <div><h3>New service lines</h3><dl class="kv">${XP.lines.map(l=>`<dt>${esc(l.label)}</dt><dd>${esc(l.description)}</dd>`).join('')}</dl></div>
+  </div>
+  <div class="bar" style="border-radius:0;border-top:1px solid var(--line)">
+    <label>Origin <select id="eo"><option value="">All</option>${Object.entries(ORIGIN).map(([k,v])=>`<option value="${k}" ${state.eo===k?'selected':''}>${v}</option>`).join('')}</select></label>
+    <label>Recommendation <select id="er"><option value="">All</option>${['pursue','partner','monitor','decline'].map(r=>`<option ${state.er===r?'selected':''}>${r}</option>`).join('')}</select></label>
+    <label>Service line <select id="el"><option value="">All</option>${allLines.map(l=>`<option ${state.el===l?'selected':''}>${esc(l)}</option>`).join('')}</select></label>
+    <button class="btn" id="ecsv">Copy proposals (CSV)</button><span class="sub">${f.length} of ${ps.length}</span></div>
+  <div class="pgrid">${domOrder.filter(d=>groups[d]).map(did=>{const d=domOf(did);return `<div class="grouphd">${esc(d.label)}${DM[did]?'':' · proposed L1'}</div>`+Object.entries(groups[did]).map(([cid,list])=>`<div class="sub" style="margin-top:2px">${esc(ctxOf(cid).label)}${C[cid]?'':' · proposed L2'}</div>`+list.map(p=>`<article class="pcardx${state.psel===p.id?' sel':''}" id="pc-${p.id}"><header><span class="pid">${esc(p.id)}</span><h3>${esc(p.label)}</h3><span class="badge ${p.origin}">${esc(ORIGIN[p.origin])}</span><span class="badge ${p.rec}">${esc(p.rec)}</span><span class="badge">${esc(p.line)}</span></header>${proposalHTML(p,false).replace(/^[\s\S]*?<\/h2>\s*<div class="chips">[\s\S]*?<\/div>/,'')}</article>`).join('')).join('')}).join('')||'<div class="empty">No proposals match. Clear the filters.</div>'}</div></div>`;
+  ['eo','er','el'].forEach(k=>V.querySelector('#'+k).onchange=e=>{state[k]=e.target.value;expansion()});
+  V.querySelector('#ecsv').onclick=()=>copy([['id','proposed_service','l1_domain','l2_context','service_line','origin','recommendation','extends','offered_by','landscape_rows','builds_on','questions','personas','rationale','evidence'].map(qc).join(','),
+    ...ps.map(p=>[p.id,p.label,domOf(p.domain).label,ctxOf(p.context).label,p.line,ORIGIN[p.origin],p.rec,p.extends?S[p.extends].label:'',p.offeredBy.map(k=>name[k]).join('; '),p.rows.join('; '),p.enablers.map(e=>XP.enablers[e].label).join('; '),p.addresses.map(o=>o+' '+(Q[o]?Q[o].question:'')).join(' | '),p.personas.map(i=>P[i].label).join('; '),p.why,p.evidence.map(e=>XP.evidence[e].url).join(' ')].map(qc).join(','))].join('\n'),'CSV');
+  wire(V);
+}
+
+/* ---- export ---- */
+const qc=s=>`"${String(s==null?'':s).replace(/"/g,'""')}"`;
+function csv(rows){const head=['question_id','question','outcome','job_id','job','job_stage','executors','participants','services','bounded_contexts','l1_domains','service_lines'];
+  return [head.join(','),...rows.map(q=>{const j=JB[q.job]||{executors:[],participants:[]};const sv=q.services.map(i=>S[i]);
+    return [q.id,q.question,q.outcome,q.job,j.statement,(ST[q.stage]||{}).label,j.executors.map(i=>P[i].label).join('; '),j.participants.map(i=>P[i].label).join('; '),sv.map(s=>s.label).join('; '),[...new Set(sv.map(s=>pctx(s).label))].join('; '),[...new Set(sv.map(s=>pdom(s).label))].join('; '),[...new Set(sv.map(s=>s.line))].join('; ')].map(qc).join(',')})].join('\n')}
+function copy(text,label){const fb=()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(label+' copied')}catch(e){toast('Copy failed')}ta.remove()};
+  try{navigator.clipboard.writeText(text).then(()=>toast(label+' copied'),fb)}catch(e){fb()}}
+
+function render(){if((state.tab==='market'&&!MK)||(state.tab==='expansion'&&!XP))state.tab='breakdown';tabs();({breakdown,persona,questions,coverage,market,expansion}[state.tab]||breakdown)();}
+render();
+})();
+</script></body></html>

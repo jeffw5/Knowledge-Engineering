@@ -131,7 +131,7 @@ window.KE_REGISTRY = {
         { id: 'apqc-pcf', code: 'PC', file: 'reference/apqc-pcf/index.html', title: 'APQC PCF 7.4', isNew: true,
           desc: 'The APQC Process Classification Framework the Commercial Operations domains are built on: the version in use and APQC\u2019s links, categories 3.0 and 6.0 as a searchable outline to L5, and the 7.2.1 \u2192 7.4 crosswalk.',
           functions: ['Impact visualization'], std: ['3.9'] },
-        { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v2.0_DRAFT.pdf', title: 'Semantic Governance v2.0',
+        { id: 'guide', code: 'SG', file: 'docs/Semantic_Governance_v2.1_DRAFT.pdf', title: 'Semantic Governance v2.1',
           desc: 'The standards guide: services, architecture and integration, and Part III knowledge engineering standards. The edition shown is the latest one in docs/ (assets/ke-guide.js).',
           functions: [], std: [] }
       ]

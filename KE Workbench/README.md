@@ -1,6 +1,6 @@
 # KE Workbench
 
-One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* v1.9 (Draft), including the §3.11 metadata field set.
+One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* in force — v2.1 (Draft), set by `assets/ke-guide.js` — including the §3.11 metadata field set.
 
 ## Run it
 

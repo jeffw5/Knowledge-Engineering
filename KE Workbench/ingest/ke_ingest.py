@@ -2,7 +2,7 @@
 """
 KE Ingest — bring legacy knowledge artifacts (vocabularies, taxonomies, ontologies)
 into line with the Part III standards of "Semantic Governance: Services,
-Architecture & Integration" v1.9 (Draft), including the §3.11 metadata field set.
+Architecture & Integration" in force (v2.1 Draft; assets/ke-guide.js), including the §3.11 metadata field set.
 
 What it does, per run:
   1. Reads every Turtle, N-Triples or RDF/XML file given and works out what each one is (SKOS vocabulary,

@@ -1,0 +1,743 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>SUDO Agility Blueprint</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a systems-schematic workbench. Sticky masthead + view switcher; each view is one interactive diagram with a detail panel. */
+:root{
+  --bg:#EEF1F6; --panel:#FFFFFF; --sunk:#E3E8F0; --line:#C9D1DE; --ink:#13203A; --muted:#55627A;
+  --accent:#2445C9; --accent-soft:#DCE3FB;
+  --s:#0B8077; --s-soft:#D3EEEB;   /* Sense */
+  --u:#5137C0; --u-soft:#E3DEF8;   /* Understand */
+  --d:#B26A0B; --d-soft:#F6E7CF;   /* Decide */
+  --o:#BC3553; --o-soft:#F7DCE2;   /* Observe / Act */
+  --gov:#2F6B3A; --gov-soft:#DCEEDD;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0C1220; --panel:#141C2E; --sunk:#1B2439; --line:#2C3853; --ink:#E3E9F4; --muted:#97A3BA;
+  --accent:#7D95FF; --accent-soft:#1F2A52;
+  --s:#3CC7B9; --s-soft:#0F302E; --u:#A897FF; --u-soft:#251E4A; --d:#F0AE4B; --d-soft:#3A2A10; --o:#FF7F98; --o-soft:#40182A;
+  --gov:#7CCB89; --gov-soft:#173323; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0C1220; --panel:#141C2E; --sunk:#1B2439; --line:#2C3853; --ink:#E3E9F4; --muted:#97A3BA;
+  --accent:#7D95FF; --accent-soft:#1F2A52;
+  --s:#3CC7B9; --s-soft:#0F302E; --u:#A897FF; --u-soft:#251E4A; --d:#F0AE4B; --d-soft:#3A2A10; --o:#FF7F98; --o-soft:#40182A;
+  --gov:#7CCB89; --gov-soft:#173323; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  background-image:linear-gradient(var(--sunk) 1px,transparent 1px),linear-gradient(90deg,var(--sunk) 1px,transparent 1px);
+  background-size:28px 28px;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* masthead */
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--panel);border-bottom:1px solid var(--line)}
+.mast .wrap{padding-block:14px 0;display:flex;flex-direction:column;gap:10px}
+.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand h1{font-size:clamp(22px,3vw,30px);font-weight:800}
+.brand h1 b{color:var(--accent)}
+.brand .tag{color:var(--muted);font-size:13.5px}
+.letters{display:inline-flex;gap:3px;font-family:var(--mono);font-weight:500;font-size:12px}
+.letters span{width:22px;height:22px;display:grid;place-items:center;border-radius:4px;color:#fff}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -4px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:none;padding:9px 12px 11px;font-size:13.5px;font-weight:500;color:var(--muted);white-space:nowrap;border-bottom:2.5px solid transparent}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .n{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+
+main .wrap{padding-block:28px 60px}
+.view{display:flex;flex-direction:column;gap:22px}
+.vhead{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;max-width:820px}
+.vhead h2{font-size:clamp(24px,3.4vw,36px);font-weight:700;line-height:1.1}
+.vhead p{color:var(--muted);max-width:68ch}
+
+.board{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px}
+.split{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.split{grid-template-columns:minmax(0,1fr)}}
+.detail{display:flex;flex-direction:column;gap:12px;min-width:0}
+.detail h3{font-size:22px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.kv dt{font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);padding-top:2px}
+.kv dd{margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;padding:3px 9px;border-radius:999px;background:var(--sunk);border:1px solid var(--line);white-space:nowrap}
+.chip.s{background:var(--s-soft);border-color:transparent;color:var(--s)}
+.chip.u{background:var(--u-soft);border-color:transparent;color:var(--u)}
+.chip.d{background:var(--d-soft);border-color:transparent;color:var(--d)}
+.chip.o{background:var(--o-soft);border-color:transparent;color:var(--o)}
+.chip.g{background:var(--gov-soft);border-color:transparent;color:var(--gov)}
+.note{font-size:13px;color:var(--muted);border-left:2px solid var(--line);padding-left:10px}
+.hint{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;background:var(--panel);padding:6px 12px;font-size:13px;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--panel)}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:7px;padding:7px 14px;font-size:13.5px;font-weight:500}
+.btn.ghost{background:transparent;color:var(--accent)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* SUDO ring */
+.ring svg{width:100%;max-width:470px;height:auto;display:block;margin:0 auto}
+.ring .arc{cursor:pointer;transition:opacity .2s, transform .2s;transform-origin:250px 250px}
+.ring .arc:hover{opacity:.9}
+.ring .arc.dim{opacity:.32}
+.ring text{font-family:var(--display);pointer-events:none}
+.pipe{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.pipe .st{flex:1 1 120px;min-width:0;background:var(--sunk);padding:8px 10px;font-size:13px;border-radius:6px;position:relative;margin-right:14px}
+.pipe .st::after{content:"";position:absolute;right:-11px;top:50%;border:6px solid transparent;border-left-color:var(--muted);transform:translateY(-50%)}
+.pipe .st:last-child{margin-right:0}.pipe .st:last-child::after{display:none}
+.pipe .st b{display:block;font-weight:600}
+.disc4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.disc4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.disc{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--panel);display:flex;flex-direction:column;gap:4px;text-align:left}
+.disc .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.disc b{font-family:var(--display);font-size:16px}
+.disc span{font-size:13px;color:var(--muted)}
+.disc[aria-pressed="true"]{outline:2px solid currentColor;outline-offset:-2px}
+
+/* value chain tree */
+.tree{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.tnode{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:7px;padding:8px 12px;background:var(--panel);text-align:left;width:100%}
+.tnode .lvl{font-family:var(--mono);font-size:11px;color:var(--muted);min-width:22px}
+.tnode b{font-weight:600}
+.tnode .meas{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--gov);white-space:nowrap}
+.tnode[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.sipo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.sipo{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sipo>div{border-radius:7px;padding:10px;font-size:13px;display:flex;flex-direction:column;gap:3px}
+.sipo .t{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase}
+.ctrl{font-family:var(--mono);font-size:11px;padding:1px 6px;border-radius:4px;border:1px solid currentColor;align-self:flex-start}
+
+/* value planning flow */
+.vflow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.vflow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.vflow{grid-template-columns:minmax(0,1fr)}}
+.vcol{border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--panel)}
+.vcol h3{font-size:16px}
+.vcol .items{display:flex;flex-direction:column;gap:5px}
+.vitem{font-size:13px;padding:5px 8px;border-radius:5px;background:var(--sunk);border:1px solid transparent;text-align:left;width:100%}
+.vitem.on{border-color:var(--accent);background:var(--accent-soft)}
+.vitem.rel{border-color:var(--accent)}
+
+/* scenario graph */
+.graph{position:relative}
+.graph svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.gcols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:22px;position:relative}
+@media (max-width:900px){.gcols{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.graph svg.wires{display:none}}
+@media (max-width:480px){.gcols{grid-template-columns:minmax(0,1fr)}}
+.gcol{display:flex;flex-direction:column;gap:6px;min-width:0}
+.gcol .eyebrow{margin-bottom:2px}
+.gn{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:6px 9px;font-size:12.5px;text-align:left;display:flex;gap:7px;align-items:center;transition:opacity .2s,background .2s;position:relative;z-index:1}
+.gn i{width:8px;height:8px;border-radius:2px;flex:none}
+.gn.dim{opacity:.28}
+.gn.hit{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.gn.src{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.wires path{fill:none;stroke:var(--line);stroke-width:1.2;transition:stroke .2s,opacity .2s}
+.wires path.on{stroke:var(--accent);stroke-width:1.8}
+.wires path.off{opacity:.12}
+.narr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;background:var(--sunk);border-radius:8px;padding:12px 14px}
+.narr .badge{font-family:var(--display);font-weight:800;font-size:22px;width:38px;height:38px;display:grid;place-items:center;border-radius:7px;color:#fff}
+
+/* cynefin */
+.cyn{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px;position:relative;aspect-ratio:1.25/1;max-width:100%}
+.cq{border:1px solid var(--line);border-radius:8px;padding:12px;text-align:left;display:flex;flex-direction:column;gap:3px;background:var(--panel);min-width:0}
+.cq b{font-family:var(--display);font-size:18px}
+.cq .loop{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.cq .ag{font-size:12.5px;margin-top:auto}
+.cq[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.cdis{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:1px dashed var(--muted);background:var(--bg);border-radius:50%;width:92px;height:92px;display:grid;place-items:center;font-family:var(--display);font-size:13px;z-index:2}
+.cdis[aria-pressed="true"]{border-style:solid;border-color:var(--accent);background:var(--accent-soft)}
+.axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px}
+
+/* agent ref model */
+.arm svg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+.arm .cap{cursor:pointer}
+.arm .cap circle{transition:fill .2s}
+.arm text{font-family:var(--body);pointer-events:none}
+.conv{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:560px){.conv{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.conv button{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:10px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.conv button b{font-family:var(--display);font-size:20px}
+.conv button span{font-size:12px;color:var(--muted)}
+.conv button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+
+/* tables */
+.tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:620px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+
+/* pairing */
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:700px){.pair{grid-template-columns:minmax(0,1fr)}}
+.plist{display:flex;flex-wrap:wrap;gap:6px}
+.pbtn{border:1px solid var(--line);background:var(--panel);border-radius:6px;padding:5px 10px;font-size:13px}
+.pbtn[aria-pressed="true"]{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.pbtn.lit{border-color:var(--accent);background:var(--accent-soft)}
+.taxo{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.taxo{grid-template-columns:minmax(0,1fr)}}
+.taxo h4{margin:0 0 6px;font-family:var(--display);font-size:15px}
+.taxo ul{margin:0;padding-left:16px;font-size:13px;color:var(--muted)}
+.taxo ul ul{padding-left:14px}
+
+/* jira trace */
+.trace{display:grid;grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);gap:14px;align-items:stretch}
+@media (max-width:820px){.trace{grid-template-columns:minmax(0,1fr)}}
+.lane{display:flex;flex-direction:column;gap:7px}
+.lane .ln{border:1px solid var(--line);border-radius:7px;padding:8px 11px;background:var(--panel);font-size:13px;text-align:left;width:100%}
+.lane .ln b{display:block;font-size:13.5px}
+.lane .ln small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.lane .ln.on{border-color:var(--accent);background:var(--accent-soft)}
+.lane .ln.ind1{margin-left:14px;width:calc(100% - 14px)}.lane .ln.ind2{margin-left:28px;width:calc(100% - 28px)}.lane .ln.ind3{margin-left:42px;width:calc(100% - 42px)}
+.meet{border:2px dashed var(--accent);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px;gap:6px;background:var(--accent-soft)}
+.meet b{font-family:var(--display);font-size:18px}
+.meet span{font-size:12px}
+
+/* fabric */
+.layers{display:flex;flex-direction:column;gap:10px}
+.layer{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:center;background:var(--panel)}
+@media (max-width:600px){.layer{grid-template-columns:minmax(0,1fr)}}
+.layer h3{font-size:17px}
+.govwrap{border:2px solid var(--gov);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--gov-soft)}
+.govwrap>.eyebrow{color:var(--gov)}
+.four{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:760px){.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.four button{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px;text-align:left;display:flex;flex-direction:column;gap:4px}
+.four button b{font-family:var(--display);font-size:19px}
+.four button span{font-size:12.5px;color:var(--muted)}
+.four button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+
+/* agility */
+.shift{display:grid;grid-template-columns:28px minmax(0,1fr) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:13.5px}
+.shift>div{padding:9px 12px;border-bottom:1px solid var(--line)}
+.shift .h{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.07em;background:var(--sunk);color:var(--muted)}
+.shift .n{font-family:var(--mono);color:var(--muted);text-align:center;padding-inline:4px}
+.shift .old{color:var(--muted)}
+.shift .new{background:var(--accent-soft)}
+.shift.legacy .new{background:transparent;color:var(--muted)}
+.shift.legacy .old{color:var(--ink);background:var(--o-soft)}
+.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:st}
+@media (max-width:760px){.stages{grid-template-columns:minmax(0,1fr)}}
+.stage{border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--panel);display:flex;flex-direction:column;gap:6px}
+.stage .num{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.stage h3{font-size:19px}
+.stage p{font-size:13.5px;color:var(--muted)}
+.stage.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.meter{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.meter>div{background:var(--sunk);border-radius:7px;padding:10px}
+.meter .v{font-family:var(--display);font-size:22px;font-variant-numeric:tabular-nums}
+.meter .l{font-size:12px;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .3s}
+.themeBtn{margin-left:auto;align-self:center;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--sunk);color:var(--ink);display:grid;place-items:center;padding:0}
+.themeBtn:hover{border-color:var(--accent);color:var(--accent)}
+.themeBtn svg{width:18px;height:18px}
+.themeBtn .sun{display:none}
+.isDark .themeBtn .sun{display:block}.isDark .themeBtn .moon{display:none}
+footer{color:var(--muted);font-size:12.5px;padding-block:20px 40px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="brand">
+      <span class="letters" aria-hidden="true"><span style="background:var(--s)">S</span><span style="background:var(--u)">U</span><span style="background:var(--d)">D</span><span style="background:var(--o)">O</span></span>
+      <h1>SUDO <b>Agility</b> Blueprint</h1>
+      <span class="tag">Model-driven services + agent-based decisions on a governed knowledge fabric</span>
+      <button class="themeBtn" id="themeBtn" aria-label="Switch to dark mode" title="Switch theme"><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </div>
+    <nav class="tabs" role="tablist" id="tabs"></nav>
+  </div>
+</header>
+
+<main><div class="wrap" id="views"></div></main>
+<div class="wrap"><footer>Synthesized from <i>The SUDO Framework — Executive Briefing</i>, <i>Enabling Agent-Based Design by Modeling Services</i> (Aug 2024) and <i>Model Driven Services Management</i>. Stage-to-agent and stage-to-service pairings are an illustrative alignment of those sources. Cynefin decision contexts adapted from D. Snowden.</footer></div>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const h=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
+const STAGE={
+  s:{k:'s',L:'S',name:'Sense',verb:'Perceive',disc:'Data engineering',blurb:'Sensors, communications and unfolding circumstances. Harvest content and context from siloed sources through real-time, event-driven ingestion.',
+     pipe:[['Siloed sources','Content + context'],['Ingestion pipelines','Real-time, event-driven'],['Integration agents','Mastering + profiling'],['Sense node','Accurate perception']],
+     sipo:'Input · proactive trigger', agents:['Sensing','Perception','Recognition','Identification'],
+     services:['Data Extraction','Instrumentation','Integration (Human · Virtual · Physical)','Monitoring','Data Quality','Data Lineage'],
+     goal:'The agent perceives the environment accurately before any reasoning occurs.'},
+  u:{k:'u',L:'U',name:'Understand',verb:'Model',disc:'Knowledge engineering',blurb:'Classification, localization and semantic modeling of the world. Domain ontologies federated under an enterprise ontology give agents one vocabulary and guard against hallucination.',
+     pipe:[['Enterprise glossary','Shared terms'],['Taxonomies','Classification'],['Domain ontologies','Causal relationships'],['Knowledge graph','Federated context']],
+     sipo:'Processing · decision logic', agents:['Understanding','Contextualization','Inference','Reasoning'],
+     services:['Data Transformation','Semantic Matching','Search (Boolean, NLP)','Anomaly Detection','Causal Analysis','Analytic Services'],
+     goal:'Similar data sits together and everything is labeled consistently, so people and AI never translate.'},
+  d:{k:'d',L:'D',name:'Decide',verb:'Formulate',disc:'Prompt engineering & AI',blurb:'Autonomous decision formulation. Clean semantic data passes a prompt-engineering filter with SHACL rules into embedded SLM/LLM reasoning that yields calculated decision pathways.',
+     pipe:[['Clean semantic data','From Understand'],['Prompt filter','Parameters + SHACL'],['Decide node','Embedded SLM / LLM'],['Pathways A · B · C','Calculated options']],
+     sipo:'Output · system state change', agents:['Projection','Simulation','Consultation','Decision Support','Optimization'],
+     services:['Prompt Engineering','Issue Management','Problem Resolution','Escalation','Analytic Services'],
+     goal:'Purpose-built agents matched to the situation; no one-size-fits-all AI.'},
+  o:{k:'o',L:'O',name:'Observe / Act',verb:'Execute',disc:'Systems & requirements engineering',blurb:'Action, regulation, and physical or virtual execution. Decisions become outcomes through governed service chains of loosely coupled microservices, each segment measured.',
+     pipe:[['Input','Proactive trigger'],['Processing','Logic + activities'],['Output','State change'],['Measurement','Reactive controls']],
+     sipo:'Measurement · reactive controls', agents:['Provisioning','Protection'],
+     services:['Data Loading','Orchestration (Screenflow)','Notification','Restoration','Continuity Management','Measuring','Auditing','Publishing (APIs, Data Sets)'],
+     goal:'Every service is a mini supply chain with measurement in each segment; outcomes feed back into Sense.'}
+};
+const ORDER=['s','u','d','o'];
+
+/* ---------------- views ---------------- */
+const VIEWS=[
+ {id:'loop',label:'SUDO loop'},
+ {id:'chain',label:'Service model'},
+ {id:'scenario',label:'Scenario & impact'},
+ {id:'decide',label:'Agent decisions'},
+ {id:'design',label:'Agents × services'},
+ {id:'trace',label:'Intent traceability'},
+ {id:'fabric',label:'Knowledge fabric'},
+ {id:'agility',label:'Agility path'}
+];
+
+const tabs=$('#tabs'), views=$('#views');
+VIEWS.forEach((v,i)=>{
+  tabs.append(h(`<button class="tab" role="tab" id="t-${v.id}" aria-controls="v-${v.id}" data-v="${v.id}"><span class="n">${String(i+1).padStart(2,'0')}</span>${v.label}</button>`));
+});
+
+/* ===== 1 SUDO LOOP ===== */
+function arcPath(cx,cy,r1,r2,a0,a1){
+  const p=(r,a)=>[cx+r*Math.cos(a),cy+r*Math.sin(a)];
+  const [x0,y0]=p(r2,a0),[x1,y1]=p(r2,a1),[x2,y2]=p(r1,a1),[x3,y3]=p(r1,a0);
+  const lg=a1-a0>Math.PI?1:0;
+  return `M${x0},${y0} A${r2},${r2} 0 ${lg} 1 ${x1},${y1} L${x2},${y2} A${r1},${r1} 0 ${lg} 0 ${x3},${y3}Z`;
+}
+function ringSVG(){
+  let g='';const gap=.035;
+  ORDER.forEach((k,i)=>{
+    const a0=-Math.PI/2+i*Math.PI/2+gap, a1=a0+Math.PI/2-2*gap, am=(a0+a1)/2;
+    const tx=250+168*Math.cos(am), ty=250+168*Math.sin(am);
+    const lx=250+226*Math.cos(am), ly=250+226*Math.sin(am);
+    g+=`<g class="arc" data-k="${k}" tabindex="0" role="button" aria-label="${STAGE[k].name}">
+      <path d="${arcPath(250,250,118,214,a0,a1)}" fill="var(--${k})"/>
+      <text x="${tx}" y="${ty-6}" text-anchor="middle" fill="#fff" font-size="40" font-weight="800">${STAGE[k].L}</text>
+      <text x="${tx}" y="${ty+18}" text-anchor="middle" fill="#fff" font-size="13" font-weight="500" style="font-family:var(--body)">${STAGE[k].name}</text>
+    </g>`;
+  });
+  return `<svg viewBox="0 0 500 500" role="img" aria-label="SUDO loop: Sense, Understand, Decide, Observe/Act">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="var(--muted)"/></marker></defs>
+    <circle cx="250" cy="250" r="236" fill="none" stroke="var(--line)" stroke-dasharray="3 5"/>
+    ${g}
+    <circle cx="250" cy="250" r="104" fill="var(--panel)" stroke="var(--gov)" stroke-width="2"/>
+    <text x="250" y="226" text-anchor="middle" fill="var(--gov)" font-size="11" style="font-family:var(--mono);letter-spacing:.1em">GOVERNED</text>
+    <text x="250" y="252" text-anchor="middle" fill="var(--ink)" font-size="19" font-weight="700">Semantic</text>
+    <text x="250" y="274" text-anchor="middle" fill="var(--ink)" font-size="19" font-weight="700">knowledge layer</text>
+    <text x="250" y="298" text-anchor="middle" fill="var(--muted)" font-size="11" style="font-family:var(--body)">outcomes feed back to Sense</text>
+  </svg>`;
+}
+views.append(h(`<section class="view" id="v-loop" role="tabpanel" aria-labelledby="t-loop">
+  <div class="vhead"><span class="eyebrow">Biomimetic decision engine</span><h2>Four disciplines become one set of decision primitives</h2>
+  <p>OODA assumed fixed categories and human-speed loops. SUDO adds models of knowledge: data, knowledge, prompt and systems engineering each become a reusable micro-primitive that runs inside a governed knowledge layer. Select a stage.</p></div>
+  <div class="board split">
+    <div class="ring">${ringSVG()}<p class="hint" style="text-align:center;margin-top:6px">Select a segment · press play to run the loop</p>
+      <div class="row" style="justify-content:center;margin-top:10px"><button class="btn" id="loopPlay">Run the loop</button></div></div>
+    <div class="detail" id="loopDetail"></div>
+  </div>
+  <div class="disc4" id="disc4"></div>
+</section>`));
+function renderLoop(k){
+  const S=STAGE[k];
+  $$('#v-loop .arc').forEach(a=>a.classList.toggle('dim',a.dataset.k!==k));
+  $$('#disc4 .disc').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+  $('#loopDetail').innerHTML=`
+    <span class="eyebrow" style="color:var(--${k})">${String(ORDER.indexOf(k)+1).padStart(2,'0')} · ${S.name} · ${S.verb}</span>
+    <h3>${S.disc}</h3><p>${S.blurb}</p>
+    <div class="pipe">${S.pipe.map(([a,b])=>`<div class="st" style="background:var(--${k}-soft)"><b>${a}</b><span class="hint">${b}</span></div>`).join('')}</div>
+    <dl class="kv"><dt>Micro-agents</dt><dd><div class="chips">${S.agents.map(a=>`<span class="chip ${k}">${a}</span>`).join('')}</div></dd>
+    <dt>Micro-services</dt><dd><div class="chips">${S.services.map(a=>`<span class="chip">${a}</span>`).join('')}</div></dd>
+    <dt>Service chain</dt><dd>${S.sipo}</dd></dl>
+    <p class="note">${S.goal}</p>`;
+}
+ORDER.forEach(k=>$('#disc4').append(h(`<button class="disc" data-k="${k}" style="color:var(--${k})"><span class="k">${STAGE[k].name}</span><b style="color:var(--ink)">${STAGE[k].disc}</b><span>${STAGE[k].pipe[3][0]} → ${STAGE[k].sipo.split(' · ')[0]}</span></button>`)));
+let loopK='s',loopTimer=null;
+const pickLoop=k=>{loopK=k;renderLoop(k)};
+$$('#v-loop .arc').forEach(a=>{a.onclick=()=>{stopLoop();pickLoop(a.dataset.k)};a.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();a.onclick()}}});
+$$('#disc4 .disc').forEach(b=>b.onclick=()=>{stopLoop();pickLoop(b.dataset.k)});
+function stopLoop(){clearInterval(loopTimer);loopTimer=null;$('#loopPlay').textContent='Run the loop'}
+$('#loopPlay').onclick=()=>{
+  if(loopTimer){stopLoop();return}
+  $('#loopPlay').textContent='Pause';
+  loopTimer=setInterval(()=>pickLoop(ORDER[(ORDER.indexOf(loopK)+1)%4]),2200);
+};
+renderLoop('s');
+
+/* ===== 2 SERVICE MODEL ===== */
+const TREE=[
+ {id:'vc',lvl:0,name:'Value Chain',desc:'External: how the enterprise joins customer and partner value chains. Where proven agent-based services are eventually externalized.',m:'Customer value · trust'},
+ {id:'vs',lvl:1,name:'Value Stream(s)',desc:'Internal end-to-end flow of value. Measures here must stay contextually relevant; aggregate measures risk confusing correlation with causation.',m:'Flow · cycle time'},
+ {id:'sc',lvl:2,name:'Service Chain(s)',desc:'L1 and L2 services modeled as mini supply chains. The Program Epic in Jira maps here so all work is funded and traceable.',m:'Service level · QoS'},
+ {id:'pr',lvl:3,name:'Process(es)',desc:'Each process decomposes into Input → Processing → Output → Measurement. Decision activities and discrete activities live inside Processing.',m:'Quality · compliance'}
+];
+views.append(h(`<section class="view" id="v-chain" role="tabpanel" aria-labelledby="t-chain">
+  <div class="vhead"><span class="eyebrow">Model-driven services management</span><h2>Decompose value into measurable service chains</h2>
+  <p>Technology is usually framed as solutions. Framing it as services inside value streams lets regulators, owners and agents trace how models are consumed, reused and changed along the chain of custody.</p></div>
+  <div class="board split">
+    <div class="detail"><span class="eyebrow">Target state · service decomposition</span><div class="tree" id="tree"></div>
+      <div class="sipo" id="sipo">
+        <div style="background:var(--s-soft)"><span class="t" style="color:var(--s)">Input</span>Proactive trigger<span class="ctrl" style="color:var(--s)">Prevent</span></div>
+        <div style="background:var(--u-soft)"><span class="t" style="color:var(--u)">Processing</span>Decision logic + discrete activities<span class="ctrl" style="color:var(--u)">Prevent</span></div>
+        <div style="background:var(--d-soft)"><span class="t" style="color:var(--d)">Output</span>System state change<span class="ctrl" style="color:var(--d)">Measure</span></div>
+        <div style="background:var(--o-soft)"><span class="t" style="color:var(--o)">Measurement</span>Reactive controls<span class="ctrl" style="color:var(--o)">Detect</span></div>
+      </div>
+      <p class="hint">Proactive controls prevent · reactive controls detect · every segment carries its own measure</p>
+    </div>
+    <div class="detail" id="treeDetail"></div>
+  </div>
+  <div class="board detail">
+    <div class="row" style="justify-content:space-between"><div><span class="eyebrow">Service Planning Model · future state</span><h3 style="margin-top:4px">From demand to measured value</h3></div><span class="hint">Select any element to see what it links to</span></div>
+    <div class="vflow" id="vflow"></div>
+    <p class="note" id="vnote">Mapping impact across strategy, operations and execution (PPM): every planning artifact links forward to the services that deliver it and the measures that prove it.</p>
+  </div>
+</section>`));
+TREE.forEach(n=>$('#tree').append(h(`<button class="tnode" data-id="${n.id}" style="margin-left:${n.lvl*16}px;width:calc(100% - ${n.lvl*16}px)"><span class="lvl">L${n.lvl}</span><b>${n.name}</b><span class="meas">⟂ ${n.m}</span></button>`)));
+function pickTree(id){
+  const n=TREE.find(x=>x.id===id);
+  $$('#tree .tnode').forEach(b=>b.setAttribute('aria-pressed',b.dataset.id===id));
+  $('#treeDetail').innerHTML=`<span class="eyebrow">Level ${n.lvl}</span><h3>${n.name}</h3><p>${n.desc}</p>
+   <dl class="kv"><dt>Measure</dt><dd>${n.m}</dd><dt>SUDO role</dt><dd>${['Externalize proven services','Orchestrate across domains','Govern chain-of-custody between developer and deployer','Run the S-U-D-O primitives'][n.lvl]}</dd></dl>
+   <p class="note">Measures need to be contextually relevant within each chain segment. Domain-specific knowledge graphs (the knowledge fabric) supply that context.</p>`;
+}
+$$('#tree .tnode').forEach(b=>b.onclick=()=>pickTree(b.dataset.id));pickTree('sc');
+const VF={
+ 'Value Planning':['Demand','Initiative','Strategy Map','Capability Map','Stakeholder','Policy','Risk'],
+ 'Value Creation':['Requirements','Scenario','Story (Agile)','Prioritization'],
+ 'Value Delivery':['Operations (Services)','Service Chains','Micro-agents','Micro-services'],
+ 'Value Measurement':['Service measures','Process measures','Controls (prevent · detect)','Outcome feedback']
+};
+const VLINK={
+ 'Demand':['Initiative','Prioritization','Service measures'],'Initiative':['Capability Map','Requirements','Prioritization'],
+ 'Strategy Map':['Capability Map','Initiative','Outcome feedback'],'Capability Map':['Requirements','Operations (Services)','Service Chains'],
+ 'Stakeholder':['Scenario','Story (Agile)','Policy'],'Policy':['Requirements','Controls (prevent · detect)','Micro-agents'],
+ 'Risk':['Prioritization','Controls (prevent · detect)','Policy'],'Requirements':['Scenario','Micro-services','Service measures'],
+ 'Scenario':['Story (Agile)','Micro-agents','Process measures'],'Story (Agile)':['Micro-agents','Micro-services'],
+ 'Prioritization':['Operations (Services)','Story (Agile)'],'Operations (Services)':['Service Chains','Service measures'],
+ 'Service Chains':['Micro-agents','Micro-services','Process measures'],'Micro-agents':['Micro-services','Controls (prevent · detect)'],
+ 'Micro-services':['Process measures'],'Service measures':['Outcome feedback'],'Process measures':['Outcome feedback'],
+ 'Controls (prevent · detect)':['Outcome feedback'],'Outcome feedback':['Demand','Strategy Map']
+};
+Object.entries(VF).forEach(([col,items])=>{
+  $('#vflow').append(h(`<div class="vcol"><h3>${col}</h3><div class="items">${items.map(i=>`<button class="vitem" data-i="${i}">${i}</button>`).join('')}</div></div>`));
+});
+$$('#vflow .vitem').forEach(b=>b.onclick=()=>{
+  const i=b.dataset.i, out=VLINK[i]||[], inn=Object.keys(VLINK).filter(k=>VLINK[k].includes(i));
+  $$('#vflow .vitem').forEach(x=>{x.classList.toggle('on',x===b);x.classList.toggle('rel',out.includes(x.dataset.i)||inn.includes(x.dataset.i))});
+  $('#vnote').innerHTML=`<b>${i}</b> is shaped by ${inn.length?inn.join(', '):'external demand'} and drives ${out.join(', ')}.`;
+});
+
+/* ===== 3 SCENARIO ===== */
+const G={
+ cols:[['svc','Service hierarchy'],['know','Knowledge objects'],['dec','Decisions'],['act','Actions'],['imp','Impacted assets']],
+ nodes:[
+  ['l1','svc','OPS Support (L1)','o'],['l2','svc','OPS Maintenance (L2)','o'],['l3','svc','Tower Inspection (L3)','o'],['uc','svc','Inspect Transmission Tower (use case)','s'],
+  ['asset','know','Asset Ref Model','u'],['parts','know','Item & Parts Assembly','u'],['defect','know','Issue / Defect','s'],['stake','know','Stakeholders','u'],['policy','know','Policy (numerous)','u'],['manual','know','Maintenance Manuals','u'],['ticket','know','Service / Task Tickets','s'],['sched','know','Schedule & Projects','s'],['commit','know','Commitments','u'],
+  ['pf','dec','Predictive Failure','d'],['rr','dec','Repair / Replace','d'],['ci','dec','Customer Impact','d'],['cap','dec','Capacity Optimization','d'],['ru','dec','Resource Utilization','d'],['up','dec','Upsell Opportunities','d'],
+  ['slot','act','Schedule maintenance slot','o'],['res','act','Schedule maintenance resources','o'],['acc','act','Access stakeholder info','o'],['upd','act','Update service info','o'],
+  ['vc','imp','Value Chain','g'],['caps','imp','Capabilities','g'],['dobj','imp','Data & Business Objects','g'],['meas','imp','Measures','g'],['models','imp','Models','g'],['proc','imp','Processes & Rules','g']
+ ],
+ edges:[['l1','l2'],['l2','l3'],['l3','uc'],['uc','asset'],['uc','defect'],['uc','manual'],['uc','ticket'],
+  ['asset','parts'],['asset','pf'],['parts','rr'],['defect','pf'],['defect','rr'],['defect','ci'],['manual','rr'],['policy','rr'],['policy','ci'],['policy','acc'],['stake','ci'],['stake','acc'],['ticket','ru'],['sched','cap'],['sched','ru'],['commit','ci'],['commit','up'],
+  ['pf','rr'],['pf','slot'],['rr','res'],['rr','upd'],['ci','acc'],['ci','up'],['cap','slot'],['ru','res'],['up','acc'],
+  ['slot','meas'],['slot','proc'],['res','caps'],['acc','vc'],['upd','dobj'],['upd','models'],['rr','models'],['pf','models'],['ci','vc'],['up','vc'],['res','meas']]
+};
+const SCN=[
+ {k:'s',t:'Sense',txt:'A drone feed and an aging-sensor event raise a new Issue / Defect on a transmission tower. Integration agents master it against the Asset Ref Model and open a Service / Task Ticket.',on:['uc','defect','ticket','sched','asset']},
+ {k:'u',t:'Understand',txt:'The knowledge graph places the defect in context: which parts assembly, which maintenance manual, which policies and commitments apply, and who the stakeholders are.',on:['asset','parts','manual','policy','stake','commit','defect']},
+ {k:'d',t:'Decide',txt:'Goal-based agents project predictive failure and weigh repair vs. replace, customer impact, capacity and resource use; the policy filter constrains the pathways and surfaces an upsell option.',on:['pf','rr','ci','cap','ru','up']},
+ {k:'o',t:'Observe / Act',txt:'Utility agents schedule the slot and crew, notify stakeholders and update service info. Each step emits a measure that flows back to Sense and updates models and processes.',on:['slot','res','acc','upd','meas','models','proc','vc','caps','dobj']}
+];
+views.append(h(`<section class="view" id="v-scenario" role="tabpanel" aria-labelledby="t-scenario">
+  <div class="vhead"><span class="eyebrow">Worked example · knowledge-driven governance</span><h2>Inspect a transmission tower, then trace every impact</h2>
+  <p>Linking every artifact (doc, code, service, policy, SOP, outcome) to every other means impact is a graph query. Step through the loop, or select any node to see what a change there touches.</p></div>
+  <div class="board detail">
+    <div class="row" style="justify-content:space-between">
+      <div class="seg" id="scnSeg"><button data-i="-1" aria-pressed="true">Full model</button>${SCN.map((s,i)=>`<button data-i="${i}">${s.t}</button>`).join('')}</div>
+      <button class="btn ghost" id="scnClear">Clear selection</button>
+    </div>
+    <div class="narr" id="scnNarr"></div>
+    <div class="graph" id="graph"><svg class="wires" id="wires" aria-hidden="true"></svg><div class="gcols" id="gcols"></div></div>
+    <div class="row hint"><span><i style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--s)"></i> Sense</span><span><i style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--u)"></i> Understand</span><span><i style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--d)"></i> Decide</span><span><i style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--o)"></i> Observe / Act</span><span><i style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--gov)"></i> Impacted asset</span></div>
+  </div>
+</section>`));
+G.cols.forEach(([c,l])=>$('#gcols').append(h(`<div class="gcol" data-c="${c}"><span class="eyebrow">${l}</span></div>`)));
+const color=k=>k==='g'?'var(--gov)':`var(--${k})`;
+G.nodes.forEach(([id,c,l,k])=>$(`#gcols .gcol[data-c="${c}"]`).append(h(`<button class="gn" data-id="${id}"><i style="background:${color(k)}"></i>${l}</button>`)));
+const out={},inn={};G.edges.forEach(([a,b])=>{(out[a]=out[a]||[]).push(b);(inn[b]=inn[b]||[]).push(a)});
+function reach(id,adj){const seen=new Set([id]),q=[id];while(q.length){const x=q.shift();(adj[x]||[]).forEach(y=>{if(!seen.has(y)){seen.add(y);q.push(y)}})}return seen}
+function drawWires(){
+  const svg=$('#wires'),box=$('#graph').getBoundingClientRect();
+  if(getComputedStyle(svg).display==='none')return;
+  const pos={};$$('#gcols .gn').forEach(n=>{const r=n.getBoundingClientRect();pos[n.dataset.id]={l:r.left-box.left,r:r.right-box.left,y:r.top-box.top+r.height/2}});
+  svg.innerHTML=G.edges.map(([a,b])=>{const A=pos[a],B=pos[b];if(!A||!B)return'';
+    let x1,x2;if(B.l>A.r){x1=A.r;x2=B.l}else if(A.l>B.r){x1=A.l;x2=B.r}else{x1=A.r;x2=B.r;const mx=Math.max(A.r,B.r)+16;return`<path data-e="${a}-${b}" d="M${x1},${A.y} C${mx},${A.y} ${mx},${B.y} ${x2},${B.y}"/>`}
+    const mx=(x1+x2)/2;return`<path data-e="${a}-${b}" d="M${x1},${A.y} C${mx},${A.y} ${mx},${B.y} ${x2},${B.y}"/>`}).join('');
+  applyGraphState();
+}
+let gState={mode:'all',src:null,step:-1};
+function applyGraphState(){
+  let lit=null,src=null;
+  if(gState.src){src=gState.src;const d=reach(src,out),u=new Set(inn[src]||[]);lit=new Set([...d,...u])}
+  else if(gState.step>=0){lit=new Set(SCN[gState.step].on)}
+  $$('#gcols .gn').forEach(n=>{const id=n.dataset.id;n.classList.toggle('dim',!!lit&&!lit.has(id));n.classList.toggle('src',id===src);n.classList.toggle('hit',!!lit&&lit.has(id)&&id!==src&&!!src)});
+  $$('#wires path').forEach(p=>{const[a,b]=p.dataset.e.split('-');const on=!!lit&&lit.has(a)&&lit.has(b);p.classList.toggle('on',on);p.classList.toggle('off',!!lit&&!on)});
+  const N=$('#scnNarr');
+  if(src){const n=G.nodes.find(x=>x[0]===src);const d=reach(src,out);d.delete(src);
+    N.innerHTML=`<span class="badge" style="background:var(--accent)">Δ</span><div><b>Change impact: ${n[2]}</b><p style="margin-top:3px">A change here propagates to <b>${d.size}</b> downstream artifacts and is fed by ${(inn[src]||[]).length} upstream ones. Understanding the impact of change is the first step to responding at the speed of business.</p></div>`}
+  else if(gState.step>=0){const s=SCN[gState.step];N.innerHTML=`<span class="badge" style="background:var(--${s.k})">${STAGE[s.k].L}</span><div><b>${s.t}</b><p style="margin-top:3px">${s.txt}</p></div>`}
+  else N.innerHTML=`<span class="badge" style="background:var(--ink)">∞</span><div><b>Service Planning Model for the use case</b><p style="margin-top:3px">L1 → L2 → L3 services frame the use case. Knowledge objects feed decisions, decisions trigger actions, and actions change governed assets. Select a node to run an impact trace.</p></div>`;
+}
+$$('#gcols .gn').forEach(n=>n.onclick=()=>{gState.src=gState.src===n.dataset.id?null:n.dataset.id;applyGraphState()});
+$$('#scnSeg button').forEach(b=>b.onclick=()=>{$$('#scnSeg button').forEach(x=>x.setAttribute('aria-pressed',x===b));gState.step=+b.dataset.i;gState.src=null;applyGraphState()});
+$('#scnClear').onclick=()=>{gState.src=null;applyGraphState()};
+
+/* ===== 4 AGENT DECISIONS ===== */
+const CYN={
+ complex:{n:'Complex',d:'No direct causality; patterns emerge.',loop:'Probe → Sense → Respond',ag:'Goal-based & learning agents',x:'Evaluate options to reach a desired state and learn from deviations.',ex:'Predicting which towers will fail next season from weather, load and aging signals.',hitl:'Human on the loop: agents propose experiments, people approve probes.'},
+ complicated:{n:'Complicated',d:'Right answers exist but need expertise.',loop:'Sense → Analyze → Respond',ag:'React agents',x:'Evaluate sensors to identify impacts relative to a baseline state.',ex:'Repair vs. replace using the parts assembly, manuals and cost baselines.',hitl:'Expert review for high-cost pathways; audit agent cross-checks.'},
+ chaotic:{n:'Chaotic',d:'Accidental entry; requires immediate stabilization.',loop:'Act → Sense → Respond',ag:'Novel practice',x:'Take immediate action to re-establish boundaries, then make sense of it.',ex:'Tower collapse during a storm: isolate the line, reroute service, dispatch crew.',hitl:'Pre-authorized playbooks; humans take command once stable.'},
+ simple:{n:'Simple',d:'Cause and effect are self-evident.',loop:'Sense → Categorize → Respond',ag:'Utility agents',x:'Rules-based, well-defined actions performed reliably within parameters.',ex:'Scheduling a routine inspection slot and notifying stakeholders.',hitl:'Fully autonomous inside SHACL constraints; sampled audit.'},
+ disorder:{n:'Disorder',d:'It is not yet clear which domain applies.',loop:'Classify first',ag:'Diagnostic / classification agent',x:'Problem classification is itself an intelligence-driven design pattern: route the situation to the right agent type.',ex:'An unfamiliar sensor anomaly with no matching pattern.',hitl:'Escalate to a human until classified.'}
+};
+const CAPS=[
+ ['Goals','Desired outcomes from the persona and job to be done; set by top-down intent.'],
+ ['Memory','Local, private state plus access to the knowledge graph; supports isolated state and autonomy.'],
+ ['Reason','Embedded SLM/LLM and deterministic logic, constrained by domain rules and SHACL.'],
+ ['Sense & Understand','Perceive events and place them in semantic context through the ontology.'],
+ ['Learn','Continuous learning and diagnostic pattern recognition from outcome measures.'],
+ ['Plan','Build calculated decision pathways toward the goal state.'],
+ ['Decide','Choose a pathway matched to the Cynefin context.'],
+ ['Coordinate','Orchestration (directional flow) and choreography (interaction) with other agents and services.'],
+ ['Act','Invoke the paired micro-service and emit a measurable state change.']
+];
+const CONV={BI:['Analytic','Metrics, analytics and BI agents describe what happened.'],AI:['Probabilistic','ML, GenAI and agents estimate what is likely.'],SI:['Deterministic','Semantic intelligence: ontologies, rules and SHACL say what must hold.'],DI:['Decisions','Decision intelligence models which option to take and why.']};
+views.append(h(`<section class="view" id="v-decide" role="tabpanel" aria-labelledby="t-decide">
+  <div class="vhead"><span class="eyebrow">Agent-based decision modeling</span><h2>Match the agent to the environment</h2>
+  <p>No single AI fits every situation. Classify the decision context first, then deploy a purpose-built agent with the right loop and the right amount of human oversight.</p></div>
+  <div class="board split">
+    <div><div class="cyn" id="cyn"></div><div class="axis"><span>← unordered</span><span>ordered →</span></div></div>
+    <div class="detail" id="cynDetail"></div>
+  </div>
+  <div class="board split">
+    <div class="arm" id="arm"></div>
+    <div class="detail">
+      <span class="eyebrow">Agent reference model v2 · target state</span><h3 id="capName">Emergent intelligence via agents</h3>
+      <p id="capDesc">Each agent combines nine capabilities around a core of federated LLM and SLM reasoning. Select a capability.</p>
+      <span class="eyebrow" style="margin-top:8px">Convergence of four disciplines</span>
+      <div class="conv" id="conv"></div>
+      <p class="note" id="convNote">Select a discipline to see what it contributes to the decision.</p>
+    </div>
+  </div>
+</section>`));
+['complex','complicated','chaotic','simple'].forEach(k=>{const c=CYN[k];$('#cyn').append(h(`<button class="cq" data-k="${k}"><b>${c.n}</b><span class="loop">${c.loop}</span><span class="ag">${c.ag}</span></button>`))});
+$('#cyn').append(h(`<button class="cdis" data-k="disorder">Disorder</button>`));
+function pickCyn(k){const c=CYN[k];$$('#cyn [data-k]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===k));
+  $('#cynDetail').innerHTML=`<span class="eyebrow">Decision context</span><h3>${c.n}</h3><p>${c.d}</p>
+  <dl class="kv"><dt>Loop</dt><dd class="mono">${c.loop}</dd><dt>Agent</dt><dd><b>${c.ag}.</b> ${c.x}</dd><dt>Tower case</dt><dd>${c.ex}</dd><dt>Oversight</dt><dd>${c.hitl}</dd></dl>`}
+$$('#cyn [data-k]').forEach(b=>b.onclick=()=>pickCyn(b.dataset.k));pickCyn('complex');
+(function(){
+  let s=`<svg viewBox="0 0 440 440" role="img" aria-label="Agent reference model">`;
+  CAPS.forEach(([n],i)=>{const a=-Math.PI/2+i*2*Math.PI/CAPS.length,x=220+160*Math.cos(a),y=220+160*Math.sin(a);
+    s+=`<line x1="220" y1="220" x2="${x}" y2="${y}" stroke="var(--line)" stroke-width="1.5"/>`});
+  s+=`<circle cx="220" cy="220" r="66" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="2"/>
+    <text x="220" y="210" text-anchor="middle" fill="var(--ink)" font-size="20" font-weight="700" style="font-family:var(--display)">Agent</text>
+    <text x="220" y="232" text-anchor="middle" fill="var(--muted)" font-size="11.5">LLM · SLM · SLM</text>
+    <text x="220" y="248" text-anchor="middle" fill="var(--muted)" font-size="11.5">federated search</text>`;
+  CAPS.forEach(([n],i)=>{const a=-Math.PI/2+i*2*Math.PI/CAPS.length,x=220+160*Math.cos(a),y=220+160*Math.sin(a);
+    const parts=n.includes('&')?['Sense &','Understand']:[n];
+    s+=`<g class="cap" data-i="${i}" tabindex="0" role="button" aria-label="${n}"><circle cx="${x}" cy="${y}" r="40" fill="var(--panel)" stroke="var(--ink)" stroke-width="1.3"/>
+     ${parts.map((p,j)=>`<text x="${x}" y="${y+4+(j-(parts.length-1)/2)*14}" text-anchor="middle" fill="var(--ink)" font-size="12" font-weight="600">${p}</text>`).join('')}</g>`});
+  $('#arm').innerHTML=s+'</svg>';
+  $$('#arm .cap').forEach(g=>{const f=()=>{$$('#arm .cap circle').forEach(c=>c.setAttribute('fill','var(--panel)'));g.querySelector('circle').setAttribute('fill','var(--accent-soft)');const[n,d]=CAPS[g.dataset.i];$('#capName').textContent=n;$('#capDesc').textContent=d};g.onclick=f;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+  Object.entries(CONV).forEach(([k,[t,d]])=>$('#conv').append(h(`<button data-k="${k}" aria-pressed="false"><b>${k}</b><span>${t}</span></button>`)));
+  $$('#conv button').forEach(b=>b.onclick=()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true');
+    const on=$$('#conv button[aria-pressed="true"]').map(x=>x.dataset.k);
+    $('#convNote').innerHTML=on.length?on.map(k=>`<b>${k}</b>: ${CONV[k][1]}`).join('<br>')+(on.length===4?'<br><b>All four together give emergent, self-orchestrating intelligence.</b>':''):'Select a discipline to see what it contributes to the decision.'});
+})();
+
+/* ===== 5 AGENTS × SERVICES ===== */
+const PRINC=[
+ ['Bounded context','Represents a single piece of business functionality.','Can play a single or multiple roles in a system.'],
+ ['Granularity','Small enough to ensure maintainability and extensibility.','Size is not the issue; depends on the target domain.'],
+ ['Isolated state','Minimize sharing of state across services.','State is local and private to support autonomy.'],
+ ['Elasticity','Add and remove resources at runtime.','Add and remove agents at runtime is central to MAS.'],
+ ['Adaptability','Autonomous failure handling, scenario-specific context.','Autonomous decisions, continuous learning, dynamic tailoring.'],
+ ['Loose coupling','Orchestration and choreography are not hard-wired.','Agents are autonomous, loosely coupled problem solvers.']
+];
+const PAIR={};ORDER.forEach(k=>STAGE[k].agents.forEach(a=>PAIR[a]={k,svc:STAGE[k].services}));
+views.append(h(`<section class="view" id="v-design" role="tabpanel" aria-labelledby="t-design">
+  <div class="vhead"><span class="eyebrow">Domain-driven + intelligence-driven design</span><h2>Pair each micro-agent with its micro-service</h2>
+  <p>Partition by functional domain. Each micro-agent is tailored to its complementary micro-service; orchestration sets the directional flow and choreography sets how they interact. Context guides the tailoring.</p></div>
+  <div class="board detail">
+    <div class="pair">
+      <div class="detail"><span class="eyebrow">Level 1 micro-agents · intelligence-driven</span><div class="plist" id="plA"></div></div>
+      <div class="detail"><span class="eyebrow">Technical micro-services · domain-driven</span><div class="plist" id="plS"></div></div>
+    </div>
+    <p class="note" id="pairNote">Select a micro-agent to light up its paired services and SUDO stage.</p>
+  </div>
+  <div class="board detail"><span class="eyebrow">Design principles</span>
+    <div class="tscroll"><table><thead><tr><th>Principle</th><th>Micro-service</th><th>Micro-agent</th></tr></thead><tbody>${PRINC.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</tbody></table></div>
+  </div>
+  <div class="board detail"><span class="eyebrow">Service taxonomy · partial, expanding</span>
+    <div class="taxo">
+      <div><h4>Business</h4><ul><li>Commercial Services</li><li>Customer Services</li><li>Network Services</li><li>Product Services</li></ul>
+        <h4 style="margin-top:12px">Functional</h4><ul><li>Business Operations</li><li>Data & Analytic Services</li><li>Financial Services</li><li>Human Resources</li><li>Supply Chain</li></ul></div>
+      <div><h4>Technical · data & integration</h4><ul><li>Data Services<ul><li>Auditing · Instrumentation</li><li>Extraction · Transformation · Loading</li><li>Quality · Lineage</li></ul></li><li>Media · Analytic Services</li><li>Integration Services<ul><li>Human · Virtual · Physical</li></ul></li></ul></div>
+      <div><h4>Technical · operations & presentation</h4><ul><li>Operational Services<ul><li>Monitoring · Measuring · Anomaly Detection</li><li>Causal Analysis · Issue Mgmt · Problem Resolution</li><li>Continuity · Escalation · Restoration · Notification</li></ul></li><li>Presentation Services<ul><li>UI/UX · Screenflow · Visualization</li><li>Navigation · Voice · Avatars · Prompt Engineering</li></ul></li></ul></div>
+    </div>
+  </div>
+</section>`));
+Object.keys(PAIR).forEach(a=>$('#plA').append(h(`<button class="pbtn" data-a="${a}" style="border-left:4px solid var(--${PAIR[a].k})">${a}</button>`)));
+[...new Set(ORDER.flatMap(k=>STAGE[k].services))].forEach(s=>$('#plS').append(h(`<button class="pbtn" data-s="${s}" tabindex="-1">${s}</button>`)));
+$$('#plA .pbtn').forEach(b=>b.onclick=()=>{const a=b.dataset.a,p=PAIR[a];
+  $$('#plA .pbtn').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  $$('#plS .pbtn').forEach(x=>x.classList.toggle('lit',p.svc.includes(x.dataset.s)));
+  $('#pairNote').innerHTML=`<b>${a}</b> agent runs in the <b style="color:var(--${p.k})">${STAGE[p.k].name}</b> primitive and pairs with ${p.svc.length} services. It keeps its own state, is added or removed at runtime, and is choreographed with peers rather than hard-wired.`});
+$('#plA .pbtn').click();
+
+/* ===== 6 TRACE ===== */
+const TD=[['Program Epic','Service L1 & L2','Service Owner · within a quarter',0],['Business Epic','Functional feature','Service Owner · within a quarter',1],['Business User Story','Use case + scenarios = intents','Delivery team · within a sprint',2],['Sub-tasks','Acceptance & test criteria','Delivery team · hours to days',3]];
+const BU=[['Program Epic','Service L1 & L2','Service Owner · within a quarter',0],['Technical Foundation Epic','Non-functional feature (NFR)','Tech Lead · within a quarter',1],['Technical User Story','Micro-service + micro-agent','Delivery team · within a sprint',2],['Sub-tasks','"How to" implementation steps','Delivery team · hours to days',3]];
+const COMP=['Microservice','Rules / Logic','Events','BI (metric, analytic, agent)','AI (ML, GenAI, agent)'];
+views.append(h(`<section class="view" id="v-trace" role="tabpanel" aria-labelledby="t-trace">
+  <div class="vhead"><span class="eyebrow">Enabling agent-based design in Jira</span><h2>Top-down intent meets bottom-up capability</h2>
+  <p>Every work item maps to the program hierarchy so it is funded and traceable. Customer intent descends as business stories; reusable agents and services rise as technical stories. They meet at the use case, which binds one intent to many solution components.</p></div>
+  <div class="board detail">
+    <div class="trace">
+      <div class="lane" id="laneTD"><span class="eyebrow">Top-down · desired outcomes</span></div>
+      <div class="meet"><span class="eyebrow" style="color:var(--accent)">Use case</span><b>1 : M solutions</b><span>Domain → Service → Process → Decision activity · Discrete activity</span></div>
+      <div class="lane" id="laneBU"><span class="eyebrow">Bottom-up · delivered outcomes</span></div>
+    </div>
+    <div class="detail"><span class="eyebrow">Solution components bound to the use case</span><div class="chips" id="comp"></div></div>
+    <p class="note" id="traceNote">Select any level to see who authors it, how long it lives and how it is measured.</p>
+  </div>
+  <div class="board detail"><span class="eyebrow">Open design questions this model answers</span>
+    <div class="tscroll"><table><thead><tr><th>Challenge</th><th>Question</th><th>Answer in this model</th></tr></thead><tbody>
+      <tr><td>Alignment</td><td>How do we capture what customers want?</td><td>Use case + scenarios = intents, written as business user stories with success criteria that drive testing.</td></tr>
+      <tr><td>Alignment</td><td>How do we see strategy to execution end to end?</td><td>Program Epic = L1/L2 service; every story links up to it and out to measures.</td></tr>
+      <tr><td>Reuse</td><td>What granularity for models and agents?</td><td>One intent maps 1:1 to a model; agents are micro, paired with micro-services.</td></tr>
+      <tr><td>Reuse</td><td>What naming and taxonomy?</td><td>Service taxonomy (business · functional · technical) and the L1 micro-agent list, both held in the ontology.</td></tr>
+      <tr><td>Events</td><td>Where do agents and services meet?</td><td>Events model domain context; agents sense events and act through their paired service.</td></tr>
+      <tr><td>Governance</td><td>How do we govern change across agents and services?</td><td>Knowledge-driven governance: impact is a graph traversal across linked artifacts.</td></tr>
+    </tbody></table></div>
+  </div>
+</section>`));
+const laneBtn=(r,side)=>h(`<button class="ln ind${r[3]}" data-side="${side}" data-l="${r[3]}"><b>${r[0]}</b>${r[1]}<br><small>${r[2]}</small></button>`);
+TD.forEach(r=>$('#laneTD').append(laneBtn(r,'td')));BU.forEach(r=>$('#laneBU').append(laneBtn(r,'bu')));
+COMP.forEach(c=>$('#comp').append(h(`<span class="chip">${c}</span>`)));
+$$('.lane .ln').forEach(b=>b.onclick=()=>{$$('.lane .ln').forEach(x=>x.classList.toggle('on',x===b));
+  const r=(b.dataset.side==='td'?TD:BU)[b.dataset.l];
+  const m=['Service level and value-stream measures','Feature adoption and reliability (NFRs)','Scenario success criteria, which drive test cases','Done-ness and quality gates'][b.dataset.l];
+  $('#traceNote').innerHTML=`<b>${r[0]}</b> (${b.dataset.side==='td'?'top-down':'bottom-up'}): ${r[1]}. Authored by ${r[2].split(' · ')[0]}, ${r[2].split(' · ')[1]}. Measured by: ${m}.`});
+
+/* ===== 7 FABRIC ===== */
+const D4={
+ 'De-silo':'Integrate all relevant sources declaratively, enabling reuse, cross-enterprise scale and continuous refinement.',
+ 'Disambiguate':'Triangulate with set theory and description logic as well as statistics, for precise entity resolution.',
+ 'Detect':'Surface weak signals by articulating the most relevant and distant relationships between entities.',
+ 'Discover':'Move beyond keywords to concepts and radically expand what can be discovered.'};
+views.append(h(`<section class="view" id="v-fabric" role="tabpanel" aria-labelledby="t-fabric">
+  <div class="vhead"><span class="eyebrow">Knowledge fabric</span><h2>A scaffolding that sits on top of existing systems</h2>
+  <p>Capture and align all content and context while preserving meaning, perspective and state of change. Every SUDO stage runs inside this governed layer.</p></div>
+  <div class="govwrap">
+    <span class="eyebrow">Governance wrapper · runs inside the semantic layer</span>
+    <div class="row"><span class="chip g">Scenario-driven security (beyond ACL / ADOM)</span><span class="chip g">Protection agents: mask · encrypt · releasability</span><span class="chip g">Audit agents: fairness · accountability · transparency</span></div>
+    <div class="layers">
+      <div class="layer"><div><span class="eyebrow">Layer 3</span><h3>Services</h3></div><div class="chips">${['Integration & Sourcing','Search (Boolean, NLP)','Analytics (quality, insights)','Visualization (navigation)','Integrity & Security','Publishing (APIs, data sets)','Auditing & Utilization'].map(x=>`<span class="chip o">${x}</span>`).join('')}</div></div>
+      <div class="layer"><div><span class="eyebrow">Layer 2</span><h3>Data</h3></div><div class="chips">${['Scenarios','Context','Relationships','Properties','Lifecycle (change)','Lineage','Semantics'].map(x=>`<span class="chip s">${x}</span>`).join('')}</div></div>
+      <div class="layer"><div><span class="eyebrow">Layer 1</span><h3>Structures</h3></div><div class="chips">${['Enterprise glossary','Local glossaries','Taxonomies','Enterprise ontology','Domain-specific ontologies','Concepts · content · change'].map(x=>`<span class="chip u">${x}</span>`).join('')}</div></div>
+    </div>
+  </div>
+  <div class="board detail"><span class="eyebrow">Advantages of embracing knowledge graphs · the 4Ds</span><div class="four" id="four"></div><p class="note" id="fourNote"></p></div>
+  <div class="board split">
+    <div class="detail"><span class="eyebrow">Self-sufficiency · published libraries</span><h3>Process automation built on reusable components</h3>
+      <div class="tscroll"><table style="min-width:420px"><tbody>
+        <tr><td>Process components</td><td>Activity building blocks assembled per scenario</td></tr>
+        <tr><td>Data services</td><td>Data management, quality, transforms, semantic matching</td></tr>
+        <tr><td>Integration services</td><td>Loosely coupled, highly available data and process integration with QoS</td></tr>
+        <tr><td>Event services</td><td>Manual workflow, timed events and automatically triggered activities</td></tr>
+        <tr><td>Deployment services</td><td>Runtime add and remove of agents and services</td></tr>
+        <tr><td>Reporting & analytics</td><td>Measures per chain segment, fed back to Sense</td></tr>
+      </tbody></table></div></div>
+    <div class="detail"><span class="eyebrow">Key benefits</span>
+      <ul style="margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:5px">
+        <li>Combines conceptual and logical views of data</li><li>Preserves enterprise and community perspectives of truth</li><li>Shifts spend from fixing old problems to solving new ones</li><li>Increases adaptability and resilience for data consumers</li><li>Scales with volume and complexity</li><li>Integrates lifecycle and operations of systems, products, services, data and analytics</li><li>Foundation for digital twins, better AI and ML-assisted knowledge capture</li><li>Accelerates innovation and cycle time</li></ul></div>
+  </div>
+</section>`));
+Object.keys(D4).forEach(k=>$('#four').append(h(`<button data-k="${k}"><b>${k}</b><span>${D4[k].split(',')[0]}</span></button>`)));
+$$('#four button').forEach(b=>b.onclick=()=>{$$('#four button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#fourNote').innerHTML=`<b>${b.dataset.k}.</b> ${D4[b.dataset.k]}`});
+$('#four button').click();
+
+/* ===== 8 AGILITY ===== */
+const SHIFT=[['Start with the application.','Start with the business information model.'],['Identify required sources.','Harvest a range of sources for broader semantic context.'],['Understand the data.','Understand the data inherently.'],['Align data to one application.','Align data to the enterprise information model.'],['Publish for a single application.','Publish reusable assets for many applications.']];
+const STG=[['Prove internally','Pilot one value stream (for example tower inspection). Pair a handful of micro-agents with existing services and measure every chain segment.'],
+ ['Industrialize','Apply lifecycle rigor across all four disciplines; publish libraries; aim for five-nines (99.999%) reliability. Vendors plug in under Buy + Insulate.'],
+ ['Externalize','Offer proven agent-based services outside the enterprise and join customer value chains directly as new value streams.']];
+views.append(h(`<section class="view" id="v-agility" role="tabpanel" aria-labelledby="t-agility">
+  <div class="vhead"><span class="eyebrow">The long game</span><h2>Prove internally, industrialize, externalize</h2>
+  <p>Enterprise agility comes from responding to change at the speed of business: data-centric assets, reusable primitives and vendors that plug in without disrupting strategic operations.</p></div>
+  <div class="board detail">
+    <div class="row" style="justify-content:space-between"><span class="eyebrow">Escaping silos</span><div class="seg" id="shiftSeg"><button data-m="legacy">App-centric</button><button data-m="target" aria-pressed="true">Data-centric</button></div></div>
+    <div class="shift" id="shift"><div class="h"></div><div class="h">App-centric (legacy)</div><div class="h">Data-centric (target)</div>
+      ${SHIFT.map((r,i)=>`<div class="n">${i+1}</div><div class="old">${r[0]}</div><div class="new">${r[1]}</div>`).join('')}
+      <div class="n">=</div><div class="old">Incremental updates driven by specific business questions.</div><div class="new">Shared, business-oriented data, contextually enriched and naturally linked.</div></div>
+  </div>
+  <div class="board detail">
+    <span class="eyebrow">Adoption path · drag to explore</span>
+    <input type="range" id="mat" min="0" max="100" value="35" aria-label="Adoption progress">
+    <div class="stages" id="stages">${STG.map((s,i)=>`<div class="stage" data-i="${i}"><span class="num">Stage ${i+1}</span><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join('')}</div>
+    <div class="meter" id="meter"></div>
+    <p class="hint">Indicators are directional, to show how the model compounds; they are not forecasts.</p>
+  </div>
+  <div class="board split">
+    <div class="detail"><span class="eyebrow">Vendor posture</span><h3>Buy + Insulate, not buy vs. build</h3><p>Commercial platforms integrate through the knowledge fabric and the service taxonomy. Because agents and services are bound to ontology concepts rather than to a vendor schema, a product can be swapped without disturbing strategic operations.</p></div>
+    <div class="detail"><span class="eyebrow">Why this yields agility</span>
+      <dl class="kv"><dt>Sense</dt><dd>Event-driven signals replace retrospective reports.</dd><dt>Understand</dt><dd>One vocabulary removes translation between teams and systems.</dd><dt>Decide</dt><dd>Context-matched agents shorten decision latency safely.</dd><dt>Act</dt><dd>Measured service chains make change impact visible and reversible.</dd></dl></div>
+  </div>
+</section>`));
+$$('#shiftSeg button').forEach(b=>b.onclick=()=>{$$('#shiftSeg button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#shift').classList.toggle('legacy',b.dataset.m==='legacy')});
+function renderMat(){const v=+$('#mat').value,st=v<34?0:v<67?1:2;
+  $$('#stages .stage').forEach(s=>s.classList.toggle('on',+s.dataset.i===st));
+  const M=[['Reusable primitives',Math.round(8+v*1.6),''],['Domains on the fabric',Math.max(1,Math.round(v/9)),''],['Decisions automated',Math.round(v*.7),'%'],['Change-impact visibility',Math.round(20+v*.8),'%']];
+  $('#meter').innerHTML=M.map(([l,n,u],i)=>`<div><div class="v">${n}${u}</div><div class="l">${l}</div><div class="bar"><i style="width:${i===0?Math.min(100,n/1.68):i===1?Math.min(100,n*9):n}%"></i></div></div>`).join('')}
+$('#mat').oninput=renderMat;renderMat();
+
+/* ---------------- theme ---------------- */
+const rootEl=document.documentElement, mq=matchMedia('(prefers-color-scheme: dark)');
+const isDark=()=>rootEl.dataset.theme?rootEl.dataset.theme==='dark':mq.matches;
+function syncTheme(){const d=isDark();document.body.classList.toggle('isDark',d);$('#themeBtn').setAttribute('aria-label',d?'Switch to light mode':'Switch to dark mode')}
+try{const t=localStorage.getItem('sudo-theme');if(t==='dark'||t==='light')rootEl.dataset.theme=t}catch(e){}
+$('#themeBtn').onclick=()=>{const t=isDark()?'light':'dark';rootEl.dataset.theme=t;try{localStorage.setItem('sudo-theme',t)}catch(e){};syncTheme()};
+mq.addEventListener&&mq.addEventListener('change',syncTheme);syncTheme();
+
+/* ---------------- routing ---------------- */
+function show(id){
+  if(!VIEWS.some(v=>v.id===id))id='loop';
+  VIEWS.forEach(v=>{$('#v-'+v.id).hidden=v.id!==id;$('#t-'+v.id).setAttribute('aria-selected',v.id===id)});
+  try{localStorage.setItem('sudo-tab',id)}catch(e){}
+  if(id==='scenario')requestAnimationFrame(drawWires);
+}
+$$('.tab').forEach(t=>t.onclick=()=>{show(t.dataset.v);try{history.replaceState(null,'','#'+t.dataset.v)}catch(e){};window.scrollTo({top:0})});
+let start=(location.hash||'').slice(1);
+if(!start){try{start=localStorage.getItem('sudo-tab')||''}catch(e){}}
+show(start||'loop');
+addEventListener('resize',()=>{if(!$('#v-scenario').hidden)drawWires()});
+document.fonts&&document.fonts.ready.then(()=>{if(!$('#v-scenario').hidden)drawWires()});
+</script>
+
+</body></html>

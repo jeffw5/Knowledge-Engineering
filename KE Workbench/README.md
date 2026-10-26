@@ -292,3 +292,11 @@ Section 04 of the sidebar. It realizes the persona model from qualitative resear
 - **Retrofit status**: `RESOLUTION` in `ingest/ops_spec.py` records where each edition resolves the guide retrofit items (v2.0 Appendix E.4).
 - **Still to do**: rebuild the core and domains (`build_core.py`, `KE Domains/_build/build_domains.py`, or re-ingest) so every asset declares v2.0 (policy P07). Restart `proxy.py` so the new route is served.
 
+
+## Semantic Governance v2.1 and the AI circuit breaker (4.6.0)
+
+- **Guide**: `Semantic_Governance_v2.1_DRAFT` (Word and PDF in `../Semantic Governance/`, PDF in `docs/`) is in force. New §2.7 *Processing and Outbound Services, and Orchestration*: processing (mapping, inferencing, learning) and outbound (search, contextual relevancy, conversational AI, publishing, APIs) microservices, topic namespaces, one orchestrating agent per tier, and decision evaluation by the AI circuit breaker gateway for every agent and human decision.
+- **Conformance Review**: each disposition is evaluated by the gateway (`ingest_api.evaluate_decision`) and stored with its decision envelope (`ke-disposition/2`). HALT: waiving a finding on a load-blocking (guardrail) rule; COMPLY: accepting an error, held until **Trustee sign-off**; PASS: everything else. Ingestion learns only from PASS decisions (`ke_ingest.effective`).
+- **Standards Conformance**: six §3.13 jobs-model rules (job steps, job step in a job, outcome per step, outcome mapped to a job step, outcome measured, persona performs jobs); Conformance Review lists them under *Jobs model (§3.13)*.
+- **Retrofit**: `RESOLUTION['2.1']` in `ingest/ops_spec.py` resolves G20 (measured agent assurance).
+- Restart `proxy.py` so the disposition gate is served.

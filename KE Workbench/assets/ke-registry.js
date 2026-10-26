@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '4.5.0',
+  version: '4.6.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -13,8 +13,8 @@ window.KE_REGISTRY = {
           desc: 'Bring vocabularies, taxonomies and ontologies (Turtle, N-Triples, RDF/XML) from a folder into the standard: new IRIs, rebuilt metadata, Turtle and TriG in separate folders, a change record, and an optional load into GraphDB.',
           functions: ['Artifact versioning', 'Governance workflow', 'Integration with graph databases'], std: ['3.2', '3.3', '3.7'] },
         { id: 'conformance-review', code: 'CR', file: 'tools/conformance-review.html', title: 'Conformance Review', live: true, isNew: true,
-          desc: 'Human in the loop for conformance errors: other organizations\u2019 content, acronyms, broken and foreign references, missing definitions. Works on ingested files before loading (opened from Ingestion) or on GraphDB; stage fixes or removals across vocabularies, taxonomies and ontologies and save them with a change record.',
-          functions: ['Governance workflow', 'Artifact versioning', 'Change monitoring'], std: ['3.2', '3.3', '3.7'] },
+          desc: 'Human in the loop for conformance errors: other organizations\u2019 content, acronyms, broken and foreign references, missing definitions. Works on ingested files before loading (opened from Ingestion) or on GraphDB; stage fixes or removals across vocabularies, taxonomies and ontologies and save them with a change record. Every disposition passes the AI circuit breaker gateway (§2.7).',
+          functions: ['Governance workflow', 'Artifact versioning', 'Change monitoring'], std: ['2.7', '3.2', '3.3', '3.4', '3.6', '3.7', '3.8', '3.13'] },
         { id: 'model-editor-vocabulary', code: 'EV', file: 'tools/model-editor-vocabulary.html', title: 'Model Editor (Vocabulary)', live: true, isNew: true,
           desc: 'Edit an ingested vocabulary file: the vocabulary\u2019s own metadata and every term (labels, definition, notes, broader and related terms, status), add or remove terms, with conformance checked as you type. Save writes the .ttl and .trig and loads them into GraphDB.',
           functions: ['Unified modeling', 'Artifact versioning'], std: ['3.2', '3.3', '3.7'] },
@@ -34,8 +34,8 @@ window.KE_REGISTRY = {
           desc: 'Families of relations — SKOS for vocabularies and taxonomies, OWL/RDFS for ontologies — that the Model Editor offers and checks against.',
           functions: ['Unified modeling'], std: ['3.9'] },
         { id: 'standards-conformance', code: 'SC', file: 'tools/standards-conformance.html', title: 'Standards Conformance', live: true, isNew: true,
-          desc: 'Runs the Part III standards checklist — base URL, naming, acronyms, term definition fields, taxonomy rules, versioning — against GraphDB or a Turtle file.',
-          functions: ['Governance workflow', 'Change monitoring'], std: ['3.2', '3.3', '3.7', '3.8', 'E.3'] },
+          desc: 'Runs the standards checklist of the guide in force — base URL, naming, acronyms, term definition fields, taxonomy rules, versioning, and the §3.13 jobs model §2.7 contextual relevancy relies on — against GraphDB or a Turtle file.',
+          functions: ['Governance workflow', 'Change monitoring'], std: ['2.7', '3.2', '3.3', '3.7', '3.8', '3.11', '3.13', 'E.3'] },
         { id: 'model-visualize', code: 'MV', file: 'tools/model-visualize.html', title: 'Model Visualizer', live: true, hidden: true,
           desc: 'Hierarchy, network and cloud views of one asset. Opened from Model Manager with an asset selected.',
           functions: ['Impact visualization'], std: ['1.3'] },
@@ -71,7 +71,7 @@ window.KE_REGISTRY = {
           functions: ['Change monitoring', 'Impact visualization', 'Governance workflow'], std: ['3.3', '3.4', '3.11'] },
         { id: 'mapping-agent-dashboard', code: 'MA', file: 'tools/mapping-agent-dashboard.html', title: 'Mapping Agent Dashboard',
           desc: 'Simulates the domain-sovereign mapping agents: routing, SHACL → SWRL → PEP validation gate, circuit breakers, human-in-the-loop review and KGCL commits.',
-          functions: ['Change monitoring', 'Governance workflow'], std: ['1.5', '2.6'] },
+          functions: ['Change monitoring', 'Governance workflow'], std: ['1.5', '2.6', '2.7'] },
         { id: 'agent-service-map', code: 'AS', file: 'tools/agent-service-map.html', title: 'Agent & Service Map',
           desc: 'Catalog of agents and microservices, their contracts, guardrails and the SSOT rules each depends on.',
           functions: ['Impact visualization'], std: ['2.6'] },

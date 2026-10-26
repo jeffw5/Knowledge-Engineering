@@ -1979,6 +1979,13 @@ RULE_NAMES = {'base-url': 'Base URL', 'uri-pattern': 'URI pattern', 'name-case':
               'versioned-term': 'No version in term IRIs', 'version-format': 'Semantic version', 'one-scheme': 'One scheme'}
 
 
+def effective(r):
+    """A review decision takes effect (is replayed, exempts a finding, teaches the definition writer) only when the
+    AI circuit breaker gateway released it: verdict PASS (Semantic Governance §2.7). Records written before the gate
+    carry no verdict and count as released."""
+    return ((r.get('decision') or {}).get('verdict') or 'PASS') == 'PASS'
+
+
 def load_feedback(path=None):
     p = pathlib.Path(path) if path else FEEDBACK_FILE
     out = []
@@ -2001,6 +2008,7 @@ def exemptions(records=None):
     """(rule id, term IRI) → the latest record that accepted the finding or marked it not an issue."""
     latest = {}
     for r in records if records is not None else load_feedback():
+        if not effective(r): continue          # held (COMPLY, FREEZE) or blocked (HALT) by the gateway
         for f in (r.get('findings') or []):
             k = (f.get('rule'), (r.get('term') or {}).get('iri'))
             if k[0] and k[1]: latest[k] = r
@@ -2028,7 +2036,7 @@ def apply_exemptions(res, ex):
 
 def apply_feedback(ing, log=print):
     """Replay the fixes reviewers made, on this run's outputs (before the headers are finished and files written)."""
-    recs = [r for r in load_feedback() if r.get('disposition') == 'fix' and r.get('actions')]
+    recs = [r for r in load_feedback() if r.get('disposition') == 'fix' and r.get('actions') and effective(r)]
     if not recs:
         return 0
     FB = ing.CORE + 'formalizedBy'
@@ -2088,7 +2096,7 @@ def definition_examples(limit=12):
     """Definitions reviewers wrote, approved or corrected — newest first — as examples for the definition writer."""
     out, seen = [], set()
     for r in reversed(load_feedback()):
-        if r.get('disposition') != 'fix': continue
+        if r.get('disposition') != 'fix' or not effective(r): continue
         for a in r.get('actions') or []:
             if a.get('type') != 'definition' or not a.get('new'): continue
             t = r.get('term') or {}

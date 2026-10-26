@@ -2,6 +2,22 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '4.6.0', date: '2026-10-26', title: 'Semantic Governance v2.1: processing, outbound and the AI circuit breaker',
+    groups: [
+      { kind: 'new', items: [
+        'Semantic Governance v2.1 (Draft) is in force. New Section 2.7, Processing and Outbound Services, and Orchestration: processing microservices for mapping, inferencing and learning; outbound microservices for search, contextual relevancy, conversational AI, publishing and APIs; topic namespaces for processing, outbound, release, feedback, decision and subscription events; one orchestrating agent per tier (the Section 2.6 orchestration-agent is now inbound-orchestration-agent). Contextual relevancy reverse engineers each prompt and maps it to domain holons and to persona, job, job step and desired outcome instances. Modeling stays independent of any one AI tool.',
+        'Section 2.7 places every decision, by an agent or a person, behind the AI circuit breaker gateway (intercept, measure Ds, Db and Dr against the pinned release, actuate PASS, COMPLY, FREEZE or HALT), following the Sales Advisor Circuit Breaker architecture. Ground truth is the released knowledge layer plus the measured data of the sources. v2.1 also sets answer traceability to 100% in §3.6, updates Appendix E.4 and adds nine Appendix F terms. The guide is in Semantic Governance/ (Word and PDF) and docs/.',
+        'Conformance Review: every disposition is a human decision and passes the circuit breaker gateway (ingest_api.evaluate_decision). Waiving a finding on a guardrail rule (the load-blocking rules: base URL, other organization\u2019s content, valid dates) is blocked (HALT); accepting an error-severity finding is held for trustee sign-off (COMPLY) until Trustee sign-off releases it; everything else is released (PASS). Each record in ingest/feedback/dispositions.jsonl now carries its decision envelope and verdict (schema ke-disposition/2), and the queue tags blocked and held decisions.',
+        'Standards Conformance: six §3.13 jobs-model rules, the core shapes that §2.7 contextual relevancy relies on — job broken into job steps, job step belongs to a job, job step has a desired outcome, desired outcome mapped to a job step (error), desired outcome measured, persona performs jobs. They read the rdfs:subClassOf statements in the data, so jtbd classes count as their core classes. Conformance Review groups them under Jobs model (§3.13).'
+      ] },
+      { kind: 'improved', items: [
+        'Ingestion learns only from released decisions: fixes are replayed, findings exempted and definitions given to the definition writer only when the gateway verdict is PASS. Records from before the gate count as released.',
+        'Operations Dashboard: retrofit item G20 (measured agent assurance) is resolved by v2.1 §2.7; open actions went from 56 to 55. Assets still declare earlier editions until they are rebuilt (policy P07).',
+        'Customer 360: the 0.4.0 persona, job, job step and desired outcome instances (data/c360/persona-jobs-0.4.0/) pass every §3.13 error rule; the 0.3.0 files fail “desired outcome mapped to a job step” on all 224 outcomes.'
+      ] }
+    ]
+  },
+  {
     version: '4.5.0', date: '2026-10-24', title: 'Semantic Governance v2.0 in force',
     groups: [
       { kind: 'new', items: [

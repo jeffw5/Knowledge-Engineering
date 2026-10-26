@@ -623,6 +623,44 @@ def dispositions_get(_, __):
 DISPOSITIONS = ('fix', 'accept', 'not-an-issue', 'defer', 'escalate')
 
 
+def _guardrail_ids(cfg):
+    """Rule ids whose findings are guardrails: the load-blocking rules (config "loadBlockingRules", names as reported)."""
+    names = cfg.get('loadBlockingRules', DEFAULT_BLOCKING) or []
+    return {rid for rid, nm in ke_ingest.RULE_NAMES.items() if any(str(n).startswith(nm) or nm.startswith(str(n).split(' (')[0]) for n in names)}
+
+
+def evaluate_decision(r, cfg, now):
+    """The AI circuit breaker gateway for review dispositions (Semantic Governance §2.7, Decision Evaluation).
+    Every disposition is a human decision and passes the same gate as agent decisions. It is measured against the
+    guide edition in force and the conformance findings it disposes of, and gets a verdict:
+      HALT    waives (accept / not an issue) a finding on a guardrail rule (a load-blocking rule): blocked, cannot be approved;
+      COMPLY  waives an error-severity finding: held until the trustee signs it off;
+      PASS    everything else, and a trustee sign-off of a held exception.
+    Only PASS decisions take effect: they are replayed, exempt findings and teach the definition writer.
+    Ds is the share of the findings the decision waives that are errors; Db and Dr are measured by the
+    evaluate-decision service once it runs (they need the agent's intent and the persona weights)."""
+    import uuid
+    fs = r.get('findings') or []
+    waives = r.get('disposition') in ('accept', 'not-an-issue')
+    guard_ids = _guardrail_ids(cfg)
+    guard = [f for f in fs if f.get('rule') in guard_ids]
+    errs = [f for f in fs if (f.get('severity') or '') == 'error']
+    if waives and guard:
+        verdict, rule = 'HALT', 'guardrail breached: ' + ', '.join(sorted({f.get('title') or f.get('rule') for f in guard}))
+    elif waives and errs and not r.get('signOff'):
+        verdict, rule = 'COMPLY', 'exception to an error-severity standard: held for trustee sign-off'
+    elif waives and errs:
+        verdict, rule = 'PASS', 'exception signed off by the trustee'
+    else:
+        verdict, rule = 'PASS', 'within tolerance'
+    return {
+        'id': 'dec-' + uuid.uuid4().hex[:12], 'kind': 'review-disposition', 'madeBy': 'human', 'persona': 'knowledge engineer',
+        'output': r.get('disposition'), 'evidence': [f.get('rule') for f in fs],
+        'release': cfg.get('standardsRef') or '', 'consequence': 'high' if (guard or errs) else 'low',
+        'distances': {'ds': round(len(errs) / len(fs), 2) if (waives and fs) else 0.0, 'db': None, 'dr': None},
+        'verdict': verdict, 'rule': rule, 'evaluatedBy': 'workbench gateway rules (Semantic Governance §2.7)', 'at': now}
+
+
 def disposition_add(b, _):
     """Append review decisions. Each record: {disposition, term:{iri, label, …}, findings:[{rule, severity, detail}],
     actions:[…], rationale, suggested, source, by}. The file is append-only: a later record for the same term wins."""
@@ -637,15 +675,21 @@ def disposition_add(b, _):
     cfg, _ = ke_ingest.load_config(CONFIG)
     f = ke_ingest.FEEDBACK_FILE
     f.parent.mkdir(parents=True, exist_ok=True)
+    verdicts, held, halted = {}, [], []
     with open(f, 'a', encoding='utf-8') as fh:
         for r in recs:
             r = dict(r)
             r.setdefault('id', 'disp-' + uuid.uuid4().hex[:12])
             r.setdefault('at', now)
             r.setdefault('by', cfg.get('author') or '')
-            r['schema'] = 'ke-disposition/1'
+            r['decision'] = evaluate_decision(r, cfg, now)
+            r['schema'] = 'ke-disposition/2'
+            v = r['decision']['verdict']; verdicts[v] = verdicts.get(v, 0) + 1
+            item = {'iri': r['term']['iri'], 'label': r['term'].get('label') or '', 'rule': r['decision']['rule']}
+            if v == 'HALT': halted.append(item)
+            elif v != 'PASS': held.append(item)
             fh.write(json.dumps(r, ensure_ascii=False) + '\n')
-    return {'ok': True, 'count': len(recs), 'path': str(f)}
+    return {'ok': True, 'count': len(recs), 'path': str(f), 'verdicts': verdicts, 'held': held, 'halted': halted}
 
 
 ROUTES = {

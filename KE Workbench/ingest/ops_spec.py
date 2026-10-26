@@ -155,6 +155,9 @@ RESOLUTION = {
         'G20': ('decide', '§3.6 Measured Agent Assurance (proposed)'),
         'G21': ('tools', 'Front matter; §3.11 Edition Conformance (rebuild assets: policy P07)'),
     },
+    '2.1': {
+        'G20': ('resolved', '§2.7 Decision Evaluation: the AI circuit breaker gateway; §3.6 Measured Agent Assurance'),
+    },
 }
 
 POLICIES = [

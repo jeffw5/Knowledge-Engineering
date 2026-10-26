@@ -1,0 +1,831 @@
+# ==========================================================================
+#  Jobs to be done: functional and emotional
+#  Target named graph: <https://www.insperity.com/graph/outcome-benchmark/jobs>
+#  26 functional jobs (22 core functional, 4 consumption chain) and 16 emotional jobs.
+#  Supersedes 03-jobs.ttl (same graph). Each functional job now names its job map steps
+#  (core:hasStep, jtbd:hasJobMapStep) in 22-job-map-steps.ttl.
+#  Emotional jobs are promoted from the persona strings; they have no steps or outcomes yet.
+#  Load after: 00-jobs-to-be-done-ontology.ttl, 01-job-steps.ttl (job map stages),
+#              05/06/11 vocabularies, and Baseline Core v1.0 (ontology-core, shapes-core).
+#  Source: PEO Outcome Benchmark (Outcome-Driven Innovation study blueprint)
+#  Status: Draft 0.4.0, generated 2026-10-26, pending business and compliance SME review
+# ==========================================================================
+
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix core:    <https://www.insperity.com/ontology/core/> .
+@prefix jtbd:    <https://www.insperity.com/ontology/jobs-to-be-done/> .
+@prefix ob:      <https://www.insperity.com/resource/outcome-benchmark/> .
+@prefix theme:   <https://www.insperity.com/taxonomy/benchmark-theme/> .
+@prefix metric:  <https://www.insperity.com/vocabulary/outcome-metric-type/> .
+@prefix evid:    <https://www.insperity.com/vocabulary/evidence-status/> .
+@prefix hr:      <http://example.org/hrservices/ddd#> .
+
+
+# ---- Functional jobs -----------------------------------------------------
+
+ob:Job-J01 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Pay employees accurately and on time"@en ;
+    skos:prefLabel "Pay employees accurately and on time"@en ;
+    skos:definition "A core functional job in which the client persona needs to pay employees accurately and on time."@en ;
+    jtbd:hasIdentifier "J01" ;
+    jtbd:hasJobStatement "Pay employees accurately and on time"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:BusinessOwner ;
+    jtbd:hasDesiredOutcome ob:Outcome-O001,
+        ob:Outcome-O002,
+        ob:Outcome-O003,
+        ob:Outcome-O004,
+        ob:Outcome-O005,
+        ob:Outcome-O006,
+        ob:Outcome-O007,
+        ob:Outcome-O008,
+        ob:Outcome-O009,
+        ob:Outcome-O010 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J01-S01, ob:JobStep-J01-S02, ob:JobStep-J01-S03, ob:JobStep-J01-S04, ob:JobStep-J01-S05, ob:JobStep-J01-S06, ob:JobStep-J01-S07, ob:JobStep-J01-S08, ob:JobStep-J01-S09 ;
+    jtbd:hasJobMapStep ob:JobStep-J01-S01, ob:JobStep-J01-S02, ob:JobStep-J01-S03, ob:JobStep-J01-S04, ob:JobStep-J01-S05, ob:JobStep-J01-S06, ob:JobStep-J01-S07, ob:JobStep-J01-S08, ob:JobStep-J01-S09 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J02 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Meet payroll tax obligations in every jurisdiction where employees work"@en ;
+    skos:prefLabel "Meet payroll tax obligations in every jurisdiction where employees work"@en ;
+    skos:definition "A core functional job in which the client persona needs to meet payroll tax obligations in every jurisdiction where employees work."@en ;
+    jtbd:hasIdentifier "J02" ;
+    jtbd:hasJobStatement "Meet payroll tax obligations in every jurisdiction where employees work"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:BusinessOwner ;
+    jtbd:hasDesiredOutcome ob:Outcome-O011,
+        ob:Outcome-O012,
+        ob:Outcome-O013,
+        ob:Outcome-O014,
+        ob:Outcome-O015,
+        ob:Outcome-O016,
+        ob:Outcome-O017,
+        ob:Outcome-O018,
+        ob:Outcome-O019 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J02-S01, ob:JobStep-J02-S02, ob:JobStep-J02-S03, ob:JobStep-J02-S04, ob:JobStep-J02-S05, ob:JobStep-J02-S06, ob:JobStep-J02-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J02-S01, ob:JobStep-J02-S02, ob:JobStep-J02-S03, ob:JobStep-J02-S04, ob:JobStep-J02-S05, ob:JobStep-J02-S06, ob:JobStep-J02-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J03 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Track time worked and manage time off"@en ;
+    skos:prefLabel "Track time worked and manage time off"@en ;
+    skos:definition "A core functional job in which the client persona needs to track time worked and manage time off."@en ;
+    jtbd:hasIdentifier "J03" ;
+    jtbd:hasJobStatement "Track time worked and manage time off"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:PeopleManager, ob:OperationsAndSafetyLeader ;
+    jtbd:hasJobParticipant ob:WorksiteEmployee, ob:FinanceLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O020,
+        ob:Outcome-O021,
+        ob:Outcome-O022,
+        ob:Outcome-O023,
+        ob:Outcome-O024,
+        ob:Outcome-O025,
+        ob:Outcome-O026,
+        ob:Outcome-O027,
+        ob:Outcome-O028 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J03-S01, ob:JobStep-J03-S02, ob:JobStep-J03-S03, ob:JobStep-J03-S04, ob:JobStep-J03-S05, ob:JobStep-J03-S06, ob:JobStep-J03-S07, ob:JobStep-J03-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J03-S01, ob:JobStep-J03-S02, ob:JobStep-J03-S03, ob:JobStep-J03-S04, ob:JobStep-J03-S05, ob:JobStep-J03-S06, ob:JobStep-J03-S07, ob:JobStep-J03-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J04 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Understand and allocate labor cost by department, job or project"@en ;
+    skos:prefLabel "Understand and allocate labor cost by department, job or project"@en ;
+    skos:definition "A core functional job in which the client persona needs to understand and allocate labor cost by department, job or project."@en ;
+    jtbd:hasIdentifier "J04" ;
+    jtbd:hasJobStatement "Understand and allocate labor cost by department, job or project"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:BusinessOwner, ob:OperationsAndSafetyLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O029,
+        ob:Outcome-O030,
+        ob:Outcome-O031,
+        ob:Outcome-O032,
+        ob:Outcome-O033,
+        ob:Outcome-O034,
+        ob:Outcome-O035 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J04-S01, ob:JobStep-J04-S02, ob:JobStep-J04-S03, ob:JobStep-J04-S04, ob:JobStep-J04-S05, ob:JobStep-J04-S06 ;
+    jtbd:hasJobMapStep ob:JobStep-J04-S01, ob:JobStep-J04-S02, ob:JobStep-J04-S03, ob:JobStep-J04-S04, ob:JobStep-J04-S05, ob:JobStep-J04-S06 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J05 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Offer a competitive and affordable benefits package"@en ;
+    skos:prefLabel "Offer a competitive and affordable benefits package"@en ;
+    skos:definition "A core functional job in which the client persona needs to offer a competitive and affordable benefits package."@en ;
+    jtbd:hasIdentifier "J05" ;
+    jtbd:hasJobStatement "Offer a competitive and affordable benefits package"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner, ob:HumanResourcesLeader ;
+    jtbd:hasJobParticipant ob:FinanceLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O036,
+        ob:Outcome-O037,
+        ob:Outcome-O038,
+        ob:Outcome-O039,
+        ob:Outcome-O040,
+        ob:Outcome-O041,
+        ob:Outcome-O042,
+        ob:Outcome-O043,
+        ob:Outcome-O044 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J05-S01, ob:JobStep-J05-S02, ob:JobStep-J05-S03, ob:JobStep-J05-S04, ob:JobStep-J05-S05, ob:JobStep-J05-S06, ob:JobStep-J05-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J05-S01, ob:JobStep-J05-S02, ob:JobStep-J05-S03, ob:JobStep-J05-S04, ob:JobStep-J05-S05, ob:JobStep-J05-S06, ob:JobStep-J05-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J06 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Administer benefit enrollment and changes"@en ;
+    skos:prefLabel "Administer benefit enrollment and changes"@en ;
+    skos:definition "A core functional job in which the client persona needs to administer benefit enrollment and changes."@en ;
+    jtbd:hasIdentifier "J06" ;
+    jtbd:hasJobStatement "Administer benefit enrollment and changes"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+    jtbd:hasJobParticipant ob:FinanceLeader, ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O045,
+        ob:Outcome-O046,
+        ob:Outcome-O047,
+        ob:Outcome-O048,
+        ob:Outcome-O049,
+        ob:Outcome-O050,
+        ob:Outcome-O051,
+        ob:Outcome-O052,
+        ob:Outcome-O053 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J06-S01, ob:JobStep-J06-S02, ob:JobStep-J06-S03, ob:JobStep-J06-S04, ob:JobStep-J06-S05, ob:JobStep-J06-S06, ob:JobStep-J06-S07, ob:JobStep-J06-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J06-S01, ob:JobStep-J06-S02, ob:JobStep-J06-S03, ob:JobStep-J06-S04, ob:JobStep-J06-S05, ob:JobStep-J06-S06, ob:JobStep-J06-S07, ob:JobStep-J06-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J07 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Provide a retirement savings plan"@en ;
+    skos:prefLabel "Provide a retirement savings plan"@en ;
+    skos:definition "A core functional job in which the client persona needs to provide a retirement savings plan."@en ;
+    jtbd:hasIdentifier "J07" ;
+    jtbd:hasJobStatement "Provide a retirement savings plan"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner, ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O054,
+        ob:Outcome-O055,
+        ob:Outcome-O056,
+        ob:Outcome-O057,
+        ob:Outcome-O058,
+        ob:Outcome-O059,
+        ob:Outcome-O060,
+        ob:Outcome-O061,
+        ob:Outcome-O062 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J07-S01, ob:JobStep-J07-S02, ob:JobStep-J07-S03, ob:JobStep-J07-S04, ob:JobStep-J07-S05, ob:JobStep-J07-S06, ob:JobStep-J07-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J07-S01, ob:JobStep-J07-S02, ob:JobStep-J07-S03, ob:JobStep-J07-S04, ob:JobStep-J07-S05, ob:JobStep-J07-S06, ob:JobStep-J07-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J08 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Choose and use my benefits"@en ;
+    skos:prefLabel "Choose and use my benefits"@en ;
+    skos:definition "A core functional job in which the client persona needs to choose and use my benefits."@en ;
+    jtbd:hasIdentifier "J08" ;
+    jtbd:hasJobStatement "Choose and use my benefits"@en ;
+    jtbd:hasJobExecutor ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O063,
+        ob:Outcome-O064,
+        ob:Outcome-O065,
+        ob:Outcome-O066,
+        ob:Outcome-O067,
+        ob:Outcome-O068,
+        ob:Outcome-O069,
+        ob:Outcome-O070 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J08-S01, ob:JobStep-J08-S02, ob:JobStep-J08-S03, ob:JobStep-J08-S04, ob:JobStep-J08-S05, ob:JobStep-J08-S06, ob:JobStep-J08-S07, ob:JobStep-J08-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J08-S01, ob:JobStep-J08-S02, ob:JobStep-J08-S03, ob:JobStep-J08-S04, ob:JobStep-J08-S05, ob:JobStep-J08-S06, ob:JobStep-J08-S07, ob:JobStep-J08-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J09 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Keep the company compliant with employment laws"@en ;
+    skos:prefLabel "Keep the company compliant with employment laws"@en ;
+    skos:definition "A core functional job in which the client persona needs to keep the company compliant with employment laws."@en ;
+    jtbd:hasIdentifier "J09" ;
+    jtbd:hasJobStatement "Keep the company compliant with employment laws"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+    jtbd:hasJobParticipant ob:BusinessOwner ;
+    jtbd:hasDesiredOutcome ob:Outcome-O071,
+        ob:Outcome-O072,
+        ob:Outcome-O073,
+        ob:Outcome-O074,
+        ob:Outcome-O075,
+        ob:Outcome-O076,
+        ob:Outcome-O077,
+        ob:Outcome-O078,
+        ob:Outcome-O079,
+        ob:Outcome-O080 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J09-S01, ob:JobStep-J09-S02, ob:JobStep-J09-S03, ob:JobStep-J09-S04, ob:JobStep-J09-S05, ob:JobStep-J09-S06, ob:JobStep-J09-S07, ob:JobStep-J09-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J09-S01, ob:JobStep-J09-S02, ob:JobStep-J09-S03, ob:JobStep-J09-S04, ob:JobStep-J09-S05, ob:JobStep-J09-S06, ob:JobStep-J09-S07, ob:JobStep-J09-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J10 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Resolve employee relations issues and separations without legal exposure"@en ;
+    skos:prefLabel "Resolve employee relations issues and separations without legal exposure"@en ;
+    skos:definition "A core functional job in which the client persona needs to resolve employee relations issues and separations without legal exposure."@en ;
+    jtbd:hasIdentifier "J10" ;
+    jtbd:hasJobStatement "Resolve employee relations issues and separations without legal exposure"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:BusinessOwner ;
+    jtbd:hasJobParticipant ob:PeopleManager ;
+    jtbd:hasDesiredOutcome ob:Outcome-O081,
+        ob:Outcome-O082,
+        ob:Outcome-O083,
+        ob:Outcome-O084,
+        ob:Outcome-O085,
+        ob:Outcome-O086,
+        ob:Outcome-O087,
+        ob:Outcome-O088,
+        ob:Outcome-O089 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J10-S01, ob:JobStep-J10-S02, ob:JobStep-J10-S03, ob:JobStep-J10-S04, ob:JobStep-J10-S05, ob:JobStep-J10-S06, ob:JobStep-J10-S07, ob:JobStep-J10-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J10-S01, ob:JobStep-J10-S02, ob:JobStep-J10-S03, ob:JobStep-J10-S04, ob:JobStep-J10-S05, ob:JobStep-J10-S06, ob:JobStep-J10-S07, ob:JobStep-J10-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J11 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Keep the workplace safe and manage injuries"@en ;
+    skos:prefLabel "Keep the workplace safe and manage injuries"@en ;
+    skos:definition "A core functional job in which the client persona needs to keep the workplace safe and manage injuries."@en ;
+    jtbd:hasIdentifier "J11" ;
+    jtbd:hasJobStatement "Keep the workplace safe and manage injuries"@en ;
+    jtbd:hasJobExecutor ob:OperationsAndSafetyLeader ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:FinanceLeader, ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O090,
+        ob:Outcome-O091,
+        ob:Outcome-O092,
+        ob:Outcome-O093,
+        ob:Outcome-O094,
+        ob:Outcome-O095,
+        ob:Outcome-O096,
+        ob:Outcome-O097,
+        ob:Outcome-O098,
+        ob:Outcome-O099 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J11-S01, ob:JobStep-J11-S02, ob:JobStep-J11-S03, ob:JobStep-J11-S04, ob:JobStep-J11-S05, ob:JobStep-J11-S06, ob:JobStep-J11-S07, ob:JobStep-J11-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J11-S01, ob:JobStep-J11-S02, ob:JobStep-J11-S03, ob:JobStep-J11-S04, ob:JobStep-J11-S05, ob:JobStep-J11-S06, ob:JobStep-J11-S07, ob:JobStep-J11-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J12 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Hire the right people"@en ;
+    skos:prefLabel "Hire the right people"@en ;
+    skos:definition "A core functional job in which the client persona needs to hire the right people."@en ;
+    jtbd:hasIdentifier "J12" ;
+    jtbd:hasJobStatement "Hire the right people"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:PeopleManager ;
+    jtbd:hasJobParticipant ob:BusinessOwner, ob:OperationsAndSafetyLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O100,
+        ob:Outcome-O101,
+        ob:Outcome-O102,
+        ob:Outcome-O103,
+        ob:Outcome-O104,
+        ob:Outcome-O105,
+        ob:Outcome-O106,
+        ob:Outcome-O107,
+        ob:Outcome-O108 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J12-S01, ob:JobStep-J12-S02, ob:JobStep-J12-S03, ob:JobStep-J12-S04, ob:JobStep-J12-S05, ob:JobStep-J12-S06, ob:JobStep-J12-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J12-S01, ob:JobStep-J12-S02, ob:JobStep-J12-S03, ob:JobStep-J12-S04, ob:JobStep-J12-S05, ob:JobStep-J12-S06, ob:JobStep-J12-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J13 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Get new hires productive quickly"@en ;
+    skos:prefLabel "Get new hires productive quickly"@en ;
+    skos:definition "A core functional job in which the client persona needs to get new hires productive quickly."@en ;
+    jtbd:hasIdentifier "J13" ;
+    jtbd:hasJobStatement "Get new hires productive quickly"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:PeopleManager ;
+    jtbd:hasJobParticipant ob:WorksiteEmployee, ob:SystemsAdministrator ;
+    jtbd:hasDesiredOutcome ob:Outcome-O109,
+        ob:Outcome-O110,
+        ob:Outcome-O111,
+        ob:Outcome-O112,
+        ob:Outcome-O113,
+        ob:Outcome-O114,
+        ob:Outcome-O115,
+        ob:Outcome-O116 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J13-S01, ob:JobStep-J13-S02, ob:JobStep-J13-S03, ob:JobStep-J13-S04, ob:JobStep-J13-S05, ob:JobStep-J13-S06, ob:JobStep-J13-S07, ob:JobStep-J13-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J13-S01, ob:JobStep-J13-S02, ob:JobStep-J13-S03, ob:JobStep-J13-S04, ob:JobStep-J13-S05, ob:JobStep-J13-S06, ob:JobStep-J13-S07, ob:JobStep-J13-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J14 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Set pay that is competitive, fair and affordable"@en ;
+    skos:prefLabel "Set pay that is competitive, fair and affordable"@en ;
+    skos:definition "A core functional job in which the client persona needs to set pay that is competitive, fair and affordable."@en ;
+    jtbd:hasIdentifier "J14" ;
+    jtbd:hasJobStatement "Set pay that is competitive, fair and affordable"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner, ob:HumanResourcesLeader ;
+    jtbd:hasJobParticipant ob:FinanceLeader, ob:PeopleManager ;
+    jtbd:hasDesiredOutcome ob:Outcome-O117,
+        ob:Outcome-O118,
+        ob:Outcome-O119,
+        ob:Outcome-O120,
+        ob:Outcome-O121,
+        ob:Outcome-O122,
+        ob:Outcome-O123,
+        ob:Outcome-O124 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J14-S01, ob:JobStep-J14-S02, ob:JobStep-J14-S03, ob:JobStep-J14-S04, ob:JobStep-J14-S05, ob:JobStep-J14-S06, ob:JobStep-J14-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J14-S01, ob:JobStep-J14-S02, ob:JobStep-J14-S03, ob:JobStep-J14-S04, ob:JobStep-J14-S05, ob:JobStep-J14-S06, ob:JobStep-J14-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J15 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Manage and improve team performance"@en ;
+    skos:prefLabel "Manage and improve team performance"@en ;
+    skos:definition "A core functional job in which the client persona needs to manage and improve team performance."@en ;
+    jtbd:hasIdentifier "J15" ;
+    jtbd:hasJobStatement "Manage and improve team performance"@en ;
+    jtbd:hasJobExecutor ob:PeopleManager ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O125,
+        ob:Outcome-O126,
+        ob:Outcome-O127,
+        ob:Outcome-O128,
+        ob:Outcome-O129,
+        ob:Outcome-O130,
+        ob:Outcome-O131,
+        ob:Outcome-O132,
+        ob:Outcome-O133 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J15-S01, ob:JobStep-J15-S02, ob:JobStep-J15-S03, ob:JobStep-J15-S04, ob:JobStep-J15-S05, ob:JobStep-J15-S06, ob:JobStep-J15-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J15-S01, ob:JobStep-J15-S02, ob:JobStep-J15-S03, ob:JobStep-J15-S04, ob:JobStep-J15-S05, ob:JobStep-J15-S06, ob:JobStep-J15-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J16 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Develop employees and retain the best ones"@en ;
+    skos:prefLabel "Develop employees and retain the best ones"@en ;
+    skos:definition "A core functional job in which the client persona needs to develop employees and retain the best ones."@en ;
+    jtbd:hasIdentifier "J16" ;
+    jtbd:hasJobStatement "Develop employees and retain the best ones"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+    jtbd:hasJobParticipant ob:BusinessOwner, ob:PeopleManager, ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O134,
+        ob:Outcome-O135,
+        ob:Outcome-O136,
+        ob:Outcome-O137,
+        ob:Outcome-O138,
+        ob:Outcome-O139,
+        ob:Outcome-O140,
+        ob:Outcome-O141,
+        ob:Outcome-O142 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J16-S01, ob:JobStep-J16-S02, ob:JobStep-J16-S03, ob:JobStep-J16-S04, ob:JobStep-J16-S05, ob:JobStep-J16-S06, ob:JobStep-J16-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J16-S01, ob:JobStep-J16-S02, ob:JobStep-J16-S03, ob:JobStep-J16-S04, ob:JobStep-J16-S05, ob:JobStep-J16-S06, ob:JobStep-J16-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J17 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Become an effective people leader"@en ;
+    skos:prefLabel "Become an effective people leader"@en ;
+    skos:definition "A core functional job in which the client persona needs to become an effective people leader."@en ;
+    jtbd:hasIdentifier "J17" ;
+    jtbd:hasJobStatement "Become an effective people leader"@en ;
+    jtbd:hasJobExecutor ob:PeopleManager ;
+    jtbd:hasDesiredOutcome ob:Outcome-O143,
+        ob:Outcome-O144,
+        ob:Outcome-O145,
+        ob:Outcome-O146,
+        ob:Outcome-O147,
+        ob:Outcome-O148,
+        ob:Outcome-O149,
+        ob:Outcome-O150 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J17-S01, ob:JobStep-J17-S02, ob:JobStep-J17-S03, ob:JobStep-J17-S04, ob:JobStep-J17-S05, ob:JobStep-J17-S06, ob:JobStep-J17-S07, ob:JobStep-J17-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J17-S01, ob:JobStep-J17-S02, ob:JobStep-J17-S03, ob:JobStep-J17-S04, ob:JobStep-J17-S05, ob:JobStep-J17-S06, ob:JobStep-J17-S07, ob:JobStep-J17-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J18 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Build and sustain a healthy, values-driven culture"@en ;
+    skos:prefLabel "Build and sustain a healthy, values-driven culture"@en ;
+    skos:definition "A core functional job in which the client persona needs to build and sustain a healthy, values-driven culture."@en ;
+    jtbd:hasIdentifier "J18" ;
+    jtbd:hasJobStatement "Build and sustain a healthy, values-driven culture"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner, ob:HumanResourcesLeader ;
+    jtbd:hasJobParticipant ob:PeopleManager, ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O151,
+        ob:Outcome-O152,
+        ob:Outcome-O153,
+        ob:Outcome-O154,
+        ob:Outcome-O155,
+        ob:Outcome-O156,
+        ob:Outcome-O157,
+        ob:Outcome-O158,
+        ob:Outcome-O159,
+        ob:Outcome-O160 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J18-S01, ob:JobStep-J18-S02, ob:JobStep-J18-S03, ob:JobStep-J18-S04, ob:JobStep-J18-S05, ob:JobStep-J18-S06, ob:JobStep-J18-S07, ob:JobStep-J18-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J18-S01, ob:JobStep-J18-S02, ob:JobStep-J18-S03, ob:JobStep-J18-S04, ob:JobStep-J18-S05, ob:JobStep-J18-S06, ob:JobStep-J18-S07, ob:JobStep-J18-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J19 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Measure the workforce while protecting employee privacy"@en ;
+    skos:prefLabel "Measure the workforce while protecting employee privacy"@en ;
+    skos:definition "A core functional job in which the client persona needs to measure the workforce while protecting employee privacy."@en ;
+    jtbd:hasIdentifier "J19" ;
+    jtbd:hasJobStatement "Measure the workforce while protecting employee privacy"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:SystemsAdministrator ;
+    jtbd:hasJobParticipant ob:BusinessOwner ;
+    jtbd:hasDesiredOutcome ob:Outcome-O161,
+        ob:Outcome-O162,
+        ob:Outcome-O163,
+        ob:Outcome-O164,
+        ob:Outcome-O165,
+        ob:Outcome-O166,
+        ob:Outcome-O167,
+        ob:Outcome-O168,
+        ob:Outcome-O169 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J19-S01, ob:JobStep-J19-S02, ob:JobStep-J19-S03, ob:JobStep-J19-S04, ob:JobStep-J19-S05, ob:JobStep-J19-S06, ob:JobStep-J19-S07, ob:JobStep-J19-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J19-S01, ob:JobStep-J19-S02, ob:JobStep-J19-S03, ob:JobStep-J19-S04, ob:JobStep-J19-S05, ob:JobStep-J19-S06, ob:JobStep-J19-S07, ob:JobStep-J19-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J20 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Use workforce data to make business decisions"@en ;
+    skos:prefLabel "Use workforce data to make business decisions"@en ;
+    skos:definition "A core functional job in which the client persona needs to use workforce data to make business decisions."@en ;
+    jtbd:hasIdentifier "J20" ;
+    jtbd:hasJobStatement "Use workforce data to make business decisions"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner, ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O170,
+        ob:Outcome-O171,
+        ob:Outcome-O172,
+        ob:Outcome-O173,
+        ob:Outcome-O174,
+        ob:Outcome-O175,
+        ob:Outcome-O176,
+        ob:Outcome-O177 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J20-S01, ob:JobStep-J20-S02, ob:JobStep-J20-S03, ob:JobStep-J20-S04, ob:JobStep-J20-S05, ob:JobStep-J20-S06, ob:JobStep-J20-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J20-S01, ob:JobStep-J20-S02, ob:JobStep-J20-S03, ob:JobStep-J20-S04, ob:JobStep-J20-S05, ob:JobStep-J20-S06, ob:JobStep-J20-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J21 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Connect employee data to other business systems securely"@en ;
+    skos:prefLabel "Connect employee data to other business systems securely"@en ;
+    skos:definition "A core functional job in which the client persona needs to connect employee data to other business systems securely."@en ;
+    jtbd:hasIdentifier "J21" ;
+    jtbd:hasJobStatement "Connect employee data to other business systems securely"@en ;
+    jtbd:hasJobExecutor ob:SystemsAdministrator ;
+    jtbd:hasJobParticipant ob:FinanceLeader, ob:HumanResourcesLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O178,
+        ob:Outcome-O179,
+        ob:Outcome-O180,
+        ob:Outcome-O181,
+        ob:Outcome-O182,
+        ob:Outcome-O183,
+        ob:Outcome-O184,
+        ob:Outcome-O185,
+        ob:Outcome-O186 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J21-S01, ob:JobStep-J21-S02, ob:JobStep-J21-S03, ob:JobStep-J21-S04, ob:JobStep-J21-S05, ob:JobStep-J21-S06, ob:JobStep-J21-S07, ob:JobStep-J21-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-J21-S01, ob:JobStep-J21-S02, ob:JobStep-J21-S03, ob:JobStep-J21-S04, ob:JobStep-J21-S05, ob:JobStep-J21-S06, ob:JobStep-J21-S07, ob:JobStep-J21-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-J22 a owl:NamedIndividual, jtbd:core-functional-job ;
+    rdfs:label "Get human resources answers and complete human resources tasks myself"@en ;
+    skos:prefLabel "Get human resources answers and complete human resources tasks myself"@en ;
+    skos:altLabel "Get HR answers and complete HR tasks myself"@en ;
+    skos:definition "A core functional job in which the client persona needs to get human resources answers and complete human resources tasks myself."@en ;
+    jtbd:hasIdentifier "J22" ;
+    jtbd:hasJobStatement "Get HR answers and complete HR tasks myself"@en ;
+    jtbd:hasJobExecutor ob:WorksiteEmployee ;
+    jtbd:hasDesiredOutcome ob:Outcome-O187,
+        ob:Outcome-O188,
+        ob:Outcome-O189,
+        ob:Outcome-O190,
+        ob:Outcome-O191,
+        ob:Outcome-O192,
+        ob:Outcome-O193,
+        ob:Outcome-O194 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-J22-S01, ob:JobStep-J22-S02, ob:JobStep-J22-S03, ob:JobStep-J22-S04, ob:JobStep-J22-S05, ob:JobStep-J22-S06, ob:JobStep-J22-S07 ;
+    jtbd:hasJobMapStep ob:JobStep-J22-S01, ob:JobStep-J22-S02, ob:JobStep-J22-S03, ob:JobStep-J22-S04, ob:JobStep-J22-S05, ob:JobStep-J22-S06, ob:JobStep-J22-S07 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-C1 a owl:NamedIndividual, jtbd:consumption-chain-job ;
+    rdfs:label "Evaluate and choose an human resources outsourcing partner"@en ;
+    skos:prefLabel "Evaluate and choose an human resources outsourcing partner"@en ;
+    skos:altLabel "Evaluate and choose an HR outsourcing partner"@en ;
+    skos:definition "A consumption chain job in which the client persona needs to evaluate and choose an human resources outsourcing partner."@en ;
+    jtbd:hasIdentifier "C1" ;
+    jtbd:hasJobStatement "Evaluate and choose an HR outsourcing partner"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner, ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader, ob:SystemsAdministrator ;
+    jtbd:hasDesiredOutcome ob:Outcome-O195,
+        ob:Outcome-O196,
+        ob:Outcome-O197,
+        ob:Outcome-O198,
+        ob:Outcome-O199,
+        ob:Outcome-O200,
+        ob:Outcome-O201,
+        ob:Outcome-O202 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-C1-S01, ob:JobStep-C1-S02, ob:JobStep-C1-S03, ob:JobStep-C1-S04, ob:JobStep-C1-S05 ;
+    jtbd:hasJobMapStep ob:JobStep-C1-S01, ob:JobStep-C1-S02, ob:JobStep-C1-S03, ob:JobStep-C1-S04, ob:JobStep-C1-S05 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-C2 a owl:NamedIndividual, jtbd:consumption-chain-job ;
+    rdfs:label "Move the company onto a new human resources provider"@en ;
+    skos:prefLabel "Move the company onto a new human resources provider"@en ;
+    skos:altLabel "Move the company onto a new HR provider"@en ;
+    skos:definition "A consumption chain job in which the client persona needs to move the company onto a new human resources provider."@en ;
+    jtbd:hasIdentifier "C2" ;
+    jtbd:hasJobStatement "Move the company onto a new HR provider"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:FinanceLeader ;
+    jtbd:hasJobParticipant ob:SystemsAdministrator, ob:BusinessOwner ;
+    jtbd:hasDesiredOutcome ob:Outcome-O203,
+        ob:Outcome-O204,
+        ob:Outcome-O205,
+        ob:Outcome-O206,
+        ob:Outcome-O207,
+        ob:Outcome-O208,
+        ob:Outcome-O209,
+        ob:Outcome-O210 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-C2-S01, ob:JobStep-C2-S02, ob:JobStep-C2-S03, ob:JobStep-C2-S04, ob:JobStep-C2-S05, ob:JobStep-C2-S06, ob:JobStep-C2-S07, ob:JobStep-C2-S08 ;
+    jtbd:hasJobMapStep ob:JobStep-C2-S01, ob:JobStep-C2-S02, ob:JobStep-C2-S03, ob:JobStep-C2-S04, ob:JobStep-C2-S05, ob:JobStep-C2-S06, ob:JobStep-C2-S07, ob:JobStep-C2-S08 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-C3 a owl:NamedIndividual, jtbd:consumption-chain-job ;
+    rdfs:label "Get help when an human resources issue arises"@en ;
+    skos:prefLabel "Get help when an human resources issue arises"@en ;
+    skos:altLabel "Get help when an HR issue arises"@en ;
+    skos:definition "A consumption chain job in which the client persona needs to get help when an human resources issue arises."@en ;
+    jtbd:hasIdentifier "C3" ;
+    jtbd:hasJobStatement "Get help when an HR issue arises"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader, ob:BusinessOwner ;
+    jtbd:hasJobParticipant ob:PeopleManager, ob:FinanceLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O211,
+        ob:Outcome-O212,
+        ob:Outcome-O213,
+        ob:Outcome-O214,
+        ob:Outcome-O215,
+        ob:Outcome-O216,
+        ob:Outcome-O217 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-C3-S01, ob:JobStep-C3-S02, ob:JobStep-C3-S03, ob:JobStep-C3-S04, ob:JobStep-C3-S05 ;
+    jtbd:hasJobMapStep ob:JobStep-C3-S01, ob:JobStep-C3-S02, ob:JobStep-C3-S03, ob:JobStep-C3-S04, ob:JobStep-C3-S05 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+ob:Job-C4 a owl:NamedIndividual, jtbd:consumption-chain-job ;
+    rdfs:label "Manage the cost and value of the human resources outsourcing relationship"@en ;
+    skos:prefLabel "Manage the cost and value of the human resources outsourcing relationship"@en ;
+    skos:altLabel "Manage the cost and value of the HR outsourcing relationship"@en ;
+    skos:definition "A consumption chain job in which the client persona needs to manage the cost and value of the human resources outsourcing relationship."@en ;
+    jtbd:hasIdentifier "C4" ;
+    jtbd:hasJobStatement "Manage the cost and value of the HR outsourcing relationship"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader, ob:BusinessOwner ;
+    jtbd:hasJobParticipant ob:HumanResourcesLeader ;
+    jtbd:hasDesiredOutcome ob:Outcome-O218,
+        ob:Outcome-O219,
+        ob:Outcome-O220,
+        ob:Outcome-O221,
+        ob:Outcome-O222,
+        ob:Outcome-O223,
+        ob:Outcome-O224 ;
+    dcterms:created "2026-10-22"^^xsd:date ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en ;
+    core:hasStep ob:JobStep-C4-S01, ob:JobStep-C4-S02, ob:JobStep-C4-S03, ob:JobStep-C4-S04, ob:JobStep-C4-S05 ;
+    jtbd:hasJobMapStep ob:JobStep-C4-S01, ob:JobStep-C4-S02, ob:JobStep-C4-S03, ob:JobStep-C4-S04, ob:JobStep-C4-S05 ;
+    dcterms:modified "2026-10-26"^^xsd:date .
+
+# ---- Emotional jobs (job kinds are functional and emotional only) --------
+
+ob:Job-E01 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel confident the company is not exposed to a lawsuit or penalty it doesn't know about"@en ;
+    skos:prefLabel "Feel confident the company is not exposed to a lawsuit or penalty it doesn't know about"@en ;
+    skos:definition "An emotional job in which the Business Owner / Chief Executive Officer persona wants to feel confident the company is not exposed to a lawsuit or penalty it doesn't know about."@en ;
+    jtbd:hasIdentifier "E01" ;
+    jtbd:hasJobStatement "Feel confident the company is not exposed to a lawsuit or penalty it doesn't know about"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E02 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel able to compete with larger employers for talent"@en ;
+    skos:prefLabel "Feel able to compete with larger employers for talent"@en ;
+    skos:definition "An emotional job in which the Business Owner / Chief Executive Officer persona wants to feel able to compete with larger employers for talent."@en ;
+    jtbd:hasIdentifier "E02" ;
+    jtbd:hasJobStatement "Feel able to compete with larger employers for talent"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E03 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Be seen by employees as an employer that takes care of its people"@en ;
+    skos:prefLabel "Be seen by employees as an employer that takes care of its people"@en ;
+    skos:definition "An emotional job in which the Business Owner / Chief Executive Officer persona wants to be seen by employees as an employer that takes care of its people."@en ;
+    jtbd:hasIdentifier "E03" ;
+    jtbd:hasJobStatement "Be seen by employees as an employer that takes care of its people"@en ;
+    jtbd:hasJobExecutor ob:BusinessOwner ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E04 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Avoid the embarrassment of a missed or wrong payroll"@en ;
+    skos:prefLabel "Avoid the embarrassment of a missed or wrong payroll"@en ;
+    skos:definition "An emotional job in which the Finance Leader persona wants to avoid the embarrassment of a missed or wrong payroll."@en ;
+    jtbd:hasIdentifier "E04" ;
+    jtbd:hasJobStatement "Avoid the embarrassment of a missed or wrong payroll"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E05 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel in control of every dollar of employer cost"@en ;
+    skos:prefLabel "Feel in control of every dollar of employer cost"@en ;
+    skos:definition "An emotional job in which the Finance Leader persona wants to feel in control of every dollar of employer cost."@en ;
+    jtbd:hasIdentifier "E05" ;
+    jtbd:hasJobStatement "Feel in control of every dollar of employer cost"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E06 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Be seen by the owner as a trusted steward of company money"@en ;
+    skos:prefLabel "Be seen by the owner as a trusted steward of company money"@en ;
+    skos:definition "An emotional job in which the Finance Leader persona wants to be seen by the owner as a trusted steward of company money."@en ;
+    jtbd:hasIdentifier "E06" ;
+    jtbd:hasJobStatement "Be seen by the owner as a trusted steward of company money"@en ;
+    jtbd:hasJobExecutor ob:FinanceLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E07 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel confident in giving advice on issues outside their expertise"@en ;
+    skos:prefLabel "Feel confident in giving advice on issues outside their expertise"@en ;
+    skos:definition "An emotional job in which the Human Resources Leader persona wants to feel confident in giving advice on issues outside their expertise."@en ;
+    jtbd:hasIdentifier "E07" ;
+    jtbd:hasJobStatement "Feel confident in giving advice on issues outside their expertise"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E08 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Avoid being blamed for a compliance miss"@en ;
+    skos:prefLabel "Avoid being blamed for a compliance miss"@en ;
+    skos:definition "An emotional job in which the Human Resources Leader persona wants to avoid being blamed for a compliance miss."@en ;
+    jtbd:hasIdentifier "E08" ;
+    jtbd:hasJobStatement "Avoid being blamed for a compliance miss"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E09 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Be seen as a strategic partner rather than an administrator"@en ;
+    skos:prefLabel "Be seen as a strategic partner rather than an administrator"@en ;
+    skos:definition "An emotional job in which the Human Resources Leader persona wants to be seen as a strategic partner rather than an administrator."@en ;
+    jtbd:hasIdentifier "E09" ;
+    jtbd:hasJobStatement "Be seen as a strategic partner rather than an administrator"@en ;
+    jtbd:hasJobExecutor ob:HumanResourcesLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E10 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel that no one will be seriously hurt on their watch"@en ;
+    skos:prefLabel "Feel that no one will be seriously hurt on their watch"@en ;
+    skos:definition "An emotional job in which the Operations and Safety Leader persona wants to feel that no one will be seriously hurt on their watch."@en ;
+    jtbd:hasIdentifier "E10" ;
+    jtbd:hasJobStatement "Feel that no one will be seriously hurt on their watch"@en ;
+    jtbd:hasJobExecutor ob:OperationsAndSafetyLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E11 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Be seen by crews as someone who has their back after an injury"@en ;
+    skos:prefLabel "Be seen by crews as someone who has their back after an injury"@en ;
+    skos:definition "An emotional job in which the Operations and Safety Leader persona wants to be seen by crews as someone who has their back after an injury."@en ;
+    jtbd:hasIdentifier "E11" ;
+    jtbd:hasJobStatement "Be seen by crews as someone who has their back after an injury"@en ;
+    jtbd:hasJobExecutor ob:OperationsAndSafetyLeader ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E12 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel competent handling difficult people conversations"@en ;
+    skos:prefLabel "Feel competent handling difficult people conversations"@en ;
+    skos:definition "An emotional job in which the People Manager persona wants to feel competent handling difficult people conversations."@en ;
+    jtbd:hasIdentifier "E12" ;
+    jtbd:hasJobStatement "Feel competent handling difficult people conversations"@en ;
+    jtbd:hasJobExecutor ob:PeopleManager ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E13 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Be seen by their team as fair and supportive"@en ;
+    skos:prefLabel "Be seen by their team as fair and supportive"@en ;
+    skos:definition "An emotional job in which the People Manager persona wants to be seen by their team as fair and supportive."@en ;
+    jtbd:hasIdentifier "E13" ;
+    jtbd:hasJobStatement "Be seen by their team as fair and supportive"@en ;
+    jtbd:hasJobExecutor ob:PeopleManager ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E14 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel financially secure and protected by good benefits"@en ;
+    skos:prefLabel "Feel financially secure and protected by good benefits"@en ;
+    skos:definition "An emotional job in which the Worksite Employee persona wants to feel financially secure and protected by good benefits."@en ;
+    jtbd:hasIdentifier "E14" ;
+    jtbd:hasJobStatement "Feel financially secure and protected by good benefits"@en ;
+    jtbd:hasJobExecutor ob:WorksiteEmployee ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E15 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Feel respected and that personal data is handled with care"@en ;
+    skos:prefLabel "Feel respected and that personal data is handled with care"@en ;
+    skos:definition "An emotional job in which the Worksite Employee persona wants to feel respected and that personal data is handled with care."@en ;
+    jtbd:hasIdentifier "E15" ;
+    jtbd:hasJobStatement "Feel respected and that personal data is handled with care"@en ;
+    jtbd:hasJobExecutor ob:WorksiteEmployee ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+
+ob:Job-E16 a owl:NamedIndividual, jtbd:emotional-job ;
+    rdfs:label "Avoid being responsible for a data breach involving employee records"@en ;
+    skos:prefLabel "Avoid being responsible for a data breach involving employee records"@en ;
+    skos:definition "An emotional job in which the Information Technology and Systems Administrator persona wants to avoid being responsible for a data breach involving employee records."@en ;
+    jtbd:hasIdentifier "E16" ;
+    jtbd:hasJobStatement "Avoid being responsible for a data breach involving employee records"@en ;
+    jtbd:hasJobExecutor ob:SystemsAdministrator ;
+    jtbd:hasEvidenceStatus evid:candidate ;
+    core:hasLifecycleStatus core:Draft ;
+    dcterms:created "2026-10-26"^^xsd:date ;
+    skos:scopeNote "Promoted from the persona's jtbd:hasEmotionalJob statement; steps and desired outcomes to be elicited in the Appreciative Inquiry interviews."@en ;
+    skos:editorialNote "Draft: pending business and compliance review before the survey is fielded."@en .
+

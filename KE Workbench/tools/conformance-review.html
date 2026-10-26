@@ -159,7 +159,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     <div class="grow">
       <div class="eyebrow">Knowledge engineering <span class="sep">•</span> Human in the loop <span class="sep">•</span> §3.2 · §3.3 · §3.7</div>
       <h1>Conformance Review</h1>
-      <p class="lede">Resolve the conformance errors the ingester could not decide: other organizations' content, acronyms, broken or foreign references and missing definitions, across vocabularies, taxonomies and ontologies. Open the files an ingestion run wrote, before loading, or models already in GraphDB. Changes are staged, then saved as one change set with a change record. Every finding gets a disposition — fixed, accepted, not an issue, deferred or needing a modeling decision — and those decisions teach the ingestion agents.</p>
+      <p class="lede">Resolve the conformance errors the ingester could not decide: other organizations' content, acronyms, broken or foreign references and missing definitions, across vocabularies, taxonomies and ontologies. Open the files an ingestion run wrote, before loading, or models already in GraphDB. Changes are staged, then saved as one change set with a change record. Every finding gets a disposition — fixed, accepted, not an issue, deferred or needing a modeling decision. Each disposition is a human decision and passes the AI circuit breaker gateway like an agent decision (Semantic Governance §2.7): waiving a guardrail finding is blocked (HALT), an exception to an error is held until the trustee signs it off (COMPLY), and only released decisions (PASS) teach the ingestion agents.</p>
     </div>
     <div class="row">
       <span class="status" id="scanStatus"></span>
@@ -257,6 +257,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     { id: 'acr', title: 'Acronyms', rules: ['acronym-label', 'acronym-id'] },
     { id: 'ref', title: 'Broken and foreign references', rules: ['broken-ref', 'base-url'] },
     { id: 'def', title: 'Missing definitions', rules: ['definition'] },
+    { id: 'jobs', title: 'Jobs model (§3.13)', rules: ['job-steps', 'step-of-job', 'step-outcome', 'outcome-step', 'outcome-measured', 'persona-jobs'] },
     { id: 'other', title: 'Other', rules: null }
   ];
   const catOf = rule => (CATS.find(c => c.rules && c.rules.includes(rule)) || CATS[CATS.length - 1]).id;
@@ -561,7 +562,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     const n = DISP.recs.length, by = {};
     DISP.recs.forEach(r => by[r.disposition] = (by[r.disposition] || 0) + 1);
     const words = { fix: 'fixed', accept: 'accepted', 'not-an-issue': 'not an issue', defer: 'deferred', escalate: 'need a decision' };
-    $('learn').innerHTML = n ? `<b>${n}</b> review decision${n === 1 ? '' : 's'} recorded (${Object.entries(by).map(([k, v]) => `${v} ${words[k] || k}`).join(', ')}). Ingestion replays the fixes, reports accepted findings as information and shows Claude the definitions you approved. <a href="../ingest/feedback/dispositions.jsonl" download="dispositions.jsonl">Download the training set</a>`
+    const vb = {}; DISP.byTerm.forEach(r => { const v = verdictOf(r); vb[v] = (vb[v] || 0) + 1; });   // each term's latest decision
+    const gate = (vb.HALT || vb.COMPLY || vb.FREEZE) ? ` Circuit breaker: ${[vb.COMPLY ? `${vb.COMPLY} held for trustee sign-off` : '', vb.FREEZE ? `${vb.FREEZE} frozen` : '', vb.HALT ? `${vb.HALT} blocked` : ''].filter(Boolean).join(', ')}; only released decisions are learned from.` : ' Every decision passed the circuit breaker gateway.';
+    $('learn').innerHTML = n ? `<b>${n}</b> review decision${n === 1 ? '' : 's'} recorded (${Object.entries(by).map(([k, v]) => `${v} ${words[k] || k}`).join(', ')}).${gate} Ingestion replays the fixes, reports accepted findings as information and shows Claude the definitions you approved. <a href="../ingest/feedback/dispositions.jsonl" download="dispositions.jsonl">Download the training set</a>`
       : 'No review decisions recorded yet. Each disposition you give is kept in <span class="mono">ingest/feedback/dispositions.jsonl</span> to train the ingestion agents.';
   }
   // A taxonomy concept reaches BFO when it, or a broader concept, is formalized by a class (core:formalizedBy).
@@ -619,11 +622,13 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       el.style.color = n ? '' : 'var(--ke-ok)';
     });
   }
-  const closedDisp = f => f.disp && (f.disp.disposition === 'accept' || f.disp.disposition === 'not-an-issue');
+  const verdictOf = r => ((r && r.decision) || {}).verdict || 'PASS';   // records from before the gate count as released
+  const closedDisp = f => f.disp && (f.disp.disposition === 'accept' || f.disp.disposition === 'not-an-issue') && verdictOf(f.disp) === 'PASS';
   const isDone = iri => staged.some(c => c.term === iri) || skipped.has(iri);
   const visible = f => (f.sev === 'error' || $('showWarn').checked) && ($('showDone').checked || (!isDone(f.iri) && !closedDisp(f)));
   const DTAG = { accept: ['acc', 'accepted'], 'not-an-issue': ['acc', 'not an issue'], defer: ['def', 'deferred'], escalate: ['esc', 'needs decision'] };
-  const dispTag = fs => { const f = fs.find(x => x.disp); if (!f) return ''; const [c, w] = DTAG[f.disp.disposition] || ['skip', f.disp.disposition]; return `<span class="tag ${c}" title="${esc((f.disp.rationale || '') + ' — ' + (f.disp.by || '') + ' ' + String(f.disp.at || '').slice(0, 10))}">${w}</span>`; };
+  const VTAG = { HALT: ['esc', 'blocked · HALT'], FREEZE: ['esc', 'held · FREEZE'], COMPLY: ['def', 'held for sign-off'] };
+  const dispTag = fs => { const f = fs.find(x => x.disp); if (!f) return ''; const v = verdictOf(f.disp); const [c, w] = VTAG[v] || DTAG[f.disp.disposition] || ['skip', f.disp.disposition]; return `<span class="tag ${c}" title="${esc((f.disp.rationale || '') + ' — ' + (f.disp.by || '') + ' ' + String(f.disp.at || '').slice(0, 10))}">${w}</span>`; };
   function countCat(c) { return findings.filter(f => f.cat === c && visible(f)).length; }
   function renderCats() {
     $('cats').innerHTML = CATS.map(c => { const n = countCat(c.id); return `<button class="cat ${c.id === cat ? 'on' : ''}" data-cat="${c.id}"><span>${esc(c.title)}</span><span class="n ${n ? '' : 'z'}">${n}</span></button>`; }).join('');
@@ -752,7 +757,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       if (d !== 'defer' && !w) { toast('Give a short rationale — it is what the agents learn from', true); $('bWhy').focus(); return; }
       const list = [...checked].filter(i => byTerm.has(i));
       list.forEach(i => why.set(i, w));
-      if (await postDispositions(list.map(i => dispRecord(i, d)))) { list.forEach(i => why.delete(i)); checked.clear(); runChecks(); refreshAll(); toast(`Recorded ${plural(list.length, 'disposition')}`); }
+      if (await postDispositions(list.map(i => dispRecord(i, d)))) { list.forEach(i => why.delete(i)); checked.clear(); runChecks(); refreshAll(); toast(`Recorded ${plural(list.length, 'disposition')}${GATE.note ? ' — ' + GATE.note : ' · all released by the circuit breaker'}`, !!GATE.note); }
     });
     $('bSkip').addEventListener('click', () => { [...checked].forEach(i => skipped.add(i)); checked.clear(); refreshAll(); });
     $('bNone').addEventListener('click', () => { checked.clear(); renderQueue(); });
@@ -916,7 +921,9 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     const cur = choice.get(iri) || (st.length ? 'fix' : (last && last.disposition !== 'fix' ? last.disposition : ''));
     const words = Object.fromEntries(DOPTS);
     return `<div class="disp"><div class="act-h">Disposition <span class="sub">${plural(fs.length, 'finding')} · recorded to train the ingestion agents</span></div><div class="act-b">
-      ${last ? `<div class="hist">Last decision: <b>${esc(words[last.disposition] || last.disposition)}</b>${last.by ? ' by ' + esc(last.by) : ''} on ${esc(String(last.at || '').slice(0, 10))}${last.rationale ? ` — “${esc(last.rationale)}”` : ''}</div>` : ''}
+      ${last ? `<div class="hist">Last decision: <b>${esc(words[last.disposition] || last.disposition)}</b>${last.by ? ' by ' + esc(last.by) : ''} on ${esc(String(last.at || '').slice(0, 10))}${last.rationale ? ` — “${esc(last.rationale)}”` : ''}${last.decision ? `<br>Circuit breaker: <b>${esc(last.decision.verdict)}</b> — ${esc(last.decision.rule)}` : ''}</div>` : ''}
+      ${last && verdictOf(last) === 'COMPLY' ? `<div class="row" style="margin:6px 0"><button class="btn sm" id="dSign">Trustee sign-off</button><span class="status">Releases this exception; it then takes effect and is learned from.</span></div>` : ''}
+      ${last && verdictOf(last) === 'HALT' ? `<div class="sugg">A guardrail finding cannot be waived. Fix it (stage a change above) or record <b>Needs a modeling decision</b>.</div>` : ''}
       <div class="opts" id="dOpts">${DOPTS.map(([k, w]) => `<label class="${cur === k ? 'on' : ''}" ${k === 'fix' && !st.length ? 'title="Stage a change above first"' : ''}><input type="radio" name="disp" value="${k}" ${cur === k ? 'checked' : ''} ${k === 'fix' && !st.length ? 'disabled' : ''}>${w}</label>`).join('')}</div>
       <div class="sugg" id="dHint">${cur ? esc(DHINT[cur]) : 'Stage a fix above, or choose how to dispose of the finding.'}</div>
       <div class="fld"><textarea id="dWhy" placeholder="Rationale (why this decision; what the agent should learn)" style="min-height:56px">${esc(why.get(iri) || '')}</textarea></div>
@@ -942,13 +949,20 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     if (c.type === 'remove') a.plan = { children: c.plan.children.length, links: c.plan.refs.length, parents: c.plan.parents };
     return a;
   };
+  // the AI circuit breaker gateway's verdicts on the decisions just recorded (ingest_api.evaluate_decision, §2.7)
+  const GATE = { note: '' };
+  function gateNote(d) {
+    const h = d.halted || [], k = d.held || [];
+    if (!h.length && !k.length) return '';
+    return [h.length ? `${plural(h.length, 'decision')} blocked by the circuit breaker (HALT: ${h[0].rule})` : '', k.length ? `${plural(k.length, 'exception')} held for trustee sign-off` : ''].filter(Boolean).join('; ');
+  }
   async function postDispositions(records) {
     if (!records.length) return true;
     try {
       const r = await fetch('/api/ingest/disposition', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ records }) });
       const d = r.ok ? await r.json() : { ok: false, error: r.status === 404 ? 'Restart the workbench server (start-workbench.command) to record dispositions.' : 'Server answered ' + r.status };
       if (!d.ok) throw new Error(d.error);
-      await loadDispositions(); return true;
+      GATE.note = gateNote(d); await loadDispositions(); return true;
     } catch (e) { toast('Disposition not recorded: ' + e.message, true); return false; }
   }
   // the fixes in a saved change set, as dispositions (built before the statements change, so the context is the reviewed one)
@@ -956,7 +970,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     const byTerm = new Map(); list.forEach(c => { if (!byTerm.has(c.term)) byTerm.set(c.term, []); byTerm.get(c.term).push(c); });
     return [...byTerm].filter(([iri]) => idx.s.has(iri)).map(([iri, cs]) => dispRecord(iri, 'fix', cs.map(actionOf)));
   }
-  function ruleTitle(id) { return ({ 'formalized-by': 'Not formalized by a class', 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date' })[id] || id; }
+  function ruleTitle(id) { return ({ 'formalized-by': 'Not formalized by a class', 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date', 'job-steps': 'Job without job steps', 'step-of-job': 'Job step not in a job', 'step-outcome': 'Job step without a desired outcome', 'outcome-step': 'Outcome not mapped to a job step', 'outcome-measured': 'Outcome not measured', 'persona-jobs': 'Persona without jobs' })[id] || id; }
   // Local name in the convention of the term's kind (§3.2 as amended): classes, taxonomy concepts and vocabulary terms are lower-case words joined by hyphens; properties lowerCamel
   function idFor(iri, lbl) {
     const words = String(lbl).replace(/[^A-Za-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);
@@ -1022,6 +1036,14 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     if ($('stFml')) $('stFml').addEventListener('click', () => { const t = clsPick($('fFml').value); if (!t) { toast('No class with that label', true); return; } stageFormalize(iri, t); refreshAll(); });
     if ($('dWhy')) $('dWhy').addEventListener('input', () => why.set(iri, $('dWhy').value));
     if ($('dOpts')) $('dOpts').addEventListener('change', e => { if (e.target.name === 'disp') { flushEdits(); choice.set(iri, e.target.value); renderDetail(); } });
+    if ($('dSign')) $('dSign').addEventListener('click', async () => {
+      const last = DISP.byTerm.get(iri); if (!last) return;
+      why.set(iri, (last.rationale || '') + ' [trustee sign-off]');
+      const rec = Object.assign(dispRecord(iri, last.disposition), { signOff: true, confirms: last.id });
+      $('dSign').disabled = true;
+      if (await postDispositions([rec])) { why.delete(iri); runChecks(); refreshAll(); toast(GATE.note ? `Not released — ${GATE.note}` : `Signed off: ${label(iri)} — released by the circuit breaker`, !!GATE.note); }
+      else if ($('dSign')) $('dSign').disabled = false;
+    });
     if ($('dRec')) $('dRec').addEventListener('click', async () => {
       const d = choice.get(iri) || (DISP.byTerm.get(iri) || {}).disposition;
       if (!d || d === 'fix') return;
@@ -1030,7 +1052,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
       if (await postDispositions([dispRecord(iri, d)])) {
         choice.delete(iri); why.delete(iri);
         runChecks(); refreshAll();
-        toast(`Recorded: ${label(iri)} — ${(DOPTS.find(x => x[0] === d) || [])[1] || d}`);
+        toast(GATE.note ? `Recorded: ${label(iri)} — ${GATE.note}` : `Recorded: ${label(iri)} — ${(DOPTS.find(x => x[0] === d) || [])[1] || d} · released by the circuit breaker`, !!GATE.note);
       } else if ($('dRec')) $('dRec').disabled = false;
     });
     if ($('stLabel')) $('stLabel').addEventListener('click', async () => {

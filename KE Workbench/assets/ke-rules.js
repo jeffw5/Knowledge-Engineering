@@ -1,12 +1,13 @@
 /* KE Workbench — Standards Conformance rules.
-   Each rule encodes a Part III / Appendix E standard from Semantic Governance v1.9 (§3.11 metadata included).
+   Each rule encodes a Part III / Appendix E standard of the Semantic Governance guide in force (assets/ke-guide.js; v2.1),
+   §3.11 metadata included; the jobs-model rules (§3.13) are the core shapes that §2.7 contextual relevancy relies on.
    runChecks(quads, { bases }) → { rules:[{...rule, checked, failed}], findings:[...], stats }
    quads: [{ s, p, o, g }] with terms { t:'iri'|'bnode'|'lit', v, lang?, dt? } */
 (function (root) {
   var RDF = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', RDFS = 'http://www.w3.org/2000/01/rdf-schema#',
       OWL = 'http://www.w3.org/2002/07/owl#', SKOS = 'http://www.w3.org/2004/02/skos/core#',
       SH = 'http://www.w3.org/ns/shacl#', DCT = 'http://purl.org/dc/terms/', XSD = 'http://www.w3.org/2001/XMLSchema#',
-      CORE = 'https://www.insperity.com/ontology/core/';
+      CORE = 'https://www.insperity.com/ontology/core/', JTBD = 'https://www.insperity.com/ontology/jobs-to-be-done/';
   var P = {
     type: RDF + 'type', label: RDFS + 'label', pref: SKOS + 'prefLabel', alt: SKOS + 'altLabel',
     def: SKOS + 'definition', sub: RDFS + 'subClassOf', isDef: RDFS + 'isDefinedBy', dom: RDFS + 'domain',
@@ -19,7 +20,19 @@
     // §3.11 asset header fields
     vaemNs: 'http://www.linkedmodel.org/schema/vaem#namespace', nsPrefix: 'http://purl.org/vocab/vann/preferredNamespacePrefix',
     language: DCT + 'language', creator: DCT + 'creator', publisher: DCT + 'publisher', conformsTo: DCT + 'conformsTo',
-    source: DCT + 'source', created: DCT + 'created', modified: DCT + 'modified', issued: DCT + 'issued'
+    source: DCT + 'source', created: DCT + 'created', modified: DCT + 'modified', issued: DCT + 'issued',
+    // §3.13 jobs model (core shapes) — the anchors §2.7 contextual relevancy maps prompts to
+    hasStep: CORE + 'hasStep', isStepOf: CORE + 'isStepOf', outcomeOf: CORE + 'outcomeOf', hasOutcome: CORE + 'hasOutcome',
+    measuredBy: CORE + 'measuredBy', performsJob: CORE + 'performsJob',
+    jHasStep: JTBD + 'hasJobMapStep', jStepOf: JTBD + 'isStepOfJob', jOutcomeStep: JTBD + 'relatesToJobMapStep', jExecutes: JTBD + 'executesJob', jOccurs: JTBD + 'occursAtJobStep'
+  };
+  // classes of the jobs model and their known specializations; rdfs:subClassOf statements in the data extend these
+  var JOBS_MODEL = {
+    job: [CORE + 'job', JTBD + 'job-to-be-done', JTBD + 'core-functional-job', JTBD + 'consumption-chain-job', JTBD + 'emotional-job', JTBD + 'social-job'],
+    step: [CORE + 'job-step', JTBD + 'job-map-step'],
+    outcome: [CORE + 'desired-outcome', JTBD + 'desired-outcome'],
+    persona: [CORE + 'persona', JTBD + 'client-persona'],
+    measure: [CORE + 'measure']
   };
   var SUBJECT_PREDS = [P.primary, P.subject, P.dcSubject];
   // Predicates whose IRI objects must point at a term that exists (broken-reference rule)
@@ -351,6 +364,54 @@
           Object.keys(byLang).forEach(function (k) { if (byLang[k] > 1) problems.push(byLang[k] + ' preferred labels for ' + k); });
           return problems.length ? problems.join('; ') : null; } },
 
+      // ── §3.13 jobs model (core shapes job-shape, job-step-shape, desired-outcome-shape) ──
+      { id: 'job-steps', sec: '3.13', sev: 'warn', title: 'Job broken into job steps',
+        desc: 'Every job names at least one job step with core:hasStep (jtbd:hasJobMapStep); job steps are unique to the job and not one-to-one with process steps (§3.13, core job-shape).',
+        applies: function (e) { return ctx.isA(e, 'job'); },
+        check: function (e) { var s = vals(e, P.hasStep).concat(vals(e, P.jHasStep));
+          if (!s.length) return (ctx.isA(e, 'emotional') ? 'Emotional job' : 'Job') + ' has no job steps (core:hasStep)';
+          var bad = s.filter(function (o) { return o.t === 'iri' && ctx.byIri.has(o.v) && !ctx.isA(ctx.byIri.get(o.v), 'step'); });
+          return bad.length ? 'core:hasStep points at ' + localName(bad[0].v) + ', which is not a job step' : null; } },
+
+      { id: 'step-of-job', sec: '3.13', sev: 'error', title: 'Job step belongs to a job',
+        desc: 'Every job step is a step of exactly one job (core:isStepOf), and the job lists it back with core:hasStep (core job-step-shape).',
+        applies: function (e) { return ctx.isA(e, 'step'); },
+        check: function (e) { var j = vals(e, P.isStepOf).concat(vals(e, P.jStepOf)).filter(function (o) { return o.t === 'iri'; });
+          if (!j.length) return 'No core:isStepOf — a job step must be a step of a job';
+          var jobs = {}; j.forEach(function (o) { jobs[o.v] = 1; });
+          if (Object.keys(jobs).length > 1) return 'Step of ' + Object.keys(jobs).length + ' jobs — a job step is unique to its job';
+          var job = ctx.byIri.get(j[0].v);
+          if (job && !ctx.isA(job, 'job')) return 'core:isStepOf points at ' + localName(j[0].v) + ', which is not a job';
+          if (job && !vals(job, P.hasStep).concat(vals(job, P.jHasStep)).some(function (o) { return o.v === e.iri; })) return localName(j[0].v) + ' does not list this step with core:hasStep';
+          return null; } },
+
+      { id: 'step-outcome', sec: '3.13', sev: 'warn', title: 'Job step has a desired outcome',
+        desc: 'Every job step carries at least one desired outcome (core:hasOutcome), so value gaps can be measured at the step (core job-step-shape).',
+        applies: function (e) { return ctx.isA(e, 'step'); },
+        check: function (e) { var o = vals(e, P.hasOutcome);
+          return o.some(function (x) { var t = ctx.byIri.get(x.v); return !t || ctx.isA(t, 'outcome'); }) ? null : 'No desired outcome (core:hasOutcome)'; } },
+
+      { id: 'outcome-step', sec: '3.13', sev: 'error', title: 'Desired outcome mapped to a job step',
+        desc: 'Every desired outcome is mapped to the job step in which it is judged (core:outcomeOf), not only to a universal job map stage (core desired-outcome-shape; §2.7 map-to-jobs).',
+        applies: function (e) { return ctx.isA(e, 'outcome'); },
+        check: function (e) { var s = vals(e, P.outcomeOf).filter(function (o) { return o.t === 'iri'; });
+          if (!s.length) return vals(e, P.jOccurs).length ? 'Placed on a job map stage only — map it to its job step with core:outcomeOf' : 'Not mapped to a job step (core:outcomeOf)';
+          var st = ctx.byIri.get(s[0].v);
+          if (st && !ctx.isA(st, 'step')) return 'core:outcomeOf points at ' + localName(s[0].v) + ', which is not a job step';
+          return null; } },
+
+      { id: 'outcome-measured', sec: '3.13', sev: 'warn', title: 'Desired outcome measured',
+        desc: 'A desired outcome names the measure (metric card) that measures it with core:measuredBy, with its target and baseline (core desired-outcome-shape).',
+        applies: function (e) { return ctx.isA(e, 'outcome'); },
+        check: function (e) { return vals(e, P.measuredBy).length ? null : 'No measure (core:measuredBy)'; } },
+
+      { id: 'persona-jobs', sec: '3.13', sev: 'warn', title: 'Persona performs jobs',
+        desc: 'Every persona instance names the jobs its executor performs (core:performsJob), so §2.7 contextual relevancy can map a prompt to the persona’s jobs, job steps and desired outcomes.',
+        applies: function (e) { return ctx.isA(e, 'persona') && e.kind === 'individual'; },
+        check: function (e) { var j = vals(e, P.performsJob);
+          if (!j.length) return vals(e, P.jExecutes).length ? 'Jobs named with jtbd:executesJob only — also state core:performsJob (no inference at query time, §3.1)' : 'No jobs (core:performsJob)';
+          return null; } },
+
       { id: 'versioned-term', sec: '3.3', sev: 'error', title: 'No version in term IRIs',
         desc: 'Only ontology and vocabulary releases get versioned IRIs; class, property and concept IRIs never do.',
         applies: function (e) { return !!TERM[e.kind]; },
@@ -411,7 +472,18 @@
     var defined = new Set(entities.map(function (e) { return e.iri; }));
     var assets = entities.filter(function (e) { return e.kind === 'ontology' || e.kind === 'scheme'; })
       .map(function (e) { return e.iri.replace(/[\/#]?$/, e.iri.slice(-1) === '#' ? '#' : '/'); });
-    var R = rules({ bases: bases, policy: opts && opts.policy ? (opts.policy.orgs ? opts.policy : policyFrom(opts.policy)) : null,
+    var byIri = new Map(entities.map(function (e) { return [e.iri, e]; }));
+    // rdfs:subClassOf closure from the data, seeded with the jobs model
+    var supers = {};
+    quads.forEach(function (q) { if (q.p.v === P.sub && q.s.t === 'iri' && q.o.t === 'iri') (supers[q.s.v] = supers[q.s.v] || []).push(q.o.v); });
+    var cls = {}; Object.keys(JOBS_MODEL).forEach(function (k) { cls[k] = new Set(JOBS_MODEL[k]); });
+    cls.emotional = new Set([JTBD + 'emotional-job']);
+    function up(c, seen) { seen = seen || new Set(); if (seen.has(c)) return seen; seen.add(c); (supers[c] || []).forEach(function (p) { up(p, seen); }); return seen; }
+    var memo = {};
+    function isA(e, k) { if (!e || !e.types || e.kind === 'class') return false; var hit = false;
+      e.types.forEach(function (t) { if (hit) return; var key = k + '|' + t; if (!(key in memo)) { var ok = false; up(t).forEach(function (c) { if (cls[k].has(c)) ok = true; }); memo[key] = ok; } hit = memo[key]; });
+      return hit; }
+    var R = rules({ bases: bases, isA: isA, byIri: byIri, policy: opts && opts.policy ? (opts.policy.orgs ? opts.policy : policyFrom(opts.policy)) : null,
                     defined: defined, assets: assets,
                     vocab: opts && opts.vocab ? (opts.vocab instanceof Set ? opts.vocab : new Set(opts.vocab)) : null }), findings = [], summary = [];
     R.forEach(function (r) {

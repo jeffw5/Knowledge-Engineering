@@ -261,7 +261,7 @@ footer{color:var(--muted);font-size:12px;margin-top:26px;border-top:1px solid va
 </head><body>
 <div class="wrap">
   <header class="tb">
-    <div><div class="lab">PLM Lifecycle Dashboard · Semantic Knowledge Layer</div><h1>SKL Semantic Services Baseline</h1><p>Set up and operationalize the services that bring in customer terminology, process it into scoped vocabulary extensions, and publish the SKL’s definitions downstream. This is the baseline every later project builds on; Visier is the first target.</p></div>
+    <div><div class="lab">PLM Lifecycle Dashboard · Semantic Knowledge Layer</div><h1>SKL Semantic Services Baseline</h1><p>Set up and operationalize the services that bring in customer terminology, process it into scoped vocabulary extensions, and publish the SKL’s definitions downstream. This is the baseline every later project builds on, and it will evolve to support configuration, customization, personalization, provisioning and insulation at scale. Visier is the first target.</p></div>
     <div><div class="lab">Program start</div><div class="val" id="tbStart"></div></div>
     <div><div class="lab">Planned finish (G3)</div><div class="val" id="tbEnd"></div></div>
     <div><div class="lab">Buffer held</div><div class="val" id="tbBuf"></div></div>
@@ -295,8 +295,8 @@ footer{color:var(--muted);font-size:12px;margin-top:26px;border-top:1px solid va
       <div><h2>Left for later projects</h2><ul id="deferred" style="margin:8px 0 0;padding-left:1.1em;font-size:13.5px;display:flex;flex-direction:column;gap:6px"></ul></div>
     </div>
     <div class="panel">
-      <h2>The seven workstreams</h2>
-      <p class="hint">Risk = likelihood × impact (1–25). Impact comes from how many of the eight baseline outcomes depend on the workstream; see the Impact &amp; risk tab.</p>
+      <h2>The eight workstreams</h2>
+      <p class="hint">Risk = likelihood × impact (1–25). Impact comes from how many of the nine baseline outcomes depend on the workstream; see the Impact &amp; risk tab.</p>
       <div class="ccards" id="ccards" style="grid-template-columns:repeat(4,minmax(0,1fr))"></div>
     </div>
   </section>
@@ -483,9 +483,13 @@ const COMPS = [
  { id:'W7', name:'Operations, measurement & scale', col:'--c7', short:'Operations',
    what:'Measures and telemetry, scale test, onboarding playbook, runbooks and training, onboarding of a second customer, pilot review and handover.',
    fam:'Across all three', nov:2, cx:3, ready:3, press:3 },
+
+ { id:'W8', name:'Provisioning, personas & access', col:'--c8', short:'Access',
+   what:'Operational personas, jobs and job steps from Personas & Jobs; access decided per job step beyond ACLs; policy decision and enforcement in the services; tenant and person provisioning; persona-scoped screens; audit and recertification.',
+   fam:'Across all three', nov:4, cx:4, ready:4, press:3 },
 ];
 // Which workstreams must exist before this one (used for dependency depth in the risk score)
-const CDEPS = { W1:[], W2:['W1'], W3:['W1','W2'], W4:['W1','W2','W3'], W5:['W1','W4'], W6:['W1','W2','W4','W5'], W7:['W3','W4','W5','W6'] };
+const CDEPS = { W1:[], W2:['W1'], W3:['W1','W2'], W4:['W1','W2','W3'], W5:['W1','W4','W8'], W6:['W1','W2','W4','W5'], W7:['W3','W4','W5','W6','W8'], W8:['W1','W2'] };
 
 const DRIVERS = {
  spd:{ name:'Speed to value', desc:'Shorter time from a customer’s first document to a published, approved definition' },
@@ -505,16 +509,18 @@ const OUTCOMES = [
  ['O6','Changes ship safely','trs',2,'Parity-test failures caught before publish; time to roll back','All caught before publish'],
  ['O7','Every term, label and mapping is traceable','trs',2,'Share of records with source, reviewer, version and publish record','100%'],
  ['O8','The baseline is reusable by the next project','spd',2,'Time to add a source type or a target adapter','Shorter on each reuse'],
+ ['O9','Tenants and people are provisioned and insulated at scale','cnf',3,'Time to provision a tenant or a person; unauthorized requests denied in tests; share of access decisions logged','Set from the pilot; 0 cross-tenant; 100% logged'],
 ].map(r=>({id:r[0],name:r[1],drv:r[2],stake:r[3],measure:r[4],target:r[5]}));
 // 3 critical, 2 supporting, 1 sustains or measures
 const DEP = {
- W1:{O1:1,O2:3,O3:3,O4:2,O5:3,O6:2,O7:2,O8:2},
- W2:{O1:1,O2:2,O3:3,O4:1,O5:2,O6:3,O7:2,O8:3},
- W3:{O1:3,O2:1,O3:2,O4:1,O5:1,O6:1,O7:3,O8:3},
- W4:{O1:3,O2:3,O3:2,O4:3,O5:2,O6:2,O7:2,O8:2},
- W5:{O1:3,O2:3,O3:1,O4:3,O5:2,O6:1,O7:3,O8:1},
- W6:{O1:1,O2:1,O3:3,O4:1,O5:3,O6:3,O7:2,O8:3},
- W7:{O1:2,O2:2,O3:2,O4:2,O5:2,O6:2,O7:1,O8:3},
+ W1:{O1:1,O2:3,O3:3,O4:2,O5:3,O6:2,O7:2,O8:2,O9:2},
+ W2:{O1:1,O2:2,O3:3,O4:1,O5:2,O6:3,O7:2,O8:3,O9:3},
+ W3:{O1:3,O2:1,O3:2,O4:1,O5:1,O6:1,O7:3,O8:3,O9:1},
+ W4:{O1:3,O2:3,O3:2,O4:3,O5:2,O6:2,O7:2,O8:2,O9:1},
+ W5:{O1:3,O2:3,O3:1,O4:3,O5:2,O6:1,O7:3,O8:1,O9:2},
+ W6:{O1:1,O2:1,O3:3,O4:1,O5:3,O6:3,O7:2,O8:3,O9:1},
+ W7:{O1:2,O2:2,O3:2,O4:2,O5:2,O6:2,O7:1,O8:3,O9:2},
+ W8:{O1:2,O2:1,O3:3,O4:2,O5:1,O6:2,O7:3,O8:3,O9:3},
 };
 
 // ===================== ROADMAP =====================
@@ -546,7 +552,7 @@ const T = [
   'Pilot customer chosen; downturn workforce advisory vocabularies named (employment actions such as furlough, reduced hours and reduction in force, with their reasons and benefit classes); stewards named; written permission to use the customer’s documents and feeds.',
   'Program manager · Domain stewards','Customer, stewards and permission confirmed in writing.'],
  ['W2-03','P0','W2','Design','Tenant model and isolation design',2,['W1-01'],
-  'Tenant IDs; one named graph per tenant lexicon; access policy; retention and residency; the rule that tenant labels never appear in core or in another tenant’s results.',
+  'Tenant IDs; one named graph per tenant lexicon; the rule that no repository is exposed to people, other systems or third parties and graphs are reached only through the semantic services; retention and residency; the rule that tenant labels never appear in core or in another tenant’s results.',
   'Security & privacy · Semantic architect','Security review passed.'],
  ['W2-04','P0','W2','Define','Security and privacy review for documents, handbooks and feeds',2,['W1-01'],
   'Data classes; PII handling and redaction rules; data-use terms; retention; who may see raw content.',
@@ -563,6 +569,12 @@ const T = [
  ['W7-01','P0','W7','Define','Measures and telemetry design',2,['W1-01'],
   'Telemetry for lead time, drift incidents, parity failures, reviewer throughput, label lookup time and cost to serve; where each is captured and who reads it.',
   'Program manager · Semantic engineer','Every measure has a source, an owner and a baseline.'],
+ ['W8-01','P0','W8','Discover','Operational persona and job discovery with Personas & Jobs',2,['W1-01'],
+  'The operational personas (tenant provisioner, onboarding lead, ops reviewer, domain steward, ontologist, platform operator, council member, auditor), their jobs and job steps, and which screens and services present each step.',
+  'Semantic architect · Ops review lead','The owner of Personas & Jobs and the ops lead sign catalog v0.1.'],
+ ['W8-03','P0','W8','Define','Provisioning, configuration and customization model',2,['W1-01'],
+  'Tenant and person lifecycles (provision, suspend, deprovision; joiner, mover, leaver); what a tenant can configure (sources, languages, thresholds, review queues), customize (its lexicon and extension vocabularies) and what is personalized by persona (screens, queues, views); the insulation rules between tenants.',
+  'Program manager · Semantic architect','Council and security approve the model; every setting is classed as configure, customize or personalize.'],
  ['W2-02','P0','W2','Design','Benchmark spike: label volume against core load, reasoning and lookup',2,['W1-04','W2-01'],
   'A synthetic core with the same labels held in-core versus in scoped lexicons, at rising label volumes and tenant counts (parameters set in W1-04); load time, reasoning time, query time, index size and release size.',
   'Semantic engineer · Semantic architect','Results reported against the W1-04 thresholds.'],
@@ -575,9 +587,12 @@ const T = [
  ['W6-02','P0','W6','Define','Publishing service contract and adapter interface',2,['W1-03'],
   'The contract: publish, validate, reconcile, status and rollback; release object; provenance stamp (SKL ID, version, publish record) on every published object; one adapter interface per execution point.',
   'Semantic architect · Semantic engineer','Contract reviewed by the Visier model developer and one second consumer.'],
- ['BF-0','P0','BUF','','Phase buffer',1,['W1-05','W1-02','W1-06','W2-03','W2-04','W3-01','W4-01','W5-01','W6-01','W6-02','W7-01'],''],
+ ['W8-02','P0','W8','Design','Access model: persona and job-step policy design',2,['W8-01','W2-03','W1-02'],
+  'The decision inputs (persona assignments, job and step, resource, context); rule forms authored in the SKL, with maker-checker, scope limits and time-bound elevation; identity provider and policy engine options; the audit record format; the no-direct-access rule for the store.',
+  'Semantic architect · Security & privacy','Security and the council approve; one worked example per persona.'],
+ ['BF-0','P0','BUF','','Phase buffer',1,['W1-05','W1-02','W1-06','W2-03','W2-04','W3-01','W4-01','W5-01','W6-01','W6-02','W7-01','W8-01','W8-02','W8-03'],''],
  ['M-0','P0','GATE','','G0 · Decisions made',0,['BF-0'],
-  'ADR approved with benchmark evidence; council seated; naming, ID and multi-parent rule agreed; inbound, processing and publishing contracts published; Visier answers recorded; pilot customer, stewards and data permission confirmed.',''],
+  'ADR approved with benchmark evidence; council seated; naming, ID and multi-parent rule agreed; inbound, processing and publishing contracts published; Visier answers recorded; pilot customer, stewards and data permission confirmed; operational persona catalog v0.1 and the access model approved.',''],
 
  // ---------------- P1 · Inbound & processing pilot ----------------
  ['W1-07','P1','W1','Develop','Author the pilot core and domain vocabularies and taxonomies',3,['W1-03','W1-06'],
@@ -586,8 +601,8 @@ const T = [
  ['W2-05','P1','W2','Develop','Environments and release pipeline: dev, test, stage, prod',3,['W2-01','W1-03'],
   'Promotion pipeline with validation gates, versioned releases, release notes, approvals and rollback; knowledge-layer change records captured as triples.',
   'Platform/DevOps · Semantic engineer','A sample release is promoted from dev to prod and rolled back.'],
- ['W2-06','P1','W2','Develop','Tenant isolation built: scoped graphs, access policy, audit log',3,['W2-03','W2-01'],
-  'Per-tenant named graphs; role-based access; audit log of reads and writes.',
+ ['W2-06','P1','W2','Develop','Tenant isolation built: scoped graphs, service identities, audit log',3,['W2-03','W2-01'],
+  'Per-tenant named graphs; service identities with separate read and write; store workbench and admin access closed to normal use, with logged break-glass; audit log of reads and writes.',
   'Platform/DevOps · Security & privacy','Isolation tests show zero cross-tenant results.'],
  ['W3-02','P1','W3','Develop','Ingestion framework: landing zone, tenant-tagged raw store, change capture, retries',2,['W3-01','W2-01'],
   'Landing zone; tenant tag and provenance stamp on every item; delta capture; retry and dead-letter handling.',
@@ -640,7 +655,7 @@ const T = [
  ['W4-10','P1','W4','Deliver','Processing pilot: the pilot customer’s candidates triaged into the review queue',1,['W4-05','W4-07','W4-08','W4-09','W3-09'],
   'Candidates for the pilot customer triaged to label, local concept, core candidate or noise, each with evidence.',
   'Semantic engineer · NLP/ML engineer','Queue loaded; spot check of 50 items by a steward finds no mis-scoped item.'],
- ['W5-02','P1','W5','Define','Review workflow and requirements',2,['W5-01','W1-02','W1-05'],
+ ['W5-02','P1','W5','Define','Review workflow and requirements',2,['W5-01','W1-02','W1-05','W8-01'],
   'States (proposed, in review, approved, published, rejected, deprecated); roles; service levels; bulk actions; audit; what a reviewer may approve and what escalates to a steward or the council.',
   'Ops review lead · Semantic architect','Ops lead and architect sign the specification.'],
  ['W5-03','P1','W5','Design','Review screen designs',3,['W5-02'],
@@ -649,6 +664,18 @@ const T = [
  ['W5-04','P1','W5','Develop','Review service and data model',3,['W5-02','W4-01'],
   'State machine, assignment, decisions, and an audit trail of every decision recorded as triples.',
   'Semantic engineer','Every decision is recorded with reviewer, time and evidence.'],
+ ['W8-04','P1','W8','Develop','Persona and job catalog and access rules authored in the SKL',3,['W8-02','W1-03','W2-05'],
+  'Personas, jobs and job steps as governed content; access rules with test cases for each persona (reviewer, steward first); maker-checker and scope rules.',
+  'Semantic architect · Semantic engineer','Every rule passes its test cases; each persona has at least one allowed and one denied case.'],
+ ['W8-05','P1','W8','Develop','Policy decision service and enforcement points in the semantic services',3,['W8-02','W2-06'],
+  'Decision per request from persona, job step, resource and context; enforcement in every service; service identities with separate read and write; no raw queries from callers or screens; decision logging.',
+  'Semantic engineer · Security & privacy','Seeded forbidden requests are all denied and every decision is logged.'],
+ ['W8-06','P1','W8','Develop','Persona assignment store and identity provider integration',3,['W8-02','W2-05'],
+  'Assign personas with tenant and domain scope and an end date; sign-in through the identity provider; recertification and revocation.',
+  'Semantic engineer · Platform/DevOps','A mover’s and a leaver’s assignments are revoked within the agreed time.'],
+ ['W8-07','P1','W8','Develop','Tenant and person provisioning services and screens',3,['W8-03','W8-06','W2-06'],
+  'Provision, suspend and deprovision a tenant (graphs, indexes, review queue, policy bindings); provision a person into one or more personas; all through logged screens.',
+  'Semantic engineer · UX/UI developer','A tenant and a reviewer are provisioned and deprovisioned end to end with a complete audit trail.'],
  ['BF-1','P1','BUF','','Phase buffer',2,['W1-07','W2-05','W3-09','W4-10','W5-04','W5-03'],''],
  ['M-1','P1','GATE','','G1 · Inbound and processing pilot complete',0,['BF-1'],
   'All four source types ingested with provenance on 100% of records; 0 PII leaks in the red team; triage precision at or above 0.90 on the gold set (proposed); 0 customer-driven triples in core; 0 cross-tenant results in isolation tests; lookup P95 within the ADR threshold.',''],
@@ -663,6 +690,15 @@ const T = [
  ['W5-05','P2','W5','Develop','Review screens v1: queue, evidence, concept picker, decisions, conflicts',4,['W5-03','W5-04'],
   'Candidate queue; evidence viewer; concept picker with match suggestions; accept, edit, reject and escalate; conflict panel.',
   'UX/UI developer · Semantic engineer','Reviewers decide a seeded batch end to end; the real pilot queue is used in W5-09.'],
+ ['W8-08','P2','W8','Develop','Persona-scoped screens: each persona sees only its jobs and steps',2,['W5-05','W8-05'],
+  'The review screens show each persona only the jobs, steps, queues and tenants it holds, with a decision per action.',
+  'UX/UI developer','A reviewer cannot see or act on another tenant’s items or on a steward’s steps.'],
+ ['W8-09','P2','W8','Deliver','Provisioning pilot: the pilot tenant, reviewers and stewards through the screens',2,['W8-07','W8-04','W8-05','W8-08'],
+  'The pilot tenant, its reviewers and stewards are provisioned through the screens; access tests cover maker-checker, tenant insulation and time-bound elevation.',
+  'Onboarding lead · Security & privacy','All access tests pass and each decision is traceable to a persona, job and step.'],
+ ['W8-10','P2','W8','Develop','Access and provisioning audit reports and recertification',2,['W8-05','W7-01','W8-06'],
+  'Reports of who held which persona, what decisions were made and what was denied; recertification workflow.',
+  'Semantic engineer · Security & privacy','The auditor persona can answer who did what, when and under which persona.'],
  ['W5-06','P2','W5','Develop','Alternate-label maintenance screens',3,['W5-05'],
   'Label editor (text, type, language, scope, effective dates); lexicon browser by scope (customer, Insperity, domain); deprecate; bulk import and export.',
   'UX/UI developer','A reviewer can find, edit and retire any label in scope without touching core.'],
@@ -687,22 +723,22 @@ const T = [
  ['W6-08','P2','W6','Deliver','Pilot publish 1: downturn vocabularies into Visier (test, then production)',2,['W6-06','W1-07','W2-05'],
   'Dimensions and selection concepts for the pilot vocabularies published in one project version; locks applied; parity and reconcile checks run; rollback rehearsed.',
   'Visier model developer · Semantic engineer','Parity passes; reconcile shows no unexplained difference; rollback rehearsed.'],
- ['W5-09','P2','W5','Deliver','Usability test, calibration and reviewer training',2,['W5-06','W5-07','W4-10'],
+ ['W5-09','P2','W5','Deliver','Usability test, calibration and reviewer training',2,['W5-06','W5-07','W4-10','W8-08'],
   'Test with ops reviewers on the pilot queue; calibration set for agreement; training material.',
   'Ops review lead · UX/UI developer','Task completion at or above 90% and reviewer agreement at or above 0.8 (proposed).'],
  ['W6-09','P2','W6','Deliver','Pilot publish 2: the approved customer lexicon projected per tenant',2,['W6-08','W5-09','M-1'],
   'Approved labels for the pilot customer resolved and published for that tenant only; no other tenant sees them.',
   'Visier model developer · Semantic engineer','Tenant-only visibility confirmed; the core release is unchanged.'],
- ['BF-2','P2','BUF','','Phase buffer',2,['W6-09','W5-09','W5-08','W5-10','W7-02'],''],
+ ['BF-2','P2','BUF','','Phase buffer',2,['W6-09','W5-09','W5-08','W5-10','W7-02','W8-09','W8-10'],''],
  ['M-2','P2','GATE','','G2 · End-to-end pilot live',0,['BF-2'],
-  'Pilot vocabularies live in Visier production in one version; parity tests pass; reconcile clean; rollback rehearsed; the pilot customer’s lexicon reviewed by ops and published for its tenant; the core is unchanged by onboarding.',''],
+  'Pilot vocabularies live in Visier production in one version; parity tests pass; reconcile clean; rollback rehearsed; the pilot customer’s lexicon reviewed by ops and published for its tenant; the pilot tenant, reviewers and stewards provisioned through the screens with access tests passed; the core is unchanged by onboarding.',''],
 
  // ---------------- P3 · Operate & scale ----------------
  ['W1-08','P3','W1','Define','Settle the skills option and its open questions',3,['W6-05','W1-02'],
   'Decision among A (map ESCO in the SKL, expose downstream), B (adopt Visier’s skills ontology as is) and C (per-customer skill sets); answers on Visier skill IDs against ESCO, load alongside or replace, ESCO version and licence, update ownership, and who approves a customer term that maps to nothing.',
   'Semantic architect · Governance council','Decision recorded before any skills publish.'],
- ['W7-03','P3','W7','Develop','Scale test: label volume, tenants and publish time',3,['W4-08','W6-03','W2-06'],
-  'Synthetic load at the volumes agreed in W1-04; core load and reasoning time, lookup P95, isolation and publish time measured against the ADR thresholds.',
+ ['W7-03','P3','W7','Develop','Scale test: label volume, tenants, personas and publish time',3,['W4-08','W6-03','W2-06','W8-05','W8-07'],
+  'Synthetic load at the volumes agreed in W1-04; core load and reasoning time, lookup P95, isolation, access decision time, tenant and person provisioning time, and publish time measured against the ADR thresholds.',
   'Semantic engineer · Platform/DevOps','Core load and reasoning time within the ADR tolerance at the top volume.'],
  ['W7-04','P3','W7','Define','Customer onboarding playbook and checklist',2,['W4-10','W5-07'],
   'Steps from source intake and permissions through PII screening, mapping, review, release and publish; effort and time targets; entry and exit checks.',
@@ -710,18 +746,18 @@ const T = [
  ['W6-07','P3','W6','Develop','Second target adapter on the same contract',3,['W6-06'],
   'An adapter for a second consumer (Copilot or Compass feed, HRScale or a partner API, chosen at G2) to show define once, publish many.',
   'Semantic engineer','Same release published to both targets with no change to the SKL.'],
- ['W7-05','P3','W7','Deliver','Runbooks, on-call, service levels and ops training',3,['W7-02','W6-06','W5-09'],
-  'Runbooks for failed ingest, PII quarantine, drift, failed publish and rollback; on-call and service levels; training for ops teams.',
+ ['W7-05','P3','W7','Deliver','Runbooks, on-call, service levels and ops training',3,['W7-02','W6-06','W5-09','W8-10'],
+  'Runbooks for failed ingest, PII quarantine, drift, failed publish and rollback, access denials and break-glass, tenant provisioning and deprovisioning; on-call and service levels; training for ops teams.',
   'Program manager · Ops review lead','Ops completes a drift and a rollback drill from the runbook.'],
- ['W7-06','P3','W7','Run','Onboard customer 2 with the playbook and a different source mix',4,['W7-04','W6-08'],
-  'Second customer’s sources ingested, reviewed and published for its tenant (the publish step uses the pattern proven in W6-09); lead time and reviewer effort recorded.',
+ ['W7-06','P3','W7','Run','Onboard customer 2 with the playbook and a different source mix',4,['W7-04','W6-08','W8-09'],
+  'Second customer provisioned through the screens; its sources ingested, reviewed and published for its tenant (the publish step uses the pattern proven in W6-09); lead time and reviewer effort recorded.',
   'Ops review lead · Data engineer · Semantic engineer','Lead time and cost to serve reported against the pilot baseline.'],
  ['W7-07','P3','W7','Run','Pilot review, measures against baseline and handover',2,['W7-06','W6-09','M-2','W7-03','W7-05','W6-07','W1-08'],
   'The five measures against the baseline; lessons learned fed back into standards and tests; backlog for the next projects; handover to operations.',
   'Program manager · Governance council','Council accepts the baseline as the base for future projects.'],
  ['BF-3','P3','BUF','','Project buffer',1,['W7-07'],''],
  ['M-3','P3','GATE','','G3 · Baseline operational',0,['BF-3'],
-  'Scale test passed; second customer onboarded from the playbook with no core change; second target live; runbooks drilled; measures reported against the baseline; council accepts handover.',''],
+  'Scale test passed, including access decisions and provisioning; second customer onboarded from the playbook with no core change; second target live; runbooks drilled; measures reported against the baseline; council accepts handover.',''],
 ].map(r=>({id:r[0],ph:r[1],ws:r[2],life:r[3],name:r[4],dur:r[5],deps:r[6],deliv:r[7]||'',owner:r[8]||'',accept:r[9]||''}));
 
 const LEVERS = [
@@ -730,6 +766,8 @@ const LEVERS = [
  ['One pilot customer, one target, one vocabulary set','The downturn workforce advisory vocabularies, one customer and Visier. A second customer starts once the first publish into Visier has succeeded, and a second target once the contract has run end to end.'],
  ['Publish the core pilot vocabularies before customer data is ready','Pilot publish 1 depends on the authored vocabularies and the release pipeline, not on the inbound pilot.'],
  ['Machines propose, people decide','Every extracted term is a candidate until a reviewer approves it, in line with the proposal’s rule: automate the mechanical, govern the judgemental.'],
+
+ ['Access and provisioning are designed with the contracts','W8-01 to W8-03 settle the persona catalog, the access model and the provisioning model in the first weeks, so the services are built to enforce them from the first release.'],
 ];
 const DEFERRED = [
  'Skills publishing: no skills object is published until the option decision (W1-08) is made and mapped',
@@ -737,6 +775,8 @@ const DEFERRED = [
  'Publishing targets beyond Visier and one second adapter',
  'Auto-approval of high-confidence labels, until reviewer agreement data exists',
  'Languages beyond those in the pilot sources',
+ 'Target operating model extensions beyond the review and provisioning screens: monitoring dashboards, operational triage and change-impact simulation, which build on the telemetry (W7-02) and release pipeline (W2-05) the plan delivers',
+ 'Configuration, customization and personalization options beyond persona-scoped screens and per-tenant settings',
  'Ontology axioms, rules and constraints stay in the SKL and are never published to Visier (proposal decision 2)',
 ];
 
@@ -810,6 +850,8 @@ const ISSUES = [
  ['High','Visier’s Dimensions API is Alpha and limited to leveled and parent-child dimensions','The proposal gates the adapter on confirming status and limits with Visier. File-based or Direct Data Intake loading is the fallback; the outbound contract does not change either way.',['W6-01','W6-05']],
  ['High','Customer permission and PII exposure in documents, handbooks and feeds are not settled','Handbooks and feeds can hold personal data. Screening fails closed and runs before processing; written permission is a G0 condition.',['W1-06','W2-04','W3-08']],
  ['High','The pilot customer, the CMS product and the feed formats are not named','Connector scope depends on them. The source register fixes the pilot set; other formats wait for later customers.',['W1-06','W3-01']],
+ ['High','Access beyond ACLs depends on a Personas & Jobs catalog that is not yet scoped for operations','Persona and job-step rules need an agreed catalog of operational personas, jobs and steps, an identity provider and a policy engine. Until then the plan carries a proposed catalog of eight personas.',['W8-01','W8-02']],
+ ['Medium','Provisioning, break-glass and recertification procedures are not defined','No repository is exposed to people or other systems, so provisioning and exceptional access must run through logged screens and a time-bound procedure.',['W8-03','W8-07']],
  ['Medium','The multi-parent naming and ID convention is not agreed','The proposal lists it as a next step. The publishing projection and the lexicon IDs both depend on it.',['W1-03']],
  ['Medium','Governance council membership and decision rights are not set','Approving releases, resolving cross-domain conflicts, promoting labels and customer-term requests all sit with the council.',['W1-02']],
  ['Medium','Operations reviewer capacity and ownership are unknown','Review throughput decides how fast a customer is onboarded. Discovery sizes the queue before the screens are designed.',['W5-01','W5-09']],
@@ -950,8 +992,8 @@ function renderFam(){
       ['Extract terms and definitions with evidence','Match to core and domain vocabularies','Triage into labels, local concepts or core requests','Operations review screens and lexicon maintenance']),
     card('Outbound','--c6','Publishes released SKL content to execution points through one contract and an adapter per target. Workstream W6.',
       ['Publish, validate, reconcile, status and rollback','Visier adapter first; published objects locked','Per-tenant projection of approved labels','Second target proves define once, publish many']),
-    card('Across all three','--c1','Governance, platform and operations that every project reuses. Workstreams W1, W2 and W7.',
-      ['Council, naming and ID rules, label architecture','Environments, release pipeline, tenant isolation','Measures, playbook, runbooks, scale test']),
+    card('Across all three','--c1','Governance, platform, access and operations that every project reuses. Workstreams W1, W2, W7 and W8.',
+      ['Council, naming and ID rules, label architecture','Environments, release pipeline, tenant isolation','Personas, access decided per job step, provisioning','Measures, playbook, runbooks, scale test']),
   ].join('');
 }
 function renderCards(){
@@ -1223,6 +1265,7 @@ function renderLifecycle(){
     'Every operations (OPR) item meets its target before release',
     'No item with target 3 is scored 0 (open major debt)',
     'The label design rule holds: zero customer-driven triples in core and zero cross-tenant results',
+    'Access tests pass for every persona in scope, including maker-checker and tenant insulation',
     'Parity tests pass and reconcile shows no unexplained difference for every target in scope',
   ].map(t=>`<li class="no" data-m="○"><span>${esc(t)}</span></li>`).join('');
 }
@@ -1234,6 +1277,8 @@ function renderIssues(){
   $('issues').querySelectorAll('[data-task]').forEach(b=>b.addEventListener('click',()=>{ selected=b.dataset.task; wsState.add(BY[selected].ws); chipRow($('wsChips'), wsState, renderGantt); show('roadmap'); renderGantt(); renderDetail(); }));
   $('assume').innerHTML = [
     'Work starts on Monday 9 November 2026, after a week to approve and staff. Dates are planning dates, not commitments.',
+    'Until the provisioning screens exist (task W8-07), pilot tenants and users are provisioned by hand under the same audit and no-direct-access rules.',
+    'No repository is exposed to people, other systems or third parties. Graphs are reached only through the semantic services, and people work only through provisioned screens. Access is decided per persona, job and job step, using Personas & Jobs, and not by access lists alone.',
     'Durations are working weeks for the roles named on each task being available when needed. Headcount is a staffing decision for G0 and is not assumed here.',
     'No work is scheduled from 21 December 2026 to 3 January 2027. Tasks that cross that period are extended by two weeks.',
     'Buffers total <b>'+BUFTOTAL+' weeks</b>, '+Math.round(100*BUFTOTAL/END0)+'% of the '+WEEKS_TXT(END0)+'-week plan: 1 week at G0, 2 at G1, 2 at G2 and 1 before G3.',

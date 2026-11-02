@@ -347,6 +347,9 @@ nav.tabs .grp button[aria-selected="true"]{background:var(--accent);color:#fff}
 .lvl.hit .r{color:var(--green-800)}
 .lvl.skip{opacity:.45}
 .lvl.miss .r{color:var(--faint)}
+.tchip{font:600 10.5px var(--mono);padding:2px 7px;border-radius:6px;border:1px solid var(--zb);background:var(--z);color:var(--zt);white-space:nowrap}
+table.t th.tz{color:var(--zt);background:var(--z);border-color:var(--zb);font-size:12px;text-transform:none;letter-spacing:0}
+.sp[data-st]{cursor:pointer}
 .states{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .states .p{padding:6px 12px;border-radius:999px;border:1px solid var(--purple-600);background:var(--purple-50);color:var(--purple-800);font-size:13px;font-weight:500}
 .states .ar{color:var(--faint)}
@@ -380,7 +383,7 @@ nav.tabs .grp button[aria-selected="true"]{background:var(--accent);color:#fff}
       <p class="lede" id="ov-aud-line"></p>
       <div class="chips" style="margin-top:12px">
         <button class="btn pri" data-goto="inbound">See the three semantic services</button>
-        <button class="btn" data-goto="legacy">How it sits on legacy</button>
+        <button class="btn" data-goto="legacy">Three tiers, search and AI</button>
         <button class="btn" data-goto="map">Architecture map</button>
       </div>
     </div>
@@ -433,8 +436,26 @@ nav.tabs .grp button[aria-selected="true"]{background:var(--accent);color:#fff}
 <section class="view" id="v-legacy" role="tabpanel">
   <div class="vhead">
     <div class="eyebrow">Scaffold over legacy</div>
-    <h2>The scaffold sits on top. Legacy stays as it is.</h2>
-    <p>No source system is modified and no downstream tool becomes a second master. Content comes in through governed adapters and goes out through governed adapters, with the SKL as the only place meaning is authored.</p>
+    <h2>Three tiers: the scaffold sits on top, legacy stays as it is</h2>
+    <p>The enterprise semantic stack has three tiers, not two. Top-down ontology and bottom-up implementation meet at a persistent mediation holon. A legacy change never reaches the ontology, and a rule is never re-authored inside a legacy tool.</p>
+  </div>
+  <div class="sec">
+    <h3>Three tiers, not two</h3>
+    <p class="sub">Top-down meaning and bottom-up implementation change at different speeds, under different owners. A dedicated middle tier sits between them so neither has to absorb the other's rate of change.</p>
+    <div class="card scroll-x"><table class="t" id="tierTable"></table></div>
+  </div>
+  <div class="sec">
+    <h3>See it work: search, conventional AI, and change</h3>
+    <p class="sub">Pick a scenario. For search and AI, step through to see which tier does what. Select any block to open it in the architecture map.</p>
+    <div class="seg" role="group" aria-label="Scenario" id="tierSeg"></div>
+    <div id="tierSteps" class="stage-pipe" style="margin-top:12px"></div>
+    <div class="card" id="tierNote"></div>
+    <div class="wt-nav" id="tierNav" style="margin:10px 0"><button class="btn" id="tierPrev">Back</button><button class="btn pri" id="tierNext">Next step</button><span class="sp-fill"></span><span class="sub" id="tierCount"></span></div>
+    <div class="card fig scroll-x" id="tierFig" style="margin-top:10px"></div>
+  </div>
+  <div class="sec">
+    <h3>Conventional search and AI alone, versus on the three tiers</h3>
+    <div class="card scroll-x"><table class="t" id="aiCompare"></table></div>
   </div>
   <div class="sec">
     <h3>Without and with the scaffold</h3>
@@ -444,8 +465,8 @@ nav.tabs .grp button[aria-selected="true"]{background:var(--accent);color:#fff}
     <p class="note" id="wwNote"></p>
   </div>
   <div class="sec">
-    <h3>End to end: legacy in, governed meaning out</h3>
-    <p class="sub">Select a service to open it, or a legacy system to see how it attaches.</p>
+    <h3>The three semantic services across the tiers</h3>
+    <p class="sub">Inbound lifts content from the bottom tier through the mediation holon. Processing turns it into governed meaning in the top tier. Outbound compiles it back down to each target. Select a service or a legacy system.</p>
     <div class="card fig scroll-x" id="e2eFig"></div>
   </div>
   <div class="sec">
@@ -1159,10 +1180,10 @@ const ATTACH = [
   scaffold:'Turns prose into candidate terms with the exact source span as evidence.',legacy:'Documents remain the customer\'s originals in their own landing zone.'},
  {id:'esco',z:'teal',t:'ESCO reference releases',s:'Skills and occupations reference set',dir:'Inbound',
   how:'ESCO ships as SKOS-RDF and CSV downloads, plus services and delta files between versions. The inbound service loads one release at a time. A rejected release goes back to mapping with the steward\'s changes.',
-  scaffold:'Hosts an ESCO-aligned canonical skills set and maps each customer term to it with exact, close, broad or narrow relations.',legacy:'Open questions remain: how Visier skill IDs relate to ESCO, load alongside or replace, and who owns versions and licensing. Status is TBD.'},
- {id:'visier',z:'coral',t:'Visier',s:'Consumption-only analytics',dir:'Outbound',
-  how:'The Visier adapter maps concept schemes to dimension types and selection concepts, and writes through Visier\'s APIs inside a project so a publish lands as one production version. Every published object carries its SKL ID and version.',
-  scaffold:'Publishes released vocabularies and taxonomies as dimension members and property values. Reads back and reconciles. Metric definitions stay symbolic in the SKL.',legacy:'Published objects are locked. Visier reports back only reconciliation status, never definitions. The Dimensions API is Alpha and limited to leveled and parent-child types, so file-based or Direct Data Intake loading is the fallback. Whether Visier can hold a tenant-specific member name is unconfirmed (task W6-01).'},
+  scaffold:'Hosts an ESCO-aligned canonical skills set and maps each customer term to it with exact, close, broad or narrow relations.',legacy:'Open questions remain: how the platform\'s own skill IDs relate to ESCO, whether to load alongside or replace, and who owns versions and licensing. Status is TBD.'},
+ {id:'downstream',z:'coral',t:'Analytics and execution platforms',s:'Consumption-only targets',dir:'Outbound',
+  how:'A per-target adapter maps concept schemes to the platform\'s own dimension and property types and writes through its APIs in one versioned batch. Every published object carries its SKL ID and version.',
+  scaffold:'Publishes released vocabularies and taxonomies as members and property values. Reads back and reconciles. Metric definitions stay symbolic in the SKL.',legacy:'Published objects are locked. The platform reports back only reconciliation status, never definitions. Where its API cannot express a structure, file-based loading is the fallback. Whether it can hold a tenant-specific member name is still to be confirmed with the vendor.'},
  {id:'consumers',z:'coral',t:'Copilot, Compass, HRScale, partner APIs',s:'Resolve through one service',dir:'Outbound',
   how:'Callers pass text and a tenant context. The service looks in the customer lexicon, then the Insperity lexicon, then the domain lexicon, then core preferred labels. It never searches another tenant.',
   scaffold:'One approved label behaves the same everywhere. Ambiguous matches return candidates with definitions.',legacy:'Consumers never query a graph or repository directly.'}
@@ -1253,6 +1274,9 @@ SOURCES.push(
  ['Architecture Proposal: Alternate Labels and Customer Terminology (PDF, 31 Oct 2026)','Semantic services baseline, lexicon layer, five-function model, personas and provisioning, operational extensions, operating model, pilot gates.'],
  ['DRAFT Proposal: SKL as Single Source of Truth, Publishing into Visier (PDF, 29 Oct 2026)','SSOT recommendation, authored versus published elements, outbound publishing, target operating model principles and lifecycle.']
 );
+
+C('lexicon','MED','add','Lexicon layer','blue','Lexicons and resolution index','Customer terms, scoped per tenant','Each customer\'s own words are kept beside the core, never inside it, so search and assistants understand the customer without changing the shared vocabulary.','Scoped lexicon graphs (one per tenant plus a house lexicon) hold SKOS-XL-style label records pointing at core concepts by ID. A derived resolution index answers lookups without querying the ontology graphs.',['SKOS-XL','PROV-O'],['mapgraph','ontology']);
+BY['lexicon']=CELLS[CELLS.length-1];
 
 /* ===================== LOGIC ===================== */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1664,9 +1688,9 @@ $('#svcDetail').addEventListener('change',e=>{
 });
 
 /* ---------- scaffold over legacy ---------- */
-S.ww='with'; S.att='visier';
+S.ww='with'; S.att='downstream'; S.tier='legacy';
 function wwSVG(mode){
-  const tools=['Visier','Copilot','Compass','Partner APIs'];
+  const tools=['Analytics platform','Copilot','Compass','Partner APIs'];
   if(mode==='without'){
     return `<svg viewBox="0 0 900 250" role="img" aria-label="Without the scaffold, each tool keeps its own copy of terms and rules and they drift apart">${svDefs}
     ${svT(450,26,'Each tool curates its own meaning','var(--red-800)',15,700)}${svT(450,46,'Two masters, then many. Poly-hierarchy, typed relations and rules have nowhere to live.','var(--muted)',11.5)}
@@ -1696,7 +1720,7 @@ function e2eSVG(){
   ${svR(30,8,340,44,'gray',true)}${svT(200,28,'Operational extensions','var(--gray-800)',13,600)}${svT(200,44,'screens · provisioning · monitoring · triage · simulation','var(--gray-600)',10)}
   ${svArrow(200,54,200,126)}${svT(208,92,'call services, never a graph','var(--muted)',10,500,'start')}
   <g data-att="consumers">${svR(400,8,220,44,'gray',true)}${svT(510,28,'Copilot · Compass · HRScale','var(--gray-800)',12.5,600)}${svT(510,44,'partner APIs: tenant-scoped labels','var(--gray-600)',10)}</g>
-  <g data-att="visier">${svR(640,8,230,44,'gray',true)}${svT(755,28,'Visier (consume only)','var(--gray-800)',12.5,600)}${svT(755,44,'locked objects, status back only','var(--gray-600)',10)}</g>
+  <g data-att="downstream">${svR(640,8,230,44,'gray',true)}${svT(755,28,'Analytics platforms (consume only)','var(--gray-800)',12,600)}${svT(755,44,'locked objects, status back only','var(--gray-600)',10)}</g>
   ${svArrow(510,126,510,54)}${svArrow(730,126,730,54)}${svArrow(780,54,780,126,true)}${svT(788,92,'status only','var(--muted)',10,500,'start')}
   <rect x="20" y="98" width="860" height="248" rx="14" fill="none" stroke="var(--blue-600)" stroke-width="1.6"/>
   ${svT(34,116,'THE SCAFFOLD: SKL AND THE THREE SEMANTIC SERVICES','var(--blue-600)',10.5,600,'start')}
@@ -1726,6 +1750,106 @@ function renderAtt(){
 $('#friction').innerHTML=`<tr><th>Friction point</th><th>If unmitigated</th><th>Mitigation already in the architecture</th></tr>`+FRICTION.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('');
 $('#rules').innerHTML=DESIGN_RULES.map(r=>`<div class="card"><b style="font-size:14px">${esc(r[0])}</b><p class="sub" style="margin:4px 0 0">${esc(r[1])}</p></div>`).join('');
 
+
+/* three-tier diagram */
+const TIERS3=[
+ {n:'Tier 1',name:'Top-down',sub:'Enterprise ontology',z:'purple'},
+ {n:'Tier 2',name:'Mediation',sub:'Mediation holon',z:'blue'},
+ {n:'Tier 3',name:'Bottom-up',sub:'Physical implementation',z:'gray'}
+];
+const TIER_ROWS=[
+ ['What it holds','Core and domain vocabularies, taxonomies and ontologies, with canonical SHACL, SWRL and deontic rules','Mapping graphs, identity registry, customer lexicons and resolution index, RAG anchor index, rule harmonization and projection','Your existing stack: dbt and LookML, property graphs, vector stores, third-party ontologies, data catalogs, source systems'],
+ ['How fast it changes','Slowly and deliberately','Whenever either side changes; it absorbs the churn','Quickly and constantly'],
+ ['Who owns it','Governance council and domain teams','Semantic governance CoE; stewards approve every mapping','Engineering teams, as today'],
+ ['Role in search','Supplies meaning: definitions, broader and narrower terms, related concepts for query expansion','Resolves the user\'s words to a concept, then the concept to where it lives in each system','Holds the content and runs the queries through its own interfaces, unchanged'],
+ ['Role in conventional AI','Validates retrieved concepts against the ontology and rules (symbolic level)','Anchors retrieved chunks to canonical entities; compiles permission rules and guardrails','Vector similarity retrieval exactly as today (nearest-neighbor level)'],
+ ['What it never does','Absorbs bottom-up churn or one customer\'s terms','Becomes a point-to-point integration','Gets rules re-authored inside it, or edits the ontology']
+];
+const AI_COMPARE=[
+ ['Search terms','Keyword match; synonyms and customer wording are missed','Terms resolved per tenant, then expanded through the ontology'],
+ ['Retrieval for AI','Text similarity only','Similarity, then anchoring to a canonical entity, then ontology validation'],
+ ['What may be shown','Left to the prompt or the model','Decided by deterministic compiled rules before the model sees any content'],
+ ['Ungrounded content','Presented like any other fact','Quarantined, or passed with an explicit low-confidence flag'],
+ ['Trust','Assumed','Measured on every response (MTBH), with a circuit breaker that holds low-trust output for a person'],
+ ['When a source system changes','Re-index, re-map, re-tune prompts','Update one mapping; the ontology and rules stay untouched'],
+ ['Audit','Hard to trace an answer to a definition','Every answer traces to versioned definitions and approvals']
+];
+const TSCEN={
+ search:{label:'How search works',steps:[
+  {t:'Ask in your own words',tiers:[0],h:['ch-search'],x:'A user searches using their own term, for example a customer\'s name for a benefit plan. The request carries identity, persona and tenant.'},
+  {t:'Resolve the term',tiers:[2],h:['lexicon'],x:'The label resolution service checks the customer\'s lexicon, then the house lexicon, then the domain lexicon, then core preferred labels. It answers from a derived index, so no ontology query runs on the hot path, and it never looks in another tenant.'},
+  {t:'Expand the meaning',tiers:[1],h:['ontology'],x:'The resolved concept brings its definition, broader and narrower terms and related concepts, so one search also finds what is filed under synonyms and child concepts.'},
+  {t:'Find where it lives',tiers:[2],h:['mapgraph','uriregistry'],x:'The mapping graph translates the canonical concept into each system\'s own representation: a catalog term, a column, a graph label, a vector namespace. Every hit resolves to one enterprise ID, so duplicates collapse.'},
+  {t:'Query existing stores',tiers:[3],h:['metric','srcsys','vector','catalog'],x:'Queries run against the systems you already have, through their own interfaces. Operational lookups use pre-compiled, cached rules; cross-domain questions accept a federated traversal.'},
+  {t:'Apply permissions',tiers:[1,2],h:['deontic','govrepo','ch-gate'],x:'Rules authored once in Tier 1 and compiled through Tier 2 decide what this person may see, by who, where and why, before results are returned.'},
+  {t:'One answer everywhere',tiers:[0],h:['ch-search'],x:'Results return with canonical IDs and the customer\'s own labels. The same term gives the same answer in search, assistants and partner APIs.'}
+ ]},
+ ai:{label:'How conventional AI works',steps:[
+  {t:'Question with context',tiers:[0],h:['ch-search'],x:'A user asks an assistant a question. The context bundle records who is asking, what about, when, where and why.'},
+  {t:'Retrieve by similarity',tiers:[3],h:['vector'],x:'Level 1: nearest-neighbor search over the existing vector store, exactly as conventional RAG does today. Nothing about the index changes.'},
+  {t:'Anchor to real entities',tiers:[2],h:['ragindex','uriregistry'],x:'The RAG anchor index binds each retrieved chunk to a canonical enterprise entity. A chunk that cannot be resolved is quarantined or passed with an explicit low-confidence flag, never treated as a governed fact.'},
+  {t:'Validate against meaning',tiers:[1],h:['ontology','shacl'],x:'Level 2: domain agents check the anchored concepts against the ontology and SHACL constraints, so the answer rests on governed meaning, not text that merely looks similar.'},
+  {t:'Decide what may surface',tiers:[1,2],h:['deontic','govrepo','ch-gate'],x:'Deterministic rules compiled from the governance repository, not the language model, decide whether this content may surface to this requester, in this context, for this purpose.'},
+  {t:'Generate within guardrails',tiers:[0],h:['ch-llm','ch-gate'],x:'Only now does content reach the model, with a compiled directive that bounds what it may say. Each response carries a trust score; below threshold, the circuit breaker holds it for a person.'},
+  {t:'Learn, but never self-write',tiers:[2,1],h:['mapgraph','ontology','gov-sem'],x:'The closed loop proposes new entities, cross-domain alignments, enrichments and corrections. Stewards review them; approved changes are recorded as versioned changes. Nothing is written automatically.'}
+ ]},
+ legacy:{label:'A legacy system changes',steps:[
+  {t:'Source changes, meaning holds',tiers:[3,2],h:['metric','lineageagent','mapgraph'],x:'A transformation model is refactored in Tier 3. Lineage ingestion agents detect the drift and propose a mapping update; a steward approves it and it publishes as a versioned assertion. Tier 1, the rules and every consumer are untouched.'}
+ ]},
+ rule:{label:'A rule changes at the top',steps:[
+  {t:'Defined once, enforced everywhere',tiers:[1,2,3],h:['shacl','govrepo','metric','vector','ch-llm','ch-gate'],x:'A canonical rule is changed once in Tier 1. Harmonization checks it for conflicts, and projection agents compile it into each tool\'s native form: SQL and dbt checks, policy-engine rules, vector filters and AI guardrails. Each compiled artifact links back to its source rule.'}
+ ]}
+};
+S.scen='search'; S.tstep=0;
+function tierSVG(hl){
+  const on=k=>hl.has(k);
+  const cell=(x,y,w,h,z,title,sub,key,open,dashed,fs=11.5)=>`<g data-open="${open}" style="cursor:pointer">${svR(x,y,w,h,z,dashed)}${on(key)?`<rect x="${x-2}" y="${y-2}" width="${w+4}" height="${h+4}" rx="12" fill="none" stroke="var(--accent)" stroke-width="3"/>`:''}${svT(x+w/2,y+h/2-3,title,`var(--${z}-800)`,fs,600)}${svT(x+w/2,y+h/2+12,sub,`var(--${z}-600)`,9.5)}</g>`;
+  const head=(y,z,l,r)=>`${svT(36,y,l,`var(--${z}-600)`,11,700,'start')}${svT(864,y,r,`var(--${z}-600)`,10.5,500,'end')}`;
+  const ch=[['ch-search','intelapp','Search, apps and assistants','where people ask'],['ch-llm','agentfabric','AI model (LLM)','generates within guardrails'],['ch-gate','cb','Policy and trust gate','permissions, trust score, breaker']];
+  const t1=[['ontology','ontology','Core ontology stack','vocabularies · taxonomies · ontologies'],['shacl','shacl','Canonical rules','SHACL · SWRL'],['deontic','deontic','Deontic norms','must, may, must not'],['gov-sem','gov-sem','Council and domain teams','own the meaning']];
+  const t2=[['mapgraph','mapgraph','Mapping graph','correspondences'],['uriregistry','uriregistry','Identity registry','one ID per thing'],['lexicon','lexicon','Lexicons + index','customer terms'],['ragindex','ragindex','RAG anchor index','grounds AI chunks'],['govrepo','govrepo','Rule projection','compiles rules out'],['lineageagent','lineageagent','Lineage agents','detect drift']];
+  const t3=[['metric','metric','dbt / LookML','metric layer'],['srcsys','srcsys','Property graphs','operational graphs'],['vector','vector','Vector DB, RAG','retrieval stores'],['corr6','corr6','Third-party ontologies','industry vocabularies'],['catalog','catalog','Data catalogs','lineage and discovery']];
+  return `<svg viewBox="0 0 900 600" role="img" aria-label="Three-tier semantic architecture: Tier 1 top-down ontology, Tier 2 mediation holon, Tier 3 bottom-up implementation">${svDefs}
+  ${svR(20,6,860,66,'gray',true)}${svT(36,22,'CHANNELS (not a tier)','var(--gray-600)',10.5,600,'start')}
+  ${ch.map((c,i)=>cell(36+i*280,28,268,38,'gray',c[2],c[3],c[0],c[1],false,11)).join('')}
+  ${svR(20,84,860,134,'purple')}${head(104,'purple','TIER 1 · TOP-DOWN · ENTERPRISE ONTOLOGY','evolves slowly · governance council authority')}
+  ${t1.map((c,i)=>cell(36+i*208,116,196,86,'purple',c[2],c[3],c[0],c[1])).join('')}
+  ${svArrow(210,220,210,252)}${svT(220,240,'rules compile downward','var(--muted)',10,500,'start')}
+  ${svArrow(690,252,690,220)}${svT(680,240,'drift rises as mapping updates','var(--muted)',10,500,'end')}
+  <rect x="20" y="254" width="860" height="128" rx="14" fill="color-mix(in srgb,var(--blue-50) 55%,var(--surface))" stroke="var(--blue-600)" stroke-width="2.6"/>
+  ${head(274,'blue','TIER 2 · MEDIATION · MEDIATION HOLON (SAML)','persistent · insulation, not integration')}
+  ${t2.map((c,i)=>cell(36+i*139,286,131,60,'blue',c[2],c[3],c[0],c[1],false,11)).join('')}
+  ${svT(450,368,'Proposed, confidence-scored, steward-reviewed, then published as versioned assertions. No point-to-point mappings.','var(--blue-800)',10.5)}
+  ${svArrow(210,384,210,416)}${svT(220,404,'compiled policy: SQL, rules, vector filters, guardrails','var(--muted)',10,500,'start')}
+  ${svArrow(690,416,690,384)}${svT(680,404,'lineage and schema signals','var(--muted)',10,500,'end')}
+  ${svR(20,418,860,128,'gray',true)}${head(438,'gray','TIER 3 · BOTTOM-UP · YOUR PHYSICAL IMPLEMENTATION','evolves fast · engineering authority · unchanged')}
+  ${t3.map((c,i)=>cell(36+i*167,450,155,60,'gray',c[2],c[3],c[0],c[1],true)).join('')}
+  ${svT(450,532,'Source and operational systems, vendor tools, content and feeds stay here as they are.','var(--gray-600)',10.5)}
+  ${svT(450,580,'The three tiers meet only through Tier 2. Tier 1 never absorbs Tier 3 churn; Tier 3 never holds re-authored rules.','var(--muted)',11.5,500)}
+  </svg>`;
+}
+const tchip=t=>t===0?`<span class="tchip z-gray">Channel</span>`:`<span class="tchip z-${TIERS3[t-1].z}">${TIERS3[t-1].n} · ${TIERS3[t-1].name}</span>`;
+$('#tierTable').innerHTML=`<tr><th></th>${TIERS3.map(t=>`<th class="tz z-${t.z}">${t.n} · ${t.name}<br><span style="font-weight:500">${t.sub}</span></th>`).join('')}</tr>`+TIER_ROWS.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join('');
+$('#aiCompare').innerHTML=`<tr><th></th><th>Conventional, on its own</th><th>On the three tiers</th></tr>`+AI_COMPARE.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('');
+$('#tierSeg').innerHTML=Object.entries(TSCEN).map(([k,v])=>`<button data-scen="${k}">${esc(v.label)}</button>`).join('');
+function renderTier(){
+  const sc=TSCEN[S.scen], st=sc.steps[S.tstep], multi=sc.steps.length>1;
+  $$('#tierSeg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.scen===S.scen));
+  $('#tierSteps').innerHTML=multi?sc.steps.map((s,i)=>`<span class="sp ${i===S.tstep?'on z-blue':''}" data-st="${i}" role="button" tabindex="0">${i+1}. ${esc(s.t)}</span>`).join(''):'';
+  $('#tierSteps').style.display=multi?'':'none';
+  $('#tierFig').innerHTML=tierSVG(new Set(st.h));
+  $('#tierNote').innerHTML=`<div class="dt" style="margin:0 0 6px">${st.tiers.map(tchip).join('')}</div><h4 style="font-size:17px;margin-bottom:4px">${multi?`Step ${S.tstep+1}. `:''}${esc(st.t)}</h4><p style="margin:0">${esc(st.x)}</p>${S.scen==='ai'?'<p class="note">Order matters: grounding happens before governance, and governance happens before content reaches the model.</p>':''}`;
+  $('#tierNav').style.display=multi?'':'none';
+  $('#tierPrev').disabled=S.tstep===0; $('#tierNext').disabled=S.tstep===sc.steps.length-1;
+  $('#tierCount').textContent=multi?`${S.tstep+1} / ${sc.steps.length}`:'';
+}
+$('#tierSeg').addEventListener('click',e=>{const b=e.target.closest('[data-scen]'); if(b){S.scen=b.dataset.scen; S.tstep=0; renderTier();}});
+$('#tierSteps').addEventListener('click',e=>{const b=e.target.closest('[data-st]'); if(b){S.tstep=+b.dataset.st; renderTier();}});
+$('#tierSteps').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const b=e.target.closest('[data-st]'); if(b){e.preventDefault(); S.tstep=+b.dataset.st; renderTier();}}});
+$('#tierPrev').onclick=()=>{if(S.tstep>0){S.tstep--; renderTier();}};
+$('#tierNext').onclick=()=>{if(S.tstep<TSCEN[S.scen].steps.length-1){S.tstep++; renderTier();}};
+$('#tierFig').addEventListener('click',e=>{const g=e.target.closest('[data-open]'); if(g) openMap(g.dataset.open);});
+
 /* ---------- operating model ---------- */
 S.lc=0; S.pers='or';
 $('#principles').innerHTML=PRINCIPLES7.map((p,i)=>`<div class="card"><div class="eyebrow">Principle ${i+1}</div><h4 style="font-size:15.5px;margin:4px 0">${esc(p[0])}</h4><p class="sub" style="margin:0">${esc(p[1])}</p></div>`).join('');
@@ -1752,7 +1876,7 @@ $('#org').innerHTML=ORG.map(r=>`<div class="gl"><b>${esc(r[0])} <em>${esc(r[1])}
 
 /* ---------- boot ---------- */
 renderMap(); applyMapState(); renderDetail();
-renderOverviewAud(); renderWalk(); renderGdom(); renderRules(); renderCB(); renderTeam(); renderApps(); renderGloss(); renderServices(); renderWW(); renderAtt(); renderLC(); renderPers();
+renderOverviewAud(); renderWalk(); renderGdom(); renderRules(); renderCB(); renderTeam(); renderApps(); renderGloss(); renderServices(); renderWW(); renderTier(); renderAtt(); renderLC(); renderPers();
 $$('[data-aud]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.aud===S.aud));
 showTab((location.hash||'').slice(1)||'overview',{keepScroll:true});
 

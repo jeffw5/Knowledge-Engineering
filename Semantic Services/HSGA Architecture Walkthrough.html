@@ -465,8 +465,8 @@ table.t th.tz{color:var(--zt);background:var(--z);border-color:var(--zb);font-si
     <p class="note" id="wwNote"></p>
   </div>
   <div class="sec">
-    <h3>The three semantic services across the tiers</h3>
-    <p class="sub">Inbound lifts content from the bottom tier through the mediation holon. Processing turns it into governed meaning in the top tier. Outbound compiles it back down to each target. Select a service or a legacy system.</p>
+    <h3>The three semantic services between the MCP and API layers</h3>
+    <p class="sub">Compass and the agents reach the scaffold through MCP. The scaffold reaches SAP, Salesforce, SharePoint, Workday, PEO products & services and third-party systems through APIs. Select a service or a system.</p>
     <div class="card fig scroll-x" id="e2eFig"></div>
   </div>
   <div class="sec">
@@ -1082,7 +1082,7 @@ const SVCMETA = {
   map:['mapgraph','shacl','kgcl','harmonize','govrepo','uriregistry']},
  outbound:{z:'coral',title:'Outbound services',tag:'Serve',
   lead:'Makes approved terminology usable at run time and in downstream tools, without making the core carry it. One contract, one adapter per target.',
-  biz:'One approved term behaves the same way in search, Copilot, Compass, HRScale, partner APIs and Visier. Downstream tools consume what is published and never edit it. If a copy ever differs from the source, that is a defect to fix, not a competing opinion.',
+  biz:'One approved term behaves the same way in Compass, in the agents built with Copilot and other LLMs, in search, in partner APIs and in Visier. Downstream tools consume what is published and never edit it. If a copy ever differs from the source, that is a defect to fix, not a competing opinion.',
   tech:'Label resolution answers from a derived index rebuilt on each release, never from the ontology graphs on the hot path. Publishing runs publish, validate, reconcile, status and rollback, with a Visier adapter that stamps the SKL ID and version on every published object.',
   map:['projagents','projruntime','virt','erp','bi']},
  common:{z:'red',title:'Common services',tag:'Shared by all three',
@@ -1166,27 +1166,36 @@ const AUTHPUB = [
  ['Provenance','SKL ID, version, publish record','A property on every published object','Enables drift detection']
 ];
 const ATTACH = [
- {id:'docs',z:'teal',t:'Customer documentation',s:'Upload or file share',dir:'Inbound',
-  how:'Upload or file-share intake with version detection. Items land with a tenant tag, are screened, then read for defined terms, abbreviations, and product and plan names.',
-  scaffold:'Copies in once, screens, extracts candidates with evidence spans.',legacy:'Untouched. It only supplies files. Written permission, retention rule and data-use terms are conditions of onboarding.'},
- {id:'cms',z:'teal',t:'Content management system',s:'API or export, incremental sync',dir:'Inbound',
-  how:'API or export with incremental sync and page-level provenance. Yields page titles, glossaries, taxonomies and navigation labels.',
-  scaffold:'Reads page-level content and keeps each term traceable to its page.',legacy:'No schema changes and no write-back. Its labels become candidates, never edits.'},
- {id:'feeds',z:'teal',t:'Customer data feeds',s:'File, SFTP or API',dir:'Inbound',
-  how:'Declarative R2RML-style mappings carry code lists (job titles, departments, pay and benefit codes) into the same candidate model as documents.',
-  scaffold:'A code list and a handbook paragraph reach review in one form.',legacy:'Feeds keep their format. The mapping is declared outside the source system.'},
- {id:'handbooks',z:'teal',t:'Employee handbooks',s:'Section-aware parsing, OCR',dir:'Inbound',
-  how:'Section-aware parsing with OCR for scans. Yields policy names, defined-terms sections, and program and role names.',
-  scaffold:'Turns prose into candidate terms with the exact source span as evidence.',legacy:'Documents remain the customer\'s originals in their own landing zone.'},
- {id:'esco',z:'teal',t:'ESCO reference releases',s:'Skills and occupations reference set',dir:'Inbound',
-  how:'ESCO ships as SKOS-RDF and CSV downloads, plus services and delta files between versions. The inbound service loads one release at a time. A rejected release goes back to mapping with the steward\'s changes.',
-  scaffold:'Hosts an ESCO-aligned canonical skills set and maps each customer term to it with exact, close, broad or narrow relations.',legacy:'Open questions remain: how the platform\'s own skill IDs relate to ESCO, whether to load alongside or replace, and who owns versions and licensing. Status is TBD.'},
- {id:'downstream',z:'coral',t:'Analytics and execution platforms',s:'Consumption-only targets',dir:'Outbound',
+ {id:'sap',g:'api',z:'teal',t:'SAP (ERP)',s:'Financial and operational system of record',dir:'API layer',
+  how:'Reached through its APIs with one adapter. The scaffold reads what it needs through a governed connector and maps SAP codes and keys to canonical concepts and enterprise IDs in the mapping graph.',
+  scaffold:'Reads through the API layer, resolves SAP keys to one enterprise ID, and enforces compiled rules where its data is used.',legacy:'SAP keeps owning the transactions. Any write-back goes only through the governed approval gate with a named approver, never directly from an agent.'},
+ {id:'sfdc',g:'api',z:'teal',t:'Salesforce (CRM)',s:'Client and account records',dir:'API layer',
+  how:'Reached through its APIs with one adapter. The identity registry resolves the same client in Salesforce, Workday and SAP to one canonical enterprise entity.',
+  scaffold:'Maps account and client entities to the ontology so a client means the same thing in every channel.',legacy:'No schema changes. Salesforce stays the system of record for its objects.'},
+ {id:'sp',g:'api',z:'teal',t:'SharePoint (CMS)',s:'Content, documents and handbooks',dir:'API layer',
+  how:'API or export with incremental sync and page-level provenance. Yields page titles, glossaries, taxonomies and navigation labels. Documents and handbooks stored there are screened first, then parsed section by section, with OCR for scans.',
+  scaffold:'Turns content into candidate terms with evidence spans, scoped to the right tenant.',legacy:'Pages and files stay where they are. Their labels become candidates for review, never direct edits to the vocabulary.'},
+ {id:'wd',g:'api',z:'teal',t:'Workday (HCM)',s:'Worker, job and pay data',dir:'API layer',
+  how:'Data feeds of code lists such as job titles, departments, and pay and benefit codes are carried by declarative R2RML-style mappings into the same candidate model as documents.',
+  scaffold:'A Workday code list and a handbook paragraph reach review in one form. Schema changes are caught by lineage agents and become mapping updates.',legacy:'Workday keeps its own model and codes. The mapping is declared outside it.'},
+ {id:'peo',g:'api',z:'teal',t:'PEO products & services',s:'Plans, offerings and eligibility',dir:'API layer',
+  how:'Product and service definitions are mapped to canonical concepts, so plans, offerings and eligibility mean the same thing in every channel.',
+  scaffold:'Eligibility, compliance and calculation logic is authored once in the SKL and runs in deterministic services. The products receive results, not copies of the rules.',legacy:'Products keep running on their own platforms. They consume governed results through the API layer.'},
+ {id:'tp',g:'api',z:'teal',t:'Third-party systems & tools',s:'Partners, vendors, external data',dir:'API layer',
+  how:'External systems connect through the API gateway with rate limiting, mutual TLS, schema validation and audit logging, with one adapter per system. Third-party ontologies are aligned through the mapping graph.',
+  scaffold:'Adds a governed, audited entry and exit point for every external system.',legacy:'No point-to-point mappings between a vendor system and the ontology are created.'},
+ {id:'downstream',g:'api',z:'coral',t:'Analytics and execution platforms',s:'Consumption-only targets',dir:'API layer',
   how:'A per-target adapter maps concept schemes to the platform\'s own dimension and property types and writes through its APIs in one versioned batch. Every published object carries its SKL ID and version.',
-  scaffold:'Publishes released vocabularies and taxonomies as members and property values. Reads back and reconciles. Metric definitions stay symbolic in the SKL.',legacy:'Published objects are locked. The platform reports back only reconciliation status, never definitions. Where its API cannot express a structure, file-based loading is the fallback. Whether it can hold a tenant-specific member name is still to be confirmed with the vendor.'},
- {id:'consumers',z:'coral',t:'Copilot, Compass, HRScale, partner APIs',s:'Resolve through one service',dir:'Outbound',
-  how:'Callers pass text and a tenant context. The service looks in the customer lexicon, then the Insperity lexicon, then the domain lexicon, then core preferred labels. It never searches another tenant.',
-  scaffold:'One approved label behaves the same everywhere. Ambiguous matches return candidates with definitions.',legacy:'Consumers never query a graph or repository directly.'}
+  scaffold:'Publishes released vocabularies and taxonomies, reads back and reconciles. Metric definitions stay symbolic in the SKL.',legacy:'Published objects are locked. The platform reports back only reconciliation status, never definitions.'},
+ {id:'esco',g:'api',z:'teal',t:'ESCO reference releases',s:'Skills and occupations reference set',dir:'API layer',
+  how:'ESCO ships as SKOS-RDF and CSV downloads, plus services and delta files between versions. The inbound service loads one release at a time; a rejected release goes back to mapping with the steward\'s changes.',
+  scaffold:'Hosts an ESCO-aligned canonical skills set and maps each customer term to it.',legacy:'Open questions remain on ID alignment, load-alongside versus replace, and version and licensing ownership.'},
+ {id:'compass',g:'mcp',z:'amber',t:'Compass (AI layer)',s:'The AI layer people use',dir:'MCP layer',
+  how:'Compass reaches governed meaning only through the MCP layer, which exposes the semantic services as tools: label resolution, grounded retrieval and compiled directives. It never queries a graph or repository directly.',
+  scaffold:'Every MCP call carries identity, persona and tenant, gets a policy decision and a log entry, and every response carries a trust score.',legacy:'Compass keeps its own experience. The scaffold supplies what terms mean, what may be shown, and how far to trust the answer.'},
+ {id:'agents',g:'mcp',z:'amber',t:'Agents (Copilot and other LLMs)',s:'Built on the same MCP tools',dir:'MCP layer',
+  how:'Agents built with Copilot and other LLMs use the same MCP tools as Compass, and receive a compiled AI directive that bounds what they may do and say.',
+  scaffold:'Grounding, permission checks and guardrails come from the scaffold, so every agent inherits the same rules without re-implementing them.',legacy:'The LLM can be swapped without re-curating meaning. Irreversible actions against SAP, Workday or other systems go through the approval gate.'}
 ];
 const PRINCIPLES7 = [
  ['Meaning has one owner','Every term, rule and calculation has one accountable steward and one home, the SKL.'],
@@ -1268,7 +1277,10 @@ GLOSS.push(
  ['Drift','','Any difference between a target\'s copy and the SKL release. Treated as a defect to fix in the SKL.'],
  ['Parity test','','Checks that a target\'s metric implementation gives the same result as the SKL definition. Blocks publish on failure.'],
  ['Persona and job','','Access is granted by persona and job step, not by a list of who may touch which graph.'],
- ['ESCO','','European multilingual classification of skills, competences and occupations; the proposed canonical reference for skills.']
+ ['ESCO','','European multilingual classification of skills, competences and occupations; the proposed canonical reference for skills.'],
+ ['Compass','AI layer','The AI layer people use. Reaches governed meaning only through the MCP layer.'],
+ ['MCP','Model Context Protocol','An open protocol through which AI applications call tools and read context. Here, the layer through which Compass and agents use the semantic services.'],
+ ['API layer','','How the scaffold communicates with SAP, Salesforce, SharePoint, Workday, PEO products & services and third-party systems: one adapter per system.']
 );
 SOURCES.push(
  ['Architecture Proposal: Alternate Labels and Customer Terminology (PDF, 31 Oct 2026)','Semantic services baseline, lexicon layer, five-function model, personas and provisioning, operational extensions, operating model, pilot gates.'],
@@ -1335,11 +1347,11 @@ $$('[data-aud]').forEach(b=>b.onclick=()=>setAud(b.dataset.aud));
 function scaffoldSVG(){
   const t=(x,y,s,fill,sz=12,w=500,anchor='middle')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${sz}" font-weight="${w}" fill="${fill}" style="font-family:var(--body)">${s}</text>`;
   const box=(x,y,w,h,z,dashed,id)=>`<rect ${id?`data-open="${id}" style="cursor:pointer"`:''} x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${dashed?'none':`var(--${z}-50)`}" stroke="var(--${z}-600)" stroke-width="1.4" ${dashed?'stroke-dasharray="5 4"':''}/>`;
-  const legacy=['ERP / HR','PLM','BI & lake','dbt / LookML','Catalogs','Vector DB','Vendor tools'];
+  const legacy=['SAP (ERP)','Salesforce','SharePoint','Workday','PEO products','Data stack','3rd-party'];
   let leg='';
   legacy.forEach((n,i)=>{const x=24+i*74; leg+=`<g data-open="srcsys" style="cursor:pointer">${box(x,336,68,42,'gray',true)}${t(x+34,361,n,'var(--ink)',9.5,500)}</g>`;});
   return `<svg viewBox="0 0 560 420" role="img" aria-label="Diagram: a governed semantic scaffold between your legacy systems and the people and AI agents who use them">
-  <g data-open="intelapp" style="cursor:pointer">${box(24,10,512,44,'gray',false)}${t(280,30,'People, dashboards and AI agents','var(--gray-800)',13,600)}${t(280,45,'ask questions and request actions','var(--gray-600)',10.5)}</g>
+  <g data-open="intelapp" style="cursor:pointer">${box(24,10,512,44,'gray',false)}${t(280,30,'Compass (AI layer), agents and people','var(--gray-800)',13,600)}${t(280,45,'reach the scaffold through the MCP layer','var(--gray-600)',10.5)}</g>
   <path d="M280 56 V70" stroke="var(--faint)" stroke-width="1.5" marker-end="url(#ah)"/>
   <rect x="24" y="72" width="512" height="152" rx="14" fill="none" stroke="var(--blue-600)" stroke-width="1.6"/>
   ${t(40,90,'THE SCAFFOLD (what you add)','var(--blue-600)',10.5,600,'start')}
@@ -1350,7 +1362,7 @@ function scaffoldSVG(){
   <g data-open="mapgraph" style="cursor:pointer">${box(24,242,512,56,'blue',false)}${t(280,264,'Mediation holon: the mapping graph','var(--blue-800)',13,700)}${t(280,282,'Insulation, not integration. A source changes, one mapping changes.','var(--blue-600)',11)}</g>
   <path d="M120 300 V328" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#ah)"/>
   <path d="M440 328 V300" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#ah)"/>
-  ${t(128,318,'governed read','var(--muted)',9.5,500,'start')}
+  ${t(128,318,'API layer: governed read','var(--muted)',9.5,500,'start')}
   ${t(432,318,'write-back only via approval gate','var(--muted)',9.5,500,'end')}
   ${leg}
   ${t(280,402,'YOUR EXISTING SYSTEMS AND VENDOR TOOLS (unchanged)','var(--gray-600)',10.5,600)}
@@ -1617,7 +1629,7 @@ function svcFlowSVG(){
   ${svArrow(612,95,638,95)}
   ${box('outbound',640,190,SV_LINES.outbound)}
   ${svArrow(832,95,858,95)}
-  ${svR(860,20,92,150,'gray',true)}${svT(906,44,'Targets','var(--gray-800)',12,600)}${['Visier','Copilot','Compass','HRScale','Partner APIs'].map((s,i)=>svT(906,70+i*20,s,'var(--gray-600)',10.5)).join('')}
+  ${svR(860,20,92,150,'gray',true)}${svT(906,44,'Targets','var(--gray-800)',12,600)}${['Compass','Agents','Visier','SAP · Workday','Partner APIs'].map((s,i)=>svT(906,70+i*20,s,'var(--gray-600)',10.5)).join('')}
   ${svT(906,188,'status only back','var(--muted)',9.5)}
   ${svR(160,186,670,52,'blue')}${svT(495,206,'Shared warehouse','var(--blue-800)',13,700)}${svT(495,222,'raw landing · candidates · lexicons · customer extensions · resolution index · change records','var(--blue-600)',10.5)}${svT(495,234,'Core and domain graphs are read only','var(--blue-600)',9.5)}
   <g data-svc="common">${svR(160,248,670,38,'red')}${svT(495,265,'Common services','var(--red-800)',12,700)}${svT(495,279,'policy decision before every read or write · telemetry from every service','var(--red-600)',10.5)}</g>
@@ -1688,9 +1700,9 @@ $('#svcDetail').addEventListener('change',e=>{
 });
 
 /* ---------- scaffold over legacy ---------- */
-S.ww='with'; S.att='downstream'; S.tier='legacy';
+S.ww='with'; S.att='sap'; S.tier='legacy';
 function wwSVG(mode){
-  const tools=['Analytics platform','Copilot','Compass','Partner APIs'];
+  const tools=['Compass','Agents','Analytics platform','Partner APIs'];
   if(mode==='without'){
     return `<svg viewBox="0 0 900 250" role="img" aria-label="Without the scaffold, each tool keeps its own copy of terms and rules and they drift apart">${svDefs}
     ${svT(450,26,'Each tool curates its own meaning','var(--red-800)',15,700)}${svT(450,46,'Two masters, then many. Poly-hierarchy, typed relations and rules have nowhere to live.','var(--muted)',11.5)}
@@ -1714,24 +1726,25 @@ function renderWW(){
 $('#ww-without').onclick=()=>{S.ww='without';renderWW();}; $('#ww-with').onclick=()=>{S.ww='with';renderWW();};
 
 function e2eSVG(){
-  const srcs=[['docs','Documentation'],['cms','CMS'],['feeds','Data feeds'],['handbooks','Handbooks'],['esco','ESCO releases']];
-  const col=(k,x,w)=>{const m=SVCMETA[k]; return `<g data-svc="${k}">${svR(x,128,w,118,m.z)}${svT(x+w/2,150,m.title.replace(' services',''),`var(--${m.z}-800)`,14,700)}${svT(x+w/2,165,m.tag,`var(--${m.z}-600)`,10)}${SV_LINES[k].map((l,i)=>svT(x+w/2,184+i*15,l,`var(--${m.z}-800)`,11)).join('')}</g>`;};
-  return `<svg viewBox="0 0 900 480" role="img" aria-label="Layered view: consumers on top, the scaffold in the middle, legacy sources at the bottom">${svDefs}
-  ${svR(30,8,340,44,'gray',true)}${svT(200,28,'Operational extensions','var(--gray-800)',13,600)}${svT(200,44,'screens · provisioning · monitoring · triage · simulation','var(--gray-600)',10)}
-  ${svArrow(200,54,200,126)}${svT(208,92,'call services, never a graph','var(--muted)',10,500,'start')}
-  <g data-att="consumers">${svR(400,8,220,44,'gray',true)}${svT(510,28,'Copilot · Compass · HRScale','var(--gray-800)',12.5,600)}${svT(510,44,'partner APIs: tenant-scoped labels','var(--gray-600)',10)}</g>
-  <g data-att="downstream">${svR(640,8,230,44,'gray',true)}${svT(755,28,'Analytics platforms (consume only)','var(--gray-800)',12,600)}${svT(755,44,'locked objects, status back only','var(--gray-600)',10)}</g>
-  ${svArrow(510,126,510,54)}${svArrow(730,126,730,54)}${svArrow(780,54,780,126,true)}${svT(788,92,'status only','var(--muted)',10,500,'start')}
-  <rect x="20" y="98" width="860" height="248" rx="14" fill="none" stroke="var(--blue-600)" stroke-width="1.6"/>
-  ${svT(34,116,'THE SCAFFOLD: SKL AND THE THREE SEMANTIC SERVICES','var(--blue-600)',10.5,600,'start')}
+  const srcs=[['sap','SAP','ERP'],['sfdc','Salesforce','CRM'],['sp','SharePoint','CMS'],['wd','Workday','HCM'],['peo','PEO products','and services'],['tp','Third-party','systems and tools']];
+  const col=(k,x,w)=>{const m=SVCMETA[k]; return `<g data-svc="${k}">${svR(x,150,w,110,m.z)}${svT(x+w/2,172,m.title.replace(' services',''),`var(--${m.z}-800)`,14,700)}${svT(x+w/2,187,m.tag,`var(--${m.z}-600)`,10)}${SV_LINES[k].map((l,i)=>svT(x+w/2,202+i*13,l,`var(--${m.z}-800)`,11)).join('')}</g>`;};
+  return `<svg viewBox="0 0 900 520" role="img" aria-label="Compass and agents on top through MCP, the scaffold in the middle, enterprise systems at the bottom through APIs">${svDefs}
+  <g data-att="compass">${svR(30,8,410,44,'amber')}${svT(235,28,'Compass: the AI layer','var(--amber-800)',13,700)}${svT(235,44,'what people use to ask and act','var(--amber-600)',10)}</g>
+  <g data-att="agents">${svR(460,8,410,44,'amber')}${svT(665,28,'Agents built with Copilot and other LLMs','var(--amber-800)',13,700)}${svT(665,44,'same tools, same rules','var(--amber-600)',10)}</g>
+  ${svArrow(235,54,235,64)}${svArrow(665,54,665,64)}
+  <g data-att="compass">${svR(30,66,840,30,'amber',false,true)}${svT(450,86,'MCP LAYER · how AI talks to the scaffold: semantic services as tools, policy-checked and logged on every call','var(--amber-800)',11,600)}</g>
+  ${svArrow(450,98,450,118)}
+  <rect x="20" y="120" width="860" height="250" rx="14" fill="none" stroke="var(--blue-600)" stroke-width="1.6"/>
+  ${svT(34,139,'THE SCAFFOLD: SKL AND THE THREE SEMANTIC SERVICES','var(--blue-600)',10.5,600,'start')}${svT(866,139,'Tier 1 and Tier 2','var(--blue-600)',10.5,500,'end')}
   ${col('inbound',34,250)}${col('processing',304,290)}${col('outbound',614,252)}
-  ${svArrow(286,187,302,187)}${svArrow(596,187,612,187)}
-  ${svR(34,258,832,38,'blue')}${svT(450,274,'Warehouse: lexicons · customer extensions · resolution index · change records. Core and domain graphs are read only.','var(--blue-800)',11,600)}${svT(450,288,'Every graph is reached only through a service','var(--blue-600)',10)}
-  <g data-svc="common">${svR(34,302,832,32,'red')}${svT(450,322,'Common: policy decision before every read or write · telemetry from every service','var(--red-800)',11,600)}</g>
-  ${svArrow(159,370,159,348)}${svT(167,362,'governed read, one connector per source type','var(--muted)',10,500,'start')}
-  ${srcs.map((s,i)=>`<g data-att="${s[0]}">${svR(30+i*170,376,160,40,'gray',true)}${svT(110+i*170,401,s[1],'var(--gray-800)',12,600)}</g>`).join('')}
-  ${svT(450,444,'YOUR EXISTING SYSTEMS AND CONTENT (unchanged)','var(--gray-600)',10.5,600)}
-  ${svT(450,462,'Nothing is modified to join. Sources supply files and feeds; targets receive published releases.','var(--muted)',10.5)}
+  ${svArrow(286,205,302,205)}${svArrow(596,205,612,205)}
+  ${svR(34,272,832,38,'blue')}${svT(450,288,'Warehouse: lexicons · customer extensions · resolution index · change records. Core and domain graphs are read only.','var(--blue-800)',11,600)}${svT(450,302,'Every graph is reached only through a service','var(--blue-600)',10)}
+  <g data-svc="common">${svR(34,318,832,40,'red')}${svT(450,342,'Common: policy decision before every read or write · telemetry from every service','var(--red-800)',11,600)}</g>
+  ${svArrow(450,392,450,372)}
+  ${svR(30,394,840,30,'teal',false,true)}${svT(450,414,'API LAYER · how the scaffold talks to enterprise systems: one adapter per system, in and out','var(--teal-800)',11,600)}
+  ${svArrow(450,446,450,426)}
+  ${srcs.map((s,i)=>`<g data-att="${s[0]}">${svR(30+i*140,448,133,44,'gray',true)}${svT(96+i*140,467,s[1],'var(--gray-800)',12,600)}${svT(96+i*140,482,s[2],'var(--gray-600)',10)}</g>`).join('')}
+  ${svT(450,512,'TIER 3 · YOUR ENTERPRISE SYSTEMS (unchanged)','var(--gray-600)',10.5,600)}
   </svg>`;
 }
 $('#e2eFig').innerHTML=e2eSVG();
@@ -1739,7 +1752,7 @@ $('#e2eFig').addEventListener('click',e=>{
   const s=e.target.closest('[data-svc]'); if(s){showTab(s.dataset.svc,{keepScroll:true}); return;}
   const a=e.target.closest('[data-att]'); if(a){S.att=a.dataset.att; renderAtt(); $('#attTiles').scrollIntoView({behavior:'smooth',block:'center'});}
 });
-$('#attTiles').innerHTML=ATTACH.map(a=>`<button class="app z-${a.z}" data-a="${a.id}"><b>${esc(a.t)}</b><span>${esc(a.dir)} · ${esc(a.s)}</span></button>`).join('');
+$('#attTiles').innerHTML=[['api','Through the API layer: enterprise systems'],['mcp','Through the MCP layer: AI']].map(([g,l])=>`<div class="eyebrow" style="grid-column:1/-1;margin-top:6px">${l}</div>`+ATTACH.filter(a=>a.g===g).map(a=>`<button class="app z-${a.z}" data-a="${a.id}"><b>${esc(a.t)}</b><span>${esc(a.s)}</span></button>`).join('')).join('');
 $('#attTiles').addEventListener('click',e=>{const b=e.target.closest('[data-a]'); if(b){S.att=b.dataset.a; renderAtt();}});
 function renderAtt(){
   $$('#attTiles .app').forEach(b=>b.setAttribute('aria-pressed',b.dataset.a===S.att));
@@ -1758,7 +1771,8 @@ const TIERS3=[
  {n:'Tier 3',name:'Bottom-up',sub:'Physical implementation',z:'gray'}
 ];
 const TIER_ROWS=[
- ['What it holds','Core and domain vocabularies, taxonomies and ontologies, with canonical SHACL, SWRL and deontic rules','Mapping graphs, identity registry, customer lexicons and resolution index, RAG anchor index, rule harmonization and projection','Your existing stack: dbt and LookML, property graphs, vector stores, third-party ontologies, data catalogs, source systems'],
+ ['What it holds','Core and domain vocabularies, taxonomies and ontologies, with canonical SHACL, SWRL and deontic rules','Mapping graphs, identity registry, customer lexicons and resolution index, RAG anchor index, rule harmonization and projection','Enterprise systems (SAP, Salesforce, SharePoint, Workday, PEO products & services, third-party tools) and the data stack (dbt and LookML, property graphs, vector stores, catalogs)'],
+ ['How it connects','Never directly; only through the semantic services','Exposes the semantic services to Compass and agents through the MCP layer, and to enterprise systems through the API layer','Through the API layer, one adapter per system'],
  ['How fast it changes','Slowly and deliberately','Whenever either side changes; it absorbs the churn','Quickly and constantly'],
  ['Who owns it','Governance council and domain teams','Semantic governance CoE; stewards approve every mapping','Engineering teams, as today'],
  ['Role in search','Supplies meaning: definitions, broader and narrower terms, related concepts for query expansion','Resolves the user\'s words to a concept, then the concept to where it lives in each system','Holds the content and runs the queries through its own interfaces, unchanged'],
@@ -1776,25 +1790,25 @@ const AI_COMPARE=[
 ];
 const TSCEN={
  search:{label:'How search works',steps:[
-  {t:'Ask in your own words',tiers:[0],h:['ch-search'],x:'A user searches using their own term, for example a customer\'s name for a benefit plan. The request carries identity, persona and tenant.'},
+  {t:'Ask in your own words',tiers:[0],h:['ch-search','ch-gate'],x:'A user searches in Compass using their own term, for example a customer\'s name for a benefit plan. Compass calls the semantic services through the MCP layer, carrying identity, persona and tenant.'},
   {t:'Resolve the term',tiers:[2],h:['lexicon'],x:'The label resolution service checks the customer\'s lexicon, then the house lexicon, then the domain lexicon, then core preferred labels. It answers from a derived index, so no ontology query runs on the hot path, and it never looks in another tenant.'},
   {t:'Expand the meaning',tiers:[1],h:['ontology'],x:'The resolved concept brings its definition, broader and narrower terms and related concepts, so one search also finds what is filed under synonyms and child concepts.'},
   {t:'Find where it lives',tiers:[2],h:['mapgraph','uriregistry'],x:'The mapping graph translates the canonical concept into each system\'s own representation: a catalog term, a column, a graph label, a vector namespace. Every hit resolves to one enterprise ID, so duplicates collapse.'},
-  {t:'Query existing stores',tiers:[3],h:['metric','srcsys','vector','catalog'],x:'Queries run against the systems you already have, through their own interfaces. Operational lookups use pre-compiled, cached rules; cross-domain questions accept a federated traversal.'},
+  {t:'Query existing systems',tiers:[3],h:['api','sap','sfdc','sp','wd','peo','metric','vector','catalog'],x:'Queries go through the API layer to the systems you already run, such as SharePoint content, Workday and Salesforce records, and the data stack. Operational lookups use pre-compiled, cached rules; cross-domain questions accept a federated traversal.'},
   {t:'Apply permissions',tiers:[1,2],h:['deontic','govrepo','ch-gate'],x:'Rules authored once in Tier 1 and compiled through Tier 2 decide what this person may see, by who, where and why, before results are returned.'},
-  {t:'One answer everywhere',tiers:[0],h:['ch-search'],x:'Results return with canonical IDs and the customer\'s own labels. The same term gives the same answer in search, assistants and partner APIs.'}
+  {t:'One answer everywhere',tiers:[0],h:['ch-search','ch-llm','ch-gate'],x:'Results return through MCP with canonical IDs and the customer\'s own labels. The same term gives the same answer in Compass, in every agent and in partner APIs.'}
  ]},
  ai:{label:'How conventional AI works',steps:[
-  {t:'Question with context',tiers:[0],h:['ch-search'],x:'A user asks an assistant a question. The context bundle records who is asking, what about, when, where and why.'},
-  {t:'Retrieve by similarity',tiers:[3],h:['vector'],x:'Level 1: nearest-neighbor search over the existing vector store, exactly as conventional RAG does today. Nothing about the index changes.'},
+  {t:'Question with context',tiers:[0],h:['ch-search','ch-gate'],x:'A user asks Compass, or an agent built with Copilot or another LLM, a question. The MCP call carries a context bundle: who is asking, what about, when, where and why.'},
+  {t:'Retrieve by similarity',tiers:[3],h:['vector'],x:'Level 1: nearest-neighbor search over the existing vector store, exactly as conventional RAG does today. Content indexed from SharePoint and other systems arrives through the API layer; nothing about the index changes.'},
   {t:'Anchor to real entities',tiers:[2],h:['ragindex','uriregistry'],x:'The RAG anchor index binds each retrieved chunk to a canonical enterprise entity. A chunk that cannot be resolved is quarantined or passed with an explicit low-confidence flag, never treated as a governed fact.'},
   {t:'Validate against meaning',tiers:[1],h:['ontology','shacl'],x:'Level 2: domain agents check the anchored concepts against the ontology and SHACL constraints, so the answer rests on governed meaning, not text that merely looks similar.'},
   {t:'Decide what may surface',tiers:[1,2],h:['deontic','govrepo','ch-gate'],x:'Deterministic rules compiled from the governance repository, not the language model, decide whether this content may surface to this requester, in this context, for this purpose.'},
-  {t:'Generate within guardrails',tiers:[0],h:['ch-llm','ch-gate'],x:'Only now does content reach the model, with a compiled directive that bounds what it may say. Each response carries a trust score; below threshold, the circuit breaker holds it for a person.'},
+  {t:'Generate within guardrails',tiers:[0],h:['ch-llm','ch-gate'],x:'Only now does content reach the model through MCP, with a compiled directive that bounds what it may say or do. Each response carries a trust score; below threshold, the circuit breaker holds it for a person. Any action against SAP, Workday or another system goes through the approval gate and the API layer.'},
   {t:'Learn, but never self-write',tiers:[2,1],h:['mapgraph','ontology','gov-sem'],x:'The closed loop proposes new entities, cross-domain alignments, enrichments and corrections. Stewards review them; approved changes are recorded as versioned changes. Nothing is written automatically.'}
  ]},
  legacy:{label:'A legacy system changes',steps:[
-  {t:'Source changes, meaning holds',tiers:[3,2],h:['metric','lineageagent','mapgraph'],x:'A transformation model is refactored in Tier 3. Lineage ingestion agents detect the drift and propose a mapping update; a steward approves it and it publishes as a versioned assertion. Tier 1, the rules and every consumer are untouched.'}
+  {t:'Source changes, meaning holds',tiers:[3,2],h:['wd','metric','api','lineageagent','mapgraph'],x:'A field changes in Workday, or a transformation model is refactored in Tier 3. Lineage ingestion agents detect the drift and propose a mapping update; a steward approves it and it publishes as a versioned assertion. Tier 1, the rules and every consumer are untouched.'}
  ]},
  rule:{label:'A rule changes at the top',steps:[
   {t:'Defined once, enforced everywhere',tiers:[1,2,3],h:['shacl','govrepo','metric','vector','ch-llm','ch-gate'],x:'A canonical rule is changed once in Tier 1. Harmonization checks it for conflicts, and projection agents compile it into each tool\'s native form: SQL and dbt checks, policy-engine rules, vector filters and AI guardrails. Each compiled artifact links back to its source rule.'}
@@ -1804,28 +1818,33 @@ S.scen='search'; S.tstep=0;
 function tierSVG(hl){
   const on=k=>hl.has(k);
   const cell=(x,y,w,h,z,title,sub,key,open,dashed,fs=11.5)=>`<g data-open="${open}" style="cursor:pointer">${svR(x,y,w,h,z,dashed)}${on(key)?`<rect x="${x-2}" y="${y-2}" width="${w+4}" height="${h+4}" rx="12" fill="none" stroke="var(--accent)" stroke-width="3"/>`:''}${svT(x+w/2,y+h/2-3,title,`var(--${z}-800)`,fs,600)}${svT(x+w/2,y+h/2+12,sub,`var(--${z}-600)`,9.5)}</g>`;
+  const band=(y,z,text,key,open)=>`<g data-open="${open}" style="cursor:pointer">${svR(20,y,860,30,z)}${on(key)?`<rect x="18" y="${y-2}" width="864" height="34" rx="12" fill="none" stroke="var(--accent)" stroke-width="3"/>`:''}${svT(450,y+20,text,`var(--${z}-800)`,11,600)}</g>`;
   const head=(y,z,l,r)=>`${svT(36,y,l,`var(--${z}-600)`,11,700,'start')}${svT(864,y,r,`var(--${z}-600)`,10.5,500,'end')}`;
-  const ch=[['ch-search','intelapp','Search, apps and assistants','where people ask'],['ch-llm','agentfabric','AI model (LLM)','generates within guardrails'],['ch-gate','cb','Policy and trust gate','permissions, trust score, breaker']];
   const t1=[['ontology','ontology','Core ontology stack','vocabularies · taxonomies · ontologies'],['shacl','shacl','Canonical rules','SHACL · SWRL'],['deontic','deontic','Deontic norms','must, may, must not'],['gov-sem','gov-sem','Council and domain teams','own the meaning']];
   const t2=[['mapgraph','mapgraph','Mapping graph','correspondences'],['uriregistry','uriregistry','Identity registry','one ID per thing'],['lexicon','lexicon','Lexicons + index','customer terms'],['ragindex','ragindex','RAG anchor index','grounds AI chunks'],['govrepo','govrepo','Rule projection','compiles rules out'],['lineageagent','lineageagent','Lineage agents','detect drift']];
-  const t3=[['metric','metric','dbt / LookML','metric layer'],['srcsys','srcsys','Property graphs','operational graphs'],['vector','vector','Vector DB, RAG','retrieval stores'],['corr6','corr6','Third-party ontologies','industry vocabularies'],['catalog','catalog','Data catalogs','lineage and discovery']];
-  return `<svg viewBox="0 0 900 600" role="img" aria-label="Three-tier semantic architecture: Tier 1 top-down ontology, Tier 2 mediation holon, Tier 3 bottom-up implementation">${svDefs}
-  ${svR(20,6,860,66,'gray',true)}${svT(36,22,'CHANNELS (not a tier)','var(--gray-600)',10.5,600,'start')}
-  ${ch.map((c,i)=>cell(36+i*280,28,268,38,'gray',c[2],c[3],c[0],c[1],false,11)).join('')}
-  ${svR(20,84,860,134,'purple')}${head(104,'purple','TIER 1 · TOP-DOWN · ENTERPRISE ONTOLOGY','evolves slowly · governance council authority')}
-  ${t1.map((c,i)=>cell(36+i*208,116,196,86,'purple',c[2],c[3],c[0],c[1])).join('')}
-  ${svArrow(210,220,210,252)}${svT(220,240,'rules compile downward','var(--muted)',10,500,'start')}
-  ${svArrow(690,252,690,220)}${svT(680,240,'drift rises as mapping updates','var(--muted)',10,500,'end')}
-  <rect x="20" y="254" width="860" height="128" rx="14" fill="color-mix(in srgb,var(--blue-50) 55%,var(--surface))" stroke="var(--blue-600)" stroke-width="2.6"/>
-  ${head(274,'blue','TIER 2 · MEDIATION · MEDIATION HOLON (SAML)','persistent · insulation, not integration')}
-  ${t2.map((c,i)=>cell(36+i*139,286,131,60,'blue',c[2],c[3],c[0],c[1],false,11)).join('')}
-  ${svT(450,368,'Proposed, confidence-scored, steward-reviewed, then published as versioned assertions. No point-to-point mappings.','var(--blue-800)',10.5)}
-  ${svArrow(210,384,210,416)}${svT(220,404,'compiled policy: SQL, rules, vector filters, guardrails','var(--muted)',10,500,'start')}
-  ${svArrow(690,416,690,384)}${svT(680,404,'lineage and schema signals','var(--muted)',10,500,'end')}
-  ${svR(20,418,860,128,'gray',true)}${head(438,'gray','TIER 3 · BOTTOM-UP · YOUR PHYSICAL IMPLEMENTATION','evolves fast · engineering authority · unchanged')}
-  ${t3.map((c,i)=>cell(36+i*167,450,155,60,'gray',c[2],c[3],c[0],c[1],true)).join('')}
-  ${svT(450,532,'Source and operational systems, vendor tools, content and feeds stay here as they are.','var(--gray-600)',10.5)}
-  ${svT(450,580,'The three tiers meet only through Tier 2. Tier 1 never absorbs Tier 3 churn; Tier 3 never holds re-authored rules.','var(--muted)',11.5,500)}
+  const ent=[['sap','erp','SAP','ERP'],['sfdc','srcsys','Salesforce','CRM'],['sp','srcsys','SharePoint','CMS'],['wd','srcsys','Workday','HCM'],['peo','srcsys','PEO products','and services'],['tp','apigw','Third-party','systems and tools']];
+  const t3=[['metric','metric','dbt / LookML','metric layer'],['graphs','srcsys','Property graphs','operational graphs'],['vector','vector','Vector DB, RAG','retrieval stores'],['corr6','corr6','Third-party ontologies','industry vocabularies'],['catalog','catalog','Data catalogs','lineage and discovery']];
+  return `<svg viewBox="0 0 900 760" role="img" aria-label="Compass and agents reach the three tiers through MCP; enterprise systems connect through APIs">${svDefs}
+  ${svR(20,6,860,76,'amber',true)}${svT(36,22,'AI LAYER (not a tier)','var(--amber-600)',10.5,700,'start')}
+  ${cell(36,30,410,42,'amber','Compass: the AI layer','what people use to ask and act','ch-search','intelapp')}
+  ${cell(454,30,410,42,'amber','Agents built with Copilot and other LLMs','same tools, same rules','ch-llm','agentfabric')}
+  ${band(90,'amber','MCP LAYER · AI to scaffold: semantic services as tools · policy check, log and trust score on every call','ch-gate','pde')}
+  ${svR(20,130,860,134,'purple')}${head(150,'purple','TIER 1 · TOP-DOWN · ENTERPRISE ONTOLOGY','evolves slowly · governance council authority')}
+  ${t1.map((c,i)=>cell(36+i*208,162,196,86,'purple',c[2],c[3],c[0],c[1])).join('')}
+  ${svArrow(210,266,210,298)}${svT(220,286,'rules compile downward','var(--muted)',10,500,'start')}
+  ${svArrow(690,298,690,266)}${svT(680,286,'drift rises as mapping updates','var(--muted)',10,500,'end')}
+  <rect x="20" y="300" width="860" height="128" rx="14" fill="color-mix(in srgb,var(--blue-50) 55%,var(--surface))" stroke="var(--blue-600)" stroke-width="2.6"/>
+  ${head(320,'blue','TIER 2 · MEDIATION · MEDIATION HOLON (SAML)','persistent · insulation, not integration')}
+  ${t2.map((c,i)=>cell(36+i*139,332,131,60,'blue',c[2],c[3],c[0],c[1],false,11)).join('')}
+  ${svT(450,414,'Proposed, confidence-scored, steward-reviewed, then published as versioned assertions. No point-to-point mappings.','var(--blue-800)',10.5)}
+  ${band(438,'teal','API LAYER · scaffold to enterprise systems: one adapter per system · compiled policy down, lineage signals up','api','apigw')}
+  ${svR(20,478,860,240,'gray',true)}${head(498,'gray','TIER 3 · BOTTOM-UP · YOUR PHYSICAL IMPLEMENTATION','evolves fast · engineering authority · unchanged')}
+  ${svT(36,518,'Enterprise systems','var(--gray-600)',10.5,600,'start')}
+  ${ent.map((c,i)=>cell(36+i*139,526,131,56,'gray',c[2],c[3],c[0],c[1],true,11)).join('')}
+  ${svT(36,604,'Data and AI implementation stack','var(--gray-600)',10.5,600,'start')}
+  ${t3.map((c,i)=>cell(36+i*167,612,155,56,'gray',c[2],c[3],c[0],c[1],true)).join('')}
+  ${svT(450,700,'Content, feeds and vendor tools stay where they are.','var(--gray-600)',10.5)}
+  ${svT(450,744,'AI reaches the tiers only through MCP; enterprise systems only through APIs. Tier 1 never absorbs Tier 3 churn.','var(--muted)',11.5,500)}
   </svg>`;
 }
 const tchip=t=>t===0?`<span class="tchip z-gray">Channel</span>`:`<span class="tchip z-${TIERS3[t-1].z}">${TIERS3[t-1].n} · ${TIERS3[t-1].name}</span>`;

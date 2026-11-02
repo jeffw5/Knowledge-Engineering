@@ -445,6 +445,11 @@ table.t th.tz{color:var(--zt);background:var(--z);border-color:var(--zb);font-si
     <div class="card scroll-x"><table class="t" id="tierTable"></table></div>
   </div>
   <div class="sec">
+    <h3>What the mediation tier maps</h3>
+    <p class="sub">Mapping covers, but is not confined to, four types. Select one to see what it connects.</p>
+    <div id="mapScope"></div>
+  </div>
+  <div class="sec">
     <h3>See it work: search, conventional AI, and change</h3>
     <p class="sub">Pick a scenario. For search and AI, step through to see which tier does what. Select any block to open it in the architecture map.</p>
     <div class="seg" role="group" aria-label="Scenario" id="tierSeg"></div>
@@ -644,7 +649,7 @@ table.t th.tz{color:var(--zt);background:var(--z);border-color:var(--zb);font-si
     <h2>Terms and where this came from</h2>
   </div>
   <div class="sec">
-    <input type="search" id="glossQ" placeholder="Filter terms, e.g. SHACL, PEP, MTBH" aria-label="Filter glossary">
+    <input type="search" id="glossQ" placeholder="Filter terms, e.g. SHACL, PEP, MTBH" aria-label="Filter glossary"> <span class="sub" id="glossCount" style="margin-left:8px"></span>
     <div class="gloss" id="gloss" style="margin-top:12px"></div>
   </div>
   <div class="sec">
@@ -744,7 +749,7 @@ C('ragindex','MED','add','Index','blue','RAG anchor index','AI answers tied to r
 C('govrepo','MED','add','Repository','purple','Governance repository','Where rules are harmonized','One place to author and reconcile rules before they go out to each system.','Rule harmonization and rule projection agents sit beside the mapping graph. PEP rule content is authored here.',['SHACL','SWRL'],['harmonize','projagents']);
 C('harmonize','MED','add','Engine','amber','Rule harmonization engine','Finds rule conflicts','Catches two departments writing conflicting rules, before it reaches production.','SPARQL conflict and dependency scan over the canonical rule set, with an Enterprise Council approval gate.',['SPARQL'],['shacl','swrl','projagents']);
 C('projagents','MED','add','Agents','amber','Rule projection agents','Translates one rule into every system\'s language','Write the rule once. It is automatically expressed in each tool\'s own terms.','Compile canonical SHACL/SWRL into SQL/dbt checks, OPA/Rego, vector filters and agent guardrails. Each artifact keeps a URI back to its source invariant.',['dbt','OPA/Rego'],['projruntime','harmonize']);
-C('corr6','MED','add','Pattern','blue','Six correspondence types','What the graph maps','Covers the six kinds of "this means that" the enterprise needs.','Ontology to third-party ontology, domain to domain, domain to operations, domain to digital-asset schema, domain to governance and invariants, domain to RAG and AI.',['6 types'],['mapgraph']);
+C('corr6','MED','add','Pattern','blue','Mapping scope','What the graph maps, and is not confined to','Maps ontologies to the schemas of your systems, to third-party ontologies, the core to each customer\'s vocabularies, and operational ontologies to domain ontologies. New kinds of mapping can be added through change control.','Covers, but is not confined to: ontologies to RDF schemas of digital assets; ontologies to third-party ontologies; core to customer vocabularies, taxonomies and ontologies; operational ontologies to domain-specific ontologies. Also domain to domain, domain to governance invariants, and domain to RAG/AI anchors. Every mapping is a governed, versioned assertion with confidence and provenance.',['SKOS','R2RML','OWL'],['mapgraph','lexicon','ontology']);
 
 /* ---- Cross-cutting ---- */
 C('agentfabric','X','add','Agentic fabric','amber','Agentic fabric','Eleven governed agent roles','AI helpers that each do one job and all follow the same review loop.','Mapping, relevancy (WHO, WHY), lineage, proposal, harmonization, projection, RAG grounding, domain reasoning, governance and trust agents. Each runs Observe, Reason, Propose, HITL review, Adapt.',['Multi-agent'],['cb','mapgraph']);
@@ -1023,7 +1028,7 @@ const GLOSS = [
  ['Holon','Koestler','A self-governing whole that is also a part of a larger whole.'],
  ['Holarchy','','A nested structure of holons. Local self-governance plus global interoperability through shared protocols.'],
  ['Mediation holon (SAML)','','A lateral holon holding the persistent mapping graph. It insulates the top-down ontology from bottom-up systems.'],
- ['Mapping graph','','Governed correspondence assertions between enterprise concepts and system-level representations, with confidence and provenance.'],
+ ['Mapping graph','','Governed correspondence assertions with confidence and provenance. Covers, but is not confined to: ontologies to RDF schemas, ontologies to third-party ontologies, core to customer vocabularies, taxonomies and ontologies, and operational ontologies to domain-specific ontologies.'],
  ['RDSG','Requirements-Driven Semantic Gateway','The six-stage, safety-governed pipeline every request traverses.'],
  ['RCB','Requirement Context Bundle','The assembled WHO, WHAT, WHEN, WHERE and WHY context for a request.'],
  ['CAD','Compiled AI Directive','The bounded instruction the agent receives after governance is applied.'],
@@ -1289,6 +1294,182 @@ SOURCES.push(
 
 C('lexicon','MED','add','Lexicon layer','blue','Lexicons and resolution index','Customer terms, scoped per tenant','Each customer\'s own words are kept beside the core, never inside it, so search and assistants understand the customer without changing the shared vocabulary.','Scoped lexicon graphs (one per tenant plus a house lexicon) hold SKOS-XL-style label records pointing at core concepts by ID. A derived resolution index answers lookups without querying the ontology graphs.',['SKOS-XL','PROV-O'],['mapgraph','ontology']);
 BY['lexicon']=CELLS[CELLS.length-1];
+
+const MAP_SCOPE=[
+ {t:'Ontologies to RDF schemas',s:'Your systems\' data structures',h:['mapgraph','metric','graphs','sap','sfdc','wd','sp'],
+  x:'Each system\'s schema is described as an RDF schema and given its own mapping ontology that links ontology classes and properties to schema elements, such as represented-by and has-attribute links. Relational sources use declarative R2RML-style mappings. Covers SAP, Salesforce, Workday, SharePoint and the data stack.'},
+ {t:'Ontologies to third-party ontologies',s:'Industry and reference standards',h:['mapgraph','tpo'],
+  x:'Enterprise ontologies are aligned to external ones, such as ESCO for skills and occupations, and industry or regulatory vocabularies, with exact, close, broad or narrow relations. Alignments are re-checked whenever either side releases a new version.'},
+ {t:'Core to customer vocabularies, taxonomies and ontologies',s:'Each customer\'s own language',h:['lexicon','mapgraph','ontology'],
+  x:'Customer labels live in scoped lexicons and customer-only concepts in extension vocabularies, each pointing at core concepts by ID with a match relation. Nothing is copied into the core, and one customer\'s terms never reach another.'},
+ {t:'Operational ontologies to domain-specific ontologies',s:'How work is done, to what it means',h:['mapgraph','ontology','gov-sem'],
+  x:'Operational areas, processes and services are mapped to the domain ontologies they serve, so a process step or service resolves to governed domain meaning without merging the two models.'},
+ {t:'And more, by design',s:'Not confined to the four above',h:['mapgraph','ragindex','govrepo','uriregistry'],
+  x:'The same mechanism also maps domain to domain, domain to governance invariants, and domain to RAG and AI anchors. New mapping types are added through change control, with the same identity, confidence, review and versioning rules.'}
+];
+
+/* ===== glossary completion: acronyms and specialist terms used on this page ===== */
+GLOSS.push(
+ // acronyms
+ ['ABAC','Attribute-based access control','Access decided from attributes of the person, resource and context, rather than fixed role lists.'],
+ ['ACD','Architecture Concept Description','V-model artifact defining the system\'s architectural elements, boundaries and interfaces at concept level.'],
+ ['ACID','Atomicity, consistency, isolation, durability','Transaction guarantees offered by the data lakehouse.'],
+ ['AEGIS','Project AEGIS','The viral-engineering design that treats agent-swarm safety like an immune system.'],
+ ['AI','Artificial intelligence','Here mostly language models and agents that act on governed knowledge.'],
+ ['ALM','Application lifecycle management','Requirements, code, sprints and test cases for software; joined with PLM in the digital thread.'],
+ ['ANN','Approximate nearest neighbor','The fast similarity search used by vector databases (Level 1 retrieval).'],
+ ['API','Application programming interface','A defined way for systems to call each other. See API layer.'],
+ ['ARB','Architecture Review Board','Body that reviews solution designs; a human checkpoint in the PLM assessment.'],
+ ['BI','Business intelligence','Dashboards and reports; consumes the governed metric layer.'],
+ ['BOM','Bill of materials','The parts list for a product; a PLM facet of the digital thread.'],
+ ['CCD','Capability Concept Description','V-model artifact translating the mission need into required capabilities.'],
+ ['CDC','Change data capture','Connectors that stream changes from source databases and SaaS systems.'],
+ ['CDR','Critical Design Review','V-model review gate after detailed design.'],
+ ['CI/CD','Continuous integration and delivery','Automated build, test and release pipelines.'],
+ ['CMS','Content management system','Here, SharePoint.'],
+ ['CoE','Center of excellence','The semantic governance CoE runs the platform and the DEV, STG and PRD lifecycle.'],
+ ['ConOps','Concept of Operations','V-model artifact describing intended use from the operator\'s view.'],
+ ['CRM','Customer relationship management','Here, Salesforce.'],
+ ['CSV','Comma-separated values','A plain tabular file format; ESCO is published in it.'],
+ ['DB','Database',''],
+ ['dbt','Data build tool','SQL transformation framework; its tests are one target for compiled rules.'],
+ ['DEV / STG / PRD','Development, staging, production','The three environments a domain holon moves through.'],
+ ['Ed25519','','A digital-signature scheme used to sign control messages in AEGIS.'],
+ ['EMD','Engineering and Manufacturing Development','V-model acquisition phase after Milestone B.'],
+ ['ERP','Enterprise resource planning','Here, SAP.'],
+ ['ETL','Extract, transform, load','Batch pipelines that move and reshape data.'],
+ ['EU AI Act','','European Union regulation of AI systems; an input to AI and trust governance.'],
+ ['FCD','Functional Concept Description','V-model artifact defining what the system does, without assigning physical elements.'],
+ ['FIBO','Financial Industry Business Ontology','Industry ontology used for FP&A process concepts.'],
+ ['FP&A','Financial planning and analysis','The worked domain example in the reference document.'],
+ ['G0 to G3','Pilot gates','Decision gates in the semantic services pilot, with planning dates.'],
+ ['HCM','Human capital management','Here, Workday.'],
+ ['HR','Human resources',''],
+ ['HSGA','Holonic Semantic Governance Architecture','The reference architecture this page walks through.'],
+ ['ICD','Initial Capabilities Document','V-model artifact formalizing a capability gap. (Not to be confused with an Interface Control Document.)'],
+ ['ID / IRI / URI','Identifier; Internationalized / Uniform Resource Identifier','Stable identifiers for every concept, rule and asset.'],
+ ['IP','Intellectual property','One of the circuit breaker\'s five scoring dimensions (PII / IP proximity).'],
+ ['IRS','Interface Requirements Specification','V-model artifact defining interface requirements at architecture level.'],
+ ['ISO / IEC / IEEE','Standards bodies','International Organization for Standardization, International Electrotechnical Commission, Institute of Electrical and Electronics Engineers.'],
+ ['KPI','Key performance indicator',''],
+ ['L1 to L7','Holarchy layers','The seven layers of the reference topology, from physical holons (L1) to the enterprise ecosystem (L7).'],
+ ['LLM','Large language model','A general-purpose language model such as those behind Copilot.'],
+ ['LookML','','Looker\'s semantic modeling language for metrics and dimensions.'],
+ ['MBSE','Model-based systems engineering',''],
+ ['MCD','Mission Concept Description','V-model artifact stating the operational mission and capability gap.'],
+ ['MDM','Master data management','Canonical records for core entities across systems.'],
+ ['Milestone A / B / C','','V-model acquisition decision points; B is the knowledge commitment gate.'],
+ ['MOVOI','Multiobjective Value of Information','Analysis of when enough is known to commit to a design alternative.'],
+ ['mTLS','Mutual TLS','Both sides of a connection authenticate with certificates.'],
+ ['NIST AI RMF','NIST AI Risk Management Framework','US framework for managing AI risk; an input to AI and trust governance.'],
+ ['NLP','Natural language processing',''],
+ ['OCR','Optical character recognition','Reads text from scanned documents.'],
+ ['OData','Open Data Protocol','A REST-based protocol for querying data services.'],
+ ['ODM','Ontology Definition Metamodel','OMG standard for ontology modeling.'],
+ ['OKR','Objectives and key results',''],
+ ['OMG','Object Management Group','Standards body behind ODM and DOL.'],
+ ['OOTB','Out of the box','Vendor capability used as supplied.'],
+ ['OPC-UA','Open Platform Communications Unified Architecture','Industrial protocol for equipment and sensor data.'],
+ ['OpenLineage','','Open standard for data lineage events; feeds the lineage ingestion agents.'],
+ ['OWL','Web Ontology Language','W3C language for ontologies.'],
+ ['P95','95th percentile','The value 95% of measurements fall under; used for lookup latency.'],
+ ['PEO','Professional employer organization',''],
+ ['PII','Personally identifiable information',''],
+ ['PLC','Programmable logic controller','Industrial controller; a signal source for L2 adapters.'],
+ ['PLM','Product lifecycle management',''],
+ ['PROV-O','W3C Provenance Ontology','Vocabulary for recording who did what, when, from what.'],
+ ['R2RML','RDB to RDF Mapping Language','W3C language that maps relational tables to RDF.'],
+ ['RAG','Retrieval-augmented generation','Giving a model retrieved content to answer from.'],
+ ['RBAC','Role-based access control',''],
+ ['RDF','Resource Description Framework','W3C graph data model of subject, predicate, object triples.'],
+ ['Rego','','The policy language of the Open Policy Agent.'],
+ ['REST','Representational state transfer','A common style for web APIs.'],
+ ['SAML','Semantic Abstraction and Mediation Layer','The mediation holon. (Not the security assertion standard of the same name.)'],
+ ['SCADA','Supervisory control and data acquisition','Industrial control systems; a signal source for L2 adapters.'],
+ ['SE','Systems engineering',''],
+ ['SEP','System Engineering Plan','V-model planning artifact.'],
+ ['SFTP','SSH File Transfer Protocol','Secure file transfer for data feeds.'],
+ ['SKOS','Simple Knowledge Organization System','W3C model for vocabularies and taxonomies.'],
+ ['SKOS-XL','SKOS eXtension for Labels','Treats each label as a resource, so it can carry scope, evidence and status.'],
+ ['SLA','Service level agreement',''],
+ ['SLE','Service level expectation','An expected service level, paired with OKRs in the PLM heatmap.'],
+ ['SLM','Small language model','A domain-specialized model; in MVP1 replaced by domain vector partitions.'],
+ ['SME','Subject-matter expert',''],
+ ['SOX','Sarbanes-Oxley Act','US financial-reporting law; an example of an obligation in FP&A.'],
+ ['SPARQL','SPARQL Protocol and RDF Query Language','W3C query language for RDF graphs.'],
+ ['SPC','Statistical process control','Control charts that detect when a process drifts out of bounds.'],
+ ['SPIFFE / SPIRE','Secure Production Identity Framework for Everyone','Workload identity standard and its runtime, used for agent identity in AEGIS.'],
+ ['SQL','Structured Query Language',''],
+ ['StRS / SyRS','Stakeholder / System Requirements Specification','V-model requirement artifacts.'],
+ ['SysML','Systems Modeling Language','OMG modeling language for systems engineering.'],
+ ['TLS','Transport Layer Security','Encryption for network connections.'],
+ ['TMRR','Technology Maturation and Risk Reduction','V-model acquisition phase between Milestones A and B.'],
+ ['TRA','Technology Readiness Assessment','V-model artifact on technology maturity.'],
+ ['UI','User interface',''],
+ ['W3C','World Wide Web Consortium','Standards body behind RDF, OWL, SKOS, SHACL and PROV-O.'],
+ ['WHO / WHAT / WHEN / WHERE / WHY','Relevancy dimensions','The five dimensions of a request\'s context, also used as MTBH sub-metrics.'],
+ // products and named components
+ ['Copilot','','LLM tooling used to build agents.'],
+ ['HRScale','','A consumer of governed terms named in the SKL proposal.'],
+ ['SAP / Salesforce / SharePoint / Workday','','The ERP, CRM, CMS and HCM systems reached through the API layer.'],
+ ['Visier','','People-analytics platform; the first publishing target in the SKL proposal.'],
+ // specialist terms
+ ['Adapter','','The per-system or per-target component that translates a service contract into that system\'s API.'],
+ ['Agentic fabric','','The set of governed agent roles that all follow the observe, reason, propose, review, adapt loop.'],
+ ['AI layer','','Compass and the agents. Reaches the scaffold only through the MCP layer.'],
+ ['Automation paradox','','Better automation can make human oversight weaker unless the humans are monitored too.'],
+ ['Break-glass access','','Emergency, time-bound, logged access outside normal controls.'],
+ ['Circuit breaker','','Stops an AI action when trust drops below threshold. States: closed (normal), open (blocked), half-open (probing).'],
+ ['Compiled semantic governance','','Rules are defined once in SHACL, SWRL and norms, then compiled into each runtime\'s native form.'],
+ ['Context engineering','','Assembling everything a model sees at inference: instructions, retrieved knowledge, memory, tools, state and policy.'],
+ ['Deontic norm','','A rule stating an obligation, permission or prohibition, with violation and sanction.'],
+ ['Digital twin','','A digital representation of a physical asset with a unique ID and typed data.'],
+ ['Domain holon','','A component ontology with its agent, vector store and policy enforcement points.'],
+ ['Embedding','','A numeric vector representing meaning, used for similarity search.'],
+ ['Enterprise holarchy','','The top holonic level: federated governance, service portfolio and engineering loop.'],
+ ['Execution point','','A downstream platform that consumes published content and never edits it.'],
+ ['Extension vocabulary','','A customer-only vocabulary of local concepts linked to the core by match relations.'],
+ ['Fatigue score','','Measure of reviewer fatigue from session length, breaks, accuracy and speed.'],
+ ['Gateway holon','','The RDSG gateway: the protocol every request traverses (L3).'],
+ ['Gold set','','A hand-verified sample used to measure precision and recall.'],
+ ['Identity and URI registry','','Mints one canonical enterprise ID for each real-world entity across systems.'],
+ ['Intent delta','','Gap between an agent\'s understanding of a task and operational reality.'],
+ ['Knowledge graph','','Facts stored as linked triples, with their meaning and rules.'],
+ ['Knowledge holon','','The smallest governed semantic asset: a term, concept, class, shape or rule (L1).'],
+ ['Label record','','A label stored as its own resource, with scope, type, evidence, status, reviewer and dates.'],
+ ['Lakehouse','','Tabular analytical storage combining data-lake scale with warehouse guarantees.'],
+ ['Landing zone','','Tenant-scoped storage for raw source items; never loaded into a graph.'],
+ ['Lineage','','The record of where data came from and how it changed.'],
+ ['MCP layer','','How Compass and agents use the semantic services as tools, with a policy check and log on every call.'],
+ ['Metric layer','','Canonical metric definitions consumed identically by every dashboard.'],
+ ['Multi-parent rule','','A concept stays single; each extra parent context gets a fully qualified term linked to it.'],
+ ['Named graph','','A separately addressable set of triples, used here as the unit of scope (per domain or tenant).'],
+ ['Ontology','','A formal model of concepts, their properties and relationships.'],
+ ['Operational extensions','','Screens, provisioning, monitoring, triage and simulation built on the service contracts.'],
+ ['Preferred, alternate and hidden labels','','The main name of a concept, other names for it, and names that match but are never shown.'],
+ ['Promotion','','Moving a recurring customer label into a domain or core vocabulary through the council.'],
+ ['Quarantine','','Holding an item that cannot be cleared, rather than passing it on.'],
+ ['RAG anchor index','','Binds each vector chunk to a canonical entity so retrieval is grounded.'],
+ ['Reconcile','','Reading a target back and comparing it to the release; differences are drift.'],
+ ['Red team','','Deliberate attempts to break a control, such as PII screening, before go-live.'],
+ ['Reversibility PEP','','Policy point that checks whether an action can be undone.'],
+ ['Rule harmonization engine','','Scans canonical rules for conflicts and dependencies before release.'],
+ ['Rule projection agent','','Compiles canonical rules into SQL, Rego, vector filters and agent guardrails.'],
+ ['Schema drift','','A change in a source system\'s structure that mappings must follow.'],
+ ['Semantic services','','The baseline: inbound, processing and outbound services, plus common policy and telemetry.'],
+ ['Service facade','','Delivery gate that checks acceptance criteria before a result is released.'],
+ ['Simulation','','Running a proposed change in a draft graph to see its impact before making it.'],
+ ['Taxonomy','','A hierarchy of concepts with broader and narrower relations.'],
+ ['Three tiers','','Tier 1 top-down ontology, Tier 2 mediation, Tier 3 bottom-up implementation. Distinct from the standard\'s tiers (core, domain, enterprise, customer) and service tiers (inbound, processing, outbound).'],
+ ['Triage','','Sorting candidates into label, homonym, local concept, core request or rejection. Also the operational alert queue.'],
+ ['Triplestore','','A database for RDF triples.'],
+ ['Trust calibration','','Comparing how often reviewers accept AI output with how often it is actually right.'],
+ ['Value-drift coefficient','','Distance between an agent\'s current objective and the original human intent.'],
+ ['Vector database','','Stores embeddings for similarity search.'],
+ ['Virtualization layer','','Runtime delivery: context assembly, pre-compiled rules, materialization and caching.'],
+ ['V-model','','Systems engineering lifecycle: definition down the left, verification up the right.'],
+ ['Vocabulary','','A governed set of terms with definitions.']
+);
 
 /* ===================== LOGIC ===================== */
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1596,8 +1777,9 @@ $('#appDetail').addEventListener('keydown',e=>{
 /* ---------- glossary ---------- */
 function renderGloss(){
   const q=($('#glossQ').value||'').toLowerCase().trim();
-  const items=GLOSS.filter(g=>!q||(g[0]+' '+g[1]+' '+g[2]).toLowerCase().includes(q));
-  $('#gloss').innerHTML=items.length?items.map(g=>`<div class="gl"><b>${esc(g[0])}${g[1]?`<em>${esc(g[1])}</em>`:''}</b><p>${esc(g[2])}</p></div>`).join(''):'<p class="empty">No terms match that filter.</p>';
+  const items=GLOSS.filter(g=>!q||(g[0]+' '+g[1]+' '+g[2]).toLowerCase().includes(q)).sort((a,b)=>a[0].localeCompare(b[0],undefined,{sensitivity:'base'}));
+  $('#glossCount').textContent=`${items.length} of ${GLOSS.length} terms`;
+  $('#gloss').innerHTML=items.length?items.map(g=>`<div class="gl"><b>${esc(g[0])}${g[1]?`<em>${esc(g[1])}</em>`:''}</b>${g[2]?`<p>${esc(g[2])}</p>`:''}</div>`).join(''):'<p class="empty">No terms match that filter.</p>';
 }
 $('#glossQ').addEventListener('input',renderGloss);
 $('#sources').innerHTML=SOURCES.map(s=>`<div class="src"><b>${esc(s[0])}</b><span>${esc(s[1])}</span></div>`).join('');
@@ -1674,7 +1856,8 @@ function renderServices(){
     <div class="sec"><h3>Four source types</h3><div class="card scroll-x"><table class="t"><tr><th>Source</th><th>What it yields</th><th>Intake</th></tr>${SRC4.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</table></div>
     <p class="note">Reference content such as ESCO also enters through inbound services, one release at a time. See <a href="#legacy" data-goto="legacy">Scaffold over legacy</a> for how each source attaches.</p></div>`;
   } else if(k==='processing'){
-    h+=`<div class="sec"><h3>Triage: where each candidate goes</h3>${triageHtml()}</div>
+    h+=`<div class="sec"><h3>What the mapping covers</h3><p class="sub">Mapping covers, but is not confined to, these four types.</p>${scopeHtml()}</div>
+    <div class="sec"><h3>Triage: where each candidate goes</h3>${triageHtml()}</div>
     <div class="grid g2 sec"><div class="card"><h4 style="font-size:16px;margin-bottom:6px">Match relations</h4><p class="sub">A synonym, abbreviation or misspelling is a label, not a match relation.</p><table class="t" style="margin-top:8px">${MATCH_REL.map(r=>`<tr><td><b>${r[0]}</b></td><td>${esc(r[1])}</td></tr>`).join('')}</table></div>
     <div class="card"><h4 style="font-size:16px;margin-bottom:6px">A label is a record, not a property</h4><div class="chips" style="margin-top:8px">${LABEL_FIELDS.map(f=>`<span class="chip">${esc(f)}</span>`).join('')}</div>
     <h4 style="font-size:16px;margin:14px 0 6px">Label lifecycle</h4><div class="states">${LSTATES.map((s,i)=>`${i?'<span class="ar">→</span>':''}<span class="p">${s}</span>`).join('')}</div><p class="note">A machine-proposed label starts Proposed. Rejected is the one exit. Published only through a release.</p></div></div>
@@ -1771,7 +1954,7 @@ const TIERS3=[
  {n:'Tier 3',name:'Bottom-up',sub:'Physical implementation',z:'gray'}
 ];
 const TIER_ROWS=[
- ['What it holds','Core and domain vocabularies, taxonomies and ontologies, with canonical SHACL, SWRL and deontic rules','Mapping graphs, identity registry, customer lexicons and resolution index, RAG anchor index, rule harmonization and projection','Enterprise systems (SAP, Salesforce, SharePoint, Workday, PEO products & services, third-party tools) and the data stack (dbt and LookML, property graphs, vector stores, catalogs)'],
+ ['What it holds','Core and domain vocabularies, taxonomies and ontologies, with canonical SHACL, SWRL and deontic rules','Mapping graphs (ontologies to RDF schemas, to third-party ontologies, core to customer vocabularies and ontologies, operational to domain ontologies, and more), identity registry, lexicons and resolution index, RAG anchor index, rule projection','Enterprise systems (SAP, Salesforce, SharePoint, Workday, PEO products & services, third-party tools) and the data stack (dbt and LookML, property graphs, vector stores, catalogs)'],
  ['How it connects','Never directly; only through the semantic services','Exposes the semantic services to Compass and agents through the MCP layer, and to enterprise systems through the API layer','Through the API layer, one adapter per system'],
  ['How fast it changes','Slowly and deliberately','Whenever either side changes; it absorbs the churn','Quickly and constantly'],
  ['Who owns it','Governance council and domain teams','Semantic governance CoE; stewards approve every mapping','Engineering teams, as today'],
@@ -1823,7 +2006,7 @@ function tierSVG(hl){
   const t1=[['ontology','ontology','Core ontology stack','vocabularies · taxonomies · ontologies'],['shacl','shacl','Canonical rules','SHACL · SWRL'],['deontic','deontic','Deontic norms','must, may, must not'],['gov-sem','gov-sem','Council and domain teams','own the meaning']];
   const t2=[['mapgraph','mapgraph','Mapping graph','correspondences'],['uriregistry','uriregistry','Identity registry','one ID per thing'],['lexicon','lexicon','Lexicons + index','customer terms'],['ragindex','ragindex','RAG anchor index','grounds AI chunks'],['govrepo','govrepo','Rule projection','compiles rules out'],['lineageagent','lineageagent','Lineage agents','detect drift']];
   const ent=[['sap','erp','SAP','ERP'],['sfdc','srcsys','Salesforce','CRM'],['sp','srcsys','SharePoint','CMS'],['wd','srcsys','Workday','HCM'],['peo','srcsys','PEO products','and services'],['tp','apigw','Third-party','systems and tools']];
-  const t3=[['metric','metric','dbt / LookML','metric layer'],['graphs','srcsys','Property graphs','operational graphs'],['vector','vector','Vector DB, RAG','retrieval stores'],['corr6','corr6','Third-party ontologies','industry vocabularies'],['catalog','catalog','Data catalogs','lineage and discovery']];
+  const t3=[['metric','metric','dbt / LookML','metric layer'],['graphs','srcsys','Property graphs','operational graphs'],['vector','vector','Vector DB, RAG','retrieval stores'],['tpo','corr6','Third-party ontologies','industry vocabularies'],['catalog','catalog','Data catalogs','lineage and discovery']];
   return `<svg viewBox="0 0 900 760" role="img" aria-label="Compass and agents reach the three tiers through MCP; enterprise systems connect through APIs">${svDefs}
   ${svR(20,6,860,76,'amber',true)}${svT(36,22,'AI LAYER (not a tier)','var(--amber-600)',10.5,700,'start')}
   ${cell(36,30,410,42,'amber','Compass: the AI layer','what people use to ask and act','ch-search','intelapp')}
@@ -1836,7 +2019,7 @@ function tierSVG(hl){
   <rect x="20" y="300" width="860" height="128" rx="14" fill="color-mix(in srgb,var(--blue-50) 55%,var(--surface))" stroke="var(--blue-600)" stroke-width="2.6"/>
   ${head(320,'blue','TIER 2 · MEDIATION · MEDIATION HOLON (SAML)','persistent · insulation, not integration')}
   ${t2.map((c,i)=>cell(36+i*139,332,131,60,'blue',c[2],c[3],c[0],c[1],false,11)).join('')}
-  ${svT(450,414,'Proposed, confidence-scored, steward-reviewed, then published as versioned assertions. No point-to-point mappings.','var(--blue-800)',10.5)}
+  ${svT(450,409,'Maps ontologies to RDF schemas, to third-party ontologies, core to customer vocabularies, and operational to domain ontologies, and more.','var(--blue-800)',10.5)}${svT(450,422,'Every mapping is proposed, confidence-scored, steward-reviewed and versioned. No point-to-point mappings.','var(--blue-600)',9.5)}
   ${band(438,'teal','API LAYER · scaffold to enterprise systems: one adapter per system · compiled policy down, lineage signals up','api','apigw')}
   ${svR(20,478,860,240,'gray',true)}${head(498,'gray','TIER 3 · BOTTOM-UP · YOUR PHYSICAL IMPLEMENTATION','evolves fast · engineering authority · unchanged')}
   ${svT(36,518,'Enterprise systems','var(--gray-600)',10.5,600,'start')}
@@ -1869,6 +2052,22 @@ $('#tierPrev').onclick=()=>{if(S.tstep>0){S.tstep--; renderTier();}};
 $('#tierNext').onclick=()=>{if(S.tstep<TSCEN[S.scen].steps.length-1){S.tstep++; renderTier();}};
 $('#tierFig').addEventListener('click',e=>{const g=e.target.closest('[data-open]'); if(g) openMap(g.dataset.open);});
 
+
+/* mapping scope */
+S.ms=0;
+function scopeHtml(){
+  const m=MAP_SCOPE[S.ms];
+  return `<div class="tri"><div>${MAP_SCOPE.map((x,i)=>`<button class="opt" data-ms="${i}" aria-pressed="${i===S.ms}"><b style="display:block">${esc(x.t)}</b><span class="sub" style="font-size:12px">${esc(x.s)}</span></button>`).join('')}</div>
+  <div class="card z-blue" style="background:var(--z);border-color:var(--zb)"><div class="eyebrow" style="color:var(--zb)">${S.ms<4?'Mapping type '+(S.ms+1):'Open by design'}</div><h4 style="color:var(--zt);font-size:18px;margin:4px 0 8px">${esc(m.t)}</h4><p style="color:var(--zt);margin:0">${esc(m.x)}</p>
+  <p class="note" style="color:var(--zb)">All mapping types share one governed lifecycle: proposed by agents, confidence-scored, reviewed by a steward, published as a versioned assertion. A source change updates a mapping, never the ontology.</p>
+  ${S.tab==='legacy'?`<button class="btn" data-ms-show="${S.ms}" style="margin-top:6px">Highlight in the three-tier diagram</button>`:''}</div></div>`;
+}
+function renderScope(){ const el=$('#mapScope'); if(el) el.innerHTML=scopeHtml(); }
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-ms]'); if(b){S.ms=+b.dataset.ms; renderScope(); if(S.tab==='processing') renderServices(); return;}
+  const sh=e.target.closest('[data-ms-show]'); if(sh){const m=MAP_SCOPE[+sh.dataset.msShow]; $('#tierFig').innerHTML=tierSVG(new Set(m.h)); $('#tierFig').scrollIntoView({behavior:'smooth',block:'center'});}
+});
+
 /* ---------- operating model ---------- */
 S.lc=0; S.pers='or';
 $('#principles').innerHTML=PRINCIPLES7.map((p,i)=>`<div class="card"><div class="eyebrow">Principle ${i+1}</div><h4 style="font-size:15.5px;margin:4px 0">${esc(p[0])}</h4><p class="sub" style="margin:0">${esc(p[1])}</p></div>`).join('');
@@ -1895,7 +2094,7 @@ $('#org').innerHTML=ORG.map(r=>`<div class="gl"><b>${esc(r[0])} <em>${esc(r[1])}
 
 /* ---------- boot ---------- */
 renderMap(); applyMapState(); renderDetail();
-renderOverviewAud(); renderWalk(); renderGdom(); renderRules(); renderCB(); renderTeam(); renderApps(); renderGloss(); renderServices(); renderWW(); renderTier(); renderAtt(); renderLC(); renderPers();
+renderOverviewAud(); renderWalk(); renderGdom(); renderRules(); renderCB(); renderTeam(); renderApps(); renderGloss(); renderServices(); renderWW(); renderTier(); renderScope(); renderAtt(); renderLC(); renderPers();
 $$('[data-aud]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.aud===S.aud));
 showTab((location.hash||'').slice(1)||'overview',{keepScroll:true});
 

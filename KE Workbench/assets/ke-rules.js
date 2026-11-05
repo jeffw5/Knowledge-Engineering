@@ -1,5 +1,5 @@
 /* KE Workbench — Standards Conformance rules.
-   Each rule encodes a Part III / Appendix E standard of the Semantic Governance guide in force (assets/ke-guide.js; v2.1),
+   Each rule encodes a Part III / Appendix E standard of the Semantic Governance guide in force (assets/ke-guide.js; v2.3),
    §3.11 metadata included; the jobs-model rules (§3.13) are the core shapes that §2.7 contextual relevancy relies on.
    runChecks(quads, { bases }) → { rules:[{...rule, checked, failed}], findings:[...], stats }
    quads: [{ s, p, o, g }] with terms { t:'iri'|'bnode'|'lit', v, lang?, dt? } */
@@ -499,6 +499,12 @@
     var g = graphRule(entities);
     g.findings.forEach(function (f) { findings.push({ rule: g.rule.id, sev: g.rule.sev, sec: g.rule.sec, iri: f.iri, kind: f.kind, label: '', detail: f.detail }); });
     summary.push(Object.assign({}, g.rule, { checked: g.checked, failed: g.findings.length }));
+    // v2.3 structural rules (A1–A6, A9) live in ke-structural.js, loaded after this file
+    if (root.KE_STRUCT) {
+      var sr = root.KE_STRUCT.structuralRules(entities, quads, { matrix: opts && opts.matrix });
+      sr.findings.forEach(function (f) { findings.push(f); });
+      sr.summary.forEach(function (r) { summary.push(r); });
+    }
     var kinds = {}; entities.forEach(function (e) { kinds[e.kind] = (kinds[e.kind] || 0) + 1; });
     return { rules: summary, findings: findings, stats: { entities: entities.length, kinds: kinds, triples: quads.length } };
   }

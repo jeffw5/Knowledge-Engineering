@@ -212,7 +212,7 @@ function srcbar(){
    <button class="btn" id="rebuild" title="Rebuild the snapshot from the files on disk (needs the workbench server)">Rebuild snapshot</button>`;
   document.getElementById('rebuild').onclick=async()=>{toast('Rebuilding…');try{const r=await fetch('/api/ingest/ops-snapshot',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!j.ok)throw new Error(j.error||'failed');location.reload()}catch(e){toast('Rebuild failed: '+e.message+'. Run python3 ingest/build_ops_snapshot.py')}};
 }
-const TABS=[['overview','Overview'],['log','Change log'],['cause','Causality & root cause'],['domains','Domains'],['compliance','Compliance'],['guide','Standards guide'],['actions','Actions'],['workbench','Workbench']];
+const TABS=[['overview','Overview'],['log','Change log'],['cause','Causality & root cause'],['domains','Domains'],['compliance','Compliance'],['guide','Standards guide'],['measures','Measures'],['actions','Actions'],['workbench','Workbench']];
 function tabs(){document.getElementById('tabs').innerHTML=TABS.map(([k,l])=>`<button class="tab" role="tab" data-k="${k}" aria-selected="${state.tab===k}">${l}</button>`).join('');
   document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{state.tab=b.dataset.k;save();render()})}
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
@@ -380,8 +380,35 @@ function complianceView(){
    <div class="tbl"><table class="heat"><thead><tr><th>Rule</th>${doms.map(d=>`<th>${esc(d)}</th>`).join('')}</tr></thead><tbody>${rules.map(r=>`<tr><td>${esc(r)}</td>${doms.map(d=>{const c=cell(r,d);return `<td class="c" style="${c.e?'background:var(--bad-soft);color:var(--bad)':c.w?'background:var(--warn-soft);color:var(--warn)':''}">${c.e||c.w?c.e+' / '+c.w:'·'}</td>`}).join('')}</tr>`).join('')||'<tr><td class="empty">No findings.</td></tr>'}</tbody></table></div></div>
    <div class="grid g2e"><div class="panel pad"><h2>Process policies</h2><table><tbody>${O.policies.map(p=>`<tr><td><span class="tag ${p.status}">${p.status}</span></td><td><b>${esc(p.id)} ${esc(p.title)}</b><div class="sub">${esc(p.check)} · ${esc(p.standard)}</div><div>${esc(p.finding)}</div></td><td class="num">${p.passing}/${p.total}</td></tr>`).join('')}</tbody></table></div>
    <div class="panel pad"><h2>Guide edition declared by assets</h2><table><tbody>${Object.entries(conf).map(([k,v])=>`<tr><td class="mono">${esc(k)}</td><td class="num">${v}</td></tr>`).join('')}</tbody></table>
-   <p class="note">Editions on disk: ${O.guide.editionsOnDisk.map(e=>'v'+esc(e)).join(', ')}. The guide no longer describes ${O.guide.items.length} practices the assets follow (Standards guide tab), so a claim of conformance to v${esc(O.guide.edition)} is partly a claim to rules that were amended.</p>
+   <p class="note">Editions on disk: ${O.guide.editionsOnDisk.map(e=>'v'+esc(e)).join(', ')}. The guide no longer describes ${O.guide.items.filter(x=>+x.id.slice(1)<=21).length} practices the assets follow (Standards guide tab), so a claim of conformance to v${esc(O.guide.edition)} is partly a claim to rules that were amended.</p>
    <h2 style="margin-top:12px">Findings to look at first</h2><ul class="list">${MODELS.filter(a=>a.errors).sort((a,b)=>b.errors-a.errors).slice(0,10).map(a=>`<li>${iriLink(a.iri)} · ${a.errors} errors${a.sample[0]?`: <span class="sub">${esc(a.sample[0].rule)}: ${esc(a.sample[0].msg)}</span>`:''}</li>`).join('')}</ul></div></div></div>`;
+  wire(V);
+}
+
+/* ---- Measures (v2.3 A11, A12): read from telemetry events only; nothing is recomputed here ---- */
+function measuresView(){
+  const T=O.telemetry||{events:[],structural:[],notYetMeasured:[]},ev=T.events||[];
+  const by={};ev.forEach(e=>{(by[e.measure]=by[e.measure]||[]).push(e)});
+  const fmt=e=>e.unit&&/share/.test(e.unit)?(100*e.value).toFixed(1)+'%':String(e.value);
+  const agg=(m)=>{const L=by[m]||[];if(!L.length)return null;
+    if(m==='impact-radius')return {txt:String(Math.max(...L.map(e=>e.value))),n:L.length,worst:L};
+    const c=L.reduce((a,e)=>a+(e.count||0),0),t=L.reduce((a,e)=>a+(e.total||0),0);
+    const useRatio=/share|per term|links per/.test(L[0].unit||'');
+    return {txt:useRatio&&t?(m==='correspondence-density'||m==='orphan-rate'?(c/t).toFixed(3):(100*c/t).toFixed(1)+'%'):(m==='promotion-backlog-age'?L[0].value+' d':String(c)),n:L.length,worst:L.slice().sort((a,b)=>b.value-a.value)}};
+  const rows=(T.structural||[]).map(([id,name,emitter])=>{const a=agg(id);
+    return `<tr><td><b>${esc(name)}</b><div class="sub mono">${esc(id)}</div></td><td class="num">${a?esc(a.txt):'<span class="sub">no events</span>'}</td><td class="num">${a?a.n:0}</td>
+      <td class="sub">${a?a.worst.slice(0,3).map(e=>`${iriLink(e.graph)} ${esc(fmt(e))}`).join('<br>'):''}</td><td class="sub">${esc(emitter)}</td></tr>`}).join('');
+  const checks=Object.keys(by).filter(m=>m.startsWith('check:')).sort().map(m=>{const L=by[m],f=L.reduce((a,e)=>a+e.value,0),g=L.filter(e=>e.value).length;
+    const first=L.filter(e=>e.value)[0];
+    return `<tr><td><span class="tag ${f?'fail':'pass'}">${f?'fail':'pass'}</span></td><td class="mono">${esc(m.slice(6))}</td><td class="num">${f}</td><td class="num">${g} / ${L.length}</td><td class="sub">${first?esc(first.note):''}</td></tr>`}).join('');
+  const last=ev.reduce((a,e)=>e.at>a?e.at:a,'');
+  V.innerHTML=`<div class="grid"><div class="panel pad"><h2>Structural measures of the semantic design</h2>
+    <p>Semantic Governance v${esc(O.guide.edition)} (A11, A12): every check that computes a measure emits a telemetry event; this page reads
+    <span class="mono">${esc(T.file||'data/ops/telemetry.jsonl')}</span> and does not recompute them. Latest event ${esc(last||'none')}. Run <b>Rebuild snapshot</b> to emit new events.</p>
+    <div class="tbl"><table><thead><tr><th>Measure</th><th>Value</th><th>Graphs</th><th>Highest graphs</th><th>Emitter</th></tr></thead><tbody>${rows}</tbody></table></div></div>
+    <div class="panel pad"><h2>Not yet measured</h2><ul class="list">${(T.notYetMeasured||[]).map(([id,name,why])=>`<li><b>${esc(name)}</b> <span class="sub">${esc(why)}</span></li>`).join('')||'<li class="sub">Every measure has an emitter.</li>'}</ul></div>
+    <div class="panel pad"><h2>Check outcomes (A1–A6, A9)</h2><div class="tbl"><table><thead><tr><th></th><th>Check</th><th>Failures</th><th>Graphs failing</th><th>Example</th></tr></thead><tbody>${checks||'<tr><td class="sub">No events yet.</td></tr>'}</tbody></table></div>
+    <p class="note">Targets: zero failures for the orphan checks in a released graph (A6). Targets for the other measures are set at the Gate 1 baseline (decision G32).</p></div></div>`;
   wire(V);
 }
 
@@ -391,7 +418,7 @@ function guideView(){
   const g=O.guide,G=g.items,c=g.counts||{},prev=g.previous||'1.9';
   const pct=G.length?Math.round(100*(c.resolved||0)/G.length):0;
   const stale=(O.policies.find(p=>p.id==='P07')||{});
-  V.innerHTML=`<div class="grid"><div class="panel pad"><h2>Semantic Governance v${esc(g.edition)} is in force</h2>
+  V.innerHTML=`<div class="grid"><div class="panel pad"><h2>Semantic Governance v${esc(g.edition)} is in force</h2>${g.kind==='amendment-set'?`<p class="note">v${esc(g.edition)} is an <b>amendment set</b> of ${esc(String((O.guide.items||[]).filter(x=>+x.id.slice(1)>21).length))} changes to the v${esc(g.baseEdition||g.previous)} Draft${g.baseFile?` · <a href="../${esc(g.baseFile)}" target="_blank" rel="noopener">open v${esc(g.baseEdition||g.previous)}</a>`:''}. The full guide text is still v${esc(g.baseEdition||g.previous)} until the amendments are merged into a v${esc(g.edition)} edition.</p>`:''}
    <p>The workbench applies <b>Semantic Governance: Services, Architecture &amp; Integration v${esc(g.edition)}</b>${g.status==='Draft'?' (Draft)':''}${g.date?', '+esc(g.date):''}${g.file?` · <a href="../${esc(g.file)}" target="_blank" rel="noopener">open the guide</a>`:''}. Editions on disk: ${(g.editionsOnDisk||[]).map(e=>'v'+esc(e)).join(', ')}. The ${G.length} places where v${esc(prev)} no longer matched practice are tracked below with where v${esc(g.edition)} resolves each one (its Appendix E.4).</p>
    <div class="kpis">${kpi((c.resolved||0)+' / '+G.length,'resolved in the guide',pct===100?'ok':'')}${kpi(c.decide||0,'written as proposals: decision pending',c.decide?'warn':'ok')}${kpi(c.tools||0,'resolved in the guide; tool work open',c.tools?'warn':'ok')}${kpi(c.open||0,'still open',c.open?'bad':'ok')}${kpi((stale.failing||0)+' / '+(stale.total||0),'assets not yet declaring v'+esc(g.edition),stale.failing?'warn':'ok','policy P07: rebuild them')}</div>
    <p><button class="btn" id="gmd">Copy as Markdown</button></p></div>
@@ -436,7 +463,7 @@ const csvOf=(head,rows)=>[head.map(qc).join(','),...rows.map(r=>r.map(qc).join('
 function copy(text,label='CSV'){const fb=()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast(label+' copied')}catch(e){toast('Copy failed')}ta.remove()};
   try{navigator.clipboard.writeText(text).then(()=>toast(label+' copied'),fb)}catch(e){fb()}}
 
-function render(){srcbar();tabs();({overview,log:logView,cause:causeView,domains:domainsView,compliance:complianceView,guide:guideView,actions:actionsView,workbench:workbenchView}[state.tab]||overview)()}
+function render(){srcbar();tabs();({overview,log:logView,cause:causeView,domains:domainsView,compliance:complianceView,guide:guideView,measures:measuresView,actions:actionsView,workbench:workbenchView}[state.tab]||overview)()}
 render();loadLive();
 })();
 </script></body></html>

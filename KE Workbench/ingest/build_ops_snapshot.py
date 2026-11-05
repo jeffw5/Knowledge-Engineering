@@ -22,6 +22,10 @@ KE = WB.parent
 sys.path.insert(0, str(WB / 'ingest'))
 import ke_ingest as k
 import ops_spec as SPEC
+import structural_checks as SC
+import telemetry as TEL
+
+_PARSED = []      # (path, role, triples) of every model file read by inventory(), reused by the structural checks
 
 PROV = 'http://www.w3.org/ns/prov#'
 DCT = 'http://purl.org/dc/terms/'
@@ -169,6 +173,7 @@ def area_of_path(p):
 
 
 def inventory(scopes, cfg):
+    del _PARSED[:]
     files = asset_files()
     parsed = []
     vocab = set()
@@ -178,6 +183,7 @@ def inventory(scopes, cfg):
         except Exception as e:
             print('  skipped', rel(p), e); continue
         parsed.append((p, role, ts))
+        _PARSED.append((p, role, ts))
         if p.name.startswith('vocabulary-') or role == 'c360':
             for s, pr, o in ts:
                 if pr[1] == RDF + 'type' and o[1] == SKOS + 'Concept': vocab.add(s[1])
@@ -395,6 +401,9 @@ def actions(recs, assets, qs, policy, expansion, guide):
                 g['priority'], 'Guide', f'Semantic Governance v{ed}', 1)
     for q in qs:
         add(q['id'], 'Decision', q['title'], q['detail'], 'medium', q['section'], 'KE Domains/review/open-questions.md')
+    if _ver(ed) >= _ver('2.3'):
+        for oid, title, detail in SPEC.OPEN_2_3:
+            add('D-' + oid, 'Decision', title, detail, 'medium', 'Guide', f'Semantic Governance v{ed} open items')
     drafts = [a for a in assets if a['status'] in ('Draft', '') and a['kind'] in ('vocabulary', 'taxonomy', 'ontology', 'shapes')]
     if drafts:
         add('L-candidate', 'Lifecycle', f'{len(drafts)} assets are Draft; define Candidate criteria and promote the core',
@@ -405,7 +414,7 @@ def actions(recs, assets, qs, policy, expansion, guide):
     return A
 
 
-def policies(recs, assets, editions, guide):
+def policies(recs, assets, editions, guide, tele=()):
     touched = set()
     for r in recs:
         touched.update(r['generated']); touched.update(r['used']); touched.update(r['invalidated'])
@@ -433,7 +442,32 @@ def policies(recs, assets, editions, guide):
         res('P07', len(stale) + len(nocl), len(models), f'The workbench applies Semantic Governance v{latest}. {len(stale)} assets declare an older edition and {len(nocl)} declare none. Rebuild them (build_core.py, build_domains.py, re-ingestion) so dcterms:conformsTo names …/standard/semantic-governance/{latest}/.'),
         res('P08', len(dups), len(by_iri), f'{len(dups)} asset IRIs have current copies at different versions: ' + '; '.join(f'{i.rsplit("/", 2)[-2]} ({", ".join(sorted(v for v, _ in vs))})' for i, vs in list(dups.items())[:6])),
         res('P09', len(models) - len(beyond), len(models), f'{len(models) - len(beyond)} of {len(models)} model assets are Draft.'),
-    ], untracked, dups
+    ] + telemetry_policies(res, tele), untracked, dups
+
+
+def telemetry_policies(res, tele):
+    """P10-P14 (v2.3): read from telemetry events only; the dashboard does not recompute a measure (A12)."""
+    chk = collections.defaultdict(lambda: [0, 0, 0])     # rule -> [failures, terms checked, graphs failing]
+    for e in tele:
+        if e['measure'].startswith('check:'):
+            c = chk[e['measure'][6:]]; c[0] += e['value']; c[1] += e.get('total') or 0; c[2] += 1 if e['value'] else 0
+    def f(rule, label, remedy):
+        c = chk.get(rule)
+        if not c: return (1, 1, f'No telemetry for {label} yet: run ingest/structural_checks.py (Rebuild snapshot does).')
+        return (c[0], max(c[1], c[0], 1), f'{c[0]} failures in {c[2]} graphs. {remedy}')
+    a = f('derivation-bfo', 'concept derivation', 'Add a BFO parent to the primitives and formalize the taxonomy concepts (core:formalizedBy).')
+    b = f('label-resolution', 'label resolution', 'Resolve ambiguous labels to one concept in their scope, or send them to the pending state.')
+    m1, m2, m3 = f('edge-matrix', 'the allowed-edge matrix', ''), f('tenant-derivation', 'tenant derivation', ''), f('tenant-isolation', 'tenant isolation', '')
+    mf = m1[0] + m2[0] + m3[0]
+    pr = f('primitive-site', 'primitive minting', 'Move primitives to the core or the top-level domain (request or promote).')
+    n_have = len(TEL.STRUCTURAL); n_miss = len(TEL.NOT_YET_MEASURED)
+    return [
+        res('P10', a[0], a[1], a[2]),
+        res('P11', b[0], b[1], b[2]),
+        res('P12', mf, max(m1[1], 1), f'{m1[0]} edges outside the matrix, {m2[0]} customer concepts without derivation, {m3[0]} tenant isolation breaches.'),
+        res('P13', pr[0], pr[1], pr[2]),
+        res('P14', n_miss, n_have + n_miss, f'{n_miss} of {n_have + n_miss} measures have no emitter: ' + '; '.join(n[1] for n in TEL.NOT_YET_MEASURED) + '.'),
+    ]
 
 
 def main():
@@ -447,7 +481,10 @@ def main():
     dec, qs = decisions()
     eds = guide_editions()
     guide = guide_current(eds)
-    pol, untracked, dups = policies(recs, assets, eds, guide)
+    # A12: every check that computes a measure emits telemetry; the dashboard reads the events and recomputes nothing
+    structural = SC.main(parsed=[x for x in _PARSED if x[1] != 'assembly'], cfg=cfg, edition=guide['edition'])
+    tele = TEL.latest()
+    pol, untracked, dups = policies(recs, assets, eds, guide, tele)
     exp = 0
     sm = KE / 'KE Domains/HR Service Operations/peo-service-map/peo-service-map.json'
     if sm.exists():
@@ -470,6 +507,8 @@ def main():
         'dispositions': [{'at': d.get('at') or d.get('recorded'), 'disposition': d.get('disposition'), 'rules': [f.get('rule') for f in d.get('findings') or []],
                           'term': (d.get('term') or {}).get('iri'), 'source': d.get('source')} for d in disp],
         'actions': acts, 'categories': SPEC.CATEGORIES,
+        'telemetry': {'events': tele, 'structural': [list(x) for x in TEL.STRUCTURAL], 'notYetMeasured': [list(x) for x in TEL.NOT_YET_MEASURED],
+                      'summary': structural, 'file': 'data/ops/telemetry.jsonl'},
         'sources': {'changeRecords': 'change-record-*.ttl under ' + KE.name, 'core': 'KE Baseline/Baseline Core v1.0/ttl', 'domains': 'KE Domains/**/ttl', 'c360': 'KE Workbench/data/c360'}}
     out = WB / 'data/ops'
     out.mkdir(parents=True, exist_ok=True)

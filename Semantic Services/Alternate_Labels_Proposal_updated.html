@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Architecture Proposal · Alternate Labels and Customer Terminology · Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:light;
+  --bg:#eef1f3;--paper:#fff;--sunk:#e4e9ed;--ink:#132030;--ink-2:#3a4a5a;--muted:#5c6b7a;--line:#cdd5dc;--line-2:#aeb9c3;--grid:rgba(29,79,145,.06);
+  --accent:#1d4f91;--accent-soft:#dfe8f5;--good:#2b7a4b;--crit:#b3261e;
+  --cds-chart-axis:#8b98a5;--cds-chart-categorical-1:#1d6fd6;--cds-text-primary:#132030;--cds-text-secondary:#5c6b7a;--cds-chart-reference-tint:#eef1f3;--cds-chart-status-critical:#b3261e;--cds-chart-grid:#dde3e8;
+  --f-head:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;--f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#0c1218;--paper:#121a22;--sunk:#18222c;--ink:#e3e9ef;--ink-2:#c1ccd6;--muted:#93a2b0;--line:#26323e;--line-2:#36444f;--grid:rgba(127,174,245,.05);
+  --accent:#7fb0f0;--accent-soft:#17283f;--good:#6cc590;--crit:#f08077;
+  --cds-chart-axis:#66768a;--cds-chart-categorical-1:#5aa2f5;--cds-text-primary:#e3e9ef;--cds-text-secondary:#93a2b0;--cds-chart-reference-tint:#18222c;--cds-chart-status-critical:#f08077;--cds-chart-grid:#26323e}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#0c1218;--paper:#121a22;--sunk:#18222c;--ink:#e3e9ef;--ink-2:#c1ccd6;--muted:#93a2b0;--line:#26323e;--line-2:#36444f;--grid:rgba(127,174,245,.05);
+  --accent:#7fb0f0;--accent-soft:#17283f;--good:#6cc590;--crit:#f08077;
+  --cds-chart-axis:#66768a;--cds-chart-categorical-1:#5aa2f5;--cds-text-primary:#e3e9ef;--cds-text-secondary:#93a2b0;--cds-chart-reference-tint:#18222c;--cds-chart-status-critical:#f08077;--cds-chart-grid:#26323e}
+*{box-sizing:border-box}
+html{scroll-padding-top:12px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--f-body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;padding-inline:16px}
+.wrap{max-width:1240px;margin:0 auto;padding-block:20px 60px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--f-head);letter-spacing:.005em;text-wrap:balance;margin:0}
+.tb{display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));border:1.5px solid var(--ink);background:var(--paper)}
+.tb>div{border-left:1px solid var(--line-2);padding:10px 14px;min-width:0}.tb>div:first-child{border-left:0}
+.lab{font:500 10.5px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tb h1{font-size:28px;line-height:1.1;margin-top:3px}
+.tb .val{font:600 15px var(--f-head);margin-top:2px}
+.tb p{margin:4px 0 0;color:var(--muted);font-size:13px}
+@media (max-width:860px){.tb{grid-template-columns:repeat(2,minmax(0,1fr))}.tb>div:first-child{grid-column:1/-1}.tb>div{border-left:0;border-top:1px solid var(--line-2)}}
+.shell{display:grid;grid-template-columns:250px minmax(0,1fr);gap:18px;margin-top:18px;align-items:start}
+@media (max-width:900px){.shell{grid-template-columns:minmax(0,1fr)}}
+nav.side{position:sticky;top:12px;background:var(--paper);border:1px solid var(--line);padding:10px 0}
+nav.side .hd{padding:2px 14px 8px}
+nav.side a{display:grid;grid-template-columns:26px minmax(0,1fr);gap:4px;padding:6px 14px;color:var(--ink-2);text-decoration:none;font-size:13.5px;border-left:3px solid transparent}
+nav.side a b{font:500 11px var(--f-mono);color:var(--faint,var(--muted));padding-top:2px}
+nav.side a:hover{background:var(--sunk)}
+nav.side a[aria-current="page"]{background:var(--accent-soft);border-left-color:var(--accent);color:var(--ink);font-weight:600}
+nav.side a.has-dia::after{content:"";}
+@media (max-width:900px){nav.side{position:static}nav.side .list{display:none}nav.side.open .list{display:block}nav.side .tog{display:block}}
+nav.side .tog{display:none;margin:0 14px 6px;border:1px solid var(--line-2);background:var(--paper);padding:5px 10px;font:600 12px var(--f-mono);cursor:pointer}
+main{min-width:0}
+.page{background:var(--paper);border:1px solid var(--line);padding:22px 28px 26px}
+@media (max-width:640px){.page{padding:16px 16px 20px}}
+.page>h2{font-size:30px;line-height:1.1;margin-bottom:4px}
+.page .num{font:500 11px var(--f-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.page h3{font-size:19px;margin:22px 0 4px}
+.page p{margin:8px 0;max-width:78ch}
+.page ul,.page ol{max-width:78ch;padding-left:1.3em;display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.page a{color:var(--accent)}
+.page code{font:500 12.5px var(--f-mono);background:var(--sunk);padding:1px 5px}
+.page pre{background:var(--sunk);padding:10px 14px;overflow-x:auto}.page pre code{background:none;padding:0}
+.page table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0}
+.page th{text-align:left;font:500 10.5px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:var(--sunk);padding:7px 10px;border-bottom:1px solid var(--line-2)}
+.page td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tw{overflow-x:auto;border:1px solid var(--line);margin:10px 0}.tw table{margin:0}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:26px;padding-top:14px;border-top:1.5px solid var(--ink)}
+.pager a{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--ink);border:1px solid var(--line-2);padding:8px 14px;max-width:48%;min-width:0}
+.pager a:hover{background:var(--sunk)}.pager a.next{text-align:right;margin-left:auto}
+.pager small{font:500 10.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+/* diagrams */
+.dia{margin:16px 0 18px}
+.dia .frame{border:1px solid var(--line);background:var(--paper);overflow-x:auto}
+.dia svg{display:block;width:100%;height:auto;min-width:640px}
+.dia svg text{font-family:var(--f-body)}
+.dia .hint{font:500 11px var(--f-mono);letter-spacing:.05em;color:var(--muted);margin:6px 0 0}
+.dia svg g.node{cursor:pointer}
+.dia svg g.node:hover rect,.dia svg g.node:hover path.shape{stroke-width:2.5}
+.dia svg g.node.sel rect{stroke:var(--ink);stroke-width:3}
+.dia svg g.node:focus-visible rect{stroke:var(--ink);stroke-width:3}
+.dpanel{border:1px solid var(--line-2);border-top:3px solid var(--accent);background:var(--paper);padding:12px 16px;margin-top:8px;min-height:74px}
+.dpanel h4{margin:0 0 2px;font:600 17px var(--f-head)}
+.dpanel p{margin:2px 0 8px;font-size:14px;max-width:80ch}
+.dpanel .empty{color:var(--muted);font-size:13.5px}
+.dpanel .go{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:4px 12px;font:600 11.5px var(--f-mono);letter-spacing:.04em;cursor:pointer;text-decoration:none;display:inline-block}
+.dpanel .go.here{background:var(--paper);color:var(--ink);border-color:var(--line-2)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}
+@media (max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.cards{grid-template-columns:minmax(0,1fr)}}
+.card{display:block;border:1px solid var(--line);border-top:3px solid var(--accent);padding:10px 12px;text-decoration:none;color:var(--ink);background:var(--paper)}
+.card:hover{background:var(--sunk)}
+.card b{display:block;font:600 15px var(--f-head)}
+.card span{font-size:12.5px;color:var(--muted)}
+footer{color:var(--muted);font-size:12px;margin-top:22px;border-top:1px solid var(--line-2);padding-top:12px;max-width:100ch}
+.themebtn{border:1px solid var(--line-2);background:var(--paper);padding:3px 9px;font:500 11px var(--f-mono);cursor:pointer;margin-top:6px}
+</style></head><body>
+<div class="wrap">
+<header class="tb">
+  <div><div class="lab">Semantic Knowledge Layer · architecture proposal · interactive edition</div><h1>Alternate Labels and Customer Terminology</h1><p>Capture, warehouse, map, manage and serve customer terminology without loading the core. Select a box in any diagram to see what it is and open its section.</p></div>
+  <div><div class="lab">Prepared by</div><div class="val">Jeffrey Wallk</div><div class="lab" style="margin-top:6px">Source</div><div class="val" style="font-size:13px">Architecture proposal, 31 Oct 2026</div></div>
+  <div><div class="lab">Sections</div><div class="val" id="cnt"></div><div class="lab" style="margin-top:6px">Diagrams</div><div class="val" id="cntd"></div></div>
+  <div><div class="lab">View</div><button type="button" class="themebtn" id="theme">Toggle light / dark</button></div>
+</header>
+<div class="shell">
+<nav class="side" id="side" aria-label="Sections"><div class="hd lab">Sections</div><button type="button" class="tog" id="navtog">Sections ▾</button><div class="list" id="navlist"><a href="#summary" data-id="summary"><b>01</b><span>Summary</span></a><a href="#context" data-id="context"><b>02</b><span>Context</span></a><a href="#principles" data-id="principles"><b>03</b><span>Principles</span></a><a href="#overview" data-id="overview"><b>04</b><span>Architecture</span></a><a href="#services" data-id="services"><b>05</b><span>Semantic services</span></a><a href="#capture" data-id="capture"><b>06</b><span>Capture</span></a><a href="#warehouse" data-id="warehouse"><b>07</b><span>Warehouse</span></a><a href="#map" data-id="map"><b>08</b><span>Map</span></a><a href="#manage" data-id="manage"><b>09</b><span>Manage</span></a><a href="#serve" data-id="serve"><b>10</b><span>Serve</span></a><a href="#isolation" data-id="isolation"><b>11</b><span>Tenant isolation</span></a><a href="#provisioning" data-id="provisioning"><b>12</b><span>Provisioning & personas</span></a><a href="#performance" data-id="performance"><b>13</b><span>Performance</span></a><a href="#options" data-id="options"><b>14</b><span>Options</span></a><a href="#operating" data-id="operating"><b>15</b><span>Operating model</span></a><a href="#extensions" data-id="extensions"><b>16</b><span>TOM extensions</span></a><a href="#risks" data-id="risks"><b>17</b><span>Risks</span></a><a href="#pilot" data-id="pilot"><b>18</b><span>Pilot & phasing</span></a><a href="#questions" data-id="questions"><b>19</b><span>Open questions</span></a></div></nav>
+<main id="main"><section class="page" id="p-summary" hidden><div class="num">01 of 19</div><h2>Summary and decision requested</h2><p>Hold alternate labels and customer terminology in a governed lexicon layer beside the core vocabularies, not inside them. The core and domain assets keep preferred labels, definitions and relations only. Everything customers and Insperity call those concepts, and every concept only one customer uses, is captured, warehoused, mapped and managed in separate scoped graphs that point at the core by ID.</p>
+<p>The result: onboarding a customer adds no triples to the core, a label change never forces a core release, one customer's terms never reach another, and every label traces to its evidence and the reviewer who approved it.</p>
+<p>This is an evolving baseline. The same layer is meant to support configuration, customization, personalization, provisioning and insulation at scale, so every later project reuses it instead of rebuilding it.</p>
+<p>The baseline is the set of semantic services. The review screens, provisioning, monitoring dashboards, triage and simulation are operational extensions of the target operating model, built on the services' contracts.</p>
+<p>Decisions requested:</p>
+<ol>
+<li>Approve the lexicon-layer pattern: scoped lexicons for labels, customer extension vocabularies for new local concepts, and a derived resolution index.</li>
+<li>Approve the five-function service model (capture, warehouse, map, manage, serve) as the baseline for every customer and future project.</li>
+<li>Approve a benchmark spike before build, with pass thresholds set in advance, to prove the performance and release-stability claims.</li>
+</ol><h3>Diagrams in this proposal</h3><div class="cards"><a class="card" href="#overview"><b>Architecture overview</b><span>Four functions, one shared warehouse</span></a><a class="card" href="#services"><b>Baseline services and extensions</b><span>Three layers</span></a><a class="card" href="#capture"><b>Capture pipeline</b><span>Four sources, five steps</span></a><a class="card" href="#warehouse"><b>Scopes, references and topology</b><span>Who writes where; three stages of growth</span></a><a class="card" href="#manage"><b>Triage and label lifecycle</b><span>Three decisions, five states</span></a><a class="card" href="#serve"><b>Resolution order and publishing</b><span>Four levels; five steps and a read-back loop</span></a><a class="card" href="#provisioning"><b>Access decision</b><span>Persona, job step, resource, context</span></a><a class="card" href="#extensions"><b>Change-impact simulation</b><span>Five steps, one rework loop</span></a><a class="card" href="#pilot"><b>Delivery timeline</b><span>Four phases, four gates</span></a></div><div class="pager"><span></span><a class="next" href="#context"><small>Next</small>Context</a></div></section>
+<section class="page" id="p-context" hidden><div class="num">02 of 19</div><h2>Context and problem</h2><p>The SKL is the single source of truth for vocabularies, taxonomies and ontologies, and publishes governed projections to execution points such as Visier. Customers describe the same things in their own words: their handbooks, documentation, CMS pages and data feeds carry plan names, abbreviations, job families and policy names.</p>
+<p>Storing all of that as alternate labels on the core concepts fails in five ways:</p>
+<ul>
+<li><strong>Growth.</strong> The core grows with every customer, and so do its indexes and reasoning cost.</li>
+<li><strong>Churn.</strong> Every label change needs a core release and steward time.</li>
+<li><strong>Leakage.</strong> One customer's terms become visible to every other customer.</li>
+<li><strong>Ambiguity.</strong> The same word can mean different things to different customers, and a flat label list cannot say so.</li>
+<li><strong>Lost evidence.</strong> A bare label records neither where it came from, who approved it, nor when it applies.</li>
+</ul>
+<p>Some customer terms are not synonyms at all. They name something the core has no concept for, and need a home that does not widen the core.</p><div class="pager"><a class="prev" href="#summary"><small>Previous</small>Summary</a><a class="next" href="#principles"><small>Next</small>Principles</a></div></section>
+<section class="page" id="p-principles" hidden><div class="num">03 of 19</div><h2>Design principles</h2><p>Nine rules govern every choice below.</p>
+<ol>
+<li><strong>The core holds meaning, not vocabulary variety.</strong> Core and domain assets carry preferred labels, definitions and relations, plus a small vetted set of universal alternate labels.</li>
+<li><strong>A label is a record, not a property.</strong> Each label carries its scope, type, language, evidence, status, reviewer and dates.</li>
+<li><strong>Scope is enforced by where a label lives.</strong> One named graph per tenant; no query path crosses tenants.</li>
+<li><strong>References point one way.</strong> Lexicon and extension graphs point at core concepts by ID. Nothing is copied into the core. Every local concept also derives from a core or domain class, so it stays on a derivation path to the core; tenants mint no primitives.</li>
+<li><strong>Machines propose, people decide.</strong> Extraction and matching create candidates; reviewers approve them. This follows the proposal's rule to automate the mechanical and govern the judgemental.</li>
+<li><strong>Derived is not source.</strong> The resolution index is rebuilt from the graphs and never edited.</li>
+<li><strong>Every change is traceable.</strong> Source, evidence span, reviewer, SKL release and publish record are kept for every label and mapping.</li>
+<li><strong>One contract per function, an adapter per source or target.</strong> The design stays stack-independent and reversible.</li>
+<li><strong>No direct access to a graph.</strong> Repositories are never exposed to people, other systems or third parties. Every read and write goes through a semantic service or a provisioned screen that logs it and applies the governance rules.</li>
+</ol><div class="pager"><a class="prev" href="#context"><small>Previous</small>Context</a><a class="next" href="#overview"><small>Next</small>Architecture</a></div></section>
+<section class="page" id="p-overview" hidden><div class="num">04 of 19</div><h2>Architecture overview</h2><p>Five functions share one warehouse. Capture brings content in, Map relates it to the core, Manage approves it and Serve delivers it. The warehouse holds every store, and the core and domain graphs are only read.</p>
+<div class="dia" data-dia="overview"></div>
+
+<p>Read the top row as inputs, the middle row as the four functions in flow order, and the bottom band as the warehouse they share. Customer terms enter at Capture and leave through Serve. Nothing is written to the core and domain graphs by this flow; they change only through the council's release process.</p><div class="pager"><a class="prev" href="#principles"><small>Previous</small>Principles</a><a class="next" href="#services"><small>Next</small>Semantic services</a></div></section>
+<section class="page" id="p-services" hidden><div class="num">05 of 19</div><h2>The semantic services</h2><p>The semantic services are the baseline. Every graph is reached only through them, and every later project, screen and dashboard is built on their contracts. Each service has one contract and, where it meets a source or a target, an adapter.</p>
+<div class="dia" data-dia="layers"></div>
+
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Service</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inbound</td>
+<td>Ingestion</td>
+<td>Lands each item with tenant tag, provenance and change capture, through one connector per source type</td>
+</tr>
+<tr>
+<td>Inbound</td>
+<td>Extraction</td>
+<td>Recovers text, structure and language, with OCR for scans</td>
+</tr>
+<tr>
+<td>Inbound</td>
+<td>Screening</td>
+<td>Detects personal and sensitive content before any other step, and fails closed</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>Candidates</td>
+<td>Extracts terms, defined terms and drafted definitions with evidence, then normalizes and merges variants</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>Matching and triage</td>
+<td>Matches candidates to concepts, proposes match relations, and classifies each as a label, a local concept, a core request or a rejection</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>Lexicon</td>
+<td>Writes label records and extension vocabularies to scoped graphs, validates their shapes and detects conflicts</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>Review</td>
+<td>Holds the lifecycle state machine, assignments, decisions and the audit trail</td>
+</tr>
+<tr>
+<td>Processing</td>
+<td>Release</td>
+<td>Runs validation, versioned releases, promotion and rollback across environments, and records changes as triples</td>
+</tr>
+<tr>
+<td>Outbound</td>
+<td>Label resolution</td>
+<td>Answers tenant-scoped lookups from the derived index</td>
+</tr>
+<tr>
+<td>Outbound</td>
+<td>Publishing</td>
+<td>Projects, validates, delivers and reconciles releases to targets through adapters</td>
+</tr>
+<tr>
+<td>Common</td>
+<td>Policy decision</td>
+<td>Decides each request from persona, job step, resource and context</td>
+</tr>
+<tr>
+<td>Common</td>
+<td>Telemetry</td>
+<td>Receives events from every service for monitoring, triage and simulation</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every service shares the same rules:</p>
+<ul>
+<li>Each request carries a caller identity and a tenant context.</li>
+<li>A policy decision is made and logged before any read or write.</li>
+<li>Graph access is parameterized. No service accepts a raw query.</li>
+<li>Each service emits events for request, decision, outcome and duration.</li>
+<li>The contract is versioned, and changing it is a governed change.</li>
+</ul>
+<p>Screens, provisioning, dashboards, triage and simulation are operational extensions of the target operating model. They call these services and never touch a graph or a repository.</p><div class="pager"><a class="prev" href="#overview"><small>Previous</small>Architecture</a><a class="next" href="#capture"><small>Next</small>Capture</a></div></section>
+<section class="page" id="p-capture" hidden><div class="num">06 of 19</div><h2>Capture</h2><p>Capture brings each customer's source material in once, tags it by tenant, screens it, and turns it into candidate terms with evidence. Four source types are in scope.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>What it yields</th>
+<th>Intake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer documentation</td>
+<td>Defined terms, abbreviations, product and plan names</td>
+<td>Upload or file-share intake; version detection</td>
+</tr>
+<tr>
+<td>Content management system</td>
+<td>Page titles, glossaries, taxonomies, navigation labels</td>
+<td>API or export; incremental sync; page-level provenance</td>
+</tr>
+<tr>
+<td>Customer data feeds</td>
+<td>Code lists: job titles, departments, pay and benefit codes</td>
+<td>File, SFTP or API; declarative R2RML-style mappings to the candidate model</td>
+</tr>
+<tr>
+<td>Employee handbooks</td>
+<td>Policy names, defined-terms sections, program and role names</td>
+<td>Section-aware parsing; OCR for scans</td>
+</tr>
+</tbody>
+</table></div>
+<p>Every source passes the same five steps:</p>
+<ol>
+<li><strong>Land.</strong> Store the raw item in the tenant's landing zone with tenant tag, source, version and hash.</li>
+<li><strong>Screen.</strong> Detect personal data and sensitive content before anything else runs. The screen fails closed: unclear items are quarantined.</li>
+<li><strong>Extract.</strong> Recover text and section structure, detect language, and run OCR with a confidence score on scans.</li>
+<li><strong>Propose.</strong> Extract candidate terms, defined-term and glossary patterns, and abbreviations. A definition is drafted only when a source span supports it.</li>
+<li><strong>Normalize.</strong> Collapse case, morphology and locale variants, and merge duplicates, keeping frequency and context.</li>
+</ol>
+<p>The output is a candidate record: text, evidence span, source, tenant, frequency and confidence. Raw content stays in tenant-scoped storage. Only candidates move on.</p>
+<div class="dia" data-dia="capture"></div>
+
+<p>The four sources feed one landing step; only the normalized candidate record leaves capture, and anything the screen cannot clear is held in quarantine.</p><div class="pager"><a class="prev" href="#services"><small>Previous</small>Semantic services</a><a class="next" href="#warehouse"><small>Next</small>Warehouse</a></div></section>
+<section class="page" id="p-warehouse" hidden><div class="num">07 of 19</div><h2>Warehouse</h2><p>The warehouse keeps each kind of content in its own store, so that customer terminology can grow without touching the core. Working names below follow the core and domain naming convention and are fixed in the naming task (W1-03); the SKL holds vocabularies, taxonomies and ontologies only, with no modules.</p>
+<div class="dia" data-dia="scopes"></div>
+
+<p>Each row is its own graph. References run upward by ID, and only stewards writing a release can change the core or domain rows.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Store</th>
+<th>Holds</th>
+<th>Written by</th>
+<th>Release behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw landing (per tenant)</td>
+<td>Source files, extracts, hashes</td>
+<td>Capture</td>
+<td>Retained by policy; never loaded into a graph</td>
+</tr>
+<tr>
+<td>Candidate store</td>
+<td>Unreviewed candidates with evidence</td>
+<td>Capture, Map</td>
+<td>Working data; never released</td>
+</tr>
+<tr>
+<td>Core and domain graphs</td>
+<td>Preferred labels, definitions, relations, a small vetted set of universal labels</td>
+<td>Stewards, through the change lifecycle</td>
+<td>Versioned core and domain releases</td>
+</tr>
+<tr>
+<td>Insperity lexicon (lexicon-insperity)</td>
+<td>House terms valid for all tenants</td>
+<td>Reviewers</td>
+<td>Own lexicon version</td>
+</tr>
+<tr>
+<td>Customer lexicons (lexicon-customer-tenant)</td>
+<td>Labels valid for one tenant only</td>
+<td>Reviewers</td>
+<td>Own version per tenant</td>
+</tr>
+<tr>
+<td>Customer extensions (vocabulary-customer-tenant)</td>
+<td>New local concepts, each derived from a core or domain class, with match relations to the core</td>
+<td>Stewards</td>
+<td>Own version per tenant</td>
+</tr>
+<tr>
+<td>Resolution index</td>
+<td>Label to concept, by scope</td>
+<td>Rebuilt from the graphs</td>
+<td>Disposable; rebuilt on release</td>
+</tr>
+<tr>
+<td>Change records</td>
+<td>Every decision and release, as triples</td>
+<td>Manage</td>
+<td>Append-only</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Repositories and access</h3>
+<p>Assuming GraphDB, one server per environment (dev, test, stage, prod) hosts a few repositories. They are split by reasoning and release cadence, not by tenant.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Repository</th>
+<th>Holds</th>
+<th>Reasoning</th>
+<th>Why separate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core and domain</td>
+<td>Core, domain and operational-domain vocabularies, taxonomies, ontologies and mapping graphs, one named graph per asset</td>
+<td>On, as the ontologies need</td>
+<td>Released and reasoned together</td>
+</tr>
+<tr>
+<td>Lexicons</td>
+<td>The Insperity lexicon and one named graph per tenant lexicon</td>
+<td>Off or minimal</td>
+<td>Labels stay out of reasoning and out of core releases</td>
+</tr>
+<tr>
+<td>Customer extensions</td>
+<td>Local concepts and their match relations, one named graph per tenant</td>
+<td>Light</td>
+<td>Own release and deletion per tenant</td>
+</tr>
+</tbody>
+</table></div>
+<p>The raw landing zone, the candidate store and the resolution index need not live in GraphDB.</p>
+<p>No repository is ever exposed to people, other systems or third parties. Each is reached only by a semantic service running under a service identity, and people work only through provisioned screens. Tenant isolation is therefore enforced by the services, with the named graph as the unit of scope. A repository per tenant, or per group of tenants, is the escalation path if a customer contract or a blast-radius concern requires it.</p>
+<div class="dia" data-dia="topology"></div>
+
+<p>The core and domain repository is the same in every stage. Growth happens in the lexicon and extension repositories, and only where a contract or blast radius requires does a tenant move to a dedicated repository or server. Because graph names carry no tenant name, environment or repository, a move changes only the catalog record. In the diagram, t1, tn and t9 stand for tenant IDs.</p>
+<h3>The label record</h3>
+<p>A label is a resource in its own right, modeled in the style of SKOS-XL, with provenance terms from PROV-O and SHACL shapes that validate each record. This is what makes a label scopable, dateable and auditable without touching the concept it names.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Label text and language</td>
+<td>The literal form, in the language it is written</td>
+</tr>
+<tr>
+<td>Concept</td>
+<td>The ID of the core, domain or extension concept it names</td>
+</tr>
+<tr>
+<td>Type</td>
+<td>Alternate, hidden (match only, never shown), abbreviation, misspelling or deprecated</td>
+</tr>
+<tr>
+<td>Scope and tenant</td>
+<td>Customer, Insperity or domain; the tenant ID for customer labels</td>
+</tr>
+<tr>
+<td>Evidence</td>
+<td>Source, document or page, span, and how often it occurs</td>
+</tr>
+<tr>
+<td>Confidence and triage class</td>
+<td>The machine score and the class it proposed</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Proposed, in review, approved, published, rejected or deprecated</td>
+</tr>
+<tr>
+<td>Reviewer and time</td>
+<td>Who decided, when and why</td>
+</tr>
+<tr>
+<td>Effective dates and release</td>
+<td>When it applies and the SKL release that carried it</td>
+</tr>
+</tbody>
+</table></div><div class="pager"><a class="prev" href="#capture"><small>Previous</small>Capture</a><a class="next" href="#map"><small>Next</small>Map</a></div></section>
+<section class="page" id="p-map" hidden><div class="num">08 of 19</div><h2>Map</h2><p>Map relates every candidate to the core and domain concepts, proposes where it should live, and flags anything ambiguous. It proposes; it never approves.</p>
+<p><strong>Matching.</strong> Lexical matching runs first, against preferred labels and existing approved labels after normalization. Embedding-assisted similarity runs second and always returns a confidence score. Each proposal carries a suggested match relation.</p>
+<p><strong>Match relations.</strong> A customer concept is linked to the nearest core or domain concept with one of four relations.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Relation</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exact</td>
+<td>The customer concept means the same as the core concept</td>
+</tr>
+<tr>
+<td>Close</td>
+<td>The meanings overlap but are not identical</td>
+</tr>
+<tr>
+<td>Broad</td>
+<td>The core concept is wider than the customer concept</td>
+</tr>
+<tr>
+<td>Narrow</td>
+<td>The core concept is more specific than the customer concept</td>
+</tr>
+</tbody>
+</table></div>
+<p>A synonym, abbreviation or misspelling is not a match relation. It is a label on the concept it names. For example, an abbreviation for reduction in force becomes an abbreviation-type label on that concept.</p>
+<p><strong>Conflicts and homonyms.</strong> Map flags four cases and never resolves them on its own:</p>
+<ul>
+<li>The same label points to different concepts in one scope.</li>
+<li>A label equals another concept's preferred label.</li>
+<li>The same label has different meanings in two tenants. Both stay scoped; the pair is flagged as evidence for the reviewers.</li>
+<li>A candidate has no close match. It goes to triage as a possible local concept.</li>
+</ul>
+<p><strong>Extension vocabularies.</strong> A local concept has an ID, a definition, a status, at least one parent and its match relations. The parent is a core or domain class the concept derives from (a derivation edge), so every local concept stays on a path to the core. The match relation is the lateral link to a concept that names the same thing; it never replaces the parent. A tenant mints no new primitives: a concept that needs one goes to triage as a core change request. Concepts with several parents follow the proposal's multi-parent rule: one canonical concept, with fully qualified terms for each extra parent context. Derivation edges and match relations are re-checked on every core release, because a core change can leave either stale. A per-graph check reports any local concept with no derivation path to the core.</p>
+<p><strong>Data-feed codes</strong> map through declarative R2RML-style mappings into the same candidate model, so a code list and a handbook paragraph reach review in one form.</p><div class="pager"><a class="prev" href="#warehouse"><small>Previous</small>Warehouse</a><a class="next" href="#manage"><small>Next</small>Manage</a></div></section>
+<section class="page" id="p-manage" hidden><div class="num">09 of 19</div><h2>Manage</h2><p>Manage turns proposals into approved, scoped content and keeps it healthy. Operational staff maintain labels, vocabularies, taxonomies, ontologies and mappings only through the provisioned screens below, within the scope their persona and job allow. The screens are an operational extension of the target operating model; the Review and Lexicon services beneath them are the baseline. Every edit is a proposal that is validated, reviewed, approved and released, never a direct write. A change beyond a persona's scope escalates to the next persona.</p>
+<h3>Triage</h3>
+<p>Each candidate is triaged into one of five destinations, with the evidence beside it.</p>
+<div class="dia" data-dia="triage"></div>
+
+<p>The table below gives the same rules with the approver for each destination.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>If the term is</th>
+<th>It goes to</th>
+<th>Approved by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The same meaning as an existing concept: a synonym, abbreviation, plural, locale variant or misspelling</td>
+<td>A label record in the narrowest lexicon in which it is true</td>
+<td>Ops reviewer</td>
+</tr>
+<tr>
+<td>A homonym: the label already means something else in this scope</td>
+<td>Stays scoped, with the conflict flagged and a disambiguation note</td>
+<td>Domain steward</td>
+</tr>
+<tr>
+<td>A new concept used by this customer only</td>
+<td>The customer extension vocabulary, as a concept derived from a core or domain class, with a match relation where it names the same thing</td>
+<td>Domain steward</td>
+</tr>
+<tr>
+<td>A new concept of general value, or a label seen across several customers or in regulation</td>
+<td>A core or domain change request through the normal lifecycle</td>
+<td>Governance council</td>
+</tr>
+<tr>
+<td>Noise, out of scope, or personal data</td>
+<td>Rejected with a reason; the evidence is kept</td>
+<td>Ops reviewer</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Label lifecycle</h3>
+<p>A machine-proposed label starts as <strong>Proposed</strong>. A reviewer moves it to <strong>In review</strong> and then <strong>Approved</strong>, or <strong>Rejected</strong>. An approved label becomes <strong>Published</strong> only through a release, and a published label can later be <strong>Deprecated</strong>. Every transition records who, when and why.</p>
+<div class="dia" data-dia="lifecycle"></div>
+
+<h3>Review and data-entry screens</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Screen</th>
+<th>What operations do there</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Candidate queue</td>
+<td>Filter by customer, source type, triage class, confidence and age; assign; watch the service-level timer</td>
+</tr>
+<tr>
+<td>Evidence viewer</td>
+<td>See the source snippet with the term highlighted, the document or page, and other occurrences</td>
+</tr>
+<tr>
+<td>Concept picker</td>
+<td>Choose among suggested matches with confidence, definition and hierarchy position</td>
+</tr>
+<tr>
+<td>Alternate-label editor</td>
+<td>Set text, type, language, scope, effective dates and notes; accept, edit or reject</td>
+</tr>
+<tr>
+<td>Conflict panel</td>
+<td>Resolve homonyms, clashes with preferred labels and cross-tenant duplicates</td>
+</tr>
+<tr>
+<td>Local-concept creator</td>
+<td>Create an extension concept, its definition and its match relation</td>
+</tr>
+<tr>
+<td>Lexicon browser</td>
+<td>Browse, search, edit, deprecate, and bulk import or export labels by scope</td>
+</tr>
+<tr>
+<td>Escalation and promotion inbox</td>
+<td>Send core change requests to stewards; route label promotion to the council</td>
+</tr>
+<tr>
+<td>Reviewer dashboard</td>
+<td>Track backlog, age of the oldest item, throughput, reviewer agreement and service levels</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Promotion, demotion and releases</h3>
+<p>A label that recurs across customers, or appears in regulation, can be promoted to a domain or core vocabulary as a universal alternate label. The council approves it and it ships in a core release. A promoted label that later conflicts is demoted the same way. Lexicon changes release on their own cadence, per scope, through the same dev, test, stage and prod pipeline. A lexicon release never changes the core version. Decisions and releases are recorded as triples.</p><div class="pager"><a class="prev" href="#map"><small>Previous</small>Map</a><a class="next" href="#serve"><small>Next</small>Serve</a></div></section>
+<section class="page" id="p-serve" hidden><div class="num">10 of 19</div><h2>Serve</h2><p>Serve makes approved terminology usable at run time and in downstream tools, without making the core carry it.</p>
+<p><strong>Label Resolution Service.</strong> Callers pass text and a tenant context. The service looks first in that customer's lexicon, then the Insperity lexicon, then the domain lexicon, then the core preferred labels. It never searches another tenant's graphs. Hidden labels match but are never displayed. If more than one concept matches at the same level, the service returns the candidates with their definitions so the caller can disambiguate. It answers from a derived index that is rebuilt on each release; it does not query the ontology graphs on the hot path.</p>
+<div class="dia" data-dia="resolution"></div>
+
+<p><strong>Consumers.</strong> Search, Copilot, Compass, HRScale and partner APIs resolve terms through the same service, so one approved label behaves the same everywhere.</p>
+<p><strong>Publishing.</strong> The outbound services follow the proposal's contract: publish, validate, reconcile, status and rollback, with one adapter per target. For Visier, the proposal publishes released vocabularies and taxonomies as dimension members and property values, each stamped with its SKL ID and version. Synonyms and definitions stay in the SKL.</p>
+<p>Customer terminology reaches Visier through a display-label rule, proposed here for confirmation: each member shows the tenant's approved label where one exists, and the preferred label otherwise. The full set of alternate labels never leaves the SKL. Whether Visier can hold a tenant-specific name for a published member is not yet confirmed. Task W6-01 asks Visier, and if the answer is no, the preferred label is published and customer terms resolve in Copilot, Compass and search instead.</p>
+<div class="dia" data-dia="publishing"></div>
+
+<p>The flow follows the publishing contract in the SKL proposal. Visier consumes and never edits; any difference found on read-back is drift and is corrected in the SKL.</p><div class="pager"><a class="prev" href="#manage"><small>Previous</small>Manage</a><a class="next" href="#isolation"><small>Next</small>Tenant isolation</a></div></section>
+<section class="page" id="p-isolation" hidden><div class="num">11 of 19</div><h2>Tenant isolation, security and privacy</h2><p>Customer documents and terms are confidential to the customer. The design protects them in six ways.</p>
+<ul>
+<li><strong>No direct access.</strong> No repository is exposed to people, other systems or third parties. Graphs are reached only through the semantic services, and people work only through provisioned screens that log and audit every action and apply the governance rules. The store's own workbench and admin accounts are closed to normal use; any break-glass access is time-bound and logged.</li>
+<li><strong>Tenant tag from the first byte.</strong> Every item carries a tenant ID from landing onward, and every query carries a tenant context.</li>
+<li><strong>Isolation enforced by the services.</strong> Each tenant's lexicon and extension vocabulary is its own named graph, and the services build the graph restriction into every query from the caller's tenant context. Services accept no raw queries from callers or screens, and read and write use separate service accounts. Graph-level controls in the store, where available, are a second layer, not the first.</li>
+<li><strong>No cross-tenant path.</strong> There is no query that spans tenants. The one exception is promotion: a label recurring across customers is counted by the review service, which shows reviewers only the count, never another tenant's evidence.</li>
+<li><strong>Fail-closed screening.</strong> Personal and sensitive content is detected, redacted or quarantined before extraction. A red-team set tests it before the pilot gate.</li>
+<li><strong>Audit and exit.</strong> Every read and write is logged. Offboarding a customer removes its landing zone, graphs and index entries without any change to the core, which is a direct benefit of keeping its terms out of it.</li>
+</ul>
+<p>Written permission to use each customer's documents and feeds, a retention rule and the data-use terms are conditions of onboarding, and are settled with security and legal in the first weeks of the plan.</p><div class="pager"><a class="prev" href="#serve"><small>Previous</small>Serve</a><a class="next" href="#provisioning"><small>Next</small>Provisioning & personas</a></div></section>
+<section class="page" id="p-provisioning" hidden><div class="num">12 of 19</div><h2>Provisioning and operational personas</h2><p>This section describes an operational extension of the target operating model, built on the semantic services. Access to every function is granted by persona and job, not by a list of who may touch which graph. The Personas &amp; Jobs model will supply the fine-grained identity and access controls, which go beyond traditional ACLs.</p>
+<h3>Operational personas</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Persona</th>
+<th>Jobs it performs</th>
+<th>Works on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tenant provisioner</td>
+<td>Create, suspend and remove a tenant; rotate service credentials</td>
+<td>Tenant records and graphs, never content</td>
+</tr>
+<tr>
+<td>Onboarding lead</td>
+<td>Register a customer's sources, confirm data permission, run onboarding</td>
+<td>One tenant's sources and ingest reports</td>
+</tr>
+<tr>
+<td>Ops reviewer</td>
+<td>Decide candidates, edit labels, raise escalations</td>
+<td>Candidates and label records for assigned tenants</td>
+</tr>
+<tr>
+<td>Domain steward</td>
+<td>Approve match relations and local concepts; maintain vocabularies, taxonomies and mappings</td>
+<td>Assets in the domains they steward</td>
+</tr>
+<tr>
+<td>Ontologist</td>
+<td>Propose changes to ontologies, triage rules and naming</td>
+<td>Ontology assets, through the lifecycle</td>
+</tr>
+<tr>
+<td>Platform operator</td>
+<td>Run pipelines, releases, rollback and drift response</td>
+<td>Services and releases, never content</td>
+</tr>
+<tr>
+<td>Council member</td>
+<td>Approve releases, label promotion and cross-domain conflicts</td>
+<td>Release and promotion decisions</td>
+</tr>
+<tr>
+<td>Auditor</td>
+<td>Read the audit trail and decision records</td>
+<td>Records only</td>
+</tr>
+</tbody>
+</table></div>
+<p>The list is a proposal. The persona and job catalog is owned by Personas &amp; Jobs, and each persona's jobs are broken into job steps that the screens and services present.</p>
+<h3>How access is decided</h3>
+<p>Each request carries four things: the person's persona assignments; the job and job step the screen or service call is performing; the resource, meaning graph class, tenant, domain and item state; and the context, such as assignment and time. The service makes the decision from rules authored in the SKL like other governed rules, and logs it with the persona, job and step that authorized it. These examples cannot be expressed as a list of permissions:</p>
+<ul>
+<li>A reviewer can decide only items assigned to them, in tenants they are provisioned for, while the item is In review.</li>
+<li>Nobody approves their own change: the persona that proposes cannot be the one that approves.</li>
+<li>A steward's approval power ends at the domains they steward.</li>
+<li>A person holding two personas has each persona's rights only while doing that persona's jobs.</li>
+<li>Elevated access is time-bound, logged and reviewed.</li>
+</ul>
+<div class="dia" data-dia="access"></div>
+
+<h3>Provisioning</h3>
+<p>Provisioning is itself a persona job. It runs through the same provisioned screens and under the same audit and governance rules.</p>
+<ol>
+<li><strong>Provision a tenant.</strong> Register the tenant; create its lexicon and extension graphs, indexes and review queue; bind its policies and persona assignments; confirm written data permission; activate. Deprovisioning reverses each step and removes the graphs, raw store and index entries.</li>
+<li><strong>Provision a person.</strong> Assign one or more personas with a tenant and domain scope and an end date; complete the persona's training and calibration; activate. Assignments are reassessed periodically, and a mover's or leaver's assignments are revoked at once.</li>
+</ol><div class="pager"><a class="prev" href="#isolation"><small>Previous</small>Tenant isolation</a><a class="next" href="#performance"><small>Next</small>Performance</a></div></section>
+<section class="page" id="p-performance" hidden><div class="num">13 of 19</div><h2>Performance and scale</h2><p>The core stays fast because customer growth happens elsewhere. Three design choices carry that claim:</p>
+<ul>
+<li>Labels are annotations, not axioms, and live in graphs outside the ontology graphs, so reasoning never loads them.</li>
+<li>Run-time lookup reads a derived index, not the graphs, so lookup cost does not depend on ontology size.</li>
+<li>Each tenant is a separate graph, so loading, reindexing and deleting one customer touches no other.</li>
+</ul>
+<p>These are claims until measured. Before the council approves the design, a benchmark spike (task W2-02) builds a synthetic core and holds the same labels two ways: in the core, and in scoped lexicons. It measures load time, reasoning time, query time, index size and release size at rising label volumes and tenant counts. Pass thresholds are agreed first (task W1-04) so the result cannot move them. The scale test in task W7-03 repeats the measurement on the built system.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th>Target</th>
+<th>Tested in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer-driven triples added to the core per onboarding</td>
+<td>0</td>
+<td>Lexicon builder and second-customer onboarding</td>
+</tr>
+<tr>
+<td>Core load and reasoning time at the top test volume</td>
+<td>Within a tolerance set before the spike</td>
+<td>Spike W2-02, scale test W7-03</td>
+</tr>
+<tr>
+<td>P95 label lookup time</td>
+<td>Threshold set from the spike</td>
+<td>Spike W2-02, Label Resolution Service</td>
+</tr>
+<tr>
+<td>Cross-tenant label results</td>
+<td>0</td>
+<td>Isolation tests</td>
+</tr>
+<tr>
+<td>Core releases triggered by a label change</td>
+<td>None</td>
+<td>Release pipeline</td>
+</tr>
+<tr>
+<td>Label records with source, reviewer and release</td>
+<td>100%</td>
+<td>Review service</td>
+</tr>
+</tbody>
+</table></div>
+<p>Customer counts and labels per customer are not yet known, so the spike uses synthetic parameters, which the decision record states. The design is revisited at the final gate with real volumes.</p><div class="pager"><a class="prev" href="#provisioning"><small>Previous</small>Provisioning & personas</a><a class="next" href="#options"><small>Next</small>Options</a></div></section>
+<section class="page" id="p-options" hidden><div class="num">14 of 19</div><h2>Options considered</h2><p>Options B and C together, chosen by the triage rule, are recommended. Option A is kept only for a small vetted set of promoted labels.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>How it works</th>
+<th>Core size and speed</th>
+<th>Tenant confidentiality</th>
+<th>Handles new customer meaning</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. Labels on core concepts</td>
+<td>Every synonym is an alternate label on the core concept</td>
+<td>Weak: grows with every customer</td>
+<td>Weak: all tenants see all labels</td>
+<td>Weak</td>
+<td>Reject for customer labels</td>
+</tr>
+<tr>
+<td>B. Scoped lexicons</td>
+<td>Labels are records in one graph per scope, pointing at core concepts</td>
+<td>Strong: core unchanged</td>
+<td>Strong: scope is the graph</td>
+<td>Weak: names existing concepts only</td>
+<td>Adopt for label-only terms</td>
+</tr>
+<tr>
+<td>C. Customer extension vocabularies</td>
+<td>New local concepts, each derived from a core or domain class, with match relations to the core</td>
+<td>Strong: core unchanged</td>
+<td>Strong</td>
+<td>Strong</td>
+<td>Adopt for new local concepts</td>
+</tr>
+<tr>
+<td>D. A copy of the core per customer</td>
+<td>Fork the core and edit labels in the fork</td>
+<td>Weak: copies multiply</td>
+<td>Strong</td>
+<td>Partial</td>
+<td>Reject: copies drift and every core fix must be merged into each</td>
+</tr>
+</tbody>
+</table></div>
+<p>B needs a resolution service and a derived index at run time. C needs steward review of each match. Both costs are accepted because they are paid once per platform or once per concept, while A and D charge every customer again and again.</p><div class="pager"><a class="prev" href="#performance"><small>Previous</small>Performance</a><a class="next" href="#operating"><small>Next</small>Operating model</a></div></section>
+<section class="page" id="p-operating" hidden><div class="num">15 of 19</div><h2>Operating model</h2><p>The roles come from the SKL proposal. Three are added here because the lexicon layer needs them.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Accountable for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Semantic architect</td>
+<td>Label architecture, triage rules, naming and ID conventions, the multi-parent rule</td>
+</tr>
+<tr>
+<td>Domain stewards</td>
+<td>Meaning of definitions, match relations, and core change requests</td>
+</tr>
+<tr>
+<td>Semantic engineers</td>
+<td>The lexicon builder, resolution service, review service and publishing adapters</td>
+</tr>
+<tr>
+<td>Visier model developer</td>
+<td>Applying published releases in Visier and blocking local edits</td>
+</tr>
+<tr>
+<td>Governance council</td>
+<td>Approving releases, label promotion, cross-domain conflicts, and customer terms that map to nothing</td>
+</tr>
+<tr>
+<td>Ops review lead (added)</td>
+<td>Reviewer capacity, service levels, calibration and training</td>
+</tr>
+<tr>
+<td>Ops reviewers (added)</td>
+<td>Deciding candidates within their scope in the review screens</td>
+</tr>
+<tr>
+<td>Data and NLP engineers (added)</td>
+<td>Source connectors, extraction, matching and the gold set</td>
+</tr>
+</tbody>
+</table></div>
+<p>The operational personas for provisioning and access, and the jobs each may perform, are set out in the section on provisioning and operational personas.</p>
+<p>Measures, reported per customer and per release:</p>
+<ul>
+<li>Lead time from first source received to approved customer lexicon</li>
+<li>Customer-driven triples added to the core per onboarding (target 0)</li>
+<li>Candidates decided per reviewer-hour, and age of the oldest open item</li>
+<li>Precision and recall of extraction, matching and triage on the gold set, and agreement between reviewers</li>
+<li>P95 label lookup time and cross-tenant results (target 0)</li>
+<li>Share of labels with full provenance (target 100%)</li>
+<li>Orphan rate in each tenant graph: local concepts with no derivation path to the core (target 0)</li>
+<li>Drift incidents per release and parity-test failures caught before publish, from the SKL proposal</li>
+</ul>
+<p>Service levels for review are set from the pilot, not guessed in advance.</p><div class="pager"><a class="prev" href="#options"><small>Previous</small>Options</a><a class="next" href="#extensions"><small>Next</small>TOM extensions</a></div></section>
+<section class="page" id="p-extensions" hidden><div class="num">16 of 19</div><h2>Target operating model extensions</h2><p>The semantic services are the baseline. The screens, provisioning and the three extensions below are operational extensions of the target operating model, built on the services' contracts. They add no route to a graph, and each can be added or changed without changing the baseline.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Extension</th>
+<th>What it adds</th>
+<th>Calls</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Review and maintenance screens</td>
+<td>Data entry for labels, local concepts, vocabularies, taxonomies, ontologies and mappings, as governed proposals</td>
+<td>Review, Lexicon, Release, Policy decision</td>
+<td>Ops reviewers, stewards, ontologists</td>
+</tr>
+<tr>
+<td>Provisioning</td>
+<td>Tenant and person lifecycles, persona assignments and recertification</td>
+<td>Policy decision, Lexicon, Telemetry</td>
+<td>Tenant provisioner, onboarding lead</td>
+</tr>
+<tr>
+<td>Monitoring dashboards</td>
+<td>Live and historical views of health, quality, review work, access, releases and capacity</td>
+<td>Telemetry</td>
+<td>Platform operators, ops review lead, auditors, council</td>
+</tr>
+<tr>
+<td>Triage</td>
+<td>One queue of alerts and exceptions, each with a severity, an owner and a runbook</td>
+<td>Telemetry, Review</td>
+<td>Platform operators, ops review lead</td>
+</tr>
+<tr>
+<td>Simulation</td>
+<td>What-if runs that show the impact of a change before it is made</td>
+<td>Release, Matching, Publishing, Telemetry</td>
+<td>Stewards, ontologists, council, program manager</td>
+</tr>
+</tbody>
+</table></div>
+<h3>Monitoring dashboards</h3>
+<p>Dashboards read telemetry, never the graphs. The measures listed above feed them.</p>
+<ul>
+<li><strong>Pipeline:</strong> volume by source type and tenant, failures, quarantined items, and lead time from source to candidate.</li>
+<li><strong>Processing quality:</strong> precision and recall on the gold set, candidate backlog, and the mix of triage classes.</li>
+<li><strong>Review work:</strong> queue size and age, throughput, reviewer agreement and service-level status.</li>
+<li><strong>Service health:</strong> latency and error rate for each service, including label lookup P95.</li>
+<li><strong>Access and security:</strong> denials, break-glass use, isolation test results, and persona assignments nearing expiry.</li>
+<li><strong>Releases and publishing:</strong> releases per environment, parity results, drift per release and rollback events.</li>
+<li><strong>Capacity:</strong> graph size, load and reasoning time by repository, and volumes per tenant, with trends.</li>
+</ul>
+<h3>Triage</h3>
+<p>Operational triage handles what goes wrong or needs attention. Alerts and exceptions from the dashboards enter one queue: failed ingests, quarantined items, drift found by reconcile, parity failures, repeated access denials, expiring assignments and service-level breaches. Each item has a severity, an owning persona and a runbook, and is assigned, worked and closed with an audit record. This is separate from the candidate triage in Manage, which decides where a term goes.</p>
+<h3>Simulation for planning and impact</h3>
+<p>Simulation shows what a change would do before it is made. A proposed change is loaded into a draft graph, and the simulation compares it with the current release without publishing anything. Simulation workspaces are graphs named with the reserved <code>sim</code> segment in the naming standard.</p>
+<div class="dia" data-dia="simulation"></div>
+
+<p>The changes worth simulating include:</p>
+<ul>
+<li>a core or domain release;</li>
+<li>promoting or demoting a label;</li>
+<li>a changed match relation;</li>
+<li>a new or changed access rule;</li>
+<li>a new tenant, or growth in volume;</li>
+<li>a changed projection to Visier, as a dry run.</li>
+</ul>
+<p>The impact view shows the concepts, labels, mappings and tenants affected; the objects that would change in each target; new conflicts or homonyms; the reviewer workload created; and, for capacity runs, the predicted load, reasoning and lookup time. It is drawn as an impact graph with the change at the center and counts by tenant and target, so a council member can see the reach of a change before approving it.</p><div class="pager"><a class="prev" href="#operating"><small>Previous</small>Operating model</a><a class="next" href="#risks"><small>Next</small>Risks</a></div></section>
+<section class="page" id="p-risks" hidden><div class="num">17 of 19</div><h2>Risks and mitigations</h2><div class="tw"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The lexicon layer adds a run-time lookup the core did not need</td>
+<td>Derived index; P95 lookup threshold set before the spike; spike and scale test</td>
+</tr>
+<tr>
+<td>Extraction floods reviewers with low-value candidates</td>
+<td>Confidence floors, de-duplication, a gold set, a triage precision target, bulk actions</td>
+</tr>
+<tr>
+<td>Reviewers approve a label at the wrong scope</td>
+<td>Narrowest scope as the default; conflict panel; steward escalation; promotion only through the council</td>
+</tr>
+<tr>
+<td>Extension concepts drift from the core when it changes</td>
+<td>Re-check match relations on every core release; drift report</td>
+</tr>
+<tr>
+<td>Customer documents hold personal or confidential content</td>
+<td>Written permission; fail-closed screening; retention rule; red-team test</td>
+</tr>
+<tr>
+<td>Visier cannot hold tenant-specific names, or its Dimensions API (Alpha) is not ready</td>
+<td>Ask Visier early (W6-01); publish the preferred label; file-based or Direct Data Intake loading as fallback; labels stay in the SKL</td>
+</tr>
+<tr>
+<td>Volumes are unknown, so the spike is not representative</td>
+<td>Record the synthetic parameters; repeat at scale test and at the final gate with real counts</td>
+</tr>
+<tr>
+<td>Labels go stale over time</td>
+<td>Effective dates, deprecation, and periodic review of unused labels</td>
+</tr>
+<tr>
+<td>A flaw in service-layer authorization exposes one tenant's terms to another, because the store is not the second line of defense</td>
+<td>Parameterized queries only, separate read and write service accounts, isolation tests in the pipeline, graph-level store controls as a backstop where available</td>
+</tr>
+<tr>
+<td>The store's own admin or workbench access bypasses the services</td>
+<td>Private network, workbench closed to normal use, time-bound logged break-glass access, encrypted backups</td>
+</tr>
+<tr>
+<td>Persona and job rules are too coarse or too tangled to maintain</td>
+<td>Author them in the SKL as governed rules with test cases, review them with Personas &amp; Jobs, and pilot them on the reviewer and steward personas first</td>
+</tr>
+</tbody>
+</table></div><div class="pager"><a class="prev" href="#extensions"><small>Previous</small>TOM extensions</a><a class="next" href="#pilot"><small>Next</small>Pilot & phasing</a></div></section>
+<section class="page" id="p-pilot" hidden><div class="num">18 of 19</div><h2>Pilot, phasing and next steps</h2><p>The pilot uses one customer, one instance of each of the four source types, the downturn workforce advisory vocabularies from the SKL proposal, and Visier as the first target. The dates below are planning dates from the <a target="_blank" rel="noopener" href="https://claude.ai/artifact/WG4JJ2bBSLp8tE4L8xd75C">PLM Lifecycle Dashboard · SKL Semantic Services Baseline</a>, which starts on 9 November 2026 and assumes a pause from 21 December to 3 January.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Planning date</th>
+<th>What is true when it passes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>G0</td>
+<td>21 Dec 2026</td>
+<td>The label architecture is decided on benchmark evidence; the council is seated; naming, ID and multi-parent rules agreed; the inbound, processing and publishing contracts are published; pilot customer, stewards and data permission confirmed</td>
+</tr>
+<tr>
+<td>G1</td>
+<td>8 Mar 2027</td>
+<td>All four source types ingested with provenance on every record; no personal-data leaks in the red team; candidates triaged into scoped lexicons; zero customer-driven triples in the core; zero cross-tenant results</td>
+</tr>
+<tr>
+<td>G2</td>
+<td>3 May 2027</td>
+<td>Pilot vocabularies live in Visier in one version with parity and reconcile checks clean; the pilot customer's lexicon reviewed by operations and published for its tenant</td>
+</tr>
+<tr>
+<td>G3</td>
+<td>24 May 2027</td>
+<td>Scale test passed; a second customer onboarded from the playbook with no change to the core; a second target live; runbooks drilled</td>
+</tr>
+</tbody>
+</table></div>
+<div class="dia" data-dia="timeline"></div>
+
+<p>Phases overlap because later work starts as soon as the contracts it needs exist. The grey band is the year-end pause; the dashed line marks the final gate.</p>
+<p>Next steps:</p>
+<ol>
+<li>Approve the three decisions in the summary.</li>
+<li>Confirm the start date and staffing for the roles above.</li>
+<li>Name the pilot customer and the domain stewards, and obtain written data permission.</li>
+<li>Send Visier the questions in task W6-01, including tenant-specific display names.</li>
+<li>Set the spike's pass thresholds before it runs.</li>
+<li>Agree the operational persona and job catalog with Personas &amp; Jobs, and the first access rules for reviewers and stewards.</li>
+</ol><div class="pager"><a class="prev" href="#risks"><small>Previous</small>Risks</a><a class="next" href="#questions"><small>Next</small>Open questions</a></div></section>
+<section class="page" id="p-questions" hidden><div class="num">19 of 19</div><h2>Open questions and decisions requested</h2><ul>
+<li>Which customer is the pilot, and which CMS and feed formats does it use?</li>
+<li>Can Visier hold a tenant-specific name for a published member, or one name per member?</li>
+<li>Which graph store, review-application host and CI platform will the baseline use? The design is stack-independent, so this is a choice, not a constraint.</li>
+<li>How many customers and how many labels per customer should the spike and scale test assume?</li>
+<li>Who staffs operations review, and how many hours a week can they give it?</li>
+<li>Which languages beyond English appear in the pilot sources?</li>
+<li>What are the pass thresholds for core load, reasoning time and lookup time?</li>
+<li>Confirm the rule for a customer term that maps to nothing in the core. It is a new concept, not a label. The domain steward approves it as a local concept derived from an existing core or domain class. If no suitable parent exists, it becomes a core change request for the governance council. Tenants mint no primitives.</li>
+<li>Which identity provider and policy engine will make access decisions, and where will persona and job assignments be held?</li>
+<li>Who owns the persona and job catalog, and how are changes to it released?</li>
+<li>What is the break-glass procedure for the store's own admin access, and who approves it?</li>
+<li>Which telemetry platform will hold service events and audit records, and how long are they retained?</li>
+<li>Which simulation should come first: label promotion, a core release, a Visier projection or capacity planning?</li>
+</ul>
+<p>Sources: the SKL proposal "Proposal: SKL as Single Source of Truth, Publishing into Visier" (29 October 2026), for the principles, roles, publishing contract, multi-parent rule, pilot scope and Visier limits, which it notes come from public documentation and should be checked against the tenant; and the <a target="_blank" rel="noopener" href="https://claude.ai/artifact/WG4JJ2bBSLp8tE4L8xd75C">PLM Lifecycle Dashboard · SKL Semantic Services Baseline</a> for the plan and dates. Standards named (SKOS-XL, PROV-O, SHACL, R2RML) are W3C specifications.</p><div class="pager"><a class="prev" href="#pilot"><small>Previous</small>Pilot & phasing</a></div></section></main>
+</div>
+<footer>Built from the architecture proposal. Planning dates in the pilot timeline come from the PLM Lifecycle Dashboard for the SKL semantic services baseline. Boxes marked with a pointer open a short explanation and the section that covers them.</footer>
+</div>
+<script>
+const PAGES = [{"id": "summary", "title": "Summary and decision requested", "nav": "Summary"}, {"id": "context", "title": "Context and problem", "nav": "Context"}, {"id": "principles", "title": "Design principles", "nav": "Principles"}, {"id": "overview", "title": "Architecture overview", "nav": "Architecture"}, {"id": "services", "title": "The semantic services", "nav": "Semantic services"}, {"id": "capture", "title": "Capture", "nav": "Capture"}, {"id": "warehouse", "title": "Warehouse", "nav": "Warehouse"}, {"id": "map", "title": "Map", "nav": "Map"}, {"id": "manage", "title": "Manage", "nav": "Manage"}, {"id": "serve", "title": "Serve", "nav": "Serve"}, {"id": "isolation", "title": "Tenant isolation, security and privacy", "nav": "Tenant isolation"}, {"id": "provisioning", "title": "Provisioning and operational personas", "nav": "Provisioning & personas"}, {"id": "performance", "title": "Performance and scale", "nav": "Performance"}, {"id": "options", "title": "Options considered", "nav": "Options"}, {"id": "operating", "title": "Operating model", "nav": "Operating model"}, {"id": "extensions", "title": "Target operating model extensions", "nav": "TOM extensions"}, {"id": "risks", "title": "Risks and mitigations", "nav": "Risks"}, {"id": "pilot", "title": "Pilot, phasing and next steps", "nav": "Pilot & phasing"}, {"id": "questions", "title": "Open questions and decisions requested", "nav": "Open questions"}];
+const DIAGRAMS = {"capture": "<svg viewBox='0 0 760 404' role='img' aria-label='Every source takes the same five steps and ends as a candidate record' font-size='13'><defs><marker id='cap-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">Every source takes the same five steps and ends as a candidate record</text><g data-node='src-docs'><rect x='24' y='48' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Documentation</text><text x='36' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">manuals, policies</text></g><g data-node='src-cms'><rect x='206' y='48' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='218' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">CMS</text><text x='218' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">pages, glossaries</text></g><g data-node='src-feeds'><rect x='388' y='48' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='400' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Data feeds</text><text x='400' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">code lists, ref. data</text></g><g data-node='src-hand'><rect x='570' y='48' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='582' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Handbooks</text><text x='582' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">policy and role names</text></g><path d='M107 104V124' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M289 104V124' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M471 104V124' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M653 104V124' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><g data-node='step-land'><rect x='24' y='124' width='712' height='40' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='149' font-weight='600' fill=\"var(--cds-text-primary)\">1  Land: store the raw item with tenant tag, source, version and hash</text></g><path d='M107 164V190' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#cap-arrow)'/><g data-node='step-screen'><rect x='24' y='190' width='166' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='214' font-weight='600' fill=\"var(--cds-text-primary)\">2  Screen</text><text x='36' y='230' font-size='11.5' fill=\"var(--cds-text-secondary)\">personal data check</text><text x='36' y='246' font-size='11.5' fill=\"var(--cds-text-secondary)\">fails closed</text></g><g data-node='step-extract'><rect x='206' y='190' width='166' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='218' y='214' font-weight='600' fill=\"var(--cds-text-primary)\">3  Extract</text><text x='218' y='230' font-size='11.5' fill=\"var(--cds-text-secondary)\">text and sections,</text><text x='218' y='246' font-size='11.5' fill=\"var(--cds-text-secondary)\">OCR, language</text></g><g data-node='step-propose'><rect x='388' y='190' width='166' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='400' y='214' font-weight='600' fill=\"var(--cds-text-primary)\">4  Propose</text><text x='400' y='230' font-size='11.5' fill=\"var(--cds-text-secondary)\">terms, defined terms,</text><text x='400' y='246' font-size='11.5' fill=\"var(--cds-text-secondary)\">abbreviations</text></g><g data-node='step-normalize'><rect x='570' y='190' width='166' height='72' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='582' y='214' font-weight='600' fill=\"var(--cds-text-primary)\">5  Normalize</text><text x='582' y='230' font-size='11.5' fill=\"var(--cds-text-secondary)\">merge variants,</text><text x='582' y='246' font-size='11.5' fill=\"var(--cds-text-secondary)\">keep frequency</text></g><path d='M190 226H204' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#cap-arrow)'/><path d='M372 226H386' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#cap-arrow)'/><path d='M554 226H568' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#cap-arrow)'/><g data-node='quarantine'><rect x='24' y='296' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='36' y='320' font-weight='600' fill=\"var(--cds-text-primary)\">Quarantine</text><text x='36' y='336' font-size='11.5' fill=\"var(--cds-text-secondary)\">unclear items held</text></g><path d='M107 262V294' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#cap-arrow)'/><g data-node='candidate'><rect x='206' y='296' width='530' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='218' y='320' font-weight='600' fill=\"var(--cds-text-primary)\">Candidate record</text><text x='218' y='336' font-size='11.5' fill=\"var(--cds-text-secondary)\">text, evidence span, source, tenant, frequency, confidence</text></g><path d='M653 262V294' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#cap-arrow)'/><text x='24' y='384' font-size='11.5' fill=\"var(--cds-text-secondary)\">Raw content stays in the tenant landing zone. Only candidate records move on.</text></svg>", "scopes": "<svg viewBox='0 0 760 446' role='img' aria-label='Labels and local concepts point up at the core and never change it' font-size='13'><defs><marker id='scp-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker><marker id='scp-arrowa' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-categorical-1)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">Labels and local concepts point up at the core and never change it</text><text x='520' y='40' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">WHO WRITES</text><g data-node='lay-core'><rect x='44' y='48' width='452' height='56' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='56' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Core</text><text x='56' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">preferred labels, definitions, relations</text></g><g data-node='lay-domain'><rect x='44' y='128' width='452' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='56' y='152' font-weight='600' fill=\"var(--cds-text-primary)\">Domain</text><text x='56' y='168' font-size='11.5' fill=\"var(--cds-text-secondary)\">preferred labels, definitions, a few vetted universal labels</text></g><g data-node='lay-insperity'><rect x='44' y='216' width='144' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='56' y='240' font-weight='600' fill=\"var(--cds-text-primary)\">Insperity</text><text x='56' y='256' font-size='11.5' fill=\"var(--cds-text-secondary)\">house terms</text></g><g data-node='lay-tenant-a'><rect x='198' y='216' width='144' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='210' y='240' font-weight='600' fill=\"var(--cds-text-primary)\">Tenant A</text><text x='210' y='256' font-size='11.5' fill=\"var(--cds-text-secondary)\">labels only</text></g><g data-node='lay-tenant-b'><rect x='352' y='216' width='144' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='364' y='240' font-weight='600' fill=\"var(--cds-text-primary)\">Tenant B</text><text x='364' y='256' font-size='11.5' fill=\"var(--cds-text-secondary)\">labels only</text></g><g data-node='lay-ext-a'><rect x='44' y='304' width='221' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='56' y='328' font-weight='600' fill=\"var(--cds-text-primary)\">Tenant A extension</text><text x='56' y='344' font-size='11.5' fill=\"var(--cds-text-secondary)\">local concepts</text></g><g data-node='lay-ext-b'><rect x='275' y='304' width='221' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='287' y='328' font-weight='600' fill=\"var(--cds-text-primary)\">Tenant B extension</text><text x='287' y='344' font-size='11.5' fill=\"var(--cds-text-secondary)\">local concepts</text></g><path d='M270 128V106' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#scp-arrow)'/><path d='M116 216V186' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#scp-arrow)'/><path d='M270 216V186' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#scp-arrow)'/><path d='M424 216V186' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#scp-arrow)'/><g data-node='match-relations'><path d='M154 360V376H28V156H42' fill='none' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='1.25' stroke-dasharray='5 4' marker-end='url(#scp-arrowa)'/><path d='M385 360V376H154' fill='none' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='1.25' stroke-dasharray='5 4'/></g><g data-node='who-stewards-core'><rect x='520' y='48' width='216' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='532' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Stewards</text><text x='532' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">through a core release</text></g><g data-node='who-stewards-domain'><rect x='520' y='128' width='216' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='532' y='152' font-weight='600' fill=\"var(--cds-text-primary)\">Stewards</text><text x='532' y='168' font-size='11.5' fill=\"var(--cds-text-secondary)\">through a domain release</text></g><g data-node='who-reviewers'><rect x='520' y='216' width='216' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='532' y='240' font-weight='600' fill=\"var(--cds-text-primary)\">Ops reviewers</text><text x='532' y='256' font-size='11.5' fill=\"var(--cds-text-secondary)\">approve, scoped to a tenant</text></g><g data-node='who-matches'><rect x='520' y='304' width='216' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='532' y='328' font-weight='600' fill=\"var(--cds-text-primary)\">Domain stewards</text><text x='532' y='344' font-size='11.5' fill=\"var(--cds-text-secondary)\">approve each match relation</text></g><text x='24' y='406' font-size='11.5' fill=\"var(--cds-text-secondary)\">Solid arrows: a reference by ID. Dashed: a match relation (exact, close, broad or narrow).</text><text x='24' y='424' font-size='11.5' fill=\"var(--cds-text-secondary)\">Nothing in the lexicon or extension rows is copied into the core.</text></svg>", "triage": "<svg viewBox='0 0 760 484' role='img' aria-label='Every candidate ends in one of four places, and a person confirms it' font-size='13'><defs><marker id='tri-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">Every candidate ends in one of four places, and a person confirms it</text><g data-node='start'><rect x='24' y='44' width='300' height='40' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='69' font-weight='600' fill=\"var(--cds-text-primary)\">Candidate term with evidence</text></g><g data-node='q-noise'><rect x='24' y='108' width='300' height='44' rx='22' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='174' y='135' text-anchor='middle' fill=\"var(--cds-text-primary)\">Noise, personal data or out of scope?</text></g><g data-node='q-same'><rect x='24' y='188' width='300' height='44' rx='22' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='174' y='215' text-anchor='middle' fill=\"var(--cds-text-primary)\">Same meaning as an existing concept?</text></g><g data-node='q-local'><rect x='24' y='276' width='300' height='44' rx='22' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='174' y='303' text-anchor='middle' fill=\"var(--cds-text-primary)\">Used by this customer only?</text></g><path d='M174 84V106' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><path d='M174 152V186' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><text x='184' y='174' font-size='11.5' fill=\"var(--cds-text-secondary)\">no</text><path d='M174 232V274' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><text x='184' y='257' font-size='11.5' fill=\"var(--cds-text-secondary)\">no</text><path d='M174 320V366' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><text x='184' y='348' font-size='11.5' fill=\"var(--cds-text-secondary)\">no</text><g data-node='dest-reject'><rect x='380' y='98' width='356' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='392' y='122' font-weight='600' fill=\"var(--cds-text-primary)\">Reject</text><text x='392' y='138' font-size='11.5' fill=\"var(--cds-text-secondary)\">Reason and evidence kept. Ops reviewer.</text></g><g data-node='dest-label'><rect x='380' y='174' width='356' height='72' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='392' y='198' font-weight='600' fill=\"var(--cds-text-primary)\">Label record</text><text x='392' y='214' font-size='11.5' fill=\"var(--cds-text-secondary)\">Narrowest scope that is true. Ops reviewer.</text><text x='392' y='230' font-size='11.5' fill=\"var(--cds-text-secondary)\">A clash with another meaning goes to a steward.</text></g><g data-node='dest-local'><rect x='380' y='262' width='356' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='392' y='286' font-weight='600' fill=\"var(--cds-text-primary)\">Local concept</text><text x='392' y='302' font-size='11.5' fill=\"var(--cds-text-secondary)\">Customer extension vocabulary with a match</text><text x='392' y='318' font-size='11.5' fill=\"var(--cds-text-secondary)\">relation to the core. Domain steward.</text></g><g data-node='dest-core'><rect x='24' y='366' width='300' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='390' font-weight='600' fill=\"var(--cds-text-primary)\">Core or domain change request</text><text x='36' y='406' font-size='11.5' fill=\"var(--cds-text-secondary)\">Normal release lifecycle.</text><text x='36' y='422' font-size='11.5' fill=\"var(--cds-text-secondary)\">Governance council.</text></g><path d='M324 130H378' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><text x='338' y='122' font-size='11.5' fill=\"var(--cds-text-secondary)\">yes</text><path d='M324 210H378' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><text x='338' y='202' font-size='11.5' fill=\"var(--cds-text-secondary)\">yes</text><path d='M324 298H378' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#tri-arrow)'/><text x='338' y='290' font-size='11.5' fill=\"var(--cds-text-secondary)\">yes</text><text x='24' y='468' font-size='11.5' fill=\"var(--cds-text-secondary)\">Rounded shapes are decisions. The service proposes each answer; a person confirms it.</text></svg>", "lifecycle": "<svg viewBox='0 0 760 316' role='img' aria-label='A label reaches users only through a release' font-size='13'><defs><marker id='lif-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">A label reaches users only through a release</text><g data-node='st-proposed'><rect x='24' y='96' width='124' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='120' font-weight='600' fill=\"var(--cds-text-primary)\">Proposed</text><text x='36' y='136' font-size='11.5' fill=\"var(--cds-text-secondary)\">machine proposes</text></g><g data-node='st-review'><rect x='171' y='96' width='124' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='183' y='120' font-weight='600' fill=\"var(--cds-text-primary)\">In review</text><text x='183' y='136' font-size='11.5' fill=\"var(--cds-text-secondary)\">assigned, open</text></g><g data-node='st-approved'><rect x='318' y='96' width='124' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='330' y='120' font-weight='600' fill=\"var(--cds-text-primary)\">Approved</text><text x='330' y='136' font-size='11.5' fill=\"var(--cds-text-secondary)\">scope, type set</text></g><g data-node='st-published'><rect x='465' y='96' width='124' height='56' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='477' y='120' font-weight='600' fill=\"var(--cds-text-primary)\">Published</text><text x='477' y='136' font-size='11.5' fill=\"var(--cds-text-secondary)\">in a release</text></g><g data-node='st-deprecated'><rect x='612' y='96' width='124' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='624' y='120' font-weight='600' fill=\"var(--cds-text-primary)\">Deprecated</text><text x='624' y='136' font-size='11.5' fill=\"var(--cds-text-secondary)\">no longer used</text></g><path d='M148 124H169' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lif-arrow)'/><text x='159' y='84' font-size='11.5' text-anchor='middle' fill=\"var(--cds-text-secondary)\">assign</text><path d='M295 124H316' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lif-arrow)'/><text x='306' y='84' font-size='11.5' text-anchor='middle' fill=\"var(--cds-text-secondary)\">approve</text><path d='M442 124H463' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lif-arrow)'/><text x='453' y='84' font-size='11.5' text-anchor='middle' fill=\"var(--cds-text-secondary)\">release</text><path d='M589 124H610' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lif-arrow)'/><text x='600' y='84' font-size='11.5' text-anchor='middle' fill=\"var(--cds-text-secondary)\">retire</text><g data-node='st-rejected'><rect x='171' y='208' width='124' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='183' y='232' font-weight='600' fill=\"var(--cds-text-primary)\">Rejected</text><text x='183' y='248' font-size='11.5' fill=\"var(--cds-text-secondary)\">reason recorded</text></g><path d='M233 152V206' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lif-arrow)'/><text x='243' y='184' font-size='11.5' fill=\"var(--cds-text-secondary)\">reject</text><text x='24' y='296' font-size='11.5' fill=\"var(--cds-text-secondary)\">Every transition records who, when and why.</text></svg>", "resolution": "<svg viewBox='0 0 760 480' role='img' aria-label='The first level with a match answers, and other tenants are never searched' font-size='13'><defs><marker id='res-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">The first level with a match answers, and other tenants are never searched</text><g data-node='caller'><rect x='24' y='48' width='240' height='56' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Caller</text><text x='36' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">text and tenant context</text></g><path d='M144 104V126' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#res-arrow)'/><g data-node='lv-customer'><rect x='24' y='128' width='240' height='56' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='36' y='152' font-weight='600' fill=\"var(--cds-text-primary)\">1  Customer lexicon</text><text x='36' y='168' font-size='11.5' fill=\"var(--cds-text-secondary)\">this tenant only</text></g><g data-node='lv-insperity'><rect x='24' y='212' width='240' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='236' font-weight='600' fill=\"var(--cds-text-primary)\">2  Insperity lexicon</text><text x='36' y='252' font-size='11.5' fill=\"var(--cds-text-secondary)\">house terms</text></g><g data-node='lv-domain'><rect x='24' y='296' width='240' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='320' font-weight='600' fill=\"var(--cds-text-primary)\">3  Domain lexicon</text><text x='36' y='336' font-size='11.5' fill=\"var(--cds-text-secondary)\">labels for the domain</text></g><g data-node='lv-core'><rect x='24' y='380' width='240' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='404' font-weight='600' fill=\"var(--cds-text-primary)\">4  Core vocabulary</text><text x='36' y='420' font-size='11.5' fill=\"var(--cds-text-secondary)\">preferred labels</text></g><path d='M144 184V210' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#res-arrow)'/><text x='154' y='203' font-size='11.5' fill=\"var(--cds-text-secondary)\">no match</text><path d='M144 268V294' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#res-arrow)'/><text x='154' y='287' font-size='11.5' fill=\"var(--cds-text-secondary)\">no match</text><path d='M144 352V378' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#res-arrow)'/><text x='154' y='371' font-size='11.5' fill=\"var(--cds-text-secondary)\">no match</text><path d='M264 156H340' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='272' y='148' font-size='11.5' fill=\"var(--cds-text-secondary)\">match</text><path d='M264 240H340' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='272' y='232' font-size='11.5' fill=\"var(--cds-text-secondary)\">match</text><path d='M264 324H340' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='272' y='316' font-size='11.5' fill=\"var(--cds-text-secondary)\">match</text><path d='M264 408H340' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='272' y='400' font-size='11.5' fill=\"var(--cds-text-secondary)\">match</text><path d='M340 156V408' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M340 282H418' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#res-arrow)'/><g data-node='answer'><rect x='420' y='226' width='316' height='112' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='432' y='250' font-weight='600' fill=\"var(--cds-text-primary)\">Answer</text><text x='432' y='266' font-size='11.5' fill=\"var(--cds-text-secondary)\">One match: return the concept.</text><text x='432' y='282' font-size='11.5' fill=\"var(--cds-text-secondary)\">Several at one level: return the</text><text x='432' y='298' font-size='11.5' fill=\"var(--cds-text-secondary)\">candidates with their definitions.</text><text x='432' y='314' font-size='11.5' fill=\"var(--cds-text-secondary)\">None: report no match.</text></g><g data-node='other'><rect x='420' y='380' width='316' height='56' rx='8' fill='none' stroke='var(--cds-chart-status-critical)' stroke-width='1.25' stroke-dasharray='5 4'/><text x='432' y='404' font-weight='600' fill=\"var(--cds-text-primary)\">Other tenants' lexicons</text><text x='432' y='420' font-size='11.5' fill=\"var(--cds-text-secondary)\">never searched</text></g><text x='24' y='466' font-size='11.5' fill=\"var(--cds-text-secondary)\">Each level is read from a derived index, rebuilt on every release.</text></svg>", "publishing": "<svg viewBox='0 0 760 384' role='img' aria-label='One contract publishes a release and reads back what the target holds' font-size='13'><defs><marker id='pub-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">One contract publishes a release and reads back what the target holds</text><g data-node='p-release'><rect x='24' y='52' width='128' height='96' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">SKL release</text><text x='36' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">versioned,</text><text x='36' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">approved</text><text x='36' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">by council</text></g><g data-node='p-project'><rect x='170' y='52' width='128' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='182' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Project</text><text x='182' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">fit the target,</text><text x='182' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">tenant labels,</text><text x='182' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">qualified terms</text></g><g data-node='p-validate'><rect x='316' y='52' width='128' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='328' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Validate</text><text x='328' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">structure, IDs,</text><text x='328' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">parity tests</text><text x='328' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">before delivery</text></g><g data-node='p-adapter'><rect x='462' y='52' width='128' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='474' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Adapter</text><text x='474' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">one project,</text><text x='474' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">SKL ID + version</text><text x='474' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">stamped on all</text></g><g data-node='p-visier'><rect x='608' y='52' width='128' height='96' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='620' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Visier</text><text x='620' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">objects locked,</text><text x='620' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">no local edits</text><text x='620' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">consume only</text></g><path d='M152 100H168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#pub-arrow)'/><path d='M298 100H314' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#pub-arrow)'/><path d='M444 100H460' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#pub-arrow)'/><path d='M590 100H606' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#pub-arrow)'/><g data-node='p-reconcile'><rect x='316' y='212' width='282' height='88' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='328' y='236' font-weight='600' fill=\"var(--cds-text-primary)\">Reconcile and status</text><text x='328' y='252' font-size='11.5' fill=\"var(--cds-text-secondary)\">read back what Visier holds,</text><text x='328' y='268' font-size='11.5' fill=\"var(--cds-text-secondary)\">flag any object that differs,</text><text x='328' y='284' font-size='11.5' fill=\"var(--cds-text-secondary)\">roll back to the last version</text></g><path d='M672 148V256H600' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#pub-arrow)'/><path d='M316 256H88V150' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#pub-arrow)'/><text x='620' y='200' font-size='11.5' fill=\"var(--cds-text-secondary)\">read back</text><text x='96' y='200' font-size='11.5' fill=\"var(--cds-text-secondary)\">drift reported to the SKL</text><text x='24' y='336' font-size='11.5' fill=\"var(--cds-text-secondary)\">Only the display label is sent: the tenant label if approved, otherwise the preferred label.</text><text x='24' y='354' font-size='11.5' fill=\"var(--cds-text-secondary)\">Alternate labels, ontology, rules and mappings stay in the SKL.</text></svg>", "access": "<svg viewBox='0 0 760 404' role='img' aria-label='Access is decided per job step, and every decision is logged' font-size='13'><defs><marker id='acc-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">Access is decided per job step, and every decision is logged</text><g data-node='in-persona'><rect x='24' y='48' width='200' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Persona assignment</text><text x='36' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">who, tenant and domain scope</text></g><g data-node='in-job'><rect x='24' y='112' width='200' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='136' font-weight='600' fill=\"var(--cds-text-primary)\">Job and step</text><text x='36' y='152' font-size='11.5' fill=\"var(--cds-text-secondary)\">what the screen is doing</text></g><g data-node='in-resource'><rect x='24' y='176' width='200' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='200' font-weight='600' fill=\"var(--cds-text-primary)\">Resource</text><text x='36' y='216' font-size='11.5' fill=\"var(--cds-text-secondary)\">graph class, tenant, state</text></g><g data-node='in-context'><rect x='24' y='240' width='200' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='264' font-weight='600' fill=\"var(--cds-text-primary)\">Context</text><text x='36' y='280' font-size='11.5' fill=\"var(--cds-text-secondary)\">assignment, time</text></g><path d='M224 76H258' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M224 140H258' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M224 204H258' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M224 268H258' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M258 76V268' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><path d='M258 172H290' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#acc-arrow)'/><g data-node='decision'><rect x='292' y='112' width='200' height='120' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='304' y='136' font-weight='600' fill=\"var(--cds-text-primary)\">Policy decision</text><text x='304' y='152' font-size='11.5' fill=\"var(--cds-text-secondary)\">rules authored in the SKL,</text><text x='304' y='168' font-size='11.5' fill=\"var(--cds-text-secondary)\">maker-checker, scope,</text><text x='304' y='184' font-size='11.5' fill=\"var(--cds-text-secondary)\">item state</text></g><g data-node='out-allow'><rect x='556' y='64' width='180' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='568' y='88' font-weight='600' fill=\"var(--cds-text-primary)\">Allow</text><text x='568' y='104' font-size='11.5' fill=\"var(--cds-text-secondary)\">service acts on the graph</text></g><g data-node='out-deny'><rect x='556' y='184' width='180' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='568' y='208' font-weight='600' fill=\"var(--cds-text-primary)\">Deny</text><text x='568' y='224' font-size='11.5' fill=\"var(--cds-text-secondary)\">refuse the request</text></g><path d='M492 150H524V92H554' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#acc-arrow)'/><path d='M492 194H524V212H554' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#acc-arrow)'/><path d='M392 232V318' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#acc-arrow)'/><text x='402' y='282' font-size='11.5' fill=\"var(--cds-text-secondary)\">every decision is logged</text><g data-node='audit'><rect x='24' y='320' width='712' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='344' font-weight='600' fill=\"var(--cds-text-primary)\">Audit record</text><text x='36' y='360' font-size='11.5' fill=\"var(--cds-text-secondary)\">persona, job, step, resource, decision and approver, kept for every request</text></g></svg>", "topology": "<svg viewBox='0 0 760 580' role='img' aria-label='The topology grows by splitting repositories, and graph names never change' font-size='13'><defs><marker id='topo-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">The topology grows by splitting repositories, and graph names never change</text><text x='24' y='62' font-weight='600' fill=\"var(--cds-text-primary)\">1  Pilot</text><text x='24' y='80' font-size='11.5' fill=\"var(--cds-text-secondary)\">one customer</text><text x='267' y='62' font-weight='600' fill=\"var(--cds-text-primary)\">2  Scale</text><text x='267' y='80' font-size='11.5' fill=\"var(--cds-text-secondary)\">many customers</text><text x='510' y='62' font-weight='600' fill=\"var(--cds-text-primary)\">3  Insulate</text><text x='510' y='80' font-size='11.5' fill=\"var(--cds-text-secondary)\">where a contract needs it</text><g data-node='srv1'><rect x='24' y='92' width='226' height='284' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='112' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">SERVER, ONE PER ENVIRONMENT</text></g><g data-node='s1-core'><rect x='36' y='124' width='202' height='72' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='48' y='148' font-weight='600' fill=\"var(--cds-text-primary)\">skl-core-domain</text><text x='48' y='164' font-size='11.5' fill=\"var(--cds-text-secondary)\">core and domain assets</text></g><g data-node='s1-lex'><rect x='36' y='204' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='48' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">skl-lexicons</text><text x='48' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-enterprise-insperity</text><text x='48' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-customer-t1</text></g><g data-node='s1-ext'><rect x='36' y='284' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='48' y='308' font-weight='600' fill=\"var(--cds-text-primary)\">skl-extensions</text><text x='48' y='324' font-size='11.5' fill=\"var(--cds-text-secondary)\">vocabulary-customer-t1-*</text><text x='48' y='340' font-size='11.5' fill=\"var(--cds-text-secondary)\">mapping-customer-t1-*</text></g><g data-node='srv2'><rect x='267' y='92' width='226' height='284' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='279' y='112' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">SERVER, ONE PER ENVIRONMENT</text></g><g data-node='s2-core'><rect x='279' y='124' width='202' height='72' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='291' y='148' font-weight='600' fill=\"var(--cds-text-primary)\">skl-core-domain</text><text x='291' y='164' font-size='11.5' fill=\"var(--cds-text-secondary)\">core and domain assets</text></g><g data-node='s2-lex'><rect x='279' y='204' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='291' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">skl-lexicons</text><text x='291' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-enterprise-insperity</text><text x='291' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-customer-t1 ... tn</text></g><g data-node='s2-ext'><rect x='279' y='284' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='291' y='308' font-weight='600' fill=\"var(--cds-text-primary)\">skl-extensions</text><text x='291' y='324' font-size='11.5' fill=\"var(--cds-text-secondary)\">vocabulary-customer-t1-*</text><text x='291' y='340' font-size='11.5' fill=\"var(--cds-text-secondary)\">one set per tenant</text></g><g data-node='srv3'><rect x='510' y='92' width='226' height='284' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='522' y='112' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">SHARED SERVER</text></g><g data-node='s3-core'><rect x='522' y='124' width='202' height='72' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='534' y='148' font-weight='600' fill=\"var(--cds-text-primary)\">skl-core-domain</text><text x='534' y='164' font-size='11.5' fill=\"var(--cds-text-secondary)\">core and domain assets</text></g><g data-node='s3-lex'><rect x='522' y='204' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='534' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">skl-lexicons</text><text x='534' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-enterprise-insperity</text><text x='534' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-customer-t1 ... tn</text></g><g data-node='s3-ext'><rect x='522' y='284' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='534' y='308' font-weight='600' fill=\"var(--cds-text-primary)\">skl-extensions</text><text x='534' y='324' font-size='11.5' fill=\"var(--cds-text-secondary)\">vocabulary-customer-t1-*</text><text x='534' y='340' font-size='11.5' fill=\"var(--cds-text-secondary)\">one set per tenant</text></g><g data-node='srv3-dedicated'><rect x='510' y='388' width='226' height='108' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='522' y='408' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">DEDICATED SERVER, BY CONTRACT</text></g><g data-node='s3-tenant'><rect x='522' y='416' width='202' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='534' y='440' font-weight='600' fill=\"var(--cds-text-primary)\">skl-tenant-t9</text><text x='534' y='456' font-size='11.5' fill=\"var(--cds-text-secondary)\">lexicon-customer-t9</text><text x='534' y='472' font-size='11.5' fill=\"var(--cds-text-secondary)\">vocabulary-customer-t9-*</text></g><path d='M250 234H265' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#topo-arrow)'/><path d='M493 234H508' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#topo-arrow)'/><text x='24' y='404' font-size='11.5' fill=\"var(--cds-text-secondary)\">Grows when a second customer</text><text x='24' y='420' font-size='11.5' fill=\"var(--cds-text-secondary)\">is onboarded.</text><text x='267' y='404' font-size='11.5' fill=\"var(--cds-text-secondary)\">Grows when a contract or blast</text><text x='267' y='420' font-size='11.5' fill=\"var(--cds-text-secondary)\">radius needs isolation.</text><g data-node='constant'><rect x='24' y='516' width='712' height='48' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='536' font-size='11.5' fill=\"var(--cds-text-secondary)\">In every stage: graphs are reached only through the semantic services, and services enforce tenant scope.</text><text x='36' y='553' font-size='11.5' fill=\"var(--cds-text-secondary)\">The highlighted repository is identical in every stage. Names follow the naming standard and never move.</text></g></svg>", "layers": "<svg viewBox='0 0 760 470' role='img' aria-label='Extensions build on the services, and only the services touch graphs' font-size='13'><defs><marker id='lay-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">Extensions build on the services, and only the services touch graphs</text><text x='24' y='58' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">OPERATIONAL EXTENSIONS: TARGET OPERATING MODEL</text><g data-node='ex-screens'><rect x='24' y='68' width='132' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='36' y='92' font-weight='600' fill=\"var(--cds-text-primary)\">Review screens</text><text x='36' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">labels, concepts,</text><text x='36' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">mappings</text></g><g data-node='ex-prov'><rect x='169' y='68' width='132' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='181' y='92' font-weight='600' fill=\"var(--cds-text-primary)\">Provisioning</text><text x='181' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">tenants, people</text></g><g data-node='ex-dash'><rect x='314' y='68' width='132' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='326' y='92' font-weight='600' fill=\"var(--cds-text-primary)\">Dashboards</text><text x='326' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">health, quality</text></g><g data-node='ex-triage'><rect x='459' y='68' width='132' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='471' y='92' font-weight='600' fill=\"var(--cds-text-primary)\">Triage</text><text x='471' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">alerts and queues</text></g><g data-node='ex-sim'><rect x='604' y='68' width='132' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' stroke-dasharray='5 4'/><text x='616' y='92' font-weight='600' fill=\"var(--cds-text-primary)\">Simulation</text><text x='616' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">what-if impact</text></g><path d='M90 140V168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)'/><path d='M235 140V168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)'/><path d='M380 140V168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)'/><path d='M525 140V168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)'/><path d='M670 140V168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)'/><g data-node='band-services'><rect x='24' y='170' width='712' height='176' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='36' y='192' font-size='11.5' font-weight='600' fill=\"var(--cds-text-primary)\">SEMANTIC SERVICES: THE BASELINE</text></g><g data-node='g-in'><rect x='36' y='204' width='160' height='128' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='48' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">Inbound</text><text x='48' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">Ingestion</text><text x='48' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">Extraction</text><text x='48' y='276' font-size='11.5' fill=\"var(--cds-text-secondary)\">Screening</text></g><g data-node='g-proc'><rect x='212' y='204' width='160' height='128' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='224' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">Processing</text><text x='224' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">Candidates</text><text x='224' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">Matching and triage</text><text x='224' y='276' font-size='11.5' fill=\"var(--cds-text-secondary)\">Lexicon</text><text x='224' y='292' font-size='11.5' fill=\"var(--cds-text-secondary)\">Review</text><text x='224' y='308' font-size='11.5' fill=\"var(--cds-text-secondary)\">Release</text></g><g data-node='g-out'><rect x='388' y='204' width='160' height='128' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='400' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">Outbound</text><text x='400' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">Label resolution</text><text x='400' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">Publishing</text></g><g data-node='g-x'><rect x='564' y='204' width='160' height='128' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='576' y='228' font-weight='600' fill=\"var(--cds-text-primary)\">Common</text><text x='576' y='244' font-size='11.5' fill=\"var(--cds-text-secondary)\">Policy decision</text><text x='576' y='260' font-size='11.5' fill=\"var(--cds-text-secondary)\">Telemetry</text></g><path d='M107 346V370' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)' marker-start='url(#lay-arrow)'/><path d='M289 346V370' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)' marker-start='url(#lay-arrow)'/><path d='M471 346V370' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)' marker-start='url(#lay-arrow)'/><path d='M653 346V370' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#lay-arrow)' marker-start='url(#lay-arrow)'/><g data-node='st-core'><rect x='24' y='372' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='396' font-weight='600' fill=\"var(--cds-text-primary)\">skl-core-domain</text><text x='36' y='412' font-size='11.5' fill=\"var(--cds-text-secondary)\">core and domain graphs</text></g><g data-node='st-lex'><rect x='206' y='372' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='218' y='396' font-weight='600' fill=\"var(--cds-text-primary)\">skl-lexicons</text><text x='218' y='412' font-size='11.5' fill=\"var(--cds-text-secondary)\">labels by scope</text></g><g data-node='st-ext'><rect x='388' y='372' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='400' y='396' font-weight='600' fill=\"var(--cds-text-primary)\">skl-extensions</text><text x='400' y='412' font-size='11.5' fill=\"var(--cds-text-secondary)\">local concepts</text></g><g data-node='st-tel'><rect x='570' y='372' width='166' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='582' y='396' font-weight='600' fill=\"var(--cds-text-primary)\">Telemetry, audit</text><text x='582' y='412' font-size='11.5' fill=\"var(--cds-text-secondary)\">events and decisions</text></g><text x='24' y='452' font-size='11.5' fill=\"var(--cds-text-secondary)\">Sources enter through Inbound and targets are fed by Outbound. Extensions call services; none touches a graph.</text></svg>", "simulation": "<svg viewBox='0 0 760 276' role='img' aria-label='A simulation shows the impact of a change before anything is published' font-size='13'><defs><marker id='sim-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">A simulation shows the impact of a change before anything is published</text><g data-node='sm-prop'><rect x='24' y='52' width='128' height='96' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Proposal</text><text x='36' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">label, concept,</text><text x='36' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">rule or release</text><text x='36' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">in a draft graph</text></g><g data-node='sm-run'><rect x='170' y='52' width='128' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='182' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Simulate</text><text x='182' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">compare with the</text><text x='182' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">current release,</text><text x='182' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">dry-run publish</text></g><g data-node='sm-impact'><rect x='316' y='52' width='128' height='96' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='328' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Impact</text><text x='328' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">concepts, labels</text><text x='328' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">tenants, targets</text><text x='328' y='124' font-size='11.5' fill=\"var(--cds-text-secondary)\">workload, load</text></g><g data-node='sm-decide'><rect x='462' y='52' width='128' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='474' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Decide</text><text x='474' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">approve, rework</text><text x='474' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">or withdraw</text></g><g data-node='sm-life'><rect x='608' y='52' width='128' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='620' y='76' font-weight='600' fill=\"var(--cds-text-primary)\">Lifecycle</text><text x='620' y='92' font-size='11.5' fill=\"var(--cds-text-secondary)\">validate and</text><text x='620' y='108' font-size='11.5' fill=\"var(--cds-text-secondary)\">release as usual</text></g><path d='M152 100H168' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#sim-arrow)'/><path d='M298 100H314' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#sim-arrow)'/><path d='M444 100H460' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#sim-arrow)'/><path d='M590 100H606' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#sim-arrow)'/><path d='M544 148V196H88V150' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25' marker-end='url(#sim-arrow)'/><text x='300' y='188' font-size='11.5' fill=\"var(--cds-text-secondary)\">rework</text><text x='24' y='236' font-size='11.5' fill=\"var(--cds-text-secondary)\">Simulations read draft and release graphs and write only to simulation records.</text><text x='24' y='254' font-size='11.5' fill=\"var(--cds-text-secondary)\">No released graph is touched and nothing is published.</text></svg>", "overview": "<svg viewBox='0 0 760 462' role='img' aria-label='Customer terms land in scoped graphs, never in the core' font-size='13'><defs><marker id='arch-arrow' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='6' markerHeight='6' orient='auto-start-reverse'><path d='M0 0L10 5L0 10z' fill=\"var(--cds-chart-axis)\"/></marker></defs><text x='24' y='28' font-size='15' font-weight='600' fill=\"var(--cds-text-primary)\">Customer terms land in scoped graphs, never in the core</text><g data-node='in-sources'><rect x='24' y='48' width='154' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Customer sources</text><text x='36' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">documents, CMS,</text><text x='36' y='104' font-size='11.5' fill=\"var(--cds-text-secondary)\">feeds, handbooks</text></g><g data-node='in-core'><rect x='210' y='48' width='154' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='222' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Core and domain</text><text x='222' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">released concepts</text><text x='222' y='104' font-size='11.5' fill=\"var(--cds-text-secondary)\">and preferred labels</text></g><g data-node='in-people'><rect x='396' y='48' width='154' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='408' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">People</text><text x='408' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">ops reviewers,</text><text x='408' y='104' font-size='11.5' fill=\"var(--cds-text-secondary)\">stewards, council</text></g><g data-node='in-targets'><rect x='582' y='48' width='154' height='72' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='594' y='72' font-weight='600' fill=\"var(--cds-text-primary)\">Targets</text><text x='594' y='88' font-size='11.5' fill=\"var(--cds-text-secondary)\">Visier, Copilot,</text><text x='594' y='104' font-size='11.5' fill=\"var(--cds-text-secondary)\">Compass, partners</text></g><g data-node='fn-capture'><rect x='24' y='144' width='154' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='168' font-weight='600' fill=\"var(--cds-text-primary)\">Capture</text><text x='36' y='184' font-size='11.5' fill=\"var(--cds-text-secondary)\">Land, tag by tenant</text><text x='36' y='200' font-size='11.5' fill=\"var(--cds-text-secondary)\">Screen PII, extract</text><text x='36' y='216' font-size='11.5' fill=\"var(--cds-text-secondary)\">Propose candidates</text></g><g data-node='fn-map'><rect x='210' y='144' width='154' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='222' y='168' font-weight='600' fill=\"var(--cds-text-primary)\">Map</text><text x='222' y='184' font-size='11.5' fill=\"var(--cds-text-secondary)\">Match to concepts</text><text x='222' y='200' font-size='11.5' fill=\"var(--cds-text-secondary)\">Set match relation</text><text x='222' y='216' font-size='11.5' fill=\"var(--cds-text-secondary)\">Flag conflicts</text></g><g data-node='fn-manage'><rect x='396' y='144' width='154' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='408' y='168' font-weight='600' fill=\"var(--cds-text-primary)\">Manage</text><text x='408' y='184' font-size='11.5' fill=\"var(--cds-text-secondary)\">Triage and review</text><text x='408' y='200' font-size='11.5' fill=\"var(--cds-text-secondary)\">Approve scope, type</text><text x='408' y='216' font-size='11.5' fill=\"var(--cds-text-secondary)\">Release and promote</text></g><g data-node='fn-serve'><rect x='582' y='144' width='154' height='96' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='594' y='168' font-weight='600' fill=\"var(--cds-text-primary)\">Serve</text><text x='594' y='184' font-size='11.5' fill=\"var(--cds-text-secondary)\">Resolve by tenant</text><text x='594' y='200' font-size='11.5' fill=\"var(--cds-text-secondary)\">Publish per target</text><text x='594' y='216' font-size='11.5' fill=\"var(--cds-text-secondary)\">Reconcile targets</text></g><g data-node='connectors' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'><path d='M101 120V142' marker-end='url(#arch-arrow)'/><path d='M101 240V262' marker-start='url(#arch-arrow)' marker-end='url(#arch-arrow)'/><path d='M287 120V142' marker-end='url(#arch-arrow)'/><path d='M287 240V262' marker-start='url(#arch-arrow)' marker-end='url(#arch-arrow)'/><path d='M473 120V142' marker-end='url(#arch-arrow)'/><path d='M473 240V262' marker-start='url(#arch-arrow)' marker-end='url(#arch-arrow)'/><path d='M659 120V142' marker-end='url(#arch-arrow)'/><path d='M659 240V262' marker-start='url(#arch-arrow)' marker-end='url(#arch-arrow)'/><path d='M178 192H208' marker-end='url(#arch-arrow)'/><path d='M364 192H394' marker-end='url(#arch-arrow)'/><path d='M550 192H580' marker-end='url(#arch-arrow)'/></g><g data-node='warehouse'><rect x='24' y='264' width='712' height='174' rx='8' fill='var(--cds-chart-reference-tint)' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='36' y='286' font-size='11.5' font-weight='600' fill=\"var(--cds-text-secondary)\">WAREHOUSE: scoped graphs and stores, read and written by every function</text></g><g data-node='wh-raw'><rect x='36' y='298' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='48' y='322' font-weight='600' fill=\"var(--cds-text-primary)\">Raw landing</text><text x='48' y='338' font-size='11.5' fill=\"var(--cds-text-secondary)\">per tenant, retained</text></g><g data-node='wh-candidates'><rect x='214' y='298' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='226' y='322' font-weight='600' fill=\"var(--cds-text-primary)\">Candidate store</text><text x='226' y='338' font-size='11.5' fill=\"var(--cds-text-secondary)\">unreviewed, sourced</text></g><g data-node='wh-core'><rect x='392' y='298' width='154' height='56' rx='8' fill=\"var(--cds-chart-categorical-1)\" fill-opacity='0.12' stroke=\"var(--cds-chart-categorical-1)\" stroke-width='2'/><text x='404' y='322' font-weight='600' fill=\"var(--cds-text-primary)\">Core and domain</text><text x='404' y='338' font-size='11.5' fill=\"var(--cds-text-secondary)\">read-only here</text></g><g data-node='wh-changes'><rect x='570' y='298' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='582' y='322' font-weight='600' fill=\"var(--cds-text-primary)\">Change records</text><text x='582' y='338' font-size='11.5' fill=\"var(--cds-text-secondary)\">decisions as triples</text></g><g data-node='wh-insperity'><rect x='36' y='366' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='48' y='390' font-weight='600' fill=\"var(--cds-text-primary)\">Insperity lexicon</text><text x='48' y='406' font-size='11.5' fill=\"var(--cds-text-secondary)\">house terms</text></g><g data-node='wh-customer'><rect x='214' y='366' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='226' y='390' font-weight='600' fill=\"var(--cds-text-primary)\">Customer lexicons</text><text x='226' y='406' font-size='11.5' fill=\"var(--cds-text-secondary)\">one graph per tenant</text></g><g data-node='wh-local'><rect x='392' y='366' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='404' y='390' font-weight='600' fill=\"var(--cds-text-primary)\">Local concepts</text><text x='404' y='406' font-size='11.5' fill=\"var(--cds-text-secondary)\">match relations up</text></g><g data-node='wh-index'><rect x='570' y='366' width='154' height='56' rx='8' fill='none' stroke=\"var(--cds-chart-axis)\" stroke-width='1.25'/><text x='582' y='390' font-weight='600' fill=\"var(--cds-text-primary)\">Resolution index</text><text x='582' y='406' font-size='11.5' fill=\"var(--cds-text-secondary)\">derived, disposable</text></g></svg>", "timeline": "<svg viewBox='0 0 760 316' role='img' aria-label='Four overlapping phases take the baseline to operation by late May 2027' font-size='13'><text x='24' y='28' font-size='15' font-weight='600' fill='var(--cds-text-primary)'>Four overlapping phases take the baseline to operation by late May 2027</text><text x='24' y='48' font-size='11.5' fill='var(--cds-text-secondary)'>Planning dates from the project plan; diamonds are gates. Select a phase for its goal and gate.</text><rect x='312.9' y='96' width='24.3' height='176' fill='var(--cds-chart-reference-tint)'/><line x1='278.2' x2='278.2' y1='96' y2='272' stroke='var(--cds-chart-grid)'/><text x='278.2' y='88' text-anchor='middle' font-size='11.5' fill='var(--cds-text-secondary)'>Dec 1</text><line x1='331.9' x2='331.9' y1='96' y2='272' stroke='var(--cds-chart-grid)'/><text x='331.9' y='88' text-anchor='middle' font-size='11.5' fill='var(--cds-text-secondary)'>Jan 1</text><line x1='385.7' x2='385.7' y1='96' y2='272' stroke='var(--cds-chart-grid)'/><text x='385.7' y='88' text-anchor='middle' font-size='11.5' fill='var(--cds-text-secondary)'>Feb 1</text><line x1='434.3' x2='434.3' y1='96' y2='272' stroke='var(--cds-chart-grid)'/><text x='434.3' y='88' text-anchor='middle' font-size='11.5' fill='var(--cds-text-secondary)'>Mar 1</text><line x1='488.1' x2='488.1' y1='96' y2='272' stroke='var(--cds-chart-grid)'/><text x='488.1' y='88' text-anchor='middle' font-size='11.5' fill='var(--cds-text-secondary)'>Apr 1</text><line x1='540.1' x2='540.1' y1='96' y2='272' stroke='var(--cds-chart-grid)'/><text x='540.1' y='88' text-anchor='middle' font-size='11.5' fill='var(--cds-text-secondary)'>May 1</text><line x1='240' x2='580' y1='96' y2='96' stroke='var(--cds-chart-axis)' stroke-width='1.25'/><line x1='580.0' x2='580.0' y1='228' y2='272' stroke='var(--cds-chart-categorical-1)' stroke-width='1.25' stroke-dasharray='4 4'/><g data-node='p0'><rect x='0' y='95' width='760' height='34' fill='transparent' stroke='none'/><line x1='240' x2='240.0' y1='112' y2='112' stroke='var(--cds-chart-grid)'/><rect x='240.0' y='105' width='72.9' height='14' rx='7' fill='var(--cds-chart-axis)' fill-opacity='0.18' stroke='var(--cds-chart-axis)' stroke-width='1.25'/><path class='shape' d='M312.9 104l8 8l-8 8l-8 -8z' fill='var(--cds-chart-axis)'/><text x='326.9' y='116' font-size='11.5' font-weight='400' fill='var(--cds-text-secondary)'>Nov 9 to Dec 21 \u00b7 G0</text><text x='24' y='116' font-weight='400' fill='var(--cds-text-primary)'>P0 Decide and contract</text></g><g data-node='p1'><rect x='0' y='131' width='760' height='34' fill='transparent' stroke='none'/><line x1='240' x2='276.4' y1='148' y2='148' stroke='var(--cds-chart-grid)'/><rect x='276.4' y='141' width='170.0' height='14' rx='7' fill='var(--cds-chart-axis)' fill-opacity='0.18' stroke='var(--cds-chart-axis)' stroke-width='1.25'/><path class='shape' d='M446.4 140l8 8l-8 8l-8 -8z' fill='var(--cds-chart-axis)'/><text x='460.4' y='152' font-size='11.5' font-weight='400' fill='var(--cds-text-secondary)'>Nov 30 to Mar 8 \u00b7 G1</text><text x='24' y='152' font-weight='400' fill='var(--cds-text-primary)'>P1 Inbound, processing</text></g><g data-node='p2'><rect x='0' y='167' width='760' height='34' fill='transparent' stroke='none'/><line x1='240' x2='300.7' y1='184' y2='184' stroke='var(--cds-chart-grid)'/><rect x='300.7' y='177' width='242.9' height='14' rx='7' fill='var(--cds-chart-axis)' fill-opacity='0.18' stroke='var(--cds-chart-axis)' stroke-width='1.25'/><path class='shape' d='M543.6 176l8 8l-8 8l-8 -8z' fill='var(--cds-chart-axis)'/><text x='557.6' y='188' font-size='11.5' font-weight='400' fill='var(--cds-text-secondary)'>Dec 14 to May 3 \u00b7 G2</text><text x='24' y='188' font-weight='400' fill='var(--cds-text-primary)'>P2 Review and outbound</text></g><g data-node='p3'><rect x='0' y='203' width='760' height='34' fill='transparent' stroke='none'/><line x1='240' x2='410.0' y1='220' y2='220' stroke='var(--cds-chart-grid)'/><rect x='410.0' y='213' width='170.0' height='14' rx='7' fill='var(--cds-chart-categorical-1)' fill-opacity='0.18' stroke='var(--cds-chart-categorical-1)' stroke-width='1.25'/><path class='shape' d='M580.0 212l8 8l-8 8l-8 -8z' fill='var(--cds-chart-categorical-1)'/><text x='594.0' y='224' font-size='11.5' font-weight='600' fill='var(--cds-text-primary)'>Feb 15 to May 24 \u00b7 G3</text><text x='24' y='224' font-weight='600' fill='var(--cds-text-primary)'>P3 Operate and scale</text></g><g data-node='visier'><rect x='0' y='239' width='760' height='34' fill='transparent' stroke='none'/><line x1='240' x2='477.7' y1='256' y2='256' stroke='var(--cds-chart-grid)'/><path class='shape' d='M477.7 248l8 8l-8 8l-8 -8z' fill='var(--cds-chart-axis)' stroke='var(--cds-chart-axis)'/><text x='491.7' y='260' font-size='11.5' font-weight='400' fill='var(--cds-text-secondary)'>Mar 26</text><text x='24' y='260' font-weight='400' fill='var(--cds-text-primary)'>Pilot live in Visier</text></g><text x='312.9' y='292' font-size='11.5' fill='var(--cds-text-secondary)'>year-end pause</text></svg>"};
+const DETAILS = {"overview": {"in-sources": ["Customer sources", "Documentation, the content management system, data feeds and employee handbooks. Each customer brings its own mix, and all four are ingested the same way.", "capture"], "in-core": ["Core and domain", "The released vocabularies, taxonomies and ontologies that Map matches candidates against. They hold preferred labels, definitions and relations, and this flow only reads them.", "warehouse"], "in-people": ["People", "Operations reviewers, domain stewards and the governance council. They act only through provisioned screens, within the scope their persona and job allow.", "provisioning"], "in-targets": ["Targets", "Visier first, then Copilot, Compass and partner APIs. They consume published content and never edit it.", "serve"], "fn-capture": ["Capture", "Lands each item with a tenant tag, screens it for personal data, extracts text and structure, and proposes candidate terms with evidence.", "capture"], "fn-map": ["Map", "Matches candidates to core and domain concepts, proposes match relations, and flags conflicts and homonyms. It proposes and never approves.", "map"], "fn-manage": ["Manage", "Triages candidates, runs the review lifecycle, applies approvals, and handles releases, promotion and retirement.", "manage"], "fn-serve": ["Serve", "Resolves labels by tenant at run time and publishes released content to targets through one contract, reading back what each target holds.", "serve"], "warehouse": ["Warehouse", "Scoped graphs and stores read and written by every function. Customer terminology lands here and never in the core.", "warehouse"], "wh-raw": ["Raw landing", "Source files and extracts per tenant, kept by retention policy and never loaded into a graph.", "warehouse"], "wh-candidates": ["Candidate store", "Unreviewed candidates with their evidence. Working data that is never released.", "warehouse"], "wh-core": ["Core and domain", "Released graphs, highlighted because this flow only reads them. Customer content is never written here; changes arrive only through the release process.", "warehouse"], "wh-changes": ["Change records", "Every decision and release, recorded as triples and append-only.", "manage"], "wh-insperity": ["Insperity lexicon", "House terms valid for every tenant, held as label records in their own graph.", "warehouse"], "wh-customer": ["Customer lexicons", "One graph per tenant holding that tenant\u2019s labels only.", "warehouse"], "wh-local": ["Local concepts", "Customer extension vocabularies: concepts only one tenant uses, with match relations up to the core.", "map"], "wh-index": ["Resolution index", "A derived, disposable index from label to concept by scope. Rebuilt on each release and never a source.", "serve"]}, "layers": {"ex-screens": ["Review screens", "Data entry and review for labels, local concepts, vocabularies, taxonomies, ontologies and mappings, always as governed proposals. An operational extension of the target operating model.", "extensions"], "ex-prov": ["Provisioning", "Tenant and person lifecycles, persona assignments and recertification, run through logged screens.", "provisioning"], "ex-dash": ["Dashboards", "Seven monitoring views: pipeline, processing quality, review work, service health, access, releases and capacity. They read telemetry, never graphs.", "extensions"], "ex-triage": ["Triage", "One queue of alerts and exceptions, each with a severity, an owning persona and a runbook.", "extensions"], "ex-sim": ["Simulation", "What-if runs that show the impact of a change before it is made, using draft graphs.", "extensions"], "band-services": ["Semantic services: the baseline", "Every graph is reached only through these services, and every later project, screen and dashboard is built on their contracts.", "services"], "g-in": ["Inbound services", "Ingestion, extraction and screening bring each customer\u2019s content in with tenant tag, provenance and personal-data screening applied.", "services"], "g-proc": ["Processing services", "Candidates, matching and triage, lexicon, review and release turn raw content into reviewed, scoped, released terms.", "services"], "g-out": ["Outbound services", "Label resolution and publishing make approved terminology usable at run time and in downstream tools.", "services"], "g-x": ["Common services", "Policy decision and telemetry. Every other service depends on them: one decides whether a request is allowed, the other receives every service\u2019s events.", "services"], "st-core": ["skl-core-domain", "The repository for core, domain and operational-domain assets. Reasoned and released together.", "warehouse"], "st-lex": ["skl-lexicons", "The repository for the Insperity lexicon and one named graph per tenant lexicon. Reasoning is off or minimal.", "warehouse"], "st-ext": ["skl-extensions", "The repository for local concepts and match relations, one named graph per tenant.", "warehouse"], "st-tel": ["Telemetry, audit", "Where service events and audit records go. Dashboards, triage and simulation read from here.", "extensions"]}, "capture": {"src-docs": ["Documentation", "Manuals, policy documents and FAQs, taken in by upload or file-share intake with version detection.", "capture"], "src-cms": ["Content management system", "Pages, glossaries and taxonomies by API or export, with incremental sync and page-level provenance.", "capture"], "src-feeds": ["Data feeds", "Code lists and reference data such as job titles, departments, pay and benefit codes, mapped through declarative R2RML-style mappings.", "capture"], "src-hand": ["Employee handbooks", "Policy names, defined-terms sections and role names, parsed with section structure, with OCR for scans.", "capture"], "step-land": ["1  Land", "Store the raw item in the tenant\u2019s landing zone with tenant tag, source, version and hash.", "capture"], "step-screen": ["2  Screen", "Detect personal and sensitive content before anything else runs. The screen fails closed: unclear items are quarantined.", "capture"], "step-extract": ["3  Extract", "Recover text and section structure, detect language, and run OCR with a confidence score on scans.", "capture"], "step-propose": ["4  Propose", "Extract candidate terms, defined-term and glossary patterns and abbreviations. A definition is drafted only when a source span supports it.", "capture"], "step-normalize": ["5  Normalize", "Collapse case, morphology and locale variants and merge duplicates, keeping frequency and context.", "capture"], "quarantine": ["Quarantine", "Items the screen cannot clear are held here and not processed.", "capture"], "candidate": ["Candidate record", "Text, evidence span, source, tenant, frequency and confidence. Only candidate records leave capture; raw content stays in the tenant landing zone.", "capture"]}, "scopes": {"lay-core": ["Core", "Preferred labels, definitions and relations. Released by stewards; customer content is never written here.", "warehouse"], "lay-domain": ["Domain", "Preferred labels, definitions and a few vetted universal labels for one domain, including operational domains.", "warehouse"], "lay-insperity": ["Insperity lexicon", "House terms valid for every tenant. Labels only, each pointing at a concept by ID.", "warehouse"], "lay-tenant-a": ["Tenant A lexicon", "Labels valid for tenant A only, in one graph. Each label points at a concept by ID and never copies it.", "warehouse"], "lay-tenant-b": ["Tenant B lexicon", "The same for tenant B. No query path crosses tenants.", "isolation"], "lay-ext-a": ["Tenant A extension", "Local concepts only tenant A uses, linked up to core or domain concepts by match relations.", "map"], "lay-ext-b": ["Tenant B extension", "The same for tenant B.", "map"], "who-stewards-core": ["Stewards, core", "Change the core only through a core release.", "manage"], "who-stewards-domain": ["Stewards, domain", "Change a domain only through a domain release.", "manage"], "who-reviewers": ["Ops reviewers", "Approve labels, scoped to a tenant, through the review screens.", "manage"], "who-matches": ["Domain stewards", "Approve each match relation from a local concept.", "map"], "match-relations": ["Match relations", "Exact, close, broad or narrow links from a customer concept to the nearest core or domain concept.", "map"]}, "topology": {"srv1": ["Server, one per environment", "Dev, test, stage and prod each have their own server. In the pilot it hosts three repositories.", "warehouse"], "srv2": ["Server, one per environment", "Many customers: the same three repositories, with more tenant graphs inside the lexicon and extension repositories.", "warehouse"], "srv3": ["Shared server", "Hosts the shared repositories for tenants without special isolation needs.", "warehouse"], "srv3-dedicated": ["Dedicated server, by contract", "Used only where a customer contract or a blast-radius concern requires isolation.", "warehouse"], "s1-core": ["skl-core-domain", "Identical in every stage: core, domain and operational-domain assets.", "warehouse"], "s2-core": ["skl-core-domain", "Unchanged from the pilot. Customer growth never lands here.", "warehouse"], "s3-core": ["skl-core-domain", "Still unchanged. This repository is the same in every stage.", "warehouse"], "s1-lex": ["skl-lexicons", "The Insperity lexicon and the pilot tenant\u2019s lexicon graph.", "warehouse"], "s2-lex": ["skl-lexicons", "One graph per tenant, t1 to tn. The tenant IDs stand for opaque IDs.", "warehouse"], "s3-lex": ["skl-lexicons", "Shared tenants stay here; a tenant that needs isolation moves out.", "warehouse"], "s1-ext": ["skl-extensions", "Local concepts and match relations for the pilot tenant.", "warehouse"], "s2-ext": ["skl-extensions", "One set of local concepts and mappings per tenant.", "warehouse"], "s3-ext": ["skl-extensions", "Same as stage 2 for shared tenants.", "warehouse"], "s3-tenant": ["skl-tenant-t9", "A dedicated repository for one tenant. Moving a tenant here changes only the catalog record, because names carry no tenant name, environment or repository.", "warehouse"], "constant": ["Constant in every stage", "Graphs are reached only through the semantic services, services enforce tenant scope, and names follow the naming standard and never move.", "isolation"]}, "triage": {"start": ["Candidate term", "A term from capture with its evidence and a machine-proposed class.", "manage"], "q-noise": ["Noise, personal data or out of scope?", "The first check. If yes, the candidate is rejected with a reason and the evidence is kept.", "manage"], "q-same": ["Same meaning as an existing concept?", "A synonym, abbreviation, plural, locale variant or misspelling goes to the narrowest lexicon in which it is true.", "manage"], "q-local": ["Used by this customer only?", "Yes: a local concept in the customer extension vocabulary. No: a core or domain change request.", "manage"], "dest-reject": ["Reject", "Reason and evidence are kept. An ops reviewer decides.", "manage"], "dest-label": ["Label record", "Goes in the narrowest scope that is true. An ops reviewer approves; a clash with another meaning goes to a steward.", "manage"], "dest-local": ["Local concept", "Added to the customer extension vocabulary with a match relation to the core. A domain steward approves.", "map"], "dest-core": ["Core or domain change request", "Goes through the normal release lifecycle and the governance council approves. A label seen across customers can be promoted this way.", "manage"]}, "lifecycle": {"st-proposed": ["Proposed", "A machine-proposed label awaiting a reviewer.", "manage"], "st-review": ["In review", "Assigned to a reviewer who is deciding.", "manage"], "st-approved": ["Approved", "Scope and type are set; the label waits for a release.", "manage"], "st-published": ["Published", "In a release. This is the only way a label reaches users.", "manage"], "st-deprecated": ["Deprecated", "No longer used, retained with its history.", "manage"], "st-rejected": ["Rejected", "The reason is recorded and the evidence is kept.", "manage"]}, "resolution": {"caller": ["Caller", "Passes text and a tenant context. Search, Copilot, Compass, HRScale and partner APIs resolve terms through the same service.", "serve"], "lv-customer": ["1  Customer lexicon", "Searched first, for the caller\u2019s tenant only.", "serve"], "lv-insperity": ["2  Insperity lexicon", "House terms valid for every tenant.", "serve"], "lv-domain": ["3  Domain lexicon", "Labels common to a domain but not universal.", "serve"], "lv-core": ["4  Core vocabulary", "Preferred labels, searched last.", "serve"], "answer": ["Answer", "One match returns the concept. Several at one level return the candidates with their definitions. None reports no match. Hidden labels match but are never shown.", "serve"], "other": ["Other tenants\u2019 lexicons", "Never searched. Isolation is enforced by the services, not left to the caller.", "isolation"]}, "publishing": {"p-release": ["SKL release", "A versioned, council-approved release.", "serve"], "p-project": ["Project", "Fit the content to the target: flatten taxonomies, apply the multi-parent rule and resolve tenant labels.", "serve"], "p-validate": ["Validate", "Structure, ID and parity checks before anything is delivered.", "serve"], "p-adapter": ["Adapter", "One adapter per target. For Visier it writes through its API inside one project and stamps the SKL ID and version on every object.", "serve"], "p-visier": ["Visier", "Consumes only. Published objects are locked, and changes start in the SKL.", "serve"], "p-reconcile": ["Reconcile and status", "Reads back what Visier holds, flags any object that differs as drift, and can roll back to the last version.", "serve"]}, "access": {"in-persona": ["Persona assignment", "Who the person is acting as, with tenant and domain scope and an end date.", "provisioning"], "in-job": ["Job and step", "What the screen or service call is doing, from the Personas & Jobs catalog.", "provisioning"], "in-resource": ["Resource", "Graph class, tenant, domain and item state.", "provisioning"], "in-context": ["Context", "Assignment and time.", "provisioning"], "decision": ["Policy decision", "Made by the service, from rules authored in the SKL, including maker-checker and scope limits.", "provisioning"], "out-allow": ["Allow", "The service acts on the graph.", "provisioning"], "out-deny": ["Deny", "The request is refused.", "provisioning"], "audit": ["Audit record", "Persona, job, step, resource, decision and approver, kept for every request.", "provisioning"]}, "simulation": {"sm-prop": ["Proposal", "A label, concept, rule or release loaded into a draft graph.", "extensions"], "sm-run": ["Simulate", "Compares the proposal with the current release and does a dry-run publish. Nothing is published.", "extensions"], "sm-impact": ["Impact", "Concepts, labels, mappings and tenants affected; objects that would change in each target; new conflicts; reviewer workload; and predicted load for capacity runs.", "extensions"], "sm-decide": ["Decide", "Approve, rework or withdraw.", "extensions"], "sm-life": ["Lifecycle", "Validate and release as usual.", "manage"]}, "timeline": {"p0": ["P0 Decide & contract \u00b7 G0", "Make the alternate-label decision on benchmark evidence, seat the council, agree naming and ID rules, and publish the inbound, processing and outbound contracts so the three service families can be built in parallel. Gate G0 \u00b7 Decisions made: ADR approved with benchmark evidence; council seated; naming, ID and multi-parent rule agreed; inbound, processing and publishing contracts published; Visier answers recorded; pilot customer, stewards and data permission confirmed; operational persona catalog v0.1 and the access model approved.", "pilot"], "p1": ["P1 Inbound & processing pilot \u00b7 G1", "Ingest the pilot customer\u2019s four source types, extract and match terms, triage them into scoped lexicons and hold the core at zero customer-driven triples. Gate G1 \u00b7 Inbound and processing pilot complete: All four source types ingested with provenance on 100% of records; 0 PII leaks in the red team; triage precision at or above 0.90 on the gold set (proposed); 0 customer-driven triples in core; 0 cross-tenant results in isolation tests; lookup P95 within the ADR threshold.", "pilot"], "p2": ["P2 Review, release & outbound \u00b7 G2", "Give operations teams the review screens, then publish the pilot vocabularies and the approved customer lexicon into Visier through the contract, with parity and reconcile checks and a rehearsed rollback. Gate G2 \u00b7 End-to-end pilot live: Pilot vocabularies live in Visier production in one version; parity tests pass; reconcile clean; rollback rehearsed; the pilot customer\u2019s lexicon reviewed by ops and published for its tenant; the pilot tenant, reviewers and stewards provisioned through the screens with access tests passed; the core is unchanged by onboarding.", "pilot"], "p3": ["P3 Operate & scale \u00b7 G3", "Prove scale, write the playbook and runbooks, onboard a second customer and a second target, and hand the baseline over for all future projects. Gate G3 \u00b7 Baseline operational: Scale test passed, including access decisions and provisioning; second customer onboarded from the playbook with no core change; second target live; runbooks drilled; measures reported against the baseline; council accepts handover.", "pilot"], "visier": ["Pilot vocabularies live in Visier", "Task W6-08: the downturn workforce advisory dimensions and selection concepts are published in one project version, with parity and reconcile checks and a rehearsed rollback.", "serve"]}};
+(function(){
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const byId = {}; PAGES.forEach((p,i)=>{ p.i=i; byId[p.id]=p; });
+$('#cnt').textContent = PAGES.length; $('#cntd').textContent = Object.keys(DIAGRAMS).length;
+function mount(box){
+  const id = box.dataset.dia; if(box.dataset.m) return; box.dataset.m = '1';
+  box.innerHTML = '<div class="frame">'+DIAGRAMS[id]+'</div><div class="dpanel" aria-live="polite"><div class="empty">Select any box in the diagram to see what it is and where it is covered.</div></div>';
+  const svg = box.querySelector('svg'), det = DETAILS[id] || {};
+  svg.querySelectorAll('g[data-node]').forEach(g=>{ const d = det[g.dataset.node]; if(d){ g.classList.add('node'); g.setAttribute('tabindex','0'); g.setAttribute('role','button'); g.setAttribute('aria-label', d[0]); } });
+}
+function select(box, g){
+  const id = box.dataset.dia, d = (DETAILS[id]||{})[g.dataset.node]; if(!d) return;
+  box.querySelectorAll('g.node.sel').forEach(x=>x.classList.remove('sel')); g.classList.add('sel');
+  const cur = box.closest('.page').id.slice(2), pg = byId[d[2]];
+  const here = pg && pg.id === cur;
+  const panel = box.querySelector('.dpanel');
+  panel.innerHTML = '<h4></h4><p></p>' + (pg ? (here ? '<span class="go here">Covered on this page</span>' : '<a class="go" href="#'+pg.id+'">Open section: '+pg.nav+' →</a>') : '');
+  panel.querySelector('h4').textContent = d[0]; panel.querySelector('p').textContent = d[1];
+}
+document.addEventListener('click', e=>{ const g = e.target.closest('.dia g.node'); if(g) select(g.closest('.dia'), g); });
+document.addEventListener('keydown', e=>{ if((e.key==='Enter'||e.key===' ') && e.target.matches && e.target.matches('.dia g.node')){ e.preventDefault(); select(e.target.closest('.dia'), e.target); } });
+function show(id){
+  if(!byId[id]) id = PAGES[0].id;
+  $$('.page').forEach(p=>{ p.hidden = p.id !== 'p-'+id; });
+  $$('#navlist a').forEach(a=>{ if(a.dataset.id===id) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  $$('#p-'+id+' .dia').forEach(mount);
+  document.title = byId[id].title + ' · Architecture Proposal (interactive)';
+  try{ localStorage.setItem('skl-arch-page', id); }catch(e){}
+  $('#side').classList.remove('open');
+  window.scrollTo({top:0});
+}
+function route(){ const h = (location.hash||'').slice(1); show(byId[h] ? h : 'summary'); }
+window.addEventListener('hashchange', route);
+$('#navtog').addEventListener('click', ()=>$('#side').classList.toggle('open'));
+$('#theme').addEventListener('click', ()=>{ const r = document.documentElement; const dark = getComputedStyle(r).colorScheme.indexOf('dark')>=0; r.setAttribute('data-theme', dark ? 'light' : 'dark'); });
+if(!location.hash){ let s = null; try{ s = localStorage.getItem('skl-arch-page'); }catch(e){} if(s && byId[s]) history.replaceState(null,'','#'+s); }
+route();
+})();
+</script>
+</body></html>

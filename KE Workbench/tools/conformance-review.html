@@ -8,6 +8,7 @@
 <script src="../assets/ke-bridge.js"></script>
 <script src="../assets/ke-sparql.js"></script>
 <script src="../assets/ke-rules.js"></script>
+<script src="../assets/ke-structural.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -258,6 +259,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     { id: 'ref', title: 'Broken and foreign references', rules: ['broken-ref', 'base-url'] },
     { id: 'def', title: 'Missing definitions', rules: ['definition'] },
     { id: 'jobs', title: 'Jobs model (§3.13)', rules: ['job-steps', 'step-of-job', 'step-outcome', 'outcome-step', 'outcome-measured', 'persona-jobs'] },
+    { id: 'struct', title: 'Structure and lineage (v2.3)', rules: ['derivation-bfo', 'primitive-site', 'polyhierarchy', 'edge-matrix', 'tenant-derivation', 'label-resolution', 'tenant-isolation', 'core-immutable'] },
     { id: 'other', title: 'Other', rules: null }
   ];
   const catOf = rule => (CATS.find(c => c.rules && c.rules.includes(rule)) || CATS[CATS.length - 1]).id;
@@ -970,7 +972,7 @@ footer.bar .sum b{font-variant-numeric:tabular-nums}
     const byTerm = new Map(); list.forEach(c => { if (!byTerm.has(c.term)) byTerm.set(c.term, []); byTerm.get(c.term).push(c); });
     return [...byTerm].filter(([iri]) => idx.s.has(iri)).map(([iri, cs]) => dispRecord(iri, 'fix', cs.map(actionOf)));
   }
-  function ruleTitle(id) { return ({ 'formalized-by': 'Not formalized by a class', 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date', 'job-steps': 'Job without job steps', 'step-of-job': 'Job step not in a job', 'step-outcome': 'Job step without a desired outcome', 'outcome-step': 'Outcome not mapped to a job step', 'outcome-measured': 'Outcome not measured', 'persona-jobs': 'Persona without jobs' })[id] || id; }
+  function ruleTitle(id) { return ({ 'formalized-by': 'Not formalized by a class', 'vocab-term': 'Not in a vocabulary', 'org-content': "Other organization's content", 'acronym-label': 'Acronym in preferred label', 'acronym-id': 'Acronym in identifier', 'broken-ref': 'Broken reference', 'base-url': 'Outside the base URL', definition: 'Definition', parent: 'No named parent', label: 'Label', 'sentence-case': 'Sentence case', 'uri-pattern': 'URI pattern', 'name-case': 'Identifier case', 'in-scheme': 'Concept scheme', 'defined-by': 'rdfs:isDefinedBy', 'domain-range': 'Domain and range', 'primary-term': 'Primary vocabulary term', 'skos-taxonomy': 'Taxonomy not in SKOS', 'header-fields': 'Header fields (§3.11)', 'valid-date': 'Invalid date', 'job-steps': 'Job without job steps', 'step-of-job': 'Job step not in a job', 'step-outcome': 'Job step without a desired outcome', 'outcome-step': 'Outcome not mapped to a job step', 'outcome-measured': 'Outcome not measured', 'persona-jobs': 'Persona without jobs', 'derivation-bfo': 'No derivation path to BFO', 'primitive-site': 'Primitive minted outside the core or a top-level domain', 'polyhierarchy': 'More than two parents', 'edge-matrix': 'Edge not in the allowed-edge matrix', 'tenant-derivation': 'Customer concept without a core or domain parent', 'label-resolution': 'Label resolves to more than one concept', 'tenant-isolation': 'Tenant isolation', 'core-immutable': 'Deprecated core term without a replacement' })[id] || id; }
   // Local name in the convention of the term's kind (§3.2 as amended): classes, taxonomy concepts and vocabulary terms are lower-case words joined by hyphens; properties lowerCamel
   function idFor(iri, lbl) {
     const words = String(lbl).replace(/[^A-Za-z0-9]+/g, ' ').trim().split(/\s+/).filter(Boolean);

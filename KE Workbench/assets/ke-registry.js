@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '4.6.0',
+  version: '4.7.0',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -15,6 +15,9 @@ window.KE_REGISTRY = {
         { id: 'conformance-review', code: 'CR', file: 'tools/conformance-review.html', title: 'Conformance Review', live: true, isNew: true,
           desc: 'Human in the loop for conformance errors: other organizations\u2019 content, acronyms, broken and foreign references, missing definitions. Works on ingested files before loading (opened from Ingestion) or on GraphDB; stage fixes or removals across vocabularies, taxonomies and ontologies and save them with a change record. Every disposition passes the AI circuit breaker gateway (§2.7).',
           functions: ['Governance workflow', 'Artifact versioning', 'Change monitoring'], std: ['2.7', '3.2', '3.3', '3.4', '3.6', '3.7', '3.8', '3.13'] },
+        { id: 'pending-terms', code: 'PT', file: 'tools/pending-terms.html', title: 'Pending terms', live: true, isNew: true,
+          desc: 'Labels and concept proposals that could not be resolved to an existing concept wait here (DEV and STG only) until the data steward chooses one disposition: alternate label, domain concept, core change request or reject. Each decision passes the circuit breaker gateway.',
+          functions: ['Governance workflow', 'Change monitoring'], std: ['2.7', '3.4', '3.8'] },
         { id: 'model-editor-vocabulary', code: 'EV', file: 'tools/model-editor-vocabulary.html', title: 'Model Editor (Vocabulary)', live: true, isNew: true,
           desc: 'Edit an ingested vocabulary file: the vocabulary\u2019s own metadata and every term (labels, definition, notes, broader and related terms, status), add or remove terms, with conformance checked as you type. Save writes the .ttl and .trig and loads them into GraphDB.',
           functions: ['Unified modeling', 'Artifact versioning'], std: ['3.2', '3.3', '3.7'] },
@@ -35,7 +38,7 @@ window.KE_REGISTRY = {
           functions: ['Unified modeling'], std: ['3.9'] },
         { id: 'standards-conformance', code: 'SC', file: 'tools/standards-conformance.html', title: 'Standards Conformance', live: true, isNew: true,
           desc: 'Runs the standards checklist of the guide in force — base URL, naming, acronyms, term definition fields, taxonomy rules, versioning, and the §3.13 jobs model §2.7 contextual relevancy relies on — against GraphDB or a Turtle file.',
-          functions: ['Governance workflow', 'Change monitoring'], std: ['2.7', '3.2', '3.3', '3.7', '3.8', '3.11', '3.13', 'E.3'] },
+          functions: ['Governance workflow', 'Change monitoring'], std: ['2.7', '3.1', '3.2', '3.3', '3.4', '3.7', '3.8', '3.11', '3.13', 'E.3'] },
         { id: 'model-visualize', code: 'MV', file: 'tools/model-visualize.html', title: 'Model Visualizer', live: true, hidden: true,
           desc: 'Hierarchy, network and cloud views of one asset. Opened from Model Manager with an asset selected.',
           functions: ['Impact visualization'], std: ['1.3'] },

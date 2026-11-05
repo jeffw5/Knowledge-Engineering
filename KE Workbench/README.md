@@ -1,6 +1,6 @@
 # KE Workbench
 
-One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* in force — v2.1 (Draft), set by `assets/ke-guide.js` — including the §3.11 metadata field set.
+One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* in force — v2.3 (Draft, an amendment set to v2.2), set by `assets/ke-guide.js` — including the §3.11 metadata field set.
 
 ## Run it
 
@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **4.5.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **4.7.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -300,3 +300,28 @@ Section 04 of the sidebar. It realizes the persona model from qualitative resear
 - **Standards Conformance**: six §3.13 jobs-model rules (job steps, job step in a job, outcome per step, outcome mapped to a job step, outcome measured, persona performs jobs); Conformance Review lists them under *Jobs model (§3.13)*.
 - **Retrofit**: `RESOLUTION['2.1']` in `ingest/ops_spec.py` resolves G20 (measured agent assurance).
 - Restart `proxy.py` so the disposition gate is served.
+
+## Semantic Governance v2.3 (4.7.0)
+
+v2.3 (Draft, 2026-11-05) is an **amendment set**: twelve changes (A1–A12) to the v2.2 Draft. It is stored as `docs/Semantic_Governance_v2.3_Amendment_Set_DRAFT.pdf` (the original is `../Semantic Governance/Semantic Governance Guide v2.3 — Amendment Set (Draft).pdf`). `ingest/guide_sync.py` treats an amendment set for a later edition than the newest full guide as the edition in force and records the guide it amends (`baseEdition`, `baseFile` in `assets/ke-guide.js`). The full guide text stays v2.2 until the amendments are merged into a v2.3 PDF; saving that as `Semantic_Governance_v2.3_DRAFT.pdf` makes it take over.
+
+| Amendment | In the workbench |
+|---|---|
+| A1 BFO lineage, immutable core | rules `derivation-bfo`, `core-immutable` |
+| A2 minting only at core or a top-level domain | rule `primitive-site` |
+| A3 limit and report parents | rule `polyhierarchy`; measure polyhierarchy rate |
+| A4 edge types and allowed-edge matrix | rule `edge-matrix`; matrix in `ingest/structural_checks.py` (`allowedEdges` in `ke-ingest.config.json` overrides it) |
+| A5 tenant concepts derive from core or domain | rule `tenant-derivation` |
+| A6 three orphan checks | `derivation-bfo`, `label-resolution` run per graph; schema binding coverage is *not yet measured* |
+| A7 persona labels, scope placement | guide rule; lexicon assets are not built yet |
+| A8 pending state and disposition | **Pending terms** page, `ingest/pending.py`, `/api/ingest/pending`, `/pending-dispose` |
+| A9 per-tenant graphs | rule `tenant-isolation` (a guardrail: waiving it in Conformance Review is HALT) |
+| A10 MTBH = T_ops / N_h | defined by the AI Circuit Breaker v3.0 registry; no tool text used the retired wordings |
+| A11 structural measures | eight measures emitted per graph |
+| A12 dashboards read telemetry | `ingest/telemetry.py` → `data/ops/telemetry.jsonl` → Operations Dashboard **Measures** tab |
+
+The browser rules are in `assets/ke-structural.js` (loaded by Standards Conformance and Conformance Review); the build runs the same rules in `ingest/structural_checks.py`, which `ingest/build_ops_snapshot.py` calls before it reads telemetry. Run `python3 ingest/structural_checks.py` to emit events alone.
+
+Provisional choices, listed as Decision actions until the guide names them: the allowed-edge matrix, `core:formalizedBy` / `rdfs:subClassOf` as the declaration of a primitive’s BFO parent, and `core:hasResolutionState core:pending` for the pending state.
+
+Still to do: rebuild the core and domains so assets declare v2.3 (policy P07) and give every primitive a BFO parent (P10). Restart `proxy.py` so the pending-term routes are served.

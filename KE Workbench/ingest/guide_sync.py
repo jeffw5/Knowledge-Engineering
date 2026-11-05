@@ -4,7 +4,9 @@
     python3 ingest/guide_sync.py            # from the "KE Workbench" folder; also POST /api/ingest/guide-sync
 
 Looks for Semantic_Governance_v<MAJOR>.<MINOR>[_DRAFT].pdf in docs/ and in ../Semantic Governance/ (the newest PDF
-there is copied into docs/), then:
+there is copied into docs/). An amendment set for a later edition ("Semantic Governance Guide v2.3 — Amendment Set
+(Draft).pdf", stored in docs/ as Semantic_Governance_v2.3_Amendment_Set_DRAFT.pdf) makes that edition the one in
+force, with the full guide it amends recorded as baseEdition / baseFile. Then:
   - writes assets/ke-guide.js (window.KE_GUIDE), which the shell, the Overview, the guide link, the Model Editor
     (Ontology) and the Operations Dashboard read;
   - sets conformsTo and standardsRef in ingest/ke-ingest.config.json to that edition, so every asset ingested or
@@ -20,6 +22,11 @@ GUIDE_JS = WB / 'assets/ke-guide.js'
 CONFIG = WB / 'ingest/ke-ingest.config.json'
 TITLE = 'Semantic Governance: Services, Architecture & Integration'
 PAT = re.compile(r'^Semantic_Governance_v(\d+)\.(\d+)(_DRAFT)?\.pdf$', re.I)
+# An amendment set proposes the next edition as changes to the full guide before it (v2.3 amends v2.2).
+# It is stored in docs/ as Semantic_Governance_v<MAJOR>.<MINOR>_Amendment_Set[_DRAFT].pdf; the original title
+# "Semantic Governance Guide v2.3 — Amendment Set (Draft).pdf" in ../Semantic Governance/ is copied under that name.
+APAT = re.compile(r'^Semantic_Governance_v(\d+)\.(\d+)_Amendment_Set(_DRAFT)?\.pdf$', re.I)
+ORIG_APAT = re.compile(r'^Semantic Governance Guide v(\d+)\.(\d+)\s*\W+\s*Amendment Set(?:\s*\(Draft\))?\.pdf$', re.I)
 
 
 def _key(p):
@@ -40,6 +47,20 @@ def editions():
     return dict(sorted(found.items()))
 
 
+def amendments():
+    """{(major, minor): path} of amendment sets, docs/ copy preferred."""
+    found = {}
+    for d in (DOCS, KE / 'Semantic Governance'):
+        if d.is_dir():
+            for p in d.iterdir():
+                m = APAT.match(p.name) or ORIG_APAT.match(p.name)
+                if m:
+                    k = (int(m.group(1)), int(m.group(2)))
+                    if k not in found or p.parent == DOCS:
+                        found[k] = p
+    return dict(sorted(found.items()))
+
+
 def current():
     if not GUIDE_JS.exists():
         return None
@@ -52,16 +73,34 @@ def current():
 
 def sync(rebuild=True):
     eds = editions()
-    if not eds:
+    ams = amendments()
+    if not eds and not ams:
         return {'ok': False, 'error': 'No Semantic_Governance_v*.pdf in docs/ or ../Semantic Governance/'}
-    (maj, mnr), src = list(eds.items())[-1]
+    top_full = list(eds.items())[-1] if eds else None
+    top_am = list(ams.items())[-1] if ams else None
+    # an amendment set for a later edition than the newest full guide makes that edition the one in force
+    amend = bool(top_am and (not top_full or top_am[0] > top_full[0]))
+    (maj, mnr), src = top_am if amend else top_full
     edition = f'{maj}.{mnr}'
-    if src.parent != DOCS:
-        DOCS.mkdir(exist_ok=True)
-        dst = DOCS / src.name
-        shutil.copyfile(src, dst)
-        src = dst
-    draft = bool(PAT.match(src.name).group(3))
+    base_file = base_ed = None
+    if amend:
+        if top_full:
+            base_ed = f'{top_full[0][0]}.{top_full[0][1]}'
+            bsrc = top_full[1]
+            if bsrc.parent != DOCS:
+                shutil.copyfile(bsrc, DOCS / bsrc.name); bsrc = DOCS / bsrc.name
+            base_file = f'docs/{bsrc.name}'
+        if not APAT.match(src.name):
+            dst = DOCS / f'Semantic_Governance_v{maj}.{mnr}_Amendment_Set_DRAFT.pdf'
+            shutil.copyfile(src, dst); src = dst
+        draft = bool(APAT.match(src.name).group(3)) if APAT.match(src.name) else True
+    else:
+        if src.parent != DOCS:
+            DOCS.mkdir(exist_ok=True)
+            dst = DOCS / src.name
+            shutil.copyfile(src, dst)
+            src = dst
+        draft = bool(PAT.match(src.name).group(3))
     date = datetime.date.fromtimestamp(src.stat().st_mtime).isoformat()
     cfg_txt = CONFIG.read_text(encoding='utf-8')
     cfg = json.loads(cfg_txt)
@@ -73,10 +112,13 @@ def sync(rebuild=True):
         'edition': edition, 'status': 'Draft' if draft else 'Released', 'date': date, 'title': TITLE,
         'file': f'docs/{src.name}', 'conformsTo': conforms, 'standardsRef': ref,
         'previous': (prev or {}).get('edition') if (prev or {}).get('edition') != edition else (prev or {}).get('previous'),
-        'editions': [f'{a}.{b}' for a, b in eds],
+        'editions': sorted({f'{a}.{b}' for a, b in list(eds) + list(ams)}, key=lambda v: tuple(int(x) for x in v.split('.'))),
+        'kind': 'amendment-set' if amend else 'guide', 'baseEdition': base_ed, 'baseFile': base_file,
         'syncedAt': datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).strftime('%Y-%m-%dT%H:%M:%SZ'),
     }
-    if not guide['previous'] and len(eds) > 1:
+    if amend and base_ed:
+        guide['previous'] = base_ed
+    elif not guide['previous'] and len(eds) > 1:
         a, b = list(eds)[-2]
         guide['previous'] = f'{a}.{b}'
     changed = not prev or prev.get('edition') != edition or prev.get('file') != guide['file']

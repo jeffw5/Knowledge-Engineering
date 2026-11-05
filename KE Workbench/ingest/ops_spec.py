@@ -1,6 +1,6 @@
 '''Operations Dashboard: authored policy and standards content (read by build_ops_snapshot.py).
 
-GUIDE     where Semantic Governance v1.9 (Draft) no longer matched how the core and domains are built, with the
+GUIDE     where Semantic Governance v1.9 (Draft) (G01-G21) and v2.2 (G22-G33, closed by the v2.3 amendment set) no longer matched how the core and domains are built, with the
           decision or release that changed it and the change made in the next edition;
 RESOLUTION, per edition, where each GUIDE item is resolved (Appendix E.4 of that edition) and its status;
 POLICIES  the process policies the change log is checked against (Part III §3.3, §3.4);
@@ -8,8 +8,8 @@ CATEGORIES and PRIORITIES for the action list.
 '''
 
 # The current edition is read from assets/ke-guide.js (written by ingest/guide_sync.py); these are fallbacks.
-GUIDE_EDITION = '2.0'
-GUIDE_NEXT = '2.1'
+GUIDE_EDITION = '2.3'
+GUIDE_NEXT = '2.4'
 
 
 def G(id, section, topic, v19, practice, sources, change, priority='high', kind='update'):
@@ -123,6 +123,67 @@ GUIDE = [
       'Every asset and generated file declares dcterms:conformsTo the v1.9 edition and "Standards: … v1.9" in its header.',
       ['ke-ingest.config.json conformsTo'],
       'Publish v2.0 (MAJOR: identifier and URI rules change), then update conformsTo in the configuration and rebuild the core and domains so assets claim the edition they meet.', 'high'),
+    # ---- v2.3 amendment set (A1-A12 amend the v2.2 Draft); `v19` holds what the edition in force before the amendments said ----
+    G('G22', '3.7', 'Primitives declare BFO lineage; core terms are immutable (A1)',
+      'v2.2 requires every primitive to be unique and to have one owner, but only core classes and relations are checked for BFO lineage.',
+      'The build checks derivation to the BFO root for every concept, class and primitive (structural_checks: derivation-bfo) and that a deprecated core term names its replacement (core-immutable). The vocabularies do not declare a BFO parent yet, so primitives fail.',
+      ['Semantic Governance v2.3 A1', 'ingest/structural_checks.py'],
+      'Add a BFO parent to every primitive in the vocabularies (core:formalizedBy or rdfs:subClassOf to a core or BFO class) and rebuild; record deprecations with core:supersededBy.', 'high', 'update'),
+    G('G23', '3.7, 3.1', 'Primitives are minted only at the core or a top-level domain (A2)',
+      'A primitive the core lacks is added to the domain that first needs it, or to its area container if several do.',
+      'primitive-site flags a primitive minted in a nested domain, at the enterprise tier or in a customer asset; area-container minting is an open item.',
+      ['Semantic Governance v2.3 A2'],
+      'Move primitives out of nested domains into the top-level parent or propose them for promotion to the core.', 'medium', 'update'),
+    G('G24', '3.7', 'Limit and report multiple parents (A3)',
+      'A taxonomy concept or class may derive from more than one parent; no limit.',
+      'polyhierarchy reports every term with more than two parents to the data steward; the polyhierarchy rate is a structural measure.',
+      ['Semantic Governance v2.3 A3'],
+      'Review the reported terms; evolution is additive, so a term never moves to another parent.', 'low', 'update'),
+    G('G25', '3.1, 3.2', 'Three edge types and a default-deny allowed-edge matrix (A4)',
+      'The relations used inside a domain are listed, but no edge classes are named.',
+      'Derivation, correspondence and lexicalization edges are classified; edge-matrix rejects an edge between tiers that the matrix (ingest/ke-ingest.config.json allowedEdges) does not allow. The matrix is provisional: the amendment states the principle, not the table.',
+      ['Semantic Governance v2.3 A4'],
+      'Confirm the matrix; ontology object properties are outside the matrix until their edge class is decided.', 'medium', 'decide'),
+    G('G26', '3.2', 'Tenant concepts derive from a core or domain class; tenants mint no primitives (A5)',
+      'Customer assets hold one tenant\'s labels and local concepts and never an ontology.',
+      'tenant-derivation checks that every customer concept has a derivation edge to a core or domain class and that no customer asset is an ontology; primitive-site rejects primitives at the customer tier. No customer assets exist yet.',
+      ['Semantic Governance v2.3 A5'],
+      'Re-check derivation and match edges on every core release (the checks run in each snapshot build).', 'medium', 'update'),
+    G('G27', '3.4', 'Three orphan checks, per graph (A6)',
+      'Quality gates cover lineage to BFO and orphan terms for the build.',
+      'Concept derivation and label resolution run per graph and are reported with a count; schema binding coverage cannot run because no source-schema bindings are modelled (listed as not yet measured).',
+      ['Semantic Governance v2.3 A6'],
+      'Model source-schema bindings so the third check can run; the target for each check is zero in a released graph.', 'medium', 'update'),
+    G('G28', '3.8', 'Personas supply alternate labels only; scope placement rule (A7)',
+      'Persona labels are core:intendedForPersona on terms; whether they stay on terms is open decision GN-D2.',
+      'A7 resolves GN-D2: a persona label stays on the core or domain term only when it holds for every tenant and is vetted; otherwise it lives in a lexicon at the narrowest scope that fits. The persona model (core:persona) is unchanged. No lexicon assets exist yet.',
+      ['Semantic Governance v2.3 A7', 'GN-D2'],
+      'Build the enterprise and customer lexicons and move scoped persona labels into them.', 'medium', 'update'),
+    G('G29', '3.8, 2.7', 'Pending state and human disposition for unresolved terms (A8)',
+      'No pending state; an unresolved label or concept proposal is rejected or guessed.',
+      'Pending terms are stored (DEV and STG only) and routed to the steward with four dispositions (alternate label, domain concept, core change, reject); each passes the circuit breaker gateway. The Pending terms page records them; a release containing a pending term fails label resolution.',
+      ['Semantic Governance v2.3 A8', 'ingest/pending.py'],
+      'Route unresolved terms from search and ingestion into the pending store.', 'medium', 'update'),
+    G('G30', '3.2', 'Per-tenant graphs with no cross-tenant path (A9)',
+      'Customer assets are one tenant\'s labels and local concepts; graph naming has 13 rules.',
+      'tenant-isolation rejects an edge or import between two tenant graphs, and any reference from a core, domain or enterprise asset to a tenant; it is a guardrail, so a Conformance Review disposition that waives it is blocked.',
+      ['Semantic Governance v2.3 A9 (graph naming rule 14)'],
+      'Add rule 14 to the graph naming rules in the guide.', 'high', 'update'),
+    G('G31', 'RT-04, Appendix D, Appendix F', 'MTBH is defined by the AI Circuit Breaker v3.0 metrics registry (A10)',
+      'MTBH is answers served, or hours in service, between confirmed hallucinations.',
+      'MTBH = T_ops / N_h per the metrics registry of AI Circuit Breaker: Updated Architecture Design (v3.0). The workbench cites the registry and does not restate the units or event rules.',
+      ['Semantic Governance v2.3 A10', 'AI Circuit Breaker v3.0'],
+      'Keep "answers per hallucination" as a separate, named rate; retire "mean time between harmful outputs" and "Mean Time to Hallucination".', 'medium', 'update'),
+    G('G32', '3.6', 'Structural measures for the semantic design (A11)',
+      '32 measures (DT-01 to DT-14, RT-01 to RT-18) cover answers and services.',
+      'Eight structural measures are emitted per graph: correspondence density, stem-reuse ratio, impact radius, polyhierarchy rate, domain-minted primitive share, promotion-backlog age, HITL disposition mix and orphan rate.',
+      ['Semantic Governance v2.3 A11'],
+      'Set each target at the Gate 1 baseline.', 'medium', 'decide'),
+    G('G33', '3.6', 'Dashboards read telemetry; reconcile with the Operations Dashboard (A12)',
+      'The Operations Dashboard reads the change log and model files.',
+      'Every check that computes a measure emits a telemetry event (data/ops/telemetry.jsonl); the Operations Dashboard reads those events (Measures tab) and does not recompute them. Measures without an emitter are listed as not yet measured.',
+      ['Semantic Governance v2.3 A12', 'ingest/telemetry.py'],
+      'Move the remaining dashboard calculations (conformance counts, policies) onto telemetry events.', 'medium', 'update'),
 ]
 
 
@@ -158,7 +219,33 @@ RESOLUTION = {
     '2.1': {
         'G20': ('resolved', '§2.7 Decision Evaluation: the AI circuit breaker gateway; §3.6 Measured Agent Assurance'),
     },
+    '2.3': {
+        'G22': ('tools', '§3.7 Primitives (A1); primitives still need a BFO parent: policy P10'),
+        'G23': ('tools', '§3.7 Owners and promotion; §3.1 Containers (A2); area-container minting is an open item; policy P13'),
+        'G24': ('resolved', '§3.7 Polymorphic terms (A3)'),
+        'G25': ('decide', '§3.1 / §3.2 Edge types and the allowed-edge matrix (A4); the matrix is provisional'),
+        'G26': ('resolved', '§3.2 Customer tier (A5)'),
+        'G27': ('tools', '§3.4 Quality gates (A6); schema binding coverage is not yet measured: policy P14'),
+        'G28': ('tools', '§3.8 Labels and Personas (A7); lexicon assets still to build'),
+        'G29': ('resolved', '§3.8 and §2.7 Pending terms and disposition (A8)'),
+        'G30': ('resolved', '§3.2 Graph Naming rule 14 (A9)'),
+        'G31': ('resolved', 'RT-04; Appendix D; Appendix F (A10)'),
+        'G32': ('decide', '§3.6 Structural measures (A11); targets to be set at the Gate 1 baseline'),
+        'G33': ('resolved', '§3.6 Monitoring (A12)'),
+    },
 }
+
+# Open items in the v2.3 amendment set (its last section) that still need a decision; they become Decision actions.
+OPEN_2_3 = [
+    ('O-AREA', 'Area-container minting', 'Does an operational-area container count as top level for minting primitives, or must they sit in a named top-level domain? (A2, §3.1)'),
+    ('O-RANK', 'Persona search ranking', 'The guide\'s wording on persona ranking in search must match graph-scoped resolution (A7; §2.7, §3.8).'),
+    ('O-SIM', 'Simulation sequencing', 'Where simulation sits against the roadmap and the Candidate entry criteria (§3.3, Appendix C).'),
+    ('O-COUNCIL', 'Council approver', 'One section lists the approver as open while the roles table names one (§3.4).'),
+    ('O-GN', 'Other graph naming decisions', 'GN-D1 and GN-D3 to GN-D7 are untouched by the v2.3 set (§3.2).'),
+    ('O-MATRIX', 'Allowed-edge matrix', 'Confirm the provisional matrix in ingest/ke-ingest.config.json (allowedEdges) and whether ontology object properties fall under default deny (A4).'),
+    ('O-BFOPRED', 'Predicate for a primitive\'s BFO parent', 'A1 requires the declaration but not the predicate; the build accepts core:formalizedBy or rdfs:subClassOf (A1).'),
+    ('O-PENDING', 'Pending-state predicate', 'The pending state is read as core:hasResolutionState core:pending (provisional name) until the guide names it (A8).'),
+]
 
 POLICIES = [
     P('P01', 'Every change set has a change record', 'Assets in the inventory that no change record generated, revised or used.', '§3.3 Change Log Structure', 'high'),
@@ -170,6 +257,11 @@ POLICIES = [
     P('P07', 'Assets declare the current guide edition', 'Assets whose dcterms:conformsTo is the latest edition of the guide.', '§3.11', 'medium'),
     P('P08', 'Assets have one current copy', 'An asset IRI found in more than one current file, at different versions.', '§3.3 Release Pipeline, D4', 'medium'),
     P('P09', 'Assets move through the lifecycle', 'Assets beyond Draft (Candidate or Released).', '§3.3 Lifecycle Management', 'medium'),
+    P('P10', 'Every concept, class and primitive derives to BFO', 'Terms with a derivation path to the BFO root (A1, A6 concept derivation); read from telemetry.', '§3.7, §3.4 (v2.3 A1, A6)', 'high'),
+    P('P11', 'Every label resolves to one concept in its scope', 'Labels that resolve to exactly one concept, or are pending (A6 label resolution); read from telemetry.', '§3.4, §3.8 (v2.3 A6, A8)', 'medium'),
+    P('P12', 'Edges follow the matrix; tenants are isolated', 'Cross-tier edges allowed by the matrix (A4), customer derivation (A5) and tenant isolation (A9); read from telemetry.', '§3.1, §3.2 (v2.3 A4, A5, A9)', 'high'),
+    P('P13', 'Primitives are minted only at the core or a top-level domain', 'Primitives minted in a nested domain, an enterprise or a customer asset (A2); read from telemetry.', '§3.7 (v2.3 A2)', 'medium'),
+    P('P14', 'Every measure has an emitter', 'Structural and orphan measures that emit telemetry events (A12); the rest are listed as not yet measured.', '§3.6 (v2.3 A12)', 'low'),
 ]
 
 CATEGORIES = ['Conformance', 'Process policy', 'Standards guide', 'Decision', 'Lifecycle', 'Portfolio']

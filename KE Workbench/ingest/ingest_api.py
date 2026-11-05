@@ -621,6 +621,8 @@ def dispositions_get(_, __):
 
 
 DISPOSITIONS = ('fix', 'accept', 'not-an-issue', 'defer', 'escalate')
+# v2.3 A9: tenant isolation is a guardrail: a finding on it cannot be waived (HALT), whatever its severity
+TENANT_GUARD = {'tenant-isolation'}
 
 
 def _guardrail_ids(cfg):
@@ -642,7 +644,7 @@ def evaluate_decision(r, cfg, now):
     import uuid
     fs = r.get('findings') or []
     waives = r.get('disposition') in ('accept', 'not-an-issue')
-    guard_ids = _guardrail_ids(cfg)
+    guard_ids = _guardrail_ids(cfg) | TENANT_GUARD
     guard = [f for f in fs if f.get('rule') in guard_ids]
     errs = [f for f in fs if (f.get('severity') or '') == 'error']
     if waives and guard:
@@ -738,3 +740,53 @@ def guide_sync(_, __):
 
 
 ROUTES[('POST', 'guide-sync')] = guide_sync
+
+
+# ── Pending terms and their disposition (Semantic Governance v2.3, A8) ──
+def evaluate_pending(d, rec, cfg, now):
+    """The gateway for a pending-term disposition (v2.2 §2.7, applied by v2.3 A8). A human decision like every other.
+      HALT    the disposition lacks what the standard requires (a derivation edge for a domain concept, a lexicon for a label);
+      COMPLY  a core change request is held for trustee sign-off: the core changes only through a deliberate release (A1);
+      PASS    everything else."""
+    import uuid
+    import pending as P
+    err = P.check_disposition(d)
+    if err:
+        verdict, rule = 'HALT', err
+    elif d.get('disposition') == 'core-change' and not d.get('signOff'):
+        verdict, rule = 'COMPLY', 'core change request: held for trustee sign-off (the core changes only by a core release)'
+    else:
+        verdict, rule = 'PASS', 'within tolerance'
+    return {'id': 'dec-' + uuid.uuid4().hex[:12], 'kind': 'pending-term-disposition', 'madeBy': 'human', 'persona': 'data steward',
+            'output': d.get('disposition'), 'evidence': [rec.get('id'), rec.get('label')], 'release': cfg.get('standardsRef') or '',
+            'consequence': 'high' if d.get('disposition') == 'core-change' else 'low',
+            'distances': {'ds': 0.0 if verdict == 'PASS' else 1.0, 'db': None, 'dr': None},
+            'verdict': verdict, 'rule': rule, 'evaluatedBy': 'workbench gateway rules (Semantic Governance §2.7)', 'at': now}
+
+
+def pending_list(_, __):
+    import pending as P
+    return {'ok': True, 'path': str(P.FILE), 'dispositions': list(P.DISPOSITIONS), 'environments': list(P.ENVIRONMENTS), 'records': P.records()}
+
+
+def pending_add(b, _):
+    import pending as P
+    return P.add(b.get('items') or [], b.get('env') or 'DEV')
+
+
+def pending_dispose(b, _):
+    import datetime
+    import pending as P
+    now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    rec = P.get(b.get('id') or '')
+    if not rec:
+        return {'ok': False, 'error': 'unknown pending term ' + str(b.get('id'))}
+    cfg, _c = ke_ingest.load_config(CONFIG)
+    dec = evaluate_pending(b, rec, cfg, now)
+    out = P.dispose(dict(b, by=b.get('by') or cfg.get('author') or ''), dec)
+    return {'ok': True, 'verdict': dec['verdict'], 'rule': dec['rule'], 'record': out}
+
+
+ROUTES[('GET', 'pending')] = pending_list
+ROUTES[('POST', 'pending')] = pending_add
+ROUTES[('POST', 'pending-dispose')] = pending_dispose

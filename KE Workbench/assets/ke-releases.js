@@ -2,6 +2,23 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '4.7.0', date: '2026-11-05', title: 'Semantic Governance v2.3: lineage, edges, tenants and structural measures',
+    groups: [
+      { kind: 'new', items: [
+        'Semantic Governance v2.3 (Draft) is in force. It is an amendment set of twelve changes (A1\u2013A12) to the v2.2 Draft, not a full guide: the PDF is in docs/ as Semantic_Governance_v2.3_Amendment_Set_DRAFT.pdf beside v2.2, and ingest/guide_sync.py now recognizes an amendment set for a later edition, records the guide it amends (baseEdition, baseFile) and moves conformsTo and standardsRef to 2.3.',
+        'Structure and lineage rules (Standards Conformance and Conformance Review, assets/ke-structural.js; the build runs the same rules in ingest/structural_checks.py): derivation to BFO for every concept, class and primitive (A1, A6); primitives minted only at the core or a top-level domain (A2); more than two parents reported to the steward (A3); the three edge types and a default-deny allowed-edge matrix (A4); customer concepts derive from a core or domain class and a tenant mints nothing (A5); a label resolves to one concept in its scope (A6, A8); tenant graphs isolated and never referred to from core, domain or enterprise assets (A9); a deprecated core term names its replacement (A1).',
+        'Pending terms (A8): a new page and API (/api/ingest/pending, /pending-dispose) store unresolved labels and concepts in DEV and STG only and route them to the steward with four dispositions: alternate label, domain concept, core change request, reject. Each decision passes the circuit breaker gateway; a core change is held for trustee sign-off, and a disposition missing what the standard requires is blocked.',
+        'Telemetry (A12): every check that computes a measure emits an event to data/ops/telemetry.jsonl (ingest/telemetry.py). The Operations Dashboard has a Measures tab that reads those events and recomputes nothing: correspondence density, stem-reuse ratio, impact radius, polyhierarchy rate, domain-minted primitive share, promotion-backlog age, HITL disposition mix and orphan rate (A11). Schema binding coverage (A6.2) is listed as not yet measured.',
+        'Operations Dashboard: policies P10\u2013P14 (derivation to BFO, label resolution, edges and tenant isolation, primitive minting, measures with an emitter); retrofit items G22\u2013G33 record where v2.3 resolves each amendment; the eight open items of the amendment set and three provisional choices made here (the matrix, the predicate for a primitive\u2019s BFO parent, the pending-state predicate) are Decision actions.'
+      ] },
+      { kind: 'improved', items: [
+        'Conformance Review: a new category, Structure and lineage (v2.3). A disposition that waives a tenant isolation finding is blocked (HALT) like the load-blocking rules.',
+        'MTBH (A10) is defined by the metrics registry of AI Circuit Breaker v3.0 (MTBH = T_ops / N_h); the workbench uses \u201cMean Time Between Hallucinations\u201d throughout and never used the retired wordings, so no tool text changed.',
+        'The assets still declare earlier editions until the core and domains are rebuilt (policy P07), and the primitives declare no BFO parent yet (P10): the new rules report them rather than hide them.'
+      ] }
+    ]
+  },
+  {
     version: '4.6.0', date: '2026-10-26', title: 'Semantic Governance v2.1: processing, outbound and the AI circuit breaker',
     groups: [
       { kind: 'new', items: [

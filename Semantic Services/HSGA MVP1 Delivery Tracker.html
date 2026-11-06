@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HSGA MVP1 Delivery Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--navy2:#12305A;--gold:#C8A951;--gold-ink:#7E6319;--ink:#20344B;--muted:#5E7188;--hair:#D8E1EC;--ice:#EEF2F7;--ice2:#F6F8FB;--surface:#fff;
+--go:#2E7D5B;--go-bg:#E6F1EC;--rev:#B8842B;--rev-bg:#FBF3DF;--nogo:#B23A3A;--nogo-bg:#F6E4E4;--teal:#2E6E8E;--teal-bg:#E3EEF4;--inf:#7A5AA6;--inf-bg:#EDE7F4;
+--serif:'Source Serif 4',Georgia,serif;--sans:Inter,system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 var(--sans);color:var(--ink);background:var(--ice2)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+header{background:var(--navy);color:#fff;padding:14px 24px 0}
+.hrow{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap}
+header h1{font:700 22px var(--serif);margin:0}
+header .sub{color:#B9C6D8;font-size:12.5px}
+header .meta{margin-left:auto;text-align:right;font-size:12.5px;color:#DDE5EF}
+header .meta b{color:var(--gold)}
+nav{display:flex;gap:2px;margin-top:12px;overflow-x:auto}
+nav a{color:#C9D4E3;text-decoration:none;padding:9px 14px;border-radius:8px 8px 0 0;font-weight:500;white-space:nowrap}
+nav a.on{background:var(--ice2);color:var(--navy);font-weight:600}
+main{max-width:1320px;margin:0 auto;padding:20px 24px 60px}
+.banner{border:1px solid #E9D9A6;background:var(--rev-bg);color:#5A4710;padding:9px 14px;border-radius:9px;margin-bottom:16px;font-size:13px}
+.banner.err{background:var(--nogo-bg);border-color:#E7C2C2;color:#6E1F1F}
+h2{font:700 24px var(--serif);color:var(--navy);margin:0 0 4px}
+h3{font:700 17px var(--serif);color:var(--navy);margin:0 0 8px}
+.lead{color:var(--muted);margin:0 0 16px;max-width:880px}
+.eb{font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--gold-ink)}
+.card{background:var(--surface);border:1px solid var(--hair);border-radius:12px;padding:16px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:1000px){.g5,.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.g2,.g3,.g5{grid-template-columns:1fr}main{padding:14px}header{padding:12px 14px 0}}
+.sec{margin-top:22px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{background:#fff;border:1px solid var(--hair);border-radius:10px;padding:12px 14px;text-align:left}
+.tile b{display:block;font:700 28px var(--serif);color:var(--navy);font-variant-numeric:tabular-nums}
+.tile span{font-size:12px;color:var(--muted)}
+button.tile:hover{border-color:var(--gold)}
+.tile.warn b{color:var(--rev)}.tile.bad b{color:var(--nogo)}.tile.good b{color:var(--go)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:7px 9px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+th{background:var(--ice2);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);position:sticky;top:0;z-index:1}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.click{cursor:pointer}tr.click:hover td{background:#FBF7EA}
+.scroll{overflow:auto}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.s-not-started{background:var(--ice);color:var(--muted)}.s-in-progress{background:var(--teal-bg);color:var(--teal)}.s-at-risk{background:var(--rev-bg);color:var(--rev)}.s-blocked{background:var(--nogo-bg);color:var(--nogo)}.s-done{background:var(--go-bg);color:var(--go)}
+.tag{display:inline-block;font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:5px;margin:1px 2px 1px 0;background:var(--ice);color:var(--muted);white-space:nowrap}
+.tag.D{background:var(--teal-bg);color:var(--teal)}.tag.R{background:var(--nogo-bg);color:var(--nogo)}.tag.A{background:var(--inf-bg);color:var(--inf)}.tag.X{background:var(--rev-bg);color:var(--rev)}
+.slip{font:600 11.5px var(--mono);padding:1px 6px;border-radius:5px;white-space:nowrap}
+.slip.p{background:var(--nogo-bg);color:var(--nogo)}.slip.z{color:var(--muted)}.slip.n{background:var(--go-bg);color:var(--go)}
+.mono{font-family:var(--mono);font-size:12px}
+.muted{color:var(--muted)}.small{font-size:12px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.toolbar select,.toolbar input{border:1px solid var(--hair);border-radius:7px;padding:6px 9px;background:#fff}
+.btn{border:1px solid var(--hair);background:#fff;border-radius:7px;padding:6px 12px;font-weight:500}
+.btn:hover{border-color:var(--gold)}
+.btn.pri{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.pri:hover{background:var(--navy2)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.bar{height:7px;background:var(--ice);border-radius:4px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.gate{display:flex;flex-direction:column;gap:6px}
+.gate .gh{display:flex;justify-content:space-between;align-items:baseline}
+.gate .gh b{font:700 16px var(--serif);color:var(--navy)}
+.gstat{font-size:12px;color:var(--muted)}
+.gstat.late{color:var(--nogo);font-weight:600}.gstat.ok{color:var(--go);font-weight:600}
+.grp td{background:var(--ice2);font-weight:600;color:var(--navy)}
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(11,31,58,.35);z-index:20;display:none}
+.scrim.on{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:#fff;z-index:21;box-shadow:-8px 0 30px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .2s;display:flex;flex-direction:column}
+.drawer.on{transform:none}
+.dhead{padding:16px 20px;border-bottom:1px solid var(--hair);display:flex;gap:10px;align-items:flex-start}
+.dhead h3{margin:2px 0 0;font-size:18px}
+.dbody{padding:16px 20px;overflow:auto;flex:1}
+.dfoot{padding:12px 20px;border-top:1px solid var(--hair);display:flex;gap:8px;align-items:center}
+.f{margin-bottom:12px}
+.f label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:4px}
+.f input,.f select,.f textarea{width:100%;border:1px solid var(--hair);border-radius:7px;padding:7px 9px;background:#fff}
+.f textarea{min-height:64px;resize:vertical}
+.frow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.rsn{display:flex;flex-wrap:wrap;gap:5px}
+.rsn button{border:1px solid var(--hair);background:#fff;border-radius:999px;padding:3px 9px;font-size:12px}
+.rsn button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.rsn button.sug{border-color:var(--gold)}
+.rsn h4{width:100%;margin:8px 0 2px;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.err{color:var(--nogo);font-size:12.5px}
+.ok{color:var(--go);font-size:12.5px}
+svg text{font-family:var(--sans)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:4px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.reg td select,.reg td input{border:1px solid var(--hair);border-radius:6px;padding:4px 6px;background:#fff;width:100%}
+.reg td textarea{border:1px solid var(--hair);border-radius:6px;padding:4px 6px;width:100%;min-height:38px;font-size:12.5px}
+.empty{color:var(--muted);padding:18px;text-align:center}
+.hbar{display:grid;grid-template-columns:minmax(150px,260px) 1fr 70px;gap:8px;align-items:center;padding:4px 0;font-size:12.5px}
+.hbar button{all:unset;cursor:pointer}
+.hbar button:hover{text-decoration:underline}
+.hbar .t{height:14px;background:var(--ice);border-radius:4px;overflow:hidden}
+.hbar .t i{display:block;height:100%;border-radius:4px}
+</style>
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <div><div class="sub">HSGA · HR360 on a governed semantic knowledge layer</div><h1>MVP1 Delivery Tracker</h1></div>
+    <div class="meta" id="hmeta">Loading…</div>
+  </div>
+  <nav id="nav"></nav>
+</header>
+<main>
+  <div id="banners"></div>
+  <section id="view"></section>
+</main>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+<script>
+/* ---------------- static reference ---------------- */
+const PROJECTS={
+ 'ISP-01':['Core ontology','core'],'ISP-02':['SSOT rules','core'],'ISP-03':['Benefits data intake','core'],'ISP-04':['Naming and personas','seed'],
+ 'ISP-05':['Change governance','seed'],'ISP-06':['Payroll concepts','seed'],'ISP-07':['Benefits domain','core'],'ISP-08':['Rule validation','core'],
+ 'ISP-10':['Grounding and circuit breaker','core'],'ISP-12':['HR360 on the SKL','core'],'ISP-13':['Legal norms','seed'],'ISP-15':['HR360 integration path','seed'],
+ 'ISP-16':['Client concepts','seed'],'ISP-21':['Operations Workbench','core']};
+const WS={S:'Semantic services',G:'Governance',O:'Operating model',A:'HR360 agent'};
+const GATES=[{g:'M-G1',wk:2,name:'Baseline'},{g:'M-G2',wk:6,name:'Keel released'},{g:'B-G0',wk:8,name:'Architecture decided'},{g:'M-G3',wk:9,name:'Services live in test'},{g:'M-G4',wk:12,name:'Proof of capability'}];
+const DISC={DT:'Discover',['RE-P']:'Define · policy',['RE-S']:'Define · service and trust',ODD:'Design',KE:'Develop · knowledge',DE:'Develop · data',SE:'Develop · systems',OPR:'Deliver · operations',GOV:'Run · governance',SLM:'Run · service lifecycle'};
+const STATUS=[['not-started','Not started'],['in-progress','In progress'],['at-risk','At risk'],['blocked','Blocked'],['done','Done']];
+const SLAB=Object.fromEntries(STATUS);
+const KIND={D:'Dependency',R:'Risk',A:'Assumption',X:'Other cause'};
+const PLURAL={D:'Dependencies',R:'Risks',A:'Assumptions',X:'Other causes'};
+const KSTAT={D:['Not started','In progress','Met','Late'],R:['Open','Mitigating','Occurred','Closed'],A:['Holding','At risk','Broken'],X:['Active']};
+const COL={'not-started':'#C5D0DD','in-progress':'#2E6E8E','at-risk':'#B8842B','blocked':'#B23A3A','done':'#2E7D5B'};
+
+/* ---------------- helpers ---------------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uniq=a=>[...new Set(a)];
+const parseD=s=>{const [y,m,d]=String(s||'2026-11-02').split('-').map(Number);return new Date(y,(m||1)-1,d||1);};
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+const fmt=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+const fmtY=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+
+/* ---------------- state ---------------- */
+const S={dels:{},reg:{},log:[],cfg:null,loaded:{dels:false,reg:false,cfg:false},canWrite:true,uid:null,names:{},
+  view:'overview',f:{ws:'',proj:'',gate:'',status:'',q:'',slipped:false,reason:''},openId:null,err:null,stale:false};
+let db=null,user=null;
+
+const start=()=>parseD(S.cfg&&S.cfg.start);
+const confirmed=()=>!!(S.cfg&&S.cfg.confirmed);
+const wkStart=w=>addD(start(),7*(w-1));
+const wkEnd=w=>addD(start(),7*(w-1)+4);
+const gDate=g=>g.g==='B-G0'?wkStart(g.wk):wkEnd(g.wk);
+function curWeek(){const ms=new Date()-start();return Math.floor(ms/864e5/7)+1;}
+function holidayWeeks(n=16){const out=new Set();for(let w=1;w<=n;w++){const a=wkStart(w),b=addD(a,6);
+  for(let d=new Date(a);d<=b;d=addD(d,1)){const m=d.getMonth(),dd=d.getDate();
+    if(m===10&&d.getDay()===4&&dd>=22&&dd<=28)out.add(w);
+    if((m===11&&dd>=24)||(m===0&&dd===1))out.add(w);}}return out;}
+const dels=()=>Object.values(S.dels).sort((a,b)=>a.id.localeCompare(b.id,undefined,{numeric:true}));
+const due=d=>d.status==='done'?(d.actual||d.fcst):d.fcst;
+const slipOf=d=>(due(d)||0)-(d.base||0);
+const overdue=d=>confirmed()&&d.status!=='done'&&curWeek()>d.fcst;
+const regList=()=>Object.values(S.reg).sort((a,b)=>('DRAX'.indexOf(a.kind)-'DRAX'.indexOf(b.kind))||a.code.localeCompare(b.code,undefined,{numeric:true}));
+const regTitle=c=>S.reg[c]?S.reg[c].title:c;
+const rtag=c=>`<span class="tag ${esc((S.reg[c]||{}).kind||c[0])}" title="${esc(regTitle(c))}">${esc(c)}</span>`;
+const pill=s=>`<span class="pill s-${esc(s)}">${esc(SLAB[s]||s)}</span>`;
+const slipChip=n=>n>0?`<span class="slip p">+${n} wk</span>`:n<0?`<span class="slip n">${n} wk</span>`:`<span class="slip z">on plan</span>`;
+const who=id=>id?(S.names[id]||'Someone'):'—';
+async function resolveNames(ids){if(!user||!user.profiles)return;ids=uniq(ids.filter(Boolean));if(!ids.length)return;try{const ps=await user.profiles(ids);let ch=false;ids.forEach(i=>{const n=(ps[i]&&ps[i].name)||'Someone';if(S.names[i]!==n){S.names[i]=n;ch=true;}});if(ch)render();}catch(e){}}
+
+/* ---------------- routing ---------------- */
+const VIEWS=[['overview','Overview'],['deliverables','Deliverables'],['slippage','Slippage'],['register','Risks, dependencies & assumptions'],['setup','Setup']];
+function route(){const h=location.hash.slice(1);S.view=VIEWS.some(v=>v[0]===h)?h:'overview';render();}
+window.addEventListener('hashchange',route);
+
+/* ---------------- render ---------------- */
+function render(){
+  $('#nav').innerHTML=VIEWS.map(([k,l])=>`<a href="#${k}" class="${S.view===k?'on':''}">${l}</a>`).join('');
+  const cw=curWeek();
+  $('#hmeta').innerHTML=S.cfg?`Start ${confirmed()?'':'(planned) '}<b>${fmtY(start())}</b> · ${cw<1?`starts in ${Math.ceil((start()-new Date())/864e5)} days`:cw>12?`week ${cw} (past plan)`:`<b>week ${cw}</b> of 12`}<br>Final gate M-G4 planned ${fmt(wkEnd(12))}`:'Loading…';
+  let b='';
+  if(!db)b+=`<div class="banner err">Shared data isn't available in this view. Open the tracker from its claude.ai link while signed in to see and update deliverables.</div>`;
+  if(S.err)b+=`<div class="banner err">${esc(S.err)}</div>`;
+  if(S.stale)b+=`<div class="banner">The shared data can't be reached yet; what you see may be out of date.</div>`;
+  if(S.cfg&&!confirmed())b+=`<div class="banner"><b>Start date not confirmed.</b> Dates assume ${fmtY(start())}; weeks stay fixed and every date moves when you set the actual start in <a href="#setup">Setup</a>. Overdue checks are off until then.</div>`;
+  if(db&&!S.canWrite)b+=`<div class="banner">You can view this tracker but not change it. Ask the owner for Contributor access to update deliverables.</div>`;
+  $('#banners').innerHTML=b;
+  const ready=S.loaded.dels&&S.loaded.cfg;
+  if(!ready&&db){$('#view').innerHTML='<div class="empty">Loading deliverables…</div>';return;}
+  if(ready&&!dels().length){$('#view').innerHTML='<div class="card empty">No deliverables yet. They will appear here once the plan is loaded.</div>';return;}
+  ({overview:vOverview,deliverables:vDels,slippage:vSlip,register:vReg,setup:vSetup})[S.view]();
+}
+
+/* ---- overview ---- */
+function vOverview(){
+  const L=dels(),cnt=s=>L.filter(d=>d.status===s).length,sl=L.filter(d=>slipOf(d)>0),od=L.filter(overdue);
+  const slipWk=sl.reduce((a,d)=>a+slipOf(d),0);
+  const tile=(n,l,cls,act)=>`<button class="tile ${cls||''}" ${act||''}><b>${n}</b><span>${l}</span></button>`;
+  const gates=GATES.map(g=>{const ds=L.filter(d=>d.gate===g.g),dn=ds.filter(d=>d.status==='done').length;
+    const fw=ds.length?Math.max(...ds.map(due)):g.wk,late=fw-g.wk;
+    const segs=STATUS.map(([s])=>{const n=ds.filter(d=>d.status===s).length;return n?`<i style="width:${100*n/ds.length}%;background:${COL[s]}" title="${SLAB[s]}: ${n}"></i>`:'';}).reverse().join('');
+    const rs=uniq(ds.filter(d=>slipOf(d)>0).flatMap(d=>d.reasons||[]));
+    return `<div class="card gate"><div class="gh"><b>${g.g}</b><span class="small muted">W${g.wk} · ${fmt(gDate(g))}</span></div><div class="small">${esc(g.name)}</div>
+    <div class="bar">${segs}</div><div class="small muted">${dn} of ${ds.length} deliverables done</div>
+    <div class="gstat ${late>0?'late':'ok'}">${late>0?`Forecast W${fw} · ${fmt(wkEnd(fw))} · +${late} wk`:'Forecast on plan'}</div>
+    ${rs.length?`<div>${rs.map(rtag).join('')}</div>`:''}
+    <button class="btn small" data-filter="gate:${g.g}">View deliverables</button></div>`;}).join('');
+  const projRows=Object.keys(PROJECTS).map(p=>{const ds=L.filter(d=>d.proj===p);if(!ds.length)return'';const dn=ds.filter(d=>d.status==='done').length,ms=Math.max(0,...ds.map(slipOf)),worst=['blocked','at-risk','in-progress','not-started','done'].find(s=>ds.some(d=>d.status===s));
+    return `<tr class="click" data-filter="proj:${p}"><td><b>${p}</b> ${esc(PROJECTS[p][0])}</td><td><span class="tag">${PROJECTS[p][1]==='core'?'Core slice':'Seed'}</span></td><td class="num">${dn} / ${ds.length}</td><td><div class="bar" style="width:120px"><i style="width:${100*dn/ds.length}%;background:var(--go)"></i></div></td><td class="num">${ds.filter(d=>slipOf(d)>0).length}</td><td>${ms>0?slipChip(ms):'<span class="slip z">—</span>'}</td><td>${pill(worst)}</td></tr>`;}).join('');
+  $('#view').innerHTML=`<div class="eb">MVP1 · ${L.length} deliverables · 14 projects · 5 gates</div><h2>Where MVP1 stands</h2><p class="lead">Status, forecast and slippage against the baseline plan. Every slipped deliverable carries a reason from the risks, dependencies and assumptions register.</p>
+  <div class="tiles">${tile(cnt('done')+' / '+L.length,'deliverables done','good',`data-filter="status:done"`)}${tile(cnt('in-progress'),'in progress','',`data-filter="status:in-progress"`)}${tile(cnt('at-risk'),'at risk','warn',`data-filter="status:at-risk"`)}${tile(cnt('blocked'),'blocked','bad',`data-filter="status:blocked"`)}${tile(sl.length,'slipped against baseline',sl.length?'bad':'',`data-filter="slipped:1"`)}${tile(slipWk,'total slip, deliverable-weeks',slipWk?'warn':'','data-go="slippage"')}${tile(confirmed()?od.length:'—',confirmed()?'overdue (past forecast)':'overdue: set start date',od.length?'bad':'','data-go="'+(confirmed()?'deliverables':'setup')+'"')}</div>
+  <div class="sec"><h3>Gate readiness</h3><div class="grid g5">${gates}</div></div>
+  <div class="sec grid g2"><div class="card"><h3>Completion against plan</h3>${burnup(L)}</div>
+  <div class="card"><h3>Top reasons for slippage</h3>${pareto(L,6)}</div></div>
+  <div class="sec"><h3>By project</h3><div class="card scroll"><table><tr><th>Project</th><th>MVP1 role</th><th class="num">Done</th><th></th><th class="num">Slipped</th><th>Worst slip</th><th>Worst status</th></tr>${projRows}</table></div></div>`;
+}
+function burnup(L){
+  const n=Math.max(1,L.length),cw=curWeek(),maxW=Math.max(12,...L.map(due));const W=560,H=210,px=36,py=14,X=w=>px+(w)*(W-px-10)/maxW,Y=v=>H-26-(v/n)*(H-26-py);
+  const cum=f=>{let p=[[0,0]];for(let w=1;w<=maxW;w++)p.push([w,L.filter(d=>f(d)!=null&&f(d)<=w).length]);return p;};
+  const path=pts=>'M'+pts.map(([w,v])=>`${X(w).toFixed(1)} ${Y(v).toFixed(1)}`).join(' L');
+  const base=cum(d=>d.base),fc=cum(due);let act=cum(d=>d.status==='done'?(d.actual||d.fcst):null);
+  act=act.filter(([w])=>w<=Math.max(0,cw));
+  let ax='';for(let w=1;w<=maxW;w++)ax+=`<text x="${X(w)}" y="${H-10}" font-size="10" text-anchor="middle" fill="#5E7188">${w}</text>`;
+  [0,.5,1].forEach(f=>ax+=`<line x1="${px}" x2="${W-10}" y1="${Y(n*f)}" y2="${Y(n*f)}" stroke="#E1E9F2"/><text x="${px-6}" y="${Y(n*f)+4}" font-size="10" text-anchor="end" fill="#5E7188">${Math.round(n*f)}</text>`);
+  const gl=GATES.map(g=>`<line x1="${X(g.wk)}" x2="${X(g.wk)}" y1="${py}" y2="${H-26}" stroke="#C8A951" stroke-dasharray="3 3"/><text x="${X(g.wk)}" y="${py-2}" font-size="9.5" text-anchor="middle" fill="#7E6319">${g.g}</text>`).join('');
+  const now=confirmed()&&cw>=1&&cw<=maxW?`<line x1="${X(cw)}" x2="${X(cw)}" y1="${py}" y2="${H-26}" stroke="#20344B" stroke-width="1.5"/>`:'';
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Cumulative deliverables by week: baseline, forecast and actual">${ax}${gl}${now}<path d="${path(base)}" fill="none" stroke="#9AA9BC" stroke-width="2" stroke-dasharray="5 4"/><path d="${path(fc)}" fill="none" stroke="#2E6E8E" stroke-width="2.2"/><path d="${path(act)}" fill="none" stroke="#2E7D5B" stroke-width="3"/></svg>
+  <div class="legend"><span><i style="background:#9AA9BC"></i>Baseline plan</span><span><i style="background:#2E6E8E"></i>Forecast</span><span><i style="background:#2E7D5B"></i>Actually done</span>${confirmed()?'<span><i style="background:#20344B;width:3px;height:12px"></i>This week</span>':''}<span>Week numbers along the bottom</span></div>`;
+}
+function reasonStats(L){const m={};L.filter(d=>slipOf(d)>0).forEach(d=>(d.reasons&&d.reasons.length?d.reasons:['—']).forEach(r=>{m[r]=m[r]||{n:0,w:0};m[r].n++;m[r].w+=slipOf(d);}));return Object.entries(m).sort((a,b)=>b[1].w-a[1].w||b[1].n-a[1].n);}
+function pareto(L,lim){const st=reasonStats(L);if(!st.length)return '<div class="empty">No slippage recorded. When a forecast moves past its baseline week, the reasons chosen show here.</div>';
+  const mx=st[0][1].w;return st.slice(0,lim||99).map(([r,v])=>`<div class="hbar"><button data-filter="reason:${esc(r)}">${r==='—'?'<span class="tag X">none given</span>':rtag(r)} ${esc(r==='—'?'No reason recorded':regTitle(r))}</button><div class="t"><i style="width:${100*v.w/mx}%;background:${(S.reg[r]||{}).kind==='D'?'#2E6E8E':(S.reg[r]||{}).kind==='A'?'#7A5AA6':(S.reg[r]||{}).kind==='X'?'#B8842B':'#B23A3A'}"></i></div><span class="mono">${v.w} wk · ${v.n}</span></div>`).join('')+'<p class="small muted" style="margin:6px 0 0">Bar length is slip in deliverable-weeks; the count is deliverables citing the reason. A deliverable can cite several.</p>';}
+
+/* ---- deliverables ---- */
+function filtered(){const f=S.f;return dels().filter(d=>(!f.ws||d.ws===f.ws)&&(!f.proj||d.proj===f.proj)&&(!f.gate||d.gate===f.gate)&&(!f.status||d.status===f.status)&&(!f.slipped||slipOf(d)>0)&&(!f.reason||(f.reason==='—'?slipOf(d)>0&&!(d.reasons||[]).length:(d.reasons||[]).includes(f.reason)))&&(!f.q||(d.id+' '+d.title+' '+(d.owner||'')+' '+(d.notes||'')).toLowerCase().includes(f.q.toLowerCase())));}
+function vDels(){
+  const f=S.f,L=filtered();const opt=(v,l,cur)=>`<option value="${esc(v)}" ${cur===v?'selected':''}>${esc(l)}</option>`;
+  const rows=[];let lp='';L.forEach(d=>{if(d.proj!==lp){lp=d.proj;rows.push(`<tr class="grp"><td colspan="8">${esc(d.proj)} · ${esc((PROJECTS[d.proj]||[d.proj])[0])} <span class="muted small" style="font-weight:400">· ${esc(WS[d.ws]||'')}</span></td></tr>`);}
+    rows.push(`<tr class="click" data-open="${esc(d.id)}"><td class="mono">${esc(d.id)}</td><td>${esc(d.title)}${d.notes?`<div class="small muted">${esc(d.notes.length>90?d.notes.slice(0,89)+'…':d.notes)}</div>`:''}</td><td class="small">${esc(d.owner||'')}</td><td class="mono">${esc(d.gate)}</td><td class="mono">W${d.base} → W${due(d)}${overdue(d)?' <span class="slip p">overdue</span>':''}</td><td>${slipChip(slipOf(d))}</td><td>${pill(d.status)}${d.pct?`<div class="small muted">${d.pct}%</div>`:''}</td><td>${(d.reasons||[]).map(rtag).join('')}</td></tr>`);});
+  $('#view').innerHTML=`<div class="eb">Deliverables</div><h2>Capture and update MVP1 deliverables</h2><p class="lead">Select a deliverable to update its status, owner, forecast week, evidence and slip reasons. Baseline weeks stay fixed; moving the forecast past the baseline asks for a reason.</p>
+  <div class="toolbar"><input id="fq" placeholder="Search" value="${esc(f.q)}" style="min-width:180px">
+  <select id="fws">${opt('','All workstreams',f.ws)}${Object.entries(WS).map(([k,l])=>opt(k,l,f.ws)).join('')}</select>
+  <select id="fproj">${opt('','All projects',f.proj)}${Object.keys(PROJECTS).map(p=>opt(p,p+' '+PROJECTS[p][0],f.proj)).join('')}</select>
+  <select id="fgate">${opt('','All gates',f.gate)}${GATES.map(g=>opt(g.g,g.g+' '+g.name,f.gate)).join('')}</select>
+  <select id="fstatus">${opt('','All statuses',f.status)}${STATUS.map(([k,l])=>opt(k,l,f.status)).join('')}</select>
+  <select id="freason">${opt('','Any reason',f.reason)}${regList().map(r=>opt(r.code,r.code+' '+r.title,f.reason)).join('')}</select>
+  <label class="small"><input type="checkbox" id="fslip" ${f.slipped?'checked':''}> Slipped only</label>
+  <button class="btn" data-clear="1">Clear</button>
+  <span style="margin-left:auto"></span><button class="btn" id="copycsv">Copy as CSV</button>${S.canWrite?'<button class="btn pri" data-new="1">Add deliverable</button>':''}</div>
+  <div class="small muted" style="margin-bottom:6px">${L.length} of ${dels().length} deliverables</div>
+  <div class="card scroll" style="padding:0;max-height:70vh"><table><tr><th>ID</th><th>Deliverable</th><th>Owner</th><th>Gate</th><th>Baseline → forecast</th><th>Slip</th><th>Status</th><th>Reasons</th></tr>${rows.join('')||'<tr><td colspan="8" class="empty">No deliverables match these filters.</td></tr>'}</table></div>`;
+  const on=(id,k,ev='change',fn=e=>e.target.value)=>$(id).addEventListener(ev,e=>{S.f[k]=fn(e);render();});
+  on('#fws','ws');on('#fproj','proj');on('#fgate','gate');on('#fstatus','status');on('#freason','reason');on('#fslip','slipped','change',e=>e.target.checked);
+  let t;$('#fq').addEventListener('input',e=>{clearTimeout(t);t=setTimeout(()=>{S.f.q=e.target.value;render();const q=$('#fq');q.focus();q.setSelectionRange(q.value.length,q.value.length);},250);});
+  $('#copycsv').addEventListener('click',async e=>{const h=['id','project','workstream','deliverable','owner','gate','discipline','baseline_week','forecast_week','actual_week','slip_weeks','status','pct','reasons','reason_note','evidence','notes'];
+    const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';const csv=[h.join(',')].concat(L.map(d=>[d.id,d.proj,WS[d.ws],d.title,d.owner,d.gate,d.disc,d.base,d.fcst,d.actual||'',slipOf(d),SLAB[d.status],d.pct||0,(d.reasons||[]).join(' '),d.reasonNote,d.evidence,d.notes].map(q).join(','))).join('\n');
+    try{await navigator.clipboard.writeText(csv);e.target.textContent='Copied';}catch(x){e.target.textContent='Copy blocked';}setTimeout(()=>{e.target.textContent='Copy as CSV';},1800);});
+}
+
+/* ---- slippage ---- */
+function vSlip(){
+  const L=dels(),sl=L.filter(d=>slipOf(d)!==0).sort((a,b)=>slipOf(b)-slipOf(a));
+  const maxW=Math.max(12,...L.map(due))+1,LW=300,WW=34,X=w=>LW+(w-1)*WW,RH=24,H=40+sl.length*RH+10,hw=holidayWeeks(maxW);
+  let ax='';for(let w=1;w<=maxW;w++){ax+=`${hw.has(w)?`<rect x="${X(w)}" y="28" width="${WW}" height="${H-38}" fill="#F3EEDD"/>`:''}<line x1="${X(w)}" x2="${X(w)}" y1="28" y2="${H-10}" stroke="#E6ECF3"/><text x="${X(w)+WW/2}" y="22" font-size="10" text-anchor="middle" fill="#5E7188">W${w}</text>`;}
+  GATES.forEach(g=>ax+=`<line x1="${X(g.wk+1)}" x2="${X(g.wk+1)}" y1="28" y2="${H-10}" stroke="#C8A951" stroke-dasharray="3 3"/><text x="${X(g.wk+1)}" y="10" font-size="9.5" text-anchor="middle" fill="#7E6319" font-weight="600">${g.g}</text>`);
+  const rows=sl.map((d,i)=>{const y=34+i*RH,b=d.base,f=due(d),late=f>b;return `<g class="click" data-open="${esc(d.id)}" style="cursor:pointer"><rect x="0" y="${y}" width="${X(maxW+1)}" height="${RH}" fill="transparent"/><text x="6" y="${y+16}" font-size="11.5" fill="#20344B"><tspan font-weight="600">${esc(d.id)}</tspan> ${esc(d.title.length>34?d.title.slice(0,33)+'…':d.title)}</text>
+    <rect x="${X(b)+6}" y="${y+6}" width="${WW-12}" height="${RH-12}" rx="3" fill="#C5D0DD"/><line x1="${X(b)+WW/2}" x2="${X(f)+WW/2}" y1="${y+RH/2}" y2="${y+RH/2}" stroke="${late?'#B23A3A':'#2E7D5B'}" stroke-width="2"/>
+    <circle cx="${X(f)+WW/2}" cy="${y+RH/2}" r="6" fill="${late?'#B23A3A':'#2E7D5B'}"/><text x="${X(Math.max(b,f)+1)+4}" y="${y+16}" font-size="10.5" fill="${late?'#B23A3A':'#2E7D5B'}" font-weight="600">${late?'+':''}${f-b} wk</text></g>`;}).join('');
+  const chart=sl.length?`<svg viewBox="0 0 ${X(maxW+1)+50} ${H}" style="width:100%;max-width:${X(maxW+1)+50}px;min-width:760px;display:block" role="img" aria-label="Baseline week against forecast week for each moved deliverable">${ax}${rows}</svg><div class="legend"><span><i style="background:#C5D0DD;height:10px"></i>Baseline week</span><span><i style="background:#B23A3A"></i>Forecast later</span><span><i style="background:#2E7D5B"></i>Forecast earlier</span><span><i style="background:#F3EEDD;height:10px"></i>Holiday weeks</span></div>`:'<div class="empty">Every deliverable is on its baseline week.</div>';
+  const by=(key,lab)=>{const m={};L.forEach(d=>{const k=d[key];m[k]=m[k]||{n:0,s:0,w:0};m[k].n++;if(slipOf(d)>0){m[k].s++;m[k].w+=slipOf(d);}});const ord=Object.keys(m).sort((a,b)=>{const ia=GATES.findIndex(g=>g.g===a),ib=GATES.findIndex(g=>g.g===b);return ia>=0&&ib>=0?ia-ib:'SGOA'.indexOf(a)-'SGOA'.indexOf(b);});return ord.map(k=>[k,m[k]]).map(([k,v])=>`<tr><td>${esc(lab(k))}</td><td class="num">${v.n}</td><td class="num">${v.s}</td><td class="num">${v.w}</td></tr>`).join('');};
+  const log=S.log.slice(0,100).map(l=>`<tr class="click" data-open="${esc(l.del)}"><td class="small">${l.at?new Date(l.at).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):''}</td><td class="small">${esc(who(l.by))}</td><td><span class="mono">${esc(l.del)}</span> ${esc((S.dels[l.del]||{}).title||'')}</td><td class="mono">W${l.from} → W${l.to}</td><td>${(l.reasons||[]).map(rtag).join('')}</td><td class="small">${esc(l.note||'')}</td></tr>`).join('');
+  $('#view').innerHTML=`<div class="eb">Slippage</div><h2>What has moved, by how much, and why</h2><p class="lead">Each row compares a deliverable's baseline week with its forecast (or actual, once done). Reasons come from the register: dependencies (D), risks (R), assumptions (A) and other causes (X).</p>
+  <div class="card scroll">${chart}</div>
+  <div class="sec grid g2"><div class="card"><h3>Reasons, ranked by slip</h3>${pareto(L)}</div>
+  <div class="card"><h3>Slip by gate and workstream</h3><table><tr><th>Gate</th><th class="num">Deliverables</th><th class="num">Slipped</th><th class="num">Slip-weeks</th></tr>${by('gate',k=>k)}</table><table style="margin-top:12px"><tr><th>Workstream</th><th class="num">Deliverables</th><th class="num">Slipped</th><th class="num">Slip-weeks</th></tr>${by('ws',k=>WS[k]||k)}</table></div></div>
+  <div class="sec"><h3>Change log</h3><p class="small muted">Every forecast change, with who made it and why. Most recent first.</p><div class="card scroll" style="padding:0;max-height:420px"><table><tr><th>When</th><th>Who</th><th>Deliverable</th><th>Forecast</th><th>Reasons</th><th>Note</th></tr>${log||'<tr><td colspan="6" class="empty">No forecast changes yet.</td></tr>'}</table></div></div>`;
+}
+
+/* ---- register ---- */
+function vReg(){
+  const L=dels();const groups=['D','R','A','X'];
+  const sec=k=>{const items=regList().filter(r=>r.kind===k);if(!items.length)return'';
+    return `<div class="sec"><h3>${PLURAL[k]}</h3><div class="card scroll" style="padding:0"><table class="reg"><tr><th style="width:56px">Code</th><th>Item</th><th style="width:150px">Owner</th><th style="width:130px">Status</th>${k==='R'?'<th style="width:60px">L</th><th style="width:60px">I</th>':''}<th style="width:120px">Slipping now</th><th>Note</th>${S.canWrite?'<th style="width:70px"></th>':''}</tr>
+    ${items.map(r=>{const cit=L.filter(d=>slipOf(d)>0&&(d.reasons||[]).includes(r.code)),w=cit.reduce((a,d)=>a+slipOf(d),0),ro=!S.canWrite?'disabled':'';
+      return `<tr data-reg="${esc(r.code)}"><td>${rtag(r.code)}</td><td><b>${esc(r.title)}</b>${r.effect?`<div class="small muted">If it bites: ${esc(r.effect)}</div>`:''}${r.mitigation?`<div class="small">${k==='D'?'Needed by':'Mitigation'}: ${esc(r.mitigation.replace(/^Needed /,''))}</div>`:''}</td>
+      <td><input data-k="owner" value="${esc(r.owner||'')}" ${ro}></td><td><select data-k="status" ${ro}>${KSTAT[k].map(s=>`<option ${r.status===s?'selected':''}>${s}</option>`).join('')}</select></td>
+      ${k==='R'?['L','I'].map(x=>`<td><select data-k="${x}" ${ro}>${['L','M','H'].map(v=>`<option ${r[x]===v?'selected':''}>${v}</option>`).join('')}</select></td>`).join(''):''}
+      <td>${cit.length?`<button class="btn small" data-filter="reason:${esc(r.code)}">${cit.length} · ${w} wk</button>`:'<span class="muted small">none</span>'}</td>
+      <td><textarea data-k="note" ${ro}>${esc(r.note||'')}</textarea></td>${S.canWrite?`<td><button class="btn small" data-savereg="${esc(r.code)}">Save</button><div class="small" data-regmsg="${esc(r.code)}"></div></td>`:''}</tr>`;}).join('')}</table></div></div>`;};
+  $('#view').innerHTML=`<div class="eb">Register</div><h2>Risks, dependencies and assumptions</h2><p class="lead">Carried over from the MVP1 briefing deck. These are the reasons a slip can cite; keep their status current so the slippage view explains itself. "Slipping now" counts deliverables whose forecast is past baseline and that cite the item.</p>${groups.map(sec).join('')}`;
+}
+
+/* ---- setup ---- */
+function vSetup(){
+  const c=S.cfg||{},hw=[...holidayWeeks(12)];const ro=!S.canWrite?'disabled':'';
+  $('#view').innerHTML=`<div class="eb">Setup</div><h2>Start date and baseline</h2><p class="lead">The plan is held in weeks. Set the actual start date and every calendar date in the tracker moves with it; baselines, forecasts and gates keep their week numbers.</p>
+  <div class="grid g2"><div class="card"><h3>Start date</h3>
+   <div class="f"><label for="sd">Week 1 starts (Monday)</label><input type="date" id="sd" value="${esc(c.start||'2026-11-02')}" ${ro}></div>
+   <div class="f"><label><input type="checkbox" id="sc" ${c.confirmed?'checked':''} ${ro} style="width:auto"> Start date confirmed</label><div class="small muted">While unconfirmed, dates are shown as planned and overdue checks are off.</div></div>
+   ${S.canWrite?'<button class="btn pri" id="savecfg">Save</button> <span id="cfgmsg" class="small"></span>':''}
+   <p class="small muted" style="margin-top:14px">With this start: M-G1 ${fmt(wkEnd(2))}, M-G2 ${fmt(wkEnd(6))}, B-G0 ${fmt(wkStart(8))}, M-G3 ${fmt(wkEnd(9))}, M-G4 ${fmt(wkEnd(12))}. Holiday weeks: ${hw.length?hw.map(w=>'W'+w).join(', '):'none'}.</p></div>
+  <div class="card"><h3>Re-baseline</h3><p class="small">Use once, when the team agrees a new plan (for example after week 1 confirms scope and access). It copies every deliverable's current forecast week into its baseline week, so slippage is measured from the new plan. The change log keeps the history.</p>
+   ${c.rebaselined?`<p class="small muted">Last re-baselined ${esc(new Date(c.rebaselined).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}))} by ${esc(who(c.rebaselinedBy))}.</p>`:'<p class="small muted">Not re-baselined yet: baselines are the original MVP1 plan.</p>'}
+   ${S.canWrite?'<button class="btn" id="rb">Re-baseline to current forecasts…</button><div id="rbc" style="display:none;margin-top:8px"><span class="small">This changes the baseline of every deliverable whose forecast differs. </span><button class="btn pri" id="rbgo">Confirm</button> <button class="btn" id="rbno">Cancel</button></div><div id="rbmsg" class="small"></div>':''}
+  </div></div>
+  <div class="sec card"><h3>How to use this tracker</h3><ol class="small" style="margin:0;padding-left:18px">
+   <li>Owners open their deliverables each week and set status, % complete and forecast week; attach a link to evidence when done.</li>
+   <li>When a forecast moves past its baseline, pick the reasons from the register and add a short note. The change is logged.</li>
+   <li>Before each gate, review Gate readiness on the Overview and the Slippage view; update register items that are biting.</li>
+   <li>Add deliverables the plan missed with Add deliverable; they start on the week you give them as baseline.</li></ol></div>`;
+  if(!S.canWrite)return;
+  $('#savecfg').onclick=async()=>{const st=$('#sd').value;if(!st){$('#cfgmsg').textContent='Choose a date.';return;}
+    await write(db.doc('config/plan'),{...(S.cfg||{}),start:st,confirmed:$('#sc').checked,updatedBy:S.uid,updatedAt:Date.now()},'#cfgmsg');};
+  $('#rb').onclick=()=>{$('#rbc').style.display='block';};$('#rbno').onclick=()=>{$('#rbc').style.display='none';};
+  $('#rbgo').onclick=async()=>{$('#rbgo').disabled=true;let n=0;for(const d of dels()){if(d.base!==d.fcst){try{await db.doc('deliverables/'+d.id).set({...d,base:d.fcst,updatedBy:S.uid,updatedAt:Date.now()});n++;}catch(e){fail(e);break;}}}
+    try{await db.doc('config/plan').set({...(S.cfg||{}),rebaselined:Date.now(),rebaselinedBy:S.uid});}catch(e){fail(e);}
+    $('#rbmsg').textContent=`Re-baselined ${n} deliverables.`;};
+}
+
+/* ---------------- drawer editor ---------------- */
+function nextId(proj){const p=proj.slice(4);const ns=dels().filter(d=>d.proj===proj).map(d=>+d.id.split('.')[1]||0);return p+'.'+((ns.length?Math.max(...ns):0)+1);}
+function openDrawer(id,isNew){
+  const d=isNew?{id:'',proj:S.f.proj||'ISP-07',ws:'S',title:'',owner:'',gate:'M-G3',disc:'KE',base:Math.max(1,Math.min(12,curWeek())),fcst:Math.max(1,Math.min(12,curWeek())),status:'not-started',pct:0,reasons:[],deps:[],evidence:'',notes:'',reasonNote:''}:{...S.dels[id],reasons:[...(S.dels[id].reasons||[])]};
+  if(!d)return;S.openId=id||'__new';const ro=S.canWrite?'':'disabled';
+  const wk=(v,mx=20)=>Array.from({length:mx},(_,i)=>i+1).map(w=>`<option value="${w}" ${+v===w?'selected':''}>W${w} · ${fmt(wkStart(w))}</option>`).join('');
+  const reasons=()=>['D','R','A','X'].map(k=>{const it=regList().filter(r=>r.kind===k);return it.length?`<h4>${PLURAL[k]}</h4>`+it.map(r=>`<button type="button" data-rs="${esc(r.code)}" class="${d.reasons.includes(r.code)?'on':''} ${(d.deps||[]).includes(r.code)?'sug':''}" title="${esc(r.title)}" ${ro}>${esc(r.code)} ${esc(r.title.length>38?r.title.slice(0,37)+'…':r.title)}</button>`).join(''):'';}).join('');
+  const dr=$('#drawer');
+  dr.innerHTML=`<div class="dhead"><div style="flex:1"><div class="eb">${isNew?'New deliverable':esc(d.proj)+' · '+esc(WS[d.ws]||'')+' · '+esc(d.gate)}</div><h3>${isNew?'Add a deliverable':esc(d.id)+' '+esc(d.title)}</h3>${!isNew&&d.updatedAt?`<div class="small muted">Last updated ${new Date(d.updatedAt).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})} by ${esc(who(d.updatedBy))}</div>`:''}</div><button class="btn" data-close="1" aria-label="Close">✕</button></div>
+  <div class="dbody"><form id="ed" onsubmit="return false">
+   ${isNew?`<div class="frow"><div class="f"><label>Project</label><select name="proj">${Object.keys(PROJECTS).map(p=>`<option value="${p}" ${d.proj===p?'selected':''}>${p} ${esc(PROJECTS[p][0])}</option>`).join('')}</select></div><div class="f"><label>Workstream</label><select name="ws">${Object.entries(WS).map(([k,l])=>`<option value="${k}" ${d.ws===k?'selected':''}>${l}</option>`).join('')}</select></div><div class="f"><label>Gate</label><select name="gate">${GATES.map(g=>`<option ${d.gate===g.g?'selected':''}>${g.g}</option>`).join('')}</select></div></div>
+   <div class="f"><label>Deliverable</label><input name="title" required></div>`:''}
+   <div class="frow"><div class="f"><label>Status</label><select name="status" ${ro}>${STATUS.map(([k,l])=>`<option value="${k}" ${d.status===k?'selected':''}>${l}</option>`).join('')}</select></div>
+    <div class="f"><label>% complete</label><input name="pct" type="number" min="0" max="100" step="5" value="${+d.pct||0}" ${ro}></div>
+    <div class="f"><label>Discipline</label><select name="disc" ${ro}>${Object.entries(DISC).map(([k,l])=>`<option value="${k}" ${d.disc===k?'selected':''}>${k} · ${l}</option>`).join('')}</select></div></div>
+   <div class="f"><label>Owner</label><input name="owner" value="${esc(d.owner||'')}" ${ro}></div>
+   <div class="frow"><div class="f"><label>Baseline week</label>${isNew?`<select name="base">${wk(d.base)}</select>`:`<input value="W${d.base} · ${fmt(wkStart(d.base))}" disabled>`}</div>
+    <div class="f"><label>Forecast week</label><select name="fcst" ${ro}>${wk(d.fcst)}</select></div>
+    <div class="f"><label>Done in week</label><select name="actual" ${ro}><option value="">—</option>${wk(d.actual)}</select></div></div>
+   <div id="slipnote" class="small" style="margin:-4px 0 10px"></div>
+   <div class="f"><label>Slip reasons ${(d.deps||[]).length?'<span style="text-transform:none;font-weight:400">(gold outline: dependencies this deliverable relies on)</span>':''}</label><div class="rsn" id="rsn">${reasons()}</div></div>
+   <div class="f"><label>Reason note</label><textarea name="reasonNote" placeholder="What happened, and what will bring it back" ${ro}>${esc(d.reasonNote||'')}</textarea></div>
+   <div class="f"><label>Evidence link</label><input name="evidence" value="${esc(d.evidence||'')}" placeholder="Link to the artifact, test report or approval" ${ro}>${d.evidence&&/^https?:\/\//.test(d.evidence)?`<div class="small"><a href="${esc(d.evidence)}" target="_blank" rel="noopener">Open evidence</a></div>`:''}</div>
+   <div class="f"><label>Notes</label><textarea name="notes" ${ro}>${esc(d.notes||'')}</textarea></div>
+  </form></div>
+  <div class="dfoot">${S.canWrite?`<button class="btn pri" id="save">${isNew?'Add':'Save'}</button>`:''}<button class="btn" data-close="1">${S.canWrite?'Cancel':'Close'}</button><span id="msg" class="small" style="margin-left:8px"></span>${S.canWrite&&!isNew&&user&&user.canEdit&&user.canEdit()?'<button class="btn" id="del" style="margin-left:auto">Delete</button>':''}</div>`;
+  dr.classList.add('on');dr.setAttribute('aria-hidden','false');$('#scrim').classList.add('on');
+  const fm=$('#ed');
+  const upd=()=>{const base=isNew?+fm.base.value:d.base,f=fm.status.value==='done'&&fm.actual.value?+fm.actual.value:+fm.fcst.value,s=f-base;
+    $('#slipnote').innerHTML=s>0?`<span class="err">${s} week${s>1?'s':''} past baseline: choose at least one reason.</span>`:s<0?`<span class="ok">${-s} week${s<-1?'s':''} ahead of baseline.</span>`:'<span class="muted">On baseline.</span>';};
+  fm.addEventListener('change',e=>{if(e.target.name==='status'&&e.target.value==='done'){if(!fm.actual.value)fm.actual.value=String(Math.max(1,Math.min(20,confirmed()?curWeek():+fm.fcst.value)));fm.pct.value=100;}upd();});upd();
+  $('#rsn').addEventListener('click',e=>{const b=e.target.closest('[data-rs]');if(!b||!S.canWrite)return;const c=b.dataset.rs,i=d.reasons.indexOf(c);if(i>=0)d.reasons.splice(i,1);else d.reasons.push(c);b.classList.toggle('on');});
+  if($('#save'))$('#save').onclick=async()=>{
+    const v=n=>fm[n]?fm[n].value:undefined;const nd={...d,status:v('status'),pct:Math.max(0,Math.min(100,+v('pct')||0)),disc:v('disc'),owner:v('owner').trim(),fcst:+v('fcst'),actual:v('actual')?+v('actual'):null,reasonNote:v('reasonNote').trim(),evidence:v('evidence').trim(),notes:v('notes').trim(),reasons:d.reasons,updatedBy:S.uid,updatedAt:Date.now()};
+    if(isNew){nd.title=v('title').trim();nd.proj=v('proj');nd.ws=v('ws');nd.gate=v('gate');nd.base=+v('base');nd.id=nextId(nd.proj);nd.added=true;if(!nd.title){$('#msg').innerHTML='<span class="err">Name the deliverable.</span>';return;}}
+    if(nd.status!=='done')nd.actual=null;
+    if(slipOf(nd)>0&&!nd.reasons.length){$('#msg').innerHTML='<span class="err">Choose at least one slip reason.</span>';return;}
+    $('#save').disabled=true;
+    const ok=await write(db.doc('deliverables/'+nd.id),nd,'#msg');
+    if(ok){const old=isNew?null:due(S.dels[nd.id]||d),nw=due(nd);
+      if(!isNew&&old!==nw){try{await db.collection('slips').add({del:nd.id,from:old,to:nw,base:nd.base,reasons:nd.reasons,note:nd.reasonNote,by:S.uid,at:Date.now()});}catch(e){fail(e);}}
+      S.dels[nd.id]=nd;closeDrawer();render();}
+    else if($('#save'))$('#save').disabled=false;};
+  if($('#del'))$('#del').onclick=async e=>{if(e.target.dataset.sure){try{await db.doc('deliverables/'+d.id).delete();delete S.dels[d.id];closeDrawer();render();}catch(x){fail(x);}}else{e.target.dataset.sure='1';e.target.textContent='Click again to delete';}};
+}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#drawer').setAttribute('aria-hidden','true');$('#scrim').classList.remove('on');S.openId=null;}
+$('#scrim').onclick=closeDrawer;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.openId)closeDrawer();});
+
+/* ---------------- writes ---------------- */
+function fail(e){const c=e&&e.code;if(c==='invalid_argument'){S.canWrite=false;S.err='Your change was refused: you have view-only access to this tracker.';}
+  else if(c==='quota_exceeded')S.err='The tracker\'s storage is full; remove old entries before adding more.';
+  else if(c==='revoked')S.err='Access to the shared data was withdrawn for this view.';
+  else S.err='A change could not be saved. Try again in a moment.';render();}
+async function write(ref,data,msgSel){try{await ref.set(data);if(msgSel&&$(msgSel)){$(msgSel).innerHTML='<span class="ok">Saved</span>';}return true;}
+  catch(e){if(e&&e.code==='unavailable'){await new Promise(r=>setTimeout(r,600+Math.random()*600));try{await ref.set(data);return true;}catch(e2){fail(e2);return false;}}fail(e);if(msgSel&&$(msgSel))$(msgSel).innerHTML='<span class="err">Not saved</span>';return false;}}
+
+/* ---------------- global clicks ---------------- */
+document.addEventListener('click',async e=>{
+  const o=e.target.closest('[data-open]');if(o&&S.dels[o.dataset.open]){openDrawer(o.dataset.open);return;}
+  if(e.target.closest('[data-close]')){closeDrawer();return;}
+  if(e.target.closest('[data-new]')){openDrawer(null,true);return;}
+  const fl=e.target.closest('[data-filter]');if(fl){const [k,v]=fl.dataset.filter.split(':');S.f={ws:'',proj:'',gate:'',status:'',q:'',slipped:false,reason:''};S.f[k]=k==='slipped'?true:v;if(k==='reason')S.f.slipped=true;location.hash='deliverables';if(S.view==='deliverables')render();return;}
+  const g=e.target.closest('[data-go]');if(g){location.hash=g.dataset.go;return;}
+  if(e.target.closest('[data-clear]')){S.f={ws:'',proj:'',gate:'',status:'',q:'',slipped:false,reason:''};render();return;}
+  const sr=e.target.closest('[data-savereg]');if(sr){const c=sr.dataset.savereg,row=document.querySelector(`tr[data-reg="${CSS.escape(c)}"]`);const r={...S.reg[c]};
+    row.querySelectorAll('[data-k]').forEach(i=>{r[i.dataset.k]=i.value;});r.updatedBy=S.uid;r.updatedAt=Date.now();sr.disabled=true;
+    const ok=await write(db.doc('register/'+c),r,`[data-regmsg="${CSS.escape(c)}"]`);sr.disabled=false;if(ok)S.reg[c]=r;}
+});
+
+/* ---------------- boot ---------------- */
+route();
+(async()=>{
+  try{user=await claude.use('user');}catch(e){user=null;}
+  try{db=await claude.use('db');}catch(e){db=null;}
+  if(user){try{S.uid=await user.id();}catch(e){}try{const c=await user.can('data.write');if(c===false)S.canWrite=false;}catch(e){}}
+  if(!db){S.canWrite=false;render();return;}
+  const timer=setTimeout(()=>{S.stale=true;S.loaded.dels=S.loaded.cfg=true;render();},10000);
+  const done=()=>{if(S.loaded.dels&&S.loaded.cfg&&S.loaded.reg){clearTimeout(timer);S.stale=false;}};
+  const onErr=e=>{clearTimeout(timer);S.loaded.dels=S.loaded.cfg=S.loaded.reg=true;if(e&&e.code!=='unavailable')S.err='The shared data stopped updating. Reload the page to reconnect.';render();};
+  db.collection('deliverables').onSnapshot(s=>{const m={};s.docs.forEach(x=>{m[x.id]={...x.data(),id:x.id};});S.dels=m;if(!s.metadata.fromCache){S.loaded.dels=true;done();}else if(s.size)S.loaded.dels=true;
+    resolveNames(Object.values(m).map(d=>d.updatedBy));if(!S.openId)render();},onErr);
+  db.collection('register').onSnapshot(s=>{const m={};s.docs.forEach(x=>{m[x.id]={...x.data(),code:x.id};});S.reg=m;if(!s.metadata.fromCache){S.loaded.reg=true;done();}if(!S.openId&&!(S.view==='register'&&document.activeElement&&document.activeElement.closest('.reg')))render();},onErr);
+  db.collection('slips').orderBy('at','desc').limit(300).onSnapshot(s=>{S.log=s.docs.map(x=>x.data());resolveNames(S.log.map(l=>l.by));if(!S.openId&&S.view==='slippage')render();},onErr);
+  db.doc('config/plan').onSnapshot(s=>{S.cfg=s.exists?s.data():{start:'2026-11-02',confirmed:false};if(!s.metadata.fromCache){S.loaded.cfg=true;done();}else S.loaded.cfg=true;
+    resolveNames([S.cfg.rebaselinedBy]);if(!S.openId)render();},onErr);
+})();
+</script>
+</body>
+</html>

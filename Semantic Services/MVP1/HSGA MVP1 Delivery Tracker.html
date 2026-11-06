@@ -183,15 +183,16 @@ function render(){
   const cw=curWeek();
   $('#hmeta').innerHTML=S.cfg?`Start ${confirmed()?'':'(planned) '}<b>${fmtY(start())}</b> · ${cw<1?`starts in ${Math.ceil((start()-new Date())/864e5)} days`:cw>12?`week ${cw} (past plan)`:`<b>week ${cw}</b> of 12`}<br>Final gate M-G4 planned ${fmt(wkEnd(12))}`:'Loading…';
   let b='';
-  if(!db)b+=`<div class="banner err">Shared data isn't available in this view. Open the tracker from its claude.ai link while signed in to see and update deliverables.</div>`;
+  if(!db&&S.booted)b+=`<div class="banner err">Shared data isn't available in this view. Open the tracker from its claude.ai link while signed in to see and update deliverables.</div>`;
+  if(LOCAL)b+=`<div class="banner"><b>Local mode.</b> Changes are saved in this browser only. Use Export in <a href="#setup">Setup</a> to back up or move your data to another device.</div>`;
   if(S.err)b+=`<div class="banner err">${esc(S.err)}</div>`;
   if(S.stale)b+=`<div class="banner">The shared data can't be reached yet; what you see may be out of date.</div>`;
   if(S.cfg&&!confirmed())b+=`<div class="banner"><b>Start date not confirmed.</b> Dates assume ${fmtY(start())}; weeks stay fixed and every date moves when you set the actual start in <a href="#setup">Setup</a>. Overdue checks are off until then.</div>`;
   if(db&&!S.canWrite)b+=`<div class="banner">You can view this tracker but not change it. Ask the owner for Contributor access to update deliverables.</div>`;
   $('#banners').innerHTML=b;
   const ready=S.loaded.dels&&S.loaded.cfg;
-  if(!ready&&db){$('#view').innerHTML='<div class="empty">Loading deliverables…</div>';return;}
-  if(ready&&!dels().length){$('#view').innerHTML='<div class="card empty">No deliverables yet. They will appear here once the plan is loaded.</div>';return;}
+  if(!ready&&(db||!S.booted)){$('#view').innerHTML='<div class="empty">Loading deliverables…</div>';return;}
+  if(ready&&!dels().length&&S.view!=='setup'){$('#view').innerHTML=LOCAL?'<div class="card empty">No deliverables yet. Add a <code>data.json</code> file next to this page, import one in <a href="#setup">Setup</a>, or start adding deliverables.<div style="margin-top:10px"><button class="btn pri" data-new="1">Add deliverable</button></div></div>':'<div class="card empty">No deliverables yet. They will appear here once the plan is loaded.</div>';return;}
   ({overview:vOverview,deliverables:vDels,slippage:vSlip,register:vReg,setup:vSetup})[S.view]();
 }
 
@@ -307,11 +308,18 @@ function vSetup(){
    ${c.rebaselined?`<p class="small muted">Last re-baselined ${esc(new Date(c.rebaselined).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}))} by ${esc(who(c.rebaselinedBy))}.</p>`:'<p class="small muted">Not re-baselined yet: baselines are the original MVP1 plan.</p>'}
    ${S.canWrite?'<button class="btn" id="rb">Re-baseline to current forecasts…</button><div id="rbc" style="display:none;margin-top:8px"><span class="small">This changes the baseline of every deliverable whose forecast differs. </span><button class="btn pri" id="rbgo">Confirm</button> <button class="btn" id="rbno">Cancel</button></div><div id="rbmsg" class="small"></div>':''}
   </div></div>
+  ${LOCAL?`<div class="sec card"><h3>Your data (local mode)</h3><p class="small">This copy is not on claude.ai, so it keeps data in this browser. Export saves everything as <code>data.json</code>; import it on another device, or commit it next to this page so a fresh browser starts from it.</p>
+   <div class="toolbar"><button class="btn pri" id="lexp">Export data.json</button><label class="btn" style="cursor:pointer">Import data.json<input type="file" id="limp" accept="application/json,.json" style="display:none"></label><button class="btn" id="lrst">Reload from site data.json</button><button class="btn" id="lclr">Start blank</button></div><div id="lmsg" class="small"></div></div>`:''}
   <div class="sec card"><h3>How to use this tracker</h3><ol class="small" style="margin:0;padding-left:18px">
    <li>Owners open their deliverables each week and set status, % complete and forecast week; attach a link to evidence when done.</li>
    <li>When a forecast moves past its baseline, pick the reasons from the register and add a short note. The change is logged.</li>
    <li>Before each gate, review Gate readiness on the Overview and the Slippage view; update register items that are biting.</li>
    <li>Add deliverables the plan missed with Add deliverable; they start on the week you give them as baseline.</li></ol></div>`;
+  if(LOCAL){const m=t=>{$('#lmsg').textContent=t;};const confirm2=(btn,fn)=>{if(btn.dataset.sure){fn();btn.dataset.sure='';}else{btn.dataset.sure='1';btn.textContent='Click again to replace this browser\'s data';}};
+    $('#lexp').onclick=()=>{exportLocal();m('Exported data.json.');};
+    $('#limp').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const o=normSeed(JSON.parse(await f.text()));if(!o)throw 0;db._replace(o);m('Imported '+Object.keys(o).length+' records.');}catch(x){m('That file is not a tracker data.json.');}};
+    $('#lrst').onclick=e=>confirm2(e.target,async()=>{const o=await loadSeed();if(o){db._replace(o);m('Reloaded from the site\'s data.json.');}else m('No data.json found next to this page.');});
+    $('#lclr').onclick=e=>confirm2(e.target,()=>{db._replace({'config/plan':{start:(S.cfg&&S.cfg.start)||'2026-11-02',confirmed:false}});m('Started blank.');});}
   if(!S.canWrite)return;
   $('#savecfg').onclick=async()=>{const st=$('#sd').value;if(!st){$('#cfgmsg').textContent='Choose a date.';return;}
     await write(db.doc('config/plan'),{...(S.cfg||{}),start:st,confirmed:$('#sc').checked,updatedBy:S.uid,updatedAt:Date.now()},'#cfgmsg');};
@@ -346,7 +354,7 @@ function openDrawer(id,isNew){
    <div class="f"><label>Evidence link</label><input name="evidence" value="${esc(d.evidence||'')}" placeholder="Link to the artifact, test report or approval" ${ro}>${d.evidence&&/^https?:\/\//.test(d.evidence)?`<div class="small"><a href="${esc(d.evidence)}" target="_blank" rel="noopener">Open evidence</a></div>`:''}</div>
    <div class="f"><label>Notes</label><textarea name="notes" ${ro}>${esc(d.notes||'')}</textarea></div>
   </form></div>
-  <div class="dfoot">${S.canWrite?`<button class="btn pri" id="save">${isNew?'Add':'Save'}</button>`:''}<button class="btn" data-close="1">${S.canWrite?'Cancel':'Close'}</button><span id="msg" class="small" style="margin-left:8px"></span>${S.canWrite&&!isNew&&user&&user.canEdit&&user.canEdit()?'<button class="btn" id="del" style="margin-left:auto">Delete</button>':''}</div>`;
+  <div class="dfoot">${S.canWrite?`<button class="btn pri" id="save">${isNew?'Add':'Save'}</button>`:''}<button class="btn" data-close="1">${S.canWrite?'Cancel':'Close'}</button><span id="msg" class="small" style="margin-left:8px"></span>${S.canWrite&&!isNew&&(LOCAL||(user&&user.canEdit&&user.canEdit()))?'<button class="btn" id="del" style="margin-left:auto">Delete</button>':''}</div>`;
   dr.classList.add('on');dr.setAttribute('aria-hidden','false');$('#scrim').classList.add('on');
   const fm=$('#ed');
   const upd=()=>{const base=isNew?+fm.base.value:d.base,f=fm.status.value==='done'&&fm.actual.value?+fm.actual.value:+fm.fcst.value,s=f-base;
@@ -390,12 +398,47 @@ document.addEventListener('click',async e=>{
     const ok=await write(db.doc('register/'+c),r,`[data-regmsg="${CSS.escape(c)}"]`);sr.disabled=false;if(ok)S.reg[c]=r;}
 });
 
+
+/* ---------------- local mode (outside claude.ai): browser storage + data.json ---------------- */
+const LKEY='mvp1-tracker-v1';let LOCAL=false;
+function makeLocalDb(store){const subs=new Set();
+  const save=()=>{try{localStorage.setItem(LKEY,JSON.stringify(store));}catch(e){S.err='This browser would not save the change (storage full or blocked). Export a backup now.';}};
+  const fire=()=>setTimeout(()=>subs.forEach(f=>f()),0);
+  const meta={fromCache:false,hasPendingWrites:false};
+  const snap=p=>({id:p.split('/').pop(),exists:p in store,data:()=>store[p],metadata:meta});
+  const ref=p=>({id:p.split('/').pop(),path:p,get:async()=>snap(p),
+    set:async d=>{store[p]=JSON.parse(JSON.stringify(d));save();fire();},
+    update:async d=>{if(!(p in store))throw{code:'invalid_argument'};Object.assign(store[p],JSON.parse(JSON.stringify(d)));save();fire();},
+    delete:async()=>{delete store[p];save();fire();},
+    onSnapshot(n){const f=()=>n(snap(p));subs.add(f);setTimeout(f,0);return()=>subs.delete(f);},
+    collection:c=>col(p+'/'+c)});
+  const col=(c,ord,lim)=>({path:c,orderBy:(f,d)=>col(c,[f,d||'asc'],lim),limit:n=>col(c,ord,n),where:()=>col(c,ord,lim),
+    _q(){const depth=c.split('/').length+1;let docs=Object.keys(store).filter(k=>k.startsWith(c+'/')&&k.split('/').length===depth).sort().map(snap);
+      if(ord)docs.sort((a,b)=>{const x=a.data()[ord[0]],y=b.data()[ord[0]];return (x>y?1:x<y?-1:0)*(ord[1]==='desc'?-1:1);});if(lim)docs=docs.slice(0,lim);
+      return{docs,size:docs.length,empty:!docs.length,metadata:meta,docChanges:()=>[]};},
+    get(){return Promise.resolve(this._q());},
+    onSnapshot(n){const f=()=>n(this._q());subs.add(f);setTimeout(f,0);return()=>subs.delete(f);},
+    doc:id=>ref(c+'/'+(id||(Date.now().toString(36)+Math.random().toString(36).slice(2,8)))),
+    add(d){const r=this.doc();return r.set(d).then(()=>r);}});
+  return {doc:ref,collection:c=>col(c),_store:store,_replace(obj){Object.keys(store).forEach(k=>delete store[k]);Object.assign(store,obj);save();fire();}};}
+async function loadSeed(){try{const r=await fetch('data.json',{cache:'no-store'});if(!r.ok)return null;const j=await r.json();return normSeed(j);}catch(e){return null;}}
+function normSeed(j){/* accepts {path:data} or [{path,data}] */if(Array.isArray(j)){const o={};j.forEach(x=>{if(x&&x.path&&x.data)o[x.path]=x.data;});return o;}return j&&typeof j==='object'?j:null;}
+function exportLocal(){const blob=new Blob([JSON.stringify(db._store,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='data.json';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}
+
 /* ---------------- boot ---------------- */
 route();
 (async()=>{
+  if(typeof window.claude==='undefined'||!window.claude||typeof window.claude.use!=='function'){
+    LOCAL=true;let st=null;try{st=JSON.parse(localStorage.getItem(LKEY)||'null');}catch(e){}
+    if(!st||!Object.keys(st).length)st=(await loadSeed())||{};
+    db=makeLocalDb(st);try{localStorage.setItem(LKEY,JSON.stringify(st));}catch(e){}
+    S.uid='local';S.names.local='You';
+  }else{
   try{user=await claude.use('user');}catch(e){user=null;}
   try{db=await claude.use('db');}catch(e){db=null;}
   if(user){try{S.uid=await user.id();}catch(e){}try{const c=await user.can('data.write');if(c===false)S.canWrite=false;}catch(e){}}
+  }
+  S.booted=true;
   if(!db){S.canWrite=false;render();return;}
   const timer=setTimeout(()=>{S.stale=true;S.loaded.dels=S.loaded.cfg=true;render();},10000);
   const done=()=>{if(S.loaded.dels&&S.loaded.cfg&&S.loaded.reg){clearTimeout(timer);S.stale=false;}};

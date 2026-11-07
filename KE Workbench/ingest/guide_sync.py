@@ -6,7 +6,9 @@
 Looks for Semantic_Governance_v<MAJOR>.<MINOR>[_DRAFT].pdf in docs/ and in ../Semantic Governance/ (the newest PDF
 there is copied into docs/). An amendment set for a later edition ("Semantic Governance Guide v2.3 — Amendment Set
 (Draft).pdf", stored in docs/ as Semantic_Governance_v2.3_Amendment_Set_DRAFT.pdf) makes that edition the one in
-force, with the full guide it amends recorded as baseEdition / baseFile. Then:
+force, with the full guide it amends recorded as baseEdition / baseFile, but only while no full guide for that edition
+exists: once the amendments are merged and saved as Semantic_Governance_v<M>.<N>[_DRAFT].pdf (as v2.3 and v2.4 were), the
+full guide takes over (kind: guide, previous: the edition before). Then:
   - writes assets/ke-guide.js (window.KE_GUIDE), which the shell, the Overview, the guide link, the Model Editor
     (Ontology) and the Operations Dashboard read;
   - sets conformsTo and standardsRef in ingest/ke-ingest.config.json to that edition, so every asset ingested or

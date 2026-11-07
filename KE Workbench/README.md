@@ -1,6 +1,6 @@
 # KE Workbench
 
-One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* in force — v2.3 (Draft, an amendment set to v2.2), set by `assets/ke-guide.js` — including the §3.11 metadata field set.
+One workbench for knowledge engineering. It brings the modeling tools, the SSOT for rules and logic, and the agent operations dashboards together under one overview, with a light/dark toggle. It applies the Part III standards of *Semantic Governance: Services, Architecture & Integration* in force — v2.4 (Draft; the full guides v2.3 and v2.4 are in `docs/`), set by `assets/ke-guide.js` — including the §3.11 metadata field set.
 
 ## Run it
 
@@ -16,7 +16,7 @@ python3 proxy.py            # GraphDB on http://localhost:7200
 
 Always open the workbench through `http://localhost:3000/`, never by double-clicking `index.html` (a `file://` page can't reach GraphDB). `proxy.py` serves the folder it sits in and prints that folder when it starts; it tells the browser not to cache the pages, so an updated tool shows up on the next reload. If it reports that port 3000 is in use, an older proxy is still running: `lsof -ti tcp:3000 | xargs kill`. It listens on this computer only; start it with `HOST=0.0.0.0` to share it on your network. To point it at another GraphDB, set `GRAPHDB_URL=http://host:7200` and/or `PORT=3000`.
 
-The Overview shows the workbench release (currently **4.7.0**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
+The Overview shows the workbench release (currently **4.8.1**); click it, or open *Reference › Release Notes*, for the change log. To record a release, add an entry at the top of `assets/ke-releases.js` and bump `version` in `assets/ke-registry.js`.
 
 Without GraphDB, the static tools still work: SSOT, dashboards, personas, HSGA, and Standards Conformance in Turtle-file mode. The pill in the top bar shows the connection.
 
@@ -325,3 +325,17 @@ The browser rules are in `assets/ke-structural.js` (loaded by Standards Conforma
 Provisional choices, listed as Decision actions until the guide names them: the allowed-edge matrix, `core:formalizedBy` / `rdfs:subClassOf` as the declaration of a primitive’s BFO parent, and `core:hasResolutionState core:pending` for the pending state.
 
 Still to do: rebuild the core and domains so assets declare v2.3 (policy P07) and give every primitive a BFO parent (P10). Restart `proxy.py` so the pending-term routes are served.
+
+## Semantic Governance v2.3 and v2.4 as full guides (4.8.0)
+
+The complete set is in `docs/`: `Semantic_Governance_v2.2_DRAFT.pdf`, `Semantic_Governance_v2.3_DRAFT.pdf` (v2.2 plus the twelve v2.3 amendments, A1–A12) and `Semantic_Governance_v2.4_DRAFT.pdf` (v2.3 plus A13–A24, glossaries and acronyms). The Word sources and PDFs are in `../Semantic Governance/`, named `Semantic_Governance_v<major>.<minor>_DRAFT`. `docs/Semantic_Governance_v2.3_Amendment_Set_DRAFT.pdf` stays as history; the v2.4 amendment set is not copied to `docs/`.
+
+- **Version management**: `ingest/guide_sync.py` takes the newest *full* guide as the edition in force (`kind: guide` in `assets/ke-guide.js`). An amendment set decides the edition only while no full guide for that edition exists, so merging the amendments into a full guide, saving it as `Semantic_Governance_v<M>.<N>_DRAFT.pdf`, and opening the workbench is the whole procedure. `previous` is the edition before; `editions` lists every edition found.
+- **Now in force**: 2.4. `conformsTo` is `…/standard/semantic-governance/2.4/` and `standardsRef` names v2.4 in `ingest/ke-ingest.config.json`. Assets keep declaring the edition they were built under until the core and domains are rebuilt, and policy P07 reports them.
+- **Retrofit**: `RESOLUTION['2.4']` in `ingest/ops_spec.py` covers G34–G45 (one per amendment A13–A24); `OPEN_2_4` lists the ten open items as Decision actions. `GUIDE_EDITION` is `2.4` and `GUIDE_NEXT` is `2.5`.
+- **Tool work still to do for v2.4**: glossary as a source kind in ingestion; the scoped acronym configuration (`acronyms.scopes`) and its first-run migration; the twelve rules in A23 added to the build and `loadBlockingRules`; the dangling-reference report on every load; the ten glossary and mapping measures emitted as telemetry; `core:mapping-record` and its properties in a core release.
+
+
+## HSGA pages in Reference (4.8.1)
+
+**Reference › HSGA Architecture Walkthrough** (the overview) and **HSGA Explorer** (the current architecture) are authored in `../Semantic Architecture/`. After revising either, run `python3 ingest/hsga_sync.py`: it publishes them to `tools/hsga-walkthrough.html` and `tools/hsga-explorer.html` with the workbench bridge, and keeps the copy it replaces in `legacy/hsga/<name>-<date>.html`. The earlier `tools/hsga-overview.html` is hidden but kept.

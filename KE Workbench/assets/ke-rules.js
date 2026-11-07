@@ -1,5 +1,5 @@
 /* KE Workbench — Standards Conformance rules.
-   Each rule encodes a Part III / Appendix E standard of the Semantic Governance guide in force (assets/ke-guide.js; v2.3),
+   Each rule encodes a Part III / Appendix E standard of the Semantic Governance guide in force (assets/ke-guide.js; v2.4, whose glossary and mapping rules are not built yet),
    §3.11 metadata included; the jobs-model rules (§3.13) are the core shapes that §2.7 contextual relevancy relies on.
    runChecks(quads, { bases }) → { rules:[{...rule, checked, failed}], findings:[...], stats }
    quads: [{ s, p, o, g }] with terms { t:'iri'|'bnode'|'lit', v, lang?, dt? } */

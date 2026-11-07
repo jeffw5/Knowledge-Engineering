@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ke-workbench:head -->
+<link rel="stylesheet" href="../assets/ke-theme.css">
+<script src="../assets/ke-bridge.js"></script>
+<style id="ke-adapter">html.ke-embedded #themebtn{display:none!important}</style>
+<!-- /ke-workbench:head -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HSGA Explorer — Holonic Semantic Governance Architecture</title>
+<style>
+:root{
+  --bg:#f6f7f9;--surface:#ffffff;--ink:#17202b;--ink2:#3c4756;--muted:#667383;--line:#d9dee5;--soft:#eef1f5;
+  --accent:#2a6fdb;--accent-ink:#fff;
+  --blue:#2a6fdb;--blue-bg:#e6effc;--teal:#0f8a7a;--teal-bg:#e2f5f2;--amber:#b97708;--amber-bg:#fdf1d8;
+  --purple:#6a4bc4;--purple-bg:#eee9fb;--red:#c93c3c;--red-bg:#fbe7e7;--green:#2f8a3e;--green-bg:#e5f4e7;
+  --coral:#c75a2c;--coral-bg:#fbebe3;--gray:#5b6572;--gray-bg:#eceff3;
+  --font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f141a;--surface:#171e26;--ink:#e8edf3;--ink2:#c3ccd6;--muted:#93a0ae;--line:#2b3541;--soft:#1e2630;
+  --accent:#6fa3f5;--accent-ink:#0b1116;
+  --blue:#6fa3f5;--blue-bg:#16243d;--teal:#3cc4b0;--teal-bg:#10302c;--amber:#e5ad3a;--amber-bg:#33290f;
+  --purple:#a58ff0;--purple-bg:#261f42;--red:#ef7777;--red-bg:#3a1a1a;--green:#5cc66d;--green-bg:#142d19;
+  --coral:#ef8f62;--coral-bg:#3a2216;--gray:#98a3b0;--gray-bg:#222830;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0f141a;--surface:#171e26;--ink:#e8edf3;--ink2:#c3ccd6;--muted:#93a0ae;--line:#2b3541;--soft:#1e2630;
+  --accent:#6fa3f5;--accent-ink:#0b1116;
+  --blue:#6fa3f5;--blue-bg:#16243d;--teal:#3cc4b0;--teal-bg:#10302c;--amber:#e5ad3a;--amber-bg:#33290f;
+  --purple:#a58ff0;--purple-bg:#261f42;--red:#ef7777;--red-bg:#3a1a1a;--green:#5cc66d;--green-bg:#142d19;
+  --coral:#ef8f62;--coral-bg:#3a2216;--gray:#98a3b0;--gray-bg:#222830;color-scheme:dark;}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--font)}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+p{margin:0 0 12px}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+.top{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:16px;padding:10px 20px;flex-wrap:wrap}
+.brand{display:flex;flex-direction:column}
+.brand b{font-size:16px}
+.brand span{font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{background:transparent;border:0;padding:6px 12px;font-size:13px;cursor:pointer;color:var(--ink2)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.iconbtn{border:1px solid var(--line);background:transparent;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer}
+
+.shell{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1240px;margin:0 auto}
+nav.side{position:sticky;top:57px;align-self:start;height:calc(100vh - 57px);overflow:auto;padding:18px 12px;border-right:1px solid var(--line)}
+nav.side .grp{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:10px 10px 4px}
+nav.side a{display:flex;gap:8px;align-items:baseline;padding:7px 10px;border-radius:7px;color:var(--ink2);text-decoration:none;font-size:14px}
+nav.side a i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted);min-width:18px}
+nav.side a:hover{background:var(--soft)}
+nav.side a[aria-current="page"]{background:var(--blue-bg);color:var(--ink);font-weight:600}
+main{padding:28px 32px 70px;min-width:0}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  nav.side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:2px;padding:8px}
+  nav.side .grp{display:none}
+  main{padding:20px 16px 60px}
+}
+
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+h1.page{font-size:30px;margin-bottom:10px}
+.lede{font-size:17px;color:var(--ink2);max-width:68ch;margin-bottom:22px}
+h2{font-size:19px;margin:30px 0 10px}
+.prose{max-width:72ch;color:var(--ink2)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr}}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.tile .k{font-size:12px;color:var(--muted)}
+.tile .v{font-size:15px;font-weight:600;margin-top:2px}
+
+figure{margin:0}
+figcaption{font-size:13px;color:var(--muted);margin-top:8px;max-width:76ch}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.diagram svg{display:block;width:100%;height:auto}
+svg text{font-family:var(--font);fill:var(--ink)}
+svg .nl{font-size:13.5px;font-weight:600;text-anchor:middle}
+svg .ns{font-size:11px;text-anchor:middle;fill:var(--muted)}
+svg .lab{font-size:11px;fill:var(--muted)}
+svg .node{cursor:pointer}
+svg .node rect,svg .node circle,svg .node path{stroke-width:1.4;transition:stroke-width .12s}
+svg .node:hover rect,svg .node:hover circle{stroke-width:2.6}
+svg .node.sel rect,svg .node.sel circle{stroke-width:3}
+svg .c-blue{fill:var(--blue-bg);stroke:var(--blue)}svg .c-teal{fill:var(--teal-bg);stroke:var(--teal)}
+svg .c-amber{fill:var(--amber-bg);stroke:var(--amber)}svg .c-purple{fill:var(--purple-bg);stroke:var(--purple)}
+svg .c-red{fill:var(--red-bg);stroke:var(--red)}svg .c-green{fill:var(--green-bg);stroke:var(--green)}
+svg .c-coral{fill:var(--coral-bg);stroke:var(--coral)}svg .c-gray{fill:var(--gray-bg);stroke:var(--gray)}
+svg .edge{stroke:var(--muted);stroke-width:1.5;fill:none}
+svg .edge.dash{stroke-dasharray:6 4}
+svg .edge.dot{stroke-dasharray:2 4}
+svg .edge.bad{stroke:var(--red)}
+
+.detail{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px;min-height:96px}
+.detail h3{font-size:17px;margin-bottom:6px}
+.detail .hint{color:var(--muted);font-size:14px}
+.detail p{margin-bottom:8px;color:var(--ink2)}
+.detail .lens{font-size:11px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block}
+body[data-aud="biz"] .tech{display:none}
+body[data-aud="tech"] .biz{display:none}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.links a{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:3px 11px;text-decoration:none}
+.links a:hover{border-color:var(--accent)}
+code,.mono{font-family:var(--mono);font-size:12.5px}
+pre.code{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow:auto;font:12.5px/1.6 var(--mono);color:var(--ink2);margin:8px 0}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.cardbtn{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.cardbtn:hover{border-color:var(--accent)}
+.cardbtn[aria-pressed="true"]{border-color:var(--accent);background:var(--blue-bg)}
+.cardbtn b{font-size:14px}
+.cardbtn span{font-size:12.5px;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10.5px;padding:1px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);align-self:flex-start}
+
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:40px;padding-top:16px;border-top:1px solid var(--line)}
+.pager a{border:1px solid var(--line);border-radius:10px;padding:10px 14px;text-decoration:none;color:var(--ink);background:var(--surface);max-width:48%}
+.pager a small{display:block;font-size:11px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em}
+.pager a:hover{border-color:var(--accent)}
+.calc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;align-items:end}
+@media (max-width:760px){.calc{grid-template-columns:1fr}}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.big{font-family:var(--mono);font-size:28px;font-weight:600}
+.foot{margin-top:36px;font-size:12.5px;color:var(--muted);max-width:76ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body data-aud="biz">
+<header class="top">
+  <div class="brand"><b>HSGA Explorer</b><span>Holonic Semantic Governance Architecture · a semantic scaffold over existing systems</span></div>
+  <div class="spacer"></div>
+  <div class="seg" role="group" aria-label="Audience lens">
+    <button id="aud-biz" aria-pressed="true">Business view</button>
+    <button id="aud-tech" aria-pressed="false">Technical view</button>
+  </div>
+  <button class="iconbtn" id="themebtn" aria-label="Toggle light and dark theme">Theme</button>
+</header>
+<div class="shell">
+  <nav class="side" id="nav" aria-label="Walkthrough pages"></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var DET={}; // diagram id -> detail map
+
+/* ---------- svg helpers ---------- */
+function N(id,x,y,w,h,label,sub,c){
+  var cy=y+h/2, ly=sub?cy-3:cy+5, sy=cy+14;
+  return '<g class="node" data-id="'+id+'" tabindex="0" role="button" aria-label="'+label+'"><rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="9" class="c-'+c+'"/>'+
+    '<text class="nl" x="'+(x+w/2)+'" y="'+ly+'">'+label+'</text>'+(sub?'<text class="ns" x="'+(x+w/2)+'" y="'+sy+'">'+sub+'</text>':'')+'</g>';
+}
+function C(id,x,y,r,label,c,top){
+  return '<g class="node" data-id="'+id+'" tabindex="0" role="button" aria-label="'+label+'"><circle cx="'+x+'" cy="'+y+'" r="'+r+'" class="c-'+c+'"/>'+
+    '<text class="nl" x="'+x+'" y="'+(y+5)+'">'+top+'</text></g>'+
+    '<text class="ns" x="'+x+'" y="'+(y+r+18)+'">'+label+'</text>';
+}
+function E(x1,y1,x2,y2,st){return '<line class="edge '+(st||'')+'" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" marker-end="url(#ar)"/>'}
+function T(x,y,s,anchor){return '<text class="lab" x="'+x+'" y="'+y+'"'+(anchor?' text-anchor="'+anchor+'"':'')+'>'+s+'</text>'}
+function svg(w,h,body,alt){
+  return '<svg viewBox="0 0 '+w+' '+h+'" role="group" aria-label="'+alt+'"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker></defs>'+body+'</svg>';
+}
+function fig(id,svgHtml,caption,hint){
+  return '<figure><div class="diagram" data-dia="'+id+'">'+svgHtml+'</div><div class="detail" data-panel="'+id+'" aria-live="polite"><div class="hint">'+(hint||'Select any cell in the diagram to see what it is and why it matters.')+'</div></div><figcaption>'+caption+'</figcaption></figure>';
+}
+function cardsFig(id,items,hint){
+  var h='<div class="cards" data-dia="'+id+'">';
+  items.forEach(function(it){h+='<button class="cardbtn node" data-id="'+it.id+'" aria-pressed="false"><b>'+it.t+'</b><span>'+it.s+'</span>'+(it.tag?'<span class="tag">'+it.tag+'</span>':'')+'</button>'});
+  return h+'</div><div class="detail" data-panel="'+id+'" aria-live="polite" style="margin-top:12px"><div class="hint">'+(hint||'Select a card for the detail.')+'</div></div>';
+}
+function showDetail(dia,id){
+  var d=(DET[dia]||{})[id]; var panel=document.querySelector('[data-panel="'+dia+'"]'); if(!d||!panel)return;
+  var h='<h3>'+d.t+'</h3>';
+  h+='<p class="biz"><span class="lens">Business view</span>'+d.biz+'</p>';
+  h+='<p class="tech"><span class="lens">Technical view</span>'+d.tech+'</p>';
+  if(d.code)h+='<pre class="code tech">'+d.code+'</pre>';
+  if(d.links){h+='<div class="links">';d.links.forEach(function(l){h+='<a href="#'+l[1]+'">'+l[0]+' →</a>'});h+='</div>'}
+  panel.innerHTML=h;
+  var dg=document.querySelector('[data-dia="'+dia+'"]');
+  dg.querySelectorAll('.node').forEach(function(n){var on=n.getAttribute('data-id')===id;n.classList.toggle('sel',on);if(n.tagName==='BUTTON')n.setAttribute('aria-pressed',on?'true':'false')});
+}
+document.addEventListener('click',function(e){
+  var n=e.target.closest('.node');if(!n)return;var dg=n.closest('[data-dia]');if(!dg)return;
+  showDetail(dg.getAttribute('data-dia'),n.getAttribute('data-id'));
+});
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Enter'&&e.key!==' ')return;var n=e.target.closest&&e.target.closest('g.node');if(!n)return;
+  e.preventDefault();var dg=n.closest('[data-dia]');showDetail(dg.getAttribute('data-dia'),n.getAttribute('data-id'));
+});
+
+/* ---------- pages ---------- */
+var PAGES=[];
+function page(id,n,title,grp,render){PAGES.push({id:id,n:n,title:title,grp:grp,render:render})}
+function head(eyebrow,title,lede){return '<div class="eyebrow">'+eyebrow+'</div><h1 class="page">'+title+'</h1><p class="lede">'+lede+'</p>'}
+
+/* 01 OVERVIEW */
+page('overview','01','Overview','Orientation',function(){
+  DET.ov={
+    legacy:{t:'Legacy and vendor systems',biz:'Payroll, HRIS, ERP, CRM, the warehouse and vendor tools keep doing what they do. HSGA does not ask you to replace or migrate them.',tech:'Treated as systems of record. Their schemas are bound to concepts by RDF anchors (dbt/LookML models, property-graph types, vector indices, catalog tables). No data movement is required for binding.',links:[['The scaffold','scaffold'],['Layers','holarchy']]},
+    bind:{t:'Bind and map',biz:'Each system field is tied to one agreed business concept, so "customer" in one tool and "account holder" in another are known to be the same thing.',tech:'A mediation holon maintains the Mapping Graph with six correspondence types. Candidates are scored, low-confidence ones go to a steward (HITL) before promotion.',links:[['Layers and mapping','holarchy'],['Labels and tenants','labels']]},
+    core:{t:'Governed semantic core',biz:'One small, stable set of foundational terms. Every other term, in any domain, for any customer, traces back to it, so meaning cannot fragment.',tech:'BFO-rooted core vocabularies act as stem cells. Rooted acyclic derivation DAG, immutable append-only core terms, three edge types, default-deny allowed-edge matrix.',links:[['Semantic design','semantic']]},
+    gate:{t:'Gateway (RDSG)',biz:'Every request and every AI action passes the same checkpoints: is it well formed, valid today, allowed, and safe.',tech:'Seven-stage traversal: RCB assembly, SHACL, SWRL temporal rules, four-domain PEP, safety/UCA boundary, compiled directive, facade delivery gate with audit commit.',links:[['Gateway journey','gateway']]},
+    deliver:{t:'Compiled and delivered',biz:'Rules are written once and pushed to where work happens: data checks, access policy, search filters and AI guardrails.',tech:'SHACL/SWRL/deontic rules are the single source and are compiled to SQL checks, OPA policy, vector filters and agent guardrails, so the graph reasoner is off the request path.',links:[['Compiled governance','compiled']]},
+    spine:{t:'HITL and measurement spine',biz:'People decide what machines cannot, and the architecture measures whether the AI is trustworthy rather than assuming it.',tech:'Disposition queues for unresolved terms, mapping and rule changes; MTBH = T_ops / N_h; structural measures emitted as telemetry events for dashboards.',links:[['Agents and HITL','agents'],['Measurement','measure']]}
+  };
+  var body=N('legacy',14,40,150,92,'Legacy and vendor','systems stay as they are','gray')+
+    N('bind',190,40,150,92,'Bind and map','mediation holon','teal')+
+    N('core',366,40,170,92,'Governed core','BFO stem cells + graphs','blue')+
+    N('gate',562,40,150,92,'Gateway','RDSG, 7 stages','amber')+
+    N('deliver',738,40,150,92,'Compile and deliver','SQL, OPA, vector, agents','green')+
+    E(164,86,190,86)+E(340,86,366,86)+E(536,86,562,86)+E(712,86,738,86)+
+    N('spine',14,168,874,46,'Human-in-the-loop and measurement spine','dispositions, trust scoring, MTBH, structural measures','purple')+
+    T(14,24,'Existing estate')+T(190,24,'New scaffold ->')+T(738,24,'Back into the estate');
+  return head('Start here','A semantic scaffold, not a replacement platform',
+    'HSGA adds a governed layer of shared meaning on top of the systems you already run. It binds what exists, enforces rules once, and lets AI act within limits that people can audit.')+
+  '<div class="grid3" style="margin-bottom:22px">'+
+   '<div class="tile"><div class="k">What changes</div><div class="v">A governed meaning layer</div></div>'+
+   '<div class="tile"><div class="k">What stays</div><div class="v">Systems of record and vendor tools</div></div>'+
+   '<div class="tile"><div class="k">What is new for AI</div><div class="v">Gateway, guardrails, measured trust</div></div></div>'+
+  fig('ov',svg(900,230,body,'End-to-end HSGA flow from legacy systems to compiled delivery with a HITL spine'),
+    'End to end in one picture. Select any cell; the Business and Technical toggle in the header changes the explanation.')+
+  '<h2>Who this page is for</h2><div class="grid2">'+
+   '<div class="card"><b>Business SMEs</b><p class="prose" style="margin-top:6px">Read the Business view. Each page explains the outcome: consistent meaning across tools, rules enforced once, AI that stops before it does harm, and a clear place for human judgment.</p></div>'+
+   '<div class="card"><b>Technical SMEs</b><p class="prose" style="margin-top:6px">Switch to the Technical view for graph structure, invariants, the gateway stages, compilation targets and the measures the dashboards need.</p></div></div>'+
+  '<h2>Suggested walkthrough</h2><p class="prose">Follow the pages in order: the scaffold, the seven layers, the semantic design, labels and tenants, the gateway, compiled governance, agents, measurement, the lifecycle view, the six accelerators, and the roadmap with open decisions.</p>';
+});
+
+/* 02 SCAFFOLD */
+page('scaffold','02','The scaffold over legacy','Orientation',function(){
+  DET.sc={
+    apps:{t:'Consumers: apps, BI, agents',biz:'People and AI assistants ask questions and take actions through the same governed path, whatever tool they use.',tech:'ERP, PLM, regulatory hub, BI, domain intelligence apps and agents consume governed outputs; every output carries provenance to the knowledge graph.',links:[['Gateway','gateway']]},
+    gw:{t:'Gateway and compiled policy',biz:'The checkpoint every request passes, plus the rules pushed into the tools people already use.',tech:'RDSG gateway for interactive traffic; compiled SQL/OPA/vector/agent policies for high-volume paths.',links:[['Compiled governance','compiled']]},
+    core:{t:'Core vocabularies',biz:'The shared foundation of meaning. Changes are rare, deliberate and never rewrite history.',tech:'BFO-rooted stem cells. Immutable, append-only; deprecate and replace rather than edit.',links:[['Semantic design','semantic']]},
+    dom:{t:'Domain ontologies',biz:'Each business domain (benefits, payroll, compliance) extends the core in its own language, owned by a domain architect.',tech:'Domain vocabularies derive from the core and/or a parent domain; multi-parent allowed but limited. Primitives only at top-level domains with BFO lineage.',links:[['Semantic design','semantic']]},
+    lab:{t:'Persona and tenant label graphs',biz:'Different roles and each client organization can use their own words without changing the shared meaning.',tech:'Separate named graphs holding alternate labels (personas) and tenant extension concepts; one-way ID references into core/domain graphs.',links:[['Labels and tenants','labels']]},
+    map:{t:'Mediation and mapping graph',biz:'The bridge. It records which system field means which concept, and how confident we are.',tech:'Six correspondence types, confidence-scored, steward-confirmed. RDF bindings to dbt/LookML, property graphs, vector indices, catalogs and third-party ontologies.',links:[['Layers','holarchy']]},
+    hris:{t:'HRIS and payroll',biz:'Remains the system of record for people and pay.',tech:'Bound via schema anchors and CDC/ETL connectors; no schema change needed.',links:[]},
+    erp:{t:'ERP and CRM',biz:'Remains the system of record for finance and customers.',tech:'Read through governed APIs; write-back through the virtualization layer only.',links:[]},
+    wh:{t:'Warehouse and transformation models',biz:'Metrics stay in place but are tied to governed definitions, so dashboards agree.',tech:'dbt/LookML metric models get RDF bindings (implementsConcept, mappingConfidence).',links:[]},
+    ven:{t:'Vendor tools and APIs',biz:'Third-party tools are brought under the same meaning and rules without custom rework per vendor.',tech:'API gateway with schema validation; third-party ontology bound by equivalence axioms rather than imported wholesale.',links:[]}
+  };
+  var b=N('apps',150,8,730,44,'Consumers','apps, BI, AI agents, assistants','green')+
+    N('gw',150,64,730,44,'Gateway and compiled policy','checks on the way in, rules pushed out','amber')+
+    N('core',150,122,230,84,'Core vocabularies','BFO stem cells','blue')+
+    N('dom',394,122,230,84,'Domain ontologies','extend the core','blue')+
+    N('lab',638,122,242,84,'Label and tenant graphs','alt labels, extensions','purple')+
+    N('map',150,220,730,48,'Mediation and mapping graph','correspondences with confidence scores','teal')+
+    N('hris',150,290,170,52,'HRIS, payroll',null,'gray')+N('erp',334,290,170,52,'ERP, CRM',null,'gray')+
+    N('wh',518,290,170,52,'Warehouse, dbt',null,'gray')+N('ven',702,290,178,52,'Vendor tools, APIs',null,'gray')+
+    '<rect x="10" y="116" width="120" height="156" rx="9" fill="none" stroke="var(--accent)" stroke-dasharray="5 4"/>'+
+    '<text class="ns" x="70" y="186" style="fill:var(--accent)">New scaffold</text><text class="ns" x="70" y="204">lightweight,</text><text class="ns" x="70" y="220">additive</text>'+
+    '<rect x="10" y="286" width="120" height="60" rx="9" fill="none" stroke="var(--muted)" stroke-dasharray="5 4"/>'+
+    '<text class="ns" x="70" y="312">Existing estate</text><text class="ns" x="70" y="328">not replaced</text>';
+  return head('Orientation','The scaffold over legacy systems',
+    'The architecture is additive. The legacy estate stays at the bottom; HSGA adds mapping, shared meaning, governance and delivery above it.')+
+  fig('sc',svg(900,360,b,'Layered diagram of the scaffold above legacy systems'),
+    'Select a cell. Dashed boxes separate what HSGA adds from what already exists.')+
+  '<h2>Why lightweight</h2><div class="grid3">'+
+   '<div class="tile"><div class="k">No migration</div><div class="v">Bind, do not move data</div></div>'+
+   '<div class="tile"><div class="k">Incremental</div><div class="v">Start with one domain</div></div>'+
+   '<div class="tile"><div class="k">Open standards</div><div class="v">OWL, SHACL, SWRL, OPA</div></div></div>';
+});
+
+/* 03 HOLARCHY */
+page('holarchy','03','Seven-layer holarchy','Architecture',function(){
+  var L=[
+   ['l7','L7','Enterprise ecosystem','consumers: ERP, PLM, regulatory hub, BI','green','Y output space','The place value lands: reports, filings, dashboards and directives, each traceable back to its source.','Wymore Y. Every output carries provenance to L4 and passes its domain certification before delivery.'],
+   ['l6','L6','Orchestration and UI','HITL workflows, persona dashboards','teal','Lambda output function','Where people see and approve things. Every approval is a signed record with a justification.','Orchestration platform, HITL intervention pane, SHACL viewer, ontology explorer, human performance monitor. Ontological RBAC binds events to personas.'],
+   ['l5','L5','Semantic governance','the rulebook','purple','R performance specs','The agreed rules: structure, timing and obligations. Nothing is published until it is tested and reviewed.','SHACL library, SWRL temporal rules, deontic norms, ORSD-style governance contracts, KGCL-style change log. Pre-deployment shape testing is mandatory.'],
+   ['l4','L4','Knowledge graph and data fabric','digital thread','blue','W state space','The governed picture of the enterprise: typed, versioned and queryable at any point in time.','Triplestore with named graphs (one per domain, plus a governance graph), federated query, vector search, lakehouse, semantic metric layer, catalog and lineage.'],
+   ['l3','L3','Gateway holon (PEP and AI edge)','the checkpoint','amber','Delta transition function','Where governance is enforced. It is built in, not bolted on, so it cannot be bypassed.','RDSG seven-stage traversal, trust circuit breaker, policy decision engine, safety/UCA specification, rule projection runtime.'],
+   ['l2','L2','Digital twin and connectivity','adapters, streams, pipelines','coral','S admissible stimuli','Only data that can be given a governed meaning is let in.','Protocol adapters, twin shell registry, event streaming, ETL, API gateway, CDC connectors. Signals typed as RDF conformant with the L5 ontology.'],
+   ['l1','L1','Physical and operational holons','systems, assets, people records','gray','X input space','The real operations that everything above describes.','Equipment, sensors, operational systems; each holon carries a digital-twin identity with SHACL-governed state boundaries.']
+  ];
+  DET.hl={};var b='',y=8;
+  L.forEach(function(r,i){
+    DET.hl[r[0]]={t:r[1]+' · '+r[2],biz:r[6],tech:r[7]+' (Wymore role: '+r[5]+').',links:[['Semantic design','semantic'],['Gateway','gateway']]};
+    var x=i*10;b+=N(r[0],10+x,y,880-x*2,50,r[1]+'  '+r[2],r[3],r[4]);y+=58;
+  });
+  return head('Architecture','Seven layers, each a whole and a part',
+    'A holarchy nests layers that are autonomous in their own scope and accountable to the layer above. The seven layers follow the Wymore system model, so every responsibility has a formal place.')+
+  fig('hl',svg(900,420,b,'Seven-layer holarchy L7 to L1'),'Select a layer. The role in the Wymore model M = (X, Y, W, S, Delta, Lambda, R) is shown in the technical view.')+
+  '<h2>Four governance domains run through every layer</h2><div class="grid2">'+
+   '<div class="card"><b>Data</b><p class="prose" style="margin:6px 0 0">Catalog, lineage, quality gates, master data, access policy.</p></div>'+
+   '<div class="card"><b>Semantic</b><p class="prose" style="margin:6px 0 0">Ontology registry, SHACL, term lifecycle, external alignment.</p></div>'+
+   '<div class="card"><b>Analytics</b><p class="prose" style="margin:6px 0 0">Model registry, one governed definition per metric, certified dashboards.</p></div>'+
+   '<div class="card"><b>AI and trust</b><p class="prose" style="margin:6px 0 0">Trust scoring, circuit breaker, model cards, mandatory human gates.</p></div></div>';
+});
+
+/* 04 SEMANTIC */
+page('semantic','04','Semantic design','Architecture',function(){
+  DET.sg={
+    bfo:{t:'BFO root',biz:'A neutral top-level framework of basic categories (things, processes, qualities). It gives every term a common ancestry.',tech:'Basic Formal Ontology (ISO/IEC 21838). All primitives must have BFO lineage; the derivation DAG is rooted here.',links:[]},
+    core:{t:'Core vocabularies: the stem cells',biz:'A small set of foundational terms from which everything else is formed. Once published they are never edited, only deprecated and replaced.',tech:'Immutable and append-only. Deprecation requires supersededBy. Core is the only place, besides top-level domains, where primitives may be minted.',links:[]},
+    da:{t:'Top-level domain',biz:'A business domain such as benefits. It can extend the core and, rarely, add a truly new primitive if it can show BFO lineage.',tech:'Derivation edges to core and/or parent domain; multi-parent permitted but kept low. Domain-minted primitives: minimal, BFO-rooted, top-level domains only.',links:[]},
+    sub:{t:'Sub-domain',biz:'A narrower area inside a domain. It specializes what exists and never invents new foundations.',tech:'No primitive minting. Derives from the parent domain or core. An open question remains for nested area containers.',links:[['Open decisions','roadmap']]},
+    db:{t:'Second top-level domain',biz:'A peer domain. Where its terms mean the same as another domain\'s, a lateral link records it.',tech:'Correspondence edges are lateral only and never replace derivation. The allowed-edge matrix is default-deny.',links:[]},
+    ten:{t:'Tenant extension',biz:'A client organization\'s own concepts, kept in their own graph so they never clutter the shared core.',tech:'Every extension concept has a derivation edge to a core or domain class; the match relation is the lateral link. Tenants mint no primitives.',links:[['Labels and tenants','labels']]},
+    per:{t:'Persona label graph',biz:'Roles can see familiar words for the same concept. The meaning is not changed.',tech:'Label-only (lexicalization edges). Separate graph, diagonally coupled to the core by one-way ID reference. Cannot add concepts.',links:[['Labels and tenants','labels']]}
+  };
+  var b=N('bfo',320,8,260,44,'BFO root','foundational categories','gray')+
+   N('core',320,86,260,52,'Core vocabularies','stem cells, immutable','blue')+
+   N('da',70,186,230,52,'Domain A (top level)','may mint a primitive: BFO lineage','blue')+
+   N('db',360,186,230,52,'Domain B (top level)','derives from core','blue')+
+   N('sub',70,282,230,52,'Sub-domain of A','specializes only','blue')+
+   N('ten',360,282,230,52,'Tenant extension','derives + lateral match','purple')+
+   N('per',660,186,220,52,'Persona labels','alternate labels only','purple')+
+   N('ten2',660,282,220,52,'Tenant graph boundary','no cross-tenant path','gray')+
+   E(450,86,450,52)+E(380,138,200,186)+E(450,138,450,186)+E(185,282,185,238)+E(475,282,475,238)+
+   E(300,212,360,212,'dash')+E(660,212,590,212,'dot')+
+   T(466,70,'derives from')+T(298,200,'match',null)+T(600,204,'label',null)+
+   '<text class="ns" x="770" y="360" style="font-size:11px">solid = derivation · dashed = correspondence · dotted = lexicalization</text>';
+  DET.sg.ten2={t:'Tenant graph boundary',biz:'Each client has a separate graph. One client\'s extensions can never be seen by or affect another.',tech:'Per-tenant named graphs with no cross-tenant path. Performance and isolation scale with tenant count rather than bloating core.',links:[['Labels and tenants','labels']]};
+
+  DET.inv={
+   i1:{t:'Core is immutable and append-only',biz:'Meaning never silently changes under you. A retired term points to its replacement.',tech:'No edits to published core terms; deprecate with supersededBy. Additive monotonic evolution: add a parent, never reparent.'},
+   i2:{t:'Primitives are rare and rooted',biz:'New foundational ideas are exceptional, and must be tied to the BFO foundation.',tech:'Minted only at core or top-level domain; BFO lineage required; minimal. Tracked as domain-minted primitive share.'},
+   i3:{t:'Rooted acyclic derivation DAG',biz:'Every term can be traced upward to the foundation, with no loops.',tech:'Multi-parent (polymorphic) inheritance allowed, kept limited; reported when a concept has more than two parents.'},
+   i4:{t:'Three edge types, default deny',biz:'Only a few kinds of relationship are allowed, which keeps the web of terms from turning into an unusable tangle.',tech:'Derivation, correspondence, lexicalization. An allowed-edge matrix by graph pair is default-deny, avoiding a fully meshed everything-relates-to-everything graph.'},
+   i5:{t:'Personas provide labels only',biz:'A role can have its own words, but cannot create meaning.',tech:'Persona vocabularies live in separate graphs, label-only. Unresolved labels become a pending state (DEV/STG only) routed by HITL.'},
+   i6:{t:'Three orphan checks',biz:'Nothing floats free: every term, field and label connects back to the foundation.',tech:'(1) concept has a derivation path to BFO; (2) schema binding coverage; (3) label resolution. Run per graph, per release.'}
+  };
+  return head('Architecture','Semantic design: one core, many graphs',
+    'Every vocabulary derives from the core stem cells or a parent domain, which keeps meaning aligned without forcing everyone into one flat model.')+
+  fig('sg',svg(900,372,b,'Derivation structure from BFO through core, domains, tenants and persona labels'),'Select a node. Domain-minted primitives are allowed only with BFO lineage and only at top-level domains.')+
+  '<h2>Design invariants</h2>'+cardsFig('inv',[
+    {id:'i1',t:'Immutable core',s:'append-only, deprecate and replace',tag:'rule'},
+    {id:'i2',t:'Primitives rare and rooted',s:'BFO lineage, top level only',tag:'rule'},
+    {id:'i3',t:'Rooted acyclic DAG',s:'limited multi-parent',tag:'rule'},
+    {id:'i4',t:'Three edge types',s:'default-deny matrix',tag:'rule'},
+    {id:'i5',t:'Labels only for personas',s:'pending state routed to HITL',tag:'rule'},
+    {id:'i6',t:'Three orphan checks',s:'path, binding, label',tag:'audit'}
+  ],'Select a rule to read the business meaning and the technical enforcement.')+
+  '<h2>Relation to multilayer and hetero-functional graph theory</h2><p class="prose">The structure behaves like a controlled hybrid: domain decomposition and propagation resemble a multilayer network with diagonal (categorical) coupling by ID, while the process-centred unifying domain echoes hetero-functional graphs. The design deliberately supports only a narrow slice of the general multilayer spectrum, because full generality would allow everything to relate to everything.</p>';
+});
+
+/* 05 LABELS AND TENANTS */
+page('labels','05','Labels, tenants and HITL','Architecture',function(){
+  DET.lb={
+    u:{t:'A term arrives',biz:'Someone uses a word the system does not yet recognize, for example a client\'s name for a benefit plan.',tech:'Label or concept proposal from a persona, tenant, ingestion agent or mapping candidate.',links:[]},
+    r:{t:'Try to resolve',biz:'The system first checks whether the word is already a known name for an existing concept.',tech:'Lookup across core, domain and alternate-label graphs scoped to the persona and tenant.',links:[]},
+    ok:{t:'Resolved: add alternate label',biz:'The word is simply recorded as another name for an existing concept. Nothing else changes.',tech:'Lexicalization edge in the persona/tenant label graph. One-way ID reference to the core or domain concept.',links:[]},
+    pend:{t:'Pending',biz:'The word is parked, not guessed at. It cannot be used in production until a person decides.',tech:'Pending state, permitted in DEV/STG only. It is a measured backlog (promotion-backlog age).',links:[['Measurement','measure']]},
+    hitl:{t:'HITL disposition',biz:'A steward or architect decides what the word really is.',tech:'Disposition queue with four outcomes and change management for any upstream impact.',links:[['Agents and HITL','agents']]},
+    o1:{t:'Outcome 1: alternate label',biz:'It is another name for something that exists.',tech:'Add to the persona or tenant label graph.',links:[]},
+    o2:{t:'Outcome 2: new domain concept',biz:'It is genuinely new for that domain.',tech:'Mint a concept in the domain with a derivation edge; no primitive unless top-level and BFO-rooted.',links:[]},
+    o3:{t:'Outcome 3: core change request',biz:'It reveals a gap in the shared foundation.',tech:'Council-reviewed core change; append-only; additive, never reparenting.',links:[['Open decisions','roadmap']]},
+    o4:{t:'Outcome 4: reject',biz:'It is not needed, or is a duplicate.',tech:'Closed with rationale in the change log.',links:[]}
+  };
+  var f=N('u',8,120,120,56,'New term',null,'gray')+N('r',156,120,150,56,'Resolve','core, domain, labels','teal')+
+   N('ok',350,28,160,56,'Add alt label','persona or tenant graph','green')+
+   N('pend',350,172,160,56,'Pending','DEV and STG only','amber')+
+   N('hitl',552,172,120,56,'HITL','disposition','purple')+
+   N('o1',728,10,162,46,'Alternate label',null,'green')+N('o2',728,66,162,46,'Domain concept',null,'blue')+
+   N('o3',728,122,162,46,'Core change request',null,'blue')+N('o4',728,178,162,46,'Reject',null,'gray')+
+   E(128,148,156,148)+E(306,136,350,66)+E(306,160,350,194)+E(510,200,552,200)+
+   E(672,190,728,33,'dash')+E(672,194,728,89,'dash')+E(672,198,728,145,'dash')+E(672,204,728,201,'dash')+
+   T(316,96,'known')+T(316,186,'unknown');
+  DET.tn={
+    core:{t:'Shared core and domains',biz:'The common foundation. No client data lives here.',tech:'Core and domain graphs are shared and read-only to tenants.',links:[]},
+    ta:{t:'Tenant graph A',biz:'Client A\'s own vocabulary, isolated.',tech:'Named graph; extension concepts derive from core/domain classes with match relations laterally.',links:[]},
+    tb:{t:'Tenant graph B',biz:'Client B\'s own vocabulary, isolated.',tech:'Same pattern; per-graph orphan check reports any extension with no derivation path to the core (target 0).',links:[]},
+    tc:{t:'Tenant graph C',biz:'Adding another client adds a graph, not complexity to the core.',tech:'Scales horizontally; query performance preserved because core and domain ontologies are not overloaded.',links:[]}
+  };
+  var t=N('core',200,8,500,60,'Shared core and domain graphs','read-only to tenants','blue')+
+   N('ta',40,130,230,60,'Tenant A graph','extensions + alt labels','purple')+N('tb',335,130,230,60,'Tenant B graph','extensions + alt labels','purple')+
+   N('tc',630,130,230,60,'Tenant C graph','extensions + alt labels','purple')+
+   E(155,130,330,68)+E(450,130,450,68)+E(745,130,570,68)+
+   '<line class="edge bad dash" x1="270" y1="160" x2="335" y2="160"/><line class="edge bad dash" x1="565" y1="160" x2="630" y2="160"/>'+
+   T(302,152,'no path','middle')+T(597,152,'no path','middle')+T(300,98,'derives from')+
+   '<text class="ns" x="450" y="224">Isolation and fidelity per organization, performance preserved as tenants scale</text>';
+  return head('Architecture','Alternate labels, tenant graphs and human disposition',
+    'Different roles and client organizations need their own words. The design lets them have that without letting meaning drift.')+
+  '<h2>What happens to an unknown term</h2>'+
+  fig('lb',svg(900,246,f,'Flow of an unresolved term to HITL disposition'),'Persona vocabularies can only add alternate labels to existing terms. Anything else is a person\'s decision.')+
+  '<h2>Per-tenant graphs</h2>'+
+  fig('tn',svg(900,236,t,'Tenant graphs isolated from each other and derived from shared core'),'For a PEO, each client organization gets its own graph. Extension concepts must derive from a core or domain class; the match relation is only the lateral link. Tenants mint no primitives.');
+});
+
+/* 06 GATEWAY */
+page('gateway','06','The gateway journey','Runtime',function(){
+  var S=[
+   ['s0','RCB','Assemble context','blue','Decompose the request into who, what, when, where and why, and activate the relevant domain holons.','Requirement Context Bundle assembly; context instantiation rather than input transformation. Session and persona binding.',false],
+   ['s1','SHACL','Structure','teal','Check the proposed change is well formed. Critical violations stop it immediately.','212+ shapes in the constraint library; critical violations halt and route to the Domain Governance Team.',false],
+   ['s2','SWRL','Time-aware rules','purple','Check it is valid today: windows, expirations, retest dates.','SWRL temporal interval rules (96+) prevent application of expired constraints.',false],
+   ['s3','PEP','Policy','amber','Check each of the four governance domains permits it for this person and purpose.','Attribute-based decisions derived from ontological roles; cross-jurisdiction conflicts to the Enterprise Governance Council.',true],
+   ['s4','UCA','Safety','red','Hold anything irreversible or unsafe for a person to approve.','Unsafe-control-action boundary and Simplex Action Gateway; irreversible actions require human authorization.',true],
+   ['s5','DIR','Directive','coral','Give the AI a clear, limited brief rather than raw rules.','Compiled AI Directive carrying guardrails; agents receive constrained operating context.',false],
+   ['s6','FAC','Deliver and audit','green','Check the response before it leaves, score trust and record the audit trail.','Facade delivery gate: acceptance criteria, five-dimension trust score, audit record to the Governance Named Graph, quarantine of tripped outputs.',true]
+  ];
+  DET.gw={};var b='<line class="edge" x1="50" y1="80" x2="850" y2="80"/>';
+  S.forEach(function(s,i){
+    var x=70+i*127;
+    DET.gw[s[0]]={t:'Stage '+(i)+' · '+s[2],biz:s[4]+(s[6]?' A person is part of this step.':''),tech:s[5],links:[['Compiled governance','compiled'],['Agents and HITL','agents']]};
+    b+=C(s[0],x,80,26,s[2],s[3],s[1]);
+    if(s[6])b+='<circle cx="'+(x+22)+'" cy="52" r="9" fill="var(--amber-bg)" stroke="var(--amber)"/><text x="'+(x+22)+'" y="56" text-anchor="middle" style="font-size:10px;font-weight:700">H</text>';
+  });
+  return head('Runtime','The gateway journey: seven stages',
+    'Every request and every AI action takes the same path. Governance is the structure of the traversal, so it cannot be skipped.')+
+  fig('gw',svg(900,150,b,'Seven-stage gateway journey with human gates marked H'),'The H marker shows where a person can be part of the step. Select a stage for the detail.')+
+  '<h2>What this buys you</h2><div class="grid3">'+
+   '<div class="tile"><div class="k">Structure</div><div class="v">Malformed changes stop early</div></div>'+
+   '<div class="tile"><div class="k">Time</div><div class="v">Expired rules are never applied</div></div>'+
+   '<div class="tile"><div class="k">Safety</div><div class="v">No autonomous irreversible actions</div></div></div>';
+});
+
+/* 07 COMPILED GOVERNANCE */
+page('compiled','07','Compiled governance','Runtime',function(){
+  DET.cg={
+    src:{t:'Single source of rules',biz:'Rules are written once, in a form legal and business reviewers can read. This is the one place they are changed.',tech:'SHACL shapes, SWRL rules and LKIF-style deontic norms (obligation, permission, prohibition) harmonized by the Rule Harmonization Engine into one conflict-checked contract.',code:'obligation(pay_overtime) :- worksite_employee(X),\n  classification(X, non_exempt), hours(X, H), H > 40.',links:[['Gateway','gateway']]},
+    comp:{t:'Rule projection',biz:'Rules are translated automatically into the formats each tool understands, then versioned.',tech:'Rule Projection Agent compiles canonical definitions to runtime-native targets; a compiled policy registry and cache keep the graph reasoner off the request-time path.',links:[['Agents and HITL','agents']]},
+    sql:{t:'Data checks (SQL, dbt)',biz:'Bad data is stopped where it is created or loaded.',tech:'SQL CHECK constraints and dbt tests; for example a k-anonymity guard: WHERE COUNT(DISTINCT employee_id) >= 5.',links:[]},
+    opa:{t:'Access policy (OPA)',biz:'Who may do what is decided from roles and attributes, not hand-edited permission lists.',tech:'Attribute-based policies evaluated by the policy decision engine; roles come from ontological definitions.',links:[]},
+    vec:{t:'Search filters (vector)',biz:'AI search only retrieves content that is current and allowed.',tech:'Vector-store filters grounded to canonical entities via the Mapping Graph; refreshed on a governed cadence.',links:[]},
+    agt:{t:'AI guardrails',biz:'Assistants are given limits, not just instructions.',tech:'Agent guardrail schema attached to every compiled directive; Simplex gate holds irreversible actions.',links:[['Measurement','measure']]}
+  };
+  var b=N('src',10,60,200,120,'Rules, once','SHACL · SWRL · deontic','purple')+
+   N('comp',260,60,190,120,'Rule projection','compile, version, cache','amber')+
+   N('sql',520,10,180,50,'SQL and dbt checks',null,'green')+N('opa',520,70,180,50,'OPA access policy',null,'green')+
+   N('vec',520,130,180,50,'Vector filters',null,'green')+N('agt',520,190,180,50,'Agent guardrails',null,'green')+
+   '<text class="ns" x="800" y="40">data platform</text><text class="ns" x="800" y="100">apps and APIs</text><text class="ns" x="800" y="160">search and RAG</text><text class="ns" x="800" y="220">AI agents</text>'+
+   E(210,120,260,120)+E(450,100,520,35)+E(450,110,520,95)+E(450,130,520,155)+E(450,140,520,215);
+  return head('Runtime','Author once, enforce everywhere',
+    'Rules live in one canonical form and are compiled to wherever enforcement is needed. The same registry answers audit questions.')+
+  fig('cg',svg(900,250,b,'One rule source compiled to four enforcement targets'),'Select any cell. Compilation keeps enforcement fast and consistent without asking every tool to reason over the graph.')+
+  '<h2>Example: one rule, two forms</h2><div class="grid2">'+
+   '<div class="card"><b>Canonical</b><pre class="code">Overtime must be paid at 1.5x for\nnon-exempt employees beyond 40 hrs/week.</pre></div>'+
+   '<div class="card"><b>Compiled (illustrative)</b><pre class="code">allow_payroll_run {\n  input.classification == "non_exempt"\n  input.hours &lt;= 40\n} else = flag {\n  input.overtime_rate &gt;= 1.5\n}</pre></div></div>';
+});
+
+/* 08 AGENTS AND HITL */
+page('agents','08','Agents and human gates','Runtime',function(){
+  var A=[
+   ['a1','Lineage Ingestion','Automated','Finds new schemas and lineage and proposes mapping candidates.','Scans connected systems; feeds the steward queue, never writes governed graphs directly.'],
+   ['a2','Mapping Confidence','Automated','Scores every mapping and flags weak ones.','Routes correspondences below the governed threshold to a Knowledge/Data Steward.'],
+   ['a3','Rule Projection','Automated','Turns the rule library into runtime-ready policy.','Compiles to SQL, OPA, vector filters and guardrails.'],
+   ['a4','Ontology Alignment','HITL-gated','Suggests links to industry standards.','Proposes equivalentClass/exactMatch; Ontology Engineer confirms before publish.'],
+   ['a5','Drift Detection','Automated','Watches for meaning drifting in source systems.','Compares schemas to bound concepts; raises steward review on degraded confidence.'],
+   ['a6','RAG Grounding','Automated','Keeps AI answers tied to governed concepts.','Anchors retrieval results to canonical entities at query time.'],
+   ['a7','Compliance Monitoring','HITL-gated','Watches for breaches of obligations.','Evaluates live data against the deontic library; escalates, does not auto-remediate.'],
+   ['a8','Recursive Learning','HITL-gated','Coordinates the improvement loop.','Orchestrates Observe, Reason, Propose, HITL Review, Adapt.']
+  ];
+  DET.ag={};A.forEach(function(a){DET.ag[a[0]]={t:a[1]+' agent',biz:a[3],tech:a[4],links:[['Measurement','measure']]}});
+  var P=[
+   ['p1','Observe','Agents capture signals','Capture lineage, drift and usage signals; no governing action yet.'],
+   ['p2','Reason','Signals become hypotheses','Synthesize signals into candidate drift or improvement hypotheses.'],
+   ['p3','Propose','A change is drafted','Draft a concrete mapping, alignment or rule change for review.'],
+   ['p4','HITL review','A person decides','The right persona authorizes, rejects or requests revision in the intervention pane.'],
+   ['p5','Adapt','Behavior updates','Publish approved changes, recompile affected targets, return to Observe.']
+  ];
+  DET.lp={};P.forEach(function(p){DET.lp[p[0]]={t:p[1],biz:p[2]+'.',tech:p[3]}});
+  var H=[
+   ['h1','Ontology change','Domain Architect + Council','New domain class needs approval before promotion.'],
+   ['h2','Weak mapping','Knowledge/Data Steward','Below-threshold confidence needs manual confirmation.'],
+   ['h3','Rule conflict','Enterprise Governance Council','Cross-jurisdiction conflict the harmonization engine cannot resolve.'],
+   ['h4','Irreversible action','Safety Reviewer','Held at the Simplex gateway until authorized.'],
+   ['h5','Low-trust output','Domain Governance Team','Quarantined and excluded from training pending review.'],
+   ['h6','Unknown term','Steward or Architect','Pending term dispositioned: label, domain concept, core change or reject.']
+  ];
+  DET.ht={};H.forEach(function(h){DET.ht[h[0]]={t:h[1],biz:h[3]+' Decided by: '+h[2]+'.',tech:'Checkpoint owner: '+h[2]+'. Logged with justification as a governance record in the Governance Named Graph.'}});
+  return head('Runtime','Eight agents, five-step loop, named human gates',
+    'Agents do the continuous, repetitive watching. People hold the decisions that carry judgment or risk.')+
+  '<h2>Agent roster</h2>'+cardsFig('ag',A.map(function(a){return {id:a[0],t:a[1],s:a[3],tag:a[2]}}))+
+  '<h2>Recursive learning loop</h2>'+cardsFig('lp',P.map(function(p){return {id:p[0],t:p[1],s:p[2]}}))+
+  '<h2>Human-in-the-loop checkpoints</h2>'+cardsFig('ht',H.map(function(h){return {id:h[0],t:h[1],s:h[2]}}))+
+  '<p class="foot">Persona names and telemetry in the source diagrams are illustrative. Role definitions, not individuals, carry authority.</p>';
+});
+
+/* 09 MEASUREMENT */
+page('measure','09','Measuring trust and structure','Assurance',function(){
+  var M=[
+   ['m1','Correspondence density','How many lateral links per concept','Too dense signals drift toward a fully meshed graph; too sparse signals fragmentation.'],
+   ['m2','Stem-reuse ratio','Share of new terms built from existing stems','High reuse means the core is doing its job.'],
+   ['m3','Impact radius','Terms affected by a core change','Shows the blast radius before a change is approved.'],
+   ['m4','Polyhierarchy rate','Concepts with more than one parent','Reported when above two; keeps inheritance understandable.'],
+   ['m5','Domain-minted primitive share','Primitives minted outside core','Should stay minimal and only at top-level domains.'],
+   ['m6','Promotion-backlog age','How long pending terms wait','Long waits mean HITL capacity is a bottleneck.'],
+   ['m7','HITL disposition mix','Label vs domain vs core vs reject','A shifting mix suggests the core or domains have gaps.'],
+   ['m8','Orphan rate per graph','Local concepts with no derivation path','Target 0; checked in every tenant graph.']
+  ];
+  DET.ms={};M.forEach(function(m){DET.ms[m[0]]={t:m[1],biz:m[2]+'. '+m[3],tech:m[2]+'. '+m[3]+' Dashboards read telemetry only, so this measure must be emitted as a telemetry event by the check that computes it.',links:[['Roadmap','roadmap']]}});
+  return head('Assurance','Trust is measured, not assumed',
+    'The architecture reports on its own health. The AI circuit breaker measures trustworthiness; structural measures show whether the semantic design is staying disciplined.')+
+  '<h2>MTBH: Mean Time Between Hallucinations</h2>'+
+  '<p class="prose">MTBH is total operational time divided by verified hallucinations or breaker trips, as defined in the metrics registry of the AI Circuit Breaker v3.0 design. The older "mean time between harmful outputs" and "mean time to hallucination" variants are retired.</p>'+
+  '<div class="card"><div class="calc">'+
+   '<label class="f">Operating hours <b id="ot">400</b><input id="oh" type="range" min="50" max="2000" step="10" value="400"></label>'+
+   '<label class="f">Verified hallucinations <b id="nt">1</b><input id="nh" type="range" min="0" max="20" step="1" value="1"></label>'+
+   '<div><div class="k" style="font-size:12px;color:var(--muted)">MTBH = T_ops / N_h</div><div class="big" id="mt">400 h</div></div></div>'+
+   '<p class="prose" style="margin:12px 0 0;font-size:13px">Illustrative calculator. Use the real trend under statistical process control; a falling MTBH is an early warning that the system is outside its validated envelope.</p></div>'+
+  '<h2>Structural measures</h2>'+cardsFig('ms',M.map(function(m){return {id:m[0],t:m[1],s:m[2],tag:'telemetry'}}))+
+  '<h2>Baseline and gates</h2><div class="grid3">'+
+   '<div class="tile"><div class="k">Metrology</div><div class="v">32 measures (design-time and run-time)</div></div>'+
+   '<div class="tile"><div class="k">Gold set</div><div class="v">150 questions, baselined at Gate 1</div></div>'+
+   '<div class="tile"><div class="k">Monitoring</div><div class="v">SPC on MTBH</div></div></div>';
+});
+
+/* 10 LIFECYCLE */
+page('lifecycle','10','Lifecycle fit (V-model)','Assurance',function(){
+  var V=[
+   ['v1','Stakeholder needs','Concept, pre MS A','blue','MCD, CCD and ConOps are captured and governed.','Info-data items are RDSG-governed; the semantic layer gives each requirement a defined term from the start.'],
+   ['v2','System requirements','TMRR','teal','Verifiable requirements, each traceable to a need.','SyRS with acceptance criteria; SHACL enforces structural and semantic integrity continuously.'],
+   ['v3','Architecture','TMRR to MS B','teal','The most concrete artifacts before the development commitment.','FCD and ACD in a SysML v2 repository baseline; STPA scenarios define the UCA boundary set.'],
+   ['v4','Design definition','EMD','amber','Detailed designs begin only after the knowledge gate.','PCD, HRS, SRS, ICD, algorithm specs (MTBH thresholds defined here), database design.'],
+   ['v5','Implementation','Code, build, assemble','gray','Virtual first, physical after design is stable.','Co-simulation with FMI; physical commitment waits for CDR confidence.'],
+   ['v6','Component verification','EMD','amber','Each part proven against its spec.','Unit verification reports traceable to HRS/SRS criteria.'],
+   ['v7','Integration','EMD to CDR','amber','Parts proven together.','ICD compliance verified at real boundaries; hardware-in-the-loop after CDR.'],
+   ['v8','System validation','Pre MS C','purple','Verified system meets stakeholder needs.','SQT and validation reports; certification evidence including STPA closure and MTBH characterization.'],
+   ['v9','Operations','O and S','green','Monitoring continues after fielding.','Scope-drift telemetry, operational envelope monitoring, MTBH and Brier drift reports.']
+  ];
+  DET.vm={};var b='';
+  var pos=[[10,10],[104,60],[198,110],[292,160],[386,210],[480,160],[574,110],[668,60],[762,10]];
+  V.forEach(function(v,i){
+    DET.vm[v[0]]={t:v[1]+' · '+v[2],biz:v[4],tech:v[5],links:[['Roadmap','roadmap']]};
+    b+=N(v[0],pos[i][0],pos[i][1],128,56,v[1],v[2],v[3]);
+  });
+    b+='<path class="edge" d="M138,38 L158,60 M232,88 L252,110 M326,138 L346,160 M420,188 L440,210 M514,238 L534,200 M608,188 L628,150 M702,138 L722,100 M796,88 L816,66" fill="none"/>';
+  b+='<text class="ns" x="200" y="290">System definition (left)</text><text class="ns" x="640" y="290">Verification and validation (right)</text>';
+  return head('Assurance','Fit with the systems-engineering lifecycle',
+    'HSGA governs the information baseline across the V-model: requirements, architecture and design items are machine-checked early, then monitored in operation.')+
+  fig('vm',svg(900,310,b,'V-model lifecycle with HSGA support at each stage'),'Select a stage. Each pre-Milestone-B artifact can be governed without any detailed design existing, which avoids premature lock-in.')+
+  '<p class="foot">Mapped from the SE V-Model artifact map (ISO/IEC 15288, INCOSE SE Handbook, DoD AAF). Artifact IDs are in the source document.</p>';
+});
+
+/* 11 ACCELERATORS */
+page('accelerators','11','Six accelerators','Delivery',function(){
+  var A=[
+   ['x1','HSGA','Nested governance holons: each layer accountable to the one above.','Federal, enterprise, client and worksite employee holons inherit obligations; a rule authored once applies correctly at every layer.','holarchy'],
+   ['x2','Decision modeling','Weighted, reproducible scoring of investment decisions.','Criteria and weights (outcome alignment, compliance risk, time to value, build vs buy) produce a visible composite and recommendation.','roadmap'],
+   ['x3','SSOT rules and logic','One authored source for obligations, permissions and prohibitions.','Canonical and compiled forms are both shown; the same registry feeds compliance checks and analytics.','compiled'],
+   ['x4','Requirements gateway','Every requirement traced to a named customer outcome.','Intake, semantic validation, outcome traceability and compliance check before anything reaches the roadmap.','gateway'],
+   ['x5','PLM dashboard','Lifecycle stage, OKRs and rule dependencies per product line.','Portfolio-wide view with SSOT dependencies for each product.','lifecycle'],
+   ['x6','AI circuit breaker','Measures AI trustworthiness and halts irreversible actions below threshold.','MTBH gating and a Simplex action gate that routes to human review.','measure']
+  ];
+  DET.ac={};A.forEach(function(a){DET.ac[a[0]]={t:a[1],biz:a[2],tech:a[3],links:[['Related page',a[4]]]}});
+  return head('Delivery','The six accelerators',
+    'The accelerators share one governance spine. They can be adopted individually or together; the Accelerator Console prototype in the project demonstrates each with illustrative data.')+
+  cardsFig('ac',A.map(function(a){return {id:a[0],t:a[1],s:a[2]}}),'Select an accelerator, then follow the link to the page that explains it in context.')+
+  '<p class="foot">Company names, rules and metrics in the console prototype are illustrative scenarios, not live system data.</p>';
+});
+
+/* 12 ROADMAP */
+page('roadmap','12','Roadmap and open decisions','Delivery',function(){
+  var R=[
+   ['r1','Phase 1','Seed and baseline','Seed the core from standards, 50+ shapes, charter the governance council, set trust baselines and stand up the model registry.','Gate 1 baseline: 150-question gold set and structural measures emitting telemetry.'],
+   ['r2','Phase 2','Extend and certify','Cross-domain extensions, 200+ shapes, external alignments, certification program, ontology-driven access.','Per-tenant graphs onboarded; 100% HITL compliance.'],
+   ['r3','Phase 3','Scale and self-serve','SHACL compliance above 99%, self-service extension toolkit, full deontic library, continuous trust monitoring.','Anti-collapse protocol validated.']
+  ];
+  DET.rm={};R.forEach(function(r){DET.rm[r[0]]={t:r[1]+' · '+r[2],biz:r[3],tech:r[3]+' '+r[4]}});
+  var D=[
+   ['d1','Decided: primitives need BFO lineage','Domains may mint primitives only with BFO lineage, kept minimal, at top level only.','resolved'],
+   ['d2','Decided: persona isolation is graph-scoped','Persona and tenant labels live in separate graphs, not in core or domain ontologies.','resolved'],
+   ['d3','Decided: MTBH definition authority','MTBH is defined by the AI Circuit Breaker v3.0 metrics registry.','resolved'],
+   ['d4','Open: nested-domain primitive minting','Whether area containers inside a domain count as top level for minting.','open'],
+   ['d5','Open: persona search ranking','Guide wording on persona ranking must match graph-scoped resolution.','open'],
+   ['d6','Open: simulation sequencing','Proposal sequencing versus the roadmap.','open'],
+   ['d7','Open: council approver role','Approver is listed as open in one section but defined in the roles table.','open'],
+   ['d8','Open: monitoring pattern','Dashboards read telemetry only, but the guide reads model files; align the two.','open']
+  ];
+  DET.dc={};D.forEach(function(d){DET.dc[d[0]]={t:d[1],biz:d[2],tech:d[2]+(d[3]==='open'?' Needs a decision before the next revision.':' Reflected in the invariants.'),links:d[3]==='resolved'?[['Semantic design','semantic']]:[]}});
+  return head('Delivery','Roadmap and open decisions',
+    'Delivery is phased and each phase is gated by measured evidence. Items still open are listed so they are visible, not buried.')+
+  '<h2>Phases</h2>'+cardsFig('rm',R.map(function(r){return {id:r[0],t:r[1],s:r[2]}}))+
+  '<h2>Decisions</h2>'+cardsFig('dc',D.map(function(d){return {id:d[0],t:d[1],s:d[2],tag:d[3]}}))+
+  '<p class="foot">Some names here are a best reconciliation across several document versions. Flag anything to rename, split or correct and the next revision will fold it in.</p>';
+});
+
+/* ---------- router ---------- */
+function buildNav(cur){
+  var h='',last='';
+  PAGES.forEach(function(p){
+    if(p.grp!==last){h+='<div class="grp">'+p.grp+'</div>';last=p.grp}
+    h+='<a href="#'+p.id+'"'+(p.id===cur?' aria-current="page"':'')+'><i>'+p.n+'</i>'+p.title+'</a>';
+  });
+  $('#nav').innerHTML=h;
+}
+function route(){
+  var id=(location.hash||'#overview').slice(1);
+  var i=PAGES.findIndex(function(p){return p.id===id});if(i<0){i=0}
+  var p=PAGES[i];DET={};
+  buildNav(p.id);
+  var html=p.render();
+  var prev=PAGES[i-1],next=PAGES[i+1];
+  html+='<div class="pager">'+(prev?'<a href="#'+prev.id+'"><small>Previous</small>'+prev.title+'</a>':'<span></span>')+(next?'<a href="#'+next.id+'" style="text-align:right"><small>Next</small>'+next.title+'</a>':'<span></span>')+'</div>';
+  $('#main').innerHTML=html;
+  document.title=p.title+' · HSGA Explorer';
+  window.scrollTo(0,0);
+  if(p.id==='measure')wireCalc();
+}
+function wireCalc(){
+  var oh=$('#oh'),nh=$('#nh');
+  function u(){
+    $('#ot').textContent=oh.value;$('#nt').textContent=nh.value;
+    var n=+nh.value,t=+oh.value;
+    $('#mt').textContent=n===0?'> '+t+' h':Math.round(t/n)+' h';
+  }
+  oh.addEventListener('input',u);nh.addEventListener('input',u);u();
+}
+window.addEventListener('hashchange',route);
+
+function setAud(a){
+  document.body.setAttribute('data-aud',a);
+  $('#aud-biz').setAttribute('aria-pressed',a==='biz'?'true':'false');
+  $('#aud-tech').setAttribute('aria-pressed',a==='tech'?'true':'false');
+}
+$('#aud-biz').addEventListener('click',function(){setAud('biz')});
+$('#aud-tech').addEventListener('click',function(){setAud('tech')});
+$('#themebtn').addEventListener('click',function(){
+  var r=document.documentElement,cur=r.getAttribute('data-theme');
+  if(!cur){cur=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+  r.setAttribute('data-theme',cur==='dark'?'light':'dark');
+});
+route();
+})();
+</script>
+</body>
+</html>

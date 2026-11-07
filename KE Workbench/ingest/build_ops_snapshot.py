@@ -404,6 +404,9 @@ def actions(recs, assets, qs, policy, expansion, guide):
     if _ver(ed) >= _ver('2.3'):
         for oid, title, detail in SPEC.OPEN_2_3:
             add('D-' + oid, 'Decision', title, detail, 'medium', 'Guide', f'Semantic Governance v{ed} open items')
+    if _ver(ed) >= _ver('2.4'):
+        for oid, title, detail in SPEC.OPEN_2_4:
+            add('D-' + oid, 'Decision', title, detail, 'medium', 'Guide', f'Semantic Governance v{ed} open items')
     drafts = [a for a in assets if a['status'] in ('Draft', '') and a['kind'] in ('vocabulary', 'taxonomy', 'ontology', 'shapes')]
     if drafts:
         add('L-candidate', 'Lifecycle', f'{len(drafts)} assets are Draft; define Candidate criteria and promote the core',

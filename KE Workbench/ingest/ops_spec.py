@@ -1,6 +1,6 @@
 '''Operations Dashboard: authored policy and standards content (read by build_ops_snapshot.py).
 
-GUIDE     where Semantic Governance v1.9 (Draft) (G01-G21) and v2.2 (G22-G33, closed by the v2.3 amendment set) no longer matched how the core and domains are built, with the
+GUIDE     where Semantic Governance v1.9 (Draft) (G01-G21) and v2.2 (G22-G33, closed by v2.3) and v2.3 (G34-G45, closed by v2.4) no longer matched how the core and domains are built, with the
           decision or release that changed it and the change made in the next edition;
 RESOLUTION, per edition, where each GUIDE item is resolved (Appendix E.4 of that edition) and its status;
 POLICIES  the process policies the change log is checked against (Part III §3.3, §3.4);
@@ -8,8 +8,8 @@ CATEGORIES and PRIORITIES for the action list.
 '''
 
 # The current edition is read from assets/ke-guide.js (written by ingest/guide_sync.py); these are fallbacks.
-GUIDE_EDITION = '2.3'
-GUIDE_NEXT = '2.4'
+GUIDE_EDITION = '2.4'
+GUIDE_NEXT = '2.5'
 
 
 def G(id, section, topic, v19, practice, sources, change, priority='high', kind='update'):
@@ -184,6 +184,67 @@ GUIDE = [
       'Every check that computes a measure emits a telemetry event (data/ops/telemetry.jsonl); the Operations Dashboard reads those events (Measures tab) and does not recompute them. Measures without an emitter are listed as not yet measured.',
       ['Semantic Governance v2.3 A12', 'ingest/telemetry.py'],
       'Move the remaining dashboard calculations (conformance counts, policies) onto telemetry events.', 'medium', 'update'),
+    # ---- v2.4 (A13-A24: glossaries and acronyms; full guide merges the v2.3 and v2.4 amendment sets); `v19` holds what the edition before said ----
+    G('G34', '3.2, 3.11', 'Glossary is the sixth asset type (A13)',
+      'Five asset types; definitions belong to concepts in a vocabulary, taxonomy or ontology.',
+      'No glossary source kind yet: ingestion does not accept a glossary, and the tier table, GN-2 and the asset-name checks list five types.',
+      ['Semantic Governance v2.4 A13', 'GN-15 to GN-19'],
+      'Add glossary to the asset types and tiers (domain, enterprise, customer; never core) and enforce GN-15 to GN-19 in the structural checks.', 'high', 'update'),
+    G('G35', '3.2, 3.11', 'Glossary identifiers, graphs and the reserved segments label and index (A14)',
+      'Identifiers and graph IRIs cover vocabulary, taxonomy, ontology, lexicon and mapping.',
+      'Entry identifiers, label resources ({asset}label/{id}-{term-type}) and version graphs for glossaries are not minted or checked; the segments label and index are not reserved in the checks.',
+      ['Semantic Governance v2.4 A14'],
+      'Mint glossary identifiers once and never change them; reserve label and index; archive glossary releases at SemVer IRIs.', 'high', 'update'),
+    G('G36', '3.8', 'Glossary entry model: concept with SKOS-XL labels, owner keeps the definition (A15)',
+      'Definitions are genus-and-differentia and belong to the vocabulary owner.',
+      'The definition check runs on every concept; a glossary entry would be rejected for a definition it does not own.',
+      ['Semantic Governance v2.4 A15'],
+      'Skip the genus-and-differentia check for glossary entries; require skos:definition, dcterms:source and a lifecycle status.', 'high', 'update'),
+    G('G37', '3.2, 3.8', 'Acronyms are scoped label resources and never resolve globally (A16)',
+      'An acronym is an alternate label of its expansion; Appendix F and the configuration hold one flat list.',
+      'Acronyms are checked against the flat acronyms.approved and acronyms.expansions lists; no label carries core:hasResolutionScope and the same letters cannot mean two things.',
+      ['Semantic Governance v2.4 A16'],
+      'Write acronyms as SKOS-XL labels with core:hasTermType core:Acronym and a resolution scope; resolve only as acronym plus scope.', 'high', 'update'),
+    G('G38', '3.2, Appendix F', 'A scoped acronym register replaces the flat approved list (A17)',
+      'Appendix F lists approved expansions and the ingestion configuration holds the same list.',
+      'ke-ingest.config.json holds acronyms.approved and acronyms.expansions; Conformance Review approves an acronym for every scope at once.',
+      ['Semantic Governance v2.4 A17'],
+      'Generate the configuration from released acronym labels, record the scope on approval, and add a category Acronyms without scope for the first-run migration.', 'high', 'update'),
+    G('G39', '3.5, 3.9', 'Weakest true predicate; no owl:sameAs across sources; exactMatch limits (A18)',
+      'Mapping changes need Architecture; no rule picks the match predicate.',
+      'Match predicates are not checked for strength, owl:sameAs between sources is not rejected and exactMatch chains are not measured.',
+      ['Semantic Governance v2.4 A18'],
+      'Reject owl:sameAs across sources; cap exactMatch chains once the limit is set at the Gate 1 baseline.', 'medium', 'decide'),
+    G('G40', '3.2, 3.11', 'Mapping records and mapping sets carry status, scope and provenance (A19)',
+      'A mapping asset holds match relations between assets; GN-D5 asks for the path pattern.',
+      'Mapping assets hold plain match triples; core:mapping-record and its properties do not exist in the core yet.',
+      ['Semantic Governance v2.4 A19', 'GN-D5'],
+      'Add the mapping-record terms in a core release, then move match relations into records; confirm GN-D5.', 'high', 'update'),
+    G('G41', '3.3, 3.4', 'Mapping lifecycle, the mapping steward and the human-in-the-loop gate (A20)',
+      'Agent-proposed mappings go through the generic human review.',
+      'The Mapping Agent Dashboard queues candidates, but Proposed records are not held in a draft graph per change-id and the mapping steward is not a named role.',
+      ['Semantic Governance v2.4 A20'],
+      'Hold Proposed records in the mapping asset draft graph, accept only through the decision gate, and name the steward in the catalog record.', 'high', 'update'),
+    G('G42', '2.7, 3.2, 3.8', 'Consumption rules: accepted links only, scoped acronym lookup, facade picks graphs, derived index graph (A21)',
+      'GN-8: services derive reachable graphs; no rule for mappings or acronyms.',
+      'Search reads every match triple and resolves acronyms without a scope; no derived index graph exists.',
+      ['Semantic Governance v2.4 A21'],
+      'Filter to Accepted records, require a scope on acronym lookups, and build the index graph per tier and per tenant.', 'medium', 'update'),
+    G('G43', '1.4, 2.7, 3.10, Appendix E', 'One onboarding procedure for every source, including third-party ontologies (A22)',
+      'BFO, RO Core and the RO extract keep their own IRIs; each source repeats the integration work.',
+      'Ingestion has no onboarding proposal, catalog record template or third-party source rule; Appendix E.5 now holds the templates.',
+      ['Semantic Governance v2.4 A22', 'Appendix E.5'],
+      'Follow E.5 for each new source; load third-party ontologies unchanged and reach them only through a mapping set.', 'medium', 'update'),
+    G('G44', '3.4, 3.11', 'Glossary and mapping shapes, load gates and the dangling-reference report (A23)',
+      'Part III checks cover vocabularies, taxonomies, ontologies, lexicons and mappings.',
+      'Twelve rules (glossary-shape to glossary-unmapped) are not in the build; loadBlockingRules lists three rules and the load does not produce a dangling-reference report.',
+      ['Semantic Governance v2.4 A23'],
+      'Add the rules, extend loadBlockingRules with the blocking ones, and attach a dangling-reference report to every load.', 'high', 'update'),
+    G('G45', '3.6', 'Glossary and mapping measures, each with an emitting check (A24)',
+      'Eight structural measures (A11) are emitted per graph.',
+      'The ten glossary and mapping measures have no emitter and are listed as not yet measured.',
+      ['Semantic Governance v2.4 A24'],
+      'Emit the ten measures from the checks in A23 and from the draft graph and change log; set targets at the Gate 1 baseline or after the pilot.', 'medium', 'update'),
 ]
 
 
@@ -233,6 +294,20 @@ RESOLUTION = {
         'G32': ('decide', '§3.6 Structural measures (A11); targets to be set at the Gate 1 baseline'),
         'G33': ('resolved', '§3.6 Monitoring (A12)'),
     },
+    '2.4': {
+        'G34': ('tools', '§3.2 Graph Naming (GN-2, GN-15 to GN-19); §3.11 Glossary Metadata'),
+        'G35': ('tools', '§3.2 Glossary Identifiers, Graphs, and Versions; Named Graphs (derived index)'),
+        'G36': ('tools', '§3.8 Glossaries and Glossary Entries'),
+        'G37': ('tools', '§3.8 Use of Alternate Labels (acronym rules)'),
+        'G38': ('tools', '§3.8 Scoped Acronym Register; Appendix F (Meaning, scope: this guide)'),
+        'G39': ('decide', '§3.9 Match Predicates; the exactMatch chain limit is to be set at the Gate 1 baseline'),
+        'G40': ('decide', '§3.11 Mapping Records and Mapping Sets; GN-D5 answered, awaiting confirmation; BFO parent of core:mapping-record is open'),
+        'G41': ('tools', '§3.3 Mapping Lifecycle and Roles; the confidence threshold is to be set'),
+        'G42': ('decide', '§2.7 Consumption Rules for Mappings and Acronyms; facade operations are to be defined with the service team'),
+        'G43': ('resolved', '§1.4 Onboarding Any Source; §3.10 third-party ontologies; Appendix E.5'),
+        'G44': ('tools', '§3.4 Glossary and Mapping Gates'),
+        'G45': ('decide', '§3.6 Glossary and Mapping Measures; targets at the Gate 1 baseline or after the pilot'),
+    },
 }
 
 # Open items in the v2.3 amendment set (its last section) that still need a decision; they become Decision actions.
@@ -245,6 +320,20 @@ OPEN_2_3 = [
     ('O-MATRIX', 'Allowed-edge matrix', 'Confirm the provisional matrix in ingest/ke-ingest.config.json (allowedEdges) and whether ontology object properties fall under default deny (A4).'),
     ('O-BFOPRED', 'Predicate for a primitive\'s BFO parent', 'A1 requires the declaration but not the predicate; the build accepts core:formalizedBy or rdfs:subClassOf (A1).'),
     ('O-PENDING', 'Pending-state predicate', 'The pending state is read as core:hasResolutionState core:pending (provisional name) until the guide names it (A8).'),
+]
+
+# Open items in the v2.4 edition (Open items at v2.4 in the Document Control section); they become Decision actions.
+OPEN_2_4 = [
+    ('O-LIMITS', 'Platform limits', 'Named-graph count and size limits, the SHACL engine, and support for graph-level versioning (A14, A23).'),
+    ('O-FIRSTMAP', 'First mapping target', 'Which core vocabulary is mapped first, and who owns it (A19, A22).'),
+    ('O-PILOT', 'Pilot scope', 'Which domain vocabulary and which glossary go first (A22).'),
+    ('O-EXACT', 'exactMatch policy', 'The maximum chain length, and whether Architecture plus the mapping steward approve every exactMatch (A18, A23).'),
+    ('O-FACADE', 'Facade operations', 'Which operations the facade exposes for lookup by concept, term and scoped acronym (A21).'),
+    ('O-SCOPE', 'Acronym scope grain', 'Whether a scope is always a concept scheme or may be a domain or an asset, and how a tenant scope relates to the enterprise scope (A16).'),
+    ('O-MAPLINEAGE', 'Core lineage of mapping-record', 'The BFO parent of core:mapping-record, as A1 requires (A19).'),
+    ('O-APQC', 'APQC statements', 'Whether the exactMatch and broadMatch statements from process kinds to the APQC registry move into a mapping asset (A19).'),
+    ('O-THRESHOLD', 'Candidate threshold', 'The minimum confidence for queueing a Proposed mapping record (A20).'),
+    ('O-LICENCE', 'Licensed customer content', 'Who holds and records the licence when a tenant supplies a licensed third-party glossary or ontology (A22).'),
 ]
 
 POLICIES = [

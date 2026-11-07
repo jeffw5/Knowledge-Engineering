@@ -1,6 +1,6 @@
 /* KE Workbench — tool registry (shared by the shell and the overview page). */
 window.KE_REGISTRY = {
-  version: '4.7.0',
+  version: '4.8.1',
   groups: [
     {
       id: 'model', label: 'Model & standards', eyebrow: 'Knowledge fabric · GraphDB',
@@ -125,12 +125,18 @@ window.KE_REGISTRY = {
       id: 'reference', label: 'Reference', eyebrow: 'Architecture & standards',
       blurb: 'The architecture and the standards the workbench applies.',
       tools: [
-        { id: 'hsga-overview', code: 'HS', file: 'tools/hsga-overview.html', title: 'HSGA Governance Overview',
-          desc: 'Holonic Semantic Governance Architecture — seven layers, four domains, the RDSG gateway and compiled governance.',
-          functions: [], std: ['2.1'] },
         { id: 'release-notes', code: 'RN', file: 'tools/release-notes.html', title: 'Release Notes', isNew: true,
           desc: 'What changed in each workbench release: new tools and features, improvements and fixes.',
           functions: ['Artifact versioning'], std: [] },
+        { id: 'hsga-walkthrough', code: 'HW', file: 'tools/hsga-walkthrough.html', title: 'HSGA Architecture Walkthrough', isNew: true,
+          desc: 'The overview of the Holonic Semantic Governance Architecture, read as a business or a technical SME: the thin semantic layer over existing systems, the v4.2 reference topology, mediation and mapping, compiled governance, alternate labels and the semantic knowledge layer.',
+          functions: [], std: ['2.1', '2.7'] },
+        { id: 'hsga-explorer', code: 'HX', file: 'tools/hsga-explorer.html', title: 'HSGA Explorer', isNew: true,
+          desc: 'The current Holonic Semantic Governance Architecture, page by page with a business and a technical view: layers, domains, agents and human review, the three orphan checks, MTBH and the open decisions.',
+          functions: [], std: ['2.1', '2.7'] },
+        { id: 'hsga-overview', code: 'HS', file: 'tools/hsga-overview.html', title: 'HSGA Governance Overview (earlier)', hidden: true,
+          desc: 'The earlier overview, replaced by the HSGA Explorer and the HSGA Architecture Walkthrough and kept for reference.',
+          functions: [], std: ['2.1'] },
         { id: 'apqc-pcf', code: 'PC', file: 'reference/apqc-pcf/index.html', title: 'APQC PCF 7.4', isNew: true,
           desc: 'The APQC Process Classification Framework the Commercial Operations domains are built on: the version in use and APQC\u2019s links, categories 3.0 and 6.0 as a searchable outline to L5, and the 7.2.1 \u2192 7.4 crosswalk.',
           functions: ['Impact visualization'], std: ['3.9'] },

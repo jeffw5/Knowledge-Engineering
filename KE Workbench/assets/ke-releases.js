@@ -2,6 +2,30 @@
    Add a new entry at the top for every release and bump `version` in ke-registry.js to match. */
 window.KE_RELEASES = [
   {
+    version: '4.8.1', date: '2026-11-07', title: 'HSGA Explorer and Architecture Walkthrough in Reference',
+    groups: [
+      { kind: 'new', items: [
+        'Reference now holds the HSGA Architecture Walkthrough (the overview) and the HSGA Explorer (the current architecture), both authored in the Semantic Architecture folder beside the repository root. The earlier HSGA Governance Overview is hidden from the navigation and kept in tools/.',
+        'ingest/hsga_sync.py publishes the two pages: it copies them from Semantic Architecture/ to tools/, adds the workbench bridge so they follow the light/dark toggle, and first keeps the copy being replaced in legacy/hsga/ with its date. Run it after every revision of either page.'
+      ] }
+    ]
+  },
+  {
+    version: '4.8.0', date: '2026-11-06', title: 'Semantic Governance v2.3 and v2.4: full guides, glossaries and acronyms',
+    groups: [
+      { kind: 'new', items: [
+        'Semantic Governance v2.4 (Draft) is in force as a full guide. docs/ now holds the complete set: Semantic_Governance_v2.3_DRAFT.pdf (v2.2 with the twelve v2.3 amendments merged, A1\u2013A12) and Semantic_Governance_v2.4_DRAFT.pdf (v2.3 with the twelve v2.4 amendments merged, A13\u2013A24). Word sources are in ../Semantic Governance/. ingest/guide_sync.py reads both as full editions (kind: guide, previous: 2.3); the v2.3 amendment set stays in docs/ as history and no longer decides the edition.',
+        'v2.4 adds glossaries and acronyms: glossary as the sixth asset type (GN-15 to GN-19), glossary identifiers and the reserved segments label and index, the glossary entry model, acronyms as scoped SKOS-XL labels with a scoped acronym register, the weakest true predicate for matches, mapping records and sets with status, scope and provenance, the mapping lifecycle and steward, consumption rules, one onboarding procedure for any source (new Appendix E.5), twelve load gates with a dangling-reference report, and ten glossary and mapping measures.',
+        'Operations Dashboard: retrofit items G34\u2013G45 record where v2.4 resolves each amendment, and the ten open items of v2.4 are Decision actions beside the five of v2.3 that remain open. The tool work for A13\u2013A24 is not done yet and is listed, not hidden: the ingester has no glossary source kind, the acronym configuration is still the flat list, and the new rules are not in the build.'
+      ] },
+      { kind: 'improved', items: [
+        'Edition management: guide_sync now has both full guides to read, so the edition in force follows the newest full guide, and an amendment set counts only while no full guide for that edition exists. conformsTo and standardsRef moved to 2.4 in ingest/ke-ingest.config.json, and the Edition Conformance statement in \u00a73.11 of the guide names the same edition.',
+        'Operations Dashboard (Guide tab): when the edition in force is a full guide, it says so and links the edition it supersedes, in place of the amendment-set note.',
+        'Assets still declare earlier editions until the core and domains are rebuilt, so policy P07 reports them against 2.4.'
+      ] }
+    ]
+  },
+  {
     version: '4.7.0', date: '2026-11-05', title: 'Semantic Governance v2.3: lineage, edges, tenants and structural measures',
     groups: [
       { kind: 'new', items: [

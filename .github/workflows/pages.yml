@@ -1,6 +1,7 @@
 # Publishes ONLY the website files to GitHub Pages.
 # PDFs are published only from KE Workbench/, Semantic Governance/, Semantic Architecture/ and ai-circuit-breaker/,
 # and only the current Semantic Governance edition (older editions and Archive/ folders are not published).
+# KE Workbench data files (.ttl/.trig/.rdf/.jsonl) are also published because the Workbench pages load them.
 # Everything else (other PDFs, decks, zips, video, RDF/TriG data, archives) stays in the repo as storage
 # but is never uploaded to Pages, so deploys stay small and fast.
 #
@@ -50,6 +51,11 @@ jobs:
               --include="Semantic_Governance_v${CURRENT}_DRAFT.pdf" --exclude='Semantic_Governance_v*_DRAFT*.pdf' \
               --include='*/' --include='*.pdf' --exclude='*' "$d/" "_site/$d/"
           done
+          # KE Workbench data files (Persona/Customer 360 .ttl, ops .jsonl, shapes, graphdb export) are read by the Workbench pages
+          rsync -a --prune-empty-dirs \
+            --exclude='_to_delete/' \
+            --include='*/' --include='*.ttl' --include='*.trig' --include='*.rdf' --include='*.jsonl' \
+            --exclude='*' "KE Workbench/" "_site/KE Workbench/"
           # Safety net: drop any other single non-PDF file over 5 MB so one stray upload can't bloat the site
           find _site -type f -size +5M ! -iname '*.pdf' -print -delete
           # Serve files as-is (no Jekyll processing)

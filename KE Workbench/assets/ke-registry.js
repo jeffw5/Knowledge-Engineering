@@ -90,7 +90,7 @@ window.KE_REGISTRY = {
         { id: 'appreciative-inquiry', code: 'AI', file: 'tools/appreciative-inquiry.html', title: 'Appreciative Inquiry', live: true, isNew: true,
           desc: 'Qualitative persona research: capture interviews through the 4-D cycle, code what people say into functional, emotional and social jobs, job steps and desired outcomes, and publish them to the graph.',
           functions: ['Unified modeling', 'Governance workflow'], std: ['3.8'] },
-        { id: 'peo-buyer-personas', code: 'BP', file: 'tools/peo-buyer-personas.html', title: 'Buyer Personas & Jobs', live: true,
+        { id: 'peo-buyer-personas', code: 'BP', file: 'tools/peo-buyer-personas.html', title: 'Persona Models', live: true,
           desc: 'Persona instances read from GraphDB, with a job pull-down showing each job\u2019s steps and desired outcomes, study scores, review status, interview evidence and demand.',
           functions: ['Impact visualization'], std: ['3.8'] },
         { id: 'job-study', code: 'JS', file: 'tools/peo-benchmark/study.html', title: 'PEO Job Study',

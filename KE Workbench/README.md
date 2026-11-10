@@ -247,14 +247,14 @@ Section 04 of the sidebar. It realizes the persona model from qualitative resear
 | Step | Tool | Reads | Writes |
 |---|---|---|---|
 | Interview | Appreciative Inquiry (`tools/appreciative-inquiry.html`) | personas, jobs, stages, outcomes | one named graph per interview: `…/graph/customer-360/interviews/{id}` |
-| Model | Buyer Personas & Jobs (`tools/peo-buyer-personas.html`) | persona instances and everything linked to them | — |
+| Model | Persona Models (`tools/peo-buyer-personas.html`) | persona instances and everything linked to them | — |
 | Measure | PEO Job Study (`tools/peo-benchmark/`) | bundled benchmark; survey CSV you upload | study scores in the browser, shared by the other tools |
 | Review | PEO Outcome Review (`tools/peo-outcome-review.html`) | personas, jobs, outcomes | one named graph per reviewer `…/graph/customer-360/review/reviewer/{id}` and per final decision `…/review/decision/{item}`; Export CSV |
 | Classify | PEO Outcome Playbook (`tools/peo-outcome-playbook.html`) | Job Study scores | battle cards, Fix / Innovate / Protect / Simplify, sales advisor prompt |
 | Gateway | Demand Gateway (`tools/demand-gateway.html`) | outcomes, scores, review decisions, interviews | one named graph per request: `…/graph/customer-360/demand/{id}`; portfolio CSV / Turtle for demand planning |
 
 - **Data**: `data/c360/` holds the schema and the PEO benchmark instances (`manifest.json` lists each file's named graph). `assets/c360-data.js` is the shared data layer: GraphDB first, the bundled Turtle when GraphDB is off, local drafts merged in.
-- **Load**: with GraphDB on and empty, Buyer Personas & Jobs › *Load benchmark into GraphDB* PUTs every file into its named graph. Reloading replaces the same graphs.
+- **Load**: with GraphDB on and empty, Persona Models › *Load benchmark into GraphDB* PUTs every file into its named graph. Reloading replaces the same graphs.
 - **Schema 0.3.0**: lower-case hyphenated class and concept identifiers; classes specialize Baseline Core v1.0 (`core:persona`, `core:job`, `core:job-step`, `core:desired-outcome`, `core:requirement`, `core:measure`). The eight universal stages are `jtbd:job-map-stage`; steps in a person's own words are `jtbd:job-map-step`.
 - **Previous personas page**: `tools/peo-buyer-personas-legacy.html` (hidden in the registry) and `legacy/3.9.0/`.
 

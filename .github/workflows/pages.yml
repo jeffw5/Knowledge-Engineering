@@ -1,0 +1,72 @@
+# Publishes ONLY the website files to GitHub Pages.
+# PDFs are published only from KE Workbench/, Semantic Governance/, Semantic Architecture/ and ai-circuit-breaker/,
+# and only the current Semantic Governance edition (older editions and Archive/ folders are not published).
+# Everything else (other PDFs, decks, zips, video, RDF/TriG data, archives) stays in the repo as storage
+# but is never uploaded to Pages, so deploys stay small and fast.
+#
+# One-time setup: Settings -> Pages -> Build and deployment -> Source = "GitHub Actions".
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # adds a manual "Run workflow" button in the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. Do NOT cancel a deploy that is already running.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Assemble site (website files only)
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude='.git/' --exclude='.github/' --exclude='_site/' \
+            --exclude='_to_delete/' --exclude='.DS_Store' --exclude='.gitattributes' --exclude='build_doc.js' \
+            --exclude='*.pdf'  --exclude='*.mp4'  --exclude='*.pptx' --exclude='*.docx' \
+            --exclude='*.zip'  --exclude='*.tgz'  --exclude='*.pages' \
+            --exclude='*.trig' --exclude='*.ttl'  --exclude='*.rdf'  --exclude='*.jsonl' \
+            --exclude='*.py'   --exclude='*.js.map' \
+            ./ _site/
+          # Add back the PDFs in the folders the site references (the broad exclude above dropped them)
+          CURRENT="2.4"
+          for d in "KE Workbench" "Semantic Governance" "Semantic Architecture" "ai-circuit-breaker"; do
+            mkdir -p "_site/$d"
+            # Versioned guide: publish only the current edition (v2.4). Older Semantic_Governance_v*_DRAFT*.pdf stay in the repo only.
+            # To publish a newer edition later, change CURRENT below.
+            rsync -a --prune-empty-dirs \
+              --exclude='_to_delete/' --exclude='Archive/' \
+              --include="Semantic_Governance_v${CURRENT}_DRAFT.pdf" --exclude='Semantic_Governance_v*_DRAFT*.pdf' \
+              --include='*/' --include='*.pdf' --exclude='*' "$d/" "_site/$d/"
+          done
+          # Safety net: drop any other single non-PDF file over 5 MB so one stray upload can't bloat the site
+          find _site -type f -size +5M ! -iname '*.pdf' -print -delete
+          # Serve files as-is (no Jekyll processing)
+          touch _site/.nojekyll
+          echo "Site size:"; du -sh _site
+          echo "Largest files:"; find _site -type f -printf '%s\t%p\n' | sort -rn | head -10
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

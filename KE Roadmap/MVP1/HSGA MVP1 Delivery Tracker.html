@@ -122,10 +122,10 @@ svg text{font-family:var(--sans)}
 <script>
 /* ---------------- static reference ---------------- */
 const PROJECTS={
- 'ISP-01':['Core ontology','core'],'ISP-02':['SSOT rules','core'],'ISP-03':['Benefits data intake','core'],'ISP-04':['Naming and personas','seed'],
- 'ISP-05':['Change governance','seed'],'ISP-06':['Payroll concepts','seed'],'ISP-07':['Benefits domain','core'],'ISP-08':['Rule validation','core'],
- 'ISP-10':['Grounding and circuit breaker','core'],'ISP-12':['HR360 on the SKL','core'],'ISP-13':['Legal norms','seed'],'ISP-15':['HR360 integration path','seed'],
- 'ISP-16':['Client concepts','seed'],'ISP-21':['Operations Workbench','core']};
+ 'NSP-01':['Core ontology','core'],'NSP-02':['SSOT rules','core'],'NSP-03':['Benefits data intake','core'],'NSP-04':['Naming and personas','seed'],
+ 'NSP-05':['Change governance','seed'],'NSP-06':['Payroll concepts','seed'],'NSP-07':['Benefits domain','core'],'NSP-08':['Rule validation','core'],
+ 'NSP-10':['Grounding and circuit breaker','core'],'NSP-12':['HR360 on the SKL','core'],'NSP-13':['Legal norms','seed'],'NSP-15':['HR360 integration path','seed'],
+ 'NSP-16':['Client concepts','seed'],'NSP-21':['Operations Workbench','core']};
 const WS={S:'Semantic services',G:'Governance',O:'Operating model',A:'HR360 agent'};
 const GATES=[{g:'M-G1',wk:2,name:'Baseline'},{g:'M-G2',wk:6,name:'Keel released'},{g:'B-G0',wk:8,name:'Architecture decided'},{g:'M-G3',wk:9,name:'Services live in test'},{g:'M-G4',wk:12,name:'Proof of capability'}];
 const DISC={DT:'Discover',['RE-P']:'Define · policy',['RE-S']:'Define · service and trust',ODD:'Design',KE:'Develop · knowledge',DE:'Develop · data',SE:'Develop · systems',OPR:'Deliver · operations',GOV:'Run · governance',SLM:'Run · service lifecycle'};
@@ -140,7 +140,7 @@ const COL={'not-started':'#C5D0DD','in-progress':'#2E6E8E','at-risk':'#B8842B','
 const $=s=>document.querySelector(s);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const uniq=a=>[...new Set(a)];
-const parseD=s=>{const [y,m,d]=String(s||'2026-11-02').split('-').map(Number);return new Date(y,(m||1)-1,d||1);};
+const parseD=s=>{const [y,m,d]=String(s||'2026-12-01').split('-').map(Number);return new Date(y,(m||1)-1,d||1);};
 const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
 const fmt=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
 const fmtY=d=>d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
@@ -153,7 +153,7 @@ let db=null,user=null;
 const start=()=>parseD(S.cfg&&S.cfg.start);
 const confirmed=()=>!!(S.cfg&&S.cfg.confirmed);
 const wkStart=w=>addD(start(),7*(w-1));
-const wkEnd=w=>addD(start(),7*(w-1)+4);
+const wkEnd=w=>{let d=addD(start(),7*w-1);while(d.getDay()===0||d.getDay()===6)d=addD(d,-1);return d;};
 const gDate=g=>g.g==='B-G0'?wkStart(g.wk):wkEnd(g.wk);
 function curWeek(){const ms=new Date()-start();return Math.floor(ms/864e5/7)+1;}
 function holidayWeeks(n=16){const out=new Set();for(let w=1;w<=n;w++){const a=wkStart(w),b=addD(a,6);
@@ -300,7 +300,7 @@ function vSetup(){
   const c=S.cfg||{},hw=[...holidayWeeks(12)];const ro=!S.canWrite?'disabled':'';
   $('#view').innerHTML=`<div class="eb">Setup</div><h2>Start date and baseline</h2><p class="lead">The plan is held in weeks. Set the actual start date and every calendar date in the tracker moves with it; baselines, forecasts and gates keep their week numbers.</p>
   <div class="grid g2"><div class="card"><h3>Start date</h3>
-   <div class="f"><label for="sd">Week 1 starts (Monday)</label><input type="date" id="sd" value="${esc(c.start||'2026-11-02')}" ${ro}></div>
+   <div class="f"><label for="sd">Week 1 starts</label><input type="date" id="sd" value="${esc(c.start||'2026-12-01')}" ${ro}></div>
    <div class="f"><label><input type="checkbox" id="sc" ${c.confirmed?'checked':''} ${ro} style="width:auto"> Start date confirmed</label><div class="small muted">While unconfirmed, dates are shown as planned and overdue checks are off.</div></div>
    ${S.canWrite?'<button class="btn pri" id="savecfg">Save</button> <span id="cfgmsg" class="small"></span>':''}
    <p class="small muted" style="margin-top:14px">With this start: M-G1 ${fmt(wkEnd(2))}, M-G2 ${fmt(wkEnd(6))}, B-G0 ${fmt(wkStart(8))}, M-G3 ${fmt(wkEnd(9))}, M-G4 ${fmt(wkEnd(12))}. Holiday weeks: ${hw.length?hw.map(w=>'W'+w).join(', '):'none'}.</p></div>
@@ -319,7 +319,7 @@ function vSetup(){
     $('#lexp').onclick=()=>{exportLocal();m('Exported data.json.');};
     $('#limp').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const o=normSeed(JSON.parse(await f.text()));if(!o)throw 0;db._replace(o);m('Imported '+Object.keys(o).length+' records.');}catch(x){m('That file is not a tracker data.json.');}};
     $('#lrst').onclick=e=>confirm2(e.target,async()=>{const o=await loadSeed();if(o){db._replace(o);m('Reloaded from the site\'s data.json.');}else m('No data.json found next to this page.');});
-    $('#lclr').onclick=e=>confirm2(e.target,()=>{db._replace({'config/plan':{start:(S.cfg&&S.cfg.start)||'2026-11-02',confirmed:false}});m('Started blank.');});}
+    $('#lclr').onclick=e=>confirm2(e.target,()=>{db._replace({'config/plan':{start:(S.cfg&&S.cfg.start)||'2026-12-01',confirmed:false}});m('Started blank.');});}
   if(!S.canWrite)return;
   $('#savecfg').onclick=async()=>{const st=$('#sd').value;if(!st){$('#cfgmsg').textContent='Choose a date.';return;}
     await write(db.doc('config/plan'),{...(S.cfg||{}),start:st,confirmed:$('#sc').checked,updatedBy:S.uid,updatedAt:Date.now()},'#cfgmsg');};
@@ -332,7 +332,7 @@ function vSetup(){
 /* ---------------- drawer editor ---------------- */
 function nextId(proj){const p=proj.slice(4);const ns=dels().filter(d=>d.proj===proj).map(d=>+d.id.split('.')[1]||0);return p+'.'+((ns.length?Math.max(...ns):0)+1);}
 function openDrawer(id,isNew){
-  const d=isNew?{id:'',proj:S.f.proj||'ISP-07',ws:'S',title:'',owner:'',gate:'M-G3',disc:'KE',base:Math.max(1,Math.min(12,curWeek())),fcst:Math.max(1,Math.min(12,curWeek())),status:'not-started',pct:0,reasons:[],deps:[],evidence:'',notes:'',reasonNote:''}:{...S.dels[id],reasons:[...(S.dels[id].reasons||[])]};
+  const d=isNew?{id:'',proj:S.f.proj||'NSP-07',ws:'S',title:'',owner:'',gate:'M-G3',disc:'KE',base:Math.max(1,Math.min(12,curWeek())),fcst:Math.max(1,Math.min(12,curWeek())),status:'not-started',pct:0,reasons:[],deps:[],evidence:'',notes:'',reasonNote:''}:{...S.dels[id],reasons:[...(S.dels[id].reasons||[])]};
   if(!d)return;S.openId=id||'__new';const ro=S.canWrite?'':'disabled';
   const wk=(v,mx=20)=>Array.from({length:mx},(_,i)=>i+1).map(w=>`<option value="${w}" ${+v===w?'selected':''}>W${w} · ${fmt(wkStart(w))}</option>`).join('');
   const reasons=()=>['D','R','A','X'].map(k=>{const it=regList().filter(r=>r.kind===k);return it.length?`<h4>${PLURAL[k]}</h4>`+it.map(r=>`<button type="button" data-rs="${esc(r.code)}" class="${d.reasons.includes(r.code)?'on':''} ${(d.deps||[]).includes(r.code)?'sug':''}" title="${esc(r.title)}" ${ro}>${esc(r.code)} ${esc(r.title.length>38?r.title.slice(0,37)+'…':r.title)}</button>`).join(''):'';}).join('');
@@ -443,11 +443,11 @@ route();
   const timer=setTimeout(()=>{S.stale=true;S.loaded.dels=S.loaded.cfg=true;render();},10000);
   const done=()=>{if(S.loaded.dels&&S.loaded.cfg&&S.loaded.reg){clearTimeout(timer);S.stale=false;}};
   const onErr=e=>{clearTimeout(timer);S.loaded.dels=S.loaded.cfg=S.loaded.reg=true;if(e&&e.code!=='unavailable')S.err='The shared data stopped updating. Reload the page to reconnect.';render();};
-  db.collection('deliverables').onSnapshot(s=>{const m={};s.docs.forEach(x=>{m[x.id]={...x.data(),id:x.id};});S.dels=m;if(!s.metadata.fromCache){S.loaded.dels=true;done();}else if(s.size)S.loaded.dels=true;
+  db.collection('deliverables').onSnapshot(s=>{const m={};s.docs.forEach(x=>{const v={...x.data(),id:x.id};if(typeof v.proj==='string')v.proj=v.proj.replace(/^ISP-/,'NSP-');m[x.id]=v;});S.dels=m;if(!s.metadata.fromCache){S.loaded.dels=true;done();}else if(s.size)S.loaded.dels=true;
     resolveNames(Object.values(m).map(d=>d.updatedBy));if(!S.openId)render();},onErr);
   db.collection('register').onSnapshot(s=>{const m={};s.docs.forEach(x=>{m[x.id]={...x.data(),code:x.id};});S.reg=m;if(!s.metadata.fromCache){S.loaded.reg=true;done();}if(!S.openId&&!(S.view==='register'&&document.activeElement&&document.activeElement.closest('.reg')))render();},onErr);
   db.collection('slips').orderBy('at','desc').limit(300).onSnapshot(s=>{S.log=s.docs.map(x=>x.data());resolveNames(S.log.map(l=>l.by));if(!S.openId&&S.view==='slippage')render();},onErr);
-  db.doc('config/plan').onSnapshot(s=>{S.cfg=s.exists?s.data():{start:'2026-11-02',confirmed:false};if(!s.metadata.fromCache){S.loaded.cfg=true;done();}else S.loaded.cfg=true;
+  db.doc('config/plan').onSnapshot(s=>{S.cfg=s.exists?s.data():{start:'2026-12-01',confirmed:false};if(!s.metadata.fromCache){S.loaded.cfg=true;done();}else S.loaded.cfg=true;
     resolveNames([S.cfg.rebaselinedBy]);if(!S.openId)render();},onErr);
 })();
 </script>

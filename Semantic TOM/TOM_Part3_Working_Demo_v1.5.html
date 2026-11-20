@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TOM v1.5 · Part III Working Demo · Measurement, Telemetry, Causal Analysis and Simulation</title>
+<style>
+:root{
+  --ink:#1F2933; --ink2:#52514e; --muted:#5F6B76; --brand:#2F6DB5; --brand-dk:#1F4D78; --draft:#B03A2E;
+  --rule:#D5DBE1; --head:#EEF3F9; --plane:#F4F6F8; --surface:#fcfcfb; --grid:#e1e0d9; --axis:#c3c2b7;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s1-l:#cde2fb;
+  --good:#0ca30c; --good-ink:#006300; --warn:#fab219; --serious:#ec835a; --crit:#d03b3b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--plane);font-size:14px;line-height:1.45}
+header{background:#fff;border-bottom:1px solid var(--rule);padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:5}
+header .draft{color:var(--draft);font-weight:700;letter-spacing:2px;font-size:13px}
+header h1{font-size:18px;margin:0}
+header .sub{color:var(--brand);font-size:13px}
+header .right{margin-left:auto;font-size:12px;color:var(--muted);text-align:right}
+.badge{display:inline-block;border:1px solid var(--rule);border-radius:12px;padding:2px 9px;font-size:11px;color:var(--muted);background:#fff}
+.layout{display:flex;min-height:calc(100vh - 62px)}
+nav{width:248px;flex:none;background:#fff;border-right:1px solid var(--rule);padding:14px 0}
+nav .grp{font-size:11px;font-weight:700;color:var(--brand);letter-spacing:.5px;padding:12px 18px 4px;text-transform:uppercase}
+nav a{display:flex;gap:10px;padding:7px 18px;color:var(--ink);text-decoration:none;font-size:13.5px;border-left:3px solid transparent;cursor:pointer}
+nav a .n{color:var(--muted);width:28px;flex:none}
+nav a:hover{background:var(--plane)}
+nav a.on{border-left-color:var(--brand);background:var(--head);font-weight:700}
+main{flex:1;padding:22px 28px 60px;min-width:0}
+.kicker{font-size:11px;font-weight:700;color:var(--brand);letter-spacing:.6px}
+h2{font-size:26px;margin:4px 0 6px}
+.lead{max-width:920px;color:var(--ink);margin:0 0 16px}
+h3{font-size:15px;margin:0 0 4px;color:var(--ink)}
+.card{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.card .note{color:var(--muted);font-size:12px;margin:2px 0 10px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.grid2>*,.grid3>*{min-width:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.tile{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:12px 14px}
+.tile .k{font-size:12px;color:var(--muted)}
+.tile .v{font-size:26px;font-weight:700;margin-top:2px}
+.tile .d{font-size:12px;margin-top:2px;color:var(--ink2)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{background:var(--head);text-align:left;font-weight:700;padding:6px 8px;border-bottom:1px solid var(--rule)}
+td{padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+code{font-family:Menlo,Consolas,monospace;font-size:11.5px;color:var(--brand-dk)}
+.st{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;white-space:nowrap}
+.st i{font-style:normal;display:inline-flex;width:16px;height:16px;border-radius:50%;align-items:center;justify-content:center;color:#fff;font-size:10px}
+.st.good i{background:var(--good)} .st.warn i{background:var(--warn);color:#0b0b0b} .st.serious i{background:var(--serious)} .st.crit i{background:var(--crit)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 14px}
+select,button{font:inherit;font-size:13px;border:1px solid var(--rule);border-radius:6px;background:#fff;padding:6px 10px;color:var(--ink)}
+button{cursor:pointer} button.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+button:hover{border-color:var(--brand)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.seg button{border:0;border-radius:0;border-right:1px solid var(--rule)} .seg button:last-child{border-right:0}
+.seg button.on{background:var(--brand);color:#fff}
+.slider{display:grid;grid-template-columns:200px 1fr 90px;gap:10px;align-items:center;margin:6px 0;font-size:13px}
+.slider input{width:100%}
+.slider .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin:4px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend b{display:inline-block;width:14px;height:3px;border-radius:2px}
+.legend b.dot{width:9px;height:9px;border-radius:50%}
+.tip{position:fixed;pointer-events:none;background:#fff;border:1px solid var(--rule);box-shadow:0 2px 10px rgba(0,0,0,.08);border-radius:6px;padding:7px 9px;font-size:12px;z-index:50;display:none;max-width:320px}
+.tip .t{font-weight:700;margin-bottom:3px}
+.log{font-family:Menlo,Consolas,monospace;font-size:11.5px;height:230px;overflow:auto;background:#fbfbfa;border:1px solid var(--rule);border-radius:6px;padding:8px}
+.log div{white-space:nowrap}
+.log .lk{color:var(--brand);font-weight:700}
+.pill{display:inline-block;border-radius:10px;padding:1px 8px;font-size:11px;font-weight:700;background:var(--head);color:var(--brand-dk)}
+.pill.fix{background:#fbebeb;color:#8a2a2a} .pill.innovate{background:#efedff;color:#3d2fa0} .pill.protect{background:#e5f4e4;color:#1d5e1d} .pill.simplify{background:#f9eeda;color:#7a5200} .pill.maintain{background:#f0efec;color:#52514e}
+.flex{display:flex;gap:16px;align-items:flex-start}
+.foot{color:var(--muted);font-size:11.5px;margin-top:24px;border-top:1px solid var(--rule);padding-top:10px}
+svg text{font-family:Arial,Helvetica,sans-serif}
+.page{display:none} .page.on{display:block}
+.howto{background:var(--head);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:16px}
+.howto b{color:var(--brand-dk)}
+.chain-node{cursor:pointer}
+.crumb{font-size:13px;color:var(--muted);margin-left:8px}
+.crumb a{color:var(--brand)}
+a{color:var(--brand)}
+@media (max-width:1100px){.grid2,.grid3{grid-template-columns:1fr} nav{width:200px}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="draft">DRAFT</div>
+  </div>
+  <div>
+    <h1>Target Operating Model — Part III Working Demo</h1>
+    <div class="sub">Measurement and Value · Conversational &amp; Agentic AI Services</div>
+  </div>
+  <div class="right">Version 1.5 · Draft · November 20, 2026<br><span class="badge">Example data from a simulated causal model — not real results</span></div>
+</header>
+<div class="layout">
+<nav id="nav">
+  <div class="grp">Start</div>
+  <a data-p="overview"><span class="n">0</span>How it works</a>
+  <div class="grp">Operate</div>
+  <a data-p="ops"><span class="n">OC</span>Operations command center</a>
+  <div class="grp">Instrument</div>
+  <a data-p="telemetry"><span class="n">T</span>Telemetry</a>
+  <a data-p="metrology"><span class="n">M</span>Metrology</a>
+  <div class="grp">Part III · Measure</div>
+  <a data-p="measurement"><span class="n">3.1</span>Measurement framework</a>
+  <a data-p="supply"><span class="n">3.2</span>Supply chain observability</a>
+  <a data-p="outcomes"><span class="n">3.3</span>Outcome management</a>
+  <a data-p="sla"><span class="n">3.4</span>Service levels &amp; unit cost</a>
+  <a data-p="dashboard"><span class="n">3.5</span>Dashboard</a>
+  <div class="grp">Analyze &amp; decide</div>
+  <a data-p="causal"><span class="n">C</span>Causal analysis</a>
+  <a data-p="simulation"><span class="n">S</span>Simulation</a>
+</nav>
+<main id="main">
+
+<!-- ============================================================ OVERVIEW -->
+<section class="page" id="p-overview">
+  <div class="kicker">START</div>
+  <h2>How the measurement system works</h2>
+  <p class="lead">Every answer Compass gives depends on five supply-chain links. Telemetry from each link becomes calibrated measures, which roll up into service levels, unit costs and customer outcomes. The same causal model that explains a past spike also simulates a proposed change. Click any box to open its page, or start at the <a href="javascript:void(0)" onclick="return go('ops')">Operations command center</a>, which drills from the big picture down to lineage, trace and audit records.</p>
+  <div class="card"><div id="ov-flow"></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>The scenario in this demo</h3>
+      <p class="note">84 days of simulated operations for four PEO capabilities, one per tier.</p>
+      <table id="ov-caps"></table>
+    </div>
+    <div class="card">
+      <h3>What happened (find it on the pages)</h3>
+      <p class="note">Two events are planted in the data so each page has something to find.</p>
+      <table>
+        <tr><th>Day</th><th>Event</th><th>Where to look</th></tr>
+        <tr><td class="num">60</td><td>Model provider raises its unit price 18%</td><td>3.4 unit cost chart; Causal analysis</td></tr>
+        <tr><td class="num">64–71</td><td>Benefits data pipeline delayed; data goes stale</td><td>Telemetry; 3.2 chain health; 3.3 outcomes; Causal analysis</td></tr>
+        <tr><td class="num">72</td><td>Pipeline fixed; freshness recovers</td><td>Every trend chart</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ OPS COMMAND CENTER -->
+<section class="page" id="p-ops">
+  <div class="kicker">OPERATE · COMMAND CENTER</div>
+  <h2>Operations command center</h2>
+  <p class="lead">One view for business and technical SMEs. Pick a lens, then drill down: pillar or link → component, system, service or agent → its lineage, trace chain, policies and audit trail → a single audit record. Every number comes from lineage, trace and audit records tagged with SKL identifiers.</p>
+  <div class="controls">
+    <span>Lens</span>
+    <div class="seg" id="ops-lens"><button data-l="big" class="on">Big picture</button><button data-l="gov">Governance</button><button data-l="plat">Platform performance</button></div>
+    <span id="ops-crumb" class="crumb"></span>
+  </div>
+  <div class="tiles" id="ops-trust"></div>
+  <div id="ops-lens-tiles" class="tiles"></div>
+  <div class="card">
+    <h3 id="ops-map-title">Architecture map</h3>
+    <p class="note" id="ops-map-note"></p>
+    <div id="ops-map"></div>
+    <div class="legend" id="ops-legend"></div>
+  </div>
+  <div id="ops-drill"></div>
+</section>
+
+<!-- ============================================================ TELEMETRY -->
+<section class="page" id="p-telemetry">
+  <div class="kicker">INSTRUMENT · TELEMETRY</div>
+  <h2>Telemetry from every link</h2>
+  <p class="lead">Each request emits a trace with one span per supply-chain link, tagged with SKL identifiers for the capability, outcome and assets it used. The stream below is live (simulated). Spans roll up into the per-link signals that every measure is computed from.</p>
+  <div class="controls"><button id="tl-toggle" class="primary">Pause stream</button><span class="badge" id="tl-rate"></span></div>
+  <div class="tiles" id="tl-tiles"></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>One request, end to end</h3>
+      <p class="note">Trace waterfall for the latest sampled request. Hover a span for its attributes.</p>
+      <div id="tl-trace"></div>
+    </div>
+    <div class="card">
+      <h3>Span stream</h3>
+      <p class="note">Newest first. Each line is one span event.</p>
+      <div class="log" id="tl-log"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Link signals over the last 84 days</h3>
+    <p class="note">Daily roll-ups. Pick a signal; the stale-data incident on days 64–71 shows in data freshness.</p>
+    <div class="controls"><select id="tl-sig"></select></div>
+    <div id="tl-chart"></div>
+  </div>
+</section>
+
+<!-- ============================================================ METROLOGY -->
+<section class="page" id="p-metrology">
+  <div class="kicker">INSTRUMENT · METROLOGY</div>
+  <h2>Metrology: can we trust the measures?</h2>
+  <p class="lead">A measure is only useful if it is defined once, measured the same way every time, and known to be accurate. Each measure has a registry entry in the SKL with its method, unit, uncertainty and calibration status. Measurement-system checks run continuously.</p>
+  <div class="card">
+    <h3>Measure registry</h3>
+    <p class="note">Every gating measure has an owner, a method, an uncertainty and a calibration date. Drifting or overdue measures cannot gate a promotion.</p>
+    <div id="mt-reg"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Repeatability: the same evaluation set, run 30 times</h3>
+      <p class="note">Spread shows measurement noise, not service change. A change smaller than the spread is not a real change.</p>
+      <div id="mt-rep"></div>
+    </div>
+    <div class="card">
+      <h3>Telemetry quality by link</h3>
+      <p class="note">Completeness of spans received and median lag before a signal is usable.</p>
+      <div id="mt-tq"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Human graders: inter-rater agreement</h3>
+    <p class="note">Groundedness and Expert Agreement depend on human judgement. Cohen's kappa by grader pair; below 0.6 triggers grader recalibration.</p>
+    <div id="mt-kappa"></div>
+  </div>
+</section>
+
+<!-- ============================================================ 3.1 MEASUREMENT -->
+<section class="page" id="p-measurement">
+  <div class="kicker">PART III · SECTION 3.1</div>
+  <h2>Measurement framework: are tiers ready to promote?</h2>
+  <p class="lead">Gating measures decide whether a capability can move to the next tier. Each capability is checked against the gate for its next tier, using only calibrated measures.</p>
+  <div class="tiles" id="ms-tiles"></div>
+  <div class="card">
+    <h3>Gate readiness by capability</h3>
+    <p class="note">Current value (last 7 days) against the threshold for the next gate. Thresholds are illustrative until the Council sets them (OD-01).</p>
+    <div id="ms-gate"></div>
+  </div>
+  <div class="card">
+    <h3>Gating measure trend</h3>
+    <p class="note">Pick a measure. The dashed line is its gate threshold.</p>
+    <div class="controls"><select id="ms-sel"></select></div>
+    <div id="ms-chart"></div>
+  </div>
+</section>
+
+<!-- ============================================================ 3.2 SUPPLY CHAIN -->
+<section class="page" id="p-supply">
+  <div class="kicker">PART III · SECTION 3.2</div>
+  <h2>Digital supply chain observability</h2>
+  <p class="lead">Each link's health is computed from its OLA measures. Move the day slider to replay the chain; click a link to see its blast radius: which capabilities, tiers and users depend on it.</p>
+  <div class="slider"><span>Replay day</span><input type="range" id="sc-day" min="1" max="84" value="67"><span class="val" id="sc-dayv"></span></div>
+  <div class="card"><div id="sc-chain"></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Supply-Chain Health Index by capability</h3>
+      <p class="note">Weighted roll-up of the link measures each capability depends on (0–100).</p>
+      <div id="sc-hi"></div>
+    </div>
+    <div class="card">
+      <h3>Blast radius: <span id="sc-br-name"></span></h3>
+      <p class="note">Capabilities that depend on the selected link, from the dependencies registered in the SKL.</p>
+      <div id="sc-br"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Answer lineage for one answer</h3>
+    <p class="note">Every answer can be traced back through the links it used. Example: a T1 Benefits answer given on the selected day.</p>
+    <div id="sc-lin"></div>
+  </div>
+</section>
+
+<!-- ============================================================ 3.3 OUTCOMES -->
+<section class="page" id="p-outcomes">
+  <div class="kicker">PART III · SECTION 3.3</div>
+  <h2>Outcome management: delivered against desired</h2>
+  <p class="lead">Each outcome is scored for importance and satisfaction; the gap drives its action class. Operating metrics track delivery between survey waves; compliance gaps are risk-profiled; everything lands in one ranked demand backlog.</p>
+  <div class="controls"><span>Segment</span><div class="seg" id="oc-seg"><button data-s="peo" class="on">PEO clients</button><button data-s="non">Employers without a PEO</button></div></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Action map</h3>
+      <p class="note">Importance against satisfaction (0–10). Below the diagonal = under-served. Hover a point.</p>
+      <div id="oc-map"></div>
+      <div class="legend" id="oc-leg"></div>
+    </div>
+    <div class="card">
+      <h3>Delivered outcomes: operating metric against target</h3>
+      <p class="note">Paired metrics show delivery between study waves. Benefits slipped during the stale-data incident.</p>
+      <div id="oc-op"></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Compliance gaps and risk profile</h3>
+      <p class="note">Impact = reach × importance × shortfall × persistence × exposure, scored 0–100 by Risk and Compliance.</p>
+      <div id="oc-comp"></div>
+    </div>
+    <div class="card">
+      <h3>HITL edit rate</h3>
+      <p class="note">Share of agent outputs a person changed before release, weekly. Edits become training and evaluation data.</p>
+      <div id="oc-hitl"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Prioritized demand</h3>
+    <p class="note">Compliance gaps with client exposure first; then value work by concept score = Σ (opportunity above threshold 10 × share of gap closed).</p>
+    <div id="oc-demand"></div>
+  </div>
+</section>
+
+<!-- ============================================================ 3.4 SLA & COST -->
+<section class="page" id="p-sla">
+  <div class="kicker">PART III · SECTION 3.4</div>
+  <h2>Service levels, unit costs and automated Lean Six Sigma</h2>
+  <p class="lead">SLAs decompose into link OLAs; unit cost rolls up the same paths. Control charts flag special-cause variation automatically and open improvement work.</p>
+  <div class="controls"><span>Capability</span><select id="sl-cap"></select></div>
+  <div class="tiles" id="sl-tiles"></div>
+  <div class="card">
+    <h3>Unit cost per resolved request — control chart</h3>
+    <p class="note">Center line and 3-sigma limits from days 1–55. Flagged points break a Western Electric rule and open a demand item automatically.</p>
+    <div id="sl-spc"></div>
+    <div class="legend"><span><b style="background:var(--s1)"></b>Unit cost</span><span><b style="background:var(--axis)"></b>Center line</span><span><b style="background:var(--crit);height:2px"></b>Control limits</span><span><b class="dot" style="background:var(--crit)"></b>Flagged point</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>SLA and OLA attainment (last 28 days)</h3>
+      <p class="note">Share of days each agreement was met.</p>
+      <div id="sl-ola"></div>
+    </div>
+    <div class="card">
+      <h3>Error budget remaining (28-day window)</h3>
+      <p class="note">Releases freeze when the budget reaches zero.</p>
+      <div id="sl-eb"></div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Cost of the eight wastes, last 28 days</h3>
+      <p class="note">Detected automatically from the measures; $ per month, all capabilities.</p>
+      <div id="sl-waste"></div>
+    </div>
+    <div class="card">
+      <h3>Six Sigma view</h3>
+      <p class="note">Defect = wrong or ungrounded answer, failed task, or SLA breach.</p>
+      <div id="sl-sigma"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 3.5 DASHBOARD -->
+<section class="page" id="p-dashboard">
+  <div class="kicker">PART III · SECTION 3.5</div>
+  <h2>Dashboard: six pillars, filtered by tier</h2>
+  <p class="lead">The six supplied pillars stay the top level. The tier filter answers "how is T1 doing?" and "is T4 ready to scale?" from the same view.</p>
+  <div class="controls"><span>Tier</span><div class="seg" id="db-tier"><button data-t="all" class="on">All</button><button data-t="T1">T1</button><button data-t="T2">T2</button><button data-t="T3">T3</button><button data-t="T4">T4</button></div><span>Window</span><div class="seg" id="db-win"><button data-w="7" class="on">7 days</button><button data-w="28">28 days</button></div></div>
+  <div class="grid3" id="db-pillars"></div>
+  <div class="card">
+    <h3>Cross-cutting views</h3>
+    <div id="db-cross"></div>
+  </div>
+</section>
+
+<!-- ============================================================ CAUSAL -->
+<section class="page" id="p-causal">
+  <div class="kicker">ANALYZE · CAUSAL ANALYSIS</div>
+  <h2>Causal analysis: why did it move?</h2>
+  <p class="lead">The SKL links each measure to the measures and levers that drive it. Pick an outcome and a day; the analysis compares that day with the baseline (days 1–55) and splits the change across its root causes using Shapley attribution over the causal model.</p>
+  <div class="controls">
+    <span>Outcome</span><select id="ca-out"></select>
+    <span>Day</span><select id="ca-day"></select>
+  </div>
+  <div class="card">
+    <h3 id="ca-title"></h3>
+    <p class="note">Bridge from the baseline value to the selected day. Each bar is one root cause's share of the change.</p>
+    <div id="ca-bridge"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Causal graph</h3>
+      <p class="note">Root causes (left) drive link measures, which drive service and outcome measures. Edges on the path to the selected outcome are highlighted; width shows strength of the effect on this day.</p>
+      <div id="ca-graph"></div>
+    </div>
+    <div class="card">
+      <h3>Finding and counterfactual</h3>
+      <div id="ca-find"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ SIMULATION -->
+<section class="page" id="p-simulation">
+  <div class="kicker">ANALYZE · SIMULATION</div>
+  <h2>Simulation: what if we change something?</h2>
+  <p class="lead">Set the levers or pick a scenario. The same causal model predicts the impact at operational, execution and strategic levels, with uncertainty from 400 Monte Carlo runs. Simulations are advisory until Risk and Quality Engineering validate the method.</p>
+  <div class="controls" id="sim-presets"></div>
+  <div class="grid2">
+    <div class="card">
+      <h3>Levers</h3>
+      <p class="note">Baseline = typical day before the incidents.</p>
+      <div id="sim-levers"></div>
+      <div class="controls" style="margin-top:10px"><button id="sim-reset">Reset to baseline</button></div>
+    </div>
+    <div class="card">
+      <h3>Predicted impact</h3>
+      <p class="note">Dot = median; whisker = 10th–90th percentile of 400 runs. Grey tick = baseline.</p>
+      <div id="sim-mc"></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Impact by level</h3>
+    <p class="note">How the scenario reads to the operator, the change lead and the executive.</p>
+    <div id="sim-levels"></div>
+  </div>
+</section>
+
+<div class="foot">Demo of TOM v1.5 Part III. All values are generated by an illustrative causal model with planted events; they are not survey results, operating data or approved claims. Thresholds are placeholders pending Council decisions (OD-01, OD-17, OD-22).</div>
+</main>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+"use strict";
+// ================================================================ utilities
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const fmt = (v, d = 0) => Number(v).toLocaleString('en-US', {minimumFractionDigits: d, maximumFractionDigits: d});
+const pct = (v, d = 1) => fmt(v * 100, d) + '%';
+const money = (v, d = 2) => '$' + fmt(v, d);
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;}}
+let rnd = mulberry32(20261120);
+const gauss = (r = rnd) => { let u = 0, v = 0; while (!u) u = r(); while (!v) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+const median = a => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+const quant = (a, q) => { const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(q * s.length))]; };
+const mean = a => a.reduce((x, y) => x + y, 0) / a.length;
+const sd = a => { const m = mean(a); return Math.sqrt(mean(a.map(x => (x - m) ** 2))); };
+const NS = 'http://www.w3.org/2000/svg';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tip = $('#tip');
+function showTip(e, html){ tip.innerHTML = html; tip.style.display = 'block'; const x = e.clientX + 14, y = e.clientY + 14; tip.style.left = Math.min(x, innerWidth - tip.offsetWidth - 10) + 'px'; tip.style.top = Math.min(y, innerHeight - tip.offsetHeight - 10) + 'px'; }
+function hideTip(){ tip.style.display = 'none'; }
+function status(kind, label){ const ic = {good:'✓', warn:'!', serious:'▲', crit:'✕'}[kind]; return `<span class="st ${kind}"><i>${ic}</i>${label}</span>`; }
+function nice(lo, hi, n = 5){ const span = hi - lo || 1; const step0 = span / n; const mag = 10 ** Math.floor(Math.log10(step0)); const step = [1, 2, 2.5, 5, 10].map(m => m * mag).find(s => s >= step0); const a = Math.floor(lo / step) * step, b = Math.ceil(hi / step) * step; const t = []; for (let v = a; v <= b + step / 2; v += step) t.push(+v.toFixed(10)); return {lo: a, hi: b, ticks: t}; }
+
+// ================================================================ the causal model
+// Levers (root causes). Baseline = a typical day before the planted events.
+const LEVERS = [
+  {k:'volume', label:'Request volume', unit:'per hour', min:400, max:3000, step:50, base:1000, f:v=>fmt(v)},
+  {k:'freshness', label:'Data freshness lag', unit:'hours', min:1, max:72, step:1, base:6, f:v=>fmt(v)+' h'},
+  {k:'apiLatency', label:'Systems API latency', unit:'ms', min:80, max:1200, step:10, base:220, f:v=>fmt(v)+' ms'},
+  {k:'coverage', label:'SKL coverage', unit:'share', min:0.5, max:1, step:0.01, base:0.82, f:v=>pct(v,0)},
+  {k:'mapPrec', label:'Mapping precision', unit:'share', min:0.6, max:1, step:0.01, base:0.9, f:v=>pct(v,0)},
+  {k:'largeShare', label:'Large-model share', unit:'share', min:0, max:1, step:0.01, base:0.3, f:v=>pct(v,0)},
+  {k:'routing', label:'Tier routing accuracy', unit:'share', min:0.6, max:1, step:0.01, base:0.93, f:v=>pct(v,0)},
+  {k:'hitl', label:'HITL review rate', unit:'share', min:0, max:0.6, step:0.01, base:0.12, f:v=>pct(v,0)},
+  {k:'price', label:'Model price index', unit:'index', min:0.5, max:2, step:0.01, base:1.0, f:v=>fmt(v,2)},
+];
+const BASE = Object.fromEntries(LEVERS.map(l => [l.k, l.base]));
+const LEVER = Object.fromEntries(LEVERS.map(l => [l.k, l]));
+
+// Outputs, with their direction (higher is better?) and formatting.
+const OUT = {
+  retrieval:{label:'Retrieval Relevance', good:+1, f:v=>pct(v)},
+  groundedness:{label:'Groundedness', good:+1, f:v=>pct(v)},
+  mtbh:{label:'MTBH (interactions)', good:+1, f:v=>fmt(v)},
+  tta:{label:'Time to Answer', good:-1, f:v=>fmt(v,2)+' s'},
+  apiErr:{label:'API Error Rate', good:-1, f:v=>pct(v,2)},
+  taskSuccess:{label:'Task Success Rate', good:+1, f:v=>pct(v)},
+  slaProb:{label:'SLA Attainment', good:+1, f:v=>pct(v)},
+  unitCost:{label:'Cost per Resolved Request', good:-1, f:v=>money(v,3)},
+  copq:{label:'Cost of Poor Quality ($/month)', good:-1, f:v=>money(v,0)},
+  complianceRisk:{label:'Compliance Exposure Score', good:-1, f:v=>fmt(v,1)},
+  vgi:{label:'Value Gap Index', good:-1, f:v=>fmt(v,3)},
+  sat:{label:'Benefits outcome satisfaction (0–10)', good:+1, f:v=>fmt(v,2)},
+};
+
+function model(L){
+  const effLarge = clamp(L.largeShare + (1 - L.routing) * 0.5, 0, 1);
+  const retrieval = clamp(0.287 + 0.45 * L.coverage + 0.25 * L.mapPrec - 0.0032 * Math.max(0, L.freshness - 6) + 0.004 * Math.max(0, 6 - L.freshness), 0.05, 0.995);
+  const groundedness = clamp(0.56 + 0.43 * retrieval + 0.035 * effLarge, 0.3, 0.998);
+  const mtbh = 1 / ((1 - groundedness) * 0.25);
+  const apiErr = clamp(0.002 + L.apiLatency / 140000 + Math.max(0, L.volume - 1800) / 900000, 0, 0.2);
+  const tta = 0.75 + L.apiLatency / 1000 * 1.6 + effLarge * 2.1 + Math.max(0, L.volume - 1200) / 1000 * 0.8 + L.hitl * 1.2;
+  const taskSuccess = clamp(groundedness * 0.62 + (1 - apiErr * 15) * 0.24 + L.routing * 0.14, 0, 1);
+  const slaProb = 1 / (1 + Math.exp(-(9 * (2.6 - tta) / 2.6 + 55 * (taskSuccess - 0.915))));
+  const fixed = 400; // $ per hour fixed platform and SKL services
+  const modelCost = (effLarge * 0.30 + (1 - effLarge) * 0.03) * L.price;
+  const rework = (1 - groundedness) * 2.6 + apiErr * 4;
+  const unitCost = fixed / L.volume + modelCost + L.hitl * 0.55 + rework + 0.004;
+  const copq = (rework + L.hitl * 0.55 * 0.35) * L.volume * 24 * 30 * 0.05;
+  const complianceRisk = clamp((1 - groundedness) * (1 - L.hitl) * 600 + (L.freshness > 24 ? (L.freshness - 24) * 0.6 : 0), 0, 100);
+  const vgi = clamp(0.30 - 0.9 * (taskSuccess - 0.9) + 0.035 * (tta - 1.8) + 0.002 * L.freshness, 0.02, 0.9);
+  const sat = clamp(6.9 + 9 * (taskSuccess - 0.9) - 0.25 * (tta - 1.8) - 0.02 * (L.freshness - 6), 0, 10);
+  return {retrieval, groundedness, mtbh, tta, apiErr, taskSuccess, slaProb, unitCost, copq, complianceRisk, vgi, sat, effLarge};
+}
+
+// Causal graph structure (for display and for which levers feed which outputs)
+const EDGES = [
+  ['coverage','retrieval'],['mapPrec','retrieval'],['freshness','retrieval'],
+  ['retrieval','groundedness'],['largeShare','groundedness'],['routing','groundedness'],
+  ['groundedness','mtbh'],
+  ['apiLatency','apiErr'],['volume','apiErr'],
+  ['apiLatency','tta'],['largeShare','tta'],['routing','tta'],['volume','tta'],['hitl','tta'],
+  ['groundedness','taskSuccess'],['apiErr','taskSuccess'],['routing','taskSuccess'],
+  ['tta','slaProb'],['taskSuccess','slaProb'],
+  ['volume','unitCost'],['largeShare','unitCost'],['routing','unitCost'],['price','unitCost'],['hitl','unitCost'],['groundedness','unitCost'],['apiErr','unitCost'],
+  ['groundedness','copq'],['apiErr','copq'],['hitl','copq'],['volume','copq'],
+  ['groundedness','complianceRisk'],['hitl','complianceRisk'],['freshness','complianceRisk'],
+  ['taskSuccess','vgi'],['tta','vgi'],['freshness','vgi'],
+  ['taskSuccess','sat'],['tta','sat'],['freshness','sat'],
+];
+
+// ================================================================ 84 days of simulated operations
+const DAYS = 84;
+const days = [];
+rnd = mulberry32(84001);
+for (let d = 1; d <= DAYS; d++){
+  const dow = (d - 1) % 7;
+  const weekend = dow >= 5;
+  const L = {
+    volume: Math.round((1000 + 2 * d) * (weekend ? 0.9 : 1) * (1 + 0.04 * gauss())),
+    freshness: clamp(6 + 1.2 * gauss(), 2, 72),
+    apiLatency: clamp(220 + 25 * gauss(), 120, 2000),
+    coverage: clamp(0.80 + 0.0006 * d + 0.004 * gauss(), 0.5, 1),
+    mapPrec: clamp(0.9 + 0.006 * gauss(), 0.6, 1),
+    largeShare: clamp(0.3 + 0.02 * gauss(), 0, 1),
+    routing: clamp(0.93 + 0.008 * gauss(), 0.6, 1),
+    hitl: clamp(0.12 + 0.01 * gauss(), 0, 0.6),
+    price: d >= 60 ? 1.18 : 1.0,
+  };
+  if (d >= 64 && d <= 71){ L.freshness = clamp(28 + (d - 64) * 4 + 3 * gauss(), 20, 72); }
+  if (d >= 66 && d <= 70){ L.hitl = clamp(0.2 + 0.01 * gauss(), 0, 0.6); }
+  const o = model(L);
+  // measurement noise on observed values
+  const obs = {};
+  for (const k in o) obs[k] = o[k];
+  obs.retrieval = clamp(o.retrieval + 0.006 * gauss(), 0, 1);
+  obs.groundedness = clamp(o.groundedness + 0.004 * gauss(), 0, 1);
+  obs.unitCost = o.unitCost * (1 + 0.025 * gauss());
+  obs.tta = o.tta * (1 + 0.03 * gauss());
+  days.push({d, L, o: obs, avail: clamp(0.9985 + 0.0007 * gauss(), 0.99, 1)});
+}
+const series = k => days.map(x => x.o[k]);
+const lseries = k => days.map(x => x.L[k]);
+const BASEDAYS = days.filter(x => x.d <= 55);
+const baseLevers = Object.fromEntries(LEVERS.map(l => [l.k, median(BASEDAYS.map(x => x.L[l.k]))]));
+
+// Capabilities (one per tier) with relative weights on the shared model
+const CAPS = [
+  {id:'cap:payroll-qa', name:'Payroll Q&A', tier:'T1', theme:'Payroll', link:'Applications and systems', costMul:0.55, ttaMul:0.8, links:{data:0.25, apps:0.25, skl:0.3, analytics:0.0, ai:0.2}},
+  {id:'cap:benefits-change', name:'Benefits change requests', tier:'T2', theme:'Benefits', costMul:0.9, ttaMul:1.0, links:{data:0.35, apps:0.3, skl:0.15, analytics:0.0, ai:0.2}},
+  {id:'cap:hr-advisory-360', name:'HR Advisory 360 (KDA)', tier:'T3', theme:'HR Compliance', costMul:1.6, ttaMul:1.4, links:{data:0.2, apps:0.05, skl:0.3, analytics:0.25, ai:0.2}},
+  {id:'cap:portfolio-impact', name:'Portfolio change impact', tier:'T4', theme:'PEO Relationship', costMul:5.2, ttaMul:3.1, links:{data:0.15, apps:0.05, skl:0.3, analytics:0.25, ai:0.25}},
+];
+
+// ================================================================ chart helpers (SVG, with hover)
+function svgEl(tag, attrs = {}, parent){ const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function txt(parent, x, y, s, a = {}){ const t = svgEl('text', Object.assign({x, y, 'font-size': 11, fill: '#52514e'}, a), parent); t.textContent = s; return t; }
+
+/** line chart: opts {series:[{name,values,color,width,dash}], xs, yfmt, ref:[{y,label,color,dash}], band:[x0,x1,label], markers:[{i,label}], height, ymin, ymax, flags:[i...]} */
+function lineChart(el, opts){
+  el.innerHTML = '';
+  const W = el.clientWidth || 700, H = opts.height || 240, m = {l: 54, r: 18, t: 14, b: 28};
+  const svg = svgEl('svg', {width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: 'img'}, el);
+  const all = opts.series.flatMap(s => s.values).concat((opts.ref || []).map(r => r.y));
+  let lo = opts.ymin ?? Math.min(...all), hi = opts.ymax ?? Math.max(...all);
+  const pad = (hi - lo) * 0.08 || 1; const nonneg = lo >= 0; if (opts.ymin == null) lo -= pad; if (opts.ymax == null) hi += pad; if (nonneg) lo = Math.max(0, lo);
+  const sc = nice(lo, hi, 4); if (nonneg) { sc.lo = Math.max(0, sc.lo); sc.ticks = sc.ticks.filter(t => t >= 0); } lo = sc.lo; hi = sc.hi;
+  const n = opts.series[0].values.length;
+  const X = i => m.l + (W - m.l - m.r) * (n === 1 ? 0.5 : i / (n - 1));
+  const Y = v => m.t + (H - m.t - m.b) * (1 - (v - lo) / (hi - lo));
+  if (opts.band){ const [a, b, lab] = opts.band; svgEl('rect', {x: X(a), y: m.t, width: X(b) - X(a), height: H - m.t - m.b, fill: '#f0efec'}, svg); txt(svg, X(a) + 4, m.t + 12, lab, {'font-size': 10.5, fill: '#5F6B76'}); }
+  for (const t of sc.ticks){ svgEl('line', {x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t), stroke: '#e1e0d9'}, svg); txt(svg, m.l - 6, Y(t) + 4, opts.yfmt ? opts.yfmt(t) : t, {'text-anchor': 'end'}); }
+  svgEl('line', {x1: m.l, x2: W - m.r, y1: H - m.b, y2: H - m.b, stroke: '#c3c2b7'}, svg);
+  const xs = opts.xs || [...Array(n).keys()].map(i => i + 1);
+  const every = Math.ceil(n / 12);
+  xs.forEach((x, i) => { if (i % every === 0 || i === n - 1) txt(svg, X(i), H - m.b + 15, x, {'text-anchor': 'middle'}); });
+  for (const r of opts.ref || []){ svgEl('line', {x1: m.l, x2: W - m.r, y1: Y(r.y), y2: Y(r.y), stroke: r.color || '#898781', 'stroke-dasharray': r.dash || '5 4', 'stroke-width': 1.25}, svg); if (r.label) txt(svg, W - m.r - 2, Y(r.y) - 4, r.label, {'text-anchor': 'end', 'font-size': 10.5, fill: '#52514e'}); }
+  for (const s of opts.series){
+    const d = s.values.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(v).toFixed(1)).join('');
+    svgEl('path', {d, fill: 'none', stroke: s.color, 'stroke-width': s.width || 2, 'stroke-dasharray': s.dash || '', 'stroke-linejoin': 'round'}, svg);
+  }
+  for (const i of opts.flags || []){ const v = opts.series[0].values[i]; svgEl('circle', {cx: X(i), cy: Y(v), r: 5, fill: '#d03b3b', stroke: '#fff', 'stroke-width': 2}, svg); }
+  if (opts.series.length > 1 && !opts.noLegend){ const lg = document.createElement('div'); lg.className = 'legend'; lg.innerHTML = opts.series.map(s => `<span><b style="background:${s.color}"></b>${esc(s.name)}</span>`).join(''); el.appendChild(lg); }
+  // hover layer
+  const cross = svgEl('line', {y1: m.t, y2: H - m.b, stroke: '#898781', 'stroke-width': 1, visibility: 'hidden'}, svg);
+  const dots = opts.series.map(s => svgEl('circle', {r: 4, fill: s.color, stroke: '#fff', 'stroke-width': 2, visibility: 'hidden'}, svg));
+  const hit = svgEl('rect', {x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: 'transparent'}, svg);
+  hit.addEventListener('mousemove', e => {
+    const r = svg.getBoundingClientRect(); const px = e.clientX - r.left;
+    const i = clamp(Math.round((px - m.l) / (W - m.l - m.r) * (n - 1)), 0, n - 1);
+    cross.setAttribute('x1', X(i)); cross.setAttribute('x2', X(i)); cross.setAttribute('visibility', 'visible');
+    dots.forEach((dt, k) => { dt.setAttribute('cx', X(i)); dt.setAttribute('cy', Y(opts.series[k].values[i])); dt.setAttribute('visibility', 'visible'); });
+    const extra = opts.tipExtra ? opts.tipExtra(i) : '';
+    showTip(e, `<div class="t">${esc(opts.xlabel || 'Day')} ${esc(xs[i])}</div>` + opts.series.map(s => `<div><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${s.color};margin-right:6px"></span>${esc(s.name)}: <b>${opts.yfmt ? opts.yfmt(s.values[i]) : fmt(s.values[i], 2)}</b></div>`).join('') + extra);
+  });
+  hit.addEventListener('mouseleave', () => { cross.setAttribute('visibility', 'hidden'); dots.forEach(d => d.setAttribute('visibility', 'hidden')); hideTip(); });
+}
+
+/** horizontal bars: rows [{label, value, color, note, status}] */
+function hbar(el, rows, opts = {}){
+  el.innerHTML = '';
+  const W = el.clientWidth || 500, rh = 26, lw = opts.labelW || 170, H = rows.length * rh + 26;
+  const svg = svgEl('svg', {width: W, height: H}, el);
+  const max = opts.max ?? Math.max(...rows.map(r => r.value)) * 1.1;
+  const X = v => lw + (W - lw - (opts.valW || 80)) * v / max;
+  svgEl('line', {x1: lw, x2: lw, y1: 4, y2: H - 22, stroke: '#c3c2b7'}, svg);
+  rows.forEach((r, i) => {
+    const y = 6 + i * rh;
+    txt(svg, lw - 8, y + 14, r.label, {'text-anchor': 'end', fill: '#1F2933', 'font-size': 12});
+    const w = Math.max(2, X(r.value) - lw);
+    const bar = svgEl('path', {d: `M${lw} ${y + 3}h${w - 4}a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h${-(w - 4)}z`, fill: r.color || 'var(--s1)'}, svg);
+    txt(svg, lw + w + 6, y + 15, opts.fmt ? opts.fmt(r.value) : fmt(r.value, 1), {'font-size': 11.5, fill: '#1F2933'});
+    if (opts.ref != null){ /* drawn below */ }
+    const hit = svgEl('rect', {x: 0, y, width: W, height: rh, fill: 'transparent'}, svg);
+    hit.addEventListener('mousemove', e => showTip(e, `<div class="t">${esc(r.label)}</div>${opts.fmt ? opts.fmt(r.value) : fmt(r.value, 2)}${r.note ? '<div>' + r.note + '</div>' : ''}`));
+    hit.addEventListener('mouseleave', hideTip);
+  });
+  if (opts.ref != null){ svgEl('line', {x1: X(opts.ref), x2: X(opts.ref), y1: 2, y2: H - 22, stroke: '#52514e', 'stroke-dasharray': '4 3'}, svg); txt(svg, X(opts.ref), H - 8, opts.refLabel || '', {'text-anchor': 'middle', 'font-size': 10.5}); }
+}
+
+function tableHTML(head, rows, numCols = []){
+  return '<table><tr>' + head.map((h, i) => `<th class="${numCols.includes(i) ? 'num' : ''}">${h}</th>`).join('') + '</tr>' + rows.map(r => '<tr>' + r.map((c, i) => `<td class="${numCols.includes(i) ? 'num' : ''}">${c}</td>`).join('') + '</tr>').join('') + '</table>';
+}
+
+// ================================================================ navigation
+const rendered = {};
+const RENDER = {};
+// Page state lives in memory. Updating the address bar is optional: Safari, macOS previews and
+// sandboxed viewers throw a SecurityError for history changes on local files, so it is guarded.
+let currentPage = 'overview';
+function safeHash(){ try { return (window.location.hash || '').slice(1); } catch (e) { return ''; } }
+function setHash(p){ try { if (window.location.hash !== '#' + p) window.history.replaceState(null, '', '#' + p); } catch (e) { /* blocked by the browser: ignore */ } }
+function go(p){
+  if (!document.getElementById('p-' + p)) p = 'overview';
+  currentPage = p;
+  $$('#nav a').forEach(a => a.classList.toggle('on', a.dataset.p === p));
+  $$('.page').forEach(s => s.classList.toggle('on', s.id === 'p-' + p));
+  setHash(p);
+  if (RENDER[p]) RENDER[p]();
+  try { window.scrollTo(0, 0); } catch (e) {}
+  return false;
+}
+$$('#nav a').forEach(a => a.addEventListener('click', () => go(a.dataset.p)));
+let resizeT; addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => { if (RENDER[currentPage]) RENDER[currentPage](); }, 150); });
+
+// ================================================================ OVERVIEW
+RENDER.overview = () => {
+  const el = $('#ov-flow'); el.innerHTML = '';
+  const W = Math.max(900, el.clientWidth), H = 300;
+  const svg = svgEl('svg', {width: '100%', viewBox: `0 0 ${W} ${H}`}, el);
+  const defs = svgEl('defs', {}, svg); const mk = svgEl('marker', {id: 'ar', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto-start-reverse'}, defs); svgEl('path', {d: 'M0 0L10 5L0 10z', fill: '#898781'}, mk);
+  const col = W / 5;
+  const boxes = [
+    {x: 0, y: 40, t: 'Telemetry', s: 'Spans from 5 links,\ntagged with SKL IDs', p: 'telemetry'},
+    {x: 0, y: 170, t: 'Metrology', s: 'Registry, calibration,\nuncertainty, graders', p: 'metrology'},
+    {x: 1, y: 20, t: '3.1 Measures', s: 'Gating measures and\npromotion gates', p: 'measurement'},
+    {x: 1, y: 110, t: '3.2 Supply chain', s: 'Link health, lineage,\nblast radius', p: 'supply'},
+    {x: 1, y: 200, t: '3.3 Outcomes', s: 'Value and compliance\ngaps, risk, demand', p: 'outcomes'},
+    {x: 2, y: 60, t: '3.4 Service & cost', s: 'SLA/OLA, unit cost,\ncontrol charts, waste', p: 'sla'},
+    {x: 2, y: 170, t: '3.5 Dashboard', s: 'Six pillars by tier\nand cross views', p: 'dashboard'},
+    {x: 3, y: 60, t: 'Causal analysis', s: 'Why did it move?\nShapley attribution', p: 'causal'},
+    {x: 4, y: 60, t: 'Simulation', s: 'What if? Monte Carlo\nimpact by level', p: 'simulation'},
+    {x: 3, y: 190, t: 'Demand backlog', s: 'Ranked fixes and\ninnovation, reinvested', p: 'outcomes'},
+  ];
+  const bw = col - 40, bh = 70;
+  const pos = b => ({x: b.x * col + 20, y: b.y});
+  const arrows = [[0,2],[0,3],[1,2],[1,4],[3,5],[2,5],[4,6],[5,6],[5,7],[7,8],[7,9],[4,9],[8,9]];
+  for (const [a, b] of arrows){ const A = pos(boxes[a]), B = pos(boxes[b]); const x1 = A.x + bw, y1 = A.y + bh / 2, x2 = B.x, y2 = B.y + bh / 2;
+    if (boxes[a].x === boxes[b].x){ svgEl('path', {d: `M${A.x + bw / 2} ${A.y + bh}V${B.y - 2}`, stroke: '#898781', fill: 'none', 'marker-end': 'url(#ar)'}, svg); continue; }
+    const mx = (x1 + x2) / 2; svgEl('path', {d: `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2 - 2} ${y2}`, stroke: '#898781', fill: 'none', 'marker-end': 'url(#ar)'}, svg); }
+  boxes.forEach((b, i) => { const p = pos(b); const g = svgEl('g', {class: 'chain-node'}, svg); const hl = i >= 2 && i <= 6;
+    svgEl('rect', {x: p.x, y: p.y, width: bw, height: bh, rx: 8, fill: hl ? '#EEF3F9' : '#fff', stroke: hl ? '#2F6DB5' : '#c3c2b7', 'stroke-width': hl ? 1.5 : 1.25}, g);
+    txt(g, p.x + 12, p.y + 22, b.t, {'font-size': 13.5, 'font-weight': 700, fill: '#1F2933'});
+    b.s.split('\n').forEach((ln, k) => txt(g, p.x + 12, p.y + 40 + k * 15, ln, {'font-size': 11.5, fill: '#52514e'}));
+    g.addEventListener('click', () => go(b.p)); });
+  txt(svg, 20, 14, 'Instrument', {'font-weight': 700, fill: '#2F6DB5'}); txt(svg, col + 20, 14, 'Part III · Measure', {'font-weight': 700, fill: '#2F6DB5'}); txt(svg, 3 * col + 20, 14, 'Analyze and decide', {'font-weight': 700, fill: '#2F6DB5'});
+  $('#ov-caps').innerHTML = '<tr><th>Capability</th><th>Tier</th><th>Theme</th><th>SKL identifier</th></tr>' + CAPS.map(c => `<tr><td>${c.name}</td><td>${c.tier}</td><td>${c.theme}</td><td><code>${c.id}</code></td></tr>`).join('');
+};
+
+// ================================================================ TELEMETRY
+const LINKS = [
+  {k:'data', name:'Data management', sig:'freshness', sigLabel:'Data freshness lag (h)', f:v=>fmt(v,1)+' h'},
+  {k:'apps', name:'Applications and systems', sig:'apiLatency', sigLabel:'API latency (ms)', f:v=>fmt(v)+' ms'},
+  {k:'skl', name:'Semantic knowledge', sig:'retrieval', sigLabel:'Retrieval relevance', f:v=>pct(v)},
+  {k:'analytics', name:'Analytics and insights', sig:'reportFresh', sigLabel:'Report freshness (h)', f:v=>fmt(v,1)+' h'},
+  {k:'ai', name:'AI: generative and agentic', sig:'groundedness', sigLabel:'Groundedness', f:v=>pct(v)},
+];
+let streamOn = true, streamTimer = null, spanCount = 0;
+const traceSpans = () => {
+  const L = Object.assign({}, baseLevers, {apiLatency: baseLevers.apiLatency * (1 + 0.2 * gauss(Math.random))});
+  const steps = [
+    ['compass', 'Compass: intake and auth', 18, {persona:'hr-leader', 'skl.capability':'cap:benefits-change'}],
+    ['router', 'Tier router: classify → T2', 42, {'tier':'T2', confidence:'0.94'}],
+    ['skl', 'SKL retrieval (semantic services)', 120, {'skl.assets':'voc:benefits, onto:plan-year', relevance:'0.88'}],
+    ['data', 'Benefits data API', L.freshness * 4 + 60, {'data.freshness_h':fmt(baseLevers.freshness,1)}],
+    ['apps', 'Benefits platform action API', L.apiLatency, {'http.status':'200'}],
+    ['ai', 'Model: plan and draft', 640 + 300 * Math.random(), {model:'standard', tokens:'1,840'}],
+    ['ai', 'Grounding check', 90, {grounded:'true'}],
+    ['compass', 'Respond and log outcome', 25, {'outcome':'out:benefits-change-on-time'}],
+  ];
+  let t = 0; return steps.map(([link, name, dur, attrs]) => { const s = {link, name, start: t, dur: Math.round(dur), attrs}; t += s.dur * (link === 'data' || link === 'skl' ? 0.6 : 1); return s; });
+};
+function drawTrace(){
+  const el = $('#tl-trace'); el.innerHTML = '';
+  const spans = traceSpans(); const end = Math.max(...spans.map(s => s.start + s.dur));
+  const W = el.clientWidth || 600, rh = 24, lw = 220, H = spans.length * rh + 30;
+  const svg = svgEl('svg', {width: W, height: H}, el);
+  const X = v => lw + (W - lw - 60) * v / end;
+  const colr = {compass:'#898781', router:'#6250d6', skl:'var(--s1)', data:'var(--s2)', apps:'var(--s3)', ai:'#1F4D78'};
+  spans.forEach((s, i) => { const y = 4 + i * rh;
+    txt(svg, 8, y + 15, s.name, {'font-size': 11.5, fill: '#1F2933'});
+    svgEl('rect', {x: X(s.start), y: y + 4, width: Math.max(3, X(s.start + s.dur) - X(s.start)), height: 14, rx: 3, fill: colr[s.link]}, svg);
+    txt(svg, X(s.start + s.dur) + 5, y + 15, s.dur + ' ms', {'font-size': 10.5});
+    const hit = svgEl('rect', {x: 0, y, width: W, height: rh, fill: 'transparent'}, svg);
+    hit.addEventListener('mousemove', e => showTip(e, `<div class="t">${esc(s.name)}</div>link: ${s.link}<br>start ${s.start} ms · ${s.dur} ms<br>` + Object.entries(s.attrs).map(([k, v]) => `<code>${esc(k)}</code> = ${esc(v)}`).join('<br>')));
+    hit.addEventListener('mouseleave', hideTip); });
+  txt(svg, lw, H - 6, '0 ms', {'font-size': 10.5}); txt(svg, W - 60, H - 6, Math.round(end) + ' ms', {'font-size': 10.5, 'text-anchor': 'end'});
+}
+function pushSpan(){
+  const log = $('#tl-log'); const L = LINKS[Math.floor(Math.random() * LINKS.length)];
+  const now = new Date(); const ts = now.toTimeString().slice(0, 8) + '.' + String(now.getMilliseconds()).padStart(3, '0');
+  const trace = Math.random().toString(16).slice(2, 10);
+  const cap = CAPS[Math.floor(Math.random() * CAPS.length)];
+  const vals = {data: `freshness_h=${fmt(baseLevers.freshness + gauss(Math.random), 1)}`, apps: `latency_ms=${Math.round(baseLevers.apiLatency * (1 + 0.15 * gauss(Math.random)))} status=200`, skl: `relevance=${fmt(0.87 + 0.03 * gauss(Math.random), 3)} assets=3`, analytics: `metric=certified report_age_h=${fmt(3 + Math.random() * 2, 1)}`, ai: `grounded=${Math.random() < 0.96} tokens=${Math.round(1500 + 600 * Math.random())}`};
+  const div = document.createElement('div');
+  div.innerHTML = `${ts} trace=${trace} <span class="lk">${L.k}</span> ${esc(cap.id)} ${vals[L.k]}`;
+  log.prepend(div); while (log.children.length > 120) log.lastChild.remove();
+  spanCount++;
+  if (spanCount % 6 === 0) drawTrace();
+  updateTiles();
+}
+function updateTiles(){
+  const last = days[days.length - 1];
+  const live = {data: baseLevers.freshness + 0.5 * gauss(Math.random), apps: baseLevers.apiLatency * (1 + 0.06 * gauss(Math.random)), skl: last.o.retrieval + 0.004 * gauss(Math.random), analytics: 3.4 + 0.3 * gauss(Math.random), ai: last.o.groundedness + 0.003 * gauss(Math.random)};
+  $('#tl-tiles').innerHTML = LINKS.map(l => `<div class="tile"><div class="k">${l.name}</div><div class="v">${l.f(live[l.k])}</div><div class="d">${l.sigLabel}</div></div>`).join('');
+  $('#tl-rate').textContent = `${fmt(spanCount)} spans received this session`;
+}
+RENDER.telemetry = () => {
+  const sel = $('#tl-sig');
+  if (!sel.options.length){ sel.innerHTML = LINKS.map(l => `<option value="${l.k}">${l.name}: ${l.sigLabel}</option>`).join(''); sel.onchange = drawSig; }
+  drawTrace(); updateTiles(); drawSig();
+  if (!streamTimer && streamOn) streamTimer = setInterval(pushSpan, 900);
+};
+$('#tl-toggle').onclick = () => { streamOn = !streamOn; $('#tl-toggle').textContent = streamOn ? 'Pause stream' : 'Resume stream'; if (streamOn){ streamTimer = setInterval(pushSpan, 900); } else { clearInterval(streamTimer); streamTimer = null; } };
+function drawSig(){
+  const k = $('#tl-sig').value; const L = LINKS.find(l => l.k === k);
+  let vals;
+  if (k === 'data') vals = lseries('freshness'); else if (k === 'apps') vals = lseries('apiLatency'); else if (k === 'skl') vals = series('retrieval'); else if (k === 'ai') vals = series('groundedness');
+  else { rnd = mulberry32(77); vals = days.map(x => clamp(3.4 + 0.4 * gauss() + (x.d >= 64 && x.d <= 71 ? 14 : 0), 1, 40)); }
+  lineChart($('#tl-chart'), {series: [{name: L.sigLabel, values: vals, color: 'var(--s1)'}], yfmt: L.f, band: [63, 70, 'Stale benefits data'], height: 230});
+}
+
+// ================================================================ METROLOGY
+const REGISTRY = [
+  ['meas:retrieval-relevance','Retrieval Relevance','share','Graded eval set, n = 400, weekly + live sample 2%','±1.8 pts','2026-11-02','calibrated','Knowledge Eng.'],
+  ['meas:groundedness','Groundedness','share','LLM judge checked against human graders, n = 300','±1.5 pts','2026-10-28','calibrated','Quality Eng.'],
+  ['meas:mtbh','MTBH','interactions','Interactions between verified ungrounded answers','±12%','2026-10-28','calibrated','Quality Eng.'],
+  ['meas:precision','Mapping Precision','share','Steward review of 200 sampled mappings','±2.1 pts','2026-09-30','drifting','Semantic Ops'],
+  ['meas:time-to-answer','Time to Answer','seconds','Trace span sum, p50 and p95','±20 ms','2026-11-15','calibrated','AI Agent Eng.'],
+  ['meas:task-success','Task Success Rate','share','End-to-end task outcome from action log','±0.8 pts','2026-11-10','calibrated','Business SME'],
+  ['meas:data-freshness','Data Freshness','hours','Source change to answer-visible, per pipeline','±0.5 h','2026-11-12','calibrated','Data Engineering'],
+  ['meas:unit-cost','Cost per Resolved Request','USD','Allocated cost ÷ resolved requests, daily','±3%','2026-11-01','calibrated','Finance / FinOps'],
+  ['meas:satisfaction','Outcome Satisfaction','0–10','Study wave + quarterly pulse, n ≥ 5 per group','±0.3','2026-08-15','due','Service-line owner'],
+  ['meas:expert-agreement','Expert Agreement Rate','share','Expert panel on 50 sampled T4 answers','±6 pts','2026-10-20','calibrated','Quality Eng.'],
+];
+RENDER.metrology = () => {
+  const stat = s => s === 'calibrated' ? status('good', 'Calibrated') : s === 'drifting' ? status('serious', 'Drifting') : status('warn', 'Calibration due');
+  $('#mt-reg').innerHTML = tableHTML(['SKL identifier', 'Measure', 'Unit', 'Method', 'Uncertainty', 'Last calibrated', 'Status', 'Owner'], REGISTRY.map(r => [`<code>${r[0]}</code>`, r[1], r[2], r[3], r[4], r[5], stat(r[6]), r[7]]));
+  // repeatability strip
+  const el = $('#mt-rep'); el.innerHTML = '';
+  rnd = mulberry32(3030);
+  const ms = [['Retrieval Relevance', 0.872, 0.009], ['Groundedness', 0.951, 0.007], ['Expert Agreement', 0.83, 0.03], ['Mapping Precision', 0.902, 0.012]];
+  const W = el.clientWidth || 500, rh = 44, lw = 150, H = ms.length * rh + 30;
+  const svg = svgEl('svg', {width: W, height: H}, el);
+  const X = v => lw + (W - lw - 20) * (v - 0.75) / 0.25;
+  [0.75, 0.8, 0.85, 0.9, 0.95, 1].forEach(t => { svgEl('line', {x1: X(t), x2: X(t), y1: 4, y2: H - 22, stroke: '#e1e0d9'}, svg); txt(svg, X(t), H - 6, pct(t, 0), {'text-anchor': 'middle'}); });
+  ms.forEach(([name, mu, s], i) => { const y = 10 + i * rh + 14; const runs = [...Array(30)].map(() => mu + s * gauss());
+    txt(svg, lw - 8, y + 4, name, {'text-anchor': 'end', fill: '#1F2933', 'font-size': 12});
+    const lo = quant(runs, 0.025), hi = quant(runs, 0.975);
+    svgEl('rect', {x: X(lo), y: y - 9, width: X(hi) - X(lo), height: 18, fill: '#cde2fb', rx: 4}, svg);
+    runs.forEach(v => svgEl('circle', {cx: X(v), cy: y + (Math.random() - 0.5) * 8, r: 3, fill: 'var(--s1)', 'fill-opacity': 0.75}, svg));
+    const hit = svgEl('rect', {x: 0, y: y - 18, width: W, height: rh - 4, fill: 'transparent'}, svg);
+    hit.addEventListener('mousemove', e => showTip(e, `<div class="t">${name}</div>30 runs · mean ${pct(mean(runs))} · 95% spread ${pct(lo)}–${pct(hi)}<br>Smallest real change: ±${fmt((hi - lo) * 50, 1)} pts`));
+    hit.addEventListener('mouseleave', hideTip); });
+  hbar($('#mt-tq'), [
+    {label: 'Data management', value: 99.2, color: 'var(--s1)', note: 'median lag 4 min'},
+    {label: 'Applications and systems', value: 99.7, color: 'var(--s1)', note: 'median lag 1 min'},
+    {label: 'Semantic knowledge', value: 98.9, color: 'var(--s1)', note: 'median lag 2 min'},
+    {label: 'Analytics and insights', value: 96.4, color: 'var(--s2)', note: 'median lag 38 min · below 98% target'},
+    {label: 'AI: generative and agentic', value: 99.5, color: 'var(--s1)', note: 'median lag 1 min'},
+  ], {max: 100, fmt: v => fmt(v, 1) + '%', ref: 98, refLabel: 'target 98% complete', labelW: 180, valW: 60});
+  const kap = [['Grader A · B', 0.78], ['Grader A · C', 0.74], ['Grader B · C', 0.71], ['Grader A · D', 0.66], ['Grader C · D', 0.55], ['Grader B · D', 0.58]];
+  hbar($('#mt-kappa'), kap.map(([l, v]) => ({label: l, value: v, color: v < 0.6 ? 'var(--s2)' : 'var(--s1)', note: v < 0.6 ? 'Below 0.6: grader D scheduled for recalibration' : 'Substantial agreement'})), {max: 1, fmt: v => 'κ = ' + fmt(v, 2), ref: 0.6, refLabel: 'κ 0.6', labelW: 130});
+};
+
+// ================================================================ 3.1 MEASUREMENT
+const GATES = [
+  {k:'retrieval', label:'Retrieval Relevance', th:0.85, dir:+1, gate:'Gate 1 (open T3)'},
+  {k:'groundedness', label:'Groundedness', th:0.94, dir:+1, gate:'Gate 1 (open T3)'},
+  {k:'mtbh', label:'MTBH', th:60, dir:+1, gate:'Gate 1 (open T3)'},
+  {k:'taskSuccess', label:'Task Success Rate', th:0.9, dir:+1, gate:'Gate 2 (open T4)'},
+  {k:'tta', label:'Time to Answer', th:2.6, dir:-1, gate:'All tiers (SLA)'},
+];
+const capVal = (cap, k, lastN = 7, upto = DAYS) => { const sl = days.slice(Math.max(0, upto - lastN), upto); let v = mean(sl.map(x => x.o[k])); if (k === 'tta') v *= cap.ttaMul; if (k === 'unitCost') v *= cap.costMul; if (k === 'groundedness' && cap.tier === 'T4') v -= 0.012; if (k === 'retrieval' && cap.tier === 'T3') v -= 0.01; if (k === 'mtbh' && cap.tier === 'T4') v *= 0.8; return v; };
+RENDER.measurement = () => {
+  const allPass = GATES.map(g => { const v = mean(days.slice(-7).map(x => x.o[g.k])); return g.dir > 0 ? v >= g.th : v <= g.th; });
+  $('#ms-tiles').innerHTML = [
+    ['Gating measures passing', `${allPass.filter(Boolean).length} of ${GATES.length}`, 'last 7 days, all capabilities'],
+    ['Calibrated measures', `${REGISTRY.filter(r => r[6] === 'calibrated').length} of ${REGISTRY.length}`, 'only calibrated measures can gate'],
+    ['Capabilities ready to promote', '1 of 4', 'Benefits change requests → T3 candidate'],
+    ['Supplied measures mapped', '33', 'plus 14 proposed agent-outcome measures'],
+  ].map(t => `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="d">${t[2]}</div></div>`).join('');
+  const next = {T1: 'T2', T2: 'T3', T3: 'T4', T4: 'Scale'};
+  const rows = [];
+  for (const c of CAPS){ for (const g of GATES){ if (c.tier === 'T4' && g.k === 'retrieval') continue; const v = capVal(c, g.k); const ok = g.dir > 0 ? v >= g.th : v <= g.th; const near = g.dir > 0 ? v >= g.th * 0.985 : v <= g.th * 1.05;
+    rows.push([c.name, c.tier + ' → ' + next[c.tier], g.label, OUT[g.k].f(v), (g.dir > 0 ? '≥ ' : '≤ ') + OUT[g.k].f(g.th), ok ? status('good', 'Passes') : near ? status('warn', 'Near') : status('crit', 'Fails')]); } }
+  $('#ms-gate').innerHTML = tableHTML(['Capability', 'Next gate', 'Measure', 'Current', 'Threshold', 'Status'], rows, [3, 4]);
+  const sel = $('#ms-sel'); if (!sel.options.length){ sel.innerHTML = GATES.map(g => `<option value="${g.k}">${g.label}</option>`).join(''); sel.onchange = drawGateTrend; }
+  drawGateTrend();
+};
+function drawGateTrend(){ const g = GATES.find(x => x.k === $('#ms-sel').value); lineChart($('#ms-chart'), {series: [{name: g.label, values: series(g.k), color: 'var(--s1)'}], yfmt: OUT[g.k].f, ref: [{y: g.th, label: 'threshold ' + OUT[g.k].f(g.th)}], band: [63, 70, 'Stale benefits data'], height: 230}); }
+
+// ================================================================ 3.2 SUPPLY CHAIN
+let scSel = 'data';
+function linkHealth(day){
+  const x = days[day - 1]; const o = x.o, L = x.L;
+  const s = v => clamp(v, 0, 100);
+  return {
+    data: s(100 - Math.max(0, L.freshness - 6) * 2.4),
+    apps: s(100 - Math.max(0, L.apiLatency - 220) * 0.08 - o.apiErr * 800 + (x.avail - 0.998) * 2000),
+    skl: s(100 - Math.max(0, 0.9 - o.retrieval) * 260),
+    analytics: s(day >= 64 && day <= 71 ? 71 : 96 - 2 * Math.abs(gauss(mulberry32(day)))),
+    ai: s(100 - (0.96 - o.groundedness) * 520 - Math.max(0, o.tta - 1.9) * 15),
+  };
+}
+const hstat = v => v >= 90 ? status('good', fmt(v) + ' Healthy') : v >= 75 ? status('warn', fmt(v) + ' Degraded') : v >= 60 ? status('serious', fmt(v) + ' At risk') : status('crit', fmt(v) + ' Failing');
+const hcol = v => v >= 90 ? '#0ca30c' : v >= 75 ? '#fab219' : v >= 60 ? '#ec835a' : '#d03b3b';
+RENDER.supply = () => {
+  const day = +$('#sc-day').value; $('#sc-dayv').textContent = 'Day ' + day;
+  const H = linkHealth(day);
+  const el = $('#sc-chain'); el.innerHTML = '';
+  const W = Math.max(860, el.clientWidth), Ht = 250;
+  const svg = svgEl('svg', {width: '100%', viewBox: `0 0 ${W} ${Ht}`}, el);
+  const defs = svgEl('defs', {}, svg); const mk = svgEl('marker', {id: 'ar2', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 6, markerHeight: 6, orient: 'auto'}, defs); svgEl('path', {d: 'M0 0L10 5L0 10z', fill: '#898781'}, mk);
+  const bw = (W - 5 * 36) / 5.2;
+  const P = {data: [0, 20], apps: [0, 130], skl: [1, 75], analytics: [2, 20], ai: [2, 130], ux: [3.2, 75]};
+  const px = k => 10 + P[k][0] * (bw + 40), py = k => P[k][1];
+  const bh = 92;
+  const arrows = [['data','skl'],['apps','skl'],['skl','analytics'],['skl','ai'],['analytics','ux'],['ai','ux'],['analytics','ai']];
+  for (const [a, b] of arrows){ if (a === 'analytics' && b === 'ai'){ svgEl('path', {d: `M${px(a) + bw / 2} ${py(a) + bh}V${py(b) - 2}`, stroke: '#898781', fill: 'none', 'marker-end': 'url(#ar2)'}, svg); continue; }
+    const x1 = px(a) + bw, y1 = py(a) + bh / 2, x2 = px(b), y2 = py(b) + bh / 2, mx = (x1 + x2) / 2; svgEl('path', {d: `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2 - 2} ${y2}`, stroke: '#898781', fill: 'none', 'marker-end': 'url(#ar2)'}, svg); }
+  const all = LINKS.map(l => ({...l, h: H[l.k]})).concat([{k: 'ux', name: 'User experience (Compass)', h: null}]);
+  for (const l of all){ const g = svgEl('g', {class: 'chain-node'}, svg); const sel = l.k === scSel;
+    svgEl('rect', {x: px(l.k), y: py(l.k), width: bw, height: bh, rx: 8, fill: l.k === 'skl' ? '#EEF3F9' : '#fff', stroke: sel ? '#2F6DB5' : '#c3c2b7', 'stroke-width': sel ? 2.5 : 1.25}, g);
+    const words = l.name.split(' '); let line = '', lines = []; for (const w of words){ if ((line + ' ' + w).length > 18){ lines.push(line); line = w; } else line = (line ? line + ' ' : '') + w; } lines.push(line);
+    lines.forEach((ln, k) => txt(g, px(l.k) + 12, py(l.k) + 22 + k * 15, ln, {'font-size': 13, 'font-weight': 700, fill: '#1F2933'}));
+    if (l.h != null){ svgEl('circle', {cx: px(l.k) + 18, cy: py(l.k) + bh - 20, r: 7, fill: hcol(l.h)}, g); txt(g, px(l.k) + 32, py(l.k) + bh - 16, `Health ${fmt(l.h)} · ${l.h >= 90 ? 'Healthy' : l.h >= 75 ? 'Degraded' : l.h >= 60 ? 'At risk' : 'Failing'}`, {'font-size': 11.5, fill: '#1F2933'}); }
+    else { const avg = mean(CAPS.map(c => Object.entries(c.links).reduce((s, [k, w]) => s + w * H[k], 0))); txt(g, px(l.k) + 12, py(l.k) + bh - 16, `SLA attainment ${pct(days[day - 1].o.slaProb, 0)}`, {'font-size': 11.5, fill: '#1F2933'}); }
+    if (l.k !== 'ux'){ g.addEventListener('click', () => { scSel = l.k; RENDER.supply(); }); g.addEventListener('mousemove', e => showTip(e, `<div class="t">${l.name}</div>${l.sigLabel}: ${l.f(l.k === 'data' ? days[day - 1].L.freshness : l.k === 'apps' ? days[day - 1].L.apiLatency : l.k === 'skl' ? days[day - 1].o.retrieval : l.k === 'ai' ? days[day - 1].o.groundedness : 3.4)}<br>Click to see blast radius`)); g.addEventListener('mouseleave', hideTip); } }
+  const hi = CAPS.map(c => ({c, v: Object.entries(c.links).reduce((s, [k, w]) => s + w * H[k], 0)}));
+  $('#sc-hi').innerHTML = tableHTML(['Capability', 'Tier', 'Health Index', 'Weakest link'], hi.map(({c, v}) => { const weak = Object.entries(c.links).filter(([, w]) => w > 0).sort((a, b) => H[a[0]] - H[b[0]])[0][0]; return [c.name, c.tier, hstat(v), LINKS.find(l => l.k === weak).name]; }));
+  const L = LINKS.find(l => l.k === scSel); $('#sc-br-name').textContent = L.name;
+  const users = {T1: 4200, T2: 1350, T3: 310, T4: 24};
+  $('#sc-br').innerHTML = tableHTML(['Capability', 'Tier', 'Dependency weight', 'Users per week', 'Effect if this link fails'], CAPS.filter(c => c.links[scSel] > 0).sort((a, b) => b.links[scSel] - a.links[scSel]).map(c => [c.name, c.tier, pct(c.links[scSel], 0), fmt(users[c.tier]), c.links[scSel] >= 0.3 ? 'Breaker trips; degrade one tier' : c.links[scSel] >= 0.2 ? 'Answers flagged; HITL review raised' : 'Monitor; partial context only']), [2, 3]);
+  const x = days[day - 1];
+  $('#sc-lin').innerHTML = tableHTML(['Link', 'Asset or step used (SKL identifier)', 'Version / time', 'Signal at answer time'], [
+    ['User experience', '<code>out:benefits-eligibility-clear</code> · persona <code>persona:hr-leader</code>', `day ${day}, 10:42`, `answer in ${fmt(x.o.tta, 2)} s`],
+    ['AI: generative and agentic', '<code>agent:t1-answer</code> · model <code>standard-2026-10</code>', 'prompt v3.2', `grounded ${x.o.groundedness > 0.94 ? 'yes' : 'flagged'} · ${pct(x.o.groundedness)}`],
+    ['Semantic knowledge', '<code>voc:benefits</code>, <code>onto:plan-year</code>, <code>map:carrier-codes</code>', 'release 2026.11.3', `relevance ${pct(x.o.retrieval)}`],
+    ['Analytics and insights', '<code>metric:eligible-headcount</code> (certified)', 'refreshed 3 h earlier', 'certified'],
+    ['Applications and systems', '<code>sys:benefits-platform</code> eligibility API', 'v4', `${fmt(x.L.apiLatency)} ms`],
+    ['Data management', '<code>ds:benefits-enrollment</code> pipeline', `lag ${fmt(x.L.freshness, 1)} h`, x.L.freshness > 24 ? status('crit', 'Stale') : status('good', 'Fresh')],
+  ]);
+};
+$('#sc-day').oninput = () => RENDER.supply();
+
+// ================================================================ 3.3 OUTCOMES
+const OUTCOMES = [
+  ['Payroll','Pay employees accurately every cycle',9.2,8.4,7.1],
+  ['Payroll','Resolve a tax notice quickly',8.6,6.2,5.0],
+  ['Benefits','Know which employees are eligible for a plan',8.8,7.4,5.6],
+  ['Benefits','Process a benefits change on time',8.3,7.2,5.4],
+  ['Benefits','Control benefits cost per employee',9.0,5.6,4.9],
+  ['HR Compliance','Stay compliant with changing state laws',9.4,7.9,4.8],
+  ['HR Compliance','Know an issue before an auditor does',8.7,5.4,4.2],
+  ['HR Technology & Data','Get one view of workforce data',7.6,5.2,4.6],
+  ['HR Technology & Data','Answer an HR question without waiting',7.9,7.1,4.4],
+  ['Talent Management','Hire the right person fast',8.1,5.0,5.2],
+  ['Training','Keep managers trained on policy',6.4,6.9,4.8],
+  ['PEO Relationship','Reach a specialist who knows my business',8.2,8.6,4.1],
+  ['PEO Relationship','See the value of the relationship',7.7,6.0,3.9],
+  ['Coaching','Get guidance on a difficult employee issue',7.3,7.8,4.5],
+];
+const opp = (i, s) => i + Math.max(i - s, 0);
+const ocClass = (o) => { const [, , i, sP, sN] = o; const oP = opp(i, sP), oN = opp(i, sN); if (sP < i - 1 && sP < sN + 0.3) return 'fix'; if (sP < i - 1.5 && sN < i - 1.5 && oP >= 10) return 'innovate'; if (sP - sN >= 1.5 && sP >= i - 1) return 'protect'; if (sP > i) return 'simplify'; return 'maintain'; };
+let ocSeg = 'peo';
+RENDER.outcomes = () => {
+  const el = $('#oc-map'); el.innerHTML = '';
+  const W = el.clientWidth || 520, H = 320, m = {l: 48, r: 16, t: 12, b: 34};
+  const svg = svgEl('svg', {width: W, height: H}, el);
+  const X = v => m.l + (W - m.l - m.r) * (v - 4) / 6, Y = v => m.t + (H - m.t - m.b) * (1 - (v - 3) / 7);
+  for (let t = 4; t <= 10; t++){ svgEl('line', {x1: X(t), x2: X(t), y1: m.t, y2: H - m.b, stroke: '#e1e0d9'}, svg); txt(svg, X(t), H - m.b + 15, t, {'text-anchor': 'middle'}); }
+  for (let t = 3; t <= 10; t++){ svgEl('line', {x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t), stroke: '#e1e0d9'}, svg); txt(svg, m.l - 6, Y(t) + 4, t, {'text-anchor': 'end'}); }
+  svgEl('line', {x1: X(4), y1: Y(4), x2: X(10), y2: Y(10), stroke: '#898781', 'stroke-dasharray': '5 4'}, svg);
+  txt(svg, X(9.9), Y(10) + 14, 'satisfaction = importance', {'text-anchor': 'end', 'font-size': 10.5});
+  txt(svg, (W + m.l) / 2, H - 4, 'Importance', {'text-anchor': 'middle', fill: '#1F2933'});
+  const yt = txt(svg, 12, (H - m.b + m.t) / 2, 'Satisfaction', {fill: '#1F2933', 'text-anchor': 'middle'}); yt.setAttribute('transform', `rotate(-90 12 ${(H - m.b + m.t) / 2})`);
+  const ccol = {fix: '#d03b3b', innovate: '#6250d6', protect: '#0ca30c', simplify: '#eda100', maintain: '#898781'};
+  OUTCOMES.forEach(o => { const cls = ocClass(o); const s = ocSeg === 'peo' ? o[3] : o[4]; const c = svgEl('circle', {cx: X(o[2]), cy: Y(s), r: 7, fill: ccol[cls], stroke: '#fff', 'stroke-width': 2}, svg);
+    c.addEventListener('mousemove', e => showTip(e, `<div class="t">${esc(o[1])}</div>${o[0]} · <span class="pill ${cls}">${cls}</span><br>Importance ${fmt(o[2], 1)} · PEO sat ${fmt(o[3], 1)} · non-PEO sat ${fmt(o[4], 1)}<br>Opportunity (PEO) ${fmt(opp(o[2], o[3]), 1)} · (non-PEO) ${fmt(opp(o[2], o[4]), 1)}`)); c.addEventListener('mouseleave', hideTip); });
+  $('#oc-leg').innerHTML = Object.entries(ccol).map(([k, c]) => `<span><b class="dot" style="background:${c}"></b>${k[0].toUpperCase() + k.slice(1)}</span>`).join('') + '<span>Class uses PEO-client scores against the alternative</span>';
+  // operating metric: benefits change on time %
+  const ontime = days.map(x => clamp(0.955 - Math.max(0, x.L.freshness - 8) * 0.004 + 0.006 * gauss(mulberry32(x.d * 7)), 0.7, 1));
+  lineChart($('#oc-op'), {series: [{name: 'Benefits changes processed on time', values: ontime, color: 'var(--s1)'}], ref: [{y: 0.95, label: 'target 95%'}], yfmt: v => pct(v, 0), band: [63, 70, 'Stale data'], height: 230});
+  $('#oc-comp').innerHTML = tableHTML(['Gap', 'Requirement', 'Evidence', 'Impact', 'Severity'], [
+    ['CG-07', 'Benefits answers must use current plan-year data', 'Stale data on days 64–71 reached 212 client answers', '<b>78</b>', status('crit', 'Sev 1')],
+    ['CG-04', 'Agent output reaches clients only after rep approval', '3 unapproved drafts in sales pilot logs', '<b>61</b>', status('serious', 'Sev 2')],
+    ['CG-11', 'External claims only within approved uses', '1 proof point used outside approved use', '<b>44</b>', status('warn', 'Sev 3')],
+    ['CG-02', 'Report groups of at least five', 'All checks passed', '<b>8</b>', status('good', 'Closed')],
+  ], [3]);
+  const weeks = [...Array(12).keys()].map(w => w + 1);
+  const hitl = weeks.map(w => w === 10 ? 0.182 : clamp(0.14 - w * 0.004 + 0.004 * gauss(mulberry32(w * 13)), 0.05, 0.3));
+  lineChart($('#oc-hitl'), {series: [{name: 'HITL edit rate', values: hitl, color: 'var(--s1)'}], xs: weeks.map(w => 'W' + w), xlabel: 'Week', yfmt: v => pct(v, 0), height: 230, tipExtra: i => i === 9 ? '<div>Edits spiked with stale benefits data; 41 corrections added to the evaluation set</div>' : ''});
+  const ideas = [
+    ['Benefits cost scenario advisor (T3)', 'Control benefits cost per employee', 0.5],
+    ['Audit-readiness early warning (T3)', 'Know an issue before an auditor does', 0.45],
+    ['Candidate shortlisting assistant (T2)', 'Hire the right person fast', 0.6],
+    ['Tax notice resolution assistant (T2)', 'Resolve a tax notice quickly', 0.6],
+    ['Unified workforce data view via SKL', 'Get one view of workforce data', 0.7],
+  ].map(([item, oname, share]) => { const o = OUTCOMES.find(x => x[1] === oname); const op = opp(o[2], o[3]); return {cls: ocClass(o), item, oname, basis: `(${fmt(op, 1)} − 10) × ${pct(share, 0)}`, score: Math.max(0, op - 10) * share}; }).sort((a, b) => b.score - a.score);
+  const simp = OUTCOMES.filter(o => ocClass(o) === 'simplify').map(o => ({cls: 'simplify', item: 'Reduce effort on: ' + o[1].toLowerCase(), oname: o[1], basis: 'satisfaction > importance', score: null}));
+  const rowsD = [{cls: 'compliance', item: 'CG-07: freshness guard on benefits retrieval; block answers when lag > 24 h', oname: 'Know which employees are eligible for a plan', basis: 'Sev 1 compliance gap, client exposure', score: 'first'}].concat(ideas, simp);
+  $('#oc-demand').innerHTML = tableHTML(['Rank', 'Class', 'Demand item', 'Outcome', 'Basis', 'Concept score'], rowsD.map((d, i) => [i + 1, `<span class="pill ${d.cls === 'compliance' ? 'fix' : d.cls}">${d.cls === 'compliance' ? 'Compliance' : d.cls[0].toUpperCase() + d.cls.slice(1)}</span>`, d.item, d.oname, d.basis, d.score === 'first' ? 'first by rule' : d.score == null ? '—' : fmt(d.score, 2)]), [0, 5]);
+};
+$$('#oc-seg button').forEach(b => b.onclick = () => { $$('#oc-seg button').forEach(x => x.classList.toggle('on', x === b)); ocSeg = b.dataset.s; RENDER.outcomes(); });
+
+// ================================================================ 3.4 SLA & COST
+function spcFlags(vals, cl, s){
+  const f = new Set();
+  vals.forEach((v, i) => { if (Math.abs(v - cl) > 3 * s) f.add(i); });
+  for (let i = 7; i < vals.length; i++){ const w = vals.slice(i - 7, i + 1); if (w.every(v => v > cl) || w.every(v => v < cl)) for (let j = i - 7; j <= i; j++) if (j >= 55) f.add(j); }
+  for (let i = 2; i < vals.length; i++){ const w = vals.slice(i - 2, i + 1); if (w.filter(v => v - cl > 2 * s).length >= 2) f.add(i); }
+  return [...f].filter(i => i >= 55).sort((a, b) => a - b);
+}
+RENDER.sla = () => {
+  const sel = $('#sl-cap'); if (!sel.options.length){ sel.innerHTML = CAPS.map((c, i) => `<option value="${i}">${c.name} (${c.tier})</option>`).join(''); sel.onchange = RENDER.sla; }
+  const cap = CAPS[+sel.value];
+  const uc = days.map(x => x.o.unitCost * cap.costMul);
+  const base = uc.slice(0, 55); const cl = mean(base), s = sd(base);
+  const flags = spcFlags(uc, cl, s);
+  lineChart($('#sl-spc'), {series: [{name: 'Unit cost', values: uc, color: 'var(--s1)'}], ref: [{y: cl, label: 'CL ' + money(cl, 3), color: '#c3c2b7', dash: '0'}, {y: cl + 3 * s, label: 'UCL', color: '#d03b3b', dash: '4 3'}, {y: Math.max(0, cl - 3 * s), label: 'LCL', color: '#d03b3b', dash: '4 3'}], flags, yfmt: v => money(v, 3), noLegend: true, height: 260,
+    tipExtra: i => flags.includes(i) ? `<div style="color:#d03b3b"><b>Flagged</b>: special-cause variation. Demand item DI-${200 + i} opened; see Causal analysis.</div>` : ''});
+  const last28 = days.slice(-28), last7 = days.slice(-7);
+  const ucNow = mean(last7.map(x => x.o.unitCost)) * cap.costMul, ucBase = cl;
+  const sla = mean(last28.map(x => x.o.slaProb));
+  const dpmo = mean(last28.map(x => 1 - x.o.taskSuccess)) * 1e6;
+  const sigma = (() => { const p = 1 - dpmo / 1e6; let lo = -6, hi = 6; const cdf = z => 0.5 * (1 + erf(z / Math.SQRT2)); for (let k = 0; k < 60; k++){ const mid = (lo + hi) / 2; if (cdf(mid) < p) lo = mid; else hi = mid; } return lo + 1.5; })();
+  $('#sl-tiles').innerHTML = [
+    ['Unit cost, last 7 days', money(ucNow, 3), `${ucNow > ucBase ? '▲' : '▼'} ${pct(Math.abs(ucNow / ucBase - 1))} against baseline ${money(ucBase, 3)}`],
+    ['SLA attainment, 28 days', pct(sla), sla >= 0.95 ? status('good', 'Meets 95% target') : status('warn', 'Below 95% target')],
+    ['Flagged control-chart points', String(flags.length), flags.length ? `days ${flags.slice(0, 6).map(i => i + 1).join(', ')}${flags.length > 6 ? '…' : ''}` : 'none'],
+    ['Realized savings, quarter', '$41,600', 'Finance-validated · 60% reinvested'],
+  ].map(t => `<div class="tile"><div class="k">${t[0]}</div><div class="v">${t[1]}</div><div class="d">${t[2]}</div></div>`).join('');
+  const ola = [
+    ['Service SLA (' + cap.tier + ')', last28.filter(x => x.o.slaProb > 0.5 && x.o.tta * cap.ttaMul < 2.6 * Math.max(1, cap.ttaMul * 0.8)).length / 28, 0.95],
+    ['Data management OLA: freshness ≤ 12 h', last28.filter(x => x.L.freshness <= 12).length / 28, 0.97],
+    ['Applications OLA: latency ≤ 400 ms', last28.filter(x => x.L.apiLatency <= 400).length / 28, 0.99],
+    ['Semantic knowledge OLA: relevance ≥ 85%', last28.filter(x => x.o.retrieval >= 0.85).length / 28, 0.95],
+    ['Analytics OLA: report freshness ≤ 6 h', last28.filter(x => !(x.d >= 64 && x.d <= 71)).length / 28, 0.95],
+    ['AI OLA: groundedness ≥ 94%', last28.filter(x => x.o.groundedness >= 0.94).length / 28, 0.95],
+  ];
+  $('#sl-ola').innerHTML = tableHTML(['Agreement', 'Attainment', 'Target', 'Status'], ola.map(([n, v, t]) => [n, pct(v, 0), pct(t, 0), v >= t ? status('good', 'Met') : v >= t - 0.1 ? status('warn', 'Breached') : status('crit', 'Breached')]), [1, 2]);
+  hbar($('#sl-eb'), ola.map(([n, v, t]) => { const rem = clamp(1 - (1 - v) / (1 - t), 0, 1); return {label: n.split(':')[0].replace('Service SLA', 'Service SLA'), value: rem * 100, color: rem <= 0 ? 'var(--s2)' : 'var(--s1)', note: rem <= 0 ? 'Budget spent: releases frozen for this service until it recovers' : 'Budget available'}; }), {max: 100, fmt: v => fmt(v) + '% left', labelW: 190});
+  hbar($('#sl-waste'), [
+    {label: 'Defects (rework)', value: 18400, note: 'Wrong answers and manual corrections, inflated by stale data'},
+    {label: 'Extra-processing', value: 9700, note: 'Large model used where T1 would do (routing misses)'},
+    {label: 'Waiting', value: 6200, note: 'Mapping and validator queues'},
+    {label: 'Inventory', value: 3100, note: 'Stale assets and unused vectors'},
+    {label: 'Non-utilized talent', value: 2800, note: 'SMEs reviewing low-risk output'},
+    {label: 'Overproduction', value: 2100, note: 'Reports nobody opens'},
+    {label: 'Motion', value: 1500, note: 'Hand-offs per issue'},
+    {label: 'Transportation', value: 900, note: 'Duplicate pipelines'},
+  ].map(r => ({...r, color: 'var(--s1)'})), {fmt: v => money(v, 0), labelW: 150});
+  $('#sl-sigma').innerHTML = tableHTML(['Measure', 'Value'], [
+    ['Defects per million opportunities (28 days)', fmt(dpmo)],
+    ['Sigma level (with 1.5 shift)', fmt(sigma, 2)],
+    ['Cost of Poor Quality (monthly run-rate)', money(mean(last28.map(x => x.o.copq)) * cap.costMul, 0)],
+    ['Open DMAIC items from flagged points', String(Math.min(3, flags.length))],
+    ['Control phase: new limits after fix', 'Recalculate after 20 stable days'],
+  ], [1]);
+};
+function erf(x){ const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
+
+// ================================================================ 3.5 DASHBOARD
+let dbTier = 'all', dbWin = 7;
+RENDER.dashboard = () => {
+  const caps = dbTier === 'all' ? CAPS : CAPS.filter(c => c.tier === dbTier);
+  const win = days.slice(-dbWin), prev = days.slice(-dbWin * 2, -dbWin);
+  const av = (arr, k, c) => mean(arr.map(x => x.o[k])) * (k === 'unitCost' ? c.costMul : k === 'tta' ? c.ttaMul : 1);
+  const agg = (k, arr) => mean(caps.map(c => av(arr, k, c)));
+  const delta = (k) => { const a = agg(k, win), b = agg(k, prev); return {a, d: a - b, good: (a - b) * (OUT[k].good) >= 0}; };
+  const dl = (k) => { const r = delta(k); return `${r.d >= 0 ? '▲' : '▼'} ${OUT[k].f(Math.abs(r.d))} vs prior ${dbWin} days ` + (Math.abs(r.d) < 1e-9 ? '' : r.good ? '<span style="color:var(--good-ink)">better</span>' : '<span style="color:#b03a2e">worse</span>'); };
+  const pill = (v, good, warn, dir = 1) => (dir > 0 ? v >= good : v <= good) ? status('good', 'On track') : (dir > 0 ? v >= warn : v <= warn) ? status('warn', 'Watch') : status('crit', 'Act');
+  const g = agg('groundedness', win), sla = agg('slaProb', win), uc = agg('unitCost', win), ts = agg('taskSuccess', win), rr = agg('retrieval', win);
+  const P = [
+    ['Trusted BI & AI', [['Groundedness', OUT.groundedness.f(g), dl('groundedness')], ['MTBH', fmt(agg('mtbh', win)), dl('mtbh')], ['Compliance exposure', fmt(agg('complianceRisk', win), 1), dl('complianceRisk')]], pill(g, 0.945, 0.93)],
+    ['Business Literacy', [['Adoption (teams referencing SKL)', String(18 + caps.length * 3), '▲ 4 this quarter'], ['Usage frequency (tags/day)', fmt(5200 * caps.length / 4), '▲ 6%'], ['Stale Asset Rate', '7.4%', '▼ 0.9 pts']], status('good', 'On track')],
+    ['Meaning at Scale', [['Task success', OUT.taskSuccess.f(ts), dl('taskSuccess')], ['Requests per day', fmt(mean(win.map(x => x.L.volume)) * 24 * caps.length / 4), 'volume'], ['AI suggestion adoption', '72%', '▲ 3 pts']], pill(ts, 0.9, 0.88)],
+    ['Improved Decision Making', [['Value Gap Index', OUT.vgi.f(agg('vgi', win)), dl('vgi')], ['Insight acceptance (T3)', dbTier === 'all' || dbTier === 'T3' ? '64%' : 'n/a for tier', 'T3 only'], ['Time to answer', OUT.tta.f(agg('tta', win)), dl('tta')]], pill(agg('vgi', win), 0.3, 0.34, -1)],
+    ['Knowledge Preservation', [['Retrieval relevance', OUT.retrieval.f(rr), dl('retrieval')], ['Update cadence (days)', '6.2', '▼ 1.1 days'], ['Metric definition conformance', '97.8%', 'stable']], pill(rr, 0.86, 0.84)],
+    ['Align Business with Technology', [['SLA attainment', OUT.slaProb.f(sla), dl('slaProb')], ['Cost per resolved request', money(uc, 3), dl('unitCost')], ['Tier routing accuracy', pct(mean(win.map(x => x.L.routing))), 'sampled']], pill(sla, 0.95, 0.9)],
+  ];
+  $('#db-pillars').innerHTML = P.map(([name, rows, st]) => `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h3>${name}</h3>${st}</div>${rows.map(r => `<div style="margin-top:8px"><div style="font-size:12px;color:var(--muted)">${r[0]}</div><div style="font-size:20px;font-weight:700">${r[1]}</div><div style="font-size:11.5px;color:var(--ink2)">${r[2]}</div></div>`).join('')}</div>`).join('');
+  $('#db-cross').innerHTML = tableHTML(['View', 'Headline', 'Open'], [
+    ['Supply-chain view', `Weakest link today: ${(() => { const H = linkHealth(DAYS); const k = Object.entries(H).sort((a, b) => a[1] - b[1])[0][0]; return LINKS.find(l => l.k === k).name + ' (' + fmt(H[k]) + ')'; })()}`, '<a href="javascript:void(0)" onclick="return go(\'supply\')">3.2</a>'],
+    ['Service and cost view', `Unit cost ${money(uc, 3)}; SLA ${pct(sla)}`, '<a href="javascript:void(0)" onclick="return go(\'sla\')">3.4</a>'],
+    ['Outcome view', 'Sev 1 compliance gap ranked first; 3 innovate and 1 fix item fill the rest of the top 5', '<a href="javascript:void(0)" onclick="return go(\'outcomes\')">3.3</a>'],
+    ['Twin view', 'Twin Coverage 41% · Telemetry Binding 63% · Twin Fidelity 0.82', '<a href="javascript:void(0)" onclick="return go(\'simulation\')">Simulation</a>'],
+  ]);
+};
+$$('#db-tier button').forEach(b => b.onclick = () => { $$('#db-tier button').forEach(x => x.classList.toggle('on', x === b)); dbTier = b.dataset.t; RENDER.dashboard(); });
+$$('#db-win button').forEach(b => b.onclick = () => { $$('#db-win button').forEach(x => x.classList.toggle('on', x === b)); dbWin = +b.dataset.w; RENDER.dashboard(); });
+
+// ================================================================ CAUSAL ANALYSIS
+function shapley(outKey, Lbase, Lnow){
+  const ks = LEVERS.map(l => l.k).filter(k => Math.abs(Lbase[k] - Lnow[k]) > 1e-9);
+  const n = ks.length; const phi = Object.fromEntries(ks.map(k => [k, 0]));
+  const fact = [1]; for (let i = 1; i <= n; i++) fact[i] = fact[i - 1] * i;
+  const val = mask => { const L = {...Lbase}; ks.forEach((k, i) => { if (mask & (1 << i)) L[k] = Lnow[k]; }); return model(L)[outKey]; };
+  const cache = new Map(); const V = m => { if (!cache.has(m)) cache.set(m, val(m)); return cache.get(m); };
+  for (let mask = 0; mask < (1 << n); mask++){ const s = popcount(mask); for (let i = 0; i < n; i++){ if (mask & (1 << i)) continue; const w = fact[s] * fact[n - s - 1] / fact[n]; phi[ks[i]] += w * (V(mask | (1 << i)) - V(mask)); } }
+  return phi;
+}
+const popcount = m => { let c = 0; while (m){ c += m & 1; m >>= 1; } return c; };
+const CA_OUTS = ['unitCost', 'groundedness', 'slaProb', 'sat', 'complianceRisk', 'vgi'];
+RENDER.causal = () => {
+  const so = $('#ca-out'), sdy = $('#ca-day');
+  if (!so.options.length){ so.innerHTML = CA_OUTS.map(k => `<option value="${k}">${OUT[k].label}</option>`).join(''); sdy.innerHTML = days.filter(x => x.d >= 56).map(x => `<option value="${x.d}" ${x.d === 68 ? 'selected' : ''}>Day ${x.d}${x.d >= 64 && x.d <= 71 ? ' · stale data' : x.d >= 60 ? ' · new model price' : ''}</option>`).join(''); so.onchange = sdy.onchange = RENDER.causal; }
+  const k = so.value, d = +sdy.value; const Lnow = days[d - 1].L;
+  const b0 = model(baseLevers)[k], b1 = model(Lnow)[k];
+  const phi = shapley(k, baseLevers, Lnow);
+  const contrib = Object.entries(phi).filter(([, v]) => Math.abs(v) > Math.abs(b1 - b0) * 0.01 + 1e-12).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+  $('#ca-title').textContent = `${OUT[k].label}: ${OUT[k].f(b0)} at baseline → ${OUT[k].f(b1)} on day ${d}`;
+  // waterfall
+  const el = $('#ca-bridge'); el.innerHTML = '';
+  const W = el.clientWidth || 800, H = 300, m = {l: 60, r: 20, t: 16, b: 58};
+  const svg = svgEl('svg', {width: W, height: H}, el);
+  const steps = [{label: 'Baseline', v: b0, total: true}, ...contrib.map(([kk, v]) => ({label: LEVER[kk].label, v, k: kk})), {label: 'Day ' + d, v: b1, total: true}];
+  let run = b0; const bars = steps.map((s, i) => { if (s.total) return {...s, y0: 0, y1: s.v}; const a = run; run += s.v; return {...s, y0: a, y1: run}; });
+  const vals = bars.flatMap(b => [b.y0, b.y1]); let lo = Math.min(...vals), hi = Math.max(...vals);
+  if (bars.every(b => !b.total || b.v >= 0)) { const span = hi - Math.min(b0, b1, ...bars.filter(b => !b.total).flatMap(b => [b.y0, b.y1])); lo = Math.min(...bars.filter(b => !b.total).flatMap(b => [b.y0, b.y1]), b0, b1) - span * 0.6; }
+  const sc = nice(lo, hi, 4);
+  const Y = v => m.t + (H - m.t - m.b) * (1 - (v - sc.lo) / (sc.hi - sc.lo));
+  const bw = (W - m.l - m.r) / bars.length;
+  sc.ticks.forEach(t => { svgEl('line', {x1: m.l, x2: W - m.r, y1: Y(t), y2: Y(t), stroke: '#e1e0d9'}, svg); txt(svg, m.l - 6, Y(t) + 4, OUT[k].f(t), {'text-anchor': 'end'}); });
+  bars.forEach((b, i) => { const x = m.l + i * bw + bw * 0.18, w = bw * 0.64; const top = Math.max(b.y0, b.y1), bot = Math.min(b.y0, b.y1);
+    const yTop = Y(b.total ? Math.max(b.v, sc.lo) : top), yBot = b.total ? Y(sc.lo) : Y(bot);
+    const better = !b.total && b.v * OUT[k].good > 0;
+    svgEl('rect', {x, y: yTop, width: w, height: Math.max(2, yBot - yTop), rx: 3, fill: b.total ? '#898781' : better ? 'var(--s3)' : 'var(--s2)'}, svg);
+    if (i < bars.length - 1){ const nx = m.l + (i + 1) * bw + bw * 0.18; svgEl('line', {x1: x + w, x2: nx, y1: Y(b.total ? b.v : b.y1), y2: Y(b.total ? b.v : b.y1), stroke: '#898781', 'stroke-dasharray': '2 2'}, svg); }
+    txt(svg, x + w / 2, yTop - 5, b.total ? OUT[k].f(b.v) : (b.v >= 0 ? '+' : '−') + OUT[k].f(Math.abs(b.v)), {'text-anchor': 'middle', fill: '#1F2933', 'font-size': 11});
+    const words = b.label.split(' '); let line = '', ls = []; for (const wd of words){ if ((line + ' ' + wd).length > 14 && line){ ls.push(line); line = wd; } else line = line ? line + ' ' + wd : wd; } ls.push(line);
+    ls.slice(0, 3).forEach((ln, j) => txt(svg, x + w / 2, H - m.b + 15 + j * 13, ln, {'text-anchor': 'middle', 'font-size': 11, fill: '#1F2933'}));
+    const hit = svgEl('rect', {x: m.l + i * bw, y: m.t, width: bw, height: H - m.t - m.b, fill: 'transparent'}, svg);
+    hit.addEventListener('mousemove', e => showTip(e, b.total ? `<div class="t">${b.label}</div>${OUT[k].f(b.v)}` : `<div class="t">${b.label}</div>baseline ${LEVER[b.k].f(baseLevers[b.k])} → day ${d} ${LEVER[b.k].f(Lnow[b.k])}<br>Contribution ${(b.v >= 0 ? '+' : '−') + OUT[k].f(Math.abs(b.v))} (${pct(Math.abs(b.v) / Math.max(1e-12, contrib.reduce((s, [, v]) => s + Math.abs(v), 0)), 0)} of total movement)`));
+    hit.addEventListener('mouseleave', hideTip); });
+  $('#ca-bridge').insertAdjacentHTML('beforeend', `<div class="legend"><span><b class="dot" style="background:#898781"></b>Baseline and day value</span><span><b class="dot" style="background:var(--s2)"></b>Made it worse</span><span><b class="dot" style="background:var(--s3)"></b>Made it better</span></div>`);
+  drawGraph(k, contrib.map(c => c[0]), phi);
+  const top = contrib[0];
+  const cf = {...Lnow}; if (top) cf[top[0]] = baseLevers[top[0]];
+  const cfv = model(cf)[k];
+  const share = top ? Math.abs(top[1]) / contrib.reduce((s, [, v]) => s + Math.abs(v), 0) : 0;
+  const cat = {freshness: 'Stale or wrong content · Data management link', price: 'Underpinning contract · Procurement', hitl: 'Policy response · HITL review raised during incident', volume: 'Demand volume · capacity', apiLatency: 'Applications and systems link', coverage: 'Knowledge gap', mapPrec: 'Mapping error', largeShare: 'Model behavior / extra-processing', routing: 'Routing or orchestration fault'};
+  $('#ca-find').innerHTML = top ? `
+    <p><b>Largest root cause:</b> ${LEVER[top[0]].label} (${LEVER[top[0]].f(baseLevers[top[0]])} → ${LEVER[top[0]].f(Lnow[top[0]])}), ${pct(share, 0)} of the movement.</p>
+    <p><b>Root-cause category (Section 2.2):</b> ${cat[top[0]]}.</p>
+    <p><b>Counterfactual:</b> with ${LEVER[top[0]].label.toLowerCase()} held at baseline, ${OUT[k].label} on day ${d} would have been <b>${OUT[k].f(cfv)}</b> instead of ${OUT[k].f(b1)}.</p>
+    <p><b>Other contributors:</b> ${contrib.slice(1, 4).map(([kk, v]) => `${LEVER[kk].label} (${(v >= 0 ? '+' : '−') + OUT[k].f(Math.abs(v))})`).join('; ') || 'none material'}.</p>
+    <p><b>Action:</b> ${top[0] === 'freshness' ? 'raise Sev 1 compliance gap CG-07, add a freshness guard (OD-17 OLA), and add the 41 HITL corrections to the evaluation set' : top[0] === 'price' ? 'open a vendor price review (Procurement) and test a routing change in Simulation to shift simple requests to the standard model' : top[0] === 'hitl' ? 'review whether elevated HITL review can step down now the data is fresh' : 'raise a demand item tagged with this root-cause category'}.</p>
+    <p class="note">Attribution is exact Shapley over the levers that changed, using the causal model. Accuracy depends on the model's validation (Twin Fidelity).</p>` : '<p>No material change from baseline on this day.</p>';
+};
+function drawGraph(outKey, active, phi){
+  const el = $('#ca-graph'); el.innerHTML = '';
+  const W = Math.max(520, el.clientWidth), H = 360;
+  const svg = svgEl('svg', {width: '100%', viewBox: `0 0 ${W} ${H}`}, el);
+  const cols = [LEVERS.map(l => l.k), ['retrieval', 'apiErr', 'groundedness', 'tta'], ['mtbh', 'taskSuccess', 'slaProb'], ['unitCost', 'copq', 'complianceRisk', 'vgi', 'sat']];
+  const pos = {}; cols.forEach((c, ci) => c.forEach((k, ri) => { pos[k] = {x: 14 + ci * (W - 150) / 3, y: 18 + (ri + 0.5) * (H - 30) / c.length}; }));
+  // ancestors of outKey
+  const anc = new Set([outKey]); let grew = true; while (grew){ grew = false; for (const [a, b] of EDGES) if (anc.has(b) && !anc.has(a)){ anc.add(a); grew = true; } }
+  const maxPhi = Math.max(1e-12, ...Object.values(phi).map(Math.abs));
+  for (const [a, b] of EDGES){ const on = anc.has(a) && anc.has(b); const A = pos[a], B = pos[b]; const wActive = active.includes(a) ? 1 + 4 * Math.abs(phi[a] || 0) / maxPhi : 1.2;
+    svgEl('path', {d: `M${A.x + 118} ${A.y}C${(A.x + B.x + 118) / 2} ${A.y} ${(A.x + B.x + 118) / 2} ${B.y} ${B.x} ${B.y}`, fill: 'none', stroke: on ? (active.includes(a) ? '#eb6834' : '#2F6DB5') : '#e1e0d9', 'stroke-width': on ? wActive : 1, 'stroke-opacity': on ? 0.85 : 1}, svg); }
+  for (const k in pos){ const p = pos[k]; const on = anc.has(k); const isOut = k === outKey; const label = LEVER[k] ? LEVER[k].label : OUT[k].label.replace(' ($/month)', '').replace(' (interactions)', '').replace('Benefits outcome satisfaction (0–10)', 'Outcome satisfaction');
+    svgEl('rect', {x: p.x, y: p.y - 11, width: 118, height: 22, rx: 6, fill: isOut ? '#EEF3F9' : '#fff', stroke: isOut ? '#2F6DB5' : on ? (active.includes(k) ? '#eb6834' : '#898781') : '#e1e0d9', 'stroke-width': isOut || active.includes(k) ? 2 : 1}, svg);
+    txt(svg, p.x + 6, p.y + 4, label.length > 19 ? label.slice(0, 18) + '…' : label, {'font-size': 10.5, fill: on ? '#1F2933' : '#b0afa8'}); }
+  ['Root causes', 'Link measures', 'Service measures', 'Outcomes and cost'].forEach((t, i) => txt(svg, 14 + i * (W - 150) / 3, 10, t, {'font-size': 10.5, 'font-weight': 700, fill: '#2F6DB5'}));
+}
+
+// ================================================================ SIMULATION
+let SIM = {...baseLevers};
+const PRESETS = [
+  ['Baseline', {}],
+  ['Shift simple requests to standard model', {largeShare: 0.12, routing: 0.96}],
+  ['Double onboarding volume', {volume: 2000}],
+  ['SKL coverage push to 95%', {coverage: 0.95, mapPrec: 0.94}],
+  ['Benefits pipeline delay (36 h)', {freshness: 36}],
+  ['Vendor price +18%', {price: 1.18}],
+  ['Reduce HITL review to 5%', {hitl: 0.05}],
+];
+RENDER.simulation = () => {
+  if (!$('#sim-presets').children.length){
+    $('#sim-presets').innerHTML = '<span>Scenario</span>' + PRESETS.map((p, i) => `<button data-i="${i}">${p[0]}</button>`).join('');
+    $$('#sim-presets button').forEach(b => b.onclick = () => { SIM = {...baseLevers, ...PRESETS[+b.dataset.i][1]}; $$('#sim-presets button').forEach(x => x.classList.toggle('primary', x === b)); buildLevers(); simRun(); });
+    $('#sim-reset').onclick = () => { SIM = {...baseLevers}; $$('#sim-presets button').forEach((x, i) => x.classList.toggle('primary', i === 0)); buildLevers(); simRun(); };
+    $$('#sim-presets button')[0].classList.add('primary');
+  }
+  buildLevers(); simRun();
+};
+function buildLevers(){
+  $('#sim-levers').innerHTML = LEVERS.map(l => `<div class="slider"><span>${l.label}</span><input type="range" min="${l.min}" max="${l.max}" step="${l.step}" value="${SIM[l.k]}" data-k="${l.k}"><span class="val" id="sv-${l.k}">${l.f(SIM[l.k])}</span></div>`).join('');
+  $$('#sim-levers input').forEach(inp => inp.oninput = () => { SIM[inp.dataset.k] = +inp.value; $('#sv-' + inp.dataset.k).textContent = LEVER[inp.dataset.k].f(+inp.value); $$('#sim-presets button').forEach(x => x.classList.remove('primary')); simRun(); });
+}
+const SIM_OUTS = ['groundedness', 'taskSuccess', 'tta', 'slaProb', 'unitCost', 'copq', 'complianceRisk', 'sat'];
+function monteCarlo(L, N = 400){
+  const r = mulberry32(99173); const res = Object.fromEntries(SIM_OUTS.map(k => [k, []]));
+  for (let i = 0; i < N; i++){
+    const Lp = {...L, volume: L.volume * (1 + 0.08 * gauss(r)), freshness: Math.max(1, L.freshness * (1 + 0.15 * gauss(r))), apiLatency: L.apiLatency * (1 + 0.12 * gauss(r)), coverage: clamp(L.coverage + 0.01 * gauss(r), 0, 1), mapPrec: clamp(L.mapPrec + 0.01 * gauss(r), 0, 1), routing: clamp(L.routing + 0.01 * gauss(r), 0, 1)};
+    const o = model(Lp); const eps = 1 + 0.02 * gauss(r); // model uncertainty
+    SIM_OUTS.forEach(k => res[k].push(k === 'unitCost' || k === 'copq' ? o[k] * eps : o[k]));
+  }
+  return res;
+}
+function simRun(){
+  const mc = monteCarlo(SIM), mb = monteCarlo(baseLevers);
+  const el = $('#sim-mc'); el.innerHTML = '';
+  const W = el.clientWidth || 520, rh = 46, lw = 175, H = SIM_OUTS.length * rh + 6;
+  const svg = svgEl('svg', {width: W, height: H}, el);
+  SIM_OUTS.forEach((k, i) => {
+    const y = 6 + i * rh + 20; const b = median(mb[k]); const q10 = quant(mc[k], 0.1), q50 = median(mc[k]), q90 = quant(mc[k], 0.9);
+    const lo = Math.min(q10, b, quant(mb[k], 0.1)), hi = Math.max(q90, b, quant(mb[k], 0.9)); const span = (hi - lo) || Math.abs(b) * 0.1 || 1;
+    const X = v => lw + 10 + (W - lw - 110) * (v - (lo - span * 0.15)) / (span * 1.3);
+    txt(svg, lw - 4, y + 4, OUT[k].label.replace(' ($/month)', ' / month').replace('Benefits outcome satisfaction (0–10)', 'Outcome satisfaction'), {'text-anchor': 'end', fill: '#1F2933', 'font-size': 12});
+    svgEl('line', {x1: lw + 10, x2: W - 100, y1: y, y2: y, stroke: '#e1e0d9'}, svg);
+    svgEl('line', {x1: X(b), x2: X(b), y1: y - 10, y2: y + 10, stroke: '#898781', 'stroke-width': 3}, svg);
+    const better = (q50 - b) * OUT[k].good > 0, same = Math.abs(q50 - b) < span * 0.02;
+    const c = same ? 'var(--s1)' : better ? 'var(--s3)' : 'var(--s2)';
+    svgEl('line', {x1: X(q10), x2: X(q90), y1: y, y2: y, stroke: c, 'stroke-width': 2}, svg);
+    svgEl('line', {x1: X(q10), x2: X(q10), y1: y - 5, y2: y + 5, stroke: c, 'stroke-width': 2}, svg);
+    svgEl('line', {x1: X(q90), x2: X(q90), y1: y - 5, y2: y + 5, stroke: c, 'stroke-width': 2}, svg);
+    svgEl('circle', {cx: X(q50), cy: y, r: 6, fill: c, stroke: '#fff', 'stroke-width': 2}, svg);
+    const dv = q50 - b; txt(svg, W - 94, y + 4, OUT[k].f(q50), {'font-size': 11.5, fill: '#1F2933', 'font-weight': 700});
+    txt(svg, W - 94, y + 17, same ? 'no change' : (dv > 0 ? '▲ ' : '▼ ') + (better ? 'better' : 'worse'), {'font-size': 10.5, fill: same ? '#52514e' : better ? '#006300' : '#b03a2e'});
+    const hit = svgEl('rect', {x: 0, y: y - 22, width: W, height: rh, fill: 'transparent'}, svg);
+    hit.addEventListener('mousemove', e => showTip(e, `<div class="t">${OUT[k].label}</div>Baseline ${OUT[k].f(b)}<br>Scenario median ${OUT[k].f(q50)}<br>80% range ${OUT[k].f(q10)} – ${OUT[k].f(q90)}`)); hit.addEventListener('mouseleave', hideTip);
+  });
+  const S = k => median(mc[k]), B = k => median(mb[k]);
+  const reqMonth = SIM.volume * 24 * 30; const costMonth = S('unitCost') * reqMonth, costMonthB = B('unitCost') * baseLevers.volume * 24 * 30;
+  const satD = S('sat') - B('sat');
+  $('#sim-levels').innerHTML = tableHTML(['Level', 'Who reads it', 'What the scenario means', 'Signal'], [
+    ['Operational', 'Service owners, Semantic Ops, SRE', `Time to answer ${OUT.tta.f(S('tta'))} (baseline ${OUT.tta.f(B('tta'))}); groundedness ${pct(S('groundedness'))}; MTBH ${fmt(1 / ((1 - S('groundedness')) * 0.25))} interactions; compliance exposure ${fmt(S('complianceRisk'), 1)}`, S('slaProb') >= 0.95 && S('complianceRisk') < 35 ? status('good', 'Within OLAs') : S('slaProb') >= 0.9 ? status('warn', 'OLA risk') : status('crit', 'OLA breach likely')],
+    ['Execution', 'Change leads, Finance / FinOps', `SLA attainment ${pct(S('slaProb'))}; unit cost ${money(S('unitCost'), 3)} (${pct(S('unitCost') / B('unitCost') - 1)} vs baseline); monthly AI service cost ${money(costMonth, 0)} vs ${money(costMonthB, 0)}; cost of poor quality ${money(S('copq'), 0)}/month`, S('unitCost') <= B('unitCost') * 1.03 ? status('good', 'Within budget') : S('unitCost') <= B('unitCost') * 1.12 ? status('warn', 'Budget pressure') : status('crit', 'Over budget')],
+    ['Strategic', 'Executives, Council', `Benefits outcome satisfaction ${fmt(S('sat'), 2)} (${satD >= 0 ? '+' : '−'}${fmt(Math.abs(satD), 2)}); Value Gap Index ${fmt(model(SIM).vgi, 3)} vs ${fmt(model(baseLevers).vgi, 3)}; ${satD < -0.2 ? 'risk to the Benefits protect position and renewal claims' : satD > 0.15 ? 'strengthens proof points once Compliance approves the use' : 'no material change to customer outcomes'}`, satD >= -0.05 ? status('good', 'Outcomes held') : satD >= -0.25 ? status('warn', 'Outcome erosion') : status('crit', 'Outcome at risk')],
+  ]);
+}
+
+// ================================================================ OPERATIONS COMMAND CENTER
+const PILLARS = [
+  {k:'apps', name:'Applications and systems', gov:false, link:'apps'},
+  {k:'data', name:'Data', gov:true, link:'data', validator:'Compliance, Security'},
+  {k:'skl', name:'Semantic knowledge', gov:true, link:'skl', validator:'Knowledge Engineering, Security'},
+  {k:'analytics', name:'Analytics and insights', gov:true, link:'analytics', validator:'Risk, Compliance'},
+  {k:'ai', name:'AI', gov:true, link:'ai', validator:'Legal, Risk, Compliance, QE'},
+  {k:'di', name:'Decision intelligence', gov:true, link:'ai', validator:'Risk, QE, Council'},
+];
+const COMP = [
+  // id, name, pillar, kind, owner, version, health, value(outcome attainment of outcomes served), upstream
+  ['sys:benefits-platform','Benefits platform','apps','system','Application owner','v4.2',97,88,[]],
+  ['sys:payroll','Payroll system','apps','system','Application owner','v11.0',98,93,[]],
+  ['sys:hris','HRIS','apps','system','Application owner','2026.3',96,84,[]],
+  ['sys:crm','CRM','apps','system','Application owner','2026.10',95,82,[]],
+  ['ds:benefits-enrollment','Benefits enrollment pipeline','data','component','Data Engineering','p-3.8',94,76,['sys:benefits-platform']],
+  ['ds:payroll-ledger','Payroll ledger pipeline','data','component','Data Engineering','p-2.1',99,93,['sys:payroll']],
+  ['ds:workforce-mart','Workforce data mart','data','component','Data Engineering','m-5.0',95,79,['sys:hris','ds:payroll-ledger','ds:benefits-enrollment']],
+  ['svc:data-quality','Data quality service','data','service','Data Governance','dq-1.6',97,85,['ds:benefits-enrollment','ds:payroll-ledger','ds:workforce-mart']],
+  ['svc:inbound','Inbound semantic services','skl','service','Semantic Ops','in-2.4',96,84,['ds:benefits-enrollment','ds:payroll-ledger','ds:workforce-mart']],
+  ['svc:ai-mapping','AI mapping service','skl','service','Semantic Ops','map-1.9',93,84,['svc:inbound']],
+  ['kg:skl-core','SKL graph (core and domain)','skl','component','Knowledge Engineering','2026.11.3',98,84,['svc:inbound','svc:ai-mapping']],
+  ['svc:search-facade','Search facade and VectorDB','skl','service','Knowledge Engineering','sf-3.1',95,84,['kg:skl-core']],
+  ['metric:semantic-layer','Semantic metric layer','analytics','component','Enterprise Analytics','ml-1.4',97,80,['kg:skl-core','ds:workforce-mart']],
+  ['svc:visier-publish','Visier publishing','analytics','service','Enterprise Analytics','vp-0.9',94,80,['metric:semantic-layer']],
+  ['svc:kda-insight','KDA insight service','analytics','service','Enterprise Analytics','kda-0.7',91,78,['metric:semantic-layer','svc:search-facade']],
+  ['agent:compass','Compass front door','ai','service','AI Agent Engineering','c-1.12',99,85,[]],
+  ['agent:tier-router','Tier router','ai','agent','AI Agent Engineering','tr-2.0',96,85,['agent:compass']],
+  ['agent:t1-answer','T1 answer agent','ai','agent','AI Agent Engineering','a1-3.2',96,86,['agent:tier-router','svc:search-facade']],
+  ['agent:t2-benefits-change','T2 benefits change agent','ai','agent','AI Agent Engineering','a2-1.5',94,77,['agent:tier-router','svc:search-facade','sys:benefits-platform']],
+  ['agent:t3-hr-advisory','T3 HR Advisory 360 agent','ai','agent','AI Agent Engineering','a3-0.8',86,74,['agent:tier-router','svc:kda-insight','svc:search-facade']],
+  ['agent:sales-advisory','Sales Advisory Agent','ai','agent','AI Agent Engineering','sa-0.6',95,81,['svc:search-facade','sys:crm']],
+  ['svc:grounding-breaker','Grounding check and breaker','ai','service','Quality Engineering','gb-1.3',99,85,['agent:t1-answer','agent:t2-benefits-change','agent:t3-hr-advisory']],
+  ['svc:decision-cascade','Decision cascade engine','di','service','AI Agent Engineering','dc-0.5',90,72,['svc:kda-insight','kg:skl-core']],
+  ['svc:twin-sim','Twin and simulation service','di','service','Enterprise Analytics','tw-0.3',88,72,['kg:skl-core','metric:semantic-layer']],
+  ['agent:t4-portfolio-impact','T4 portfolio impact agent','di','agent','AI Agent Engineering','a4-0.4',72,70,['agent:tier-router','svc:decision-cascade','svc:twin-sim']],
+  ['log:decision-log','Decision log','di','component','Council secretariat','dl-1.0',97,70,['agent:t4-portfolio-impact','agent:t3-hr-advisory']],
+  ['svc:demand-backlog','Demand backlog and ranking','di','service','Continuous Improvement','db-1.1',98,78,['log:decision-log','svc:grounding-breaker','svc:data-quality']],
+].map(([id, name, pillar, kind, owner, version, health, value, up]) => ({id, name, pillar, kind, owner, version, health, value, up}));
+const CMAP = Object.fromEntries(COMP.map(c => [c.id, c]));
+
+const POLICIES = [
+  ['DP-01','data','Answer sources fresh within 12 hours','Freshness check per pipeline, hourly', {'ds:benefits-enrollment':[20,28,'8 of 28 days failed during the pipeline delay (days 64–71); fixed in release p-3.8'], 'ds:payroll-ledger':[28,28], 'ds:workforce-mart':[27,28,'1 late refresh']}],
+  ['DP-02','data','Personal data minimized in answer sources','PII scan on every load', {'ds:benefits-enrollment':[28,28], 'ds:payroll-ledger':[28,28], 'ds:workforce-mart':[28,28], 'svc:inbound':[28,28]}],
+  ['DP-03','data','Every source has registered lineage','Lineage registry check, daily', {'ds:benefits-enrollment':[28,28], 'ds:payroll-ledger':[28,28], 'ds:workforce-mart':[28,28], 'svc:data-quality':[28,28]}],
+  ['DP-04','data','Retention rules applied','Retention job evidence, weekly', {'ds:benefits-enrollment':[4,4], 'ds:payroll-ledger':[4,4], 'ds:workforce-mart':[4,4]}],
+  ['SP-01','skl','Every term has an approved definition','Definition completeness scan', {'kg:skl-core':[1189,1230,'41 new benefits terms awaiting definition']}],
+  ['SP-02','skl','Changes only through change control with a release record','Release-record match on every graph write', {'kg:skl-core':[642,643,'1 unregistered change to map:carrier-codes found on day 81'], 'svc:ai-mapping':[310,310]}],
+  ['SP-03','skl','Graph reached only through semantic services','Direct-access attempts blocked and logged', {'kg:skl-core':[28,28], 'svc:search-facade':[28,28]}],
+  ['SP-04','skl','Alternate labels kept separate from core and domain','Structure check on release', {'kg:skl-core':[6,6], 'svc:inbound':[6,6]}],
+  ['AP-01','analytics','Only certified metrics in T3 and T4','Metric certification check per query', {'metric:semantic-layer':[2140,2140], 'svc:kda-insight':[1022,1043,'21 queries used an uncertified draft metric']}],
+  ['AP-02','analytics','Report groups of at least five','Aggregation check on every output', {'svc:visier-publish':[460,460], 'svc:kda-insight':[1043,1043]}],
+  ['AP-03','analytics','Metric definitions conform to the SKL','Definition conformance per generated query', {'metric:semantic-layer':[2093,2140,'47 queries with a non-conforming filter'], 'svc:kda-insight':[1020,1043,'23 non-conforming']}],
+  ['AI-01','ai','Answers grounded with citations','Grounding check on every answer', {'agent:t1-answer':[95400,100000], 'agent:t2-benefits-change':[9610,10000], 'agent:t3-hr-advisory':[4740,5000,'Below 95% on days 64–71'], 'svc:grounding-breaker':[28,28]}],
+  ['AI-02','ai','Rep approval before any client contact','Approval link on every client-facing draft', {'agent:sales-advisory':[417,420,'3 drafts reached clients without a rep approval link (CG-04)']}],
+  ['AI-03','ai','Approved uses only for outcome statements','Approved-use check per proof point', {'agent:sales-advisory':[612,613,'1 proof point used outside its approved use (CG-11)']}],
+  ['AI-04','ai','Circuit-breaker thresholds enforced','Breaker event audit', {'svc:grounding-breaker':[28,28]}],
+  ['AI-05','ai','No legal, tax or insurance advice','Topic guard on every answer', {'agent:t1-answer':[100000,100000], 'agent:t3-hr-advisory':[5000,5000], 'agent:sales-advisory':[420,420]}],
+  ['AI-06','ai','Model and prompt versions registered','Registry match on every call', {'agent:tier-router':[28,28], 'agent:t1-answer':[28,28], 'agent:t2-benefits-change':[28,28], 'agent:t3-hr-advisory':[28,28], 'agent:sales-advisory':[28,28], 'agent:t4-portfolio-impact':[28,28]}],
+  ['DI-01','di','Every T4 recommendation keeps its full reasoning chain','Cascade traceability check', {'agent:t4-portfolio-impact':[46,48,'2 runs missing the reconcile step record'], 'svc:decision-cascade':[46,48,'same 2 runs']}],
+  ['DI-02','di','Consequential decisions have a named accountable reviewer','Reviewer link on decision record', {'agent:t4-portfolio-impact':[12,12], 'log:decision-log':[12,12]}],
+  ['DI-03','di','Simulation methods validated before use','Method validation status', {'svc:twin-sim':[0,1,'Method tw-0.3 awaiting Risk and QE validation; results marked advisory']}],
+  ['DI-04','di','Decision outcomes recorded','Outcome record within 90 days', {'log:decision-log':[9,11,'2 decisions past 90 days without an outcome record'], 'svc:demand-backlog':[28,28]}],
+].map(([id, pillar, name, control, checks]) => ({id, pillar, name, control, checks, target: id === 'AI-01' ? 0.95 : 1}));
+const isGap = (p, id) => p.checks[id][0] / p.checks[id][1] < p.target - 1e-12;
+
+const polFor = id => POLICIES.filter(p => p.checks[id]);
+const adh = (p, id) => { const [ok, n] = p.checks[id]; return ok / n; };
+const compAdh = id => { const ps = polFor(id); if (!ps.length) return null; const ok = ps.reduce((s, p) => s + p.checks[id][0] / p.checks[id][1], 0); return ok / ps.length; };
+const compGaps = id => polFor(id).filter(p => isGap(p, id));
+const pillarAdh = k => { const ps = POLICIES.filter(p => p.pillar === k); let ok = 0, n = 0; ps.forEach(p => Object.keys(p.checks).forEach(c => { ok += adh(p, c); n++; })); return n ? ok / n : null; };
+const pillarGaps = k => POLICIES.filter(p => p.pillar === k).flatMap(p => Object.keys(p.checks).filter(c => isGap(p, c)).map(c => ({p, c, v: p.checks[c]})));
+const govStatus = (v, gaps) => v == null ? ['none','No policies'] : gaps === 0 ? ['good','Adherent'] : v >= 97 ? ['warn','Minor gap'] : v >= 90 ? ['serious','Gap'] : ['crit','Major gap'];
+
+let opsLens = 'big', opsSel = null, opsPillar = null, opsTab = 'lineage', opsEvent = null;
+const lensVal = c => opsLens === 'gov' ? (compAdh(c.id) == null ? null : compAdh(c.id) * 100) : opsLens === 'plat' ? c.health : c.value;
+const lensStatus = (v) => { if (v == null) return ['none', 'No policies']; if (opsLens === 'gov') return v >= 99.5 ? ['good','Adherent'] : v >= 97 ? ['warn','Minor gap'] : v >= 90 ? ['serious','Gap'] : ['crit','Major gap']; if (opsLens === 'plat') return v >= 95 ? ['good','Healthy'] : v >= 88 ? ['warn','Degraded'] : v >= 75 ? ['serious','At risk'] : ['crit','Failing']; return v >= 85 ? ['good','On target'] : v >= 78 ? ['warn','Watch'] : v >= 72 ? ['serious','Below target'] : ['crit','At risk']; };
+const SCOL = {good:'#0ca30c', warn:'#fab219', serious:'#ec835a', crit:'#d03b3b', none:'#c3c2b7'};
+const SICON = {good:'✓', warn:'!', serious:'▲', crit:'✕', none:'–'};
+
+function lineageSet(id, dir){ const out = new Set(); const stack = [id]; while (stack.length){ const x = stack.pop(); const next = dir === 'up' ? (CMAP[x]?.up || []) : COMP.filter(c => c.up.includes(x)).map(c => c.id); for (const n of next) if (!out.has(n)){ out.add(n); stack.push(n); } } return out; }
+
+// audit events with a real hash chain (FNV-1a)
+function fnv(s){ let h = 0x811c9dc5; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return ('00000000' + h.toString(16)).slice(-8); }
+const PLANTED = {
+  'ds:benefits-enrollment': [[64,'09:00','svc:data-quality','Freshness check','DP-01','Failed: lag 28 h > 12 h'],[64,'09:05','Data Engineering (on call)','Incident opened INC-2291','DP-01','Sev 1 via CG-07'],[66,'14:20','Business SME, Benefits','Raised HITL review to 20%','AI-01','Approved'],[72,'11:40','Data Engineering','Released fix p-3.8','SP-02','Release record rel-2026.11.4'],[72,'12:00','svc:data-quality','Freshness check','DP-01','Passed: lag 5.6 h']],
+  'agent:sales-advisory': [[78,'10:12','agent:sales-advisory','Drafted client follow-up','AI-02','No approval link'],[78,'10:13','svc:approval-gate','Client send check','AI-02','Gap: sent without approval (CG-04)'],[80,'15:02','agent:sales-advisory','Proof point PP-14 used in prospect deck','AI-03','Gap: use not approved (CG-11)'],[81,'09:30','Compliance','Opened gaps CG-04, CG-11','AI-02','Sev 2, Sev 3']],
+  'kg:skl-core': [[81,'16:45','svc:release-check','Graph write without release record','SP-02','Gap: map:carrier-codes changed'],[81,'17:10','Knowledge Engineering','Change record CR-588 raised retroactively','SP-02','Under review'],[83,'08:15','svc:search-facade','Direct graph access attempt from analytics notebook','SP-03','Blocked']],
+  'agent:t4-portfolio-impact': [[79,'13:00','agent:t4-portfolio-impact','Cascade run DR-0417','DI-01','Gap: reconcile step not recorded'],[79,'16:30','Council reviewer','Recommendation reviewed','DI-02','Approved with conditions'],[82,'11:05','agent:t4-portfolio-impact','Cascade run DR-0421','DI-01','Passed: 6 of 6 steps recorded']],
+  'svc:twin-sim': [[76,'10:00','Enterprise Analytics','Method tw-0.3 submitted for validation','DI-03','Awaiting Risk and QE'],[80,'14:00','svc:twin-sim','Scenario run for portfolio review','DI-03','Marked advisory: method not validated']],
+  'log:decision-log': [[83,'09:00','svc:outcome-check','90-day outcome check','DI-04','Gap: 2 decisions without outcome']],
+};
+function auditEvents(c){
+  const r = mulberry32([...c.id].reduce((s, ch) => s * 31 + ch.charCodeAt(0) >>> 0, 7));
+  const acts = c.kind === 'agent' ? [['Tool call: semantic search','SP-03','Allowed; scope persona:hr-leader'],['Policy pre-check','AI-05','Passed'],['Grounding check','AI-01','Passed; 3 citations'],['Answer released','AI-06','Model and prompt versions registered']] : c.pillar === 'data' ? [['Pipeline load','DP-02','Passed PII scan'],['Lineage registered','DP-03','Passed'],['Freshness check','DP-01','Passed']] : c.pillar === 'apps' ? [['API call from agent','—','200 OK'],['Configuration change','—','Change ticket linked']] : [['Release deployed','SP-02','Release record matched'],['Health check','—','Passed'],['Policy check','—','Passed']];
+  const ev = [];
+  for (let i = 0; i < 7; i++){ const d = 76 + Math.floor(r() * 9); const a = acts[Math.floor(r() * acts.length)]; ev.push([d, String(8 + Math.floor(r() * 10)).padStart(2, '0') + ':' + String(Math.floor(r() * 60)).padStart(2, '0'), c.kind === 'agent' || c.kind === 'service' ? c.id : c.owner, a[0], a[1], a[2]]); }
+  (PLANTED[c.id] || []).forEach(e => ev.push(e));
+  ev.sort((a, b) => a[0] - b[0] || a[1].localeCompare(b[1]));
+  let prev = '00000000';
+  return ev.map((e, i) => { const rec = {seq: i + 1, day: e[0], time: e[1], actor: e[2], action: e[3], object: c.id, policy: e[4], result: e[5], version: c.version, trace: fnv(c.id + i).slice(0, 8)}; rec.prev = prev; rec.hash = fnv(prev + JSON.stringify([rec.seq, rec.day, rec.time, rec.actor, rec.action, rec.object, rec.policy, rec.result])); prev = rec.hash; return rec; }).reverse();
+}
+function verifyChain(evs){ const asc = [...evs].reverse(); let prev = '00000000'; for (const e of asc){ if (e.prev !== prev) return false; const h = fnv(prev + JSON.stringify([e.seq, e.day, e.time, e.actor, e.action, e.object, e.policy, e.result])); if (h !== e.hash) return false; prev = h; } return true; }
+
+const CAP_OF = {'agent:t1-answer':'cap:payroll-qa','agent:t2-benefits-change':'cap:benefits-change','agent:t3-hr-advisory':'cap:hr-advisory-360','agent:t4-portfolio-impact':'cap:portfolio-impact','agent:sales-advisory':'cap:sales-advisory','ds:benefits-enrollment':'cap:benefits-change','sys:benefits-platform':'cap:benefits-change'};
+const OUT_OF = {'cap:payroll-qa':'out:pay-accurately','cap:benefits-change':'out:benefits-change-on-time','cap:hr-advisory-360':'out:stay-compliant-state-laws','cap:portfolio-impact':'out:see-relationship-value','cap:sales-advisory':'out:reach-specialist'};
+
+RENDER.ops = () => {
+  // trust strip
+  const allComp = COMP.length, linFull = COMP.filter(c => c.up.length || c.pillar === 'apps' || c.id === 'agent:compass').length;
+  const agents = COMP.filter(c => c.kind === 'agent');
+  const gapsAll = PILLARS.filter(p => p.gov).flatMap(p => pillarGaps(p.k));
+  const allOk = COMP.every(c => verifyChain(auditEvents(c)));
+  $('#ops-trust').innerHTML = [
+    ['Lineage Coverage', pct(linFull / allComp, 0), `${linFull} of ${allComp} components with registered lineage`],
+    ['Trace Completeness', '99.1%', 'requests with every expected span and SKL ID'],
+    ['Agent Action Auditability', '99.6%', `${agents.length} registered agents · 2 T4 runs incomplete`],
+    ['Audit Log Integrity', allOk ? '✓ Verified' : '✕ Broken', 'hash chain checked for every component'],
+    ['Evidence Freshness', '96%', 'controls with current evidence'],
+    ['Open policy gaps', String(gapsAll.length), 'across five governance pillars'],
+  ].map(t => `<div class="tile"><div class="k">${t[0]}</div><div class="v" style="font-size:22px">${t[1]}</div><div class="d">${t[2]}</div></div>`).join('');
+  // lens tiles
+  const lastW = days.slice(-7);
+  if (opsLens === 'big'){
+    const sat = mean(lastW.map(x => x.o.sat)), ts = mean(lastW.map(x => x.o.taskSuccess)), uc = mean(lastW.map(x => x.o.unitCost)), vgi = mean(lastW.map(x => x.o.vgi));
+    $('#ops-lens-tiles').innerHTML = [
+      ['Value · Outcome Attainment', '81%', 'desired outcomes at or above target'], ['Value · Value Gap Index', fmt(vgi, 3), 'importance-weighted shortfall'], ['Value · Realized savings', '$41,600', 'quarter, Finance-validated'],
+      ['Customer · Outcome satisfaction', fmt(sat, 2) + ' / 10', 'Benefits, pulse-adjusted'], ['Customer · Task success', pct(ts), 'last 7 days'], ['Customer · Escalations', '37', 'to a human this week'],
+      ['Financial · Cost per request', money(uc, 3), 'all tiers, last 7 days'], ['Financial · Run cost vs budget', '97%', 'month to date'], ['Financial · Cost of Poor Quality', money(mean(lastW.map(x => x.o.copq)), 0), 'monthly run-rate'],
+    ].map(t => `<div class="tile"><div class="k">${t[0]}</div><div class="v" style="font-size:20px">${t[1]}</div><div class="d">${t[2]}</div></div>`).join('');
+  } else if (opsLens === 'gov'){
+    $('#ops-lens-tiles').innerHTML = PILLARS.filter(p => p.gov).map(p => { const a = pillarAdh(p.k) * 100, g = pillarGaps(p.k).length; const [s, l] = govStatus(a, g);
+      return `<div class="tile" style="cursor:pointer" data-pillar="${p.k}"><div class="k">${p.name}</div><div class="v" style="font-size:22px">${fmt(a, 1)}%</div><div class="d">${status(s, l)} · ${g} open gap${g === 1 ? '' : 's'}</div><div class="d" style="color:var(--brand)">Drill into policies ›</div></div>`; }).join('');
+    $$('#ops-lens-tiles .tile').forEach(t => t.onclick = () => { opsPillar = t.dataset.pillar; opsSel = null; opsEvent = null; RENDER.ops(); });
+  } else {
+    const H = linkHealth(DAYS);
+    $('#ops-lens-tiles').innerHTML = LINKS.map(l => `<div class="tile"><div class="k">${l.name}</div><div class="v" style="font-size:22px">${fmt(H[l.k])}</div><div class="d">${hstat(H[l.k])}</div></div>`).join('') + `<div class="tile"><div class="k">SLA attainment, 28 days</div><div class="v" style="font-size:22px">${pct(mean(days.slice(-28).map(x => x.o.slaProb)))}</div><div class="d">all capabilities</div></div>`;
+  }
+  // breadcrumb
+  const crumbs = [['Command center', () => { opsPillar = null; opsSel = null; opsEvent = null; }], [{big:'Big picture', gov:'Governance', plat:'Platform performance'}[opsLens], () => { opsPillar = null; opsSel = null; opsEvent = null; }]];
+  if (opsPillar) crumbs.push([PILLARS.find(p => p.k === opsPillar).name, () => { opsSel = null; opsEvent = null; }]);
+  if (opsSel) crumbs.push([CMAP[opsSel].name, () => { opsEvent = null; }]);
+  if (opsEvent) crumbs.push(['Audit record #' + opsEvent.seq, () => {}]);
+  $('#ops-crumb').innerHTML = crumbs.map((c, i) => i < crumbs.length - 1 ? `<a href="javascript:void(0)" data-c="${i}">${esc(c[0])}</a>` : `<b>${esc(c[0])}</b>`).join(' › ');
+  $$('#ops-crumb a').forEach(a => a.onclick = () => { crumbs[+a.dataset.c][1](); RENDER.ops(); });
+  drawOpsMap();
+  drawOpsDrill();
+};
+function drawOpsMap(){
+  const el = $('#ops-map'); el.innerHTML = '';
+  $('#ops-map-title').textContent = {big:'Architecture map · value and customer impact', gov:'Architecture map · policy adherence', plat:'Architecture map · platform health'}[opsLens];
+  $('#ops-map-note').textContent = 'Every component, system, service and agent, by governance pillar. Number on each node = ' + {big:'attainment of the customer outcomes it serves (%)', gov:'policy adherence, last 28 days (%)', plat:'health index (0–100)'}[opsLens] + '. Click a node to drill in; click a column title for its policies. Lines show lineage.';
+  const W = Math.max(1000, el.clientWidth), colW = W / PILLARS.length, nw = Math.min(176, colW - 18), nh = 36, gap = 10, top = 48;
+  const maxRows = Math.max(...PILLARS.map(p => COMP.filter(c => c.pillar === p.k).length));
+  const H = top + maxRows * (nh + gap) + 14;
+  const svg = svgEl('svg', {width: '100%', viewBox: `0 0 ${W} ${H}`}, el);
+  const pos = {};
+  PILLARS.forEach((p, pi) => { const cs = COMP.filter(c => c.pillar === p.k); cs.forEach((c, ri) => { pos[c.id] = {x: pi * colW + (colW - nw) / 2, y: top + ri * (nh + gap)}; }); });
+  const up = opsSel ? lineageSet(opsSel, 'up') : new Set(), down = opsSel ? lineageSet(opsSel, 'down') : new Set();
+  const inPillar = id => !opsPillar || CMAP[id].pillar === opsPillar;
+  // edges
+  for (const c of COMP) for (const u of c.up){ const A = pos[u], B = pos[c.id]; let col = '#e1e0d9', w = 1, op = 1;
+    if (opsSel){ if ((up.has(u) || u === opsSel) && (up.has(c.id) || c.id === opsSel) && (u !== opsSel)) { col = '#eb6834'; w = 2; } else if ((down.has(c.id)) && (down.has(u) || u === opsSel)) { col = '#2a78d6'; w = 2; } else op = 0.35; }
+    let d;
+    if (Math.abs(A.x - B.x) < 2){ d = `M${A.x} ${A.y + nh / 2}C${A.x - 26} ${A.y + nh / 2} ${B.x - 26} ${B.y + nh / 2} ${B.x} ${B.y + nh / 2}`; }
+    else if (A.x < B.x){ const x1 = A.x + nw, y1 = A.y + nh / 2, x2 = B.x, y2 = B.y + nh / 2, mx = (x1 + x2) / 2; d = `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`; }
+    else { const x1 = A.x, y1 = A.y + nh / 2, x2 = B.x + nw, y2 = B.y + nh / 2, mx = (x1 + x2) / 2; d = `M${x1} ${y1}C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`; }
+    svgEl('path', {d, fill: 'none', stroke: col, 'stroke-width': w, 'stroke-opacity': op}, svg); }
+  // column headers
+  PILLARS.forEach((p, pi) => { const g = svgEl('g', {style: 'cursor:pointer'}, svg); const on = opsPillar === p.k;
+    svgEl('rect', {x: pi * colW + 4, y: 4, width: colW - 8, height: 30, rx: 6, fill: on ? '#EEF3F9' : '#F4F6F8', stroke: on ? '#2F6DB5' : 'none'}, g);
+    txt(g, pi * colW + colW / 2, 20, p.name, {'text-anchor': 'middle', 'font-weight': 700, 'font-size': 12, fill: '#1F2933'});
+    const a = p.gov ? pillarAdh(p.k) : null; txt(g, pi * colW + colW / 2, 31, p.gov ? `adherence ${fmt(a * 100, 1)}% · ${pillarGaps(p.k).length} gaps` : 'platform only · no pillar policies', {'text-anchor': 'middle', 'font-size': 10, fill: '#5F6B76'});
+    if (p.gov) g.addEventListener('click', () => { opsPillar = opsPillar === p.k ? null : p.k; opsSel = null; opsEvent = null; RENDER.ops(); }); });
+  // nodes
+  for (const c of COMP){ const p = pos[c.id]; const v = lensVal(c); const [s, lab] = opsLens === 'gov' ? govStatus(v, compGaps(c.id).length) : lensStatus(v); const sel = c.id === opsSel; const dim = (opsSel && !sel && !up.has(c.id) && !down.has(c.id)) || !inPillar(c.id);
+    const g = svgEl('g', {style: 'cursor:pointer', opacity: dim ? 0.35 : 1}, svg);
+    svgEl('rect', {x: p.x, y: p.y, width: nw, height: nh, rx: 6, fill: sel ? '#EEF3F9' : '#fff', stroke: sel ? '#2F6DB5' : up.has(c.id) ? '#eb6834' : down.has(c.id) ? '#2a78d6' : '#c3c2b7', 'stroke-width': sel ? 2.5 : (up.has(c.id) || down.has(c.id)) ? 1.8 : 1}, g);
+    svgEl('rect', {x: p.x, y: p.y, width: 5, height: nh, fill: SCOL[s]}, g);
+    svgEl('circle', {cx: p.x + 16, cy: p.y + nh / 2, r: 7, fill: SCOL[s]}, g);
+    txt(g, p.x + 16, p.y + nh / 2 + 3.5, SICON[s], {'text-anchor': 'middle', 'font-size': 9, 'font-weight': 700, fill: s === 'warn' ? '#0b0b0b' : '#fff'});
+    const nm = c.name.length > 22 ? c.name.slice(0, 21) + '…' : c.name;
+    txt(g, p.x + 28, p.y + 15, nm, {'font-size': 11, 'font-weight': 700, fill: '#1F2933'});
+    txt(g, p.x + 28, p.y + 28, (c.kind === 'agent' ? 'AGENT · ' : c.kind.toUpperCase() + ' · ') + c.version, {'font-size': 9.5, fill: '#5F6B76'});
+    txt(g, p.x + nw - 6, p.y + 28, v == null ? '—' : fmt(v, opsLens === 'gov' ? 1 : 0), {'text-anchor': 'end', 'font-size': 11, 'font-weight': 700, fill: '#1F2933'});
+    g.addEventListener('mousemove', e => showTip(e, `<div class="t">${esc(c.name)}</div><code>${c.id}</code><br>${c.kind} · ${esc(c.owner)} · ${c.version}<br>${status(s, lab)} ${v == null ? '' : fmt(v, 1)}<br>Gaps: ${compGaps(c.id).map(p => p.id).join(', ') || 'none'}<br>Upstream: ${c.up.length} · Downstream: ${COMP.filter(x => x.up.includes(c.id)).length}`));
+    g.addEventListener('mouseleave', hideTip);
+    g.addEventListener('click', () => { opsSel = c.id; opsEvent = null; RENDER.ops(); setTimeout(() => $('#ops-drill').scrollIntoView({behavior: 'smooth', block: 'start'}), 50); }); }
+  $('#ops-legend').innerHTML = ['good','warn','serious','crit'].map(s => `<span>${status(s, lensStatus(opsLens === 'gov' ? {good:100,warn:98,serious:93,crit:50}[s] : opsLens === 'plat' ? {good:97,warn:90,serious:80,crit:60}[s] : {good:90,warn:80,serious:74,crit:60}[s])[1])}</span>`).join('') + (opsSel ? '<span><b style="background:#eb6834"></b>Upstream lineage</span><span><b style="background:#2a78d6"></b>Downstream lineage</span>' : '<span><b style="background:#c3c2b7"></b>Lineage link</span>');
+}
+function drawOpsDrill(){
+  const el = $('#ops-drill');
+  if (!opsSel && opsPillar){
+    const p = PILLARS.find(x => x.k === opsPillar); const ps = POLICIES.filter(x => x.pillar === opsPillar);
+    el.innerHTML = `<div class="card"><h3>${p.name}: policies, controls and gaps</h3><p class="note">Validators: ${p.validator}. Adherence = share of control checks passed, last 28 days. Click a component to drill in.</p>` +
+      tableHTML(['Policy', 'Requirement', 'Control', 'Applies to', 'Adherence', 'Gap'], ps.map(x => { const ids = Object.keys(x.checks); const ok = ids.reduce((s, c) => s + x.checks[c][0], 0), n = ids.reduce((s, c) => s + x.checks[c][1], 0); const gaps = ids.filter(c => isGap(x, c));
+        return [`<b>${x.id}</b>`, x.name, x.control, ids.map(c => `<a href="javascript:void(0)" data-sel="${c}">${esc(CMAP[c].name)}</a>`).join('<br>'), pct(ok / n, 1), gaps.length ? gaps.map(c => status(x.checks[c][0] / x.checks[c][1] < 0.97 ? 'serious' : 'warn', esc(CMAP[c].name + ': ' + (x.checks[c][2] || 'below target')))).join('<br>') : status('good', 'None')]; }), [4]) + '</div>';
+    $$('#ops-drill a[data-sel]').forEach(a => a.onclick = () => { opsSel = a.dataset.sel; RENDER.ops(); });
+    return;
+  }
+  if (!opsSel){ el.innerHTML = '<div class="howto"><b>Start here:</b> click any node on the map to see its lineage, trace chain, policies and audit trail. In the Governance lens, click a pillar tile or column title to see its policies and gaps. Try <a href="javascript:void(0)" id="ops-try1">Benefits enrollment pipeline</a>, <a href="javascript:void(0)" id="ops-try2">Sales Advisory Agent</a> or <a href="javascript:void(0)" id="ops-try3">T4 portfolio impact agent</a>.</div>'; $('#ops-try1').onclick = () => { opsSel = 'ds:benefits-enrollment'; RENDER.ops(); }; $('#ops-try2').onclick = () => { opsSel = 'agent:sales-advisory'; RENDER.ops(); }; $('#ops-try3').onclick = () => { opsSel = 'agent:t4-portfolio-impact'; RENDER.ops(); }; return; }
+  const c = CMAP[opsSel]; const evs = auditEvents(c); const ok = verifyChain(evs);
+  const upL = [...lineageSet(c.id, 'up')], downL = [...lineageSet(c.id, 'down')];
+  const ad = compAdh(c.id), gaps = compGaps(c.id);
+  const head = `<div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px"><div><div class="kicker">${PILLARS.find(p => p.k === c.pillar).name.toUpperCase()} · ${c.kind.toUpperCase()}</div><h3 style="font-size:18px;margin-top:2px">${esc(c.name)}</h3><div class="note"><code>${c.id}</code> · owner ${esc(c.owner)} · version ${c.version}</div></div>
+    <div class="flex" style="gap:22px"><div><div class="note">Health</div>${hstat(c.health)}</div><div><div class="note">Policy adherence</div>${ad == null ? '—' : status(govStatus(ad * 100, gaps.length)[0], pct(ad, 1) + (gaps.length ? ' · ' + gaps.length + ' gap' + (gaps.length > 1 ? 's' : '') : ''))}</div><div><div class="note">Outcome attainment</div><b>${c.value}%</b></div><div><div class="note">Audit chain</div>${ok ? status('good', 'Verified') : status('crit', 'Broken')}</div></div></div>
+    <div class="seg" id="ops-tabs" style="margin-top:10px">${[['lineage','Lineage'],['trace','Traceability'],['policies','Policies and gaps'],['audit','Audit trail']].map(([k, l]) => `<button data-t="${k}" class="${opsTab === k ? 'on' : ''}">${l}</button>`).join('')}</div><div id="ops-tab" style="margin-top:12px"></div></div>`;
+  el.innerHTML = head;
+  $$('#ops-tabs button').forEach(b => b.onclick = () => { opsTab = b.dataset.t; opsEvent = null; drawOpsDrill(); });
+  const T = $('#ops-tab');
+  if (opsTab === 'lineage'){
+    const row = id => { const x = CMAP[id]; return [`<a href="javascript:void(0)" data-sel="${id}">${esc(x.name)}</a>`, `<code>${id}</code>`, x.version, hstat(x.health), compGaps(id).length ? compGaps(id).map(p => p.id).join(', ') : '—']; };
+    T.innerHTML = `<p class="note">Where this component's inputs come from (upstream) and what depends on it (downstream). Highlighted on the map in orange and blue. Lineage is held as a PROV-O graph in the SKL.</p><div class="grid2"><div><h3>Upstream · ${upL.length}</h3>${upL.length ? tableHTML(['Component', 'SKL ID', 'Version', 'Health', 'Gaps'], upL.map(row)) : '<p class="note">Source of record: no upstream.</p>'}</div><div><h3>Downstream · ${downL.length}</h3>${downL.length ? tableHTML(['Component', 'SKL ID', 'Version', 'Health', 'Gaps'], downL.map(row)) : '<p class="note">No dependants.</p>'}</div></div>`;
+  } else if (opsTab === 'trace'){
+    const cap = CAP_OF[c.id] || (c.pillar === 'ai' || c.pillar === 'di' ? 'cap:hr-advisory-360' : 'cap:benefits-change'); const out = OUT_OF[cap] || 'out:benefits-change-on-time';
+    const pol = gaps[0] || polFor(c.id)[0];
+    const chain = [['Outcome', out, 'good'], ['Capability', cap, 'good'], ['Policy', pol ? pol.id + ' ' + pol.name : 'Platform standard', 'good'], ['Control', pol ? pol.control : 'Health check', 'good'], ['Evidence', pol ? `${fmt(pol.checks[c.id][0])} of ${fmt(pol.checks[c.id][1])} checks passed` : 'Health checks passing', pol && isGap(pol, c.id) ? 'serious' : 'good'], ['Release', c.version + ' · release record matched', c.id === 'kg:skl-core' ? 'warn' : 'good']];
+    T.innerHTML = `<p class="note">Why this component is allowed to do what it does: from the customer outcome it serves down to the evidence that its controls work and the release that put it in production.</p><div style="display:flex;gap:8px;align-items:stretch;flex-wrap:wrap">${chain.map((s, i) => `<div style="flex:1;min-width:150px;border:1px solid var(--rule);border-left:4px solid ${SCOL[s[2]]};border-radius:8px;padding:8px 10px;background:#fff"><div class="note" style="margin:0">${i + 1}. ${s[0]}</div><div style="font-size:12.5px;font-weight:700;margin:3px 0">${esc(s[1])}</div>${status(s[2], s[2] === 'good' ? 'Linked' : 'Gap')}</div>${i < chain.length - 1 ? '<div style="align-self:center;color:#898781">→</div>' : ''}`).join('')}</div>
+      <h3 style="margin-top:16px">Latest request trace through this component</h3><p class="note">Spans carry the SKL identifiers that join the trace to the traceability chain above.</p>` + tableHTML(['Span', 'Component', 'Duration', 'Attributes'], [
+        ['compass.intake', '<code>agent:compass</code>', '18 ms', `trace ${fnv(c.id).slice(0, 8)} · persona:hr-leader`], ['router.classify', '<code>agent:tier-router</code>', '42 ms', `tier ${c.pillar === 'di' ? 'T4' : 'T2'} · confidence 0.94`],
+        ['skl.retrieve', '<code>svc:search-facade</code>', '120 ms', 'assets voc:benefits, onto:plan-year · release 2026.11.3'], [c.id.split(':')[1] + '.execute', `<code>${c.id}</code>`, c.kind === 'agent' ? '920 ms' : '64 ms', `version ${c.version} · policy checks ${polFor(c.id).map(p => p.id).join(', ') || 'platform'}`], ['grounding.check', '<code>svc:grounding-breaker</code>', '90 ms', 'grounded true · 3 citations'], ['audit.write', '<code>log:audit</code>', '4 ms', `hash ${evs[0].hash}`]]);
+  } else if (opsTab === 'policies'){
+    T.innerHTML = polFor(c.id).length ? tableHTML(['Policy', 'Pillar', 'Requirement', 'Control', 'Checks passed', 'Adherence', 'Gap'], polFor(c.id).map(p => { const [o, n, note] = p.checks[c.id]; return [`<b>${p.id}</b>`, PILLARS.find(x => x.k === p.pillar).name, p.name, p.control, `${fmt(o)} / ${fmt(n)}`, pct(o / n, 1), isGap(p, c.id) ? status(o / n < 0.97 ? 'serious' : 'warn', esc(note || 'below target')) : status('good', p.target < 1 ? 'Meets ' + pct(p.target, 0) + ' target' : 'None')]; }), [4, 5]) + (gaps.length ? `<p class="note" style="margin-top:8px">Open gaps feed Section 3.3 compliance gaps and the demand backlog. Severity is set by impact assessment.</p>` : '') : '<p class="note">No pillar policies apply directly; platform standards (availability, change tickets, security patching) are monitored under Platform performance.</p>';
+  } else {
+    if (opsEvent){ const e = opsEvent; T.innerHTML = `<p><a href="javascript:void(0)" id="ops-back">‹ Back to audit trail</a></p><h3>Audit record #${e.seq}</h3><table>${[['Object', `<code>${e.object}</code>`], ['Day and time', `Day ${e.day}, ${e.time}`], ['Actor', esc(e.actor)], ['Action', esc(e.action)], ['Policy checked', e.policy], ['Result', esc(e.result)], ['Version at the time', e.version], ['Trace ID', `<code>${e.trace}</code>`], ['Previous hash', `<code>${e.prev}</code>`], ['Record hash', `<code>${e.hash}</code>`], ['Chain status', ok ? status('good', 'Hash matches; chain verified to record #1') : status('crit', 'Chain broken')]].map(r => `<tr><th style="width:200px">${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table>`; $('#ops-back').onclick = () => { opsEvent = null; RENDER.ops(); }; return; }
+    T.innerHTML = `<p class="note">Append-only and hash-chained: each record carries the hash of the one before, so any edit breaks the chain. Click a record to open it. Records in red are policy gaps.</p>` + tableHTML(['#', 'Day', 'Time', 'Actor', 'Action', 'Policy', 'Result', 'Hash'], evs.map(e => { const gap = /Gap|Failed|No approval/.test(e.result); return [`<a href="javascript:void(0)" data-ev="${e.seq}">${e.seq}</a>`, e.day, e.time, esc(e.actor), esc(e.action), e.policy, gap ? `<span style="color:#b03a2e;font-weight:700">${esc(e.result)}</span>` : esc(e.result), `<code>${e.hash}</code>`]; }), [0, 1]);
+    $$('#ops-tab a[data-ev]').forEach(a => a.onclick = () => { opsEvent = evs.find(e => e.seq === +a.dataset.ev); RENDER.ops(); });
+  }
+  $$('#ops-tab a[data-sel]').forEach(a => a.onclick = () => { opsSel = a.dataset.sel; opsEvent = null; RENDER.ops(); });
+}
+$$('#ops-lens button').forEach(b => b.onclick = () => { $$('#ops-lens button').forEach(x => x.classList.toggle('on', x === b)); opsLens = b.dataset.l; if (opsLens !== 'gov') opsPillar = null; RENDER.ops(); });
+
+// ================================================================ boot
+go(safeHash() || 'overview');
+</script>
+</body>
+</html>
